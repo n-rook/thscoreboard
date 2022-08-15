@@ -8,16 +8,24 @@
         <p>Register for an account</p>
         <form method="post">
             {% csrf_token %} 
-            <fieldset>
-                <legend>Register</legend>
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-                <label for="email">Email address</label>
-                <input type="email" name="email" required>
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-                <input type="submit" value="Register">
-            </fieldset>
+            {{ form.non_field_errors }}
+            <!-- {{ form }} -->
+            <div class="field-wrapper">
+                {{ form.username.errors }}
+                <label for="{{ form.username.id_for_label }}">Username</label>
+                {{ form.username }}
+            </div>
+            <div class="field-wrapper">
+                {{ form.email.errors }}
+                <label for="{{ form.email.id_for_label }}">Email Address</label>
+                {{ form.email }}
+            </div>
+            <div class="field-wrapper">
+                {{ form.password.errors }}
+                <label for="{{ form.password.id_for_label }}">Password</label>
+                {{ form.password }}
+            </div>
+            <input type="submit" value="Register">
         </form>
     </body>
 </html>
