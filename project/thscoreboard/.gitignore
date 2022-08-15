@@ -4,6 +4,7 @@
 .tox/
 __pycache__
 MANIFEST
+.dev_pgpass
 db.sqlite3
 dist/
 docs/_build/
