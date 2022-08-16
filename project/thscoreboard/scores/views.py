@@ -1,7 +1,7 @@
-# from django.shortcuts import render
+from django.shortcuts import render
+from django.views.decorators import http as http_decorators
 from django import http
 
-# Create your views here.
+@http_decorators.require_safe
 def index(request):
-    return http.HttpResponse('Hello world')
-    
+    return render(request, 'scores/index.html')
