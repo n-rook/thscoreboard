@@ -6,7 +6,9 @@ from . import views
 app_name = 'users'
 
 urlpatterns = [
-    path('login', views.login, name='login'),
     path('register', views.register, name='register'),
     path('registration_success', views.registration_success, name='registration_success'),
+    # For now, just reuse the built-in Django pages.
+    path('', include('django.contrib.auth.urls')),
+    
 ]

@@ -1,26 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}Register{% endblock %}
-
 {% block content %}
+
 <form method="post">
-    {% csrf_token %} 
+    {% csrf_token %}
     {{ form.non_field_errors }}
+
     <div class="field-wrapper">
         {{ form.username.errors }}
         <label for="{{ form.username.id_for_label }}">Username</label>
         {{ form.username }}
     </div>
     <div class="field-wrapper">
-        {{ form.email.errors }}
-        <label for="{{ form.email.id_for_label }}">Email Address</label>
-        {{ form.email }}
-    </div>
-    <div class="field-wrapper">
         {{ form.password.errors }}
         <label for="{{ form.password.id_for_label }}">Password</label>
         {{ form.password }}
     </div>
-    <input type="submit" value="Register">
+    <input type="submit" value="Log in">
 </form>
+
 {% endblock %}
