@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'shared_content.apps.SharedContentConfig',
     'scores.apps.ScoresConfig',
     'users.apps.UsersConfig',
     'django.contrib.admin',
