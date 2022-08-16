@@ -17,12 +17,18 @@
             <h1>Touhou Scoreboard</h1>
         </a>
         <div class="flex-1"></div>
+        {% if user.is_authenticated %}
         <div id="topbar-link-button">
             <a href="/users/profile">Profile</a>
         </div>
         <div id="topbar-link-button">
             <a href="/users/logout">Log out</a>
         </div>
+        {% else %}
+        <div id="topbar-link-button">
+            <a href="/users/login">Log in</a>
+        </div>
+        {% endif %}
     </div>
     <div id="content">
         {% block content %}{% endblock %}
