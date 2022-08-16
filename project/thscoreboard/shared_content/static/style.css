@@ -19,6 +19,9 @@
 #topbar-banner > img {
     object-fit: contain;
     display: block;
+    border: 1px solid;
+    border-color: black;
+    background-color: rgb(87, 53, 118);;
 }
 
 #topbar-banner h1 {
