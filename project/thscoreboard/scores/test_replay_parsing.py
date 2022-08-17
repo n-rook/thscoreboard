@@ -10,11 +10,11 @@ class Th06ReplayTestCase(unittest.TestCase):
             return replay_parsing.Parse(f.read())
     
     def testHard1cc(self):
-        with self.assertRaises(replay_parsing.UnsupportedReplayError):
-            # Not implemented yet...
-            self.ParseTestReplay('th6_hard_1cc.rpy')
-        # No crash
-        # Someday we will want to return data here.
+        replay_info = self.ParseTestReplay('th6_hard_1cc.rpy')
+        self.assertEqual(replay_info.game, 'th06')
+        self.assertEqual(replay_info.difficulty, 2)
+        self.assertEqual(replay_info.shot, 'ReimuA')
+        self.assertEqual(replay_info.score, 92245410)
 
         # 6 stages (Hard 1cc)
         # Final score is 92245410

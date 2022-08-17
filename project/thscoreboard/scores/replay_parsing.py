@@ -1,3 +1,4 @@
+"""Parsing and gleaning information from individual replay files."""
 
 from dataclasses import dataclass
 import logging
@@ -15,6 +16,14 @@ class UnsupportedGameError(Error):
 
 class UnsupportedReplayError(Error):
     pass
+
+
+@dataclass
+class ReplayInfo:
+    game: str
+    shot: str
+    difficulty: int
+    score: int
 
 
 def Parse(replay):
@@ -39,13 +48,22 @@ def _Parse06(replay):
 
     logging.info(str(header))
     logging.info(str(encrypted_header))
-    raise UnsupportedReplayError()
+
+    return ReplayInfo(
+        'th06',
+        header.shot,
+        header.difficulty,
+        encrypted_header.score
+    )
 
 def _Parse06Header(replay):
     logging.info(replay[:15].hex())
 
     gamecode = replay[:4]
     version = replay[4:6]
+    if version != b'\x02\x01':
+        # \x02\x01 corresponds to the latest version, 1.02h.
+        raise UnsupportedReplayError('This th06 replay is for an unsupported version.')
     player_byte = replay[6]
     if player_byte == 0:
         player = 'ReimuA'
