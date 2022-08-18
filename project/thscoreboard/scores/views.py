@@ -98,6 +98,7 @@ def publish_replay(request, temp_replay_id):
         raise Http404()
 
     if request.method == 'POST':
+        
         raise NotImplementedError()
 
     replay_info = replay_parsing.Parse(bytes(temp_replay.replay))

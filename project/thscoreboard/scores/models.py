@@ -15,7 +15,8 @@ class Game(models.Model):
 
 
 class Shot(models.Model):
-    shot_id = models.TextField(primary_key=True)
+
+    shot_id = models.TextField()
     """A unique ID for the shot.
 
     Typically, this is the name of the character (in English), plus perhaps a
@@ -25,6 +26,9 @@ class Shot(models.Model):
 
     game = models.ForeignKey('Game', on_delete=models.CASCADE)
     """The game in which this shot appears."""
+
+    class Meta:
+        constraints = [models.UniqueConstraint('shot_id', 'game', name='unique_shot_per_game')]
 
 
 # Create your models here.
@@ -50,7 +54,6 @@ class Score(models.Model):
 class ReplayFile(models.Model):
     """Represents a replay file for a given score."""
 
-    # score = models.ForeignKey('Score', on_delete=models.CASCADE, unique=True)
     score = models.OneToOneField('Score', on_delete=models.CASCADE)
     """The score record to which this replay corresponds."""
 
@@ -79,4 +82,3 @@ class TemporaryReplayFile(models.Model):
 
     replay = models.BinaryField(max_length=limits.MAX_REPLAY_SIZE)
     """The replay file itself."""
-    
