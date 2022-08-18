@@ -2,7 +2,7 @@ import logging
 from urllib import parse
 
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, Http404
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators import http as http_decorators
 from django.contrib.auth import decorators as auth_decorators
 from django.core.exceptions import ValidationError
@@ -45,8 +45,6 @@ def _HandleReplay(request, replay_bytes):
     except replay_parsing.Error as e:
         raise ValidationError(str(e))
     
-
-
 
 @auth_decorators.login_required
 @http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
@@ -124,7 +122,7 @@ def publish_replay(request, temp_replay_id):
 
 @http_decorators.require_safe
 def score_details(request, game_id: str, score_id: int):
-    score_instance = GetScoreOr404(request.user, game_id)
+    score_instance = GetScoreOr404(request.user, score_id)
 
     if score_instance.shot.game.game_id != game_id:
         # Wrong game, but IDs are unique anyway so we know the right game. Send the user there.
@@ -167,6 +165,30 @@ def download_replay(request, game_id: str, score_id: int):
             'Content-Disposition': content_disposition
         }
     )
+
+
+@http_decorators.require_safe
+def game_scoreboard(request, game_id: str):
+    # You don't need pagination if you don't have users yet!
+    game = get_object_or_404(models.Game, game_id=game_id)
+    # all_shots = models.Shot.objects.filter(shot__game=game_id)
+    all_scores = (
+        models.Score.objects.select_related('shot', 'replayfile')
+            .filter(category=models.Category.REGULAR)
+            .filter(shot__game=game_id)
+            .order_by('-points')
+    )
+
+    return render(
+        request,
+        'scores/game_scoreboard.html',
+        {
+            'game_name': game.GetName(),
+            'scores': all_scores,
+        })
+
+
+
 
 @http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
 @auth_decorators.login_required

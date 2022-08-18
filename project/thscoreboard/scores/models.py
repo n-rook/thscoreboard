@@ -61,6 +61,8 @@ class Category(models.IntegerChoices):
 class Score(models.Model):
 
     class Meta:
+        ordering = ['shot', 'difficulty', '-points']
+
         constraints = [
             models.CheckConstraint(
                 check=models.Q(difficulty__gte=0),

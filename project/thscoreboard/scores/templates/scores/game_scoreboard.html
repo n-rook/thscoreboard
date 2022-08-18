@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{ game_name }}</h2>
+    <table>
+        <tr>
+            <th>
+                User
+            </th>
+            <th>
+                Difficulty
+            </th>
+            <th>
+                Shot
+            </th>
+            <th>
+                Score
+            </th>
+        </tr>
+        {% for score in scores %}
+            <tr>
+                <td>
+                    {{score.user.username}}
+                </td>
+                <td>
+                    {{score.GetDifficultyName}}
+                </td>
+                <td>
+                    {{score.shot.GetName}}
+                </td>
+                <td>
+                    <a href="/scores/{{score.shot.game.game_id}}/{{score.id}}">{{score.points}}</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
