@@ -9,3 +9,4 @@ class FileTooBigError(ValidationError):
     def __init__(self):
         super().__init__('Replays cannot be bigger than 1MB.')
 
+MAX_COMMENT_LENGTH = 50000

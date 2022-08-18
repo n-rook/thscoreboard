@@ -12,6 +12,7 @@ def register(request):
         if form.is_valid():
 
             logging.info('Form was valid')
+            # TODO let people register...
             return HttpResponseRedirect('./registration_success')
         else:
             pass

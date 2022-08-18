@@ -1,5 +1,7 @@
 from django import forms
 
+from . import models
+from . import limits
 
 game_names = (
     ('th06', '東方紅魔郷 - Embodiment of Scarlet Devil'),
@@ -36,6 +38,7 @@ class PublishReplayForm(forms.Form):
     # game = forms.ChoiceField(choices=game_names)
     difficulty = forms.ChoiceField(choices=difficulty_names)
     shot = forms.ChoiceField(choices=shot_names)
-    score = forms.IntegerField(min_value=0)
-    category = forms.ChoiceField(choices=category_names)
-    comment = forms.CharField(max_length=50000)
+    points = forms.IntegerField(min_value=0)
+    category = forms.ChoiceField(choices=models.Category.choices)
+    comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)
+    is_good = forms.BooleanField(initial=True)

@@ -3,6 +3,8 @@
 from dataclasses import dataclass
 import logging
 
+from . import game_ids
+
 class Error(Exception):
     pass
 
@@ -24,6 +26,12 @@ class ReplayInfo:
     shot: str
     difficulty: int
     score: int
+
+    # def GetShotId(self):
+    #     """Get the integer shot ID suitable for the database."""
+    #     # This is kind of imprecise; fix up data structures so we don't need to do this.
+    #     if self.game == game_ids.GameIDs.TH06:
+    #         return game_ids.TH06_SHOT_NAME_TO_ID_BIDICT[self.shot]
 
 
 def Parse(replay):
@@ -50,7 +58,7 @@ def _Parse06(replay):
     logging.info(str(encrypted_header))
 
     return ReplayInfo(
-        'th06',
+        game_ids.GameIDs.TH06,
         header.shot,
         header.difficulty,
         encrypted_header.score
