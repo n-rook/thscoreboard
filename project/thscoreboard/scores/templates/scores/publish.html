@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Finish uploading your replay</h2>
+
+</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <!-- name -->
+    <!-- game -->
+    difficulty
+    shot
+    score
+    category (regular, tool-assisted, unranked, private)
+    comment
+
+    <div class="field-wrapper">
+        {{ form.difficulty.errors }}
+        <label for="{{form.difficulty.id_for_label}}">Difficulty</label>
+        {{ form.difficulty }}
+    </div>
+    <div class="field-wrapper">
+        {{ form.shot.errors }}
+        <label for="{{form.shot.id_for_label}}">Shot</label>
+        {{ form.shot }}
+    </div>
+    <div class="field-wrapper">
+        {{ form.score.errors }}
+        <label for="{{form.score.id_for_label}}">Score</label>
+        {{ form.score }}
+    </div>
+    <div class="field-wrapper">
+        {{ form.category.errors }}
+        <label for="{{form.category.id_for_label}}">Category</label>
+        {{ form.category }}
+    </div>
+    <div class="field-wrapper">
+        {{ form.comment.errors }}
+        <label for="{{form.comment.id_for_label}}">Comment</label>
+        {{ form.comment }}
+    </div>
+    <input type="submit" value="Publish Replay">
+</form>
+{% endblock %}

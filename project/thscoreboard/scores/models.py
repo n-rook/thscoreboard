@@ -1,6 +1,7 @@
-from operator import mod
+
 from django.db import models
 
+from . import limits
 
 class Game(models.Model):
     game_id = models.TextField(primary_key=True)
@@ -64,7 +65,8 @@ class TemporaryReplayFile(models.Model):
     """Represents a temporarily held replay file a user is uploading.
     
     When the user is uploading a replay file, we want the server to receive the
-    file and parse metadata from it to help the user. However, 
+    file and parse metadata from it to help the user. However, this means that the
+    replay must be saved before it is published.
     """
 
     # TODO: When this table gets big, we can bother with a good way to clean it up.
@@ -74,3 +76,7 @@ class TemporaryReplayFile(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     """When the replay file was uploaded."""
+
+    replay = models.BinaryField(max_length=limits.MAX_REPLAY_SIZE)
+    """The replay file itself."""
+    
