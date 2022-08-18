@@ -1,10 +1,14 @@
 import logging
-from django.http import Http404
+from urllib import parse
+
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import redirect, render
 from django.views.decorators import http as http_decorators
 from django.contrib.auth import decorators as auth_decorators
 from django.core.exceptions import ValidationError
 from django.db import transaction
+
+
 
 from . import forms
 from . import limits
@@ -93,7 +97,7 @@ def publish_replay(request, temp_replay_id):
     if request.method == 'POST':
         form = forms.PublishReplayForm(request.POST)
         if form.is_valid():
-            PublishNewScore(
+            new_score = PublishNewScore(
                 user=request.user,
                 game_id=replay_info.game,
                 difficulty=replay_info.difficulty,
@@ -105,8 +109,7 @@ def publish_replay(request, temp_replay_id):
                 temp_replay_instance=temp_replay,
                 replay_info=replay_info,
             )
-            # 304 over to replay details page
-            raise NotImplementedError()
+            return redirect(score_details, game_id=replay_info.game, score_id=new_score.id)
         else:
             return render(request, 'scores/publish.html', {'form': form})
 
@@ -115,11 +118,66 @@ def publish_replay(request, temp_replay_id):
         'shot': replay_info.shot,
         'points': replay_info.score
     })
-    # form.difficulty.initial = replay_info.difficulty
-    # form.shot.initial = replay_info.shot
-    # form.score.initial = replay_info.score
     
     return render(request, 'scores/publish.html', {'form': form})
+
+
+@http_decorators.require_safe
+def score_details(request, game_id: str, score_id: int):
+    try:
+        score_instance = models.Score.objects.select_related('shot').get(id=score_id)
+    except models.Score.DoesNotExist:
+        raise Http404()
+    if not score_instance.IsVisible(request.user):
+        raise Http404()
+
+    if score_instance.shot.game.game_id != game_id:
+        # Wrong game, but IDs are unique anyway so we know the right game. Send the user there.
+        return redirect(score_details, game_id=score_instance.shot.game.game_id, score_id=score_id)
+
+    return render(request, 'scores/score_details.html', {
+        'game_name': score_instance.shot.game.GetName(),
+        'shot_name': score_instance.shot.GetName(),
+        'difficulty_name': score_instance.GetDifficultyName(),
+        'game_id': game_id,
+        'score': score_instance,
+        'replay': score_instance.replayfile
+    })
+
+
+@http_decorators.require_safe
+def download_replay(request, game_id: str, score_id: int):
+    try:
+        score_instance = models.Score.objects.select_related('user', 'shot').get(id=score_id)
+    except models.Score.DoesNotExist:
+        raise Http404()
+
+    if score_instance.shot.game.game_id != game_id:
+        raise Http404()
+    if not score_instance.IsVisible(request.user):
+        raise Http404()
+    if not score_instance.shot.game.has_replays:
+        raise HttpResponseBadRequest()
+    
+    try:
+        replay_instance = models.ReplayFile.objects.get(score=score_instance)
+    except models.ReplayFile.DoesNotExist:
+        raise ValueError('No replay for this score. This should not be possible')
+    
+    content_disposition = 'attachment; filename="{basic_filename}"; filename*=UTF-8''{utf8_filename}'.format(
+        basic_filename=score_instance.GetNiceFilename(ascii_only=True),
+        utf8_filename=parse.quote_plus(score_instance.GetNiceFilename(), encoding='UTF-8')
+    )
+
+    return HttpResponse(
+        replay_instance.replay,
+        headers={
+            'Content-Type': 'application/octet-stream',
+            'Content-Disposition': content_disposition
+        }
+    )
+
+
 
 @transaction.atomic
 def PublishNewScore(user, game_id: str, difficulty: int, shot_id: str, points: int, category: str, comment: str, is_good: bool, temp_replay_instance: models.TemporaryReplayFile, replay_info: replay_parsing.ReplayInfo):
@@ -143,3 +201,4 @@ def PublishNewScore(user, game_id: str, difficulty: int, shot_id: str, points: i
     score_instance.save()
     replay_file_instance.save()
     temp_replay_instance.delete()
+    return score_instance

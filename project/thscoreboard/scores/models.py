@@ -1,7 +1,8 @@
 
 from django.db import models
+from django.contrib.auth import models as auth_models
 
-
+from . import game_ids
 from . import limits
 
 class Game(models.Model):
@@ -24,8 +25,14 @@ class Game(models.Model):
     starting from 0.
     """
 
+    def GetName(self):
+        return game_ids.GetGameName(self.game_id)
+
 
 class Shot(models.Model):
+
+    class Meta:
+        constraints = [models.UniqueConstraint('shot_id', 'game', name='unique_shot_per_game')]
 
     shot_id = models.TextField()
     """A unique ID for the shot.
@@ -38,8 +45,9 @@ class Shot(models.Model):
     game = models.ForeignKey('Game', on_delete=models.CASCADE)
     """The game in which this shot appears."""
 
-    class Meta:
-        constraints = [models.UniqueConstraint('shot_id', 'game', name='unique_shot_per_game')]
+    def GetName(self):
+        """Get a pretty name for this shot type. Note: Populates game."""
+        return game_ids.GetShotName(self.game.game_id, self.shot_id)
 
 
 class Category(models.IntegerChoices):
@@ -78,6 +86,10 @@ class Score(models.Model):
 
     difficulty = models.IntegerField()
     """The difficulty on which the player played."""
+    
+    def GetDifficultyName(self):
+        """Get a pretty name for this difficulty. Note: Populates shot and game."""
+        return game_ids.GetDifficultyName(self.shot.game.game_id, self.difficulty)
 
     points = models.BigIntegerField()
     """The score of the replay."""
@@ -87,7 +99,31 @@ class Score(models.Model):
 
     comment = models.TextField(max_length=limits.MAX_COMMENT_LENGTH)
     """A comment the user entered."""
-    
+
+    def IsVisible(self, viewer: auth_models.User):
+        """Returns whether this score should be visible to this user."""
+        # Add a unit test for this
+
+        if self.category != Category.PRIVATE:
+            return True
+        return self.user == viewer
+
+    def GetNiceFilename(self, ascii_only=False):
+        """Returns a nice filename for a replay for this score.
+        
+        This always returns something, even if this score does not actually
+        have a replay.
+
+        Args:
+            ascii_only: If True, don't include the username, so that this can
+            safely be included in a "filename" Content-Disposition field.
+        """
+        return '{gamecode}_{user}_{id}.rpy'.format(
+            gamecode=self.shot.game.game_id,
+            user=self.user.username,
+            id=self.id,
+        )
+
 
 class ReplayFile(models.Model):
     """Represents a replay file for a given score."""
