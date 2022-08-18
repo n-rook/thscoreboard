@@ -1,0 +1,32 @@
+<table>
+    <tr>
+        <th>
+            User
+        </th>
+        <th>
+            Difficulty
+        </th>
+        <th>
+            Shot
+        </th>
+        <th>
+            Score
+        </th>
+    </tr>
+    {% for score in scores %}
+        <tr>
+            <td>
+                <a href="/scores/user/{{score.user.username}}">{{score.user.username}}</a>
+            </td>
+            <td>
+                <a href="/scores/{{score.shot.game.game_id}}/d{{score.difficulty}}">{{score.GetDifficultyName}}</a>
+            </td>
+            <td>
+                <a href="/scores/{{score.shot.game.game_id}}/d{{score.difficulty}}/{{score.shot.shot_id}}">{{score.shot.GetName}}</a>
+            </td>
+            <td>
+                <a href="/scores/{{score.shot.game.game_id}}/{{score.id}}">{{score.points}}</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>

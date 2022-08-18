@@ -79,10 +79,6 @@ class Score(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     """When the replay was uploaded."""
 
-    # game = models.ForeignKey('Game', on_delete=models.PROTECT)
-    # """The game this replay comes from."""
-    # This is denormalized! Just get it from "shot".
-
     shot = models.ForeignKey('Shot', on_delete=models.PROTECT)
     """The shot type the player used."""
 
@@ -92,6 +88,9 @@ class Score(models.Model):
     def GetDifficultyName(self):
         """Get a pretty name for this difficulty. Note: Populates shot and game."""
         return game_ids.GetDifficultyName(self.shot.game.game_id, self.difficulty)
+    
+    def GetDifficultyUrlCode(self):
+        return f'd{self.difficulty}'
 
     points = models.BigIntegerField()
     """The score of the replay."""

@@ -1,14 +1,16 @@
+import itertools
 import logging
+from typing import Optional
 from urllib import parse
+
 
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators import http as http_decorators
 from django.contrib.auth import decorators as auth_decorators
+from django.contrib.auth import models as auth_models
 from django.core.exceptions import ValidationError
 from django.db import transaction
-
-
 
 from . import forms
 from . import limits
@@ -18,10 +20,6 @@ from . import replay_parsing
 @http_decorators.require_safe
 def index(request):
     return render(request, 'scores/index.html')
-
-
-# class FileTooBigError(ValidationError):
-#     pass
 
 
 def _ReadFile(file_from_form):
@@ -168,26 +166,65 @@ def download_replay(request, game_id: str, score_id: int):
 
 
 @http_decorators.require_safe
-def game_scoreboard(request, game_id: str):
-    # You don't need pagination if you don't have users yet!
+def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, shot_id: Optional[str] = None):
+    # Ancient wisdom: You don't need pagination if you don't have users yet!
     game = get_object_or_404(models.Game, game_id=game_id)
-    # all_shots = models.Shot.objects.filter(shot__game=game_id)
     all_scores = (
         models.Score.objects.select_related('shot', 'replayfile')
             .filter(category=models.Category.REGULAR)
             .filter(shot__game=game_id)
             .order_by('-points')
     )
+    if difficulty is not None:
+        if difficulty < 0 or difficulty >= game.num_difficulties:
+            raise Http404()
+        all_scores = all_scores.filter(difficulty=difficulty)
+    if shot_id is not None:
+        shot = get_object_or_404(models.Shot, game=game_id, shot_id=shot_id)
+        all_scores = all_scores.filter(shot=shot)
 
     return render(
         request,
         'scores/game_scoreboard.html',
         {
-            'game_name': game.GetName(),
+            'game': game,
             'scores': all_scores,
         })
 
 
+@http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
+def user_page(request, username: str):
+    user = get_object_or_404(auth_models.User, username=username)
+    def GetUserScores():
+        # Yields (game, list_of_scores_for_the_game) tuples.
+        
+        scores = (
+            models.Score.objects
+                .filter(user=user)
+                .exclude(category=models.Category.PRIVATE)
+                .order_by('shot__game_id', 'shot_id', 'created'))
+        
+        current_game = None
+        for score in scores:
+            if current_game is None:
+                current_game = score.shot.game
+                current_scores = []
+            if current_game != score.shot.game:
+                yield (current_game, current_scores)
+                current_game = score.shot.game
+                current_scores = []
+            current_scores.append(score)
+        if current_game is not None:
+            yield (current_game, current_scores)    
+
+    return render(
+        request,
+        'scores/user_page.html',
+        {
+            'user': user,
+            'scores_by_game': list(GetUserScores())}
+        )
+    
 
 
 @http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
