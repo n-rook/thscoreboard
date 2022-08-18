@@ -1,7 +1,7 @@
 import logging
 from urllib import parse
 
-from django.http import HttpResponse, HttpResponseBadRequest, Http404
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, Http404
 from django.shortcuts import redirect, render
 from django.views.decorators import http as http_decorators
 from django.contrib.auth import decorators as auth_decorators
@@ -124,12 +124,7 @@ def publish_replay(request, temp_replay_id):
 
 @http_decorators.require_safe
 def score_details(request, game_id: str, score_id: int):
-    try:
-        score_instance = models.Score.objects.select_related('shot').get(id=score_id)
-    except models.Score.DoesNotExist:
-        raise Http404()
-    if not score_instance.IsVisible(request.user):
-        raise Http404()
+    score_instance = GetScoreOr404(request.user, game_id)
 
     if score_instance.shot.game.game_id != game_id:
         # Wrong game, but IDs are unique anyway so we know the right game. Send the user there.
@@ -141,20 +136,16 @@ def score_details(request, game_id: str, score_id: int):
         'difficulty_name': score_instance.GetDifficultyName(),
         'game_id': game_id,
         'score': score_instance,
-        'replay': score_instance.replayfile
+        'replay': score_instance.replayfile,
+        'is_owner': request.user == score_instance.user,
     })
 
 
 @http_decorators.require_safe
 def download_replay(request, game_id: str, score_id: int):
-    try:
-        score_instance = models.Score.objects.select_related('user', 'shot').get(id=score_id)
-    except models.Score.DoesNotExist:
-        raise Http404()
-
+    score_instance = GetScoreOr404(request.user, score_id)
+    
     if score_instance.shot.game.game_id != game_id:
-        raise Http404()
-    if not score_instance.IsVisible(request.user):
         raise Http404()
     if not score_instance.shot.game.has_replays:
         raise HttpResponseBadRequest()
@@ -177,6 +168,40 @@ def download_replay(request, game_id: str, score_id: int):
         }
     )
 
+@http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
+@auth_decorators.login_required
+def delete_score(request, game_id: str, score_id: int):
+    score_instance = GetScoreOr404(request.user, score_id)
+
+    if score_instance.shot.game.game_id != game_id:
+        raise Http404()
+    if not score_instance.user == request.user:
+        raise HttpResponseForbidden()
+    
+    if request.method == 'POST':
+        score_instance.delete()
+        return redirect(f'/scores/user/{request.user.username}')
+    
+    return render(
+        request,
+        'scores/delete_score.html',
+        {   
+            'game_name': score_instance.shot.game.GetName(),
+            'shot_name': score_instance.shot.GetName(),
+            'difficulty_name': score_instance.GetDifficultyName(),
+            'score': score_instance,
+        }
+    )
+
+
+def GetScoreOr404(user, score_id):
+    try:
+        score_instance = models.Score.objects.select_related('shot').get(id=score_id)
+    except models.Score.DoesNotExist:
+        raise Http404()
+    if not score_instance.IsVisible(user):
+        raise Http404()
+    return score_instance
 
 
 @transaction.atomic

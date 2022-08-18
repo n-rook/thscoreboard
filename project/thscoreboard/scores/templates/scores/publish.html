@@ -8,14 +8,6 @@
     {% csrf_token %}
     {{ form.non_field_errors }}
 
-    <!-- name -->
-    <!-- game -->
-    difficulty
-    shot
-    score
-    category (regular, tool-assisted, unranked, private)
-    comment
-
     <div class="field-wrapper">
         {{ form.difficulty.errors }}
         <label for="{{form.difficulty.id_for_label}}">Difficulty</label>
