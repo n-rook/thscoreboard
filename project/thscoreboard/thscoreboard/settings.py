@@ -37,6 +37,7 @@ else:
 DEBUG = not IS_PROD
 
 ALLOWED_HOSTS = [
+    'localhost',
     'touhou-scoreboard.herokuapp.com',
     'touhou-scoreboard-staging.herokuapp.com',
 ]
@@ -173,6 +174,8 @@ SASS_PROCESSOR_ROOT = 'compiled_static_css/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/users/login'
 
 LOGIN_REDIRECT_URL = '/'
 
