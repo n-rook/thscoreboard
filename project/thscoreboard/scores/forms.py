@@ -67,5 +67,12 @@ class PublishReplayForm(forms.Form):
     points = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=models.Category.choices)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)
-    is_good = forms.BooleanField(initial=True)
+    is_good = forms.BooleanField(initial=True, required=False)
     video_link = VideoReplayLinkField(required=False)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if not cleaned_data['is_good'] and not cleaned_data['video_link']:
+            self.add_error('video_link', 
+            exceptions.ValidationError(
+                'If your replay desyncs, please provide a video so it can still be watched.'))
