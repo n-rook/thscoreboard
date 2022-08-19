@@ -1,7 +1,7 @@
 import logging
 from django.http import HttpResponseRedirect
 
-from django.contrib.auth import models as auth_models
+from django.contrib import auth
 from django.db import transaction
 from django.shortcuts import render
 from django.views.decorators import http as http_decorators
@@ -50,7 +50,7 @@ def register(request):
 
 @transaction.atomic
 def _register(username, password, email, passcode):
-    u = auth_models.User.objects.create_user(
+    u = auth.get_user_model().objects.create_user(
         username=username,
         password=password,
         email=email

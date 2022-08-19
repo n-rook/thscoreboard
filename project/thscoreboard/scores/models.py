@@ -1,6 +1,8 @@
 
 from django.db import models
-from django.contrib.auth import models as auth_models
+from django.contrib import auth
+
+from thscoreboard import settings
 
 from . import game_ids
 from . import limits
@@ -84,7 +86,7 @@ class Score(models.Model):
         ]
 
     """Represents a score recorded on the scoreboard."""
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     """The user who uploaded the replay."""
 
     category = models.IntegerField(choices=Category.choices)
@@ -114,7 +116,7 @@ class Score(models.Model):
     comment = models.TextField(max_length=limits.MAX_COMMENT_LENGTH)
     """A comment the user entered."""
 
-    def IsVisible(self, viewer: auth_models.User):
+    def IsVisible(self, viewer: auth.get_user_model()):
         """Returns whether this score should be visible to this user."""
         # Add a unit test for this
 
@@ -174,7 +176,7 @@ class TemporaryReplayFile(models.Model):
     # TODO: When this table gets big, we can bother with a good way to clean it up.
     # But replay files are not that big, so let's deal with that later.
 
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     created = models.DateTimeField(auto_now_add=True)
     """When the replay file was uploaded."""

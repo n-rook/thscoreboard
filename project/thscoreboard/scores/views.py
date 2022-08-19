@@ -6,8 +6,8 @@ from urllib import parse
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators import http as http_decorators
+from django.contrib import auth
 from django.contrib.auth import decorators as auth_decorators
-from django.contrib.auth import models as auth_models
 from django.core.exceptions import ValidationError
 from django.db import transaction
 
@@ -215,7 +215,7 @@ def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, sho
 
 @http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
 def user_page(request, username: str):
-    user = get_object_or_404(auth_models.User, username=username)
+    user = get_object_or_404(auth.get_user_model(), username=username)
     def GetUserScores():
         # Yields (game, list_of_scores_for_the_game) tuples.
         
