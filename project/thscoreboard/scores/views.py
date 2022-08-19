@@ -1,5 +1,6 @@
 import logging
 from typing import Optional
+from unittest.util import sorted_list_difference
 from urllib import parse
 
 
@@ -88,8 +89,15 @@ def upload_file(request):
     
     else:
         form = forms.UploadReplayFileForm()
+    
+    all_games = models.Game.objects.all()
+    no_replay_games = [g for g in all_games if not g.has_replays]
 
-    return render(request, 'scores/upload.html', {'form': form})
+    return render(request, 'scores/upload.html', {
+        'form': form,
+        'all_games': all_games,
+        'no_replay_games': no_replay_games,
+        })
 
 @auth_decorators.login_required
 @http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
@@ -104,15 +112,17 @@ def publish_replay(request, temp_replay_id):
         raise Http404()
 
     replay_info = replay_parsing.Parse(bytes(temp_replay.replay))
+    shot_instance = models.Shot.objects.select_related('game').get(game=replay_info.game, shot_id=replay_info.shot)
 
     if request.method == 'POST':
-        form = forms.PublishReplayForm(request.POST)
+        form = forms.PublishReplayForm(request.POST, game_id=replay_info.game)
         if form.is_valid():
             new_score = PublishNewScore(
                 user=request.user,
-                game_id=replay_info.game,
+                # game_id=replay_info.game,
                 difficulty=replay_info.difficulty,
-                shot_id=replay_info.shot,
+                # shot_id=replay_info.shot,
+                shot=shot_instance,
                 points=form.cleaned_data['points'],
                 category=form.cleaned_data['category'],
                 comment=form.cleaned_data['comment'],
@@ -125,13 +135,55 @@ def publish_replay(request, temp_replay_id):
         else:
             return render(request, 'scores/publish.html', {'form': form})
 
-    form = forms.PublishReplayForm(initial={
-        'difficulty': replay_info.difficulty,
-        'shot': replay_info.shot,
-        'points': replay_info.score
+    form = forms.PublishReplayForm(
+        game_id=replay_info.game,
+        initial={
+            'difficulty': replay_info.difficulty,
+            'shot': shot_instance,
+            'points': replay_info.score
+        })
+    
+    return render(request, 'scores/publish.html', {
+        'form': form,
+        'has_replay_file': True,
+        })
+
+
+@auth_decorators.login_required
+@http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
+def publish_replay_no_file(request, game_id: str):
+    """Publish a replay for a game without replays."""
+    game = get_object_or_404(models.Game, game_id=game_id, has_replays=False)
+
+    if request.method == 'POST':
+        form = forms.PublishScoreWithoutReplayForm(request.POST, game_id=game.game_id)
+        if form.is_valid():
+            new_score = PublishScoreWithoutReplay(
+                user=request.user,
+                difficulty=form.cleaned_data['difficulty'],
+                shot=form.cleaned_data['shot'],
+                points=form.cleaned_data['points'],
+                category=form.cleaned_data['category'],
+                comment=form.cleaned_data['comment'],
+                video_link=form.cleaned_data['video_link'],
+            )
+            return redirect(score_details, game_id=game.game_id, score_id=new_score.id)
+        else:
+            return render(request, 'scores/publish.html',
+            {
+                'game': game,
+                'form': form,
+                'has_replay_file': False
+            })
+    
+    form = forms.PublishScoreWithoutReplayForm(game_id=game.game_id)
+    return render(request, 'scores/publish_no_replay.html',
+    {
+        'game': game,
+        'form': form,
+        'has_replay_file': False
     })
     
-    return render(request, 'scores/publish.html', {'form': form})
 
 
 @http_decorators.require_safe
@@ -142,15 +194,18 @@ def score_details(request, game_id: str, score_id: int):
         # Wrong game, but IDs are unique anyway so we know the right game. Send the user there.
         return redirect(score_details, game_id=score_instance.shot.game.game_id, score_id=score_id)
 
-    return render(request, 'scores/score_details.html', {
+    context = {
         'game_name': score_instance.shot.game.GetName(),
         'shot_name': score_instance.shot.GetName(),
         'difficulty_name': score_instance.GetDifficultyName(),
         'game_id': game_id,
         'score': score_instance,
-        'replay': score_instance.replayfile,
         'is_owner': request.user == score_instance.user,
-    })
+    }
+    if hasattr(score_instance, 'replayfile'):
+        context['replay'] = score_instance.replayfile
+
+    return render(request, 'scores/score_details.html', context)
 
 
 @http_decorators.require_safe
@@ -286,12 +341,12 @@ def GetScoreOr404(user, score_id):
 
 
 @transaction.atomic
-def PublishNewScore(user, game_id: str, difficulty: int, shot_id: str, points: int, category: str, comment: str, video_link: str, is_good: bool, temp_replay_instance: models.TemporaryReplayFile, replay_info: replay_parsing.ReplayInfo):
-    shot_instance = models.Shot.objects.select_related('game').get(game=game_id, shot_id=shot_id)
+def PublishNewScore(user, difficulty: int, shot: models.Shot, points: int, category: str, comment: str, video_link: str, is_good: bool, temp_replay_instance: models.TemporaryReplayFile, replay_info: replay_parsing.ReplayInfo):
+    # shot_instance = models.Shot.objects.select_related('game').get(game=game_id, shot_id=shot_id)
 
     score_instance = models.Score(
         user=user,
-        shot=shot_instance,
+        shot=shot,
         difficulty=difficulty,
         points=points,
         category=category,
@@ -308,4 +363,18 @@ def PublishNewScore(user, game_id: str, difficulty: int, shot_id: str, points: i
     score_instance.save()
     replay_file_instance.save()
     temp_replay_instance.delete()
+    return score_instance
+
+
+def PublishScoreWithoutReplay(user, difficulty: int, shot: models.Shot, points: int, category: str, comment: str, video_link: str):
+    score_instance = models.Score(
+        user=user,
+        shot=shot,
+        difficulty=difficulty,
+        points=points,
+        category=category,
+        comment=comment,
+        video_link=video_link,
+    )
+    score_instance.save()
     return score_instance

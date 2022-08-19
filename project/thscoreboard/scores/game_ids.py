@@ -2,10 +2,16 @@
 
 
 class GameIDs:
+    TH05 = 'th05'
     TH06 = 'th06'
 
 
 def GetGameName(game_id: str, short=False):
+    if game_id == GameIDs.TH05:
+        if short:
+            return 'th05'
+        else:
+            return '東方怪綺談 - Mystic Square'
     if game_id == GameIDs.TH06:
         if short:
             return 'th06'
@@ -15,6 +21,10 @@ def GetGameName(game_id: str, short=False):
 
 
 def GetShotName(game_id: str, shot_id: str):
+    if game_id == GameIDs.TH05:
+        # The names are the same as the short codenames.
+        # Well, in English.
+        return shot_id
     if game_id == GameIDs.TH06:
         if shot_id == 'ReimuA':
             return 'Reimu A'
@@ -28,7 +38,7 @@ def GetShotName(game_id: str, shot_id: str):
 
 
 def GetDifficultyName(game_id: str, difficulty: int):
-    if game_id == GameIDs.TH06:
+    if game_id in {GameIDs.TH05, GameIDs.TH06}:
         if difficulty == 0:
             return 'Easy'
         elif difficulty == 1:

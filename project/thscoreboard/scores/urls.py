@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('upload', views.upload_file, name='upload_file'),
     path('publish/<int:temp_replay_id>', views.publish_replay),
+    path('publish/<str:game_id>', views.publish_replay_no_file),
     path('user/<str:username>', views.user_page),
     path('<str:game_id>', views.game_scoreboard),
     path('<str:game_id>/d<int:difficulty>', views.game_scoreboard),
