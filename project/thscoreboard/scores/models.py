@@ -1,6 +1,6 @@
 
 from django.db import models
-from django.contrib.auth import models as auth_models
+from django.contrib import auth
 
 from thscoreboard import settings
 
@@ -116,7 +116,7 @@ class Score(models.Model):
     comment = models.TextField(max_length=limits.MAX_COMMENT_LENGTH)
     """A comment the user entered."""
 
-    def IsVisible(self, viewer: auth_models.User):
+    def IsVisible(self, viewer: auth.get_user_model()):
         """Returns whether this score should be visible to this user."""
         # Add a unit test for this
 

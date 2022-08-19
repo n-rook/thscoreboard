@@ -2,7 +2,6 @@ import logging
 from django.http import HttpResponseRedirect
 
 from django.contrib import auth
-from django.contrib.auth import models as auth_models
 from django.db import transaction
 from django.shortcuts import render
 from django.views.decorators import http as http_decorators
