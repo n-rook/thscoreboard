@@ -2,7 +2,7 @@
 
 {% block content %}
     <h2><a href="/scores/{{game.game_id}}">{{ game.GetName }}</a></h2>
-    {% if difficulty and shot %}<h3>{{ difficulty_name }} — {{ shot_name }}</h3>
+    {% if difficulty and shot %}<h3>{{ difficulty_name }} — {{ shot.GetName }}</h3>
     {% elif difficulty %}<h3>{{difficulty_name}}</h3>
     {% endif %}
     {% include "scores/score_table.html" %}

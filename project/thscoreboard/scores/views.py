@@ -1,4 +1,3 @@
-import itertools
 import logging
 from typing import Optional
 from urllib import parse
@@ -16,6 +15,7 @@ from . import forms
 from . import limits
 from . import models
 from . import replay_parsing
+from . import game_ids
 
 
 @http_decorators.require_safe
@@ -190,13 +190,18 @@ def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, sho
             .filter(shot__game=game_id)
             .order_by('-points')
     )
+    extra_params = {}
     if difficulty is not None:
         if difficulty < 0 or difficulty >= game.num_difficulties:
             raise Http404()
         all_scores = all_scores.filter(difficulty=difficulty)
+        extra_params['difficulty'] = difficulty
+        extra_params['difficulty_name'] = game_ids.GetDifficultyName(game.game_id, difficulty)
+
     if shot_id is not None:
         shot = get_object_or_404(models.Shot, game=game_id, shot_id=shot_id)
         all_scores = all_scores.filter(shot=shot)
+        extra_params['shot'] = shot
 
     return render(
         request,
@@ -204,6 +209,7 @@ def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, sho
         {
             'game': game,
             'scores': all_scores,
+            **extra_params
         })
 
 
