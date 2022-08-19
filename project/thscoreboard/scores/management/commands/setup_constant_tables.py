@@ -18,7 +18,7 @@ class Command(BaseCommand):
 
 @transaction.atomic
 def _Create06():
-    th06 = models.Game(game_id='th06', has_replays=True)
+    th06 = models.Game(game_id='th06', has_replays=True, num_difficulties=5)
     th06.save()
 
     shots = ['ReimuA', 'ReimuB', 'MarisaA', 'MarisaB']
