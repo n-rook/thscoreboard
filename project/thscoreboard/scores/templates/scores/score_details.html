@@ -2,16 +2,18 @@
 
 {% block content %}
     <h2>{{ game_name }}</h2>
-    <h3>{{ difficulty_name }} -- {{ shot_name }}</h3>
+    <h3>{{ difficulty_name }} — {{ shot_name }}</h3>
     <div class="score-box">
         Total score: <span class="score-points">{{ score.points }}</span>
     </div>
     <div>
+    {% if replay %}
     {% if replay.is_good %}
         <a href="/scores/{{ game_id }}/{{ score.id }}/download">Download replay</a>
     {% else %}
         <div>Be aware, this replay desyncs!</div>
         <a href="/scores/{{ game_id }}/{{ score.id }}/download">Download replay anyway</a>
+    {% endif %}
     {% endif %}
     </div>
     {% if score.video_link %}

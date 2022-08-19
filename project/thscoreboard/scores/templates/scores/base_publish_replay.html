@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% block pre_replay_form %}{% endblock %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div class="field-wrapper">
+        {{ form.difficulty.errors }}
+        <label for="{{form.difficulty.id_for_label}}">Difficulty</label>
+        {{ form.difficulty }}
+    </div>
+    <div class="field-wrapper">
+        {{ form.shot.errors }}
+        <label for="{{form.shot.id_for_label}}">Shot</label>
+        {{ form.shot }}
+    </div>
+    <div class="field-wrapper">
+        {{ form.points.errors }}
+        <label for="{{form.points.id_for_label}}">Score</label>
+        {{ form.points }}
+    </div>
+    <div class="field-wrapper">
+        {{ form.category.errors }}
+        <label for="{{form.category.id_for_label}}">Category</label>
+        {{ form.category }}
+    </div>
+    <div class="field-wrapper">
+        {{ form.video_link.errors }}
+        <label for="{{form.video_link.id_for_label}}">Video link</label>
+        {{ form.video_link }}
+    </div>
+    {% if has_replay_file %}
+    <div class="field-wrapper">
+        {{ form.is_good.errors }}
+        <label for="{{form.is_good.id_for_label}}">No desyncs</label>
+        {{ form.is_good }}
+    </div>
+    {% endif %}
+    <div class="field-wrapper">
+        {{ form.comment.errors }}
+        <label for="{{form.comment.id_for_label}}">Comment</label>
+        {{ form.comment }}
+    </div>
+    <input type="submit" value="Publish Replay">
+</form>
+{% block post_replay_form %}{% endblock %}
+{% endblock %}

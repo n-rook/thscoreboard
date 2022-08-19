@@ -51,6 +51,23 @@ def _AllowedVideoDomainsValidator(value: str):
             )
 
 
+class ShotField(forms.ModelChoiceField):
+    """A field defining shot type. You must call set_queryset before using."""
+
+    def __init__(self):
+        super().__init__(
+            queryset=None,
+            empty_label=None,
+            )
+    
+    @classmethod
+    def set_queryset(self, field: 'ShotField', game_id: str):
+        field.queryset = models.Shot.objects.filter(game=game_id)
+
+    def label_from_instance(self, obj: models.Shot) -> str:
+        return obj.GetName()
+
+
 class VideoReplayLinkField(forms.URLField):
     default_validators = forms.URLField.default_validators + [_AllowedVideoDomainsValidator]
 
@@ -61,9 +78,14 @@ class UploadReplayFileForm(forms.Form):
     replay_file = forms.FileField()
     
 class PublishReplayForm(forms.Form):
-    # game = forms.ChoiceField(choices=game_names)
+
+    def __init__(self, *args, game_id: str, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        ShotField.set_queryset(self.fields['shot'], game_id)
+
     difficulty = forms.ChoiceField(choices=difficulty_names)
-    shot = forms.ChoiceField(choices=shot_names)
+    shot = ShotField()
     points = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=models.Category.choices)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)
@@ -76,3 +98,18 @@ class PublishReplayForm(forms.Form):
             self.add_error('video_link', 
             exceptions.ValidationError(
                 'If your replay desyncs, please provide a video so it can still be watched.'))
+
+
+class PublishScoreWithoutReplayForm(forms.Form):
+
+    def __init__(self, *args, game_id: str, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        ShotField.set_queryset(self.fields['shot'], game_id)
+
+    difficulty = forms.ChoiceField(choices=difficulty_names)
+    shot = ShotField()
+    points = forms.IntegerField(min_value=0)
+    category = forms.ChoiceField(choices=models.Category.choices)
+    comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)
+    video_link = VideoReplayLinkField(required=True)
