@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'shared_content.apps.SharedContentConfig',
     'scores.apps.ScoresConfig',
     'users.apps.UsersConfig',
@@ -153,3 +154,5 @@ SASS_PROCESSOR_ROOT = 'compiled_static_css/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
