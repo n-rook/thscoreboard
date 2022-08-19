@@ -21,6 +21,14 @@
         <label for="{{ form.password.id_for_label }}">Password</label>
         {{ form.password }}
     </div>
+    {% if require_passcode %}
+    <div class="field-wrapper">
+        {{ form.passcode.errors }}
+        <label for="{{ form.passcode.id_for_label }}">Early access passcode</label>
+        {{ form.passcode }}
+    </div>
+    {% endif %}
+
     <input type="submit" value="Register">
 </form>
 {% endblock %}
