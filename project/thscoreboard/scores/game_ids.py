@@ -42,10 +42,3 @@ def GetDifficultyName(game_id: str, difficulty: int):
     
     return 'Bug difficulty'
 
-# TH06_SHOT_NAME_TO_ID_BIDICT = bidict({
-#     'ReimuA': 0,
-#     'ReimuB': 1,
-#     'MarisaA': 2,
-#     'MarisaB': 3,
-# })
-# """Map shot types to database-ready numeric IDs."""
