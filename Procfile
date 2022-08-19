@@ -1,1 +1,1 @@
-web: cd project/thscoreboard && gunicorn thscoreboard/wsgi.py
+web: cd project/thscoreboard && gunicorn thscoreboard.wsgi
