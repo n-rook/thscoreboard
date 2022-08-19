@@ -3,6 +3,11 @@
         <th>
             User
         </th>
+        {% if show_game %}
+        <th>
+            Game
+        </th>
+        {% endif %}
         <th>
             Difficulty
         </th>
@@ -12,12 +17,20 @@
         <th>
             Score
         </th>
+        <th>
+            Upload date
+        </th>
     </tr>
     {% for score in scores %}
         <tr>
             <td>
                 <a href="/scores/user/{{score.user.username}}">{{score.user.username}}</a>
             </td>
+            {% if show_game %}
+            <td>
+                <a href="/scores/{{score.shot.game.game_id}}">{{score.shot.game.GetShortName}}</a>
+            </td>
+            {% endif %}
             <td>
                 <a href="/scores/{{score.shot.game.game_id}}/d{{score.difficulty}}">{{score.GetDifficultyName}}</a>
             </td>
@@ -26,6 +39,9 @@
             </td>
             <td>
                 <a href="/scores/{{score.shot.game.game_id}}/{{score.id}}">{{score.points}}</a>
+            </td>
+            <td>
+                {{score.created | date:"Y-m-d"}}
             </td>
         </tr>
     {% endfor %}

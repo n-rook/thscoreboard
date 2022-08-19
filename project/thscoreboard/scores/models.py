@@ -6,6 +6,10 @@ from . import game_ids
 from . import limits
 
 class Game(models.Model):
+
+    class Meta:
+        ordering = ['game_id']
+
     game_id = models.TextField(primary_key=True)
     """A unique ID for the game, based on its number.
     
@@ -28,6 +32,14 @@ class Game(models.Model):
     def GetName(self):
         return game_ids.GetGameName(self.game_id)
 
+    def GetShortName(self):
+        """Get a short name for this game.
+        
+        Someday I will figure out how to localize this. Then I will make
+        English speakers get "EoSD" when Japanese speakers get "東方紅魔郷".
+        """
+        return game_ids.GetGameName(self.game_id, short=True)
+
 
 class Shot(models.Model):
 
@@ -48,6 +60,7 @@ class Shot(models.Model):
     def GetName(self):
         """Get a pretty name for this shot type. Note: Populates game."""
         return game_ids.GetShotName(self.game.game_id, self.shot_id)
+    
 
 
 class Category(models.IntegerChoices):

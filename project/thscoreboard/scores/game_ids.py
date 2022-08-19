@@ -1,16 +1,16 @@
 """Various human-readable game IDs, used in low-level libraries like game_ids.py."""
 
 
-from telnetlib import GA
-
-
 class GameIDs:
     TH06 = 'th06'
 
 
-def GetGameName(game_id: str):
+def GetGameName(game_id: str, short=False):
     if game_id == GameIDs.TH06:
-        return '東方紅魔郷 - Embodiment of Scarlet Devil'
+        if short:
+            return 'th06'
+        else:
+            return '東方紅魔郷 - Embodiment of Scarlet Devil'
     return 'Unknown game (bug!)'
 
 

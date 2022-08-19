@@ -4,5 +4,18 @@
 
 <p>If you have an account, <a href="/scores/upload">try uploading a replay!</a></p>
 
+<p>Currently supported games:
+    {% for game in all_games %}
+    <ul>
+        <li>
+            <a href="/scores/{{game.game_id}}">{{game.GetName}}</a>
+        </li>
+    </ul>
+    {% endfor %}
+</p>
+
+<p>Recent uploads:
+    {% include "scores/score_table.html" with scores=recent_uploads show_game=True %}
+</p>
 
 {% endblock %}

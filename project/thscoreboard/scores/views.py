@@ -17,9 +17,24 @@ from . import limits
 from . import models
 from . import replay_parsing
 
+
 @http_decorators.require_safe
 def index(request):
-    return render(request, 'scores/index.html')
+    all_games = models.Game.objects.all()
+
+    recent_uploads = (
+        models.Score.objects
+            .filter(category__in=[models.Category.REGULAR, models.Category.TAS])
+            .order_by('-created')
+            [:10]
+            )
+
+    return render(
+        request, 'scores/index.html',
+        {
+            'all_games': all_games,
+            'recent_uploads': recent_uploads,
+        })
 
 
 def _ReadFile(file_from_form):
