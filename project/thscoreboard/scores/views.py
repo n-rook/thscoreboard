@@ -117,6 +117,7 @@ def publish_replay(request, temp_replay_id):
                 category=form.cleaned_data['category'],
                 comment=form.cleaned_data['comment'],
                 is_good=form.cleaned_data['is_good'],
+                video_link=form.cleaned_data['video_link'],
                 temp_replay_instance=temp_replay,
                 replay_info=replay_info,
             )
@@ -285,7 +286,7 @@ def GetScoreOr404(user, score_id):
 
 
 @transaction.atomic
-def PublishNewScore(user, game_id: str, difficulty: int, shot_id: str, points: int, category: str, comment: str, is_good: bool, temp_replay_instance: models.TemporaryReplayFile, replay_info: replay_parsing.ReplayInfo):
+def PublishNewScore(user, game_id: str, difficulty: int, shot_id: str, points: int, category: str, comment: str, video_link: str, is_good: bool, temp_replay_instance: models.TemporaryReplayFile, replay_info: replay_parsing.ReplayInfo):
     shot_instance = models.Shot.objects.select_related('game').get(game=game_id, shot_id=shot_id)
 
     score_instance = models.Score(
@@ -295,6 +296,7 @@ def PublishNewScore(user, game_id: str, difficulty: int, shot_id: str, points: i
         points=points,
         category=category,
         comment=comment,
+        video_link=video_link,
     )
     replay_file_instance = models.ReplayFile(
         score=score_instance,
@@ -302,7 +304,7 @@ def PublishNewScore(user, game_id: str, difficulty: int, shot_id: str, points: i
         is_good=is_good,
         points=replay_info.score,
     )
-    
+
     score_instance.save()
     replay_file_instance.save()
     temp_replay_instance.delete()
