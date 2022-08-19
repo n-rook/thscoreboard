@@ -10,7 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+import dj_database_url
+
+
+IS_HEROKU = "DYNO" in os.environ
+IS_PROD = IS_HEROKU
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +27,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-satv#@fo8oe#=$hip@6w7qaktz0=!$b@2dtev+x(8ne*_7e2ic'
+
+if IS_PROD:
+    SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
+else:
+    SECRET_KEY = 'django-insecure-satv#@fo8oe#=$hip@6w7qaktz0=!$b@2dtev+x(8ne*_7e2ic'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = not IS_PROD
 
 ALLOWED_HOSTS = []
 
@@ -92,15 +103,22 @@ LOGGING = {
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'OPTIONS': {
-            'service': 'local_thscoreboard',
-            'passfile': '.dev_pgpass',
+if 'DATABASE_URL' in os.environ:
+    # We are on Heroku
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+    }
+else:
+    # Use local database
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'OPTIONS': {
+                'service': 'local_thscoreboard',
+                'passfile': '.dev_pgpass',
+            },
         },
-    },
-}
+    }
 
 
 # Password validation
