@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Upload a replay</h2>
+<p>
+    This website is under construction; only some Touhou games are supported.
+    Currently the following games are supported:
+    <ul>東方紅魔郷 - Embodiment of Scarlet Devil (6)</ul>
+</p>
+<p>
+
+</p>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="field-wrapper">
+        {{ form.replay_file.errors }}
+        <label for="{{form.replay_file.id_for_label}}">Replay File</label>
+        {{ form.replay_file }}
+    </div>
+    <input type="submit" value="Upload Replay">
+</form>
+{% endblock %}

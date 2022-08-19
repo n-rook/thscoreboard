@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+{% load sass_tags %}
+<html lang="en">
+<head>
+    <title>{% block title %}Touhou Scoreboard{% endblock %}</title>
+    <link rel="stylesheet" href="{% sass_src 'style.sass' %}">
+    <link rel="icon" type="image/png" href="{% static 'favicon.png' %}" sizes="48x48">
+</head>
+
+<body>
+    <div id="topbar">
+        <div class="topbar-little-spacer">
+        </div>
+        <a id="topbar-banner" href="/">
+            <img src="{% static 'topbar_logo.png' %}" />
+            <h1>Touhou Scoreboard</h1>
+        </a>
+        <div class="flex-1"></div>
+        {% if user.is_authenticated %}
+        <div id="topbar-link-button">
+            <a href="/scores/user/{{user.username}}">My Scores</a>
+        </div>
+        <div id="topbar-link-button">
+            <a href="/users/profile">Profile</a>
+        </div>
+        <div id="topbar-link-button">
+            <a href="/users/logout">Log out</a>
+        </div>
+        {% else %}
+        <div id="topbar-link-button">
+            <a href="/users/login">Log in</a>
+        </div>
+        <div id="topbar-link-button">
+            <a href="/users/register">Sign up</a>
+        </div>
+        {% endif %}
+    </div>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
