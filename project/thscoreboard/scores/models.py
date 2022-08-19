@@ -110,7 +110,7 @@ class Score(models.Model):
     points = models.BigIntegerField()
     """The score of the replay."""
 
-    video_url = models.TextField(max_length=1000)
+    video_link = models.TextField(max_length=1000)
     """A URL to a video site with a recording of the run."""
 
     comment = models.TextField(max_length=limits.MAX_COMMENT_LENGTH)

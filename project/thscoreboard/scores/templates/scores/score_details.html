@@ -14,9 +14,14 @@
         <a href="/scores/{{ game_id }}/{{ score.id }}/download">Download replay anyway</a>
     {% endif %}
     </div>
+    {% if score.video_link %}
+    <div>
+        <a href="{{score.video_link}}">Watch replay on external site</a>
+    </div>
+    {% endif %}
     {% if is_owner %}
-        <div>
-            <a href="/scores/{{ game_id }}/{{ score.id }}/delete">Permanently delete this replay</a>
-        </div>
+    <div>
+        <a href="/scores/{{ game_id }}/{{ score.id }}/delete">Permanently delete this replay</a>
+    </div>
     {% endif %}
 {% endblock %}

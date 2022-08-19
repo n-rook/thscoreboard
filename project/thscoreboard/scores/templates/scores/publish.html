@@ -29,6 +29,11 @@
         {{ form.category }}
     </div>
     <div class="field-wrapper">
+        {{ form.video_link.errors }}
+        <label for="{{form.video_link.id_for_label}}">Video link</label>
+        {{ form.video_link }}
+    </div>
+    <div class="field-wrapper">
         {{ form.is_good.errors }}
         <label for="{{form.is_good.id_for_label}}">No desyncs</label>
         {{ form.is_good }}
