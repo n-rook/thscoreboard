@@ -43,5 +43,27 @@ body
     padding: 0
     @include font-body-text
 
+h2
+    font: 400 32px  "EB Garamond", "Times New Roman", serif
+
+h3
+    font: 400 26px  "EB Garamond", "Times New Roman", serif
+
 #content
-    padding: 8px 10px 8px
+    padding: 8px 12px 8px
+
+table
+    table-layout: fixed
+    border-collapse: collapse
+
+th, td
+    padding: 2px 5px 2px
+
+.score-table
+    thead
+        background-color: #ffb3ff
+    tbody
+        tr:nth-child(odd)
+            background-color: #fff3ff
+        tr:nth-child(even)
+            background-color: #ffe6ff

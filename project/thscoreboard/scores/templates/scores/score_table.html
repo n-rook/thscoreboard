@@ -1,26 +1,29 @@
-<table>
-    <tr>
-        <th>
-            User
-        </th>
-        {% if show_game %}
-        <th>
-            Game
-        </th>
-        {% endif %}
-        <th>
-            Difficulty
-        </th>
-        <th>
-            Shot
-        </th>
-        <th>
-            Score
-        </th>
-        <th>
-            Upload date
-        </th>
-    </tr>
+<table class="score-table">
+    <thead>
+        <tr>
+            <th>
+                User
+            </th>
+            {% if show_game %}
+            <th>
+                Game
+            </th>
+            {% endif %}
+            <th>
+                Difficulty
+            </th>
+            <th>
+                Shot
+            </th>
+            <th>
+                Score
+            </th>
+            <th>
+                Upload date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
     {% for score in scores %}
         <tr>
             <td>
@@ -45,4 +48,5 @@
             </td>
         </tr>
     {% endfor %}
+    </tbody>
 </table>
