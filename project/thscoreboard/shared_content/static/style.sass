@@ -1,3 +1,6 @@
+@mixin font-body-text
+    font: 16px "Lato", "Arial", sans-serif
+
 .flex-1
     flex: 1
 
@@ -23,13 +26,14 @@
 #topbar-banner h1
     display: block
     color: white
-    font-size: 21px
+    font: 600 27px "EB Garamond", "Times New Roman", serif
     margin: auto 10px
     margin-block: 5px 5px
 
 #topbar-link-button > a
     color: white
     margin: 10px 5px
+    font: 14px "Lato", "Arial", sans-serif
 
 .topbar-little-spacer
     width: 4px
@@ -37,6 +41,29 @@
 body
     margin: 0
     padding: 0
+    @include font-body-text
+
+h2
+    font: 400 32px  "EB Garamond", "Times New Roman", serif
+
+h3
+    font: 400 26px  "EB Garamond", "Times New Roman", serif
 
 #content
-    padding: 8px 10px 8px
+    padding: 8px 12px 8px
+
+table
+    table-layout: fixed
+    border-collapse: collapse
+
+th, td
+    padding: 2px 5px 2px
+
+.score-table
+    thead
+        background-color: #ffb3ff
+    tbody
+        tr:nth-child(odd)
+            background-color: #fff3ff
+        tr:nth-child(even)
+            background-color: #ffe6ff

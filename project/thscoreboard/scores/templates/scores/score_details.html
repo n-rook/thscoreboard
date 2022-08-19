@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{ game_name }}</h2>
+    <h2><a href="/scores/{{ game_id}}">{{ game_name }}</a></h2>
     <h3>{{ difficulty_name }} — {{ shot_name }}</h3>
     <div class="score-box">
         Total score: <span class="score-points">{{ score.points }}</span>
