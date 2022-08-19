@@ -38,6 +38,7 @@ DEBUG = not IS_PROD
 
 ALLOWED_HOSTS = [
     'touhou-scoreboard.herokuapp.com',
+    'touhou-scoreboard-staging.herokuapp.com',
 ]
 
 
