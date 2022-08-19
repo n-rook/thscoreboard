@@ -28,13 +28,6 @@ def register(request):
                     password=form.cleaned_data['password'],
                     passcode=passcode,
                     )
-
-
-
-                logging.info('Form was valid')
-
-
-                # TODO let people register...
                 return HttpResponseRedirect('./registration_success')
             
         except models.EarlyAccessPasscode.DoesNotExist:
@@ -62,8 +55,3 @@ def _register(username, password, email, passcode):
 @http_decorators.require_safe
 def registration_success(request):
     return render(request, 'users/registration_success.html')
-
-# For now, just reuse the built-in Django pages.
-# @http_decorators.require_http_methods(["GET", "POST"])
-# def login(request):
-#     return render(request, 'users/login.html')
