@@ -187,4 +187,17 @@ LOGIN_REDIRECT_URL = '/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+if os.environ.get('EMAIL_HOST'):
+    print('Using production SMTP!')
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.environ['EMAIL_HOST']
+    print(f'SMTP host: {EMAIL_HOST}')
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+    EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+    EMAIL_USE_TLS = True
+
+    DEFAULT_FROM_EMAIL = 'no-reply@silentselene.net'
+else:
+    print('Using DEVELOPER CONSOLE SMTP; no real emails will be sent!')
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
