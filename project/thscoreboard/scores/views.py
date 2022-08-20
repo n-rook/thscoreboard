@@ -298,7 +298,7 @@ def user_page(request, username: str):
         request,
         'scores/user_page.html',
         {
-            'user': user,
+            'viewed_user': user,
             'scores_by_game': list(GetUserScores())}
         )
     
