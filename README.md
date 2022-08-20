@@ -15,3 +15,12 @@ settings.py is configured to use a local instance of PostgreSQL by default. To s
 1. Run "python manage.py runserver" and see if it successfully connects. If so, run "python manage.py migrate" to set up the initial database contents.
 1. Run "python manage.py setup_constant_tables" to set up constant tables, like the Game and Shot tables.
 
+### Email configuration
+
+This project rarely needs to send email. For example, it sends
+email if the user forgot their password and needs to reset it.
+
+By default, in a development provider, we use the "Console" email backend.
+This backend "sends" emails by logging them to the console. Obviously this
+is not super realistic, but it should be good enough for most purposes.
+
