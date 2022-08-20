@@ -41,7 +41,7 @@ def _GetAllowedHosts():
     hosts = ['localhost']
     env_host = os.environ.get('MY_HOST')
     if env_host:
-        hosts += env_host
+        hosts.append(env_host)
     return hosts
 
 
