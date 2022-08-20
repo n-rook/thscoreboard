@@ -186,3 +186,5 @@ LOGIN_URL = '/users/login'
 LOGIN_REDIRECT_URL = '/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
