@@ -46,7 +46,7 @@ def _GetAllowedHosts():
 
 
 ALLOWED_HOSTS = _GetAllowedHosts()
-
+print('Allowed hosts: {}'.format(', '.join(ALLOWED_HOSTS)))
 
 # Application definition
 
