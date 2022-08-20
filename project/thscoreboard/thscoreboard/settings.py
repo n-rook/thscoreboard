@@ -36,11 +36,16 @@ else:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not IS_PROD
 
-ALLOWED_HOSTS = [
-    'localhost',
-    'touhou-scoreboard.herokuapp.com',
-    'touhou-scoreboard-staging.herokuapp.com',
-]
+
+def _GetAllowedHosts():
+    hosts = ['localhost']
+    env_host = os.environ.get('MY_HOST')
+    if env_host:
+        hosts += env_host
+    return hosts
+
+
+ALLOWED_HOSTS = _GetAllowedHosts()
 
 
 # Application definition
