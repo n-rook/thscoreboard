@@ -36,11 +36,11 @@ def register(request):
     4. If the user clicks that page, they see a confirmation page because
        I don't want to confirm somebody's account with a GET.
     5. If they POST there, they get a real account.
-    6. We set up a cleanup cron job to delete temporary users so that we
+    6. TODO: We set up a cleanup cron job to delete temporary users so that we
        are not indefinitely holding these rows.
 
-    Note: If a user tries to log in as an unverified user, we should resend
-    the notification email, even though we will not log them in.
+    TODO: If a user tries to log in as an unverified user, we should resend
+    the notification email, even though they cannot log in yet.
     """
     if request.method == 'POST':
         try:
