@@ -51,6 +51,9 @@ def _GetAllowedHosts():
 ALLOWED_HOSTS = _GetAllowedHosts()
 print('Allowed hosts: {}'.format(', '.join(ALLOWED_HOSTS)))
 
+
+USE_HTTPS_IN_EMAIL_LINKS = os.environ.get('USE_HTTPS_IN_EMAIL_LINKS') == 'Yes'
+
 # Application definition
 
 INSTALLED_APPS = [

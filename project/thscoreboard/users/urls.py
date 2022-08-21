@@ -9,6 +9,8 @@ app_name = 'users'
 urlpatterns = [
     path('register', views.register, name='register'),
     path('registration_success', views.registration_success, name='registration_success'),
+    path('preregistered', views.preregistered, name='preregistered'),
+    path('verify_email/<str:token>', views.verify_email, name='verify_email'),
 
     path(
         'login',
