@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>
+    Are you sure you want to register your account (with username {{unverified_user.username}})?
+</p>
+<p>
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="submit" name="register" value="Register" />
+    </form>
+</p>
+{% endblock %}

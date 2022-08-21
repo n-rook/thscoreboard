@@ -1,0 +1,9 @@
+{% autoescape off %}
+
+Thanks for registering an account with {{ site_name }}.
+
+To complete registration, click here:
+{{ link }}
+
+If you did not register this account, you can ignore this message.
+{% endautoescape %}
