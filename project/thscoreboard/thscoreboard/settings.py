@@ -11,13 +11,16 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
+IS_HEROKU = "DYNO" in os.environ
+IS_PROD = IS_HEROKU
+if not IS_PROD:
+    import dotenv
+    dotenv.load_dotenv()
+
+
 from pathlib import Path
 
 import dj_database_url
-
-
-IS_HEROKU = "DYNO" in os.environ
-IS_PROD = IS_HEROKU
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -122,10 +125,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'OPTIONS': {
-                'service': 'local_thscoreboard',
-                'passfile': '.dev_pgpass',
-            },
+            'HOST': 'localhost',
+            'PORT': '5432',
+            'NAME': 'thscoreboard',
+            'USER': 'thscoreboard',
+            'PASSWORD': os.environ['LOCAL_DATABASE_PASSWORD'],
         },
     }
 
