@@ -9,6 +9,7 @@ from . import limits
 
 game_names = (
     ('th06', '東方紅魔郷 - Embodiment of Scarlet Devil'),
+    ('th10', '東方風神録　- Mountain of Faith')
 )
 
 difficulty_names = (
@@ -22,8 +23,10 @@ difficulty_names = (
 shot_names = (
     ('ReimuA', 'Reimu A'),
     ('ReimuB', 'Reimu B'),
+    ('ReimuC', 'Reimu C'),
     ('MarisaA', 'Marisa A'),
     ('MarisaB', 'Marisa B'),
+    ('MarisaC', 'Marisa C'),
 )
 
 category_names = (

@@ -9,6 +9,12 @@ class Command(BaseCommand):
     help = 'Set up the Game and Shot tables.'
 
     def handle(self, *args, **kwargs):
+        if models.Game.objects.filter(game_id='th10'):
+            logging.info('th10 already created')
+        else:
+            _Create10();
+            logging.info('Created th10')
+
         if models.Game.objects.filter(game_id='th06'):
             logging.info('th06 already loaded')
         else:
@@ -21,6 +27,16 @@ class Command(BaseCommand):
             _Create05()
             logging.info('Created th05')
 
+
+@transaction.atomic
+def _Create10():
+    th10 = models.Game(game_id='th10', has_replays=True, num_difficulties=5)
+    th10.save()
+
+    shots = ['ReimuA', 'ReimuB', 'ReimuC', 'MarisaA', 'MarisaB', 'MarisaC']
+    for shot in shots:
+        shot_row = models.Shot(game=th10, shot_id=shot)
+        shot_row.save()
 
 @transaction.atomic
 def _Create06():
