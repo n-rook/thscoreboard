@@ -46,7 +46,7 @@ def Parse(replay):
     logging.info('gamecode %s', gamecode)
 
     if gamecode == b'T6RP':
-        from . import th06
+        from .replay_parsers import th06
         get_real = th06.Th06.from_bytes(bytes(th06_decrypt(replay[15:], replay[14])))
         
         shots = [ "ReimuA", "ReimuB", "MarisaA", "MarisaB" ]        
