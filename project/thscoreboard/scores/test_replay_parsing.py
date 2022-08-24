@@ -20,3 +20,10 @@ class Th06ReplayTestCase(unittest.TestCase):
         # 6 stages (Hard 1cc)
         # Final score is 92245410
         # Final resources are 0 lives, 2 bombs
+
+    def testExtra(self):
+        replay_info = self.ParseTestReplay('th6_extra.rpy')
+        self.assertEqual(replay_info.game, 'th06')
+        self.assertEqual(replay_info.difficulty, 4)
+        self.assertEqual(replay_info.shot, 'MarisaA')
+        self.assertEqual(replay_info.score, 181144360)
