@@ -4,6 +4,9 @@ from dataclasses import dataclass
 import logging
 
 from . import game_ids
+from .kaitai_parsers import th06
+from .kaitai_parsers import th10
+from .kaitai_parsers import th_modern
 
 
 class Error(Exception):
@@ -36,6 +39,126 @@ class ReplayInfo:
     #         return game_ids.TH06_SHOT_NAME_TO_ID_BIDICT[self.shot]
 
 
+def _th06_decrypt(data, key):
+    for byte in data:
+        yield (byte - key) % 256
+        key += 7
+    return data
+
+
+def _decrypt(data: bytearray, block_size, base, add):
+    tbuf = data.copy()
+    p = 0
+    left = len(data)
+    if left % block_size < block_size // 4:
+        left -= left % block_size
+    left -= len(data) & 1
+    while left:
+        if left < block_size:
+            block_size = left
+        tp1 = p + block_size - 1
+        tp2 = p + block_size - 2
+        hf = (block_size + (block_size & 0x1)) // 2
+        for i in range(hf):
+            data[tp1] = tbuf[p] ^ base
+            base = (base + add) % 0x100
+            tp1 -= 2
+            p += 1
+        hf = block_size // 2
+        for i in range(hf):
+            data[tp2] = tbuf[p] ^ base
+            base = (base + add) % 0x100
+            tp2 -= 2
+            p += 1
+        left -= block_size
+
+
+class _Ref:
+    def __init__(self, value):
+        self.value = value
+
+
+def _unlzss_get_bit(buffer, ref_pointer, ref_filter, length):
+    result = 0
+    current = buffer[ref_pointer.value]
+    for i in range(length):
+        result <<= 1
+        if current & ref_filter.value:
+            result |= 0x1
+        ref_filter.value >>= 1
+        if ref_filter.value == 0:
+            ref_pointer.value += 1
+            current = buffer[ref_pointer.value]
+            ref_filter.value = 0x80
+    return result
+
+
+def _unlzss(buffer, decode, length):
+    ref_pointer = _Ref(0)
+    ref_filter = _Ref(0x80)
+    dest = 0
+    dic = [0] * 0x2010
+    while ref_pointer.value < length:
+        bits = _unlzss_get_bit(buffer, ref_pointer, ref_filter, 1)
+        if ref_pointer.value >= length:
+            return dest
+        if bits:
+            bits = _unlzss_get_bit(buffer, ref_pointer, ref_filter, 8)
+            if ref_pointer.value >= length:
+                return dest
+            decode[dest] = bits
+            dic[dest & 0x1fff] = bits
+            dest += 1
+        else:
+            bits = _unlzss_get_bit(buffer, ref_pointer, ref_filter, 13)
+            if ref_pointer.value >= length:
+                return dest
+            index = bits - 1
+            bits = _unlzss_get_bit(buffer, ref_pointer, ref_filter, 4)
+            if ref_pointer.value >= length:
+                return dest
+            bits += 3
+            for i in range(bits):
+                dic[dest & 0x1fff] = dic[index + i]
+                decode[dest] = dic[index + i]
+                dest += 1
+    return dest
+
+
+def _Parse06(rep_raw):
+    replay = th06.Th06.from_bytes(bytes(_th06_decrypt(rep_raw[15:], rep_raw[14])))
+    
+    shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
+    
+    return ReplayInfo(
+        game_ids.GameIDs.TH06,
+        shots[rep_raw[6]],
+        rep_raw[7],
+        replay.header.score
+    )
+
+
+def _Parse10(rep_raw):
+    header = th_modern.ThModern.from_bytes(rep_raw)
+    comp_data = bytearray(header.main.comp_data)
+    
+    _decrypt(comp_data, 0x400, 0xaa, 0xe1)
+    _decrypt(comp_data, 0x80, 0x3d, 0x7a)
+    decodedata = bytearray(header.main.size)
+    _unlzss(comp_data, decodedata, header.main.comp_size - 2)
+    
+    replay = th10.Th10.from_bytes(decodedata)
+    
+    shots = ["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"]
+      
+    return ReplayInfo(
+        game_ids.GameIDs.TH10,
+        shots[replay.header.shot],
+        replay.header.difficulty,
+        replay.header.score * 10
+    )
+
+
 def Parse(replay):
     """Parse a replay file."""
 
@@ -44,120 +167,7 @@ def Parse(replay):
 
     if gamecode == b'T6RP':
         return _Parse06(replay)
+    elif gamecode == b't10r':
+        return _Parse10(replay)
     else:
         raise UnsupportedGameError('This game is unsupported.')
-
-
-def _Parse06(replay):
-    # Big thanks to https://pytouhou.linkmauve.fr/doc/06/t6rp.xhtml
-    if len(replay) < 16:
-        raise BadReplayError()
-
-    header, rest = _Parse06Header(replay)
-    decrypted_rest = _Decrypt06(header, rest)
-    encrypted_header = _Parse06EncryptedHeader(decrypted_rest)
-
-    logging.info(str(header))
-    logging.info(str(encrypted_header))
-
-    return ReplayInfo(
-        game_ids.GameIDs.TH06,
-        header.shot,
-        header.difficulty,
-        encrypted_header.score
-    )
-
-
-def _Parse06Header(replay):
-    logging.info(replay[:15].hex())
-
-    gamecode = replay[:4]
-    version = replay[4:6]
-    if version != b'\x02\x01':
-        # \x02\x01 corresponds to the latest version, 1.02h.
-        raise UnsupportedReplayError('This th06 replay is for an unsupported version.')
-    player_byte = replay[6]
-    if player_byte == 0:
-        player = 'ReimuA'
-    elif player_byte == 1:
-        player = 'ReimuB'
-    elif player_byte == 2:
-        player = 'MarisaA'
-    elif player_byte == 3:
-        player = 'MarisaB'
-    else:
-        raise BadReplayError('Could not read shot type')
-    difficulty = replay[7]
-    if difficulty > 4:
-        raise BadReplayError('Could not recognize difficulty')
-    checksum = replay[8:12]
-    # unused = replay[12:14]
-    encryption_key = replay[14]
-    rest = replay[15:]
-    return (
-        Touhou06Header(
-            gamecode=gamecode,
-            version=version,
-            shot=player,
-            difficulty=difficulty,
-            checksum=checksum,
-            encryption_key=encryption_key),
-        rest)
-
-
-def _Decrypt06(header, rest):
-    def DecryptGenerator():
-        key = header.encryption_key
-        for byte in rest:
-            yield (byte - key) % 256
-            key += 7
-    return bytes(DecryptGenerator())
-
-
-def _ReadNullTerminatedAsciiString(some_bytes):
-    for i, b in enumerate(some_bytes):
-        if b == 0:
-            return some_bytes[:i].decode(encoding='ascii')
-    raise BadReplayError('Could not read bytestring')
-
-
-def _Parse06EncryptedHeader(decrypted_rest):
-    logging.info(decrypted_rest[:(37 + 6 * 4)].hex())
-    # 1 ignored byte
-    date_bytes = decrypted_rest[1:10]
-    date_str = _ReadNullTerminatedAsciiString(date_bytes)
-    name_bytes = decrypted_rest[10:19]
-    name_str = _ReadNullTerminatedAsciiString(name_bytes)
-    # 2 ignored bytes
-    score = int.from_bytes(decrypted_rest[21:25], 'little', signed=False)
-    # 4 ignored bytes
-    # Some sources indicate that this is a floating point representation of
-    # the slowdown rate. However, I can't get this to work.
-    # slowdown_rate_bytes = decrypted_rest[29:33]
-    # 4 ignored bytes
-    stage_n_offset = []
-    for i in range(7):
-        start_offset = 37 + i * 4
-        stage_n_offset.append(int.from_bytes(decrypted_rest[start_offset:start_offset + 4], 'little', signed=False))
-
-    return Touhou06EncryptedHeader(date_str, name_str, score, tuple(stage_n_offset))
-
-
-@dataclass(frozen=True)
-class Touhou06Header:
-    gamecode: bytes  # 4 bytes
-    version: bytes  # 4 bytes
-    shot: str  # "ReimuA" etc
-    difficulty: int  # 0 is easy, 1 normal, 4 extra
-    checksum: bytes  # 4 bytes
-    # Unused bit that is 2 bytes
-    encryption_key: int  # 8-bit unsigned int
-
-
-@dataclass(frozen=True)
-class Touhou06EncryptedHeader:
-    date: str
-    name: str
-    score: int
-    stage_offsets: tuple  # Byte offsets where the per-stage entry starts.
-    # Includes the unencrypted header's bytes!

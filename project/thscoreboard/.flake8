@@ -4,6 +4,8 @@ ignore =
     W293
     # We have not decided on a max line length yet.
     E501,
+exclude = 
+	scores/kaitai_parsers/*
 per-file-ignores =
     # settings.py must import dependencies oddly in order to make sure they
     # load in exactly the correct way.
