@@ -3,6 +3,10 @@ An open-source scoreboard for Touhou games.
 
 ## Setting up a development environment
 
+### Generating the replay parsers
+
+Start by installing `kaitai-struct-compiler`. Then, navigate to `project/thscoreboard/scores/kaitai_parsers` and run `kaitai-struct-compiler -t python ../../../../ref/threp-ksy/*.ksy` (note that you don't need to change the slashes to backslashes to run this on Windows)
+
 ### Database configuration
 
 settings.py is configured to use a local instance of PostgreSQL by default. To set up local Postgres:
