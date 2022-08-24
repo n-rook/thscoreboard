@@ -46,8 +46,7 @@ def _th06_decrypt(data, key):
     return data
 
 
-def _decrypt(data, block_size, base, add):
-    assert isinstance(data, bytearray)
+def _decrypt(data: bytearray, block_size, base, add):
     tbuf = data.copy()
     p = 0
     left = len(data)
