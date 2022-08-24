@@ -122,7 +122,7 @@ def Parse(replay):
     logging.info('gamecode %s', gamecode)
 
     if gamecode == b'T6RP':
-        from .replay_parsers import th06
+        from .kaitai_parsers import th06
         get_real = th06.Th06.from_bytes(bytes(th06_decrypt(replay[15:], replay[14])))
         
         shots = [ "ReimuA", "ReimuB", "MarisaA", "MarisaB" ]        
@@ -134,8 +134,8 @@ def Parse(replay):
             get_real.header.score
         )
     elif gamecode == b't10r':
-        from .replay_parsers import th10
-        from .replay_parsers import th_modern
+        from .kaitai_parsers import th10
+        from .kaitai_parsers import th_modern
         
         header = th_modern.ThModern.from_bytes(replay)
         comp_data = bytearray(header.main.comp_data)
