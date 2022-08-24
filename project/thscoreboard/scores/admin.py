@@ -1,3 +1,3 @@
-from django.contrib import admin
+"""Register administration hooks in this module."""
 
-# Register your models here.
+# This is empty, but in the future, we might register our models here.

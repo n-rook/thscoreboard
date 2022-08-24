@@ -3,6 +3,7 @@ import unittest
 
 from . import replay_parsing
 
+
 class Th06ReplayTestCase(unittest.TestCase):
 
     def ParseTestReplay(self, filename):

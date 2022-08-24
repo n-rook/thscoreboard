@@ -23,4 +23,3 @@ email if the user forgot their password and needs to reset it.
 By default, in a development provider, we use the "Console" email backend.
 This backend "sends" emails by logging them to the console. Obviously this
 is not super realistic, but it should be good enough for most purposes.
-

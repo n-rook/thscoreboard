@@ -1,7 +1,6 @@
 from urllib import parse
 
 from django import forms
-from django.core import validators
 from django.core import exceptions
 
 from . import models
@@ -48,7 +47,7 @@ def _AllowedVideoDomainsValidator(value: str):
             params={
                 'sites_comma_separated': ', '.join(_ALLOWED_REPLAY_HOSTS)
             }
-            )
+        )
 
 
 class ShotField(forms.ModelChoiceField):
@@ -58,7 +57,7 @@ class ShotField(forms.ModelChoiceField):
         super().__init__(
             queryset=None,
             empty_label=None,
-            )
+        )
     
     @classmethod
     def set_queryset(self, field: 'ShotField', game_id: str):
@@ -76,7 +75,8 @@ class VideoReplayLinkField(forms.URLField):
 
 class UploadReplayFileForm(forms.Form):
     replay_file = forms.FileField()
-    
+
+
 class PublishReplayForm(forms.Form):
 
     def __init__(self, *args, game_id: str, **kwargs):
@@ -95,9 +95,11 @@ class PublishReplayForm(forms.Form):
     def clean(self):
         cleaned_data = super().clean()
         if not cleaned_data['is_good'] and not cleaned_data['video_link']:
-            self.add_error('video_link', 
-            exceptions.ValidationError(
-                'If your replay desyncs, please provide a video so it can still be watched.'))
+            self.add_error(
+                'video_link',
+                exceptions.ValidationError(
+                    'If your replay desyncs, please provide a video '
+                    'so it can still be watched.'))
 
 
 class PublishScoreWithoutReplayForm(forms.Form):
