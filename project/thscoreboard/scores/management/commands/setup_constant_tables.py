@@ -1,8 +1,9 @@
 import logging
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.db import transaction
 from scores import models
+
 
 class Command(BaseCommand):
 
@@ -31,6 +32,7 @@ def _Create06():
     for shot in shots:
         shot_row = models.Shot(game=th06, shot_id=shot)
         shot_row.save()
+
 
 @transaction.atomic
 def _Create05():

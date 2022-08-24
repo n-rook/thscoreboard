@@ -1,4 +1,5 @@
-from email.mime import base
+"""Defines all models for the scores app."""
+
 import secrets
 
 from django.contrib.auth import base_user
@@ -7,11 +8,8 @@ from django.contrib.auth import hashers
 from django.contrib.auth import validators as auth_validators
 from django.db import models
 from django.db import transaction
-from django.utils.translation import gettext_lazy as _
 
 from thscoreboard import settings
-
-# Create your models here.
 
 
 class User(auth_models.AbstractUser):
@@ -29,6 +27,7 @@ class User(auth_models.AbstractUser):
 
 
 _USERNAME_MAX_LENGTH = 150
+
 
 class UnverifiedUser(models.Model):
     """A user who has not yet verified their email.

@@ -5,12 +5,14 @@ import logging
 
 from . import game_ids
 
+
 class Error(Exception):
     pass
 
 
 class BadReplayError(Error):
     pass
+
 
 class UnsupportedGameError(Error):
     pass
@@ -45,6 +47,7 @@ def Parse(replay):
     else:
         raise UnsupportedGameError('This game is unsupported.')
 
+
 def _Parse06(replay):
     # Big thanks to https://pytouhou.linkmauve.fr/doc/06/t6rp.xhtml
     if len(replay) < 16:
@@ -63,6 +66,7 @@ def _Parse06(replay):
         header.difficulty,
         encrypted_header.score
     )
+
 
 def _Parse06Header(replay):
     logging.info(replay[:15].hex())
@@ -87,7 +91,7 @@ def _Parse06Header(replay):
     if difficulty > 4:
         raise BadReplayError('Could not recognize difficulty')
     checksum = replay[8:12]
-    unused = replay[12:14]
+    # unused = replay[12:14]
     encryption_key = replay[14]
     rest = replay[15:]
     return (
@@ -99,6 +103,7 @@ def _Parse06Header(replay):
             checksum=checksum,
             encryption_key=encryption_key),
         rest)
+
 
 def _Decrypt06(header, rest):
     def DecryptGenerator():
@@ -128,7 +133,7 @@ def _Parse06EncryptedHeader(decrypted_rest):
     # 4 ignored bytes
     # Some sources indicate that this is a floating point representation of
     # the slowdown rate. However, I can't get this to work.
-    slowdown_rate_bytes = decrypted_rest[29:33]
+    # slowdown_rate_bytes = decrypted_rest[29:33]
     # 4 ignored bytes
     stage_n_offset = []
     for i in range(7):
@@ -136,6 +141,7 @@ def _Parse06EncryptedHeader(decrypted_rest):
         stage_n_offset.append(int.from_bytes(decrypted_rest[start_offset:start_offset + 4], 'little', signed=False))
 
     return Touhou06EncryptedHeader(date_str, name_str, score, tuple(stage_n_offset))
+
 
 @dataclass(frozen=True)
 class Touhou06Header:
@@ -146,6 +152,7 @@ class Touhou06Header:
     checksum: bytes  # 4 bytes
     # Unused bit that is 2 bytes
     encryption_key: int  # 8-bit unsigned int
+
 
 @dataclass(frozen=True)
 class Touhou06EncryptedHeader:

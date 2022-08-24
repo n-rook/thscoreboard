@@ -1,0 +1,10 @@
+[flake8]
+ignore = 
+    # Blank line contains whitespace? Who cares?
+    W293
+    # We have not decided on a max line length yet.
+    E501,
+per-file-ignores =
+    # settings.py must import dependencies oddly in order to make sure they
+    # load in exactly the correct way.
+    ./thscoreboard/settings.py: E402

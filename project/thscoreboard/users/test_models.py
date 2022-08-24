@@ -2,6 +2,7 @@ from django import test
 
 from . import models
 
+
 class RegistrationTestCase(test.TestCase):
 
     def testUnverifiedUser(self):
@@ -26,4 +27,3 @@ class RegistrationTestCase(test.TestCase):
         self.assertTrue(
             real_user.check_password('some-password')
         )
-
