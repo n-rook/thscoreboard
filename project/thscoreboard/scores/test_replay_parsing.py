@@ -28,6 +28,7 @@ class Th06ReplayTestCase(unittest.TestCase):
         self.assertEqual(replay_info.shot, 'MarisaA')
         self.assertEqual(replay_info.score, 181144360)
 
+
 class Th10ReplayTestCase(unittest.TestCase):
     
     def ParseTestReplay(self, filename):
