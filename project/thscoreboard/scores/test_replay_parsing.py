@@ -27,3 +27,16 @@ class Th06ReplayTestCase(unittest.TestCase):
         self.assertEqual(replay_info.difficulty, 4)
         self.assertEqual(replay_info.shot, 'MarisaA')
         self.assertEqual(replay_info.score, 181144360)
+
+class Th10ReplayTestCase(unittest.TestCase):
+    
+    def ParseTestReplay(self, filename):
+        with open(path.join('scores/replays_for_tests', filename), 'rb') as f:
+            return replay_parsing.Parse(f.read())
+    
+    def testNormal(self):
+        rpy = self.ParseTestReplay('th10_normal.rpy')
+        self.assertEqual(rpy.game, 'th10')
+        self.assertEqual(rpy.difficulty, 1)
+        self.assertEqual(rpy.shot, 'ReimuB')
+        self.assertEqual(rpy.score, 294127890)
