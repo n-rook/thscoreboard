@@ -7,6 +7,7 @@ from thscoreboard import settings
 from . import game_ids
 from . import limits
 
+
 class Game(models.Model):
 
     class Meta:
@@ -64,7 +65,6 @@ class Shot(models.Model):
         return game_ids.GetShotName(self.game.game_id, self.shot_id)
     
 
-
 class Category(models.IntegerChoices):
     REGULAR = 1
     TAS = 2
@@ -82,7 +82,7 @@ class Score(models.Model):
             models.CheckConstraint(
                 check=models.Q(difficulty__gte=0),
                 name='difficulty_gte_0'
-                )
+            ),
         ]
 
     """Represents a score recorded on the scoreboard."""
@@ -164,6 +164,7 @@ class ReplayFile(models.Model):
     cases it will be different. For example, this will be the max score for
     counterstop replays.
     """
+
 
 class TemporaryReplayFile(models.Model):
     """Represents a temporarily held replay file a user is uploading.

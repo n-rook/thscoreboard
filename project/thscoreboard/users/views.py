@@ -1,4 +1,5 @@
-import logging
+"""Defines views for user and account management."""
+
 from typing import Optional
 from django.http import HttpResponseRedirect
 
@@ -52,8 +53,7 @@ def register(request):
                     username=form.cleaned_data['username'],
                     email=form.cleaned_data['email'],
                     password=form.cleaned_data['password'],
-                    passcode=passcode,
-                    )
+                    passcode=passcode)
                 send_email.SendVerificationEmail(request, unverified_user)
                 return HttpResponseRedirect('./preregistered')
             
@@ -62,9 +62,11 @@ def register(request):
     else:
         form = RegisterForm()
 
-    return render(request, 'users/register.html', {
-        'form': form,
-        'require_passcode': _USE_PASSCODE
+    return render(
+        request, 'users/register.html',
+        {
+            'form': form,
+            'require_passcode': _USE_PASSCODE
         })
 
 

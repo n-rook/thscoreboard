@@ -1,6 +1,5 @@
 import logging
 from typing import Optional
-from unittest.util import sorted_list_difference
 from urllib import parse
 
 
@@ -25,10 +24,10 @@ def index(request):
 
     recent_uploads = (
         models.Score.objects
-            .filter(category__in=[models.Category.REGULAR, models.Category.TAS])
-            .order_by('-created')
-            [:10]
-            )
+        .filter(category__in=[models.Category.REGULAR, models.Category.TAS])
+        .order_by('-created')
+        [:10]
+    )
 
     return render(
         request, 'scores/index.html',
@@ -93,11 +92,16 @@ def upload_file(request):
     all_games = models.Game.objects.all()
     no_replay_games = [g for g in all_games if not g.has_replays]
 
-    return render(request, 'scores/upload.html', {
-        'form': form,
-        'all_games': all_games,
-        'no_replay_games': no_replay_games,
-        })
+    return render(
+        request,
+        'scores/upload.html',
+        {
+            'form': form,
+            'all_games': all_games,
+            'no_replay_games': no_replay_games,
+        }
+    )
+
 
 @auth_decorators.login_required
 @http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
@@ -143,10 +147,14 @@ def publish_replay(request, temp_replay_id):
             'points': replay_info.score
         })
     
-    return render(request, 'scores/publish.html', {
-        'form': form,
-        'has_replay_file': True,
-        })
+    return render(
+        request,
+        'scores/publish.html',
+        {
+            'form': form,
+            'has_replay_file': True,
+        }
+    )
 
 
 @auth_decorators.login_required
@@ -169,22 +177,27 @@ def publish_replay_no_file(request, game_id: str):
             )
             return redirect(score_details, game_id=game.game_id, score_id=new_score.id)
         else:
-            return render(request, 'scores/publish.html',
-            {
-                'game': game,
-                'form': form,
-                'has_replay_file': False
-            })
+            return render(
+                request,
+                'scores/publish.html',
+                {
+                    'game': game,
+                    'form': form,
+                    'has_replay_file': False
+                }
+            )
     
     form = forms.PublishScoreWithoutReplayForm(game_id=game.game_id)
-    return render(request, 'scores/publish_no_replay.html',
-    {
-        'game': game,
-        'form': form,
-        'has_replay_file': False
-    })
+    return render(
+        request,
+        'scores/publish_no_replay.html',
+        {
+            'game': game,
+            'form': form,
+            'has_replay_file': False
+        }
+    )
     
-
 
 @http_decorators.require_safe
 def score_details(request, game_id: str, score_id: int):
@@ -242,9 +255,9 @@ def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, sho
     game = get_object_or_404(models.Game, game_id=game_id)
     all_scores = (
         models.Score.objects.select_related('shot', 'replayfile')
-            .filter(category=models.Category.REGULAR)
-            .filter(shot__game=game_id)
-            .order_by('-points')
+        .filter(category=models.Category.REGULAR)
+        .filter(shot__game=game_id)
+        .order_by('-points')
     )
     extra_params = {}
     if difficulty is not None:
@@ -272,14 +285,15 @@ def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, sho
 @http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
 def user_page(request, username: str):
     user = get_object_or_404(auth.get_user_model(), username=username)
+    
     def GetUserScores():
         # Yields (game, list_of_scores_for_the_game) tuples.
         
         scores = (
             models.Score.objects
-                .filter(user=user)
-                .exclude(category=models.Category.PRIVATE)
-                .order_by('shot__game_id', 'shot_id', 'created'))
+            .filter(user=user)
+            .exclude(category=models.Category.PRIVATE)
+            .order_by('shot__game_id', 'shot_id', 'created'))
         
         current_game = None
         for score in scores:
@@ -292,17 +306,17 @@ def user_page(request, username: str):
                 current_scores = []
             current_scores.append(score)
         if current_game is not None:
-            yield (current_game, current_scores)    
+            yield (current_game, current_scores)
 
     return render(
         request,
         'scores/user_page.html',
         {
             'viewed_user': user,
-            'scores_by_game': list(GetUserScores())}
-        )
+            'scores_by_game': list(GetUserScores())
+        }
+    )
     
-
 
 @http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
 @auth_decorators.login_required
@@ -321,7 +335,7 @@ def delete_score(request, game_id: str, score_id: int):
     return render(
         request,
         'scores/delete_score.html',
-        {   
+        {
             'game_name': score_instance.shot.game.GetName(),
             'shot_name': score_instance.shot.GetName(),
             'difficulty_name': score_instance.GetDifficultyName(),

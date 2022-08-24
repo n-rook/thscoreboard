@@ -70,4 +70,3 @@ def GetDifficultyName(game_id: str, difficulty: int):
             return 'Extra'
     
     return 'Bug difficulty'
-

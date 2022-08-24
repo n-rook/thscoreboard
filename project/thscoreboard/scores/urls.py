@@ -1,4 +1,3 @@
-from distutils.command.upload import upload
 from django.urls import path
 
 from . import views

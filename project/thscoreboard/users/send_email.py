@@ -1,4 +1,4 @@
-
+"""Contains functions that send specific email messages."""
 from urllib import parse
 
 
@@ -12,6 +12,7 @@ from . import models
 
 
 _ACCOUNTS_EMAIL = 'accounts@silentselene.net'
+
 
 def _GetFullyQualifiedLink(request, url_path: str):
     site = get_current_site(request)
