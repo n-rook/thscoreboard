@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - 'main'
-      - 'nrook/run-tests'
+  pull_request:
 
 jobs:
   build:
