@@ -8,12 +8,14 @@ from .kaitai_parsers import th06
 from .kaitai_parsers import th10
 from .kaitai_parsers import th_modern
 
+
 class Error(Exception):
     pass
 
 
 class BadReplayError(Error):
     pass
+
 
 class UnsupportedGameError(Error):
     pass
@@ -36,11 +38,13 @@ class ReplayInfo:
     #     if self.game == game_ids.GameIDs.TH06:
     #         return game_ids.TH06_SHOT_NAME_TO_ID_BIDICT[self.shot]
 
+
 def _th06_decrypt(data, key):
     for byte in data:
         yield (byte - key) % 256
         key += 7
     return data
+
 
 def _decrypt(data, block_size, base, add):
     assert isinstance(data, bytearray)
@@ -69,9 +73,11 @@ def _decrypt(data, block_size, base, add):
             p += 1
         left -= block_size
 
+
 class _Ref:
     def __init__(self, value):
         self.value = value
+
 
 def _unlzss_get_bit(buffer, ref_pointer, ref_filter, length):
     result = 0
@@ -86,7 +92,8 @@ def _unlzss_get_bit(buffer, ref_pointer, ref_filter, length):
             current = buffer[ref_pointer.value]
             ref_filter.value = 0x80
     return result
-    
+
+
 def _unlzss(buffer, decode, length):
     ref_pointer = _Ref(0)
     ref_filter = _Ref(0x80)
@@ -117,11 +124,12 @@ def _unlzss(buffer, decode, length):
                 decode[dest] = dic[index + i]
                 dest += 1
     return dest
-    
+
+
 def _Parse06(rep_raw):
     replay = th06.Th06.from_bytes(bytes(_th06_decrypt(rep_raw[15:], rep_raw[14])))
     
-    shots = [ "ReimuA", "ReimuB", "MarisaA", "MarisaB" ]        
+    shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
     
     return ReplayInfo(
         game_ids.GameIDs.TH06,
@@ -129,7 +137,8 @@ def _Parse06(rep_raw):
         rep_raw[7],
         replay.header.score
     )
-   
+
+
 def _Parse10(rep_raw):
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
@@ -137,11 +146,11 @@ def _Parse10(rep_raw):
     _decrypt(comp_data, 0x400, 0xaa, 0xe1)
     _decrypt(comp_data, 0x80, 0x3d, 0x7a)
     decodedata = bytearray(header.main.size)
-    _unlzss(comp_data, decodedata, header.main.comp_size-2)
+    _unlzss(comp_data, decodedata, header.main.comp_size - 2)
     
     replay = th10.Th10.from_bytes(decodedata)
     
-    shots = [ "ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC" ]
+    shots = ["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"]
       
     return ReplayInfo(
         game_ids.GameIDs.TH10,
@@ -149,6 +158,7 @@ def _Parse10(rep_raw):
         replay.header.difficulty,
         replay.header.score * 10
     )
+
 
 def Parse(replay):
     """Parse a replay file."""
@@ -158,7 +168,7 @@ def Parse(replay):
 
     if gamecode == b'T6RP':
         return _Parse06(replay)
-    elif gamecode == b't10r':        
+    elif gamecode == b't10r':
         return _Parse10(replay)
     else:
         raise UnsupportedGameError('This game is unsupported.')

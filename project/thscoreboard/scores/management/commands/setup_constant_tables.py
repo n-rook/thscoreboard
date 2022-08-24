@@ -13,7 +13,7 @@ class Command(BaseCommand):
         if models.Game.objects.filter(game_id='th10'):
             logging.info('th10 already created')
         else:
-            _Create10();
+            _Create10()
             logging.info('Created th10')
 
         if models.Game.objects.filter(game_id='th06'):
@@ -38,6 +38,7 @@ def _Create10():
     for shot in shots:
         shot_row = models.Shot(game=th10, shot_id=shot)
         shot_row.save()
+
 
 @transaction.atomic
 def _Create06():
