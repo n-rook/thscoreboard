@@ -20,20 +20,6 @@ types:
     doc: blank type
   header:
     seq:
-      - id: magic
-        contents: T6RP
-      - id: version
-        size: 2
-      - id: shot
-        type: u1
-      - id: difficulty
-        type: u1
-      - id: checksum
-        type: u4
-      - id: unknown_1
-        type: u2
-      - id: ke
-        type: u1
       - id: unknown_2
         type: u1
       - id: date
