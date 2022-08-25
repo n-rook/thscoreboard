@@ -73,56 +73,89 @@ def _decrypt(data: bytearray, block_size, base, add):
         left -= block_size
 
 
-class _Ref:
-    def __init__(self, value):
-        self.value = value
+# LZSS decompression code written by Michael Lamparski (ExpHP)
+# From his Samidare archive extractor and repacker (samidare.py)
+
+def _iter_take(iter, n):
+    """ Limit an iterator to just the first n elements. """
+    for _ in range(n):
+        try:
+            yield next(iter)
+        except StopIteration:
+            return
 
 
-def _unlzss_get_bit(buffer, ref_pointer, ref_filter, length):
-    result = 0
-    current = buffer[ref_pointer.value]
-    for i in range(length):
-        result <<= 1
-        if current & ref_filter.value:
-            result |= 0x1
-        ref_filter.value >>= 1
-        if ref_filter.value == 0:
-            ref_pointer.value += 1
-            current = buffer[ref_pointer.value]
-            ref_filter.value = 0x80
-    return result
+def _read_integer_from_bitstream(bit_iter, size):
+    """ Read ``size`` bytes from bit_iter as an integer in big-endian bit order.
+
+    Bits after the end of the iterator can be read, and will be zero."""
+    int_bits = list(_iter_take(bit_iter, size))
+    int_bits.extend([0] * (size - len(int_bits)))
+
+    acc = 0
+    for bit in int_bits:
+        acc *= 2
+        acc += bit
+    return acc
 
 
-def _unlzss(buffer, decode, length):
-    ref_pointer = _Ref(0)
-    ref_filter = _Ref(0x80)
-    dest = 0
-    dic = [0] * 0x2010
-    while ref_pointer.value < length:
-        bits = _unlzss_get_bit(buffer, ref_pointer, ref_filter, 1)
-        if ref_pointer.value >= length:
-            return dest
-        if bits:
-            bits = _unlzss_get_bit(buffer, ref_pointer, ref_filter, 8)
-            if ref_pointer.value >= length:
-                return dest
-            decode[dest] = bits
-            dic[dest & 0x1fff] = bits
-            dest += 1
+def _expect_iter_empty(iter):
+    try:
+        value = next(iter)
+    except StopIteration:
+        return
+    assert False, f'iterator not empty (item: {value})'
+
+
+def _unlzss(input_bytes):
+    # Iterate over the bits as a bit stream, from MSB to LSB for each byte
+    concatenated_bits = ''.join([f'{x:08b}' for x in input_bytes])
+    input_bits = iter([int(bitstr) for bitstr in concatenated_bits])
+
+    # Keep scrolling window of previous output
+    history = [0] * 0x8000
+    history_write_index = 1
+    output_bytes = []
+    
+    def put_output_byte(byte: int):
+        nonlocal history_write_index
+        output_bytes.append(byte)
+        history[history_write_index] = byte
+        history_write_index += 1
+        history_write_index %= len(history)
+
+    while True:
+        control_bit = _read_integer_from_bitstream(input_bits, 1)
+        if control_bit:
+            # Directly read an output byte
+            data_byte = _read_integer_from_bitstream(input_bits, 8)
+            put_output_byte(data_byte)
+            # print('<-- new data byte ({:04x}):  {}', history_write_index, repr(bytes([data_byte])))
+
         else:
-            bits = _unlzss_get_bit(buffer, ref_pointer, ref_filter, 13)
-            if ref_pointer.value >= length:
-                return dest
-            index = bits - 1
-            bits = _unlzss_get_bit(buffer, ref_pointer, ref_filter, 4)
-            if ref_pointer.value >= length:
-                return dest
-            bits += 3
-            for i in range(bits):
-                dic[dest & 0x1fff] = dic[index + i]
-                decode[dest] = dic[index + i]
-                dest += 1
-    return dest
+            # Read a string from the history
+            read_from = _read_integer_from_bitstream(input_bits, 15)
+            if not read_from:
+                # print(' no more bits:  exit')
+                break
+            # print(f'--> read from: {read_from}')
+            read_count = _read_integer_from_bitstream(input_bits, 4) + 3
+
+            # Read a string from the history.
+            #
+            # IMPORTANT:
+            #    Each new byte must be added to the history immediately after it is read.
+            #    This is because it is possible for the range `read_from:read_from + read_count`
+            #    to cross over the current write point in the history.
+            #    (allowing a byte or a short byte sequence to be repeated)
+            for _ in range(read_count):
+                put_output_byte(history[read_from])
+                # print(f'      history: -> {repr(bytes([history[read_from]]))}')
+                read_from += 1
+                read_from %= len(history)
+
+    _expect_iter_empty(input_bits)
+    return bytes(output_bytes)
 
 
 def _Parse06(rep_raw):
@@ -144,10 +177,8 @@ def _Parse10(rep_raw):
     
     _decrypt(comp_data, 0x400, 0xaa, 0xe1)
     _decrypt(comp_data, 0x80, 0x3d, 0x7a)
-    decodedata = bytearray(header.main.size)
-    _unlzss(comp_data, decodedata, header.main.comp_size - 2)
-    
-    replay = th10.Th10.from_bytes(decodedata)
+
+    replay = th10.Th10.from_bytes(_unlzss(comp_data))
     
     shots = ["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"]
       
