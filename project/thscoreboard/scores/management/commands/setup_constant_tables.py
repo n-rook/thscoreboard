@@ -16,6 +16,12 @@ class Command(BaseCommand):
             _Create10()
             logging.info('Created th10')
 
+        if models.Game.objects.filter(game_id='th07'):
+            logging.info('th07 already created')
+        else:
+            _Create07()
+            logging.info('Created th07')
+
         if models.Game.objects.filter(game_id='th06'):
             logging.info('th06 already loaded')
         else:
@@ -37,6 +43,17 @@ def _Create10():
     shots = ['ReimuA', 'ReimuB', 'ReimuC', 'MarisaA', 'MarisaB', 'MarisaC']
     for shot in shots:
         shot_row = models.Shot(game=th10, shot_id=shot)
+        shot_row.save()
+
+
+@transaction.atomic
+def _Create07():
+    th07 = models.Game(game_id = 'th07', has_replays=True, num_difficulties=6)
+    th07.save()
+
+    shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"]
+    for shot in shots:
+        shot_row = models.Shot(game=th07, shot_id=shot)
         shot_row.save()
 
 
