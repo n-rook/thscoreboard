@@ -95,6 +95,7 @@ def _unlzss_get_bit(buffer, ref_pointer, ref_filter, length):
 
 
 def _unlzss(buffer, decode, length):
+    length -= 2
     ref_pointer = _Ref(0)
     ref_filter = _Ref(0x80)
     dest = 0
@@ -145,7 +146,7 @@ def _Parse07(rep_raw):
     comp_data = bytearray(header.header.size)
     #   please don't ask what is going on here
     #   0x54 - 16 = 68
-    _unlzss(rep_raw[68:], comp_data, header.header.comp_size - 2)
+    _unlzss(rep_raw[68:], comp_data, header.header.comp_size)
     comp_data = bytearray(16) + rep_raw[0:68] + comp_data
     replay = th07.Th07.from_bytes(comp_data)
 
@@ -165,7 +166,7 @@ def _Parse10(rep_raw):
     _decrypt(comp_data, 0x400, 0xaa, 0xe1)
     _decrypt(comp_data, 0x80, 0x3d, 0x7a)
     decodedata = bytearray(header.main.size)
-    _unlzss(comp_data, decodedata, header.main.comp_size - 2)
+    _unlzss(comp_data, decodedata, header.main.comp_size)
     
     replay = th10.Th10.from_bytes(decodedata)
     
