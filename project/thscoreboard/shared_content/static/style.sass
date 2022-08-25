@@ -43,14 +43,53 @@ body
     padding: 0
     @include font-body-text
 
+.light-background
+    background-color: #fff3ff
+
 h2
     font: 400 32px  "EB Garamond", "Times New Roman", serif
 
 h3
     font: 400 26px  "EB Garamond", "Times New Roman", serif
 
+
 #content
     padding: 8px 12px 8px
+    flex: 1
+
+#simple-centered-box
+
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    text-align: center
+
+    max-width: 600px
+    margin-top: 50px
+    margin-left: auto
+    margin-right: auto
+
+    #simple-centered-title
+        box-sizing: border-box
+        font: 400 20px "Lato", "Arial", sans-serif
+        background-color: #ffe6ff
+        height: 32px
+        width: 100%
+        padding: 0px
+
+        p
+            margin: 0
+            padding: 4px
+    
+    #simple-centered-content
+        box-sizing: border-box
+        background-color: white
+        width: 100%
+        padding: 10px 8px
+
+#simple-centered-content form
+    text-align: left
 
 table
     table-layout: fixed

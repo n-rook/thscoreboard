@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block body-class %}light-background{% endblock %}
+
+{% block content %}
+<div id="simple-centered-box">
+    <div id="simple-centered-title">
+        {% block centered-title %}
+        <!-- add a p tag to put a title here.-->
+        {% endblock %}
+    </div>
+    <div id="simple-centered-content">
+        {% block centered-content %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

@@ -1,6 +1,8 @@
-{% extends "base.html" %}
+{% extends "simple_centered.html" %}
 
-{% block content %}
+{% block centered-title %}<p>Log in</p>{% endblock %}
+
+{% block centered-content %}
 
 <form method="post">
     {% csrf_token %}
