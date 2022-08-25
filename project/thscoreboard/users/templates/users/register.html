@@ -3,32 +3,40 @@
 {% block centered-title %}<p>Register</p>{% endblock %}
 
 {% block centered-content %}
-<form method="post">
-    {% csrf_token %} 
+<form method="post" class="form-flex">
+    {% csrf_token %}
     {{ form.non_field_errors }}
-    <div class="field-wrapper">
+    <div class="form-body">
+    
+    <div class="form-block">
         {{ form.username.errors }}
         <label for="{{ form.username.id_for_label }}">Username</label>
-        {{ form.username }}
-    </div>
-    <div class="field-wrapper">
+        <br>
+        
         {{ form.email.errors }}
         <label for="{{ form.email.id_for_label }}">Email Address</label>
-        {{ form.email }}
-    </div>
-    <div class="field-wrapper">
+        <br>
+        
         {{ form.password.errors }}
         <label for="{{ form.password.id_for_label }}">Password</label>
-        {{ form.password }}
-    </div>
+        <br>
+
     {% if require_passcode %}
-    <div class="field-wrapper">
         {{ form.passcode.errors }}
         <label for="{{ form.passcode.id_for_label }}">Early access passcode</label>
-        {{ form.passcode }}
-    </div>
     {% endif %}
+    </div>
 
-    <input type="submit" value="Register">
+    <div class="form-block">
+    {{ form.username }} <br>
+    {{ form.email }} <br>
+    {{ form.password }} <br>
+    
+    {% if require_passcode %}
+        {{ form.passcode }}
+    {% endif %}
+    </div>
+    </div>
+    <input type="submit" value="Register" style="margin-top: 5px; max-width: 75px;">
 </form>
 {% endblock %}

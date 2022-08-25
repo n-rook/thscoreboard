@@ -2,48 +2,45 @@
 
 {% block content %}
 {% block pre_replay_form %}{% endblock %}
-<form method="post">
+<form method="post" class="form-flex">
     {% csrf_token %}
     {{ form.non_field_errors }}
 
-    <div class="field-wrapper">
+    <div class="form-body" style="max-width: 30em;">
+    <div class="form-block">
         {{ form.difficulty.errors }}
         <label for="{{form.difficulty.id_for_label}}">Difficulty</label>
-        {{ form.difficulty }}
-    </div>
-    <div class="field-wrapper">
         {{ form.shot.errors }}
         <label for="{{form.shot.id_for_label}}">Shot</label>
-        {{ form.shot }}
-    </div>
-    <div class="field-wrapper">
         {{ form.points.errors }}
         <label for="{{form.points.id_for_label}}">Score</label>
-        {{ form.points }}
-    </div>
-    <div class="field-wrapper">
         {{ form.category.errors }}
         <label for="{{form.category.id_for_label}}">Category</label>
-        {{ form.category }}
-    </div>
-    <div class="field-wrapper">
         {{ form.video_link.errors }}
         <label for="{{form.video_link.id_for_label}}">Video link</label>
-        {{ form.video_link }}
-    </div>
-    {% if has_replay_file %}
-    <div class="field-wrapper">
+
+        {% if has_replay_file %}
         {{ form.is_good.errors }}
         <label for="{{form.is_good.id_for_label}}">No desyncs</label>
-        {{ form.is_good }}
-    </div>
-    {% endif %}
-    <div class="field-wrapper">
+        {% endif %}
+        
         {{ form.comment.errors }}
         <label for="{{form.comment.id_for_label}}">Comment</label>
+    </div>
+    
+    <div class="form-block">
+        {{ form.difficulty }}
+        {{ form.shot }}
+        {{ form.points }} 
+        {{ form.category }} 
+        {{ form.video_link }}
+    {% if has_replay_file %}
+        {{ form.is_good }}
+    {% endif %}        
         {{ form.comment }}
     </div>
-    <input type="submit" value="Publish Replay">
+    </div>
+    <input type="submit" value="Publish Replay" style="margin-top: 5px; max-width: 100px;">
 </form>
 {% block post_replay_form %}{% endblock %}
 {% endblock %}
