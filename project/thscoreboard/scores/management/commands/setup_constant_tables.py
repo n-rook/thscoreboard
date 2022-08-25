@@ -48,7 +48,7 @@ def _Create10():
 
 @transaction.atomic
 def _Create07():
-    th07 = models.Game(game_id = 'th07', has_replays=True, num_difficulties=6)
+    th07 = models.Game(game_id='th07', has_replays=True, num_difficulties=6)
     th07.save()
 
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"]
