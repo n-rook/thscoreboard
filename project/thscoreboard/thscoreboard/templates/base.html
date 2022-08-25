@@ -3,7 +3,7 @@
 {% load sass_tags %}
 <html lang="en">
 <head>
-    <title>{% block title %}Touhou Scoreboard{% endblock %}</title>
+    <title>{% block title %}Silent Selene{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="{% sass_src 'style.sass' %}">
@@ -12,13 +12,13 @@
     <link rel="icon" type="image/png" href="{% static 'favicon.png' %}" sizes="48x48">
 </head>
 
-<body>
+<body class="{% block body-class %}{% endblock %}">
     <div id="topbar">
         <div class="topbar-little-spacer">
         </div>
         <a id="topbar-banner" href="/">
             <img src="{% static 'topbar_logo.png' %}" />
-            <h1>Touhou Scoreboard</h1>
+            <h1>Silent Selene</h1>
         </a>
         <div class="flex-1"></div>
         {% if user.is_authenticated %}
@@ -40,7 +40,7 @@
         </div>
         {% endif %}
     </div>
-    <div id="content">
+    <div id="content" class="{% block content-class %} {% endblock %}">
         {% block content %}{% endblock %}
     </div>
 </body>
