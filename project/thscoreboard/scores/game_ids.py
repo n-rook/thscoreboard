@@ -4,6 +4,7 @@
 class GameIDs:
     TH05 = 'th05'
     TH06 = 'th06'
+    TH07 = 'th07'
     TH10 = 'th10'
 
 
@@ -18,6 +19,12 @@ def GetGameName(game_id: str, short=False):
             return 'th06'
         else:
             return '東方紅魔郷 - Embodiment of Scarlet Devil'
+    if game_id == GameIDs.TH07:
+        if short:
+            return 'th07'
+        else:
+            # we're replacing this file anyway so
+            return 'perfect cherry blossom'
     if game_id == GameIDs.TH10:
         if short:
             return 'th10'
@@ -40,6 +47,8 @@ def GetShotName(game_id: str, shot_id: str):
             return 'Marisa A'
         elif shot_id == 'MarisaB':
             return 'Marisa B'
+    if game_id == GameIDs.TH07:
+        return shot_id
     if game_id == GameIDs.TH10:
         if shot_id == 'ReimuA':
             return 'Reimu A (Homing Type)'
@@ -57,7 +66,7 @@ def GetShotName(game_id: str, shot_id: str):
 
 
 def GetDifficultyName(game_id: str, difficulty: int):
-    if game_id in {GameIDs.TH05, GameIDs.TH06, GameIDs.TH10}:
+    if game_id in {GameIDs.TH05, GameIDs.TH06, GameIDs.TH07, GameIDs.TH10}:
         if difficulty == 0:
             return 'Easy'
         elif difficulty == 1:
@@ -68,5 +77,7 @@ def GetDifficultyName(game_id: str, difficulty: int):
             return 'Lunatic'
         elif difficulty == 4:
             return 'Extra'
+        elif difficulty == 5:
+            return 'Phantasm'
     
     return 'Bug difficulty'

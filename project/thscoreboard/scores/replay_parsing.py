@@ -5,6 +5,7 @@ import logging
 
 from . import game_ids
 from .kaitai_parsers import th06
+from .kaitai_parsers import th07, th07_comp
 from .kaitai_parsers import th10
 from .kaitai_parsers import th_modern
 
@@ -94,6 +95,7 @@ def _unlzss_get_bit(buffer, ref_pointer, ref_filter, length):
 
 
 def _unlzss(buffer, decode, length):
+    length -= 2
     ref_pointer = _Ref(0)
     ref_filter = _Ref(0x80)
     dest = 0
@@ -138,6 +140,25 @@ def _Parse06(rep_raw):
     )
 
 
+def _Parse07(rep_raw):
+    rep_raw = bytes(_th06_decrypt(rep_raw[16:], rep_raw[13]))
+    header = th07_comp.Th07Comp.from_bytes(rep_raw)
+    comp_data = bytearray(header.header.size)
+    #   please don't ask what is going on here
+    #   0x54 - 16 = 68
+    _unlzss(rep_raw[68:], comp_data, header.header.comp_size)
+    comp_data = bytearray(16) + rep_raw[0:68] + comp_data
+    replay = th07.Th07.from_bytes(comp_data)
+
+    shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"]
+    return ReplayInfo(
+        game_ids.GameIDs.TH07,
+        shots[replay.header.shot],
+        replay.header.difficulty,
+        replay.header.score * 10
+    )
+
+
 def _Parse10(rep_raw):
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
@@ -145,7 +166,7 @@ def _Parse10(rep_raw):
     _decrypt(comp_data, 0x400, 0xaa, 0xe1)
     _decrypt(comp_data, 0x80, 0x3d, 0x7a)
     decodedata = bytearray(header.main.size)
-    _unlzss(comp_data, decodedata, header.main.comp_size - 2)
+    _unlzss(comp_data, decodedata, header.main.comp_size)
     
     replay = th10.Th10.from_bytes(decodedata)
     
@@ -167,6 +188,8 @@ def Parse(replay):
 
     if gamecode == b'T6RP':
         return _Parse06(replay)
+    elif gamecode == b'T7RP':
+        return _Parse07(replay)
     elif gamecode == b't10r':
         return _Parse10(replay)
     else:
