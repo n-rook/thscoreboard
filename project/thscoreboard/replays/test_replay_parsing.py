@@ -5,7 +5,7 @@ from . import replay_parsing
 
 
 def ParseTestReplay(filename):
-    with open(path.join('scores/replays_for_tests', filename), 'rb') as f:
+    with open(path.join('replays/replays_for_tests', filename), 'rb') as f:
         return replay_parsing.Parse(f.read())
 
 

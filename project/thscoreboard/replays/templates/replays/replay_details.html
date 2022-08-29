@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2><a href="/replays/{{ game_id}}">{{ game_name }}</a></h2>
+    <h3>{{ difficulty_name }} — {{ shot_name }}</h3>
+    <div class="replay-box">
+        Total score: <span class="replay-points">{{ replay.points }}</span>
+    </div>
+    <div>
+    {% if replay %}
+    {% if replay.is_good %}
+        <a href="/replays/{{ game_id }}/{{ replay.id }}/download">Download replay</a>
+    {% else %}
+        <div>Be aware, this replay desyncs!</div>
+        <a href="/replays/{{ game_id }}/{{ replay.id }}/download">Download replay anyway</a>
+    {% endif %}
+    {% endif %}
+    </div>
+    {% if replay.video_link %}
+    <div>
+        <a href="{{replay.video_link}}">Watch replay on external site</a>
+    </div>
+    {% endif %}
+    {% if is_owner %}
+    <div>
+        <a href="/replays/{{ game_id }}/{{ replay.id }}/delete">Permanently delete this replay</a>
+    </div>
+    {% endif %}
+{% endblock %}
