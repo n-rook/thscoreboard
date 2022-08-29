@@ -1,38 +1,29 @@
 meta:
   id: th07
-  file-extension: rpy
+  file-extension: raw
   endian: le
 seq:
+  - id: file_header
+    type: file_header
   - id: header
     type: header
-  - id: replay_header
-    type: replay_header
 instances:
   stages:
-    pos: header.stage_offsets[_index]
+    pos: file_header.stage_offsets[_index]
     type:
-      switch-on: header.stage_offsets[_index]
+      switch-on: file_header.stage_offsets[_index]
       cases:
         0: dummy
         _: stage
     repeat: expr
     repeat-expr: 7
-    size: 40
 types:
   dummy:
     doc: blank type
-  header:
+  file_header:
     seq:
-      - id: magic
-        contents: T7RP
-      - id: version
-        size: 2
-      - id: unknown_1
-        size: 7
-      - id: key
-        type: u1
-      - id: unknown_2
-        type: u2
+      - id: padding
+        size: 16
       - id: unknown_3
         type: u4
       - id: comp_size
@@ -47,7 +38,7 @@ types:
         type: u4
         repeat: expr
         repeat-expr: 7
-  replay_header:
+  header:
     seq:
       - id: unknown_1
         size: 2

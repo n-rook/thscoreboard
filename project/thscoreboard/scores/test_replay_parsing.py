@@ -30,6 +30,16 @@ class Th06ReplayTestCase(unittest.TestCase):
         self.assertEqual(replay_info.score, 181144360)
 
 
+class Th07ReplayTestCase(unittest.TestCase):
+
+    def testLunatic(self):
+        rpy = ParseTestReplay('th7_lunatic.rpy')
+        self.assertEqual(rpy.game, 'th07')
+        self.assertEqual(rpy.difficulty, 3)
+        self.assertEqual(rpy.shot, "SakuyaB")
+        self.assertEqual(rpy.score, 702864100)
+
+
 class Th10ReplayTestCase(unittest.TestCase):
     
     def testNormal(self):
