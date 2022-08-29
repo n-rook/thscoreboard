@@ -163,6 +163,79 @@ class Replay(models.Model):
             id=self.id,
         )
 
+class ReplayStages(models.Model):
+
+    class Meta:
+        constraints = [models.UniqueConstraint('replay', 'stage', name='unique_stage_per_replay')]
+
+    replay = models.OneToOneField('Replay', on_delete=models.CASCADE, primary_key=True)   
+
+    stage = models.IntegerField()
+
+    power = models.IntegerField(blank=True, null=True)
+
+    piv = models.IntegerField(blank=True, null=True)
+
+    lives = models.IntegerField(blank=True, null=True)
+
+    life_pieces = models.IntegerField(blank=True, null=True)
+
+    bombs = models.IntegerField(blank=True, null=True)
+
+    bomb_pieces = models.IntegerField(blank=True, null=True)
+
+    graze = models.IntegerField(blank=True, null=True)
+
+    point_items = models.IntegerField(blank=True, null=True)
+
+    """Game specific entries"""
+
+    
+    th06_rank = models.IntegerField(blank=True, null=True)
+
+    th07_cherry = models.IntegerField(blank=True, null=True)
+
+    th07_cherrymax = models.IntegerField(blank=True, null=True)
+
+    th08_time = models.IntegerField(blank=True, null=True)
+
+    th08_human_youkai = models.IntegerField(blank=True, null=True)
+
+    th09_char = models.IntegerField(blank=True, null=True)
+
+    th09_ai = models.IntegerField(blank=True, null=True)
+
+    th12_ufo1 = models.IntegerField(blank=True, null=True)
+
+    th12_ufo2 = models.IntegerField(blank=True, null=True)
+
+    th12_ufo3 = models.IntegerField(blank=True, null=True)
+
+    th125_freeze_area = models.IntegerField(blank=True, null=True)
+
+    extends = models.IntegerField(blank=True, null=True)
+
+    th13_trance = models.IntegerField(blank=True, null=True)
+
+    th14_poc_count = models.IntegerField(blank=True, null=True)
+
+    th14_miss_count = models.IntegerField(blank=True, null=True)
+
+    th16_season = models.IntegerField(blank=True, null=True)
+
+    th17_hyper_fill = models.IntegerField(blank=True, null=True)
+
+    th17_token1 = models.IntegerField(blank=True, null=True)
+
+    th17_token2 = models.IntegerField(blank=True, null=True)
+
+    th17_token3 = models.IntegerField(blank=True, null=True)
+
+    th17_token4 = models.IntegerField(blank=True, null=True)
+
+    th17_token5 = models.IntegerField(blank=True, null=True)
+
+
 
 class ReplayFile(models.Model):
     """Represents a replay file or video for a given submission."""
