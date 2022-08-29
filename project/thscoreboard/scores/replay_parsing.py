@@ -8,6 +8,8 @@ from .kaitai_parsers import th06
 from .kaitai_parsers import th10
 from .kaitai_parsers import th_modern
 
+import tsadecode as td
+
 
 class Error(Exception):
     pass
@@ -126,7 +128,9 @@ def _unlzss(buffer, decode, length):
 
 
 def _Parse06(rep_raw):
-    replay = th06.Th06.from_bytes(bytes(_th06_decrypt(rep_raw[15:], rep_raw[14])))
+    cryptdata = bytearray(rep_raw[15:])
+    td.decrypt06(cryptdata, rep_raw[14])
+    replay = th06.Th06.from_bytes(cryptdata)
     
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
     
@@ -142,12 +146,9 @@ def _Parse10(rep_raw):
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
     
-    _decrypt(comp_data, 0x400, 0xaa, 0xe1)
-    _decrypt(comp_data, 0x80, 0x3d, 0x7a)
-    decodedata = bytearray(header.main.size)
-    _unlzss(comp_data, decodedata, header.main.comp_size - 2)
-    
-    replay = th10.Th10.from_bytes(decodedata)
+    td.decrypt(comp_data, 0x400, 0xaa, 0xe1)
+    td.decrypt(comp_data, 0x80, 0x3d, 0x7a)
+    replay = th10.Th10.from_bytes(td.unlzss(comp_data))
     
     shots = ["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"]
       
