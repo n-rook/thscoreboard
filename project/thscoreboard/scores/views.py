@@ -17,6 +17,8 @@ from . import models
 from . import replay_parsing
 from . import game_ids
 
+import datetime
+
 
 @http_decorators.require_safe
 def index(request):
@@ -263,7 +265,7 @@ def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, sho
     if difficulty is not None:
         if difficulty < 0 or difficulty >= game.num_difficulties:
             raise Http404()
-        all_scores = all_scores.filter(difficulty=difficulty)
+        all_scores = all_scores.filter(rep_difficulty=difficulty)
         extra_params['difficulty'] = difficulty
         extra_params['difficulty_name'] = game_ids.GetDifficultyName(game.game_id, difficulty)
 
@@ -361,17 +363,19 @@ def PublishNewScore(user, difficulty: int, shot: models.Shot, points: int, categ
     score_instance = models.Score(
         user=user,
         shot=shot,
-        difficulty=difficulty,
+        rep_difficulty=difficulty,
         points=points,
+        rep_points=points,
         category=category,
         comment=comment,
-        video_link=video_link,
+        rep_date=datetime.datetime.now(tz=None),
+        rep_name="temptest"
     )
     replay_file_instance = models.ReplayFile(
         score=score_instance,
         replay=temp_replay_instance.replay,
-        is_good=is_good,
-        points=replay_info.score,
+        video_link=video_link,
+        is_good=is_good
     )
 
     score_instance.save()
@@ -384,11 +388,19 @@ def PublishScoreWithoutReplay(user, difficulty: int, shot: models.Shot, points: 
     score_instance = models.Score(
         user=user,
         shot=shot,
-        difficulty=difficulty,
+        rep_difficulty=difficulty,
         points=points,
+        rep_points=points,
         category=category,
         comment=comment,
+        rep_date=datetime.datetime.now(tz=None),
+        rep_name="temptest"
+    )
+    replay_file_instance = models.ReplayFile(
+        score=score_instance,
         video_link=video_link,
+        is_good=True
     )
     score_instance.save()
+    replay_file_instance.save()
     return score_instance

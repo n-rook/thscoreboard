@@ -35,10 +35,10 @@
             </td>
             {% endif %}
             <td>
-                <a href="/scores/{{score.shot.game.game_id}}/d{{score.difficulty}}">{{score.GetDifficultyName}}</a>
+                <a href="/scores/{{score.shot.game.game_id}}/d{{score.rep_difficulty}}">{{score.GetDifficultyName}}</a>
             </td>
             <td>
-                <a href="/scores/{{score.shot.game.game_id}}/d{{score.difficulty}}/{{score.shot.shot_id}}">{{score.shot.GetName}}</a>
+                <a href="/scores/{{score.shot.game.game_id}}/d{{score.rep_difficulty}}/{{score.shot.shot_id}}">{{score.shot.GetName}}</a>
             </td>
             <td>
                 <a href="/scores/{{score.shot.game.game_id}}/{{score.id}}">{{score.points}}</a>

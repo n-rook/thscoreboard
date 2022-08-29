@@ -76,11 +76,11 @@ class Category(models.IntegerChoices):
 class Score(models.Model):
 
     class Meta:
-        ordering = ['shot', 'difficulty', '-points']
+        ordering = ['shot', 'rep_difficulty', '-points']
 
         constraints = [
             models.CheckConstraint(
-                check=models.Q(difficulty__gte=0),
+                check=models.Q(rep_difficulty__gte=0),
                 name='difficulty_gte_0'
             ),
         ]
@@ -89,32 +89,55 @@ class Score(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     """The user who uploaded the replay."""
 
+    #   submission related metadata
+
     category = models.IntegerField(choices=Category.choices)
 
     created = models.DateTimeField(auto_now_add=True)
     """When the replay was uploaded."""
 
+    comment = models.TextField(max_length=limits.MAX_COMMENT_LENGTH)
+    """A comment the user entered."""
+
+    points = models.BigIntegerField()
+    """The final score of the run. If the run counterstops, this value should contain the post-counterstop score"""
+
+    #   replay metadata
+
     shot = models.ForeignKey('Shot', on_delete=models.PROTECT)
     """The shot type the player used."""
 
-    difficulty = models.IntegerField()
+    rep_date = models.DateTimeField()
+    """
+        What to do about replays that don't store year
+        Just have the user enter it manually I guess
+    """
+
+    rep_points = models.BigIntegerField()
+    """ The final score recorded in the replay.
+    
+        This will usually be the same as the score on the Score row, but in some
+        cases it will be different. For example, this will be the max score for
+        counterstop replays.
+    """
+
+    rep_name = models.TextField()
+    
+    rep_difficulty = models.IntegerField()
     """The difficulty on which the player played."""
     
     def GetDifficultyName(self):
         """Get a pretty name for this difficulty. Note: Populates shot and game."""
-        return game_ids.GetDifficultyName(self.shot.game.game_id, self.difficulty)
+        return game_ids.GetDifficultyName(self.shot.game.game_id, self.rep_difficulty)
     
     def GetDifficultyUrlCode(self):
         return f'd{self.difficulty}'
 
-    points = models.BigIntegerField()
-    """The score of the replay."""
+    rep_slowdown = models.FloatField(blank=True, null=True)
 
-    video_link = models.TextField(max_length=1000)
-    """A URL to a video site with a recording of the run."""
+    rep_clear = models.IntegerField(blank=True, null=True)
 
-    comment = models.TextField(max_length=limits.MAX_COMMENT_LENGTH)
-    """A comment the user entered."""
+    rep_spellpracticeid = models.IntegerField(blank=True, null=True)
 
     def IsVisible(self, viewer: auth.get_user_model()):
         """Returns whether this score should be visible to this user."""
@@ -142,12 +165,12 @@ class Score(models.Model):
 
 
 class ReplayFile(models.Model):
-    """Represents a replay file for a given score."""
+    """Represents a replay file or video for a given score."""
 
     score = models.OneToOneField('Score', on_delete=models.CASCADE)
     """The score record to which this replay corresponds."""
 
-    replay = models.BinaryField(max_length=limits.MAX_REPLAY_SIZE)
+    replay = models.BinaryField(max_length=limits.MAX_REPLAY_SIZE, blank=True, null=True)
     """The replay file itself."""
 
     is_good = models.BooleanField()
@@ -157,13 +180,8 @@ class ReplayFile(models.Model):
     Touhou community will later discover how to fix a certain type of desync.
     """
 
-    points = models.BigIntegerField()
-    """The final score recorded in the replay.
-    
-    This will usually be the same as the score on the Score row, but in some
-    cases it will be different. For example, this will be the max score for
-    counterstop replays.
-    """
+    video_link = models.TextField(max_length=1000, blank=True, null=True)
+    """A URL to a video site with a recording of the run."""
 
 
 class TemporaryReplayFile(models.Model):
