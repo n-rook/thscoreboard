@@ -131,8 +131,8 @@ else:
             'HOST': 'localhost',
             'PORT': '5432',
             'NAME': 'thscoreboard',
-            'USER': 'thscoreboard',
-            'PASSWORD': 'temppassword',
+            'USER': os.environ.get('LOCAL_DATABASE_USER', 'thscoreboard'),
+            'PASSWORD': os.environ['LOCAL_DATABASE_PASSWORD'],
         },
     }
 
