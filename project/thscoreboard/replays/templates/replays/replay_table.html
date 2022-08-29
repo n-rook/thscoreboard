@@ -1,4 +1,4 @@
-<table class="score-table">
+<table class="replay-table">
     <thead>
         <tr>
             <th>
@@ -24,27 +24,27 @@
         </tr>
     </thead>
     <tbody>
-    {% for score in scores %}
+    {% for replay in replays %}
         <tr>
             <td>
-                <a href="/scores/user/{{score.user.username}}">{{score.user.username}}</a>
+                <a href="/replays/user/{{replay.user.username}}">{{replay.user.username}}</a>
             </td>
             {% if show_game %}
             <td>
-                <a href="/scores/{{score.shot.game.game_id}}">{{score.shot.game.GetShortName}}</a>
+                <a href="/replays/{{replay.shot.game.game_id}}">{{replay.shot.game.GetShortName}}</a>
             </td>
             {% endif %}
             <td>
-                <a href="/scores/{{score.shot.game.game_id}}/d{{score.rep_difficulty}}">{{score.GetDifficultyName}}</a>
+                <a href="/replays/{{replay.shot.game.game_id}}/d{{replay.rep_difficulty}}">{{replay.GetDifficultyName}}</a>
             </td>
             <td>
-                <a href="/scores/{{score.shot.game.game_id}}/d{{score.rep_difficulty}}/{{score.shot.shot_id}}">{{score.shot.GetName}}</a>
+                <a href="/replays/{{replay.shot.game.game_id}}/d{{replay.rep_difficulty}}/{{replay.shot.shot_id}}">{{replay.shot.GetName}}</a>
             </td>
             <td>
-                <a href="/scores/{{score.shot.game.game_id}}/{{score.id}}">{{score.points}}</a>
+                <a href="/replays/{{replay.shot.game.game_id}}/{{replay.id}}">{{replay.points}}</a>
             </td>
             <td>
-                {{score.created | date:"Y-m-d"}}
+                {{replay.created | date:"Y-m-d"}}
             </td>
         </tr>
     {% endfor %}

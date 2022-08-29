@@ -20,11 +20,11 @@
     </div>
     <input type="submit" value="Upload Replay">
 </form>
-<h2>Publish a score for a game without replays</h2>
+<h2>Publish a replay for a game without replay files</h2>
 <ul>
     {% for game in no_replay_games %}
     <li>
-        <a href="/scores/publish/{{game.game_id}}">{{ game.GetName }}</a>
+        <a href="/replays/publish/{{game.game_id}}">{{ game.GetName }}</a>
     </li>
     {% endfor %}
 </ul>
