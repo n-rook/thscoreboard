@@ -105,7 +105,7 @@ class PublishReplayForm(forms.Form):
                     'so it can still be watched.'))
 
 
-class PublishScoreWithoutReplayForm(forms.Form):
+class PublishReplayWithoutFileForm(forms.Form):
 
     def __init__(self, *args, game_id: str, **kwargs):
         super().__init__(*args, **kwargs)

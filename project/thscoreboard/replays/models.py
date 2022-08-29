@@ -28,7 +28,7 @@ class Game(models.Model):
     For the vast majority of Touhou games, this is 5: Easy, Normal, Hard,
     Lunatic, and Extra.
 
-    The difficulties will be given numeric values in actual score rows,
+    The difficulties will be given numeric values in actual replay rows,
     starting from 0.
     """
 
@@ -73,7 +73,7 @@ class Category(models.IntegerChoices):
 
 
 # Create your models here.
-class Score(models.Model):
+class Replay(models.Model):
 
     class Meta:
         ordering = ['shot', 'difficulty', '-points']
@@ -117,7 +117,7 @@ class Score(models.Model):
     """A comment the user entered."""
 
     def IsVisible(self, viewer: auth.get_user_model()):
-        """Returns whether this score should be visible to this user."""
+        """Returns whether this replay should be visible to this user."""
         # Add a unit test for this
 
         if self.category != Category.PRIVATE:
@@ -125,10 +125,10 @@ class Score(models.Model):
         return self.user == viewer
 
     def GetNiceFilename(self, ascii_only=False):
-        """Returns a nice filename for a replay for this score.
+        """Returns a nice filename for this replay.
         
-        This always returns something, even if this score does not actually
-        have a replay.
+        This always returns something, even if this submission does not actually
+        have a replay file.
 
         Args:
             ascii_only: If True, don't include the username, so that this can
@@ -144,10 +144,10 @@ class Score(models.Model):
 class ReplayFile(models.Model):
     """Represents a replay file for a given score."""
 
-    score = models.OneToOneField('Score', on_delete=models.CASCADE)
-    """The score record to which this replay corresponds."""
+    replay = models.OneToOneField('Replay', on_delete=models.CASCADE)
+    """The submission to which this replay corresponds."""
 
-    replay = models.BinaryField(max_length=limits.MAX_REPLAY_SIZE)
+    replay_file = models.BinaryField(max_length=limits.MAX_REPLAY_SIZE, blank=True, null=True)
     """The replay file itself."""
 
     is_good = models.BooleanField()

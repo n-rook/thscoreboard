@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ScoresConfig(AppConfig):
+class ReplaysConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'scores'
+    name = 'replays'

@@ -23,14 +23,14 @@ def index(request):
     all_games = models.Game.objects.all()
 
     recent_uploads = (
-        models.Score.objects
+        models.Replay.objects
         .filter(category__in=[models.Category.REGULAR, models.Category.TAS])
         .order_by('-created')
         [:10]
     )
 
     return render(
-        request, 'scores/index.html',
+        request, 'replays/index.html',
         {
             'all_games': all_games,
             'recent_uploads': recent_uploads,
@@ -94,7 +94,7 @@ def upload_file(request):
 
     return render(
         request,
-        'scores/upload.html',
+        'replays/upload.html',
         {
             'form': form,
             'all_games': all_games,
@@ -121,7 +121,7 @@ def publish_replay(request, temp_replay_id):
     if request.method == 'POST':
         form = forms.PublishReplayForm(request.POST, game_id=replay_info.game)
         if form.is_valid():
-            new_score = PublishNewScore(
+            new_replay = PublishNewReplay(
                 user=request.user,
                 # game_id=replay_info.game,
                 difficulty=replay_info.difficulty,
@@ -135,9 +135,9 @@ def publish_replay(request, temp_replay_id):
                 temp_replay_instance=temp_replay,
                 replay_info=replay_info,
             )
-            return redirect(score_details, game_id=replay_info.game, score_id=new_score.id)
+            return redirect(replay_details, game_id=replay_info.game, replay_id=new_replay.id)
         else:
-            return render(request, 'scores/publish.html', {'form': form})
+            return render(request, 'replays/publish.html', {'form': form})
 
     form = forms.PublishReplayForm(
         game_id=replay_info.game,
@@ -149,7 +149,7 @@ def publish_replay(request, temp_replay_id):
     
     return render(
         request,
-        'scores/publish.html',
+        'replays/publish.html',
         {
             'form': form,
             'has_replay_file': True,
@@ -164,9 +164,9 @@ def publish_replay_no_file(request, game_id: str):
     game = get_object_or_404(models.Game, game_id=game_id, has_replays=False)
 
     if request.method == 'POST':
-        form = forms.PublishScoreWithoutReplayForm(request.POST, game_id=game.game_id)
+        form = forms.PublishReplayWithoutFileForm(request.POST, game_id=game.game_id)
         if form.is_valid():
-            new_score = PublishScoreWithoutReplay(
+            new_replay = PublishReplayWithoutFile(
                 user=request.user,
                 difficulty=form.cleaned_data['difficulty'],
                 shot=form.cleaned_data['shot'],
@@ -175,11 +175,11 @@ def publish_replay_no_file(request, game_id: str):
                 comment=form.cleaned_data['comment'],
                 video_link=form.cleaned_data['video_link'],
             )
-            return redirect(score_details, game_id=game.game_id, score_id=new_score.id)
+            return redirect(replay_details, game_id=game.game_id, replay_id=new_replay.id)
         else:
             return render(
                 request,
-                'scores/publish.html',
+                'replays/publish.html',
                 {
                     'game': game,
                     'form': form,
@@ -187,10 +187,10 @@ def publish_replay_no_file(request, game_id: str):
                 }
             )
     
-    form = forms.PublishScoreWithoutReplayForm(game_id=game.game_id)
+    form = forms.PublishReplayWithoutFileForm(game_id=game.game_id)
     return render(
         request,
-        'scores/publish_no_replay.html',
+        'replays/publish_no_replay.html',
         {
             'game': game,
             'form': form,
@@ -200,48 +200,48 @@ def publish_replay_no_file(request, game_id: str):
     
 
 @http_decorators.require_safe
-def score_details(request, game_id: str, score_id: int):
-    score_instance = GetScoreOr404(request.user, score_id)
+def replay_details(request, game_id: str, replay_id: int):
+    replay_instance = GetReplayOr404(request.user, replay_id)
 
-    if score_instance.shot.game.game_id != game_id:
+    if replay_instance.shot.game.game_id != game_id:
         # Wrong game, but IDs are unique anyway so we know the right game. Send the user there.
-        return redirect(score_details, game_id=score_instance.shot.game.game_id, score_id=score_id)
+        return redirect(replay_details, game_id=replay_instance.shot.game.game_id, replay_id=replay_id)
 
     context = {
-        'game_name': score_instance.shot.game.GetName(),
-        'shot_name': score_instance.shot.GetName(),
-        'difficulty_name': score_instance.GetDifficultyName(),
+        'game_name': replay_instance.shot.game.GetName(),
+        'shot_name': replay_instance.shot.GetName(),
+        'difficulty_name': replay_instance.GetDifficultyName(),
         'game_id': game_id,
-        'score': score_instance,
-        'is_owner': request.user == score_instance.user,
+        'replay': replay_instance,
+        'is_owner': request.user == replay_instance.user,
     }
-    if hasattr(score_instance, 'replayfile'):
-        context['replay'] = score_instance.replayfile
+    if hasattr(replay_instance, 'replayfile'):
+        context['replay'] = replay_instance.replayfile
 
-    return render(request, 'scores/score_details.html', context)
+    return render(request, 'replays/replay_details.html', context)
 
 
 @http_decorators.require_safe
-def download_replay(request, game_id: str, score_id: int):
-    score_instance = GetScoreOr404(request.user, score_id)
+def download_replay(request, game_id: str, replay_id: int):
+    replay_instance = GetReplayOr404(request.user, replay_id)
     
-    if score_instance.shot.game.game_id != game_id:
+    if replay_instance.shot.game.game_id != game_id:
         raise Http404()
-    if not score_instance.shot.game.has_replays:
+    if not replay_instance.shot.game.has_replays:
         raise HttpResponseBadRequest()
     
     try:
-        replay_instance = models.ReplayFile.objects.get(score=score_instance)
+        replay_file_instance = models.ReplayFile.objects.get(replay=replay_instance)
     except models.ReplayFile.DoesNotExist:
-        raise ValueError('No replay for this score. This should not be possible')
+        raise ValueError('No replay file for this submission. This should not be possible')
     
-    content_disposition = 'attachment; filename="{basic_filename}"; filename*=UTF-8''{utf8_filename}'.format(
-        basic_filename=score_instance.GetNiceFilename(ascii_only=True),
-        utf8_filename=parse.quote_plus(score_instance.GetNiceFilename(), encoding='UTF-8')
+    content_disposition = 'attachment; filename="{basic_filename}"; filename*={utf8_filename}'.format(
+        basic_filename=replay_instance.GetNiceFilename(ascii_only=True),
+        utf8_filename=parse.quote_plus(replay_instance.GetNiceFilename(), encoding='UTF-8')
     )
 
     return HttpResponse(
-        replay_instance.replay,
+        replay_file_instance.replay_file,
         headers={
             'Content-Type': 'application/octet-stream',
             'Content-Disposition': content_disposition
@@ -253,8 +253,8 @@ def download_replay(request, game_id: str, score_id: int):
 def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, shot_id: Optional[str] = None):
     # Ancient wisdom: You don't need pagination if you don't have users yet!
     game = get_object_or_404(models.Game, game_id=game_id)
-    all_scores = (
-        models.Score.objects.select_related('shot', 'replayfile')
+    all_replays = (
+        models.Replay.objects.select_related('shot', 'replayfile')
         .filter(category=models.Category.REGULAR)
         .filter(shot__game=game_id)
         .order_by('-points')
@@ -269,15 +269,15 @@ def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, sho
 
     if shot_id is not None:
         shot = get_object_or_404(models.Shot, game=game_id, shot_id=shot_id)
-        all_scores = all_scores.filter(shot=shot)
+        all_replays = all_replays.filter(shot=shot)
         extra_params['shot'] = shot
 
     return render(
         request,
-        'scores/game_scoreboard.html',
+        'replays/game_scoreboard.html',
         {
             'game': game,
-            'scores': all_scores,
+            'replays': all_replays,
             **extra_params
         })
 
@@ -286,79 +286,79 @@ def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, sho
 def user_page(request, username: str):
     user = get_object_or_404(auth.get_user_model(), username=username)
     
-    def GetUserScores():
-        # Yields (game, list_of_scores_for_the_game) tuples.
+    def GetUserReplays():
+        # Yields (game, list_of_replays_for_the_game) tuples.
         
-        scores = (
-            models.Score.objects
+        replays = (
+            models.Replay.objects
             .filter(user=user)
             .exclude(category=models.Category.PRIVATE)
             .order_by('shot__game_id', 'shot_id', 'created'))
         
         current_game = None
-        for score in scores:
+        for replay in replays:
             if current_game is None:
-                current_game = score.shot.game
-                current_scores = []
-            if current_game != score.shot.game:
-                yield (current_game, current_scores)
-                current_game = score.shot.game
-                current_scores = []
-            current_scores.append(score)
+                current_game = replay.shot.game
+                current_replays = []
+            if current_game != replay.shot.game:
+                yield (current_game, current_replays)
+                current_game = replay.shot.game
+                current_replays = []
+            current_replays.append(replay)
         if current_game is not None:
-            yield (current_game, current_scores)
+            yield (current_game, current_replays)
 
     return render(
         request,
-        'scores/user_page.html',
+        'replays/user_page.html',
         {
             'viewed_user': user,
-            'scores_by_game': list(GetUserScores())
+            'replays_by_game': list(GetUserReplays())
         }
     )
     
 
 @http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
 @auth_decorators.login_required
-def delete_score(request, game_id: str, score_id: int):
-    score_instance = GetScoreOr404(request.user, score_id)
+def delete_replay(request, game_id: str, replay_id: int):
+    replay_instance = GetReplayOr404(request.user, replay_id)
 
-    if score_instance.shot.game.game_id != game_id:
+    if replay_instance.shot.game.game_id != game_id:
         raise Http404()
-    if not score_instance.user == request.user:
+    if not replay_instance.user == request.user:
         raise HttpResponseForbidden()
     
     if request.method == 'POST':
-        score_instance.delete()
-        return redirect(f'/scores/user/{request.user.username}')
+        replay_instance.delete()
+        return redirect(f'/replays/user/{request.user.username}')
     
     return render(
         request,
-        'scores/delete_score.html',
+        'replays/delete_replay.html',
         {
-            'game_name': score_instance.shot.game.GetName(),
-            'shot_name': score_instance.shot.GetName(),
-            'difficulty_name': score_instance.GetDifficultyName(),
-            'score': score_instance,
+            'game_name': replay_instance.shot.game.GetName(),
+            'shot_name': replay_instance.shot.GetName(),
+            'difficulty_name': replay_instance.GetDifficultyName(),
+            'replay': replay_instance,
         }
     )
 
 
-def GetScoreOr404(user, score_id):
+def GetReplayOr404(user, replay_id):
     try:
-        score_instance = models.Score.objects.select_related('shot').get(id=score_id)
-    except models.Score.DoesNotExist:
+        replay_instance = models.Replay.objects.select_related('shot').get(id=replay_id)
+    except models.Replay.DoesNotExist:
         raise Http404()
-    if not score_instance.IsVisible(user):
+    if not replay_instance.IsVisible(user):
         raise Http404()
-    return score_instance
+    return replay_instance
 
 
 @transaction.atomic
-def PublishNewScore(user, difficulty: int, shot: models.Shot, points: int, category: str, comment: str, video_link: str, is_good: bool, temp_replay_instance: models.TemporaryReplayFile, replay_info: replay_parsing.ReplayInfo):
+def PublishNewReplay(user, difficulty: int, shot: models.Shot, points: int, category: str, comment: str, video_link: str, is_good: bool, temp_replay_instance: models.TemporaryReplayFile, replay_info: replay_parsing.ReplayInfo):
     # shot_instance = models.Shot.objects.select_related('game').get(game=game_id, shot_id=shot_id)
 
-    score_instance = models.Score(
+    replay_instance = models.Replay(
         user=user,
         shot=shot,
         difficulty=difficulty,
@@ -368,20 +368,20 @@ def PublishNewScore(user, difficulty: int, shot: models.Shot, points: int, categ
         video_link=video_link,
     )
     replay_file_instance = models.ReplayFile(
-        score=score_instance,
-        replay=temp_replay_instance.replay,
+        replay=replay_instance,
+        replay_file=temp_replay_instance.replay,
         is_good=is_good,
         points=replay_info.score,
     )
 
-    score_instance.save()
+    replay_instance.save()
     replay_file_instance.save()
     temp_replay_instance.delete()
-    return score_instance
+    return replay_instance
 
 
-def PublishScoreWithoutReplay(user, difficulty: int, shot: models.Shot, points: int, category: str, comment: str, video_link: str):
-    score_instance = models.Score(
+def PublishReplayWithoutFile(user, difficulty: int, shot: models.Shot, points: int, category: str, comment: str, video_link: str):
+    replay_instance = models.Replay(
         user=user,
         shot=shot,
         difficulty=difficulty,
@@ -389,6 +389,8 @@ def PublishScoreWithoutReplay(user, difficulty: int, shot: models.Shot, points: 
         category=category,
         comment=comment,
         video_link=video_link,
+        is_good=True
     )
-    score_instance.save()
-    return score_instance
+    replay_instance.save()
+    replay_file_instance.save()
+    return replay_instance
