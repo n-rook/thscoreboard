@@ -163,12 +163,13 @@ class Replay(models.Model):
             id=self.id,
         )
 
+
 class ReplayStages(models.Model):
 
     class Meta:
         constraints = [models.UniqueConstraint('replay', 'stage', name='unique_stage_per_replay')]
 
-    replay = models.OneToOneField('Replay', on_delete=models.CASCADE, primary_key=True)   
+    replay = models.OneToOneField('Replay', on_delete=models.CASCADE, primary_key=True)
 
     stage = models.IntegerField()
 
@@ -190,7 +191,6 @@ class ReplayStages(models.Model):
 
     """Game specific entries"""
 
-    
     th06_rank = models.IntegerField(blank=True, null=True)
 
     th07_cherry = models.IntegerField(blank=True, null=True)
@@ -234,7 +234,6 @@ class ReplayStages(models.Model):
     th17_token4 = models.IntegerField(blank=True, null=True)
 
     th17_token5 = models.IntegerField(blank=True, null=True)
-
 
 
 class ReplayFile(models.Model):
