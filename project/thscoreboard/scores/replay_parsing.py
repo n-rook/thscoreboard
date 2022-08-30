@@ -5,9 +5,11 @@ import logging
 
 from . import game_ids
 from .kaitai_parsers import th06
-from .kaitai_parsers import th07, th07_comp
+from .kaitai_parsers import th07
 from .kaitai_parsers import th10
 from .kaitai_parsers import th_modern
+
+import tsadecode as td
 
 
 class Error(Exception):
@@ -40,95 +42,10 @@ class ReplayInfo:
     #         return game_ids.TH06_SHOT_NAME_TO_ID_BIDICT[self.shot]
 
 
-def _th06_decrypt(data, key):
-    for byte in data:
-        yield (byte - key) % 256
-        key += 7
-    return data
-
-
-def _decrypt(data: bytearray, block_size, base, add):
-    tbuf = data.copy()
-    p = 0
-    left = len(data)
-    if left % block_size < block_size // 4:
-        left -= left % block_size
-    left -= len(data) & 1
-    while left:
-        if left < block_size:
-            block_size = left
-        tp1 = p + block_size - 1
-        tp2 = p + block_size - 2
-        hf = (block_size + (block_size & 0x1)) // 2
-        for i in range(hf):
-            data[tp1] = tbuf[p] ^ base
-            base = (base + add) % 0x100
-            tp1 -= 2
-            p += 1
-        hf = block_size // 2
-        for i in range(hf):
-            data[tp2] = tbuf[p] ^ base
-            base = (base + add) % 0x100
-            tp2 -= 2
-            p += 1
-        left -= block_size
-
-
-class _Ref:
-    def __init__(self, value):
-        self.value = value
-
-
-def _unlzss_get_bit(buffer, ref_pointer, ref_filter, length):
-    result = 0
-    current = buffer[ref_pointer.value]
-    for i in range(length):
-        result <<= 1
-        if current & ref_filter.value:
-            result |= 0x1
-        ref_filter.value >>= 1
-        if ref_filter.value == 0:
-            ref_pointer.value += 1
-            current = buffer[ref_pointer.value]
-            ref_filter.value = 0x80
-    return result
-
-
-def _unlzss(buffer, decode, length):
-    length -= 2
-    ref_pointer = _Ref(0)
-    ref_filter = _Ref(0x80)
-    dest = 0
-    dic = [0] * 0x2010
-    while ref_pointer.value < length:
-        bits = _unlzss_get_bit(buffer, ref_pointer, ref_filter, 1)
-        if ref_pointer.value >= length:
-            return dest
-        if bits:
-            bits = _unlzss_get_bit(buffer, ref_pointer, ref_filter, 8)
-            if ref_pointer.value >= length:
-                return dest
-            decode[dest] = bits
-            dic[dest & 0x1fff] = bits
-            dest += 1
-        else:
-            bits = _unlzss_get_bit(buffer, ref_pointer, ref_filter, 13)
-            if ref_pointer.value >= length:
-                return dest
-            index = bits - 1
-            bits = _unlzss_get_bit(buffer, ref_pointer, ref_filter, 4)
-            if ref_pointer.value >= length:
-                return dest
-            bits += 3
-            for i in range(bits):
-                dic[dest & 0x1fff] = dic[index + i]
-                decode[dest] = dic[index + i]
-                dest += 1
-    return dest
-
-
 def _Parse06(rep_raw):
-    replay = th06.Th06.from_bytes(bytes(_th06_decrypt(rep_raw[15:], rep_raw[14])))
+    cryptdata = bytearray(rep_raw[15:])
+    td.decrypt06(cryptdata, rep_raw[14])
+    replay = th06.Th06.from_bytes(cryptdata)
     
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
     
@@ -141,14 +58,11 @@ def _Parse06(rep_raw):
 
 
 def _Parse07(rep_raw):
-    rep_raw = bytes(_th06_decrypt(rep_raw[16:], rep_raw[13]))
-    header = th07_comp.Th07Comp.from_bytes(rep_raw)
-    comp_data = bytearray(header.header.size)
+    comp_data = bytearray(rep_raw[16:])
+    td.decrypt06(comp_data, rep_raw[13])
     #   please don't ask what is going on here
     #   0x54 - 16 = 68
-    _unlzss(rep_raw[68:], comp_data, header.header.comp_size)
-    comp_data = bytearray(16) + rep_raw[0:68] + comp_data
-    replay = th07.Th07.from_bytes(comp_data)
+    replay = th07.Th07.from_bytes(bytearray(16) + comp_data[0:68] + td.unlzss(comp_data[68:]))
 
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"]
     return ReplayInfo(
@@ -163,12 +77,9 @@ def _Parse10(rep_raw):
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
     
-    _decrypt(comp_data, 0x400, 0xaa, 0xe1)
-    _decrypt(comp_data, 0x80, 0x3d, 0x7a)
-    decodedata = bytearray(header.main.size)
-    _unlzss(comp_data, decodedata, header.main.comp_size)
-    
-    replay = th10.Th10.from_bytes(decodedata)
+    td.decrypt(comp_data, 0x400, 0xaa, 0xe1)
+    td.decrypt(comp_data, 0x80, 0x3d, 0x7a)
+    replay = th10.Th10.from_bytes(td.unlzss(comp_data))
     
     shots = ["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"]
       
