@@ -263,7 +263,7 @@ def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, sho
     if difficulty is not None:
         if difficulty < 0 or difficulty >= game.num_difficulties:
             raise Http404()
-        all_scores = all_scores.filter(difficulty=difficulty)
+        all_replays = all_replays.filter(difficulty=difficulty)
         extra_params['difficulty'] = difficulty
         extra_params['difficulty_name'] = game_ids.GetDifficultyName(game.game_id, difficulty)
 
@@ -392,5 +392,4 @@ def PublishReplayWithoutFile(user, difficulty: int, shot: models.Shot, points: i
         is_good=True
     )
     replay_instance.save()
-    replay_file_instance.save()
     return replay_instance
