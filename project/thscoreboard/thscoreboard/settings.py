@@ -58,7 +58,7 @@ USE_HTTPS_IN_EMAIL_LINKS = os.environ.get('USE_HTTPS_IN_EMAIL_LINKS') == 'Yes'
 
 INSTALLED_APPS = [
     'shared_content.apps.SharedContentConfig',
-    'scores.apps.ScoresConfig',
+    'replays.apps.ReplaysConfig',
     'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
