@@ -1,5 +1,7 @@
 """Various human-readable game IDs, used in low-level libraries like game_ids.py."""
 
+from django.utils.translation import gettext as _
+
 
 class GameIDs:
     TH05 = 'th05'
@@ -9,28 +11,30 @@ class GameIDs:
 
 
 def GetGameName(game_id: str, short=False):
+    # Believe it or not, this really is the best way I found to do this.
+    # Having the translation strings on different lines makes it so that they
+    # are all automatically detected by "makemessages".
     if game_id == GameIDs.TH05:
         if short:
-            return 'th05'
+            return _('th05')
         else:
-            return '東方怪綺談 - Mystic Square'
+            return _('東方怪綺談 - Mystic Square')
     if game_id == GameIDs.TH06:
         if short:
-            return 'th06'
+            return _('th06')
         else:
-            return '東方紅魔郷 - Embodiment of Scarlet Devil'
+            return _('東方紅魔郷 - Embodiment of Scarlet Devil')
     if game_id == GameIDs.TH07:
         if short:
-            return 'th07'
+            return _('th07')
         else:
-            # we're replacing this file anyway so
-            return 'perfect cherry blossom'
+            return _('東方妖々夢 - Perfect Cherry Blossom')
     if game_id == GameIDs.TH10:
         if short:
-            return 'th10'
+            return _('th10')
         else:
-            return "東方風神録 - Mountain of Faith"
-    return 'Unknown game (bug!)'
+            return _('東方風神録 - Mountain of Faith')
+    return _('Unknown game (bug!)')
 
 
 def GetShotName(game_id: str, shot_id: str):

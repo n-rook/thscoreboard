@@ -17,10 +17,10 @@ if not IS_PROD:
     import dotenv
     dotenv.load_dotenv()
 
-
 from pathlib import Path
 
 import dj_database_url
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -56,6 +56,8 @@ USE_HTTPS_IN_EMAIL_LINKS = os.environ.get('USE_HTTPS_IN_EMAIL_LINKS') == 'Yes'
 
 # Application definition
 
+DEV_ONLY_APPS = ['rosetta']
+
 INSTALLED_APPS = [
     'shared_content.apps.SharedContentConfig',
     'replays.apps.ReplaysConfig',
@@ -67,12 +69,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sass_processor',
-]
+] + (DEV_ONLY_APPS if DEBUG else [])
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -110,7 +113,7 @@ LOGGING = {
     },
     'root': {
         'handlers': ['console'],
-        'level': 'INFO',
+        'level': 'DEBUG',
     },
 }
 
@@ -161,6 +164,15 @@ AUTH_USER_MODEL = 'users.User'
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+
+LANGUAGES = [
+    ('en-us', _('English')),
+    ('ja', _('Japanese')),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale'
+]
 
 TIME_ZONE = 'UTC'
 
