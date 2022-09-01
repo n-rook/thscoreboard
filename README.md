@@ -27,3 +27,53 @@ email if the user forgot their password and needs to reset it.
 By default, in a development provider, we use the "Console" email backend.
 This backend "sends" emails by logging them to the console. Obviously this
 is not super realistic, but it should be good enough for most purposes.
+
+### Translation and localization
+
+Silent Selene supports two languages: English and Japanese. In order to deal with
+language files, you must install "gettext". This package is available here for Windows:
+
+https://mlocati.github.io/articles/gettext-iconv-windows.html
+
+For details on Django translations, see this page:
+
+https://docs.djangoproject.com/en/4.1/topics/i18n/translation/
+
+The basics, though, are as follows. To mark a string as being translated in
+code, use a function from "django.utils.translation." Usually this is as follows:
+
+```
+from django.utils.translation import gettext as _
+
+...
+return _('something to be translated')
+```
+
+But there are advanced features, too.
+
+You can also mark strings as being for translation in templates, too:
+
+https://docs.djangoproject.com/en/4.1/topics/i18n/translation/#internationalization-in-template-code
+
+In the future, we should just mark everything as being for translation.
+
+These translations are defined in `.po` files in the locale directory. You can
+edit them by hand, but it is easier to use a special editor for them. I've
+added the "django-rosetta" app to this site; it is an editor you can access by
+running "runserver" and then going to /rosetta on your local page. (It is not
+included in the prod release.) I have no special attachment to django-rosetta;
+I would not be surprised if we found a better editor later.
+
+To add new strings-to-be-translated to the .po files, run `python manage.py makemessages --all`. This updates the .po files to include the new strings.
+
+The .po files must be compiled into .mo files with "python manage.py compilemessages"
+in order to be used. It's probably a good idea to rerun this command whenever you
+need to edit the translations.
+
+(At some point, we should probably install a Git hook to do this, too.)
+
+The easiest way to tell if translations are working properly is to look at the
+score table; the games will be abbreviated in the style of "EoSD" if the
+names are translated into English, but will be in the style of "th06" otherwise.
+
+There isn't a hook yet to actually switch the language to Japanese.

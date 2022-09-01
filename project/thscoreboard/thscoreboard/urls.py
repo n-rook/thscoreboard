@@ -13,9 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+import logging
+
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, re_path, path
 from replays import views
+from thscoreboard import settings
 
 urlpatterns = [
     path('users/', include('users.urls')),
@@ -23,3 +27,11 @@ urlpatterns = [
     path('replays/', include('replays.urls')),
     path('admin/', admin.site.urls),
 ]
+
+# Install django-rosetta if (and only if) it is listed as an installed app.
+# This should not be the case in prod.
+if 'rosetta' in settings.INSTALLED_APPS:
+    logging.info('Including django-rosetta at /rosetta')
+    urlpatterns += [
+        re_path(r'^rosetta/', include('rosetta.urls'))
+    ]
