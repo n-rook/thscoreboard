@@ -217,8 +217,6 @@ def replay_details(request, game_id: str, replay_id: int):
         'replay': replay_instance,
         'is_owner': request.user == replay_instance.user,
     }
-    if hasattr(replay_instance, 'replayfile'):
-        context['replay'] = replay_instance.replayfile
 
     return render(request, 'replays/replay_details.html', context)
 

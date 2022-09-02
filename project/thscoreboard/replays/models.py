@@ -142,6 +142,13 @@ class Replay(models.Model):
     clear = models.IntegerField(blank=True, null=True)
 
     spellpracticeid = models.IntegerField(blank=True, null=True)
+    
+    is_good = models.BooleanField()
+    """Whether a replay file can be used unmodified to watch the replay.
+    
+    Even a desynced replay file can be useful to have. For example, maybe the
+    Touhou community will later discover how to fix a certain type of desync.
+    """
 
     def IsVisible(self, viewer: auth.get_user_model()):
         """Returns whether this replay should be visible to this user."""
@@ -248,13 +255,6 @@ class ReplayFile(models.Model):
 
     replay_file = models.BinaryField(max_length=limits.MAX_REPLAY_SIZE, blank=True, null=True)
     """The replay file itself."""
-
-    is_good = models.BooleanField()
-    """Whether a replay file can be used unmodified to watch the replay.
-    
-    Even a desynced replay file can be useful to have. For example, maybe the
-    Touhou community will later discover how to fix a certain type of desync.
-    """
 
 
 class TemporaryReplayFile(models.Model):
