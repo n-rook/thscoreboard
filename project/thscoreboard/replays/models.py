@@ -76,7 +76,7 @@ class Category(models.IntegerChoices):
 class Replay(models.Model):
 
     class Meta:
-        ordering = ['shot', 'difficulty', '-points']
+        ordering = ['shot', 'difficulty', '-score']
 
         constraints = [
             models.CheckConstraint(
@@ -89,14 +89,44 @@ class Replay(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     """The user who uploaded the replay."""
 
-    category = models.IntegerField(choices=Category.choices)
+    #   submission related metadata
 
     created = models.DateTimeField(auto_now_add=True)
     """When the replay was uploaded."""
 
+    category = models.IntegerField(choices=Category.choices)
+
+    video_link = models.TextField(max_length=1000, blank=True, null=True)
+    """A URL to a video site with a recording of the run."""
+
+    comment = models.TextField(max_length=limits.MAX_COMMENT_LENGTH)
+    """A comment the user entered."""
+
+    score = models.BigIntegerField()
+    """The final score of the run. If the run counterstops, this value should contain the post-counterstop score"""
+
+    #   replay metadata
+
+    date = models.DateTimeField()
+    """
+        What to do about replays that don't store year
+        Just have the user enter it manually I guess
+    """
+
+    rep_score = models.BigIntegerField()
+    """ The final score recorded in the replay.
+    
+        This will usually be the same as the score on the Score row, but in some
+        cases it will be different. For example, this will be the max score for
+        counterstop replays.
+    """
+
+    name = models.TextField()
+    """The player name saved in the replay"""
+
     shot = models.ForeignKey('Shot', on_delete=models.PROTECT)
     """The shot type the player used."""
-
+    
     difficulty = models.IntegerField()
     """The difficulty on which the player played."""
     
@@ -107,14 +137,11 @@ class Replay(models.Model):
     def GetDifficultyUrlCode(self):
         return f'd{self.difficulty}'
 
-    points = models.BigIntegerField()
-    """The score of the replay."""
+    slowdown = models.FloatField(blank=True, null=True)
 
-    video_link = models.TextField(max_length=1000)
-    """A URL to a video site with a recording of the run."""
+    clear = models.IntegerField(blank=True, null=True)
 
-    comment = models.TextField(max_length=limits.MAX_COMMENT_LENGTH)
-    """A comment the user entered."""
+    spellpracticeid = models.IntegerField(blank=True, null=True)
 
     def IsVisible(self, viewer: auth.get_user_model()):
         """Returns whether this replay should be visible to this user."""
@@ -141,6 +168,78 @@ class Replay(models.Model):
         )
 
 
+class ReplayStages(models.Model):
+
+    class Meta:
+        constraints = [models.UniqueConstraint('replay', 'stage', name='unique_stage_per_replay')]
+
+    replay = models.OneToOneField('Replay', on_delete=models.CASCADE, primary_key=True)
+
+    stage = models.IntegerField()
+
+    power = models.IntegerField(blank=True, null=True)
+
+    piv = models.IntegerField(blank=True, null=True)
+
+    lives = models.IntegerField(blank=True, null=True)
+
+    life_pieces = models.IntegerField(blank=True, null=True)
+
+    bombs = models.IntegerField(blank=True, null=True)
+
+    bomb_pieces = models.IntegerField(blank=True, null=True)
+
+    graze = models.IntegerField(blank=True, null=True)
+
+    point_items = models.IntegerField(blank=True, null=True)
+
+    """Game specific entries"""
+
+    th06_rank = models.IntegerField(blank=True, null=True)
+
+    th07_cherry = models.IntegerField(blank=True, null=True)
+
+    th07_cherrymax = models.IntegerField(blank=True, null=True)
+
+    th08_time = models.IntegerField(blank=True, null=True)
+
+    th08_human_youkai = models.IntegerField(blank=True, null=True)
+
+    th09_char = models.IntegerField(blank=True, null=True)
+
+    th09_ai = models.IntegerField(blank=True, null=True)
+
+    th12_ufo1 = models.IntegerField(blank=True, null=True)
+
+    th12_ufo2 = models.IntegerField(blank=True, null=True)
+
+    th12_ufo3 = models.IntegerField(blank=True, null=True)
+
+    th125_freeze_area = models.IntegerField(blank=True, null=True)
+
+    extends = models.IntegerField(blank=True, null=True)
+
+    th13_trance = models.IntegerField(blank=True, null=True)
+
+    th14_poc_count = models.IntegerField(blank=True, null=True)
+
+    th14_miss_count = models.IntegerField(blank=True, null=True)
+
+    th16_season = models.IntegerField(blank=True, null=True)
+
+    th17_hyper_fill = models.IntegerField(blank=True, null=True)
+
+    th17_token1 = models.IntegerField(blank=True, null=True)
+
+    th17_token2 = models.IntegerField(blank=True, null=True)
+
+    th17_token3 = models.IntegerField(blank=True, null=True)
+
+    th17_token4 = models.IntegerField(blank=True, null=True)
+
+    th17_token5 = models.IntegerField(blank=True, null=True)
+
+
 class ReplayFile(models.Model):
     """Represents a replay file for a given score."""
 
@@ -155,14 +254,6 @@ class ReplayFile(models.Model):
     
     Even a desynced replay file can be useful to have. For example, maybe the
     Touhou community will later discover how to fix a certain type of desync.
-    """
-
-    points = models.BigIntegerField()
-    """The final score recorded in the replay.
-    
-    This will usually be the same as the score on the Score row, but in some
-    cases it will be different. For example, this will be the max score for
-    counterstop replays.
     """
 
 

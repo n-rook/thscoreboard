@@ -89,7 +89,7 @@ class PublishReplayForm(forms.Form):
 
     difficulty = forms.ChoiceField(choices=difficulty_names)
     shot = ShotField()
-    points = forms.IntegerField(min_value=0)
+    score = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=models.Category.choices)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)
     is_good = forms.BooleanField(initial=True, required=False)
@@ -114,7 +114,7 @@ class PublishReplayWithoutFileForm(forms.Form):
 
     difficulty = forms.ChoiceField(choices=difficulty_names)
     shot = ShotField()
-    points = forms.IntegerField(min_value=0)
+    score = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=models.Category.choices)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)
     video_link = VideoReplayLinkField(required=True)

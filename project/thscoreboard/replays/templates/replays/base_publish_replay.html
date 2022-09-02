@@ -12,8 +12,8 @@
         <label for="{{form.difficulty.id_for_label}}">Difficulty</label>
         {{ form.shot.errors }}
         <label for="{{form.shot.id_for_label}}">Shot</label>
-        {{ form.points.errors }}
-        <label for="{{form.points.id_for_label}}">Score</label>
+        {{ form.score.errors }}
+        <label for="{{form.score.id_for_label}}">Score</label>
         {{ form.category.errors }}
         <label for="{{form.category.id_for_label}}">Category</label>
         {{ form.video_link.errors }}
@@ -31,7 +31,7 @@
     <div class="form-block">
         {{ form.difficulty }}
         {{ form.shot }}
-        {{ form.points }} 
+        {{ form.score }} 
         {{ form.category }} 
         {{ form.video_link }}
     {% if has_replay_file %}

@@ -17,6 +17,8 @@ from . import models
 from . import replay_parsing
 from . import game_ids
 
+import datetime
+
 
 @http_decorators.require_safe
 def index(request):
@@ -127,7 +129,7 @@ def publish_replay(request, temp_replay_id):
                 difficulty=replay_info.difficulty,
                 # shot_id=replay_info.shot,
                 shot=shot_instance,
-                points=form.cleaned_data['points'],
+                score=form.cleaned_data['score'],
                 category=form.cleaned_data['category'],
                 comment=form.cleaned_data['comment'],
                 is_good=form.cleaned_data['is_good'],
@@ -144,7 +146,7 @@ def publish_replay(request, temp_replay_id):
         initial={
             'difficulty': replay_info.difficulty,
             'shot': shot_instance,
-            'points': replay_info.score
+            'score': replay_info.score
         })
     
     return render(
@@ -170,7 +172,7 @@ def publish_replay_no_file(request, game_id: str):
                 user=request.user,
                 difficulty=form.cleaned_data['difficulty'],
                 shot=form.cleaned_data['shot'],
-                points=form.cleaned_data['points'],
+                score=form.cleaned_data['score'],
                 category=form.cleaned_data['category'],
                 comment=form.cleaned_data['comment'],
                 video_link=form.cleaned_data['video_link'],
@@ -257,7 +259,7 @@ def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, sho
         models.Replay.objects.select_related('shot', 'replayfile')
         .filter(category=models.Category.REGULAR)
         .filter(shot__game=game_id)
-        .order_by('-points')
+        .order_by('-score')
     )
     extra_params = {}
     if difficulty is not None:
@@ -355,23 +357,24 @@ def GetReplayOr404(user, replay_id):
 
 
 @transaction.atomic
-def PublishNewReplay(user, difficulty: int, shot: models.Shot, points: int, category: str, comment: str, video_link: str, is_good: bool, temp_replay_instance: models.TemporaryReplayFile, replay_info: replay_parsing.ReplayInfo):
+def PublishNewReplay(user, difficulty: int, shot: models.Shot, score: int, category: str, comment: str, video_link: str, is_good: bool, temp_replay_instance: models.TemporaryReplayFile, replay_info: replay_parsing.ReplayInfo):
     # shot_instance = models.Shot.objects.select_related('game').get(game=game_id, shot_id=shot_id)
 
     replay_instance = models.Replay(
         user=user,
         shot=shot,
         difficulty=difficulty,
-        points=points,
+        score=score,
+        rep_score=score,
         category=category,
         comment=comment,
-        video_link=video_link,
+        date=datetime.datetime.now(tz=None),
+        name="temptest",
     )
     replay_file_instance = models.ReplayFile(
         replay=replay_instance,
         replay_file=temp_replay_instance.replay,
-        is_good=is_good,
-        points=replay_info.score,
+        is_good=is_good
     )
 
     replay_instance.save()
@@ -380,16 +383,18 @@ def PublishNewReplay(user, difficulty: int, shot: models.Shot, points: int, cate
     return replay_instance
 
 
-def PublishReplayWithoutFile(user, difficulty: int, shot: models.Shot, points: int, category: str, comment: str, video_link: str):
+def PublishReplayWithoutFile(user, difficulty: int, shot: models.Shot, score: int, category: str, comment: str, video_link: str):
     replay_instance = models.Replay(
         user=user,
         shot=shot,
         difficulty=difficulty,
-        points=points,
+        score=score,
+        rep_score=score,
         category=category,
         comment=comment,
+        date=datetime.datetime.now(tz=None),
+        name="temptest",
         video_link=video_link,
-        is_good=True
     )
     replay_instance.save()
     return replay_instance
