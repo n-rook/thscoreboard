@@ -7,8 +7,8 @@
         Total score: <span class="replay-points">{{ replay.points }}</span>
     </div>
     <div>
-    {% if replay %}
-    {% if replay.is_good %}
+    {% if has_replay_file %}
+    {% if replay_file_is_good %}
         <a href="/replays/{{ game_id }}/{{ replay.id }}/download">Download replay</a>
     {% else %}
         <div>Be aware, this replay desyncs!</div>
