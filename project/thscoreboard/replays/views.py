@@ -216,7 +216,10 @@ def replay_details(request, game_id: str, replay_id: int):
         'is_owner': request.user == replay_instance.user,
     }
     if hasattr(replay_instance, 'replayfile'):
-        context['replay'] = replay_instance.replayfile
+        context['has_replay_file'] = True
+        context['replay_file_is_good'] = replay_instance.replayfile.is_good
+    else:
+        context['has_replay_file'] = False
 
     return render(request, 'replays/replay_details.html', context)
 
@@ -388,8 +391,7 @@ def PublishReplayWithoutFile(user, difficulty: int, shot: models.Shot, points: i
         points=points,
         category=category,
         comment=comment,
-        video_link=video_link,
-        is_good=True
+        video_link=video_link
     )
     replay_instance.save()
     return replay_instance
