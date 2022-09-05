@@ -18,12 +18,12 @@ import logging
 
 from django.contrib import admin
 from django.urls import include, re_path, path
-from replays import views
+from replays.views import index
 from thscoreboard import settings
 
 urlpatterns = [
     path('users/', include('users.urls')),
-    path('', views.index),
+    path('', index.index),
     path('replays/', include('replays.urls')),
     path('admin/', admin.site.urls),
 ]
