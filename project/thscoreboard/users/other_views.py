@@ -1,4 +1,5 @@
 """Defines views for user and account management."""
+# TODO: Separate views in different files and put in views/.
 
 from typing import Optional
 from django.http import HttpResponseRedirect

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<h2>{% translate "My Profile" %}</h2>
+
+<form method="post" class="form-flex">
+    {% csrf_token %}
+
+    <div class="form-body form-body-profile">
+        <div class="form-block">
+            <label for="{{form.username.id_for_label}}">{{form.username.label}}</label>
+            <label for="{{form.password.id_for_label}}">{{form.password.label}}</label>
+            <label for="{{form.email.id_for_label}}">{{form.email.label}}</label>
+        </div>
+        <div class="form-block">
+            {{ form.username }}
+            {{ form.password }}
+            {{ form.email }}
+        </div>
+    </div>
+</form>
+
+{% endblock %}

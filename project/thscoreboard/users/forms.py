@@ -54,3 +54,17 @@ class RegisterForm(forms.Form):
 
 class RegisterFormWithPasscode(RegisterForm):
     passcode = forms.CharField(label='passcode', max_length=200)
+
+
+class UserProfileForm(forms.Form):
+    username = forms.CharField(label=_('Username'), disabled=True)
+    password = forms.CharField(
+        label=_('Password'),
+        disabled=True,
+        widget=forms.PasswordInput(
+            # Display a placeholder field for the user's password.
+            # Obviously, we won't display their real password, since we don't
+            # even know it.
+            attrs={'placeholder': '●●●●●●●●'}
+        ))
+    email = forms.EmailField(label=_('Email address'), disabled=True)
