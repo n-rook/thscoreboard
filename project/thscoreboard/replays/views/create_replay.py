@@ -1,5 +1,6 @@
 """Views related to creating a replay file."""
 
+from datetime import datetime
 import logging
 
 from django.http import Http404
@@ -192,6 +193,7 @@ def PublishNewReplay(user, difficulty: int, shot: models.Shot, points: int, cate
         video_link=video_link,
         is_good=is_good,
         rep_points=replay_info.score,
+        timestamp=replay_info.timestamp
     )
     replay_file_instance = models.ReplayFile(
         replay=replay_instance,
@@ -212,7 +214,9 @@ def PublishReplayWithoutFile(user, difficulty: int, shot: models.Shot, points: i
         points=points,
         category=category,
         comment=comment,
-        video_link=video_link
+        video_link=video_link,
+        timestamp=datetime.now(),
+        rep_points=points
     )
     replay_instance.save()
     return replay_instance

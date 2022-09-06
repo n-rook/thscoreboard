@@ -1,6 +1,7 @@
 """Parsing and gleaning information from individual replay files."""
 
 from dataclasses import dataclass
+from datetime import datetime
 import logging
 
 from . import game_ids
@@ -34,6 +35,7 @@ class ReplayInfo:
     shot: str
     difficulty: int
     score: int
+    timestamp: datetime
 
     # def GetShotId(self):
     #     """Get the integer shot ID suitable for the database."""
@@ -53,7 +55,8 @@ def _Parse06(rep_raw):
         game_ids.GameIDs.TH06,
         shots[rep_raw[6]],
         rep_raw[7],
-        replay.header.score
+        replay.header.score,
+        datetime.strptime(replay.header.date, "%m/%d/%y")
     )
 
 
@@ -69,7 +72,8 @@ def _Parse07(rep_raw):
         game_ids.GameIDs.TH07,
         shots[replay.header.shot],
         replay.header.difficulty,
-        replay.header.score * 10
+        replay.header.score * 10,
+        datetime.strptime(replay.header.date, "%m/%d")
     )
 
 
@@ -87,7 +91,8 @@ def _Parse10(rep_raw):
         game_ids.GameIDs.TH10,
         shots[replay.header.shot],
         replay.header.difficulty,
-        replay.header.score * 10
+        replay.header.score * 10,
+        datetime.fromtimestamp(replay.header.timestamp)
     )
 
 
