@@ -115,14 +115,18 @@ class Replay(models.Model):
     
     Even a desynced replay file can be useful to have. For example, maybe the
     Touhou community will later discover how to fix a certain type of desync.
+
+    If this submission has no replay file, this field will be null.
     """
 
-    rep_points = models.BigIntegerField()
+    rep_points = models.BigIntegerField(blank=True, null=True)
     """The final score recorded in the replay.
     
     This will usually be the same as the score on the Score row, but in some
     cases it will be different. For example, this will be the max score for
     counterstop replays.
+
+    If this submission has no replay file, this field will be null.
     """
 
     video_link = models.TextField(max_length=1000)
