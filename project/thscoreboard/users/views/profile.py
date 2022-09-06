@@ -10,6 +10,7 @@ from django.views.decorators import http as http_decorators
 
 from users import forms
 
+
 @auth_decorators.login_required
 @http_decorators.require_safe
 def profile(request):
