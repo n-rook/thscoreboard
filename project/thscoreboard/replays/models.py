@@ -135,6 +135,9 @@ class Replay(models.Model):
     comment = models.TextField(max_length=limits.MAX_COMMENT_LENGTH)
     """A comment the user entered."""
 
+    timestamp = models.DateTimeField()
+    """Timestamp from the replay"""
+
     def IsVisible(self, viewer: auth.get_user_model()):
         """Returns whether this replay should be visible to this user."""
         # Add a unit test for this
