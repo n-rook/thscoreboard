@@ -131,7 +131,7 @@ class Replay(models.Model):
     comment = models.TextField(max_length=limits.MAX_COMMENT_LENGTH)
     """A comment the user entered."""
 
-    timestamp = models.DateTimeField()
+    timestamp = models.DateTimeField(blank=True, null=True)
     """Timestamp from the replay"""
 
     def IsVisible(self, viewer: auth.get_user_model()):
