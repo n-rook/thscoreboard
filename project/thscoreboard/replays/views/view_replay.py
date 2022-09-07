@@ -25,10 +25,10 @@ def replay_details(request, game_id: str, replay_id: int):
         'game_id': game_id,
         'replay': replay_instance,
         'is_owner': request.user == replay_instance.user,
+        'replay_file_is_good': replay_instance.is_good
     }
     if hasattr(replay_instance, 'replayfile'):
         context['has_replay_file'] = True
-        context['replay_file_is_good'] = replay_instance.replayfile.is_good
     else:
         context['has_replay_file'] = False
 

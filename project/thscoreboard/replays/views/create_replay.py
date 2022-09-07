@@ -190,12 +190,12 @@ def PublishNewReplay(user, difficulty: int, shot: models.Shot, points: int, cate
         category=category,
         comment=comment,
         video_link=video_link,
+        is_good=is_good,
+        rep_points=replay_info.score,
     )
     replay_file_instance = models.ReplayFile(
         replay=replay_instance,
         replay_file=temp_replay_instance.replay,
-        is_good=is_good,
-        points=replay_info.score,
     )
 
     replay_instance.save()

@@ -109,6 +109,25 @@ class Replay(models.Model):
 
     points = models.BigIntegerField()
     """The score of the replay."""
+    
+    is_good = models.BooleanField(blank=True, null=True)
+    """Whether a replay file can be used unmodified to watch the replay.
+    
+    Even a desynced replay file can be useful to have. For example, maybe the
+    Touhou community will later discover how to fix a certain type of desync.
+
+    If this submission has no replay file, this field will be null.
+    """
+
+    rep_points = models.BigIntegerField(blank=True, null=True)
+    """The final score recorded in the replay.
+    
+    This will usually be the same as the score on the Score row, but in some
+    cases it will be different. For example, this will be the max score for
+    counterstop replays.
+
+    If this submission has no replay file, this field will be null.
+    """
 
     video_link = models.TextField(max_length=1000)
     """A URL to a video site with a recording of the run."""
@@ -149,21 +168,6 @@ class ReplayFile(models.Model):
 
     replay_file = models.BinaryField(max_length=limits.MAX_REPLAY_SIZE, blank=True, null=True)
     """The replay file itself."""
-
-    is_good = models.BooleanField()
-    """Whether a replay file can be used unmodified to watch the replay.
-    
-    Even a desynced replay file can be useful to have. For example, maybe the
-    Touhou community will later discover how to fix a certain type of desync.
-    """
-
-    points = models.BigIntegerField()
-    """The final score recorded in the replay.
-    
-    This will usually be the same as the score on the Score row, but in some
-    cases it will be different. For example, this will be the max score for
-    counterstop replays.
-    """
 
 
 class TemporaryReplayFile(models.Model):
