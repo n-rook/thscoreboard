@@ -2,15 +2,17 @@
 from django.contrib.auth import views as auth_views
 from django.urls import path, reverse_lazy
 
-from . import views
+from users import other_views
+from users.views import profile
 
 app_name = 'users'
 
 urlpatterns = [
-    path('register', views.register, name='register'),
-    path('registration_success', views.registration_success, name='registration_success'),
-    path('preregistered', views.preregistered, name='preregistered'),
-    path('verify_email/<str:token>', views.verify_email, name='verify_email'),
+    path('register', other_views.register, name='register'),
+    path('registration_success', other_views.registration_success, name='registration_success'),
+    path('preregistered', other_views.preregistered, name='preregistered'),
+    path('verify_email/<str:token>', other_views.verify_email, name='verify_email'),
+    path('profile', profile.profile, name='profile'),
 
     path(
         'login',
