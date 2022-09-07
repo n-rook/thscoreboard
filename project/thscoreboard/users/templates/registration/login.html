@@ -4,23 +4,32 @@
 
 {% block centered-content %}
 
-<form method="post" class="form-flex">
+<form method="post">
     {% csrf_token %}
     {{ form.non_field_errors }}
-
-    <div class="form-body">
-    <div class="form-block">
-        {{ form.username.errors }}
-        <label for="{{ form.username.id_for_label }}">Username</label>
-        {{ form.password.errors }}
-        <label for="{{ form.password.id_for_label }}">Password</label>
-    </div>
-    <div class="form-block">
-        {{ form.username }}
-        {{ form.password }}
-    </div>
-    </div>
-    <input type="submit" value="Log in" style="margin-top: 5px; max-width: 75px;">
+    
+    <table class="form-table">
+        <th style="width: 100%;"></th>
+        <tr>
+        <td>
+            <label for="{{ form.username.id_for_label }}">Username</label>
+            {{ form.username.errors }}
+        </td>
+        <td>
+            {{ form.username }}
+        </td>
+        </tr>
+        <tr>
+        <td>
+            <label for="{{ form.password.id_for_label }}">Password</label>
+            {{ form.password.errors }}
+        </td>
+        <td>
+            {{ form.password }}
+        </td>
+        </tr>
+    </table>
+    <input type="submit" value="Log in">
 </form>
 
 <p>Forgot your password? <a href="{% url 'users:forgot_password' %}">Reset it here</a>.</p>

@@ -2,45 +2,79 @@
 
 {% block content %}
 {% block pre_replay_form %}{% endblock %}
-<form method="post" class="form-flex">
+<form method="post">
     {% csrf_token %}
     {{ form.non_field_errors }}
 
-    <div class="form-body" style="max-width: 30em;">
-    <div class="form-block">
-        {{ form.difficulty.errors }}
-        <label for="{{form.difficulty.id_for_label}}">Difficulty</label>
-        {{ form.shot.errors }}
-        <label for="{{form.shot.id_for_label}}">Shot</label>
-        {{ form.points.errors }}
-        <label for="{{form.points.id_for_label}}">Score</label>
-        {{ form.category.errors }}
-        <label for="{{form.category.id_for_label}}">Category</label>
-        {{ form.video_link.errors }}
-        <label for="{{form.video_link.id_for_label}}">Video link</label>
-
-        {% if has_replay_file %}
-        {{ form.is_good.errors }}
-        <label for="{{form.is_good.id_for_label}}">No desyncs</label>
-        {% endif %}
-        
-        {{ form.comment.errors }}
-        <label for="{{form.comment.id_for_label}}">Comment</label>
-    </div>
-    
-    <div class="form-block">
-        {{ form.difficulty }}
-        {{ form.shot }}
-        {{ form.points }} 
-        {{ form.category }} 
-        {{ form.video_link }}
+    <table class="form-table">
+        <th style="width: 50%;"></th>
+        <tr>
+        <td>
+            <label for="{{form.difficulty.id_for_label}}">Difficulty</label>
+            {{ form.difficulty.errors }}
+        </td>
+        <td>
+            {{ form.difficulty }}
+        </td>
+        </tr>
+        <tr>
+        <td>
+            <label for="{{form.shot.id_for_label}}">Shot</label>
+            {{ form.shot.errors }}
+        </td>
+        <td>
+            {{ form.shot }}
+        </td>
+        </tr>
+        <tr>
+        <td>
+            <label for="{{form.points.id_for_label}}">Score</label>
+            {{ form.points.errors }}
+        </td>
+        <td>
+            {{ form.points }}
+        </td>
+        </tr>
+        <tr>
+        <td>
+            <label for="{{form.category.id_for_label}}">Category</label>
+            {{ form.category.errors }}
+        </td>
+        <td>
+            {{ form.category }}
+        </td>
+        </tr>
+        <tr>
+        <td>
+            <label for="{{form.video_link.id_for_label}}">Video link</label>
+            {{ form.video_link.errors }}
+        </td>
+        <td>
+            {{ form.video_link }}
+        </td>
+        </tr>
     {% if has_replay_file %}
-        {{ form.is_good }}
-    {% endif %}        
-        {{ form.comment }}
-    </div>
-    </div>
-    <input type="submit" value="Publish Replay" style="margin-top: 5px; max-width: 100px;">
+        <tr>
+        <td>
+            <label for="{{form.is_good.id_for_label}}">No desyncs</label>
+            {{ form.is_good.errors }}
+        </td>
+        <td>
+            {{ form.is_good }}
+        </td>
+        </tr>
+    {% endif %}
+        <tr>
+        <td>
+            <label for="{{form.comment.id_for_label}}">Comment</label>
+            {{ form.comment.errors }}
+        </td>
+        <td>
+            {{ form.comment }}
+        </td>
+        </tr>
+    </table>
+    <input type="submit" value="Publish Replay">
 </form>
 {% block post_replay_form %}{% endblock %}
 {% endblock %}
