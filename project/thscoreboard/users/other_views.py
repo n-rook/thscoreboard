@@ -111,7 +111,12 @@ def verify_email(request, token: str):
         })
 
     if request.method == 'POST':
-        unverified_user.VerifyUser()
+        new_account = unverified_user.VerifyUser()
+        # Log the user in.
+        # Note that this does mean a user with access to the confirmation email
+        # gets to log in. But if they have the user's email account, they could
+        # just do a forgot password anyway.
+        auth.login(request, new_account)
         return redirect('users:registration_success')
     
     return render(request, 'users/verify_email.html', {
