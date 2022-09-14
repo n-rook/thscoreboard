@@ -1,0 +1,15 @@
+[Unit]
+Description=Silent Selene
+After=network.target
+After=postgresql.service
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=silentselene
+WorkingDirectory=/home/silentselene/silentselene/project/thscoreboard/
+ExecStart=/usr/bin/python3 manage.py runserver
+
+[Install]
+WantedBy=multi-user.target
