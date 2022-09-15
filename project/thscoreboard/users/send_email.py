@@ -11,7 +11,7 @@ from thscoreboard import settings
 from . import models
 
 
-_ACCOUNTS_EMAIL = 'accounts@silentselene.net'
+_ACCOUNTS_EMAIL = 'Silent Selene Accounts <accounts@silentselene.net>'
 
 
 def _GetFullyQualifiedLink(request, url_path: str):
