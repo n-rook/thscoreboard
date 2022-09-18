@@ -33,14 +33,11 @@ class Game(models.Model):
     """
 
     def GetName(self):
+        """Get a long name for the game."""
         return game_ids.GetGameName(self.game_id)
 
     def GetShortName(self):
-        """Get a short name for this game.
-        
-        Someday I will figure out how to localize this. Then I will make
-        English speakers get "EoSD" when Japanese speakers get "東方紅魔郷".
-        """
+        """Get a short name for this game, suitable for a column in a table."""
         return game_ids.GetGameName(self.game_id, short=True)
 
 
