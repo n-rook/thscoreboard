@@ -12,8 +12,12 @@ class GameIDsTestCase(test.SimpleTestCase):
         self.assertIn('Embodiment of Scarlet Devil', eosd_name)
 
     def testGetShortName(self):
-        eosd_name = game_ids.GetGameName(game_id=game_ids.GameIDs.TH06, short=True)
-        self.assertEqual('EoSD', eosd_name)
+        # https://github.com/n-rook/thscoreboard/issues/58
+        # gettext doesn't work right on the GitHub bot, so we intentionally
+        # override it with a language for which we don't have translations.
+        with test.override_settings(LANGUAGE_CODE='pt-br'):
+            eosd_name = game_ids.GetGameName(game_id=game_ids.GameIDs.TH06, short=True)
+        self.assertEqual('th06', eosd_name)
 
     def testGetShotName(self):
         shot_name = game_ids.GetShotName(game_id=game_ids.GameIDs.TH06, shot_id='ReimuA')
