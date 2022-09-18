@@ -218,7 +218,6 @@ def PublishNewReplay(user, difficulty: int, shot: models.Shot, points: int, cate
             bomb_pieces=s.bomb_pieces,
             th06_rank=s.th06_rank
         )
-        print(s)
         replay_stage.save()
 
     return replay_instance
