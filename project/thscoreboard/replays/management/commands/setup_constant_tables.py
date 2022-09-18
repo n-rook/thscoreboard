@@ -10,29 +10,29 @@ class Command(BaseCommand):
     help = 'Set up the Game and Shot tables.'
 
     def handle(self, *args, **kwargs):
-        if models.Game.objects.filter(game_id='th10'):
-            logging.info('th10 already created')
-        else:
-            _Create10()
-            logging.info('Created th10')
+        """Set up constant tables in the database."""
+        SetUpConstantTables()
 
-        if models.Game.objects.filter(game_id='th07'):
-            logging.info('th07 already created')
-        else:
-            _Create07()
-            logging.info('Created th07')
 
-        if models.Game.objects.filter(game_id='th06'):
-            logging.info('th06 already loaded')
-        else:
-            _Create06()
-            logging.info('Created th06')
-            
-        if models.Game.objects.filter(game_id='th05'):
-            logging.info('th05 already loaded')
-        else:
-            _Create05()
-            logging.info('Created th05')
+def SetUpConstantTables():
+    """Set up constant tables in the database.
+
+    In addition to the command, this procedure is available here as a
+    separate function, so that tests can call it easily.
+    """
+
+    _CreateIfNotLoaded('th10', _Create10)
+    _CreateIfNotLoaded('th07', _Create07)
+    _CreateIfNotLoaded('th06', _Create06)
+    _CreateIfNotLoaded('th05', _Create05)
+
+
+def _CreateIfNotLoaded(game_id, constant_creation_function):
+    if models.Game.objects.filter(game_id=game_id):
+        logging.info('%s already loaded', game_id)
+    else:
+        constant_creation_function()
+        logging.info('Created %s', game_id)
 
 
 @transaction.atomic
