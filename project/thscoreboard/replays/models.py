@@ -163,6 +163,39 @@ class Replay(models.Model):
         )
 
 
+class ReplayStage(models.Model):
+    """Represents a stage split for a given replay"""
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['replay', 'stage'], name='unique_stage_per_game')]
+
+    replay = models.ForeignKey('Replay', on_delete=models.CASCADE)
+    """The replay this split corresponds to"""
+
+    stage = models.IntegerField()
+    """The stage this split corresponds to in the replay"""
+
+    score = models.BigIntegerField(blank=True, null=True)
+
+    piv = models.IntegerField(blank=True, null=True)
+
+    graze = models.IntegerField(blank=True, null=True)
+
+    point_items = models.IntegerField(blank=True, null=True)
+
+    power = models.IntegerField(blank=True, null=True)
+
+    lives = models.IntegerField(blank=True, null=True)
+
+    life_pieces = models.IntegerField(blank=True, null=True)
+
+    bombs = models.IntegerField(blank=True, null=True)
+
+    bomb_pieces = models.IntegerField(blank=True, null=True)
+
+    th06_rank = models.IntegerField(blank=True, null=True)
+
+
 class ReplayFile(models.Model):
     """Represents a replay file for a given score."""
 

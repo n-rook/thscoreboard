@@ -30,12 +30,28 @@ class UnsupportedReplayError(Error):
 
 
 @dataclass
+class ReplayStage:
+    stage: int = None
+    score: int = None
+    piv: int = None
+    graze: int = None
+    point_items: int = None
+    power: int = None
+    lives: int = None
+    life_pieces: int = None
+    bombs: int = None
+    bomb_pieces: int = None
+    th06_rank: int = None
+
+
+@dataclass
 class ReplayInfo:
     game: str
     shot: str
     difficulty: int
     score: int
     timestamp: datetime
+    stages = []
 
     # def GetShotId(self):
     #     """Get the integer shot ID suitable for the database."""
@@ -50,14 +66,32 @@ def _Parse06(rep_raw):
     replay = th06.Th06.from_bytes(cryptdata)
     
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
+
+    rep_stages = []
+    i = 0
+    for score in replay.stages:
+        if replay.header.stage_offsets[i] != 0:
+            s = ReplayStage()
+            s.stage = i
+            s.score = score.score
+            s.power = score.power
+            s.lives = score.lives
+            s.bombs = score.bombs
+            s.th06_rank = score.rank
+            rep_stages.append(s)
+        i += 1
     
-    return ReplayInfo(
+    r = ReplayInfo(
         game_ids.GameIDs.TH06,
         shots[rep_raw[6]],
         rep_raw[7],
         replay.header.score,
         datetime.strptime(replay.header.date, "%m/%d/%y")
     )
+
+    r.stages = rep_stages
+
+    return r
 
 
 def _Parse07(rep_raw):
@@ -86,14 +120,28 @@ def _Parse10(rep_raw):
     replay = th10.Th10.from_bytes(td.unlzss(comp_data))
     
     shots = ["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"]
-      
-    return ReplayInfo(
+
+    rep_stages = []
+    for stage in replay.stages:
+        s = ReplayStage()
+        s.stage = stage.stage
+        s.score = stage.score
+        s.power = stage.power
+        s.piv = stage.piv
+        s.lives = stage.lives
+        rep_stages.append(s)
+        
+    r = ReplayInfo(
         game_ids.GameIDs.TH10,
         shots[replay.header.shot],
         replay.header.difficulty,
         replay.header.score * 10,
         datetime.fromtimestamp(replay.header.timestamp)
     )
+
+    r.stages = rep_stages
+      
+    return r
 
 
 def Parse(replay):
