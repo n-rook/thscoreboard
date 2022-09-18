@@ -202,6 +202,24 @@ def PublishNewReplay(user, difficulty: int, shot: models.Shot, points: int, cate
     replay_instance.save()
     replay_file_instance.save()
     temp_replay_instance.delete()
+    
+    for s in replay_info.stages:
+        replay_stage = models.ReplayStage(
+            replay=replay_instance,
+            stage=s.stage,
+            score=s.score,
+            piv=s.piv,
+            graze=s.graze,
+            point_items=s.point_items,
+            power=s.power,
+            lives=s.lives,
+            life_pieces=s.life_pieces,
+            bombs=s.bombs,
+            bomb_pieces=s.bomb_pieces,
+            th06_rank=s.th06_rank
+        )
+        replay_stage.save()
+
     return replay_instance
 
 
