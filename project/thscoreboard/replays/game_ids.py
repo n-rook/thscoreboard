@@ -2,6 +2,7 @@
 
 from django.utils.translation import gettext as _, pgettext
 
+
 class GameIDs:
     TH01 = 'th01'
     TH05 = 'th05'
