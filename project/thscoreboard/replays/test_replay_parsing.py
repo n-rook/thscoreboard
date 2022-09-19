@@ -1,5 +1,6 @@
 from os import path
 import unittest
+import logging
 
 from . import replay_parsing
 
@@ -12,39 +13,62 @@ def ParseTestReplay(filename):
 class Th06ReplayTestCase(unittest.TestCase):
     
     def testHard1cc(self):
-        replay_info = ParseTestReplay('th6_hard_1cc.rpy')
-        self.assertEqual(replay_info.game, 'th06')
-        self.assertEqual(replay_info.difficulty, 2)
-        self.assertEqual(replay_info.shot, 'ReimuA')
-        self.assertEqual(replay_info.score, 92245410)
+        logging.info('Testing th06 Hard with th6_hard_1cc.rpy')
+        r = ParseTestReplay('th6_hard_1cc.rpy')
+        self.assertEqual(r.game, 'th06')
+        self.assertEqual(r.difficulty, 2)
+        self.assertEqual(r.shot, 'ReimuA')
+        self.assertEqual(r.score, 92245410)
+
+        self.assertEqual(r.stages[0].stage, 0)
+        self.assertEqual(r.stages[0].score, 5204570)
+        self.assertEqual(r.stages[0].lives, 2)
+        self.assertEqual(r.stages[0].th06_rank, 16)
+
+        self.assertEqual(r.stages[5].stage, 5)
+        self.assertEqual(r.stages[5].score, 92245410)
+        self.assertEqual(r.stages[5].power, 128)
+        self.assertEqual(r.stages[5].lives, 3)
+        self.assertEqual(r.stages[5].bombs, 1)
+        self.assertEqual(r.stages[5].th06_rank, 19)
 
         # 6 stages (Hard 1cc)
         # Final score is 92245410
         # Final resources are 0 lives, 2 bombs
 
     def testExtra(self):
-        replay_info = ParseTestReplay('th6_extra.rpy')
-        self.assertEqual(replay_info.game, 'th06')
-        self.assertEqual(replay_info.difficulty, 4)
-        self.assertEqual(replay_info.shot, 'MarisaA')
-        self.assertEqual(replay_info.score, 181144360)
+        logging.info("Testing th06 Extra with th6_extra.rpy")
+        r = ParseTestReplay('th6_extra.rpy')
+        self.assertEqual(r.game, 'th06')
+        self.assertEqual(r.difficulty, 4)
+        self.assertEqual(r.shot, 'MarisaA')
+        self.assertEqual(r.score, 181144360)
+
+        self.assertEqual(r.stages[0].stage, 6)
+        self.assertEqual(r.stages[0].score, 181144360)
+        self.assertEqual(r.stages[0].power, 0)
+        self.assertEqual(r.stages[0].lives, 2)
+        self.assertEqual(r.stages[0].bombs, 3)
+        self.assertEqual(r.stages[0].th06_rank, 16)
 
 
 class Th07ReplayTestCase(unittest.TestCase):
 
     def testLunatic(self):
-        rpy = ParseTestReplay('th7_lunatic.rpy')
-        self.assertEqual(rpy.game, 'th07')
-        self.assertEqual(rpy.difficulty, 3)
-        self.assertEqual(rpy.shot, "SakuyaB")
-        self.assertEqual(rpy.score, 702864100)
+        logging.info("Testing th07 Lunatic with th7_lunatic.rpy")
+        r = ParseTestReplay('th7_lunatic.rpy')
+        self.assertEqual(r.game, 'th07')
+        self.assertEqual(r.difficulty, 3)
+        self.assertEqual(r.shot, "SakuyaB")
+        self.assertEqual(r.score, 702864100)
 
 
 class Th10ReplayTestCase(unittest.TestCase):
     
     def testNormal(self):
-        rpy = ParseTestReplay('th10_normal.rpy')
-        self.assertEqual(rpy.game, 'th10')
-        self.assertEqual(rpy.difficulty, 1)
-        self.assertEqual(rpy.shot, 'ReimuB')
-        self.assertEqual(rpy.score, 294127890)
+        logging.info("Testing th10 Normal with th10_normal.rpy")
+        r = ParseTestReplay('th10_normal.rpy')
+        self.assertEqual(r.game, 'th10')
+        self.assertEqual(r.difficulty, 1)
+        self.assertEqual(r.shot, 'ReimuB')
+        self.assertEqual(r.score, 294127890)

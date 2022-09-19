@@ -103,13 +103,14 @@ class Th07(KaitaiStruct):
             return self._m_stages
 
         _pos = self._io.pos()
-        self._io.seek(self.file_header.stage_offsets[i])
         self._m_stages = []
         for i in range(7):
             _on = self.file_header.stage_offsets[i]
             if _on == 0:
                 self._m_stages.append(Th07.Dummy(self._io, self, self._root))
             else:
+                #   moving this line here fixes an occasional crash causeed by kaitai-struct's lazy loading
+                self._io.seek(self.file_header.stage_offsets[i])
                 self._m_stages.append(Th07.Stage(self._io, self, self._root))
 
         self._io.seek(_pos)
