@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-31 20:18-0400\n"
-"PO-Revision-Date: 2022-08-30 19:16+0000\n"
-"Last-Translator:   <nrook@nrook.com>\n"
+"POT-Creation-Date: 2022-09-18 20:16-0400\n"
+"PO-Revision-Date: 2022-09-18 20:16+0000\n"
+"Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -18,46 +18,68 @@ msgstr ""
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
 #: .\replays\game_ids.py:19
-msgid "th05"
-msgstr "MS"
+msgid "th01"
+msgstr "HRtP"
 
 #: .\replays\game_ids.py:21
-msgid "東方怪綺談 - Mystic Square"
+msgid "東方靈異伝 - The Highly Responsive to Prayers"
 msgstr ""
 
 #: .\replays\game_ids.py:24
-msgid "th06"
-msgstr "EoSD"
+msgid "th05"
+msgstr "MS"
 
 #: .\replays\game_ids.py:26
-msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
+msgid "東方怪綺談 - Mystic Square"
 msgstr ""
 
 #: .\replays\game_ids.py:29
-msgid "th07"
-msgstr "PCB"
+msgid "th06"
+msgstr "EoSD"
 
 #: .\replays\game_ids.py:31
-msgid "東方妖々夢 - Perfect Cherry Blossom"
+msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
 msgstr ""
 
 #: .\replays\game_ids.py:34
+msgid "th07"
+msgstr "PCB"
+
+#: .\replays\game_ids.py:36
+msgid "東方妖々夢 - Perfect Cherry Blossom"
+msgstr ""
+
+#: .\replays\game_ids.py:39
 msgid "th10"
 msgstr "MoF"
 
-#: .\replays\game_ids.py:36
+#: .\replays\game_ids.py:41
 msgid "東方風神録 - Mountain of Faith"
 msgstr ""
 
-#: .\replays\game_ids.py:37
+#: .\replays\game_ids.py:42
 msgid "Unknown game (bug!)"
 msgstr ""
 
-#: .\thscoreboard\settings.py:169
+#: .\replays\game_ids.py:48
+msgid "Reimu"
+msgstr ""
+
+#: .\replays\game_ids.py:83
+msgctxt "th01 route"
+msgid "Jigoku"
+msgstr ""
+
+#: .\replays\game_ids.py:85
+msgctxt "th01 route"
+msgid "Makai"
+msgstr ""
+
+#: .\thscoreboard\settings.py:177
 msgid "English"
 msgstr ""
 
-#: .\thscoreboard\settings.py:170
+#: .\thscoreboard\settings.py:178
 msgid "Japanese"
 msgstr ""
 
@@ -71,4 +93,20 @@ msgstr ""
 
 #: .\users\forms.py:44
 msgid "An account has already been registered with this email address."
+msgstr ""
+
+#: .\users\forms.py:60
+msgid "Username"
+msgstr ""
+
+#: .\users\forms.py:62
+msgid "Password"
+msgstr ""
+
+#: .\users\forms.py:70
+msgid "Email address"
+msgstr ""
+
+#: .\users\templates\users\profile.html:5
+msgid "My Profile"
 msgstr ""

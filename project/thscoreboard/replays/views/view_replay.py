@@ -32,6 +32,9 @@ def replay_details(request, game_id: str, replay_id: int):
     else:
         context['has_replay_file'] = False
 
+    if replay_instance.route:
+        context['route_name'] = replay_instance.route.GetName()
+
     return render(request, 'replays/replay_details.html', context)
 
 

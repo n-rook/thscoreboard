@@ -42,6 +42,15 @@ class Game(models.Model):
 
 
 class Shot(models.Model):
+    """The character selected by the player.
+    
+    If a game has both "shots" and "subshots", this includes both. For example,
+    in EoSD, Reimu has two Shot rows, "ReimuA" and "ReimuB".
+
+    All games have shots. (This makes a lot of code simpler, since it can
+    assume the presence of a shot type.) If a game does not let the player
+    select a shot, a single row is defined, named after the protagonist.
+    """
 
     class Meta:
         constraints = [models.UniqueConstraint('shot_id', 'game', name='unique_shot_per_game')]
@@ -67,6 +76,40 @@ class Category(models.IntegerChoices):
     TAS = 2
     UNLISTED = 3
     PRIVATE = 4
+
+
+class Route(models.Model):
+    """One of several sets of stages pickable by the player in a run.
+    
+    For example, Imperishable Night has two routes: "Final A" and "Final B".
+
+    The route has to be chosen by the player for the route; for example,
+    the two Stage 4s of IN don't count, because each shot can only face one
+    stage.
+
+    Most games do not have different routes, so they do not have rows in this
+    table.
+    """
+
+    class Meta:
+        constraints = [models.UniqueConstraint('route_id', 'game', name='unique_route_per_game')]
+
+    game = models.ForeignKey('Game', on_delete=models.CASCADE)
+    """The game in which this shot appears."""
+
+    route_id = models.TextField()
+    """A unique ID for the route."""
+
+    order_number = models.IntegerField()
+    """A number used only to order the routes in a game.
+    
+    For example, if two routes have 1 and 2, the route with 1 is listed first,
+    then the route with 2.
+    """
+
+    def GetName(self):
+        """Get a pretty name for this route. Populates the game field."""
+        return game_ids.GetRouteName(self.game.game_id, self.route_id)
 
 
 # Create your models here.
@@ -96,6 +139,9 @@ class Replay(models.Model):
 
     difficulty = models.IntegerField()
     """The difficulty on which the player played."""
+
+    route = models.ForeignKey('Route', on_delete=models.PROTECT, blank=True, null=True)
+    """The route on which the game was played."""
     
     def GetDifficultyName(self):
         """Get a pretty name for this difficulty. Note: Populates shot and game."""

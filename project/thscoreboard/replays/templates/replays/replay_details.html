@@ -2,7 +2,11 @@
 
 {% block content %}
     <h2><a href="/replays/{{ game_id}}">{{ game_name }}</a></h2>
+    {% if route_name %}
+    <h3>{{ difficulty_name }} ({{ route_name }}) — {{ shot_name }}</h3>
+    {% else %}
     <h3>{{ difficulty_name }} — {{ shot_name }}</h3>
+    {% endif %}
     <div class="replay-box">
         Total score: <span class="replay-points">{{ replay.points }}</span>
     </div>
