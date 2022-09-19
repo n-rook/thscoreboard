@@ -175,7 +175,7 @@ class ReplayStage(models.Model):
     stage = models.IntegerField()
     """The stage this split corresponds to in the replay"""
 
-    score = models.BigIntegerField(blank=True, null=True)
+    score = models.BigIntegerField()
 
     piv = models.IntegerField(blank=True, null=True)
 
