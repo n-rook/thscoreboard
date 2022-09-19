@@ -1,8 +1,12 @@
+"""Various forms useful for the replays site."""
+
+from typing import Tuple
 from urllib import parse
 
 from django import forms
 from django.core import exceptions
 
+from . import game_ids
 from . import models
 from . import limits
 
@@ -53,6 +57,14 @@ def _AllowedVideoDomainsValidator(value: str):
         )
 
 
+def _GetDifficultyChoices(game: models.Game) -> Tuple[int, str]:
+    """Return pairs like (0, "Easy") for each difficulty of a game."""
+    return [
+        (i, game_ids.GetDifficultyName(game.game_id, i))
+        for i in range(game.num_difficulties)
+    ]
+
+
 class ShotField(forms.ModelChoiceField):
     """A field defining shot type. You must call set_queryset before using."""
 
@@ -68,6 +80,30 @@ class ShotField(forms.ModelChoiceField):
 
     def label_from_instance(self, obj: models.Shot) -> str:
         return obj.GetName()
+
+
+class RouteField(forms.ModelChoiceField):
+    """A field defining route type. You must call set_queryset before using."""
+
+    def __init__(self):
+        super().__init__(
+            queryset=None,
+            empty_label=None
+        )
+
+    @classmethod
+    def set_queryset(self, field: 'RouteField', game_id: str):
+        field.queryset = models.Route.objects.filter(game=game_id)
+
+    def label_from_instance(self, obj: models.Route) -> str:
+        return obj.GetName()
+    
+    def should_include(self) -> bool:
+        """Whether or not the Route field should be included in the form.
+        
+        Most Touhou games don't have routes, so they don't need this field.
+        """
+        return self.choices
 
 
 class VideoReplayLinkField(forms.URLField):
@@ -107,13 +143,20 @@ class PublishReplayForm(forms.Form):
 
 class PublishReplayWithoutFileForm(forms.Form):
 
-    def __init__(self, *args, game_id: str, **kwargs):
+    def __init__(self, *args, game: models.Game, **kwargs):
         super().__init__(*args, **kwargs)
 
-        ShotField.set_queryset(self.fields['shot'], game_id)
+        ShotField.set_queryset(self.fields['shot'], game.game_id)
+        RouteField.set_queryset(self.fields['route'], game.game_id)
+
+        if not self.fields['route'].should_include():
+            del self.fields['route']
+        
+        self.fields['difficulty'].choices = _GetDifficultyChoices(game)
 
     difficulty = forms.ChoiceField(choices=difficulty_names)
     shot = ShotField()
+    route = RouteField()
     points = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=models.Category.choices)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)

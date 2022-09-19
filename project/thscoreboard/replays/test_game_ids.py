@@ -27,6 +27,10 @@ class GameIDsTestCase(test.SimpleTestCase):
         difficulty_name = game_ids.GetDifficultyName(game_id=game_ids.GameIDs.TH06, difficulty=0)
         self.assertEqual(difficulty_name, 'Easy')
 
+    def testGetRouteName(self):
+        difficulty_name = game_ids.GetRouteName(game_id=game_ids.GameIDs.TH01, route_id='Jigoku')
+        self.assertEqual(difficulty_name, 'Jigoku')
+
 
 class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
 
@@ -68,4 +72,13 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             for shot in shots:
                 self.AssertNoBug(
                     game_ids.GetShotName(game_id=game.game_id, shot_id=shot.shot_id)
+                )
+    
+    def testNoBugRouteNamesForGames(self):
+        games = models.Game.objects.all()
+        for game in games:
+            routes = models.Route.objects.filter(game=game.game_id)
+            for route in routes:
+                self.AssertNoBug(
+                    game_ids.GetRouteName(game_id=game.game_id, route_id=route.route_id)
                 )

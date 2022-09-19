@@ -1,6 +1,7 @@
 """Views related to creating a replay file."""
 
 import logging
+from typing import Optional
 
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
@@ -143,12 +144,13 @@ def publish_replay_no_file(request, game_id: str):
     game = get_object_or_404(models.Game, game_id=game_id, has_replays=False)
 
     if request.method == 'POST':
-        form = forms.PublishReplayWithoutFileForm(request.POST, game_id=game.game_id)
+        form = forms.PublishReplayWithoutFileForm(request.POST, game=game)
         if form.is_valid():
             new_replay = PublishReplayWithoutFile(
                 user=request.user,
                 difficulty=form.cleaned_data['difficulty'],
                 shot=form.cleaned_data['shot'],
+                route=form.cleaned_data.get('route'),  # Passes None if route is not defined.
                 points=form.cleaned_data['points'],
                 category=form.cleaned_data['category'],
                 comment=form.cleaned_data['comment'],
@@ -166,7 +168,7 @@ def publish_replay_no_file(request, game_id: str):
                 }
             )
     
-    form = forms.PublishReplayWithoutFileForm(game_id=game.game_id)
+    form = forms.PublishReplayWithoutFileForm(game=game)
     return render(
         request,
         'replays/publish_no_replay.html',
@@ -205,15 +207,17 @@ def PublishNewReplay(user, difficulty: int, shot: models.Shot, points: int, cate
     return replay_instance
 
 
-def PublishReplayWithoutFile(user, difficulty: int, shot: models.Shot, points: int, category: str, comment: str, video_link: str):
+def PublishReplayWithoutFile(user, difficulty: int, shot: models.Shot, points: int, category: str, comment: str, video_link: str, route: Optional[models.Route]):
     replay_instance = models.Replay(
         user=user,
         shot=shot,
         difficulty=difficulty,
+        route=route,
         points=points,
         category=category,
         comment=comment,
-        video_link=video_link
+        video_link=video_link,
     )
     replay_instance.save()
+
     return replay_instance

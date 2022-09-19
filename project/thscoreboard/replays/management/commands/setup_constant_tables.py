@@ -25,6 +25,7 @@ def SetUpConstantTables():
     _CreateIfNotLoaded('th07', _Create07)
     _CreateIfNotLoaded('th06', _Create06)
     _CreateIfNotLoaded('th05', _Create05)
+    _CreateIfNotLoaded('th01', _Create01)
 
 
 def _CreateIfNotLoaded(game_id, constant_creation_function):
@@ -77,3 +78,18 @@ def _Create05():
     for shot in shots:
         shot_row = models.Shot(game=th05, shot_id=shot)
         shot_row.save()
+
+
+@transaction.atomic
+def _Create01():
+    # No extra in HRtP!
+    th01 = models.Game(game_id='th01', has_replays=False, num_difficulties=4)
+    th01.save()
+
+    shot = models.Shot(game=th01, shot_id='Reimu')
+    shot.save()
+    
+    routes = ['Jigoku', 'Makai']
+    for i, route_id in enumerate(routes):
+        route = models.Route(game=th01, route_id=route_id, order_number=i)
+        route.save()

@@ -26,6 +26,17 @@
             {{ form.shot }}
         </td>
         </tr>
+        {% if form.route %}
+        <tr>
+        <td>
+            <label for="{{form.points.id_for_label}}">Route</label>
+            {{ form.route.errors }}
+        </td>
+        <td>
+            {{ form.route }}
+        </td>
+        </tr>
+        {% endif %}
         <tr>
         <td>
             <label for="{{form.points.id_for_label}}">Score</label>
