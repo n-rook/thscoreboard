@@ -164,7 +164,10 @@ class Replay(models.Model):
 
 
 class ReplayStage(models.Model):
-    """Represents a stage split for a given replay"""
+    """ Represents a stage split for a given replay
+        Most games store the values from the start of the stage
+        TH07 and TH08 store the values from the end of the stage
+    """
 
     class Meta:
         constraints = [models.UniqueConstraint(fields=['replay', 'stage'], name='unique_stage_per_game')]
@@ -173,27 +176,74 @@ class ReplayStage(models.Model):
     """The replay this split corresponds to"""
 
     stage = models.IntegerField()
-    """The stage this split corresponds to in the replay"""
+    """ The stage this split corresponds to in the replay
+        This is 0-indexed, regular stages are numbered in order, typically 0-5, extra is the stage after, usually 6
+        Exceptions:
+            TH08 - the A and B stages bloat the stage numbers, pushing extra back
+            TH09 - there are 9 stages in main game stored as stages 0 - 8
+                    the game stores the stage movement data for the AI, stored as stages 10 - 18
+                    PVP is stored as a separate stage, stage 9 and 19, for player 1 and 2 respectively
+                    all in all there are 40 offsets saved for potential stage data, most unused
+    """
 
     score = models.BigIntegerField()
+    """ The current score stored at this stage"""
 
     piv = models.IntegerField(blank=True, null=True)
+    """ The current PIV stored at this stage
+        This may be named as a different mechanic in some games, but it functions and is stored the same.
+        Games that use this field (and the alternate names if applicable):
+            TH07 - cherry
+            TH10 - faith
+    """
 
     graze = models.IntegerField(blank=True, null=True)
+    """ The current graze stored at this stage
+        Games that use this field:
+            TH07
+    """
 
     point_items = models.IntegerField(blank=True, null=True)
+    """ The number of point items acquired at this stage
+        Games that use this field:
+            TH07
+    """
 
     power = models.IntegerField(blank=True, null=True)
+    """ The player's power at this stage
+        In the modern windows games (TH10 onwards), the displayed power is in a different format to the stored/internal power
+        The formula is (power * 0.05) and is displayed with 2 decimal places. It starts at 1.00 in some games and at 0 in others.
+        Games that use this field:
+            TH06
+            TH07
+            TH10
+    """
 
     lives = models.IntegerField(blank=True, null=True)
+    """ The number of extra lives at this stage
+        Currently, all games use this field.
+        (Photo games and other side games we choose to support won't)
+    """
 
     life_pieces = models.IntegerField(blank=True, null=True)
+    """ The number of life pieces at this stage
+        Games that use this field:
+    """
 
     bombs = models.IntegerField(blank=True, null=True)
+    """ The number of bombs at this stage
+        Games that use this field:
+            TH06
+            TH07
+    """
 
     bomb_pieces = models.IntegerField(blank=True, null=True)
+    """ The number of bomb pieces at this stage
+        Games that use this field:
+    """        
 
     th06_rank = models.IntegerField(blank=True, null=True)
+    """The internal 'rank' value for TH06"""
 
 
 class ReplayFile(models.Model):
