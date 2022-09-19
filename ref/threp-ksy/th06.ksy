@@ -7,7 +7,7 @@ seq:
     type: header
 instances:
   stages:
-    pos: header.stage_offsets[_index]
+    pos: header.stage_offsets[_index] - 15
     type:
       switch-on: header.stage_offsets[_index]
       cases:
