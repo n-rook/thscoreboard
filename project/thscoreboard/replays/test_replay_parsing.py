@@ -25,7 +25,6 @@ class Th06ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.stages[0].lives, 2)
         self.assertEqual(r.stages[0].th06_rank, 16)
 
-
         self.assertEqual(r.stages[5].stage, 5)
         self.assertEqual(r.stages[5].score, 92245410)
         self.assertEqual(r.stages[5].power, 128)

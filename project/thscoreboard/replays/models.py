@@ -240,7 +240,7 @@ class ReplayStage(models.Model):
     bomb_pieces = models.IntegerField(blank=True, null=True)
     """ The number of bomb pieces at this stage
         Games that use this field:
-    """        
+    """
 
     th06_rank = models.IntegerField(blank=True, null=True)
     """The internal 'rank' value for TH06"""
