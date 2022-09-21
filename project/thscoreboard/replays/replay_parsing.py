@@ -42,6 +42,8 @@ class ReplayStage:
     bombs: int = None
     bomb_pieces: int = None
     th06_rank: int = None
+    th07_cherry: int = None
+    tho7_cherrymax: int = None
 
 
 @dataclass
@@ -102,13 +104,36 @@ def _Parse07(rep_raw):
     replay = th07.Th07.from_bytes(bytearray(16) + comp_data[0:68] + td.unlzss(comp_data[68:]))
 
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"]
-    return ReplayInfo(
+
+    rep_stages = []
+
+    i = 0
+    for score in replay.stages:
+        if replay.header.stage_offsets[i] != 0:
+            s = ReplayStage()
+            s.stage = i
+            s.score = score.score * 10
+            s.power = score.power
+            s.lives = score.lives
+            s.bombs = score.bombs
+            s.point_items = score.point_items
+            s.graze = score.graze
+            s.piv = score.piv
+            s.th07_cherry = score.cherry
+            s.th07_cherrymax = score.th07_cherrymax
+            rep_stages.append(s)
+        i += 1
+
+    r = ReplayInfo(
         game_ids.GameIDs.TH07,
         shots[replay.header.shot],
         replay.header.difficulty,
         replay.header.score * 10,
         datetime.strptime(replay.header.date, "%m/%d")
     )
+
+    r.stages = rep_stages
+    return r
 
 
 def _Parse10(rep_raw):

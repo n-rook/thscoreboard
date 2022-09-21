@@ -288,6 +288,12 @@ class ReplayStage(models.Model):
     th06_rank = models.IntegerField(blank=True, null=True)
     """The internal 'rank' value for TH06"""
 
+    th07_cherry = models.IntegerField(blank=True, null=True)
+    """Current cherry value for TH07"""
+
+    th07_cherrymax = models.IntegerField(blank=True, null=True)
+    """Current cherry max for TH07"""
+
 
 class ReplayFile(models.Model):
     """Represents a replay file for a given score."""
