@@ -125,7 +125,7 @@ def _Parse10(rep_raw):
     for stage in replay.stages:
         s = ReplayStage()
         s.stage = stage.stage
-        s.score = stage.score
+        s.score = stage.score * 10
         s.power = stage.power
         s.piv = stage.piv
         s.lives = stage.lives
