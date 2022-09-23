@@ -109,7 +109,7 @@ def _Parse07(rep_raw):
 
     i = 0
     for score in replay.stages:
-        if replay.header.stage_offsets[i] != 0:
+        if replay.file_header.stage_offsets[i] != 0:
             s = ReplayStage()
             s.stage = i
             s.score = score.score * 10
@@ -120,7 +120,7 @@ def _Parse07(rep_raw):
             s.graze = score.graze
             s.piv = score.piv
             s.th07_cherry = score.cherry
-            s.th07_cherrymax = score.th07_cherrymax
+            s.th07_cherrymax = score.cherrymax
             rep_stages.append(s)
         i += 1
 
