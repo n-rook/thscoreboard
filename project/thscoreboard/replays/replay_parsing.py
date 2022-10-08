@@ -43,7 +43,7 @@ class ReplayStage:
     bomb_pieces: int = None
     th06_rank: int = None
     th07_cherry: int = None
-    tho7_cherrymax: int = None
+    th07_cherrymax: int = None
 
 
 @dataclass
@@ -54,12 +54,6 @@ class ReplayInfo:
     score: int
     timestamp: datetime
     stages = []
-
-    # def GetShotId(self):
-    #     """Get the integer shot ID suitable for the database."""
-    #     # This is kind of imprecise; fix up data structures so we don't need to do this.
-    #     if self.game == game_ids.GameIDs.TH06:
-    #         return game_ids.TH06_SHOT_NAME_TO_ID_BIDICT[self.shot]
 
 
 def _Parse06(rep_raw):
@@ -173,7 +167,6 @@ def Parse(replay):
     """Parse a replay file."""
 
     gamecode = replay[:4]
-    logging.info('gamecode %s', gamecode)
 
     if gamecode == b'T6RP':
         return _Parse06(replay)
@@ -182,4 +175,5 @@ def Parse(replay):
     elif gamecode == b't10r':
         return _Parse10(replay)
     else:
+        logging.warning('Failed to comprehend gamecode %s', gamecode)
         raise UnsupportedGameError('This game is unsupported.')
