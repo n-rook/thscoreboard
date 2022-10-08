@@ -1,14 +1,12 @@
 """Views related to creating a replay file."""
 
-from typing import Optional
-
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators import http as http_decorators
 from django.contrib.auth import decorators as auth_decorators
 from django.core.exceptions import ValidationError
-from django.db import transaction
 
+from replays import create_replay
 from replays import forms
 from replays import limits
 from replays import models
@@ -101,11 +99,9 @@ def publish_replay(request, temp_replay_id):
     if request.method == 'POST':
         form = forms.PublishReplayForm(request.POST, game_id=replay_info.game)
         if form.is_valid():
-            new_replay = PublishNewReplay(
+            new_replay = create_replay.PublishNewReplay(
                 user=request.user,
-                # game_id=replay_info.game,
                 difficulty=replay_info.difficulty,
-                # shot_id=replay_info.shot,
                 shot=shot_instance,
                 points=form.cleaned_data['points'],
                 category=form.cleaned_data['category'],
@@ -146,7 +142,7 @@ def publish_replay_no_file(request, game_id: str):
     if request.method == 'POST':
         form = forms.PublishReplayWithoutFileForm(request.POST, game=game)
         if form.is_valid():
-            new_replay = PublishReplayWithoutFile(
+            new_replay = create_replay.PublishReplayWithoutFile(
                 user=request.user,
                 difficulty=form.cleaned_data['difficulty'],
                 shot=form.cleaned_data['shot'],
@@ -178,66 +174,4 @@ def publish_replay_no_file(request, game_id: str):
             'has_replay_file': False
         }
     )
-
-
-@transaction.atomic
-def PublishNewReplay(user, difficulty: int, shot: models.Shot, points: int, category: str, comment: str, video_link: str, is_good: bool, temp_replay_instance: models.TemporaryReplayFile, replay_info: replay_parsing.ReplayInfo):
-    # shot_instance = models.Shot.objects.select_related('game').get(game=game_id, shot_id=shot_id)
-
-    replay_instance = models.Replay(
-        user=user,
-        shot=shot,
-        difficulty=difficulty,
-        points=points,
-        category=category,
-        comment=comment,
-        video_link=video_link,
-        is_good=is_good,
-        rep_points=replay_info.score,
-        timestamp=replay_info.timestamp
-    )
-    replay_file_instance = models.ReplayFile(
-        replay=replay_instance,
-        replay_file=temp_replay_instance.replay,
-    )
-
-    replay_instance.save()
-    replay_file_instance.save()
-    temp_replay_instance.delete()
     
-    for s in replay_info.stages:
-        replay_stage = models.ReplayStage(
-            replay=replay_instance,
-            stage=s.stage,
-            score=s.score,
-            piv=s.piv,
-            graze=s.graze,
-            point_items=s.point_items,
-            power=s.power,
-            lives=s.lives,
-            life_pieces=s.life_pieces,
-            bombs=s.bombs,
-            bomb_pieces=s.bomb_pieces,
-            th06_rank=s.th06_rank,
-            th07_cherry=s.th07_cherry,
-            th07_cherrymax=s.th07_cherrymax
-        )
-        replay_stage.save()
-
-    return replay_instance
-
-
-def PublishReplayWithoutFile(user, difficulty: int, shot: models.Shot, points: int, category: str, comment: str, video_link: str, route: Optional[models.Route]):
-    replay_instance = models.Replay(
-        user=user,
-        shot=shot,
-        difficulty=difficulty,
-        route=route,
-        points=points,
-        category=category,
-        comment=comment,
-        video_link=video_link,
-    )
-    replay_instance.save()
-
-    return replay_instance
