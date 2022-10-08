@@ -77,6 +77,7 @@ class Th07ReplayTestCase(unittest.TestCase):
         self.assertEqual(stage_2.th07_cherry, 29080)
         self.assertEqual(stage_2.th07_cherrymax, 311380)
 
+
 class Th10ReplayTestCase(unittest.TestCase):
     
     def testNormal(self):

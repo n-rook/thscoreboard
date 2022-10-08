@@ -1,6 +1,5 @@
 """Views related to creating a replay file."""
 
-import logging
 from typing import Optional
 
 from django.http import Http404
