@@ -47,7 +47,6 @@ def upload_file(request):
         if form.is_valid():
             try:
                 file_contents = _ReadFile(request.FILES['replay_file'])
-                logging.info('Replay was %s %d', type(file_contents), len(file_contents))
                 _ = _HandleReplay(request, file_contents)
                 # We check that the replay can be parsed, but don't care about its
                 # contents.

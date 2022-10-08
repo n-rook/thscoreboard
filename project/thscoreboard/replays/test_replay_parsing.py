@@ -62,6 +62,20 @@ class Th07ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, "SakuyaB")
         self.assertEqual(r.score, 702864100)
 
+    def testStages(self):
+        r = ParseTestReplay('th7_lunatic.rpy')
+
+        self.assertEqual(len(r.stages), 6)
+        stage_2 = r.stages[1]
+        self.assertEqual(stage_2.score, 68342530)
+        self.assertEqual(stage_2.piv, 92800)
+        self.assertEqual(stage_2.graze, 374)
+        self.assertEqual(stage_2.power, 113)
+        self.assertEqual(stage_2.lives, 2)
+        self.assertEqual(stage_2.bombs, 4)
+        self.assertIsNone(stage_2.th06_rank)
+        self.assertEqual(stage_2.th07_cherry, 29080)
+        self.assertEqual(stage_2.th07_cherrymax, 311380)
 
 class Th10ReplayTestCase(unittest.TestCase):
     
