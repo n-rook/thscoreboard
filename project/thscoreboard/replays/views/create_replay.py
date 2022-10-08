@@ -174,4 +174,3 @@ def publish_replay_no_file(request, game_id: str):
             'has_replay_file': False
         }
     )
-    
