@@ -70,6 +70,7 @@ def upload_file(request):
         form = forms.UploadReplayFileForm()
     
     all_games = models.Game.objects.all()
+    replay_games = [g for g in all_games if g.has_replays]
     no_replay_games = [g for g in all_games if not g.has_replays]
 
     return render(
@@ -78,6 +79,7 @@ def upload_file(request):
         {
             'form': form,
             'all_games': all_games,
+            'replay_games': replay_games,
             'no_replay_games': no_replay_games,
         }
     )

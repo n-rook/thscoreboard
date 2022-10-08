@@ -46,12 +46,14 @@ body
 .light-background
     background-color: #fff3ff
 
+h1
+    font: 550 36px  "EB Garamond", "Times New Roman", serif
+
 h2
     font: 400 32px  "EB Garamond", "Times New Roman", serif
 
 h3
     font: 400 26px  "EB Garamond", "Times New Roman", serif
-
 
 #content
     padding: 8px 12px 8px
@@ -91,12 +93,38 @@ h3
 #simple-centered-content form
     text-align: left
 
+form.inline-form
+    box-sizing: border-box
+    border: medium solid black
+    margin: 2px
+    padding: 8px
+
+    .field-wrapper
+        margin: 4px 2px
+        display: flex
+        flex-direction: column
+        
+        label
+            margin: 4px 0px
+        
+        input
+            margin: 4px 4px
+    
+    input[type=submit]
+        height: 2em
+        width: 100%
+
+form.upload-form
+    width: 350px
+
 table
     table-layout: fixed
     border-collapse: collapse
 
 th, td
     padding: 2px 5px 2px
+
+.form-table-replay
 
 .form-table tbody
     vertical-align: top
