@@ -1,26 +1,40 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
-<h2>Upload a replay</h2>
+<h1>{% translate "Publish a replay" %}</h1>
+<h2>{% translate "Upload a replay file" %}</h2>
 <p>
-    This website is under construction; only some Touhou games are supported.
-    Currently the following games are supported:
-    <ul>東方紅魔郷 - Embodiment of Scarlet Devil (6)</ul>
+    {% translate "Upload a new replay from one of the following games:" %}
+    <ul>
+        {% for game in replay_games %}
+            <li>{{ game.GetName }}</li>
+        {% endfor %}
+    </ul>
+    {% blocktranslate %}
+        This site is still under construction; we hope to support all official
+        Touhou games soon.
+    {% endblocktranslate %}
 </p>
-<p>
 
-</p>
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" class="inline-form upload-form">
     {% csrf_token %}
     {{ form.non_field_errors }}
     <div class="field-wrapper">
         {{ form.replay_file.errors }}
-        <label for="{{form.replay_file.id_for_label}}">Replay File</label>
-        {{ form.replay_file }}
+        <label for="{{form.replay_file.id_for_label}}">{% translate "Choose replay:" %}</label>
+        <input
+            type="file"
+            name="{{form.replay_file.name}}"
+            required
+            id="{{form.replay_file.id_for_label}}"
+            accept=".rpy"
+            >
     </div>
-    <input type="submit" value="Upload Replay">
+
+    <input type="submit" value="Upload">
 </form>
-<h2>Publish a replay for a game without replay files</h2>
+<h2>{% translate "Publish a replay for a game without replay files" %}</h2>
 <ul>
     {% for game in no_replay_games %}
     <li>

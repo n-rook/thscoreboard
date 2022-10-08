@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-18 20:16-0400\n"
+"POT-Creation-Date: 2022-10-08 13:35-0400\n"
 "PO-Revision-Date: 2022-09-18 20:16+0000\n"
 "Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,62 +17,91 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
-#: .\replays\game_ids.py:19
+#: .\replays\game_ids.py:20
 msgid "th01"
 msgstr "HRtP"
 
-#: .\replays\game_ids.py:21
+#: .\replays\game_ids.py:22
 msgid "東方靈異伝 - The Highly Responsive to Prayers"
 msgstr ""
 
-#: .\replays\game_ids.py:24
+#: .\replays\game_ids.py:25
 msgid "th05"
 msgstr "MS"
 
-#: .\replays\game_ids.py:26
+#: .\replays\game_ids.py:27
 msgid "東方怪綺談 - Mystic Square"
 msgstr ""
 
-#: .\replays\game_ids.py:29
+#: .\replays\game_ids.py:30
 msgid "th06"
 msgstr "EoSD"
 
-#: .\replays\game_ids.py:31
+#: .\replays\game_ids.py:32
 msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
 msgstr ""
 
-#: .\replays\game_ids.py:34
+#: .\replays\game_ids.py:35
 msgid "th07"
 msgstr "PCB"
 
-#: .\replays\game_ids.py:36
+#: .\replays\game_ids.py:37
 msgid "東方妖々夢 - Perfect Cherry Blossom"
 msgstr ""
 
-#: .\replays\game_ids.py:39
+#: .\replays\game_ids.py:40
 msgid "th10"
 msgstr "MoF"
 
-#: .\replays\game_ids.py:41
+#: .\replays\game_ids.py:42
 msgid "東方風神録 - Mountain of Faith"
 msgstr ""
 
-#: .\replays\game_ids.py:42
+#: .\replays\game_ids.py:43
 msgid "Unknown game (bug!)"
 msgstr ""
 
-#: .\replays\game_ids.py:48
+#: .\replays\game_ids.py:49
 msgid "Reimu"
 msgstr ""
 
-#: .\replays\game_ids.py:83
+#: .\replays\game_ids.py:84
 msgctxt "th01 route"
 msgid "Jigoku"
 msgstr ""
 
-#: .\replays\game_ids.py:85
+#: .\replays\game_ids.py:86
 msgctxt "th01 route"
 msgid "Makai"
+msgstr ""
+
+#: .\replays\templates\replays\upload.html:5
+msgid "Publish a replay"
+msgstr ""
+
+#: .\replays\templates\replays\upload.html:6
+msgid "Upload a replay file"
+msgstr ""
+
+#: .\replays\templates\replays\upload.html:8
+msgid "Upload a new replay from one of the following games:"
+msgstr ""
+
+#: .\replays\templates\replays\upload.html:14
+msgid ""
+"\n"
+"        This site is still under construction; we hope to support all "
+"official\n"
+"        Touhou games soon.\n"
+"    "
+msgstr ""
+
+#: .\replays\templates\replays\upload.html:25
+msgid "Choose replay:"
+msgstr ""
+
+#: .\replays\templates\replays\upload.html:37
+msgid "Publish a replay for a game without replay files"
 msgstr ""
 
 #: .\thscoreboard\settings.py:177
