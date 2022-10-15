@@ -213,11 +213,19 @@ class Replay(models.Model):
             ascii_only: If True, don't include the username, so that this can
             safely be included in a "filename" Content-Disposition field.
         """
-        return '{gamecode}_{user}_{id}.rpy'.format(
-            gamecode=self.shot.game.game_id,
-            user=self.user.username,
-            id=self.id,
-        )
+        gamecode = self.shot.game.game_id
+
+        if ascii_only:
+            return '{gamecode}_{id}.rpy'.format(
+                gamecode=gamecode,
+                id=self.id
+            )
+        else:
+            return '{gamecode}_{user}_{id}.rpy'.format(
+                gamecode=gamecode,
+                user=self.user.username,
+                id=self.id,
+            )
 
 
 class ReplayStage(models.Model):
