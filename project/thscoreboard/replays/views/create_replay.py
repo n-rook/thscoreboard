@@ -97,13 +97,13 @@ def publish_replay(request, temp_replay_id):
     shot_instance = models.Shot.objects.select_related('game').get(game=replay_info.game, shot_id=replay_info.shot)
 
     if request.method == 'POST':
-        form = forms.PublishReplayForm(request.POST, game_id=replay_info.game)
+        form = forms.PublishReplayForm(request.POST)
         if form.is_valid():
             new_replay = create_replay.PublishNewReplay(
                 user=request.user,
                 difficulty=replay_info.difficulty,
                 shot=shot_instance,
-                points=form.cleaned_data['points'],
+                points=replay_info.score,
                 category=form.cleaned_data['category'],
                 comment=form.cleaned_data['comment'],
                 is_good=form.cleaned_data['is_good'],
@@ -116,18 +116,21 @@ def publish_replay(request, temp_replay_id):
             return render(request, 'replays/publish.html', {'form': form})
 
     form = forms.PublishReplayForm(
-        game_id=replay_info.game,
         initial={
-            'difficulty': replay_info.difficulty,
-            'shot': shot_instance,
             'points': replay_info.score
         })
-    
+
+    # When IN is supported, add "route" here too.
+
     return render(
         request,
         'replays/publish.html',
         {
             'form': form,
+            'game_name': shot_instance.game.GetName(),
+            'difficulty_name': shot_instance.game.GetDifficultyName(replay_info.difficulty),
+            'shot_name': shot_instance.GetName(),
+            'route_name': None,
             'has_replay_file': True,
         }
     )

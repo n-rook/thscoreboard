@@ -120,13 +120,11 @@ class UploadReplayFileForm(forms.Form):
 
 class PublishReplayForm(forms.Form):
 
-    def __init__(self, *args, game_id: str, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        ShotField.set_queryset(self.fields['shot'], game_id)
+        self.fields['points'].widget.attrs.update({'readonly': 'readonly'})
 
-    difficulty = forms.ChoiceField(choices=difficulty_names)
-    shot = ShotField()
     points = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=models.Category.choices)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)
@@ -156,7 +154,7 @@ class PublishReplayWithoutFileForm(forms.Form):
         
         self.fields['difficulty'].choices = _GetDifficultyChoices(game)
 
-    difficulty = forms.ChoiceField(choices=difficulty_names)
+    difficulty = forms.ChoiceField(choices=difficulty_names, initial=1)
     shot = ShotField()
     route = RouteField()
     points = forms.IntegerField(min_value=0)

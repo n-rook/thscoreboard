@@ -1,5 +1,68 @@
-{% extends "replays/base_publish_replay.html" %}
+{% extends "base.html" %}
 
-{% block pre_replay_form %}
-<h2>Finish uploading your replay</h2>
+{% block content %}
+<h1>Finish uploading your replay</h1>
+<h2>{{ game_name }}</h2>
+{% if route_name %}
+<h3>{{ difficulty_name }} ({{ route_name }}) — {{ shot_name }}</h3>
+{% else %}
+<h3>{{ difficulty_name }} — {{ shot_name }}</h3>
+{% endif %}
+
+<form method="post" class="finish-uploading-form">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <table class="form-table">
+        <th style="width: 50%;"></th>
+        <tr>
+        <td>
+            <label for="{{form.points.id_for_label}}">Score</label>
+            {{ form.points.errors }}
+        </td>
+        <td>
+            {{ form.points }}
+        </td>
+        </tr>
+        <tr>
+        <td>
+            <label for="{{form.category.id_for_label}}">Category</label>
+            {{ form.category.errors }}
+        </td>
+        <td>
+            {{ form.category }}
+        </td>
+        </tr>
+        <tr>
+        <td>
+            <label for="{{form.video_link.id_for_label}}">Video link</label>
+            {{ form.video_link.errors }}
+        </td>
+        <td>
+            {{ form.video_link }}
+        </td>
+        </tr>
+    {% if has_replay_file %}
+        <tr>
+        <td>
+            <label for="{{form.is_good.id_for_label}}">No desyncs</label>
+            {{ form.is_good.errors }}
+        </td>
+        <td>
+            {{ form.is_good }}
+        </td>
+        </tr>
+    {% endif %}
+        <tr>
+        <td>
+            <label for="{{form.comment.id_for_label}}">Comment</label>
+            {{ form.comment.errors }}
+        </td>
+        <td>
+            {{ form.comment }}
+        </td>
+        </tr>
+    </table>
+    <input type="submit" value="Publish Replay">
+</form>
 {% endblock %}
