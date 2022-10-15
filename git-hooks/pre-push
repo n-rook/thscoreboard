@@ -1,0 +1,16 @@
+#!/bin/bash
+# Run flake8 before pushing.
+
+set -Eeuo pipefail
+
+pushd ./project/thscoreboard > /dev/null
+
+linter_outcome=0
+flake8 || linter_outcome=$?
+if [ $linter_outcome -ne 0 ]; then
+  echo "flake8 failed; aborting push."
+  echo "You can always skip this with --no-verify."
+fi
+
+popd > /dev/null
+exit $linter_outcome
