@@ -1,13 +1,12 @@
 """Views related to looking at a saved replay."""
 
-from urllib import parse
-
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, Http404
 from django.contrib.auth import decorators as auth_decorators
 from django.views.decorators import http as http_decorators
 from django.shortcuts import redirect, render
 
 from replays import models
+from replays.lib import http_util
 
 
 @http_decorators.require_safe
@@ -51,18 +50,15 @@ def download_replay(request, game_id: str, replay_id: int):
         replay_file_instance = models.ReplayFile.objects.get(replay=replay_instance)
     except models.ReplayFile.DoesNotExist:
         raise ValueError('No replay file for this submission. This should not be possible')
-    
-    content_disposition = 'attachment; filename="{basic_filename}"; filename*={utf8_filename}'.format(
-        basic_filename=replay_instance.GetNiceFilename(ascii_only=True),
-        utf8_filename=parse.quote_plus(replay_instance.GetNiceFilename(), encoding='UTF-8')
+
+    download_headers = http_util.GetDownloadFileHeaders(
+        ascii_filename=replay_instance.GetNiceFilename(ascii_only=True),
+        full_filename=replay_instance.GetNiceFilename(ascii_only=False)
     )
 
     return HttpResponse(
         replay_file_instance.replay_file,
-        headers={
-            'Content-Type': 'application/octet-stream',
-            'Content-Disposition': content_disposition
-        }
+        headers=download_headers
     )
 
 
