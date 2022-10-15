@@ -9,6 +9,7 @@ from . import limits
 
 
 class Game(models.Model):
+    """Represents a single Touhou game."""
 
     class Meta:
         ordering = ['game_id']
@@ -72,10 +73,23 @@ class Shot(models.Model):
     
 
 class Category(models.IntegerChoices):
+    """The category under which a replay is uploaded."""
+
     REGULAR = 1
+    """A normal upload; a legitimate replay played by a real player."""
+
     TAS = 2
+    """A tool-assisted replay."""
+
     UNLISTED = 3
+    """A special replay that isn't listed on the leaderboards.
+    
+    This category is for things like replays of modded games or high-FPS runs;
+    replays that don't fall under the TAS category.
+    """
+
     PRIVATE = 4
+    """A private replay that isn't shown to anyone."""
 
 
 class Route(models.Model):
@@ -112,8 +126,8 @@ class Route(models.Model):
         return game_ids.GetRouteName(self.game.game_id, self.route_id)
 
 
-# Create your models here.
 class Replay(models.Model):
+    """Represents a score recorded on the scoreboard."""
 
     class Meta:
         ordering = ['shot', 'difficulty', '-points']
@@ -125,7 +139,6 @@ class Replay(models.Model):
             ),
         ]
 
-    """Represents a score recorded on the scoreboard."""
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     """The user who uploaded the replay."""
 
@@ -191,7 +204,7 @@ class Replay(models.Model):
 
     def GetNiceFilename(self, ascii_only=False):
         """Returns a nice filename for this replay.
-        
+
         This always returns something, even if this submission does not actually
         have a replay file.
 
@@ -317,6 +330,7 @@ class TemporaryReplayFile(models.Model):
     # But replay files are not that big, so let's deal with that later.
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    """The user who uploaded the temporary replay."""
 
     created = models.DateTimeField(auto_now_add=True)
     """When the replay file was uploaded."""
