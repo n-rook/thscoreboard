@@ -1,3 +1,4 @@
+"""Contains all of the models for the replay site."""
 
 from django.db import models
 from django.contrib import auth
