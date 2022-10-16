@@ -41,6 +41,10 @@ class Game(models.Model):
     def GetShortName(self):
         """Get a short name for this game, suitable for a column in a table."""
         return game_ids.GetGameName(self.game_id, short=True)
+    
+    def GetDifficultyName(self, difficulty: int) -> str:
+        """Gets the name of a difficulty in this game."""
+        return game_ids.GetDifficultyName(self.game_id, difficulty)
 
 
 class Shot(models.Model):
