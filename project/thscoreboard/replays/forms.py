@@ -123,9 +123,9 @@ class PublishReplayForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['points'].widget.attrs.update({'readonly': 'readonly'})
+        self.fields['score'].widget.attrs.update({'readonly': 'readonly'})
 
-    points = forms.IntegerField(min_value=0)
+    score = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=models.Category.choices)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)
     is_good = forms.BooleanField(initial=True, required=False)
@@ -157,7 +157,7 @@ class PublishReplayWithoutFileForm(forms.Form):
     difficulty = forms.ChoiceField(choices=difficulty_names, initial=1)
     shot = ShotField()
     route = RouteField()
-    points = forms.IntegerField(min_value=0)
+    score = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=models.Category.choices)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)
     video_link = VideoReplayLinkField(required=True)

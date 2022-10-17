@@ -103,7 +103,7 @@ def publish_replay(request, temp_replay_id):
                 user=request.user,
                 difficulty=replay_info.difficulty,
                 shot=shot_instance,
-                points=replay_info.score,
+                score=replay_info.score,
                 category=form.cleaned_data['category'],
                 comment=form.cleaned_data['comment'],
                 is_good=form.cleaned_data['is_good'],
@@ -117,7 +117,7 @@ def publish_replay(request, temp_replay_id):
 
     form = forms.PublishReplayForm(
         initial={
-            'points': replay_info.score
+            'score': replay_info.score
         })
 
     # When IN is supported, add "route" here too.
@@ -150,7 +150,7 @@ def publish_replay_no_file(request, game_id: str):
                 difficulty=form.cleaned_data['difficulty'],
                 shot=form.cleaned_data['shot'],
                 route=form.cleaned_data.get('route'),  # Passes None if route is not defined.
-                points=form.cleaned_data['points'],
+                score=form.cleaned_data['score'],
                 category=form.cleaned_data['category'],
                 comment=form.cleaned_data['comment'],
                 video_link=form.cleaned_data['video_link'],
