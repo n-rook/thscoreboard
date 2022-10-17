@@ -24,6 +24,7 @@
         </tr>
     </thead>
     <tbody>
+    {% load humanize %}
     {% for replay in replays %}
         <tr>
             <td>
@@ -41,7 +42,7 @@
                 <a href="/replays/{{replay.shot.game.game_id}}/d{{replay.rep_difficulty}}/{{replay.shot.shot_id}}">{{replay.shot.GetName}}</a>
             </td>
             <td>
-                <a href="/replays/{{replay.shot.game.game_id}}/{{replay.id}}">{{replay.points}}</a>
+                <a href="/replays/{{replay.shot.game.game_id}}/{{replay.id}}">{{replay.points|intcomma}}</a>
             </td>
             <td>
                 {{replay.created | date:"Y-m-d"}}
