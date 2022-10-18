@@ -12,7 +12,7 @@ from replays import replay_parsing
 
 
 @transaction.atomic
-def PublishNewReplay(user, difficulty: int, shot: models.Shot, points: int, category: str, comment: str, video_link: str, is_good: bool, temp_replay_instance: models.TemporaryReplayFile, replay_info: replay_parsing.ReplayInfo):
+def PublishNewReplay(user, difficulty: int, shot: models.Shot, score: int, category: str, comment: str, video_link: str, is_good: bool, temp_replay_instance: models.TemporaryReplayFile, replay_info: replay_parsing.ReplayInfo):
     """Publish a new replay file.
 
     This creates a new Replay row, as well as rows in related tables like
@@ -22,7 +22,7 @@ def PublishNewReplay(user, difficulty: int, shot: models.Shot, points: int, cate
         user: The User object who will own the new replay.
         difficulty: The difficulty of the new replay.
         shot: The Shot model instance for the replay.
-        points: How many points the run had at its end.
+        score: What score the run had at its end.
         category: The category for the replay (whether it's TAS, unlisted, etc.)
         comment: A string comment describing the replay from its creator.
         video_link: An optional link to a video of the replay.
@@ -40,12 +40,12 @@ def PublishNewReplay(user, difficulty: int, shot: models.Shot, points: int, cate
         user=user,
         shot=shot,
         difficulty=difficulty,
-        points=points,
+        score=score,
         category=category,
         comment=comment,
         video_link=video_link,
         is_good=is_good,
-        rep_points=replay_info.score,
+        rep_score=replay_info.score,
         timestamp=replay_info.timestamp
     )
     replay_file_instance = models.ReplayFile(
@@ -79,14 +79,14 @@ def PublishNewReplay(user, difficulty: int, shot: models.Shot, points: int, cate
     return replay_instance
 
 
-def PublishReplayWithoutFile(user, difficulty: int, shot: models.Shot, points: int, category: str, comment: str, video_link: str, route: Optional[models.Route]):
+def PublishReplayWithoutFile(user, difficulty: int, shot: models.Shot, score: int, category: str, comment: str, video_link: str, route: Optional[models.Route]):
     """Create a new Replay for a game in which replay files don't exist.
     
     Args:
         user: The User object who will own the new replay.
         difficulty: The difficulty of the new replay.
         shot: The Shot model instance for the replay.
-        points: How many points the run had at its end.
+        score: What score the run had at its end.
         category: The category for the replay (whether it's TAS, unlisted, etc.)
         comment: A string comment describing the replay from its creator.
         video_link: A link to a video of the replay.
@@ -102,7 +102,7 @@ def PublishReplayWithoutFile(user, difficulty: int, shot: models.Shot, points: i
         shot=shot,
         difficulty=difficulty,
         route=route,
-        points=points,
+        score=score,
         category=category,
         comment=comment,
         video_link=video_link,

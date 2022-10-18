@@ -24,7 +24,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             user=self.user,
             difficulty=1,
             shot=shot,
-            points=10000,
+            score=10000,
             category=models.Category.REGULAR,
             comment='Hello',
             video_link='https://www.youtube.com/example',
@@ -34,8 +34,8 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertEqual(new_replay.user, self.user)
         self.assertEqual(new_replay.GetDifficultyName(), 'Normal')
         self.assertEqual(new_replay.shot, shot)
-        self.assertEqual(new_replay.points, 10000)
-        self.assertIsNone(new_replay.rep_points)
+        self.assertEqual(new_replay.score, 10000)
+        self.assertIsNone(new_replay.rep_score)
         self.assertEqual(new_replay.video_link, 'https://www.youtube.com/example')
         self.assertEqual(new_replay.comment, 'Hello')
 
@@ -61,7 +61,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             user=self.user,
             difficulty=3,
             shot=shot,
-            points=294127890,
+            score=294127890,
             category=models.Category.REGULAR,
             comment='Hello',
             video_link='',
@@ -73,8 +73,8 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertEqual(new_replay.user, self.user)
         self.assertEqual(new_replay.GetDifficultyName(), 'Lunatic')
         self.assertEqual(new_replay.shot, shot)
-        self.assertEqual(new_replay.points, 294127890)
-        self.assertEqual(new_replay.rep_points, 294127890)
+        self.assertEqual(new_replay.score, 294127890)
+        self.assertEqual(new_replay.rep_score, 294127890)
         self.assertEqual(new_replay.category, models.Category.REGULAR)
         self.assertEqual(new_replay.comment, 'Hello')
 
@@ -98,7 +98,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             user=self.user,
             difficulty=3,
             shot=shot,
-            points=294127890,
+            score=294127890,
             category=models.Category.REGULAR,
             comment='',
             video_link='',

@@ -18,7 +18,7 @@ def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, sho
         models.Replay.objects.select_related('shot', 'replayfile')
         .filter(category=models.Category.REGULAR)
         .filter(shot__game=game_id)
-        .order_by('-points')
+        .order_by('-score')
     )
     extra_params = {}
     if difficulty is not None:
