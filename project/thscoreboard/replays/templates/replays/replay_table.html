@@ -1,3 +1,4 @@
+{% load humanize %}
 <table class="replay-table">
     <thead>
         <tr>
@@ -41,7 +42,7 @@
                 <a href="/replays/{{replay.shot.game.game_id}}/d{{replay.rep_difficulty}}/{{replay.shot.shot_id}}">{{replay.shot.GetName}}</a>
             </td>
             <td>
-                <a href="/replays/{{replay.shot.game.game_id}}/{{replay.id}}">{{replay.score}}</a>
+                <a href="/replays/{{replay.shot.game.game_id}}/{{replay.id}}">{{replay.score|intcomma}}</a>
             </td>
             <td>
                 {{replay.created | date:"Y-m-d"}}
