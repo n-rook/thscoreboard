@@ -135,7 +135,7 @@ class Replay(models.Model):
     """Represents a score recorded on the scoreboard."""
 
     class Meta:
-        ordering = ['shot', 'difficulty', '-points']
+        ordering = ['shot', 'difficulty', '-score']
 
         constraints = [
             models.CheckConstraint(
@@ -168,7 +168,7 @@ class Replay(models.Model):
     def GetDifficultyUrlCode(self):
         return f'd{self.difficulty}'
 
-    points = models.BigIntegerField()
+    score = models.BigIntegerField()
     """The score of the replay."""
     
     is_good = models.BooleanField(blank=True, null=True)
@@ -180,7 +180,7 @@ class Replay(models.Model):
     If this submission has no replay file, this field will be null.
     """
 
-    rep_points = models.BigIntegerField(blank=True, null=True)
+    rep_score = models.BigIntegerField(blank=True, null=True)
     """The final score recorded in the replay.
     
     This will usually be the same as the score on the Score row, but in some

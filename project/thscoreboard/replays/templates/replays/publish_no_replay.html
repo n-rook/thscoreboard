@@ -31,7 +31,7 @@
         {% if form.route %}
         <tr>
         <td>
-            <label for="{{form.points.id_for_label}}">Route</label>
+            <label for="{{form.score.id_for_label}}">Route</label>
             {{ form.route.errors }}
         </td>
         <td>
@@ -41,11 +41,11 @@
         {% endif %}
         <tr>
         <td>
-            <label for="{{form.points.id_for_label}}">Score</label>
-            {{ form.points.errors }}
+            <label for="{{form.score.id_for_label}}">Score</label>
+            {{ form.score.errors }}
         </td>
         <td>
-            {{ form.points }}
+            {{ form.score }}
         </td>
         </tr>
         <tr>
