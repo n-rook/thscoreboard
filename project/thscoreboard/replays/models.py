@@ -1,7 +1,11 @@
 """Contains all of the models for the replay site."""
 
+import datetime
+import logging
+
 from django.db import models
 from django.contrib import auth
+from django.utils import timezone
 
 from thscoreboard import settings
 
@@ -17,7 +21,7 @@ class Game(models.Model):
 
     game_id = models.TextField(primary_key=True)
     """A unique ID for the game, based on its number.
-    
+
     For example, Touhou 6 is th06.
     """
 
@@ -26,7 +30,7 @@ class Game(models.Model):
 
     num_difficulties = models.IntegerField()
     """The number of difficulties the game has.
-    
+
     For the vast majority of Touhou games, this is 5: Easy, Normal, Hard,
     Lunatic, and Extra.
 
@@ -41,7 +45,7 @@ class Game(models.Model):
     def GetShortName(self):
         """Get a short name for this game, suitable for a column in a table."""
         return game_ids.GetGameName(self.game_id, short=True)
-    
+
     def GetDifficultyName(self, difficulty: int) -> str:
         """Gets the name of a difficulty in this game."""
         return game_ids.GetDifficultyName(self.game_id, difficulty)
@@ -49,7 +53,7 @@ class Game(models.Model):
 
 class Shot(models.Model):
     """The character selected by the player.
-    
+
     If a game has both "shots" and "subshots", this includes both. For example,
     in EoSD, Reimu has two Shot rows, "ReimuA" and "ReimuB".
 
@@ -75,7 +79,7 @@ class Shot(models.Model):
     def GetName(self):
         """Get a pretty name for this shot type. Note: Populates game."""
         return game_ids.GetShotName(self.game.game_id, self.shot_id)
-    
+
 
 class Category(models.IntegerChoices):
     """The category under which a replay is uploaded."""
@@ -88,7 +92,7 @@ class Category(models.IntegerChoices):
 
     UNLISTED = 3
     """A special replay that isn't listed on the leaderboards.
-    
+
     This category is for things like replays of modded games or high-FPS runs;
     replays that don't fall under the TAS category.
     """
@@ -99,7 +103,7 @@ class Category(models.IntegerChoices):
 
 class Route(models.Model):
     """One of several sets of stages pickable by the player in a run.
-    
+
     For example, Imperishable Night has two routes: "Final A" and "Final B".
 
     The route has to be chosen by the player for the route; for example,
@@ -121,7 +125,7 @@ class Route(models.Model):
 
     order_number = models.IntegerField()
     """A number used only to order the routes in a game.
-    
+
     For example, if two routes have 1 and 2, the route with 1 is listed first,
     then the route with 2.
     """
@@ -160,20 +164,20 @@ class Replay(models.Model):
 
     route = models.ForeignKey('Route', on_delete=models.PROTECT, blank=True, null=True)
     """The route on which the game was played."""
-    
+
     def GetDifficultyName(self):
         """Get a pretty name for this difficulty. Note: Populates shot and game."""
         return game_ids.GetDifficultyName(self.shot.game.game_id, self.difficulty)
-    
+
     def GetDifficultyUrlCode(self):
         return f'd{self.difficulty}'
 
     score = models.BigIntegerField()
     """The score of the replay."""
-    
+
     is_good = models.BooleanField(blank=True, null=True)
     """Whether a replay file can be used unmodified to watch the replay.
-    
+
     Even a desynced replay file can be useful to have. For example, maybe the
     Touhou community will later discover how to fix a certain type of desync.
 
@@ -182,7 +186,7 @@ class Replay(models.Model):
 
     rep_score = models.BigIntegerField(blank=True, null=True)
     """The final score recorded in the replay.
-    
+
     This will usually be the same as the score on the Score row, but in some
     cases it will be different. For example, this will be the max score for
     counterstop replays.
@@ -333,19 +337,40 @@ class ReplayFile(models.Model):
 
 class TemporaryReplayFile(models.Model):
     """Represents a temporarily held replay file a user is uploading.
-    
+
     When the user is uploading a replay file, we want the server to receive the
     file and parse metadata from it to help the user. However, this means that the
     replay must be saved before it is published.
     """
 
-    # TODO: When this table gets big, we can bother with a good way to clean it up.
-    # But replay files are not that big, so let's deal with that later.
+    TEMPORARY_REPLAY_FILE_TTL = datetime.timedelta(days=30)
+
+    @classmethod
+    def CleanUp(cls, now: datetime.datetime) -> None:
+        """Delete old temporary replay files.
+
+        Args:
+            now: The current time.
+
+        Returns:
+            The number of deleted files.
+        """
+        earliest_surviving_replay_time = now - cls.TEMPORARY_REPLAY_FILE_TTL
+
+        logging.info(
+            'Deleting all temporary replay files before %s',
+            earliest_surviving_replay_time
+        )
+
+        deleted_count, _ = (
+            cls.objects.filter(created__lt=earliest_surviving_replay_time)
+            .delete())
+        logging.info('Deleted %d temporary replay files', deleted_count)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     """The user who uploaded the temporary replay."""
 
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(default=timezone.now)
     """When the replay file was uploaded."""
 
     replay = models.BinaryField(max_length=limits.MAX_REPLAY_SIZE)
