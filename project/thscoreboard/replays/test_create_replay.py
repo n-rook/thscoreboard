@@ -1,14 +1,8 @@
-from os import path
-
 from replays import models
 from replays import create_replay
 from replays import replay_parsing
 from replays.testing import test_case
-
-
-def ReadTestFile(filename):
-    with open(path.join('replays/replays_for_tests', filename), 'rb') as f:
-        return f.read()
+from replays.testing import test_replays
 
 
 class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
@@ -45,7 +39,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         )
     
     def testPublishReplay(self):
-        replay_file_contents = ReadTestFile('th10_normal.rpy')
+        replay_file_contents = test_replays.GetRaw('th10_normal')
         
         temp_replay = models.TemporaryReplayFile(
             user=self.user,
@@ -82,7 +76,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             models.TemporaryReplayFile.objects.get(id=temp_replay.id)
 
     def testPublishReplaySavesStages_TH10(self):
-        replay_file_contents = ReadTestFile('th10_normal.rpy')
+        replay_file_contents = test_replays.GetRaw('th10_normal')
 
         temp_replay = models.TemporaryReplayFile(
             user=self.user,
