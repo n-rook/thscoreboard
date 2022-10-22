@@ -19,10 +19,10 @@
     </thead>
     <tbody>
     {% for stage in replay_stages %}
-        <tr>
+        <tr class="tnum">
             <td>{{stage.stage}}</td>
             <td>{{stage.score|intcomma}}</td>
-            <td>{{stage.piv}}</td>
+            <td>{{stage.piv|intcomma}}</td>
             <td>{{stage.graze}}</td>
             <td>{{stage.point_items}}</td>
             <td>{{stage.power}}</td>
@@ -31,8 +31,8 @@
             <td>{{stage.bombs}}</td>
             <td>{{stage.bomb_pieces}}</td>
             <td>{{stage.th06_rank}}</td>
-            <td>{{stage.th07_cherry}}</td>
-            <td>{{stage.th07_cherrymax}}</td>
+            <td>{{stage.th07_cherry|intcomma}}</td>
+            <td>{{stage.th07_cherrymax|intcomma}}</td>
         </tr>
     {% endfor %}
     </tbody>
