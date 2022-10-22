@@ -11,6 +11,11 @@
     <div class="replay-box">
         Total score: <span class="replay-score">{{ replay.score|intcomma }}</span>
     </div>
+    <p>
+        {% if has_stages %}
+        {% include "replays/replay_stages.html" %}
+        {% endif %}
+    </p>
     <div>
     {% if has_replay_file %}
     {% if replay_file_is_good %}

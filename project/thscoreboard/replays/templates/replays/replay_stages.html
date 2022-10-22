@@ -1,0 +1,39 @@
+{% load humanize %}
+<table class="replay-table">
+    <thead>
+        <tr>
+            <th>Stage</th>
+            <th>Score</th>
+            <th>PIV</th>
+            <th>Graze</th>
+            <th>Point Items</th>
+            <th>Power</th>
+            <th>Lives</th>
+            <th>Life Pieces</th>
+            <th>Bombs</th>
+            <th>Bomb Pieces</th>
+            <th>Rank</th>
+            <th>Cherry</th>
+            <th>CherryMax</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for stage in replay_stages %}
+        <tr>
+            <td>{{stage.stage}}</td>
+            <td>{{stage.score|intcomma}}</td>
+            <td>{{stage.piv}}</td>
+            <td>{{stage.graze}}</td>
+            <td>{{stage.point_items}}</td>
+            <td>{{stage.power}}</td>
+            <td>{{stage.lives}}</td>
+            <td>{{stage.life_pieces}}</td>
+            <td>{{stage.bombs}}</td>
+            <td>{{stage.bomb_pieces}}</td>
+            <td>{{stage.th06_rank}}</td>
+            <td>{{stage.th07_cherry}}</td>
+            <td>{{stage.th07_cherrymax}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
