@@ -1,20 +1,19 @@
-from os import path
 import unittest
 import logging
 
-from . import replay_parsing
+from replays.testing import test_replays
+from replays import replay_parsing
 
 
 def ParseTestReplay(filename):
-    with open(path.join('replays/replays_for_tests', filename), 'rb') as f:
-        return replay_parsing.Parse(f.read())
+    return replay_parsing.Parse(test_replays.GetRaw(filename))
 
 
 class Th06ReplayTestCase(unittest.TestCase):
     
     def testHard1cc(self):
         logging.info('Testing th06 Hard with th6_hard_1cc.rpy')
-        r = ParseTestReplay('th6_hard_1cc.rpy')
+        r = ParseTestReplay('th6_hard_1cc')
         self.assertEqual(r.game, 'th06')
         self.assertEqual(r.difficulty, 2)
         self.assertEqual(r.shot, 'ReimuA')
@@ -38,7 +37,7 @@ class Th06ReplayTestCase(unittest.TestCase):
 
     def testExtra(self):
         logging.info("Testing th06 Extra with th6_extra.rpy")
-        r = ParseTestReplay('th6_extra.rpy')
+        r = ParseTestReplay('th6_extra')
         self.assertEqual(r.game, 'th06')
         self.assertEqual(r.difficulty, 4)
         self.assertEqual(r.shot, 'MarisaA')
@@ -56,14 +55,14 @@ class Th07ReplayTestCase(unittest.TestCase):
 
     def testLunatic(self):
         logging.info("Testing th07 Lunatic with th7_lunatic.rpy")
-        r = ParseTestReplay('th7_lunatic.rpy')
+        r = ParseTestReplay('th7_lunatic')
         self.assertEqual(r.game, 'th07')
         self.assertEqual(r.difficulty, 3)
         self.assertEqual(r.shot, "SakuyaB")
         self.assertEqual(r.score, 702864100)
 
     def testStages(self):
-        r = ParseTestReplay('th7_lunatic.rpy')
+        r = ParseTestReplay('th7_lunatic')
 
         self.assertEqual(len(r.stages), 6)
         stage_2 = r.stages[1]
@@ -82,7 +81,7 @@ class Th10ReplayTestCase(unittest.TestCase):
     
     def testNormal(self):
         logging.info("Testing th10 Normal with th10_normal.rpy")
-        r = ParseTestReplay('th10_normal.rpy')
+        r = ParseTestReplay('th10_normal')
         self.assertEqual(r.game, 'th10')
         self.assertEqual(r.difficulty, 1)
         self.assertEqual(r.shot, 'ReimuB')
