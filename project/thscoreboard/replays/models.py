@@ -1,16 +1,15 @@
 """Contains all of the models for the replay site."""
 
 import datetime
-import logging
 
 from django.db import models
 from django.contrib import auth
 from django.utils import timezone
 
+from replays import game_ids
+from replays import limits
+from shared_content import model_ttl
 from thscoreboard import settings
-
-from . import game_ids
-from . import limits
 
 
 class Game(models.Model):
@@ -343,7 +342,7 @@ class TemporaryReplayFile(models.Model):
     replay must be saved before it is published.
     """
 
-    TEMPORARY_REPLAY_FILE_TTL = datetime.timedelta(days=30)
+    TTL = datetime.timedelta(days=30)
 
     @classmethod
     def CleanUp(cls, now: datetime.datetime) -> None:
@@ -355,17 +354,7 @@ class TemporaryReplayFile(models.Model):
         Returns:
             The number of deleted files.
         """
-        earliest_surviving_replay_time = now - cls.TEMPORARY_REPLAY_FILE_TTL
-
-        logging.info(
-            'Deleting all temporary replay files before %s',
-            earliest_surviving_replay_time
-        )
-
-        deleted_count, _ = (
-            cls.objects.filter(created__lt=earliest_surviving_replay_time)
-            .delete())
-        logging.info('Deleted %d temporary replay files', deleted_count)
+        return model_ttl.CleanUpOldRows(cls, now)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     """The user who uploaded the temporary replay."""
