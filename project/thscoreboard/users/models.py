@@ -1,5 +1,6 @@
 """Defines all models for the scores app."""
 
+import datetime
 import secrets
 
 from django.contrib.auth import base_user
@@ -8,7 +9,9 @@ from django.contrib.auth import hashers
 from django.contrib.auth import validators as auth_validators
 from django.db import models
 from django.db import transaction
+from django.utils import timezone
 
+from shared_content import model_ttl
 from thscoreboard import settings
 
 
@@ -31,7 +34,7 @@ _USERNAME_MAX_LENGTH = 150
 
 class UnverifiedUser(models.Model):
     """A user who has not yet verified their email.
-    
+
     Unverified users cannot log in.
     """
 
@@ -45,37 +48,50 @@ class UnverifiedUser(models.Model):
 
     token = models.CharField(max_length=100, unique=True)
     """The secret email token used to verify ownership of the email address.
-    
+
     We only expose this token in email messages, so if the user knows it, we
     know the address is theirs.
     """
 
     email = models.EmailField()
 
-    created = models.DateTimeField(auto_now_add=True)
-    # TODO: Delete unverified users that are too old.
+    created = models.DateTimeField(default=timezone.now)
+
+    TTL = datetime.timedelta(days=30)
+
+    @classmethod
+    def CleanUp(cls, now: datetime.datetime) -> None:
+        """Delete old unverified users.
+
+        Args:
+            now: The current time.
+
+        Returns:
+            The number of deleted unverified users.
+        """
+        model_ttl.CleanUpOldRows(cls, now)
 
     def SetPassword(self, raw_password: str):
         """Hashes and sets the password. Identical to User.set_password()."""
         self.password = hashers.make_password(raw_password)
-    
+
     def CheckPassword(self, raw_password: str) -> bool:
         """Return whether a user's password is correct.
-        
+
         Similar to User.check_password.
-        
+
         Args:
             raw_password: The raw, unencoded password from the user.
-        
+
         Returns:
             True if the password matches, False otherwise.
         """
         return hashers.check_password(raw_password, self.password)
-    
+
     @classmethod
     def CreateUser(cls, username, email, raw_password):
         """Create a new UnverifiedUser row.
-        
+
         Be aware that this method does not check uniqueness for username and
         email. To be nice to the user, do this yourself.
         """
@@ -90,7 +106,7 @@ class UnverifiedUser(models.Model):
             token=token)
         unverified_user.save()
         return unverified_user
-    
+
     @transaction.atomic
     def VerifyUser(self) -> 'User':
         """Convert an UnverifiedUser into a real, verified user.
@@ -98,7 +114,7 @@ class UnverifiedUser(models.Model):
         This method also deletes all of the "losers": any UnverifiedUser
         entries with the same username or email address. To the user,
         it will appear that their token became invalid.
-        
+
         Returns:
             The new user.
         """
