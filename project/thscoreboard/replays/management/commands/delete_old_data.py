@@ -1,0 +1,22 @@
+
+from django.core.management.base import BaseCommand
+from django.utils import timezone
+from replays import models
+
+
+class Command(BaseCommand):
+
+    help = 'Delete expired temporary data.'
+
+    def handle(self, *args, **kwargs):
+        """Delete expired temporary data."""
+        _DeleteExpiredTemporaryData()
+
+
+def _DeleteExpiredTemporaryData():
+    # Don't do this in a transaction; it's a heavy operation, and it's still
+    # useful even if interrupted halfway.
+
+    now = timezone.now()
+
+    models.TemporaryReplayFile().CleanUp(now)
