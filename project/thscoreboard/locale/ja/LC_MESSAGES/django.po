@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-31 20:18-0400\n"
+"POT-Creation-Date: 2022-10-23 18:34-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,51 +18,137 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: .\replays\game_ids.py:19
+#: .\replays\game_ids.py:20
+msgid "th01"
+msgstr ""
+
+#: .\replays\game_ids.py:22
+msgid "東方靈異伝 - The Highly Responsive to Prayers"
+msgstr ""
+
+#: .\replays\game_ids.py:25
 msgid "th05"
 msgstr ""
 
-#: .\replays\game_ids.py:21
+#: .\replays\game_ids.py:27
 msgid "東方怪綺談 - Mystic Square"
 msgstr ""
 
-#: .\replays\game_ids.py:24
+#: .\replays\game_ids.py:30
 msgid "th06"
 msgstr ""
 
-#: .\replays\game_ids.py:26
+#: .\replays\game_ids.py:32
 msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
 msgstr ""
 
-#: .\replays\game_ids.py:29
+#: .\replays\game_ids.py:35
 msgid "th07"
 msgstr ""
 
-#: .\replays\game_ids.py:31
+#: .\replays\game_ids.py:37
 msgid "東方妖々夢 - Perfect Cherry Blossom"
 msgstr ""
 
-#: .\replays\game_ids.py:34
+#: .\replays\game_ids.py:40
 msgid "th10"
 msgstr ""
 
-#: .\replays\game_ids.py:36
+#: .\replays\game_ids.py:42
 msgid "東方風神録 - Mountain of Faith"
 msgstr ""
 
-#: .\replays\game_ids.py:37
+#: .\replays\game_ids.py:43
 msgid "Unknown game (bug!)"
 msgstr ""
 
-#: .\thscoreboard\settings.py:169
+#: .\replays\game_ids.py:49
+msgid "Reimu"
+msgstr ""
+
+#: .\replays\game_ids.py:84
+msgctxt "th01 route"
+msgid "Jigoku"
+msgstr ""
+
+#: .\replays\game_ids.py:86
+msgctxt "th01 route"
+msgid "Makai"
+msgstr ""
+
+#: .\replays\templates\replays\docs\about.html:5
+msgid "About Silent Selene"
+msgstr ""
+
+#: .\replays\templates\replays\docs\about.html:6
+#, python-format
+msgid ""
+"\n"
+"    <h2>What is Silent Selene?</h2>\n"
+"    <p>\n"
+"        Silent Selene is an online repository and scoreboard for Team "
+"Shanghai Alice's popular Touhou Project shooting games. We welcome all "
+"replays and videos of runs, from a new player's first clear to the great "
+"achievements of elite players. Silent Selene is free to use, and will never "
+"collect a profit. We are not affiliated with Team Shanghai Alice or ZUN; we "
+"just love his games!\n"
+"    </p>\n"
+"    <h2>What is Touhou?</h2>\n"
+"    <p>\n"
+"        The Touhou Project is a series of games, books, and other media. The "
+"Touhou Project is largely created by ZUN, acting as the sole member of Team "
+"Shanghai Alice. All the games are made by ZUN.\n"
+"    </p>\n"
+"    <p>\n"
+"        You can buy most of the official Touhou games on <a href=\"https://"
+"store.steampowered.com/search/?developer=%%e4%%b8%%8a"
+"%%e6%%b5%%b7%%e3%%82%%a2%%e3%%83%%aa%%e3%%82%%b9%%e5%%b9%%bb"
+"%%e6%%a8%%82%%e5%%9b%%a3\">Steam</a>, <a href=\"https://www.dlsite.com/"
+"maniax/circle/profile/=/maker_id/RG46179.html\">DLSite</a> or many other "
+"online stores. A few are not sold as online downloads, but can be purchased "
+"as CDs.\n"
+"    </p>\n"
+"    "
+msgstr ""
+
+#: .\replays\templates\replays\upload.html:5
+msgid "Publish a replay"
+msgstr ""
+
+#: .\replays\templates\replays\upload.html:6
+msgid "Upload a replay file"
+msgstr ""
+
+#: .\replays\templates\replays\upload.html:8
+msgid "Upload a new replay from one of the following games:"
+msgstr ""
+
+#: .\replays\templates\replays\upload.html:14
+msgid ""
+"\n"
+"        This site is still under construction; we hope to support all "
+"official\n"
+"        Touhou games soon.\n"
+"    "
+msgstr ""
+
+#: .\replays\templates\replays\upload.html:25
+msgid "Choose replay:"
+msgstr ""
+
+#: .\replays\templates\replays\upload.html:37
+msgid "Publish a replay for a game without replay files"
+msgstr ""
+
+#: .\thscoreboard\settings.py:178
 msgid "English"
 msgstr ""
 
-#: .\thscoreboard\settings.py:170
+#: .\thscoreboard\settings.py:179
 msgid "Japanese"
 msgstr ""
 
-#: .\thscoreboard\templates\base.html:33
+#: .\thscoreboard\templates\base.html:36
 msgid "Log out"
 msgstr ""
 
@@ -72,4 +158,20 @@ msgstr ""
 
 #: .\users\forms.py:44
 msgid "An account has already been registered with this email address."
+msgstr ""
+
+#: .\users\forms.py:60
+msgid "Username"
+msgstr ""
+
+#: .\users\forms.py:62
+msgid "Password"
+msgstr ""
+
+#: .\users\forms.py:70
+msgid "Email address"
+msgstr ""
+
+#: .\users\templates\users\profile.html:5
+msgid "My Profile"
 msgstr ""

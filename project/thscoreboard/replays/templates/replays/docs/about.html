@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <h1>{% translate "About Silent Selene" %}</h1>
+    {% blocktranslate %}
+    <h2>What is Silent Selene?</h2>
+    <p>
+        Silent Selene is an online repository and scoreboard for Team Shanghai Alice's popular Touhou Project shooting games. We welcome all replays and videos of runs, from a new player's first clear to the great achievements of elite players. Silent Selene is free to use, and will never collect a profit. We are not affiliated with Team Shanghai Alice or ZUN; we just love his games!
+    </p>
+    <h2>What is Touhou?</h2>
+    <p>
+        The Touhou Project is a series of games, books, and other media. The Touhou Project is largely created by ZUN, acting as the sole member of Team Shanghai Alice. All the games are made by ZUN.
+    </p>
+    <p>
+        You can buy most of the official Touhou games on <a href="https://store.steampowered.com/search/?developer=%e4%b8%8a%e6%b5%b7%e3%82%a2%e3%83%aa%e3%82%b9%e5%b9%bb%e6%a8%82%e5%9b%a3">Steam</a>, <a href="https://www.dlsite.com/maniax/circle/profile/=/maker_id/RG46179.html">DLSite</a> or many other online stores. A few are not sold as online downloads, but can be purchased as CDs.
+    </p>
+    {% endblocktranslate %}
+{% endblock %}
