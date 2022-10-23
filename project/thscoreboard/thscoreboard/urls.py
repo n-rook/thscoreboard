@@ -24,7 +24,8 @@ from thscoreboard import settings
 urlpatterns = [
     path('users/', include('users.urls')),
     path('', index.index),
-    path('replays/', include('replays.urls')),
+    path('replays/', include('replays.urls.replay_urls')),
+    path('docs/', include('replays.urls.docs_urls')),
     path('admin/', admin.site.urls),
 ]
 

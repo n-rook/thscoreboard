@@ -22,6 +22,9 @@
             <h1>Silent Selene</h1>
         </a>
         <div class="flex-1"></div>
+        <div id="topbar-link-button">
+            <a href="/docs">About</a>
+        </div>
         {% if user.is_authenticated %}
         <div id="topbar-link-button">
             <a href="/replays/user/{{user.username}}">My Replays</a>
