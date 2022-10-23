@@ -2,37 +2,89 @@
 <table class="replay-table">
     <thead>
         <tr>
+            {% if table_fields.stage %}
             <th>Stage</th>
+            {% endif %}
+            {% if table_fields.score %}
             <th>Score</th>
+            {% endif %}
+            {% if table_fields.piv %}
             <th>PIV</th>
+            {% endif %}
+            {% if table_fields.graze %}
             <th>Graze</th>
+            {% endif %}
+            {% if table_fields.point_items %}
             <th>Point Items</th>
+            {% endif %}
+            {% if table_fields.power %}
             <th>Power</th>
+            {% endif %}
+            {% if table_fields.lives %}
             <th>Lives</th>
+            {% endif %}
+            {% if table_fields.life_pieces %}
             <th>Life Pieces</th>
+            {% endif %}
+            {% if table_fields.bombs %}
             <th>Bombs</th>
+            {% endif %}
+            {% if table_fields.bomb_pieces %}
             <th>Bomb Pieces</th>
+            {% endif %}
+            {% if table_fields.th06_rank %}
             <th>Rank</th>
+            {% endif %}
+            {% if table_fields.th07_cherry %}
             <th>Cherry</th>
+            {% endif %}
+            {% if table_fields.th07_cherrymax %}
             <th>CherryMax</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
     {% for stage in replay_stages %}
         <tr class="tnum">
+            {% if table_fields.stage %}
             <td>{{stage.stage}}</td>
+            {% endif %}
+            {% if table_fields.score %}
             <td>{{stage.score|intcomma}}</td>
+            {% endif %}
+            {% if table_fields.piv %}
             <td>{{stage.piv|intcomma}}</td>
+            {% endif %}
+            {% if table_fields.graze %}
             <td>{{stage.graze}}</td>
+            {% endif %}
+            {% if table_fields.point_items %}
             <td>{{stage.point_items}}</td>
+            {% endif %}
+            {% if table_fields.power %}
             <td>{{stage.power}}</td>
+            {% endif %}
+            {% if table_fields.lives %}
             <td>{{stage.lives}}</td>
+            {% endif %}
+            {% if table_fields.life_pieces %}
             <td>{{stage.life_pieces}}</td>
+            {% endif %}
+            {% if table_fields.bombs %}
             <td>{{stage.bombs}}</td>
+            {% endif %}
+            {% if table_fields.bomb_pieces %}
             <td>{{stage.bomb_pieces}}</td>
+            {% endif %}
+            {% if table_fields.th06_rank %}
             <td>{{stage.th06_rank}}</td>
+            {% endif %}
+            {% if table_fields.th07_cherry %}
             <td>{{stage.th07_cherry|intcomma}}</td>
+            {% endif %}
+            {% if table_fields.th07_cherrymax %}
             <td>{{stage.th07_cherrymax|intcomma}}</td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>
