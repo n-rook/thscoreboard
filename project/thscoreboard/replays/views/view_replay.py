@@ -11,8 +11,7 @@ from replays.lib import http_util
 
 @http_decorators.require_safe
 def replay_details(request, game_id: str, replay_id: int):
-    replay_instance = GetReplayOr404(request.user, replay_id)
-    replay_stages = GetReplayStages(request.user, replay_id)
+    replay_instance, replay_stages = GetReplayWithStagesOr404(request.user, replay_id)
 
     if replay_instance.shot.game.game_id != game_id:
         # Wrong game, but IDs are unique anyway so we know the right game. Send the user there.
@@ -159,12 +158,15 @@ def GetReplayOr404(user, replay_id):
     return replay_instance
 
 
-def GetReplayStages(user, replay_id):
+def GetReplayWithStagesOr404(user, replay_id):
     try:
-        replay_stages = models.ReplayStage.objects.filter(replay=replay_id)
-        replay_instance = models.Replay.objects.get(id=replay_id)
+        replay_instance = models.Replay.objects.select_related('shot').get(id=replay_id)
     except models.Replay.DoesNotExist:
-        return None
+        return Http404()
     if not replay_instance.IsVisible(user):
-        return None
-    return replay_stages
+        return Http404()
+    try:    
+        replay_stages = models.ReplayStage.objects.filter(replay=replay_id)
+    except models.Replay.DoesNotExist:
+        replay_stages = None
+    return replay_instance, replay_stages
