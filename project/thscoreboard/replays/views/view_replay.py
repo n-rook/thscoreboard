@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbid
 from django.contrib.auth import decorators as auth_decorators
 from django.views.decorators import http as http_decorators
 from django.shortcuts import redirect, render
+from django.db import transaction
 
 from replays import models
 from replays.lib import http_util
@@ -157,7 +158,7 @@ def GetReplayOr404(user, replay_id):
         raise Http404()
     return replay_instance
 
-
+@transaction.atomic
 def GetReplayWithStagesOr404(user, replay_id):
     try:
         replay_instance = models.Replay.objects.select_related('shot').get(id=replay_id)
@@ -165,7 +166,7 @@ def GetReplayWithStagesOr404(user, replay_id):
         return Http404()
     if not replay_instance.IsVisible(user):
         return Http404()
-    try:    
+    try:
         replay_stages = models.ReplayStage.objects.filter(replay=replay_id)
     except models.Replay.DoesNotExist:
         replay_stages = None
