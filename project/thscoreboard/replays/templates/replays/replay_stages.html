@@ -1,45 +1,46 @@
 {% load humanize %}
+{% load i18n %}
 <table class="replay-table">
     <thead>
         <tr>
             {% if table_fields.stage %}
-            <th>Stage</th>
+            <th>{% translate "Stage" %}</th>
             {% endif %}
             {% if table_fields.score %}
-            <th>Score</th>
+            <th>{% translate "Score" %}</th>
             {% endif %}
             {% if table_fields.piv %}
-            <th>PIV</th>
+            <th>{% translate "PIV" %}</th>
             {% endif %}
             {% if table_fields.graze %}
-            <th>Graze</th>
+            <th>{% translate "Graze" %}</th>
             {% endif %}
             {% if table_fields.point_items %}
-            <th>Point Items</th>
+            <th>{% translate "Point Items" %}</th>
             {% endif %}
             {% if table_fields.power %}
-            <th>Power</th>
+            <th>{% translate "Power" %}</th>
             {% endif %}
             {% if table_fields.lives %}
-            <th>Lives</th>
+            <th>{% translate "Lives" %}</th>
             {% endif %}
             {% if table_fields.life_pieces %}
-            <th>Life Pieces</th>
+            <th>{% translate "Life Pieces" %}</th>
             {% endif %}
             {% if table_fields.bombs %}
-            <th>Bombs</th>
+            <th>{% translate "Bombs" %}</th>
             {% endif %}
             {% if table_fields.bomb_pieces %}
-            <th>Bomb Pieces</th>
+            <th>{% translate "Bomb Pieces" %}</th>
             {% endif %}
             {% if table_fields.th06_rank %}
-            <th>Rank</th>
+            <th>{% translate "Rank" %}</th>
             {% endif %}
             {% if table_fields.th07_cherry %}
-            <th>Cherry</th>
+            <th>{% translate "Cherry" %}</th>
             {% endif %}
             {% if table_fields.th07_cherrymax %}
-            <th>CherryMax</th>
+            <th>{% translate "CherryMax" %}</th>
             {% endif %}
         </tr>
     </thead>
