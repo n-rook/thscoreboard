@@ -8,6 +8,7 @@ from django.db import transaction
 
 from replays import models
 from replays.lib import http_util
+from replays import game_fields
 
 
 @http_decorators.require_safe
@@ -17,62 +18,6 @@ def replay_details(request, game_id: str, replay_id: int):
     if replay_instance.shot.game.game_id != game_id:
         # Wrong game, but IDs are unique anyway so we know the right game. Send the user there.
         return redirect(replay_details, game_id=replay_instance.shot.game.game_id, replay_id=replay_id)
-
-    table_fields_th06 = {
-        'stage': True,
-        'score': True,
-        'piv': False,
-        'graze': False,
-        'point_items': False,
-        'power': True,
-        'lives': True,
-        'life_pieces': False,
-        'bombs': True,
-        'bomb_pieces': False,
-        'th06_rank': True,
-        'th07_cherry': False,
-        'th07_cherrymax': False
-    }
-
-    table_fields_th07 = {
-        'stage': True,
-        'score': True,
-        'piv': True,
-        'graze': True,
-        'point_items': True,
-        'power': True,
-        'lives': True,
-        'life_pieces': False,
-        'bombs': True,
-        'bomb_pieces': False,
-        'th06_rank': False,
-        'th07_cherry': True,
-        'th07_cherrymax': True
-    }
-
-    table_fields_th10 = {
-        'stage': True,
-        'score': True,
-        'piv': True,
-        'graze': False,
-        'point_items': False,
-        'power': True,
-        'lives': True,
-        'life_pieces': False,
-        'bombs': False,
-        'bomb_pieces': False,
-        'th06_rank': False,
-        'th07_cherry': False,
-        'th07_cherrymax': False
-    }
-
-    game_fields = {
-        'th01': None,
-        'th05': None,
-        'th06': table_fields_th06,
-        'th07': table_fields_th07,
-        'th10': table_fields_th10
-    }
 
     context = {
         'game_name': replay_instance.shot.game.GetName(),
@@ -84,7 +29,7 @@ def replay_details(request, game_id: str, replay_id: int):
         'replay_file_is_good': replay_instance.is_good,
         'has_stages': replay_stages is not None,
         'replay_stages': replay_stages,
-        'table_fields': game_fields[game_id]
+        'table_fields': game_fields.GetGameField(game_id)
     }
 
     if hasattr(replay_instance, 'replayfile'):
@@ -157,6 +102,7 @@ def GetReplayOr404(user, replay_id):
     if not replay_instance.IsVisible(user):
         raise Http404()
     return replay_instance
+
 
 @transaction.atomic
 def GetReplayWithStagesOr404(user, replay_id):
