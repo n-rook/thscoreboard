@@ -1,6 +1,7 @@
 """A class that provides methods used to properly format and display replay data"""
 
 from immutabledict import immutabledict
+from . import game_ids
 
 _table_fields_th06 = immutabledict({
     'stage': True,
@@ -57,6 +58,17 @@ _game_fields = immutabledict({
     'th07': _table_fields_th07,
     'th10': _table_fields_th10
 })
+
+
+def GetPower(game_id: str, power: int):
+    if game_id == game_ids.GameIDs.TH06:
+        return power
+    if game_id == game_ids.GameIDs.TH07:
+        return power
+    if game_id == game_ids.GameIDs.TH10:
+        return "%.2f" % (float(power) * 0.05)
+
+    return power
 
 
 def GetGameField(gameid: str):

@@ -19,6 +19,10 @@ def replay_details(request, game_id: str, replay_id: int):
         # Wrong game, but IDs are unique anyway so we know the right game. Send the user there.
         return redirect(replay_details, game_id=replay_instance.shot.game.game_id, replay_id=replay_id)
 
+    # format power for frontend to show like ingame
+    for stage in replay_stages:
+        stage.Power = game_fields.GetPower(game_id, stage.power)
+
     context = {
         'game_name': replay_instance.shot.game.GetName(),
         'shot_name': replay_instance.shot.GetName(),
