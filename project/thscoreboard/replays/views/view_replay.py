@@ -113,9 +113,9 @@ def GetReplayWithStagesOr404(user, replay_id):
     try:
         replay_instance = models.Replay.objects.select_related('shot').get(id=replay_id)
     except models.Replay.DoesNotExist:
-        return Http404()
+        raise Http404()
     if not replay_instance.IsVisible(user):
-        return Http404()
+        raise Http404()
     try:
         replay_stages = models.ReplayStage.objects.filter(replay=replay_id)
     except models.Replay.DoesNotExist:
