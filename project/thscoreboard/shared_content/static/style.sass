@@ -59,6 +59,34 @@ h3
     padding: 8px 12px 8px
     flex: 1
 
+// Docs pages
+
+.docs-layout
+    display: flex
+    flex-wrap: wrap
+    flex-direction: row
+
+.docs-nav
+    font: 600 17px "Lato", "Arial", sans-serif
+
+    padding: 20px 10px 0
+    padding-top: 20px
+    width: 11em
+
+    ul
+        margin: 0
+        padding: 0
+
+    li
+        padding: 3px 0
+        list-style: none
+
+.docs-content
+    flex-basis: 20em
+    flex-grow: 1
+    max-width: 50em
+
+
 #simple-centered-box
 
     display: flex
@@ -83,7 +111,7 @@ h3
         p
             margin: 0
             padding: 4px
-    
+
     #simple-centered-content
         box-sizing: border-box
         background-color: white
@@ -103,13 +131,13 @@ form.inline-form
         margin: 4px 2px
         display: flex
         flex-direction: column
-        
+
         label
             margin: 4px 0px
-        
+
         input
             margin: 4px 4px
-    
+
     input[type=submit]
         height: 2em
         width: 100%

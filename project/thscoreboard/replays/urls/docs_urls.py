@@ -4,5 +4,6 @@ from replays.views import docs
 
 
 urlpatterns = [
-    path('', docs.make_docs_page_route('about.html')),
+    path('', docs.make_docs_page_route('about.html'), name='Docs/About'),
+    path('terms', docs.make_docs_page_route('terms_of_use.html'), name='Docs/TermsOfUse')
 ]
