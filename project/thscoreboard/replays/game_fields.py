@@ -60,15 +60,15 @@ _game_fields = immutabledict({
 })
 
 
-def GetPower(game_id: str, power: int):
+def GetPowerFormat(game_id: str, power: int) -> str:
     if game_id == game_ids.GameIDs.TH06:
-        return power
+        return str(power)
     if game_id == game_ids.GameIDs.TH07:
-        return power
+        return str(power)
     if game_id == game_ids.GameIDs.TH10:
         return "%.2f" % (float(power) * 0.05)
 
-    return power
+    return str(power)
 
 
 def GetGameField(gameid: str):
