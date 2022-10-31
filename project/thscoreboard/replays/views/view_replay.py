@@ -31,7 +31,7 @@ def replay_details(request, game_id: str, replay_id: int):
         'replay': replay_instance,
         'is_owner': request.user == replay_instance.user,
         'replay_file_is_good': replay_instance.is_good,
-        'has_stages': replay_stages is not None,
+        'has_stages': len(replay_stages) != 0,
         'replay_stages': replay_stages,
         'table_fields': game_fields.GetGameField(game_id)
     }
