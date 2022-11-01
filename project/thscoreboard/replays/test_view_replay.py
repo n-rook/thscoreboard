@@ -2,6 +2,7 @@ from os import path
 
 from replays import replay_parsing
 from replays.testing import test_case
+from replays.testing import test_replays
 
 from . import game_ids
 from . import game_fields
@@ -9,15 +10,10 @@ from . import game_fields
 import logging
 
 
-def ReadTestFile(filename):
-    with open(path.join('replays/replays_for_tests', filename), 'rb') as f:
-        return f.read()
-
-
 tests = [
-    (game_ids.GameIDs.TH06, 'th6_hard_1cc.rpy'),
-    (game_ids.GameIDs.TH07, 'th7_lunatic.rpy'),
-    (game_ids.GameIDs.TH10, 'th10_normal.rpy')
+    (game_ids.GameIDs.TH06, 'th6_hard_1cc'),
+    (game_ids.GameIDs.TH07, 'th7_lunatic'),
+    (game_ids.GameIDs.TH10, 'th10_normal')
 ]
 
 
@@ -30,7 +26,7 @@ class TestTableFields(test_case.ReplayTestCase):
     def testFields(self):
         for gameid, file in tests:
             logging.info('testing game fields %s %s', gameid, file)
-            rpy = ReadTestFile(file)
+            rpy = test_replays.GetRaw(file)
             replay_info = replay_parsing.Parse(rpy)
             fields = game_fields.GetGameField(gameid)
             for key in fields:
