@@ -1,5 +1,3 @@
-from os import path
-
 from replays import replay_parsing
 from replays.testing import test_case
 from replays.testing import test_replays
