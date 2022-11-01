@@ -4,18 +4,24 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbid
 from django.contrib.auth import decorators as auth_decorators
 from django.views.decorators import http as http_decorators
 from django.shortcuts import redirect, render
+from django.db import transaction
 
 from replays import models
 from replays.lib import http_util
+from replays import game_fields
 
 
 @http_decorators.require_safe
 def replay_details(request, game_id: str, replay_id: int):
-    replay_instance = GetReplayOr404(request.user, replay_id)
+    replay_instance, replay_stages = GetReplayWithStagesOr404(request.user, replay_id)
 
     if replay_instance.shot.game.game_id != game_id:
         # Wrong game, but IDs are unique anyway so we know the right game. Send the user there.
         return redirect(replay_details, game_id=replay_instance.shot.game.game_id, replay_id=replay_id)
+
+    # format power for frontend to show like ingame
+    for stage in replay_stages:
+        stage.Power = game_fields.GetPowerFormat(game_id, stage.power)
 
     context = {
         'game_name': replay_instance.shot.game.GetName(),
@@ -24,8 +30,12 @@ def replay_details(request, game_id: str, replay_id: int):
         'game_id': game_id,
         'replay': replay_instance,
         'is_owner': request.user == replay_instance.user,
-        'replay_file_is_good': replay_instance.is_good
+        'replay_file_is_good': replay_instance.is_good,
+        'has_stages': len(replay_stages) != 0,
+        'replay_stages': replay_stages,
+        'table_fields': game_fields.GetGameField(game_id)
     }
+
     if hasattr(replay_instance, 'replayfile'):
         context['has_replay_file'] = True
     else:
@@ -96,3 +106,15 @@ def GetReplayOr404(user, replay_id):
     if not replay_instance.IsVisible(user):
         raise Http404()
     return replay_instance
+
+
+@transaction.atomic
+def GetReplayWithStagesOr404(user, replay_id):
+    try:
+        replay_instance = models.Replay.objects.select_related('shot').get(id=replay_id)
+    except models.Replay.DoesNotExist:
+        raise Http404()
+    if not replay_instance.IsVisible(user):
+        raise Http404()
+    replay_stages = models.ReplayStage.objects.filter(replay=replay_id)
+    return replay_instance, replay_stages

@@ -1,0 +1,92 @@
+{% load humanize %}
+{% load i18n %}
+<table class="replay-table">
+    <thead>
+        <tr>
+            {% if table_fields.stage %}
+            <th>{% translate "Stage" %}</th>
+            {% endif %}
+            {% if table_fields.score %}
+            <th>{% translate "Score" %}</th>
+            {% endif %}
+            {% if table_fields.piv %}
+            <th>{% translate "PIV" %}</th>
+            {% endif %}
+            {% if table_fields.graze %}
+            <th>{% translate "Graze" %}</th>
+            {% endif %}
+            {% if table_fields.point_items %}
+            <th>{% translate "Point Items" %}</th>
+            {% endif %}
+            {% if table_fields.power %}
+            <th>{% translate "Power" %}</th>
+            {% endif %}
+            {% if table_fields.lives %}
+            <th>{% translate "Lives" %}</th>
+            {% endif %}
+            {% if table_fields.life_pieces %}
+            <th>{% translate "Life Pieces" %}</th>
+            {% endif %}
+            {% if table_fields.bombs %}
+            <th>{% translate "Bombs" %}</th>
+            {% endif %}
+            {% if table_fields.bomb_pieces %}
+            <th>{% translate "Bomb Pieces" %}</th>
+            {% endif %}
+            {% if table_fields.th06_rank %}
+            <th>{% translate "Rank" %}</th>
+            {% endif %}
+            {% if table_fields.th07_cherry %}
+            <th>{% translate "Cherry" %}</th>
+            {% endif %}
+            {% if table_fields.th07_cherrymax %}
+            <th>{% translate "CherryMax" %}</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+    {% for stage in replay_stages %}
+        <tr class="num-align">
+            {% if table_fields.stage %}
+            <td>{{stage.stage}}</td>
+            {% endif %}
+            {% if table_fields.score %}
+            <td>{{stage.score|intcomma}}</td>
+            {% endif %}
+            {% if table_fields.piv %}
+            <td>{{stage.piv|intcomma}}</td>
+            {% endif %}
+            {% if table_fields.graze %}
+            <td>{{stage.graze}}</td>
+            {% endif %}
+            {% if table_fields.point_items %}
+            <td>{{stage.point_items}}</td>
+            {% endif %}
+            {% if table_fields.power %}
+            <td>{{stage.Power}}</td>
+            {% endif %}
+            {% if table_fields.lives %}
+            <td>{{stage.lives}}</td>
+            {% endif %}
+            {% if table_fields.life_pieces %}
+            <td>{{stage.life_pieces}}</td>
+            {% endif %}
+            {% if table_fields.bombs %}
+            <td>{{stage.bombs}}</td>
+            {% endif %}
+            {% if table_fields.bomb_pieces %}
+            <td>{{stage.bomb_pieces}}</td>
+            {% endif %}
+            {% if table_fields.th06_rank %}
+            <td>{{stage.th06_rank}}</td>
+            {% endif %}
+            {% if table_fields.th07_cherry %}
+            <td>{{stage.th07_cherry|intcomma}}</td>
+            {% endif %}
+            {% if table_fields.th07_cherrymax %}
+            <td>{{stage.th07_cherrymax|intcomma}}</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

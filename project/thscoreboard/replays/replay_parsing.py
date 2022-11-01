@@ -45,6 +45,9 @@ class ReplayStage:
     th07_cherry: int = None
     th07_cherrymax: int = None
 
+    def __getitem__(self, item):
+        return getattr(self, item)
+
 
 @dataclass
 class ReplayInfo:
