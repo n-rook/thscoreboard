@@ -1,11 +1,10 @@
 # This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
 
-from pkg_resources import parse_version
 import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 
 
-if parse_version(kaitaistruct.__version__) < parse_version('0.9'):
+if getattr(kaitaistruct, 'API_VERSION', (0, 9)) < (0, 9):
     raise Exception("Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s" % (kaitaistruct.__version__))
 
 class Th14(KaitaiStruct):
@@ -17,9 +16,9 @@ class Th14(KaitaiStruct):
 
     def _read(self):
         self.header = Th14.Header(self._io, self, self._root)
-        self.stages = [None] * (self.header.stage_count)
+        self.stages = []
         for i in range(self.header.stage_count):
-            self.stages[i] = Th14.Stage(self._io, self, self._root)
+            self.stages.append(Th14.Stage(self._io, self, self._root))
 
 
     class Header(KaitaiStruct):
@@ -82,15 +81,15 @@ class Th14(KaitaiStruct):
             self.unknown_4 = self._io.read_u4le()
             self.unknown_5 = self._io.read_u4le()
             self.unknown_6 = self._io.read_u4le()
-            self.last_item_collected_pos = [None] * (3)
+            self.last_item_collected_pos = []
             for i in range(3):
-                self.last_item_collected_pos[i] = self._io.read_f4le()
+                self.last_item_collected_pos.append(self._io.read_f4le())
 
             self.poc_count = self._io.read_u4le()
             self.focused = self._io.read_u4le()
-            self.spellcard_real_times = [None] * (21)
+            self.spellcard_real_times = []
             for i in range(21):
-                self.spellcard_real_times[i] = self._io.read_u4le()
+                self.spellcard_real_times.append(self._io.read_u4le())
 
             self.stage_data = self._io.read_bytes(self.end_off)
 
