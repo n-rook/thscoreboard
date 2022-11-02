@@ -8,6 +8,7 @@ from . import game_ids
 from .kaitai_parsers import th06
 from .kaitai_parsers import th07
 from .kaitai_parsers import th10
+from .kaitai_parsers import th11
 from .kaitai_parsers import th_modern
 
 import tsadecode as td
@@ -166,6 +167,41 @@ def _Parse10(rep_raw):
     return r
 
 
+def _Parse11(rep_raw):
+    header = th_modern.ThModern.from_bytes(rep_raw)
+    comp_data = bytearray(header.main.comp_data)
+
+    td.decrypt(comp_data, 0x800, 0xaa, 0xe1)
+    td.decrypt(comp_data, 0x40, 0x3d, 0x7a)
+    replay = th11.Th11.from_bytes(td.unlzss(comp_data))
+
+    shots = ["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"]
+
+    rep_stages = []
+    for stage in replay.stages:
+        s = ReplayStage()
+        s.stage = stage.stage
+        s.score = stage.score * 10
+        s.piv = stage.piv
+        s.graze = stage.graze
+        s.power = stage.power
+        s.lives = stage.lives
+        s.life_pieces = stage.life_pieces
+        rep_stages.append(s)
+
+    r = ReplayInfo(
+        game=game_ids.GameIDs.TH11,
+        shot=shots[replay.header.shot],
+        difficulty=replay.header.difficulty,
+        score=replay.header.score * 10,
+        timestamp=datetime.fromtimestamp(replay.header.timestamp)
+    )
+
+    r.stages = rep_stages
+
+    return r
+
+
 def Parse(replay):
     """Parse a replay file."""
 
@@ -177,6 +213,8 @@ def Parse(replay):
         return _Parse07(replay)
     elif gamecode == b't10r':
         return _Parse10(replay)
+    elif gamecode == b't11r':
+        return _Parse11(replay)
     else:
         logging.warning('Failed to comprehend gamecode %s', gamecode)
         raise UnsupportedGameError('This game is unsupported.')

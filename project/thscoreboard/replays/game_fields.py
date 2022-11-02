@@ -51,12 +51,29 @@ _table_fields_th10 = immutabledict({
     'th07_cherrymax': False
 })
 
+_table_fields_th11 = immutabledict({
+    'stage': True,
+    'score': True,
+    'piv': True,
+    'graze': True,
+    'point_items': False,
+    'power': True,
+    'lives': True,
+    'life_pieces': True,
+    'bombs': False,
+    'bomb_pieces': False,
+    'th06_rank': False,
+    'th07_cherry': False,
+    'th07_cherrymax': False
+})
+
 _game_fields = immutabledict({
     'th01': None,
     'th05': None,
     'th06': _table_fields_th06,
     'th07': _table_fields_th07,
-    'th10': _table_fields_th10
+    'th10': _table_fields_th10,
+    'th11': _table_fields_th11
 })
 
 
@@ -66,6 +83,8 @@ def GetPowerFormat(game_id: str, power: int) -> str:
     if game_id == game_ids.GameIDs.TH07:
         return str(power)
     if game_id == game_ids.GameIDs.TH10:
+        return "%.2f" % (float(power) * 0.05)
+    if game_id == game_ids.GameIDs.TH11:
         return "%.2f" % (float(power) * 0.05)
 
     return str(power)
