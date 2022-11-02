@@ -58,7 +58,7 @@ class Th11(KaitaiStruct):
             self.power = self._io.read_u4le()
             self.piv = self._io.read_u4le()
             self.lives = self._io.read_u2le()
-            self.live_pieces = self._io.read_u2le()
+            self.life_pieces = self._io.read_u2le()
             self.unknown_1 = self._io.read_bytes(24)
             self.graze = self._io.read_u4le()
             self.unknown_2 = self._io.read_bytes(88)

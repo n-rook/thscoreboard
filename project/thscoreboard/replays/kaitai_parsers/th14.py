@@ -74,7 +74,7 @@ class Th14(KaitaiStruct):
             self.power_max = self._io.read_u4le()
             self.power_levelup = self._io.read_u4le()
             self.lives = self._io.read_u4le()
-            self.life_piece = self._io.read_u4le()
+            self.life_pieces = self._io.read_u4le()
             self.unknown_3 = self._io.read_u4le()
             self.bombs = self._io.read_u4le()
             self.bomb_pieces = self._io.read_u4le()

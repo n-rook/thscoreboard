@@ -85,7 +85,7 @@ types:
       type: u4
     - id: lives
       type: u4
-    - id: life_piece
+    - id: life_pieces
       type: u4
     - id: unknown_3
       type: u4

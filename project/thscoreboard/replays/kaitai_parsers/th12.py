@@ -59,7 +59,7 @@ class Th12(KaitaiStruct):
             self.power = self._io.read_u4le()
             self.piv = self._io.read_u4le()
             self.lives = self._io.read_u2le()
-            self.live_pieces = self._io.read_u2le()
+            self.life_pieces = self._io.read_u2le()
             self.bombs = self._io.read_u2le()
             self.bomb_pieces = self._io.read_u2le()
             self.ufo_1 = self._io.read_u4le()
