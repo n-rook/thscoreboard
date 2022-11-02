@@ -1,11 +1,10 @@
 # This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
 
-from pkg_resources import parse_version
 import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 
 
-if parse_version(kaitaistruct.__version__) < parse_version('0.9'):
+if getattr(kaitaistruct, 'API_VERSION', (0, 9)) < (0, 9):
     raise Exception("Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s" % (kaitaistruct.__version__))
 
 class Th11(KaitaiStruct):
@@ -17,9 +16,9 @@ class Th11(KaitaiStruct):
 
     def _read(self):
         self.header = Th11.Header(self._io, self, self._root)
-        self.stages = [None] * (self.header.stagecount)
+        self.stages = []
         for i in range(self.header.stagecount):
-            self.stages[i] = Th11.Stage(self._io, self, self._root)
+            self.stages.append(Th11.Stage(self._io, self, self._root))
 
 
     class Header(KaitaiStruct):
