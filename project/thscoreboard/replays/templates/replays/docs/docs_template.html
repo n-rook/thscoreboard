@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+<div class="docs-layout">
+    <nav class="docs-nav">
+        <ul>
+            <li><a href="{% url 'Docs/About' %}">About</a></li>
+            <li><a href="{% url 'Docs/TermsOfUse' %}">Terms & Privacy Policy</a></li>
+        </ul>
+    </nav>
+    <div class="docs-content">
+        {% block main_text %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
