@@ -36,6 +36,7 @@ def _CreateIfNotLoaded(game_id, constant_creation_function):
         constant_creation_function()
         logging.info('Created %s', game_id)
 
+
 @transaction.atomic
 def _Create11():
     th11 = models.Game(game_id='th11', has_replays=True, num_difficulties=5)
