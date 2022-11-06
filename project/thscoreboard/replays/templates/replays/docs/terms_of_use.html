@@ -2,7 +2,8 @@
 {% load i18n %}
 
 {% block main_text %}
-    <h1>{% translate "Terms of Service and Privacy Policy" %}</h1>
+    {% url 'Docs/Privacy' as privacy_url %}
+    <h1>{% translate "Terms of Service" %}</h1>
     {% blocktranslate %}
     <h2>Overview</h2>
 
@@ -28,7 +29,7 @@
         By creating an account, you agree that we may send you transactional e-mail based on activity on the site, or announcing new features or changes to our Terms of Service or Privacy Policy. You're solely responsible and liable for all activity under your account. We may suspend or delete your account for any or no reason.
     </p>
     <p>
-        If you're like to learn how we handle the data provided as part of your account, please see our Privacy Policy below.
+        If you're like to learn how we handle the data provided as part of your account, please see our <a href="{{ privacy_url }}">Privacy Policy</a>.
     </p>
 
     <h3>Age Requirements</h3>
@@ -126,7 +127,7 @@
 
     <h2>License and Attribution</h3>
     <p>
-        These terms of use and privacy policy are licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, so if you like them, you can use them on your own site. They were based on <a href="https://wordpress.com/tos/">the WordPress Terms of Service</a>.
+        These terms of use are licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, so if you like them, you can use them on your own site. They were based on <a href="https://wordpress.com/tos/">the WordPress Terms of Service</a>.
     </p>
     {% endblocktranslate %}
 {% endblock %}
