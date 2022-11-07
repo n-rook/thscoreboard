@@ -77,14 +77,10 @@ _game_fields = immutabledict({
 })
 
 
-def GetPowerFormat(game_id: str, power: int) -> str:
-    if game_id == game_ids.GameIDs.TH06:
+def GetFormatPower(game_id: str, power: int) -> str:
+    if game_id in (game_ids.GameIDs.TH06, game_ids.GameIDs.TH07):
         return str(power)
-    if game_id == game_ids.GameIDs.TH07:
-        return str(power)
-    if game_id == game_ids.GameIDs.TH10:
-        return "%.2f" % (float(power) * 0.05)
-    if game_id == game_ids.GameIDs.TH11:
+    if game_id in (game_ids.GameIDs.TH10, game_ids.GameIDs.TH11):
         return "%.2f" % (float(power) * 0.05)
 
     return str(power)
@@ -100,7 +96,7 @@ _life_pieces = immutabledict({
 })
 
 
-def GetLivesFormat(game_id: str, lives: int, life_pieces: int) -> str:
+def GetFormatLives(game_id: str, lives: int, life_pieces: int) -> str:
     total_life_pieces = _life_pieces[game_id]
     if total_life_pieces is None:
         return str(lives)
