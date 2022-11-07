@@ -11,7 +11,8 @@ import logging
 tests = [
     (game_ids.GameIDs.TH06, 'th6_hard_1cc'),
     (game_ids.GameIDs.TH07, 'th7_lunatic'),
-    (game_ids.GameIDs.TH10, 'th10_normal')
+    (game_ids.GameIDs.TH10, 'th10_normal'),
+    (game_ids.GameIDs.TH11, 'th11_normal')
 ]
 
 
