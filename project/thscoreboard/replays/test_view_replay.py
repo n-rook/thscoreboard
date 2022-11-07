@@ -11,7 +11,8 @@ import logging
 tests = [
     (game_ids.GameIDs.TH06, 'th6_hard_1cc'),
     (game_ids.GameIDs.TH07, 'th7_lunatic'),
-    (game_ids.GameIDs.TH10, 'th10_normal')
+    (game_ids.GameIDs.TH10, 'th10_normal'),
+    (game_ids.GameIDs.TH11, 'th11_normal')
 ]
 
 
@@ -40,7 +41,11 @@ class TestTableFields(test_case.ReplayTestCase):
 class TestGetPower(test_case.ReplayTestCase):
 
     def testGetPower(self):
-        self.assertEqual(game_fields.GetPowerFormat(game_ids.GameIDs.TH06, 100), '100')
-        self.assertEqual(game_fields.GetPowerFormat(game_ids.GameIDs.TH07, 100), '100')
-        self.assertEqual(game_fields.GetPowerFormat(game_ids.GameIDs.TH10, 100), '5.00')
-        self.assertEqual(game_fields.GetPowerFormat(game_ids.GameIDs.TH10, 66), '3.30')
+        self.assertEqual(game_fields.GetFormatPower(game_ids.GameIDs.TH06, 100), '100')
+        self.assertEqual(game_fields.GetFormatPower(game_ids.GameIDs.TH07, 100), '100')
+        self.assertEqual(game_fields.GetFormatPower(game_ids.GameIDs.TH10, 100), '5.00')
+        self.assertEqual(game_fields.GetFormatPower(game_ids.GameIDs.TH10, 66), '3.30')
+
+    def testGetFormatLives(self):
+        
+        self.assertEqual(game_fields.GetFormatLives(game_ids.GameIDs.TH11, 5, 2), '5 (2/5)')

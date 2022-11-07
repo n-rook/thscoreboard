@@ -9,6 +9,7 @@ class GameIDs:
     TH06 = 'th06'
     TH07 = 'th07'
     TH10 = 'th10'
+    TH11 = 'th11'
 
 
 def GetGameName(game_id: str, short=False):
@@ -40,6 +41,11 @@ def GetGameName(game_id: str, short=False):
             return _('th10')
         else:
             return _('東方風神録 - Mountain of Faith')
+    if game_id == GameIDs.TH11:
+        if short:
+            return _('th11')
+        else:
+            return _('東方地霊殿 - Subterranean Animism')
     return _('Unknown game (bug!)')
 
 
@@ -75,6 +81,19 @@ def GetShotName(game_id: str, shot_id: str):
             return 'Marisa B (Piercing Type)'
         elif shot_id == 'MarisaC':
             return 'Marisa C (Magician Type)'
+    if game_id == GameIDs.TH11:
+        if shot_id == 'ReimuA':
+            return 'Reimu A (Yukari Yakumo)'
+        elif shot_id == 'ReimuB':
+            return 'Reimu B (Suika Ibuki)'
+        elif shot_id == 'ReimuC':
+            return 'Reimu C (Aya Shameimaru)'
+        elif shot_id == 'MarisaA':
+            return 'Marisa A (Alice Margatroid)'
+        elif shot_id == 'MarisaB':
+            return 'Marisa B (Patchouli Knowledge)'
+        elif shot_id == 'MarisaC':
+            return 'Marisa C (Nitori Kawashiro)'
     return 'Bug shot'
 
 
@@ -88,7 +107,7 @@ def GetRouteName(game_id: str, route_id: str):
 
 
 def GetDifficultyName(game_id: str, difficulty: int):
-    if game_id in {GameIDs.TH01, GameIDs.TH05, GameIDs.TH06, GameIDs.TH07, GameIDs.TH10}:
+    if game_id in {GameIDs.TH01, GameIDs.TH05, GameIDs.TH06, GameIDs.TH07, GameIDs.TH10, GameIDs.TH11}:
         if difficulty == 0:
             return 'Easy'
         elif difficulty == 1:

@@ -13,7 +13,8 @@ from . import limits
 game_names = (
     ('th06', '東方紅魔郷 - Embodiment of Scarlet Devil'),
     ('th07', '東方妖々夢 - Perfect Cherry Blossom'),
-    ('th10', '東方風神録 - Mountain of Faith')
+    ('th10', '東方風神録 - Mountain of Faith'),
+    ('th11', '東方地霊殿 - Subterranean Animism')
 )
 
 difficulty_names = (

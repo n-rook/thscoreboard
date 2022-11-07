@@ -86,3 +86,21 @@ class Th10ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.difficulty, 1)
         self.assertEqual(r.shot, 'ReimuB')
         self.assertEqual(r.score, 294127890)
+
+
+class Th11ReplayTestCaseA(unittest.TestCase):
+
+    def testNormal(self):
+        r = ParseTestReplay('th11_normal')
+        self.assertEqual(r.game, 'th11')
+        self.assertEqual(r.difficulty, 1)
+        self.assertEqual(r.score, 210042730)
+        self.assertEqual(r.shot, "ReimuB")
+
+        stage5 = r.stages[4]
+        self.assertEqual(stage5.score, 59938190)
+        self.assertEqual(stage5.power, 80)
+        self.assertEqual(stage5.piv, 66460)
+        self.assertEqual(stage5.lives, 8)
+        self.assertEqual(stage5.life_pieces, 1)
+        self.assertEqual(stage5.graze, 1582)
