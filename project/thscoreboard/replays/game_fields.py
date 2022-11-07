@@ -90,7 +90,31 @@ def GetPowerFormat(game_id: str, power: int) -> str:
     return str(power)
 
 
+_life_pieces = immutabledict({
+    'th01': None,
+    'th05': None,
+    'th06': None,
+    'th07': None,
+    'th10': None,
+    'th11': 5
+})
+
+
+def GetLivesFormat(game_id: str, lives: int, life_pieces: int) -> str:
+    total_life_pieces = _life_pieces[game_id]
+    if total_life_pieces is None:
+        return str(lives)
+    else:
+        return f"{lives} ({life_pieces}/{total_life_pieces})"
+
+
 def GetGameField(gameid: str):
     if gameid in _game_fields:
         return _game_fields[gameid]
+    return None
+
+
+def GetGameLifePieces(gameid: str):
+    if gameid in _life_pieces:
+        return _life_pieces[gameid]
     return None

@@ -87,6 +87,7 @@ class Th10ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'ReimuB')
         self.assertEqual(r.score, 294127890)
 
+
 class Th11ReplayTestCaseA(unittest.TestCase):
 
     def testNormal(self):

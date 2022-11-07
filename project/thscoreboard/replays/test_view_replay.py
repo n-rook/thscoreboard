@@ -45,3 +45,6 @@ class TestGetPower(test_case.ReplayTestCase):
         self.assertEqual(game_fields.GetPowerFormat(game_ids.GameIDs.TH07, 100), '100')
         self.assertEqual(game_fields.GetPowerFormat(game_ids.GameIDs.TH10, 100), '5.00')
         self.assertEqual(game_fields.GetPowerFormat(game_ids.GameIDs.TH10, 66), '3.30')
+
+    def testGetLivesFormat(self):
+        self.assertEqual(game_fields.GetLivesFormat(game_ids.GameIDs.TH11, 5, 2), '5 (2/5)')

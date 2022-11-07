@@ -24,14 +24,8 @@
             {% if table_fields.lives %}
             <th>{% translate "Lives" %}</th>
             {% endif %}
-            {% if table_fields.life_pieces %}
-            <th>{% translate "Life Pieces" %}</th>
-            {% endif %}
             {% if table_fields.bombs %}
             <th>{% translate "Bombs" %}</th>
-            {% endif %}
-            {% if table_fields.bomb_pieces %}
-            <th>{% translate "Bomb Pieces" %}</th>
             {% endif %}
             {% if table_fields.th06_rank %}
             <th>{% translate "Rank" %}</th>
@@ -63,19 +57,13 @@
             <td>{{stage.point_items}}</td>
             {% endif %}
             {% if table_fields.power %}
-            <td>{{stage.Power}}</td>
+            <td>{{stage.formatPower}}</td>
             {% endif %}
             {% if table_fields.lives %}
-            <td>{{stage.lives}}</td>
-            {% endif %}
-            {% if table_fields.life_pieces %}
-            <td>{{stage.life_pieces}}</td>
+            <td>{{stage.formatLives}}</td>
             {% endif %}
             {% if table_fields.bombs %}
             <td>{{stage.bombs}}</td>
-            {% endif %}
-            {% if table_fields.bomb_pieces %}
-            <td>{{stage.bomb_pieces}}</td>
             {% endif %}
             {% if table_fields.th06_rank %}
             <td>{{stage.th06_rank}}</td>

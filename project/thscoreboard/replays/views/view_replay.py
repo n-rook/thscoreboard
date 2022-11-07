@@ -21,7 +21,12 @@ def replay_details(request, game_id: str, replay_id: int):
 
     # format power for frontend to show like ingame
     for stage in replay_stages:
-        stage.Power = game_fields.GetPowerFormat(game_id, stage.power)
+        stage.formatPower = game_fields.GetPowerFormat(game_id, stage.power)
+        total_live_pieces = game_fields.GetGameLifePieces(game_id)
+        if total_live_pieces is not None:
+            stage.formatLives = game_fields.GetLivesFormat(game_id, stage.lives, stage.life_pieces)
+        else:
+            stage.formatLives = str(stage.lives)
 
     context = {
         'game_name': replay_instance.shot.game.GetName(),
