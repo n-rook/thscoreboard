@@ -76,7 +76,7 @@ class ShotField(forms.ModelChoiceField):
             queryset=None,
             empty_label=None,
         )
-    
+
     @classmethod
     def set_queryset(self, field: 'ShotField', game_id: str):
         field.queryset = models.Shot.objects.filter(game=game_id)
@@ -100,10 +100,10 @@ class RouteField(forms.ModelChoiceField):
 
     def label_from_instance(self, obj: models.Route) -> str:
         return obj.GetName()
-    
+
     def should_include(self) -> bool:
         """Whether or not the Route field should be included in the form.
-        
+
         Most Touhou games don't have routes, so they don't need this field.
         """
         return self.choices
@@ -130,6 +130,7 @@ class PublishReplayForm(forms.Form):
     category = forms.ChoiceField(choices=models.Category.choices)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)
     is_good = forms.BooleanField(initial=True, required=False)
+    is_clear = forms.BooleanField(initial=True, required=False)
     video_link = VideoReplayLinkField(required=False)
 
     def clean(self):
@@ -152,7 +153,7 @@ class PublishReplayWithoutFileForm(forms.Form):
 
         if not self.fields['route'].should_include():
             del self.fields['route']
-        
+
         self.fields['difficulty'].choices = _GetDifficultyChoices(game)
 
     difficulty = forms.ChoiceField(choices=difficulty_names, initial=1)
@@ -160,5 +161,6 @@ class PublishReplayWithoutFileForm(forms.Form):
     route = RouteField()
     score = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=models.Category.choices)
+    is_clear = forms.BooleanField(initial=True, required=False)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)
     video_link = VideoReplayLinkField(required=True)

@@ -16,7 +16,7 @@ from replays.views import view_replay
 
 def _ReadFile(file_from_form):
     """Read a file.
-    
+
     Args:
         file_from_form: An UploadedFile.
     """
@@ -27,7 +27,7 @@ def _ReadFile(file_from_form):
 
 def _HandleReplay(request, replay_bytes):
     """Handle an uploaded replay.
-    
+
     May raise ValidationError.
     """
     try:
@@ -61,10 +61,10 @@ def upload_file(request):
 
             except ValidationError as e:
                 form.add_error('replay_file', e)
-    
+
     else:
         form = forms.UploadReplayFileForm()
-    
+
     all_games = models.Game.objects.all()
     replay_games = [g for g in all_games if g.has_replays]
     no_replay_games = [g for g in all_games if not g.has_replays]
@@ -107,6 +107,7 @@ def publish_replay(request, temp_replay_id):
                 category=form.cleaned_data['category'],
                 comment=form.cleaned_data['comment'],
                 is_good=form.cleaned_data['is_good'],
+                is_clear=form.cleaned_data['is_clear'],
                 video_link=form.cleaned_data['video_link'],
                 temp_replay_instance=temp_replay,
                 replay_info=replay_info,
@@ -152,6 +153,7 @@ def publish_replay_no_file(request, game_id: str):
                 route=form.cleaned_data.get('route'),  # Passes None if route is not defined.
                 score=form.cleaned_data['score'],
                 category=form.cleaned_data['category'],
+                is_clear=form.cleaned_data['is_clear'],
                 comment=form.cleaned_data['comment'],
                 video_link=form.cleaned_data['video_link'],
             )
@@ -166,7 +168,7 @@ def publish_replay_no_file(request, game_id: str):
                     'has_replay_file': False
                 }
             )
-    
+
     form = forms.PublishReplayWithoutFileForm(game=game)
     return render(
         request,

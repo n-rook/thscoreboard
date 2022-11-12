@@ -42,6 +42,14 @@
             {{ form.video_link }}
         </td>
         </tr>
+        <tr>
+        <td>
+            <label for="{{form.is_clear.id_for_label}}">Did it clear?</label>
+        </td>
+        <td>
+            {{ form.is_clear }}
+        </td>
+        </tr>
     {% if has_replay_file %}
         <tr>
         <td>
