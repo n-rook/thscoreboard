@@ -205,7 +205,7 @@ class Replay(models.Model):
     name = models.TextField(max_length=12, blank=True, null=True)
     """Username stored in the replay
     
-    The game only allows 8 characters to be added, 
+    The game only allows 8 characters to be added,
     but technically there are 12 bytes allocated, so space is reserved just in case
     """
 
