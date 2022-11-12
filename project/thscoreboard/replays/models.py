@@ -202,6 +202,13 @@ class Replay(models.Model):
     timestamp = models.DateTimeField(blank=True, null=True)
     """Timestamp from the replay"""
 
+    name = models.TextField(max_length=12, blank=True, null=True)
+    """Username stored in the replay
+    
+    The game only allows 8 characters to be added, 
+    but technically there are 12 bytes allocated, so space is reserved just in case
+    """
+
     def IsVisible(self, viewer: auth.get_user_model()):
         """Returns whether this replay should be visible to this user."""
         # Add a unit test for this
