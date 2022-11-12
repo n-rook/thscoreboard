@@ -89,7 +89,7 @@ class Category(models.IntegerChoices):
     TAS = 2
     """A tool-assisted replay."""
 
-    UNLISTED = 3
+    UNUSUAL = 3
     """A special replay that isn't listed on the leaderboards.
 
     This category is for things like replays of modded games or high-FPS runs;
