@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('replays', '0009_alter_temporaryreplayfile_created'),
+        ('replays', '0010_alter_replay_category'),
     ]
 
     operations = [
