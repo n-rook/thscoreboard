@@ -1,0 +1,92 @@
+{% extends "replays/docs/docs_template.html" %}
+{% load i18n %}
+
+{% block main_text %}
+    <h1>{% translate "Replay Rules" %}</h1>
+    {% blocktranslate %}
+    <h2>Disclaimer</h2>
+    <p>These rules are preliminary; we will adjust them based on feedback from the community. If we do, we might have to recategorize some replays.</p>
+    <h2>Overview</h2>
+    <p>
+        There are three types of replays on Silent Selene: regular, TAS, and unlisted. Most replays are <b>regular</b>; that describes runs that are played normally, without any unusual tools to assist the player. (Tools that do not change the character of the run are still allowed in regular replays.) <b>TAS</b> replays are tool-assisted; any helper tools are allowed, even ones that are obviously "cheating" like save states. But the replay still has to be a replay of the actual game. And <b>unlisted</b> runs are everything else; this category mostly applies to replays that changed the game's patterns somehow or made other crazy changes.
+    </p>
+    <h2>tl;dr</h2>
+    <p>
+        For regular runs, most tools like vpatch are allowed. Translation patches are allowed. Pause buffering is not allowed.
+    </p>
+    <h2>Is My Replay Regular?</h2>
+    <h3>General Rules</h3>
+    <h4>Expert replays</h4>
+    <p>
+        A few things are not allowed in <b>expert replays</b>, but are allowed for everyone else. Some things shouldn't be allowed at high levels of competition, but we don't want to restrict novice and intermediate players too much, especially if they're excited to upload replays of their successful runs. An expert replay is any replay which meets any of these criteria:
+    </p>
+    <ul>
+        <li>
+            Lunatic
+        </li>
+        <li>
+            Uses no bombs
+        </li>
+        <li>
+            Does not miss; that is, does not lose a life
+        </li>
+        <li>
+            Has a good score: a score noticeably higher than that of an average 1cc that does not engage with the scoring mechanics
+        </li>
+    </ul>
+    <h4>What's Allowed</h4>
+    <p>
+        Here are the general rules for regular replays.
+    </p>
+    <ul>
+        <li>
+            The low-latency tool "vpatch" is allowed.
+        </li>
+        <li>
+            Special DLLs to translate DirectX to other graphics APIs are allowed. For example, "ENB Converter" and "dgVoodoo" are allowed.
+        </li>
+        <li>
+            Emulators, or other tools that run a binary on an operation system or computer for which it was not designed, are allowed. This includes PC-98 emulators such as "Neko Project II", as well as programs like "Wine" that allow players to run Windows games on other operating systems.
+        </li>
+        <li>
+            Patches which translate the game's text are allowed.
+        </li>
+        <li>
+            Patches which modify the way the game's score is displayed so as to avoid a "counterstop" are allowed.
+        </li>
+    </ul>
+    <h4>What's Banned</h4>
+    <p>
+        The following things are not allowed.
+    </p>
+    <ul>
+        <li>
+            Any patch that modifies the game's behavior is not allowed.
+        </li>
+        <li>
+            Loading save states is not allowed. This includes any "runahead" emulator functionality that relies on save states.
+        </li>
+        <li>
+            Pause buffering, the technique of repeatedly pausing in quick succession to gain an advantage, is not allowed.
+        </li>
+        <li>
+            Pausing to gain an advantage, such as pausing when bullets are onscreen in order to read them, is not allowed. We may exempt specific replays from this rule if we deem the advantage unintentional.
+        </li>
+        <li>
+            Editing a replay file after it has been saved is not allowed (except for renaming it).
+        </li>
+    </ul>
+    <h3>Game-specific rules</h3>
+    <ul>
+        <li>
+            <b>TH06</b>: Texture patches that affect the appearance of the game, such as the "hitbox patch", are not allowed in expert replays.
+        </li>
+        <li>
+            <b>TH10</b>: "Hint files" are allowed.
+        </li>
+        <li>
+            <b>TH11</b>: "Hint files" are not allowed.
+        </li>
+    </ul>
+    {% endblocktranslate %}
+{% endblock %}
