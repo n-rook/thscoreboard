@@ -1,4 +1,4 @@
-"""Defines all models for the scores app."""
+"""Defines models for the users app, which contains account information."""
 
 import datetime
 import secrets
