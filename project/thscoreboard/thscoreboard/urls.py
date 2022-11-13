@@ -18,6 +18,7 @@ import logging
 
 from django.contrib import admin
 from django.urls import include, re_path, path
+from django.views.generic import base as base_views
 from replays.views import index
 from thscoreboard import settings
 
@@ -27,6 +28,15 @@ urlpatterns = [
     path('replays/', include('replays.urls.replay_urls')),
     path('docs/', include('replays.urls.docs_urls')),
     path('admin/', admin.site.urls),
+
+    # When fetching non-HTML pages, the browser looks at /favicon.ico
+    # to find an icon.
+    path(
+        'favicon.ico',
+        base_views.RedirectView.as_view(
+            url='/static/favicon.ico',
+            permanent=True,
+        )),
 ]
 
 # Install django-rosetta if (and only if) it is listed as an installed app.
