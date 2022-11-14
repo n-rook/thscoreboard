@@ -1,0 +1,12 @@
+[Unit]
+Description=Create a backup of the SilentSelene.net database
+Wants=silentselene-backup.timer
+
+[Service]
+Type=oneshot
+User=silentselene
+WorkingDirectory=/home/silentselene/backups/
+ExecStart=/bin/sh -c 'pg_dump thscoreboard -U postgres --format=c --file backup_$$(date -u +%%Y-%%m-%%e)'
+
+[Install]
+WantedBy=multi-user.target
