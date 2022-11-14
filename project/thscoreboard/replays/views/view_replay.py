@@ -32,7 +32,6 @@ def replay_details(request, game_id: str, replay_id: int):
         'shot_name': replay_instance.shot.GetName(),
         'difficulty_name': replay_instance.GetDifficultyName(),
         'game_id': game_id,
-        'upload_date': replay_instance.created.strftime("%d %b %Y %H:%M:%S %p"),
         'replay': replay_instance,
         'is_owner': request.user == replay_instance.user,
         'replay_file_is_good': replay_instance.is_good,
@@ -40,9 +39,6 @@ def replay_details(request, game_id: str, replay_id: int):
         'replay_stages': replay_stages,
         'table_fields': game_fields.GetGameField(game_id)
     }
-
-    if hasattr(replay_instance, 'timestamp'):
-        context['replay_date'] = replay_instance.timestamp.strftime("%d %b %Y %H:%M:%S %p")
 
     if hasattr(replay_instance, 'replayfile'):
         context['has_replay_file'] = True

@@ -3,9 +3,13 @@
 
 {% block content %}
     <h2><a href="/replays/{{ game_id}}">{{ game_name }}</a></h2>
-    <div>Upload Date: {{ upload_date }}</div>
-    {% if replay_date %}
-    <div>Replay Date: {{ replay_date }}</div>
+    <div>Uploaded on: {{ replay.created|date:"d F Y, h:i A" }}</div>
+    {% if replay.timestamp %}
+        {% if game_id == "th07" %}
+        <div>Replay Date: {{ replay.timestamp|date:"d F" }}</div>
+        {% else %}
+        <div>Replay Date: {{ replay.timestamp|date:"d F Y, h:i A" }}</div>
+        {% endif %}
     {% endif %}
     <h3><b>Replay Info</b></h3>
     <table>
