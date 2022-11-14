@@ -129,10 +129,12 @@ def publish_replay(request, temp_replay_id):
         {
             'form': form,
             'game_name': shot_instance.game.GetName(),
+            'game_id': shot_instance.game.game_id,
             'difficulty_name': shot_instance.game.GetDifficultyName(replay_info.difficulty),
             'shot_name': shot_instance.GetName(),
             'route_name': None,
             'has_replay_file': True,
+            'replay': replay_info,
         }
     )
 
