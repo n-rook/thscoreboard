@@ -57,6 +57,7 @@ class ReplayInfo:
     difficulty: int
     score: int
     timestamp: datetime
+    name: str
     stages = []
 
 
@@ -82,11 +83,12 @@ def _Parse06(rep_raw):
         i += 1
     
     r = ReplayInfo(
-        game_ids.GameIDs.TH06,
-        shots[rep_raw[6]],
-        rep_raw[7],
-        replay.header.score,
-        datetime.strptime(replay.header.date, "%m/%d/%y")
+        game=game_ids.GameIDs.TH06,
+        shot=shots[rep_raw[6]],
+        difficulty=rep_raw[7],
+        score=replay.header.score,
+        timestamp=datetime.strptime(replay.header.date, "%m/%d/%y"),
+        name=replay.header.name.replace("\x00", "")
     )
 
     r.stages = rep_stages
@@ -123,11 +125,12 @@ def _Parse07(rep_raw):
         i += 1
 
     r = ReplayInfo(
-        game_ids.GameIDs.TH07,
-        shots[replay.header.shot],
-        replay.header.difficulty,
-        replay.header.score * 10,
-        datetime.strptime(replay.header.date, "%m/%d")
+        game=game_ids.GameIDs.TH07,
+        shot=shots[replay.header.shot],
+        difficulty=replay.header.difficulty,
+        score=replay.header.score * 10,
+        timestamp=datetime.strptime(replay.header.date, "%m/%d"),
+        name=replay.header.name.replace("\x00", "")
     )
 
     r.stages = rep_stages
@@ -155,11 +158,12 @@ def _Parse10(rep_raw):
         rep_stages.append(s)
         
     r = ReplayInfo(
-        game_ids.GameIDs.TH10,
-        shots[replay.header.shot],
-        replay.header.difficulty,
-        replay.header.score * 10,
-        datetime.fromtimestamp(replay.header.timestamp)
+        game=game_ids.GameIDs.TH10,
+        shot=shots[replay.header.shot],
+        difficulty=replay.header.difficulty,
+        score=replay.header.score * 10,
+        timestamp=datetime.fromtimestamp(replay.header.timestamp),
+        name=replay.header.name.replace("\x00", "")
     )
 
     r.stages = rep_stages
@@ -194,7 +198,8 @@ def _Parse11(rep_raw):
         shot=shots[replay.header.shot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.fromtimestamp(replay.header.timestamp)
+        timestamp=datetime.fromtimestamp(replay.header.timestamp),
+        name=replay.header.name.replace("\x00", "")
     )
 
     r.stages = rep_stages
