@@ -1,0 +1,29 @@
+{% extends "replays/docs/docs_template.html" %}
+{% load i18n %}
+
+{% block main_text %}
+    {% url 'Docs/Privacy' as replay_rules_url %}
+    <h1>{% translate "Rules" %}</h1>
+    {% blocktranslate %}
+    <h2>General Rules</h2>
+    <ul>
+        <li>Do not use the site if you are under 13 (or 16 in Europe).</li>
+        <li>Do not impersonate other members of the Touhou community, or upload replays that are not yours.</li>
+        <li>Do not create multiple accounts.</li>
+        <li>Do not try to pass off tool-assisted replays as having been played without the use of restricted tools. (For more information on which tools are allowed, see the <a href="{{ replay_rules_url }}">Replay Rules</a>.)</li>
+        <li>Do not encourage illegal activity or provide information about piracy. (Note that using an emulator is not illegal.)</li>
+    </ul>
+    <p>
+        The rules above are not exhaustive; we may enforce bans or other punishment at our own discretion for any behavior we judge harmful to the Touhou community.
+    </p>
+    <h2>Replay Rules</h2>
+    <p>
+        For detailed rules on what is allowed for regular replays, see the <a href="{{ replay_rules_url }}">Replay Rules</a>.
+    </p>
+    <ul>
+        <li>Be sure the replay information you specify is correct.</li>
+        <li>If your replay links to a video, the video must be publicly accessible, and must show your run of the game.</li>
+    </ul>
+
+    {% endblocktranslate %}
+{% endblock %}

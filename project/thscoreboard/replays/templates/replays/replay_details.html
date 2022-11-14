@@ -3,17 +3,47 @@
 
 {% block content %}
     <h2><a href="/replays/{{ game_id}}">{{ game_name }}</a></h2>
-    {% if route_name %}
-    <h3>{{ difficulty_name }} ({{ route_name }}) — {{ shot_name }}</h3>
-    {% else %}
-    <h3>{{ difficulty_name }} — {{ shot_name }}</h3>
+    <div>Uploaded on: {{ replay.created|date:"d F Y, h:i A" }}</div>
+    {% if replay.timestamp %}
+        {% if game_id == "th07" %}
+        <div>Replay Date: {{ replay.timestamp|date:"d F" }}</div>
+        {% else %}
+        <div>Replay Date: {{ replay.timestamp|date:"d F Y, h:i A" }}</div>
+        {% endif %}
     {% endif %}
-    <div class="replay-box">
-        Total score: <span class="replay-score">{{ replay.score|intcomma }}</span>
-    </div>
-    {% if replay.is_clear %}
-    <p>Clears!</p>
-    {% endif %}
+    <div class="replay-header"><h3>Replay Info</h3></div>
+    <table>
+        <tbody>
+            {% if replay.name %}
+            <tr>
+                <td>Name</td>
+                <td>{{ replay.name }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td>Difficulty</td>
+                <td>{{ difficulty_name }}</td>
+            </tr>
+            <tr>
+                <td>Shot</td>
+                <td>{{ shot_name }}</td>
+            </tr>
+            {% if route_name %}
+            <tr>
+                <td>Route</td>
+                <td>{{ route_name }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td>Score</td>
+                <td>{{ replay.score|intcomma }}</td>
+            </tr>
+            <tr>
+                <td>Clears?</td>
+                <td>{% if replay.is_clear %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
     <p>
         {% if has_stages %}
         {% include "replays/replay_stages.html" %}

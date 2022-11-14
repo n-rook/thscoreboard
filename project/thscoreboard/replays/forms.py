@@ -125,6 +125,7 @@ class PublishReplayForm(forms.Form):
         super().__init__(*args, **kwargs)
 
         self.fields['score'].widget.attrs.update({'readonly': 'readonly'})
+        self.fields['name'].widget.attrs.update({'readonly': 'readonly'})
 
     score = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=models.Category.choices)
@@ -132,6 +133,7 @@ class PublishReplayForm(forms.Form):
     is_good = forms.BooleanField(initial=True, required=False)
     is_clear = forms.BooleanField(initial=True, required=False)
     video_link = VideoReplayLinkField(required=False)
+    name = forms.CharField(max_length=12, required=False)
 
     def clean(self):
         cleaned_data = super().clean()

@@ -3,18 +3,51 @@
 {% block content %}
 <h1>Finish uploading your replay</h1>
 <h2>{{ game_name }}</h2>
-{% if route_name %}
-<h3>{{ difficulty_name }} ({{ route_name }}) — {{ shot_name }}</h3>
-{% else %}
-<h3>{{ difficulty_name }} — {{ shot_name }}</h3>
-{% endif %}
-
+<p>
+    <table class="replay-header">
+        <tbody>
+            {% if replay.timestamp %}
+            <tr>
+                <td>Replay Date</td>
+                {% if game_id == "th07" %}
+                <td>{{ replay.timestamp|date:"d F" }}</td>
+                {% else %}
+                <td>{{ replay.timestamp|date:"d F Y, h:i A" }}</td>
+                {% endif %}
+            </tr>
+            {% endif %}
+            <tr>
+                <td>Difficulty</td>
+                <td>{{ difficulty_name }}</td>
+            </tr>
+            <tr>
+                <td>Shot</td>
+                <td>{{ shot_name }}</td>
+            </tr>
+            {% if route_name %}
+            <tr>
+                <td>Route</td>
+                <td>{{ route_name }}</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</p>
 <form method="post" class="finish-uploading-form">
     {% csrf_token %}
     {{ form.non_field_errors }}
 
     <table class="form-table">
         <th style="width: 50%;"></th>
+        <tr>
+        <td>
+            <label for="{{form.name.id_for_label}}">Name</label>
+            {{ form.name.errors }}
+        </td>
+        <td>
+            {{ form.name }}
+        </td>
+        </tr>
         <tr>
         <td>
             <label for="{{form.score.id_for_label}}">Score</label>

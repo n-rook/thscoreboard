@@ -110,7 +110,7 @@ def publish_replay(request, temp_replay_id):
                 is_clear=form.cleaned_data['is_clear'],
                 video_link=form.cleaned_data['video_link'],
                 temp_replay_instance=temp_replay,
-                replay_info=replay_info,
+                replay_info=replay_info
             )
             return redirect(view_replay.replay_details, game_id=replay_info.game, replay_id=new_replay.id)
         else:
@@ -118,7 +118,8 @@ def publish_replay(request, temp_replay_id):
 
     form = forms.PublishReplayForm(
         initial={
-            'score': replay_info.score
+            'score': replay_info.score,
+            'name': replay_info.name
         })
 
     # When IN is supported, add "route" here too.
@@ -129,10 +130,12 @@ def publish_replay(request, temp_replay_id):
         {
             'form': form,
             'game_name': shot_instance.game.GetName(),
+            'game_id': shot_instance.game.game_id,
             'difficulty_name': shot_instance.game.GetDifficultyName(replay_info.difficulty),
             'shot_name': shot_instance.GetName(),
             'route_name': None,
             'has_replay_file': True,
+            'replay': replay_info,
         }
     )
 
