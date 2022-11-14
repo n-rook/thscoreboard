@@ -183,6 +183,9 @@ class Replay(models.Model):
     If this submission has no replay file, this field will be null.
     """
 
+    is_clear = models.BooleanField()
+    """Whether the replay cleared the game."""
+
     rep_score = models.BigIntegerField(blank=True, null=True)
     """The final score recorded in the replay.
 

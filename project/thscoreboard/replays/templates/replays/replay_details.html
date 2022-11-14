@@ -38,6 +38,10 @@
                 <td>Score</td>
                 <td>{{ replay.score|intcomma }}</td>
             </tr>
+            <tr>
+                <td>Clears?</td>
+                <td>{% if replay.is_clear %}Yes{% else %}No{% endif %}</td>
+            </tr>
         </tbody>
     </table>
     <p>

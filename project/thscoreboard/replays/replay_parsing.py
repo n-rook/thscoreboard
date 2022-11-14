@@ -65,7 +65,7 @@ def _Parse06(rep_raw):
     cryptdata = bytearray(rep_raw[15:])
     td.decrypt06(cryptdata, rep_raw[14])
     replay = th06.Th06.from_bytes(cryptdata)
-    
+
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
 
     rep_stages = []
@@ -81,7 +81,7 @@ def _Parse06(rep_raw):
             s.th06_rank = score.rank
             rep_stages.append(s)
         i += 1
-    
+
     r = ReplayInfo(
         game=game_ids.GameIDs.TH06,
         shot=shots[rep_raw[6]],
@@ -140,11 +140,11 @@ def _Parse07(rep_raw):
 def _Parse10(rep_raw):
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
-    
+
     td.decrypt(comp_data, 0x400, 0xaa, 0xe1)
     td.decrypt(comp_data, 0x80, 0x3d, 0x7a)
     replay = th10.Th10.from_bytes(td.unlzss(comp_data))
-    
+
     shots = ["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"]
 
     rep_stages = []
@@ -156,7 +156,7 @@ def _Parse10(rep_raw):
         s.piv = stage.piv
         s.lives = stage.lives
         rep_stages.append(s)
-        
+
     r = ReplayInfo(
         game=game_ids.GameIDs.TH10,
         shot=shots[replay.header.shot],
@@ -167,7 +167,7 @@ def _Parse10(rep_raw):
     )
 
     r.stages = rep_stages
-      
+
     return r
 
 

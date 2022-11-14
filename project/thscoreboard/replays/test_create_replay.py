@@ -21,6 +21,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             score=10000,
             category=models.Category.REGULAR,
             comment='Hello',
+            is_clear=True,
             video_link='https://www.youtube.com/example',
             route=None,
         )
@@ -30,6 +31,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertEqual(new_replay.shot, shot)
         self.assertEqual(new_replay.score, 10000)
         self.assertIsNone(new_replay.rep_score)
+        self.assertTrue(new_replay.is_clear)
         self.assertEqual(new_replay.video_link, 'https://www.youtube.com/example')
         self.assertEqual(new_replay.comment, 'Hello')
 
@@ -37,10 +39,10 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             new_replay,
             models.Replay.objects.get(id=new_replay.id)
         )
-    
+
     def testPublishReplay(self):
         replay_file_contents = test_replays.GetRaw('th10_normal')
-        
+
         temp_replay = models.TemporaryReplayFile(
             user=self.user,
             replay=replay_file_contents
@@ -60,6 +62,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             comment='Hello',
             video_link='',
             is_good=True,
+            is_clear=False,
             temp_replay_instance=temp_replay,
             replay_info=replay_info,
         )
@@ -69,6 +72,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertEqual(new_replay.shot, shot)
         self.assertEqual(new_replay.score, 294127890)
         self.assertEqual(new_replay.rep_score, 294127890)
+        self.assertFalse(new_replay.is_clear)
         self.assertEqual(new_replay.category, models.Category.REGULAR)
         self.assertEqual(new_replay.comment, 'Hello')
 
@@ -97,6 +101,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             comment='',
             video_link='',
             is_good=True,
+            is_clear=True,
             temp_replay_instance=temp_replay,
             replay_info=replay_info,
         )
