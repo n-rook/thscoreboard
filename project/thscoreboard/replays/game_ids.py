@@ -50,59 +50,83 @@ def GetGameName(game_id: str, short=False):
 
 
 def GetShotName(game_id: str, shot_id: str):
+
     if game_id == GameIDs.TH01:
         if shot_id == 'Reimu':
-            return _('Reimu')
+            return _('th01 Reimu')
+
     if game_id == GameIDs.TH05:
-        # The names are the same as the short codenames.
-        # Well, in English.
-        return shot_id
+        if shot_id == 'Reimu':
+            return _('th05 Reimu')
+        if shot_id == 'Marisa':
+            return _('th05 Marisa')
+        if shot_id == 'Mima':
+            return _('th05 Mima')
+        if shot_id == 'Yuuka':
+            return _('th05 Yuuka')
+
     if game_id == GameIDs.TH06:
         if shot_id == 'ReimuA':
-            return 'Reimu A'
+            return _('th06 Reimu A')
         elif shot_id == 'ReimuB':
-            return 'Reimu B'
+            return _('th06 Reimu B')
         elif shot_id == 'MarisaA':
-            return 'Marisa A'
+            return _('th06 Marisa A')
         elif shot_id == 'MarisaB':
-            return 'Marisa B'
+            return _('th06 Marisa B')
+
     if game_id == GameIDs.TH07:
+        if shot_id == 'ReimuA':
+            return _('th07 Reimu A')
+        if shot_id == 'ReimuB':
+            return _('th07 Reimu B')
+        if shot_id == 'MarisaA':
+            return _('th07 Marisa A')
+        if shot_id == 'MarisaB':
+            return _('th07 Marisa B')
+        if shot_id == 'SakuyaA':
+            return _('th07 Sakuya A')
+        if shot_id == 'SakuyaB':
+            return _('th07 Sakuya B')
         return shot_id
+
     if game_id == GameIDs.TH10:
         if shot_id == 'ReimuA':
-            return 'Reimu A (Homing Type)'
+            return _('th10 Reimu A')
         elif shot_id == 'ReimuB':
-            return 'Reimu B (Forward Focus Type)'
+            return _('th10 Reimu B')
         elif shot_id == 'ReimuC':
-            return 'Reimu C (Sealing Type)'
+            return _('th10 Reimu C')
         elif shot_id == 'MarisaA':
-            return 'Marisa A (High-Power Type)'
+            return _('th10 Marisa A')
         elif shot_id == 'MarisaB':
-            return 'Marisa B (Piercing Type)'
+            return _('th10 Marisa B')
         elif shot_id == 'MarisaC':
-            return 'Marisa C (Magician Type)'
+            return _('th10 Marisa C')
+
     if game_id == GameIDs.TH11:
         if shot_id == 'ReimuA':
-            return 'Reimu A (Yukari Yakumo)'
+            return _('th11 Reimu A')
         elif shot_id == 'ReimuB':
-            return 'Reimu B (Suika Ibuki)'
+            return _('th11 Reimu B')
         elif shot_id == 'ReimuC':
-            return 'Reimu C (Aya Shameimaru)'
+            return _('th11 Reimu C')
         elif shot_id == 'MarisaA':
-            return 'Marisa A (Alice Margatroid)'
+            return _('th11 Marisa A')
         elif shot_id == 'MarisaB':
-            return 'Marisa B (Patchouli Knowledge)'
+            return _('th11 Marisa B')
         elif shot_id == 'MarisaC':
-            return 'Marisa C (Nitori Kawashiro)'
+            return _('th11 Marisa C')
+
     return 'Bug shot'
 
 
 def GetRouteName(game_id: str, route_id: str):
     if game_id == GameIDs.TH01:
         if route_id == 'Jigoku':
-            return pgettext('th01 route', 'Jigoku')
+            return _('th01 Jigoku')
         elif route_id == 'Makai':
-            return pgettext('th01 route', 'Makai')
+            return _('th01 Makai')
     return 'Bug route'
 
 
@@ -118,7 +142,8 @@ def GetDifficultyName(game_id: str, difficulty: int):
             return 'Lunatic'
         elif difficulty == 4:
             return 'Extra'
-        elif difficulty == 5:
+    if game_id in {GameIDs.TH07}:
+        if difficulty == 5:
             return 'Phantasm'
     
     return 'Bug difficulty'
