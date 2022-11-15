@@ -4,6 +4,7 @@ from django.core import mail
 from django.template import loader
 from django import urls
 
+from thscoreboard import settings
 from . import models
 
 
@@ -11,7 +12,7 @@ _ACCOUNTS_EMAIL = 'Silent Selene Accounts <accounts@silentselene.net>'
 
 
 def SendVerificationEmail(request, u: models.UnverifiedUser):
-    full_link = request.META['HTTP_ORIGIN'] + urls.reverse('users:verify_email', kwargs={'token': u.token})
+    full_link = settings.SITE_BASE + urls.reverse('users:verify_email', kwargs={'token': u.token})
 
     text_message = loader.render_to_string(
         'registration/email/verification.txt',
