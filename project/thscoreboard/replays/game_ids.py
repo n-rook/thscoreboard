@@ -1,6 +1,6 @@
 """Various human-readable game IDs, used in low-level libraries like game_ids.py."""
 
-from django.utils.translation import gettext as _, pgettext
+from django.utils.translation import gettext as _
 
 
 class GameIDs:
