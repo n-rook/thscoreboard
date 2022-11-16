@@ -51,8 +51,11 @@ def _GetAllowedHosts():
 ALLOWED_HOSTS = _GetAllowedHosts()
 print('Allowed hosts: {}'.format(', '.join(ALLOWED_HOSTS)))
 
+SITE_BASE = os.environ.get("SITE_BASE")
+if not SITE_BASE:
+    SITE_BASE = "http://localhost:8000/"
 
-USE_HTTPS_IN_EMAIL_LINKS = os.environ.get('USE_HTTPS_IN_EMAIL_LINKS') == 'Yes'
+CSRF_TRUSTED_ORIGINS = [SITE_BASE]
 
 # Application definition
 
