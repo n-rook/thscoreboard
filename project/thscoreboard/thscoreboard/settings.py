@@ -53,7 +53,7 @@ print('Allowed hosts: {}'.format(', '.join(ALLOWED_HOSTS)))
 
 SITE_BASE = os.environ.get("SITE_BASE")
 if not SITE_BASE:
-    SITE_BASE = "http://localhost:8000/"
+    SITE_BASE = "http://localhost:8000"
 
 CSRF_TRUSTED_ORIGINS = [SITE_BASE]
 
