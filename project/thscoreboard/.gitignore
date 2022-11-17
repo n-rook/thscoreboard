@@ -6,7 +6,7 @@ __pycache__
 MANIFEST
 .dev_pgpass
 .env
-compiled_static_css
+*.css
 db.sqlite3
 dist/
 docs/_build/
