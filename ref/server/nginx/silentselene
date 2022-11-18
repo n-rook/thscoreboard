@@ -11,4 +11,12 @@ server {
         location /static {
                 root /home/silentselene/silentselene/project/thscoreboard/shared_content;
         }
+		
+        location /static/admin {
+                root /usr/local/lib/python3.9/dist-packages/django/contrib/admin;
+        }
+
+        location = /favicon.ico {
+                alias /home/silentselene/silentselene/project/thscoreboard/shared_content/static/favicon.ico;
+        }
 }
