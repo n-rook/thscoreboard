@@ -120,6 +120,7 @@ LOGGING = {
     },
 }
 
+DEPLOY_KEY = os.environ["DEPLOY_KEY"] if "DEPLOY_KEY" in os.environ else "DEFAULT_DEPLOY_KEY_INSECURE"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

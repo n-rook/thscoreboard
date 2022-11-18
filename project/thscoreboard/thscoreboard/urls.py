@@ -21,6 +21,7 @@ from django.urls import include, re_path, path
 from django.views.generic import base as base_views
 from replays.views import index
 from thscoreboard import settings
+from . import autodeploy
 
 urlpatterns = [
     path('users/', include('users.urls')),
@@ -28,6 +29,7 @@ urlpatterns = [
     path('replays/', include('replays.urls.replay_urls')),
     path('docs/', include('replays.urls.docs_urls')),
     path('admin/', admin.site.urls),
+    path('deploy', autodeploy.deploy),
 
     # When fetching non-HTML pages, the browser looks at /favicon.ico
     # to find an icon.

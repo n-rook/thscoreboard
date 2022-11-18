@@ -5,11 +5,12 @@ After=postgresql.service
 
 [Service]
 Type=simple
+KillSignal=SIGINT
 Restart=always
 RestartSec=1
 User=silentselene
 WorkingDirectory=/home/silentselene/silentselene/project/thscoreboard/
-ExecStart=/usr/bin/python3 manage.py runserver
+ExecStart=uwsgi /home/silentselene/silentselene/ref/server/uwsgi.ini
 
 [Install]
 WantedBy=multi-user.target
