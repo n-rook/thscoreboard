@@ -6,7 +6,6 @@ try:
     from replays.management.commands import setup_constant_tables
     from thscoreboard import settings
     
-    import bcrypt
     import os
 
     def deploy(request):
@@ -32,6 +31,6 @@ try:
             return HttpResponse(content="<h1>Unauthorized!</h1>", status=403)
 except ImportError:
     print("Could not import uwsgi module. Automatic deployment at /deploy unavailable")
+    
     def deploy(request):
         return HttpResponse(content="<h1>Automatic deployment unavailable</h1>", status=501)
-
