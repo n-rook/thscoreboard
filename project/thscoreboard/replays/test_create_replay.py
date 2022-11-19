@@ -1,3 +1,5 @@
+
+from replays import game_ids
 from replays import models
 from replays import create_replay
 from replays import replay_parsing
@@ -12,7 +14,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.user = self.createUser('some-user')
 
     def testPublishWithoutReplayFile(self):
-        shot = models.Shot.objects.get(shot_id='Mima')
+        shot = models.Shot.objects.get(game_id=game_ids.GameIDs.TH05, shot_id='Mima')
 
         new_replay = create_replay.PublishReplayWithoutFile(
             user=self.user,

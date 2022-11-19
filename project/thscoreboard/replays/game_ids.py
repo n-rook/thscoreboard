@@ -5,6 +5,9 @@ from django.utils.translation import gettext as _, pgettext
 
 class GameIDs:
     TH01 = 'th01'
+    TH02 = 'th02'
+    TH03 = 'th03'
+    TH04 = 'th04'
     TH05 = 'th05'
     TH06 = 'th06'
     TH07 = 'th07'
@@ -21,6 +24,21 @@ def GetGameName(game_id: str, short=False):
             return _('th01')
         else:
             return _('東方靈異伝 - The Highly Responsive to Prayers')
+    if game_id == GameIDs.TH02:
+        if short:
+            return _('th02')
+        else:
+            return _('東方封魔録 - Story of Eastern Wonderland')
+    if game_id == GameIDs.TH03:
+        if short:
+            return _('th03')
+        else:
+            return _('東方夢時空 - The Phantasmagoria of Dim. Dream')
+    if game_id == GameIDs.TH04:
+        if short:
+            return _('th04')
+        else:
+            return _('東方幻想郷 - Lotus Land Story')
     if game_id == GameIDs.TH05:
         if short:
             return _('th05')
@@ -53,10 +71,50 @@ def GetShotName(game_id: str, shot_id: str):
     if game_id == GameIDs.TH01:
         if shot_id == 'Reimu':
             return _('Reimu')
+    if game_id == GameIDs.TH02:
+        if shot_id == 'ReimuA':
+            return _('Mobility')
+        elif shot_id == 'ReimuB':
+            return _('Defensive')
+        elif shot_id == 'ReimuC':
+            return _('Offensive')
+    if game_id == GameIDs.TH03:
+        if shot_id == 'Reimu':
+            return _('Reimu')
+        elif shot_id == 'Mima':
+            return _('Mima')
+        elif shot_id == 'Marisa':
+            return _('Marisa')
+        elif shot_id == 'Ellen':
+            return _('Ellen')
+        elif shot_id == 'Kotohime':
+            return _('Kotohime')
+        elif shot_id == 'Kana':
+            return _('Kana')
+        elif shot_id == 'Rikako':
+            return _('Rikako')
+        elif shot_id == 'Chiyuri':
+            return _('Chiyuri')
+        elif shot_id == 'Yumemi':
+            return _('Yumemi')
+    if game_id == GameIDs.TH04:
+        if shot_id == 'ReimuA':
+            return _('Reimu A')
+        elif shot_id == 'ReimuB':
+            return _('Reimu B')
+        elif shot_id == 'MarisaA':
+            return _('Marisa A')
+        elif shot_id == 'MarisaB':
+            return _('Marisa B')
     if game_id == GameIDs.TH05:
-        # The names are the same as the short codenames.
-        # Well, in English.
-        return shot_id
+        if shot_id == 'Reimu':
+            return _('Reimu')
+        elif shot_id == 'Marisa':
+            return _('Marisa')
+        elif shot_id == 'Mima':
+            return _('Mima')
+        elif shot_id == 'Yuuka':
+            return _('Yuuka')
     if game_id == GameIDs.TH06:
         if shot_id == 'ReimuA':
             return 'Reimu A'
@@ -107,7 +165,16 @@ def GetRouteName(game_id: str, route_id: str):
 
 
 def GetDifficultyName(game_id: str, difficulty: int):
-    if game_id in {GameIDs.TH01, GameIDs.TH05, GameIDs.TH06, GameIDs.TH07, GameIDs.TH10, GameIDs.TH11}:
+    if game_id in {
+            GameIDs.TH01,
+            GameIDs.TH02,
+            GameIDs.TH03,
+            GameIDs.TH04,
+            GameIDs.TH05,
+            GameIDs.TH06,
+            GameIDs.TH07,
+            GameIDs.TH10,
+            GameIDs.TH11}:
         if difficulty == 0:
             return 'Easy'
         elif difficulty == 1:
@@ -120,5 +187,5 @@ def GetDifficultyName(game_id: str, difficulty: int):
             return 'Extra'
         elif difficulty == 5:
             return 'Phantasm'
-    
+
     return 'Bug difficulty'

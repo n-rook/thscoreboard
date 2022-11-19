@@ -26,6 +26,9 @@ def SetUpConstantTables():
     _CreateIfNotLoaded('th07', _Create07)
     _CreateIfNotLoaded('th06', _Create06)
     _CreateIfNotLoaded('th05', _Create05)
+    _CreateIfNotLoaded('th04', _Create04)
+    _CreateIfNotLoaded('th03', _Create03)
+    _CreateIfNotLoaded('th02', _Create02)
     _CreateIfNotLoaded('th01', _Create01)
 
 
@@ -93,6 +96,55 @@ def _Create05():
 
 
 @transaction.atomic
+def _Create04():
+    th04 = models.Game(
+        game_id='th04', has_replays=False,
+        num_difficulties=5)
+    th04.save()
+
+    shots = [
+        'ReimuA',
+        'ReimuB',
+        'MarisaA',
+        'MarisaB'
+    ]
+    for shot in shots:
+        shot_row = models.Shot(game=th04, shot_id=shot)
+        shot_row.save()
+
+
+def _Create03():
+    th03 = models.Game(game_id='th03', has_replays=False, num_difficulties=5)
+    th03.save()
+
+    shots = [
+        'Reimu',
+        'Mima',
+        'Marisa',
+        'Ellen',
+        'Kotohime',
+        'Kana',
+        'Rikako',
+        'Chiyuri',
+        'Yumemi',
+    ]
+    for shot in shots:
+        shot_row = models.Shot(game=th03, shot_id=shot)
+        shot_row.save()
+
+
+@transaction.atomic
+def _Create02():
+    th02 = models.Game(game_id='th02', has_replays=False, num_difficulties=5)
+    th02.save()
+
+    shots = ['ReimuA', 'ReimuB', 'ReimuC']
+    for shot in shots:
+        shot_row = models.Shot(game=th02, shot_id=shot)
+        shot_row.save()
+
+
+@transaction.atomic
 def _Create01():
     # No extra in HRtP!
     th01 = models.Game(game_id='th01', has_replays=False, num_difficulties=4)
@@ -100,7 +152,7 @@ def _Create01():
 
     shot = models.Shot(game=th01, shot_id='Reimu')
     shot.save()
-    
+
     routes = ['Jigoku', 'Makai']
     for i, route_id in enumerate(routes):
         route = models.Route(game=th01, route_id=route_id, order_number=i)
