@@ -1,5 +1,9 @@
 """A webhook that runs "git pull" and updates the server."""
 
+import base64
+import logging
+import subprocess
+
 from sass_processor.management.commands import compilescss
 
 from django.http import HttpResponse
@@ -12,8 +16,6 @@ from django.views.decorators import csrf
 from users.models import User
 from replays.management.commands import setup_constant_tables
 
-import base64
-import os
 
 try:
     import uwsgi
@@ -24,7 +26,8 @@ except ImportError:
 
 
 def do_deploy():
-    os.system("git pull")
+    git_pull()
+
     migrate.Command().handle(
         database="default",
         skip_checks=False,
@@ -55,6 +58,17 @@ def do_deploy():
     uwsgi.reload()
 
 
+def git_pull():
+    # Retrieve the main branch from the github repo.
+    outcome = subprocess.run(
+        ['git', 'pull', '--ff-only'],
+        check=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True)
+    logging.info('Pulled recent changes from origin.\nOutput:\n%s', outcome.stdout)
+
+
 @csrf.csrf_exempt
 def deploy(request):
     if "Authorization" in request.headers:
@@ -64,6 +78,7 @@ def deploy(request):
             try:
                 user = User.objects.get(username=creds[0])
                 if check_password(creds[1], user.password) and user.is_superuser:
+                    logging.info('Deploying on behalf of %s', user.username)
                     do_deploy()
                     return HttpResponse(status=200, content="Success!!!")
             except ObjectDoesNotExist:
