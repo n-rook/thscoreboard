@@ -120,6 +120,7 @@ LOGGING = {
     },
 }
 
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -208,7 +209,7 @@ STATICFILES_FINDERS = [
     'sass_processor.finders.CssFinder',
 ]
 
-SASS_PROCESSOR_ROOT = 'compiled_static_css'
+SASS_PROCESSOR_ROOT = 'compiled_static_css/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
