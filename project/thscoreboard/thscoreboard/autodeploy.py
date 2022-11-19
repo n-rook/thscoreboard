@@ -1,14 +1,18 @@
 from django.http import HttpResponse
-import base64
 try:
     import uwsgi
 
+    from django.contrib.staticfiles.management.commands import collectstatic
+    from sass_processor.management.commands import compilescss
     from django.core.management.commands import migrate
+
+    
     from django.core.exceptions import ObjectDoesNotExist
     from django.contrib.auth.hashers import check_password
     from users.models import User
     from replays.management.commands import setup_constant_tables
     
+    import base64
     import os
 
     def do_deploy():
@@ -26,6 +30,24 @@ try:
         )
 
         setup_constant_tables.SetUpConstantTables()
+
+        compilescss.Command().handle(
+            verbosity=1,
+            delete_files=False,
+            use_storage=False,
+            sass_precision=True
+        )
+
+        collectstatic.Command().handle(
+            interactive=False,
+            verbosity=1,
+            link=False,
+            clear=True,
+            dry_run=False,
+            ignore_patterns=[],
+            use_default_ignore_patterns=False,
+            post_process=False
+        )
 
         uwsgi.reload()
 
