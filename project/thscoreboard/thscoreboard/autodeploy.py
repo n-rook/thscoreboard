@@ -4,10 +4,10 @@ try:
     import uwsgi
 
     from django.core.management.commands import migrate
+    from django.core.exceptions import ObjectDoesNotExist
     from django.contrib.auth.hashers import check_password
     from users.models import User
     from replays.management.commands import setup_constant_tables
-    
     
     import os
 
@@ -39,7 +39,7 @@ try:
                     if check_password(creds[1], user.password) and user.is_superuser:
                         do_deploy()
                         return HttpResponse(status=200, content="Success!!!")
-                except:
+                except ObjectDoesNotExist:
                     response = HttpResponse(status=401, content=f"Failed to authenticate user {creds[0]}")
                     response.headers["WWW-Authenticate"] = "Basic"
                     return response
