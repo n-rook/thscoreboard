@@ -24,6 +24,7 @@ jobs:
     - name: Deploy to staging
       working-directory: ./project/thscoreboard
       env:
+        LOCAL_DATABASE_PASSWORD: unused
         DEPLOY_PASSWORD: ${{ secrets.STAGING_DEPLOYER_PASSWORD }}
       run: |
         python manage.py remote_deploy staging.silentselene.net deployer
