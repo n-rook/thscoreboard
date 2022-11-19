@@ -6,7 +6,6 @@ try:
     from sass_processor.management.commands import compilescss
     from django.core.management.commands import migrate
 
-    
     from django.core.exceptions import ObjectDoesNotExist
     from django.contrib.auth.hashers import check_password
     from users.models import User
