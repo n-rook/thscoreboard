@@ -1,4 +1,5 @@
 import logging
+import os
 
 from django.core.management import base
 import requests
@@ -14,13 +15,18 @@ class Command(base.BaseCommand):
 
         parser.add_argument('target', help='The host (and port) of the server which should fetch a new version from HEAD.')
         parser.add_argument('username', help='The username of the superuser with deployment rights.')
-        parser.add_argument('password', help='The password of the superuser with deployment rights.')
+        parser.add_argument('password', nargs='?', help='The password of the superuser with deployment rights.')
 
     def handle(self, *args, **options):
         """Deploy to a remote server."""
         target = options['target']
         username = options['username']
-        password = options['password']
+        if options['password']:
+            password = options['password']
+        elif 'DEPLOY_PASSWORD' in os.environ:
+            password = os.environ['DEPLOY_PASSWORD']
+        else:
+            raise ValueError('No password specified')
 
         RequestDeploy(target, username, password)
 
