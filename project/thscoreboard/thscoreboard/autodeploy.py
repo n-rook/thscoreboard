@@ -54,6 +54,7 @@ def do_deploy():
     )
     uwsgi.reload()
 
+
 @csrf.csrf_exempt
 def deploy(request):
     if "Authorization" in request.headers:
