@@ -1,9 +1,14 @@
+"""A webhook that runs "git pull" and updates the server."""
+
+from sass_processor.management.commands import compilescss
+
 from django.http import HttpResponse
 from django.contrib.staticfiles.management.commands import collectstatic
 from django.core.management.commands import migrate
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.hashers import check_password
-from sass_processor.management.commands import compilescss
+from django.views.decorators import csrf
+
 from users.models import User
 from replays.management.commands import setup_constant_tables
 
@@ -49,7 +54,7 @@ def do_deploy():
     )
     uwsgi.reload()
 
-
+@csrf.csrf_exempt
 def deploy(request):
     if "Authorization" in request.headers:
         auth = request.headers["Authorization"].split(' ')
