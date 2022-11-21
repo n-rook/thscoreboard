@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-15 03:06+0000\n"
+"POT-Creation-Date: 2022-11-21 03:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,119 +87,148 @@ msgid "Unknown game (bug!)"
 msgstr ""
 
 #: replays/game_ids.py:56
-msgid "th01 Reimu"
+msgctxt "th01"
+msgid "Reimu"
 msgstr ""
 
 #: replays/game_ids.py:60
-msgid "th05 Reimu"
+msgctxt "th05"
+msgid "Reimu"
 msgstr ""
 
 #: replays/game_ids.py:62
-msgid "th05 Marisa"
+msgctxt "th05"
+msgid "Marisa"
 msgstr ""
 
 #: replays/game_ids.py:64
-msgid "th05 Mima"
+msgctxt "th05"
+msgid "Mima"
 msgstr ""
 
 #: replays/game_ids.py:66
-msgid "th05 Yuuka"
+msgctxt "th05"
+msgid "Yuuka"
 msgstr ""
 
 #: replays/game_ids.py:70
-msgid "th06 Reimu A"
+msgctxt "th06"
+msgid "Reimu A"
 msgstr ""
 
 #: replays/game_ids.py:72
-msgid "th06 Reimu B"
+msgctxt "th06"
+msgid "Reimu B"
 msgstr ""
 
 #: replays/game_ids.py:74
-msgid "th06 Marisa A"
+msgctxt "th06"
+msgid "Marisa A"
 msgstr ""
 
 #: replays/game_ids.py:76
-msgid "th06 Marisa B"
+msgctxt "th06"
+msgid "Marisa B"
 msgstr ""
 
 #: replays/game_ids.py:80
-msgid "th07 Reimu A"
+msgctxt "th07"
+msgid "Reimu A"
 msgstr ""
 
 #: replays/game_ids.py:82
-msgid "th07 Reimu B"
+msgctxt "th07"
+msgid "Reimu B"
 msgstr ""
 
 #: replays/game_ids.py:84
-msgid "th07 Marisa A"
+msgctxt "th07"
+msgid "Marisa A"
 msgstr ""
 
 #: replays/game_ids.py:86
-msgid "th07 Marisa B"
+msgctxt "th07"
+msgid "Marisa B"
 msgstr ""
 
 #: replays/game_ids.py:88
-msgid "th07 Sakuya A"
+msgctxt "th07"
+msgid "Sakuya A"
 msgstr ""
 
 #: replays/game_ids.py:90
-msgid "th07 Sakuya B"
+msgctxt "th07"
+msgid "Sakuya B"
 msgstr ""
 
 #: replays/game_ids.py:95
-msgid "th10 Reimu A"
+msgctxt "th10"
+msgid "Reimu A"
 msgstr ""
 
 #: replays/game_ids.py:97
-msgid "th10 Reimu B"
+msgctxt "th10"
+msgid "Reimu B"
 msgstr ""
 
 #: replays/game_ids.py:99
-msgid "th10 Reimu C"
+msgctxt "th10"
+msgid "Reimu C"
 msgstr ""
 
 #: replays/game_ids.py:101
-msgid "th10 Marisa A"
+msgctxt "th10"
+msgid "Marisa A"
 msgstr ""
 
 #: replays/game_ids.py:103
-msgid "th10 Marisa B"
+msgctxt "th10"
+msgid "Marisa B"
 msgstr ""
 
 #: replays/game_ids.py:105
-msgid "th10 Marisa C"
+msgctxt "th10"
+msgid "Marisa C"
 msgstr ""
 
 #: replays/game_ids.py:109
-msgid "th11 Reimu A"
+msgctxt "th11"
+msgid "Reimu A"
 msgstr ""
 
 #: replays/game_ids.py:111
-msgid "th11 Reimu B"
+msgctxt "th11"
+msgid "Reimu B"
 msgstr ""
 
 #: replays/game_ids.py:113
-msgid "th11 Reimu C"
+msgctxt "th11"
+msgid "Reimu C"
 msgstr ""
 
 #: replays/game_ids.py:115
-msgid "th11 Marisa A"
+msgctxt "th11"
+msgid "Marisa A"
 msgstr ""
 
 #: replays/game_ids.py:117
-msgid "th11 Marisa B"
+msgctxt "th11"
+msgid "Marisa B"
 msgstr ""
 
 #: replays/game_ids.py:119
-msgid "th11 Marisa C"
+msgctxt "th11"
+msgid "Marisa C"
 msgstr ""
 
 #: replays/game_ids.py:127
-msgid "th01 Jigoku"
+msgctxt "th01"
+msgid "Jigoku"
 msgstr ""
 
 #: replays/game_ids.py:129
-msgid "th01 Makai"
+msgctxt "th01"
+msgid "Makai"
 msgstr ""
 
 #: replays/templates/replays/docs/about.html:5

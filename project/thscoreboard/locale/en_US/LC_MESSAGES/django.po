@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-15 03:06+0000\n"
-"PO-Revision-Date: 2022-11-15 14:06+1100\n"
+"POT-Creation-Date: 2022-11-21 03:38+0000\n"
+"PO-Revision-Date: 2022-11-21 14:39+1100\n"
 "Last-Translator: nrook+admin@nrook.com\n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -86,119 +86,148 @@ msgid "Unknown game (bug!)"
 msgstr ""
 
 #: replays/game_ids.py:56
-msgid "th01 Reimu"
+msgctxt "th01"
+msgid "Reimu"
 msgstr "Reimu"
 
 #: replays/game_ids.py:60
-msgid "th05 Reimu"
+msgctxt "th05"
+msgid "Reimu"
 msgstr "Reimu"
 
 #: replays/game_ids.py:62
-msgid "th05 Marisa"
+msgctxt "th05"
+msgid "Marisa"
 msgstr "Marisa"
 
 #: replays/game_ids.py:64
-msgid "th05 Mima"
+msgctxt "th05"
+msgid "Mima"
 msgstr "Mima"
 
 #: replays/game_ids.py:66
-msgid "th05 Yuuka"
+msgctxt "th05"
+msgid "Yuuka"
 msgstr "Yuuka"
 
 #: replays/game_ids.py:70
-msgid "th06 Reimu A"
+msgctxt "th06"
+msgid "Reimu A"
 msgstr "Reimu A"
 
 #: replays/game_ids.py:72
-msgid "th06 Reimu B"
+msgctxt "th06"
+msgid "Reimu B"
 msgstr "Reimu B"
 
 #: replays/game_ids.py:74
-msgid "th06 Marisa A"
+msgctxt "th06"
+msgid "Marisa A"
 msgstr "Marisa A"
 
 #: replays/game_ids.py:76
-msgid "th06 Marisa B"
+msgctxt "th06"
+msgid "Marisa B"
 msgstr "Marisa B"
 
 #: replays/game_ids.py:80
-msgid "th07 Reimu A"
+msgctxt "th07"
+msgid "Reimu A"
 msgstr "Reimu A"
 
 #: replays/game_ids.py:82
-msgid "th07 Reimu B"
+msgctxt "th07"
+msgid "Reimu B"
 msgstr "Reimu B"
 
 #: replays/game_ids.py:84
-msgid "th07 Marisa A"
+msgctxt "th07"
+msgid "Marisa A"
 msgstr "Marisa A"
 
 #: replays/game_ids.py:86
-msgid "th07 Marisa B"
+msgctxt "th07"
+msgid "Marisa B"
 msgstr "Marisa B"
 
 #: replays/game_ids.py:88
-msgid "th07 Sakuya A"
+msgctxt "th07"
+msgid "Sakuya A"
 msgstr "Sakuya A"
 
 #: replays/game_ids.py:90
-msgid "th07 Sakuya B"
+msgctxt "th07"
+msgid "Sakuya B"
 msgstr "Sakuya B"
 
 #: replays/game_ids.py:95
-msgid "th10 Reimu A"
-msgstr "Reimu A (Homing Type)"
+msgctxt "th10"
+msgid "Reimu A"
+msgstr "Reimu A"
 
 #: replays/game_ids.py:97
-msgid "th10 Reimu B"
-msgstr "Reimu B (Forward Focus Type)"
+msgctxt "th10"
+msgid "Reimu B"
+msgstr "Reimu B"
 
 #: replays/game_ids.py:99
-msgid "th10 Reimu C"
+msgctxt "th10"
+msgid "Reimu C"
 msgstr "Reimu C (Sealing Type)"
 
 #: replays/game_ids.py:101
-msgid "th10 Marisa A"
-msgstr "Marisa A (High-Power Type)"
+msgctxt "th10"
+msgid "Marisa A"
+msgstr "Marisa A"
 
 #: replays/game_ids.py:103
-msgid "th10 Marisa B"
-msgstr "Marisa B (Piercing Type)"
+msgctxt "th10"
+msgid "Marisa B"
+msgstr "Marisa B"
 
 #: replays/game_ids.py:105
-msgid "th10 Marisa C"
+msgctxt "th10"
+msgid "Marisa C"
 msgstr "Marisa C (Magician Type)"
 
 #: replays/game_ids.py:109
-msgid "th11 Reimu A"
-msgstr "Reimu A (Yukari Yakumo)"
+msgctxt "th11"
+msgid "Reimu A"
+msgstr "Reimu A"
 
 #: replays/game_ids.py:111
-msgid "th11 Reimu B"
-msgstr "Reimu B (Suika Ibuki)"
+msgctxt "th11"
+msgid "Reimu B"
+msgstr "Reimu B"
 
 #: replays/game_ids.py:113
-msgid "th11 Reimu C"
+msgctxt "th11"
+msgid "Reimu C"
 msgstr "Reimu C (Aya Shameimaru)"
 
 #: replays/game_ids.py:115
-msgid "th11 Marisa A"
-msgstr "Marisa A (Alice Margatroid)"
+msgctxt "th11"
+msgid "Marisa A"
+msgstr "Marisa A"
 
 #: replays/game_ids.py:117
-msgid "th11 Marisa B"
-msgstr "Marisa B (Patchouli Knowledge)"
+msgctxt "th11"
+msgid "Marisa B"
+msgstr "Marisa B"
 
 #: replays/game_ids.py:119
-msgid "th11 Marisa C"
+msgctxt "th11"
+msgid "Marisa C"
 msgstr "Marisa C (Nitori Kawashiro)"
 
 #: replays/game_ids.py:127
-msgid "th01 Jigoku"
+msgctxt "th01"
+msgid "Jigoku"
 msgstr "Jigoku"
 
 #: replays/game_ids.py:129
-msgid "th01 Makai"
+msgctxt "th01"
+msgid "Makai"
 msgstr "Makai"
 
 #: replays/templates/replays/docs/about.html:5
@@ -1018,6 +1047,51 @@ msgstr ""
 #: users/templates/users/profile.html:5
 msgid "My Profile"
 msgstr ""
+
+#~ msgid "th05 Reimu"
+#~ msgstr "Reimu"
+
+#~ msgid "th07 Reimu A"
+#~ msgstr "Reimu A"
+
+#~ msgid "th07 Reimu B"
+#~ msgstr "Reimu B"
+
+#~ msgid "th07 Marisa A"
+#~ msgstr "Marisa A"
+
+#~ msgid "th07 Marisa B"
+#~ msgstr "Marisa B"
+
+#~ msgid "th10 Reimu A"
+#~ msgstr "Reimu A (Homing Type)"
+
+#~ msgid "th10 Reimu B"
+#~ msgstr "Reimu B (Forward Focus Type)"
+
+#~ msgid "th10 Marisa A"
+#~ msgstr "Marisa A (High-Power Type)"
+
+#~ msgid "th10 Marisa B"
+#~ msgstr "Marisa B (Piercing Type)"
+
+#~ msgid "th11 Reimu A"
+#~ msgstr "Reimu A (Yukari Yakumo)"
+
+#~ msgid "th11 Reimu B"
+#~ msgstr "Reimu B (Suika Ibuki)"
+
+#~ msgid "th11 Reimu C"
+#~ msgstr "Reimu C (Aya Shameimaru)"
+
+#~ msgid "th11 Marisa A"
+#~ msgstr "Marisa A (Alice Margatroid)"
+
+#~ msgid "th11 Marisa B"
+#~ msgstr "Marisa B (Patchouli Knowledge)"
+
+#~ msgid "th11 Marisa C"
+#~ msgstr "Marisa C (Nitori Kawashiro)"
 
 #~ msgid "th10 Reimu A (Homing Type)"
 #~ msgstr "Reimu A (Homing Type)"

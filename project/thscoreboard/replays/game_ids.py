@@ -1,6 +1,6 @@
 """Various human-readable game IDs, used in low-level libraries like game_ids.py."""
 
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext as _, pgettext
 
 
 class GameIDs:
@@ -53,70 +53,70 @@ def GetShotName(game_id: str, shot_id: str):
 
     if game_id == GameIDs.TH01:
         if shot_id == 'Reimu':
-            return _('th01 Reimu')
+            return pgettext('th01', 'Reimu')
 
     if game_id == GameIDs.TH05:
         if shot_id == 'Reimu':
-            return _('th05 Reimu')
+            return pgettext('th05', 'Reimu')
         if shot_id == 'Marisa':
-            return _('th05 Marisa')
+            return pgettext('th05', 'Marisa')
         if shot_id == 'Mima':
-            return _('th05 Mima')
+            return pgettext('th05', 'Mima')
         if shot_id == 'Yuuka':
-            return _('th05 Yuuka')
+            return pgettext('th05', 'Yuuka')
 
     if game_id == GameIDs.TH06:
         if shot_id == 'ReimuA':
-            return _('th06 Reimu A')
+            return pgettext('th06', 'Reimu A')
         elif shot_id == 'ReimuB':
-            return _('th06 Reimu B')
+            return pgettext('th06', 'Reimu B')
         elif shot_id == 'MarisaA':
-            return _('th06 Marisa A')
+            return pgettext('th06', 'Marisa A')
         elif shot_id == 'MarisaB':
-            return _('th06 Marisa B')
+            return pgettext('th06', 'Marisa B')
 
     if game_id == GameIDs.TH07:
         if shot_id == 'ReimuA':
-            return _('th07 Reimu A')
+            return pgettext('th07', 'Reimu A')
         if shot_id == 'ReimuB':
-            return _('th07 Reimu B')
+            return pgettext('th07', 'Reimu B')
         if shot_id == 'MarisaA':
-            return _('th07 Marisa A')
+            return pgettext('th07', 'Marisa A')
         if shot_id == 'MarisaB':
-            return _('th07 Marisa B')
+            return pgettext('th07', 'Marisa B')
         if shot_id == 'SakuyaA':
-            return _('th07 Sakuya A')
+            return pgettext('th07', 'Sakuya A')
         if shot_id == 'SakuyaB':
-            return _('th07 Sakuya B')
+            return pgettext('th07', 'Sakuya B')
         return shot_id
 
     if game_id == GameIDs.TH10:
         if shot_id == 'ReimuA':
-            return _('th10 Reimu A')
+            return pgettext('th10', 'Reimu A')
         elif shot_id == 'ReimuB':
-            return _('th10 Reimu B')
+            return pgettext('th10', 'Reimu B')
         elif shot_id == 'ReimuC':
-            return _('th10 Reimu C')
+            return pgettext('th10', 'Reimu C')
         elif shot_id == 'MarisaA':
-            return _('th10 Marisa A')
+            return pgettext('th10', 'Marisa A')
         elif shot_id == 'MarisaB':
-            return _('th10 Marisa B')
+            return pgettext('th10', 'Marisa B')
         elif shot_id == 'MarisaC':
-            return _('th10 Marisa C')
+            return pgettext('th10', 'Marisa C')
 
     if game_id == GameIDs.TH11:
         if shot_id == 'ReimuA':
-            return _('th11 Reimu A')
+            return pgettext('th11', 'Reimu A')
         elif shot_id == 'ReimuB':
-            return _('th11 Reimu B')
+            return pgettext('th11', 'Reimu B')
         elif shot_id == 'ReimuC':
-            return _('th11 Reimu C')
+            return pgettext('th11', 'Reimu C')
         elif shot_id == 'MarisaA':
-            return _('th11 Marisa A')
+            return pgettext('th11', 'Marisa A')
         elif shot_id == 'MarisaB':
-            return _('th11 Marisa B')
+            return pgettext('th11', 'Marisa B')
         elif shot_id == 'MarisaC':
-            return _('th11 Marisa C')
+            return pgettext('th11', 'Marisa C')
 
     return 'Bug shot'
 
@@ -124,9 +124,9 @@ def GetShotName(game_id: str, shot_id: str):
 def GetRouteName(game_id: str, route_id: str):
     if game_id == GameIDs.TH01:
         if route_id == 'Jigoku':
-            return _('th01 Jigoku')
+            return pgettext('th01', 'Jigoku')
         elif route_id == 'Makai':
-            return _('th01 Makai')
+            return pgettext('th01', 'Makai')
     return 'Bug route'
 
 
