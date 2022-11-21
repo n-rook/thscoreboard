@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-11-21 03:38+0000\n"
-"PO-Revision-Date: 2022-11-21 14:39+1100\n"
+"PO-Revision-Date: 2022-11-21 14:44+1100\n"
 "Last-Translator: nrook+admin@nrook.com\n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -193,12 +193,12 @@ msgstr "Marisa C (Magician Type)"
 #: replays/game_ids.py:109
 msgctxt "th11"
 msgid "Reimu A"
-msgstr "Reimu A"
+msgstr "Reimu A (Yukari Yakumo)"
 
 #: replays/game_ids.py:111
 msgctxt "th11"
 msgid "Reimu B"
-msgstr "Reimu B"
+msgstr "Reimu B (Suika Ibuki)"
 
 #: replays/game_ids.py:113
 msgctxt "th11"
@@ -208,12 +208,12 @@ msgstr "Reimu C (Aya Shameimaru)"
 #: replays/game_ids.py:115
 msgctxt "th11"
 msgid "Marisa A"
-msgstr "Marisa A"
+msgstr "Marisa A (Alice Margatroid)"
 
 #: replays/game_ids.py:117
 msgctxt "th11"
 msgid "Marisa B"
-msgstr "Marisa B"
+msgstr "Marisa B (Patchouli Knowledge)"
 
 #: replays/game_ids.py:119
 msgctxt "th11"
