@@ -1,0 +1,9 @@
+[Unit]
+Description=Create a daily backup of the SilentSelene.net database
+Requires=silentselene-backup.service
+
+[Timer]
+OnCalendar=daily
+
+[Install]
+WantedBy=timers.target

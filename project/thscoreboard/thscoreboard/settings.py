@@ -19,7 +19,6 @@ if not IS_PROD:
 
 from pathlib import Path
 
-import dj_database_url
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -51,8 +50,11 @@ def _GetAllowedHosts():
 ALLOWED_HOSTS = _GetAllowedHosts()
 print('Allowed hosts: {}'.format(', '.join(ALLOWED_HOSTS)))
 
+SITE_BASE = os.environ.get("SITE_BASE")
+if not SITE_BASE:
+    SITE_BASE = "http://localhost:8000"
 
-USE_HTTPS_IN_EMAIL_LINKS = os.environ.get('USE_HTTPS_IN_EMAIL_LINKS') == 'Yes'
+CSRF_TRUSTED_ORIGINS = [SITE_BASE]
 
 # Application definition
 
@@ -122,19 +124,24 @@ LOGGING = {
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if 'DATABASE_URL' in os.environ:
-    # We are on Heroku
+if 'DATABASE_SOCKET' in os.environ:
+    # We are on a server that only accepts database connections on a socket
     DATABASES = {
-        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'thscoreboard',
+            'USER': os.environ.get('LOCAL_DATABASE_USER', 'thscoreboard'),
+            'PASSWORD': os.environ['LOCAL_DATABASE_PASSWORD'],
+        },
     }
 else:
     # Use local database
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'thscoreboard',
             'HOST': 'localhost',
             'PORT': '5432',
-            'NAME': 'thscoreboard',
             'USER': os.environ.get('LOCAL_DATABASE_USER', 'thscoreboard'),
             'PASSWORD': os.environ['LOCAL_DATABASE_PASSWORD'],
         },
