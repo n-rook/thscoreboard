@@ -8,6 +8,7 @@ from sass_processor.management.commands import compilescss
 
 from django.http import HttpResponse
 from django.contrib.staticfiles.management.commands import collectstatic
+from django.core import management
 from django.core.management.commands import migrate
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.hashers import check_password
@@ -28,33 +29,24 @@ except ImportError:
 def do_deploy():
     git_pull()
 
-    migrate.Command().handle(
-        database="default",
-        skip_checks=False,
-        verbosity=1,
-        interactive=False,
-        run_syncdb=False,
-        app_label="",
-        prune="",
-        plan=""
+    management.call_command(
+        'migrate',
+        interactive=False
     )
-    setup_constant_tables.SetUpConstantTables()
-    compilescss.Command().handle(
-        verbosity=1,
-        delete_files=False,
-        use_storage=False,
-        sass_precision=True
+
+    management.call_command(
+        'setup_constant_tables',
     )
-    collectstatic.Command().handle(
-        interactive=False,
-        verbosity=1,
-        link=False,
-        clear=True,
-        dry_run=False,
-        ignore_patterns=[],
-        use_default_ignore_patterns=False,
-        post_process=False
+
+    management.call_command(
+        'compilescss',
     )
+
+    management.call_command(
+        'collectstatic',
+        interactive=False
+    )
+
     uwsgi.reload()
 
 
