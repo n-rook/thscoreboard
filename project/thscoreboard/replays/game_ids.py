@@ -68,99 +68,119 @@ def GetGameName(game_id: str, short=False):
 
 
 def GetShotName(game_id: str, shot_id: str):
+
     if game_id == GameIDs.TH01:
         if shot_id == 'Reimu':
-            return _('Reimu')
+            return pgettext('th01', 'Reimu')
     if game_id == GameIDs.TH02:
         if shot_id == 'ReimuA':
-            return _('Mobility')
+            return pgettext('th02', 'Mobility')
         elif shot_id == 'ReimuB':
-            return _('Defensive')
+            return pgettext('th02', 'Defensive')
         elif shot_id == 'ReimuC':
-            return _('Offensive')
+            return pgettext('th02', 'Offensive')
     if game_id == GameIDs.TH03:
         if shot_id == 'Reimu':
-            return _('Reimu')
+            return pgettext('th03', 'Reimu')
         elif shot_id == 'Mima':
-            return _('Mima')
+            return pgettext('th03', 'Mima')
         elif shot_id == 'Marisa':
-            return _('Marisa')
+            return pgettext('th03', 'Marisa')
         elif shot_id == 'Ellen':
-            return _('Ellen')
+            return pgettext('th03', 'Ellen')
         elif shot_id == 'Kotohime':
-            return _('Kotohime')
+            return pgettext('th03', 'Kotohime')
         elif shot_id == 'Kana':
-            return _('Kana')
+            return pgettext('th03', 'Kana')
         elif shot_id == 'Rikako':
-            return _('Rikako')
+            return pgettext('th03', 'Rikako')
         elif shot_id == 'Chiyuri':
-            return _('Chiyuri')
+            return pgettext('th03', 'Chiyuri')
         elif shot_id == 'Yumemi':
-            return _('Yumemi')
+            return pgettext('th03', 'Yumemi')
+
     if game_id == GameIDs.TH04:
         if shot_id == 'ReimuA':
-            return _('Reimu A')
+            return pgettext('th04', 'Reimu A')
         elif shot_id == 'ReimuB':
-            return _('Reimu B')
+            return pgettext('th04', 'Reimu B')
         elif shot_id == 'MarisaA':
-            return _('Marisa A')
+            return pgettext('th04', 'Marisa A')
         elif shot_id == 'MarisaB':
-            return _('Marisa B')
+            return pgettext('th04', 'Marisa B')
+
     if game_id == GameIDs.TH05:
         if shot_id == 'Reimu':
-            return _('Reimu')
-        elif shot_id == 'Marisa':
-            return _('Marisa')
-        elif shot_id == 'Mima':
-            return _('Mima')
-        elif shot_id == 'Yuuka':
-            return _('Yuuka')
+            return pgettext('th05', 'Reimu')
+        if shot_id == 'Marisa':
+            return pgettext('th05', 'Marisa')
+        if shot_id == 'Mima':
+            return pgettext('th05', 'Mima')
+        if shot_id == 'Yuuka':
+            return pgettext('th05', 'Yuuka')
+
     if game_id == GameIDs.TH06:
         if shot_id == 'ReimuA':
-            return 'Reimu A'
+            return pgettext('th06', 'Reimu A')
         elif shot_id == 'ReimuB':
-            return 'Reimu B'
+            return pgettext('th06', 'Reimu B')
         elif shot_id == 'MarisaA':
-            return 'Marisa A'
+            return pgettext('th06', 'Marisa A')
         elif shot_id == 'MarisaB':
-            return 'Marisa B'
+            return pgettext('th06', 'Marisa B')
+
     if game_id == GameIDs.TH07:
+        if shot_id == 'ReimuA':
+            return pgettext('th07', 'Reimu A')
+        if shot_id == 'ReimuB':
+            return pgettext('th07', 'Reimu B')
+        if shot_id == 'MarisaA':
+            return pgettext('th07', 'Marisa A')
+        if shot_id == 'MarisaB':
+            return pgettext('th07', 'Marisa B')
+        if shot_id == 'SakuyaA':
+            return pgettext('th07', 'Sakuya A')
+        if shot_id == 'SakuyaB':
+            return pgettext('th07', 'Sakuya B')
         return shot_id
+
     if game_id == GameIDs.TH10:
         if shot_id == 'ReimuA':
-            return 'Reimu A (Homing Type)'
+            return pgettext('th10', 'Reimu A')
         elif shot_id == 'ReimuB':
-            return 'Reimu B (Forward Focus Type)'
+            return pgettext('th10', 'Reimu B')
         elif shot_id == 'ReimuC':
-            return 'Reimu C (Sealing Type)'
+            return pgettext('th10', 'Reimu C')
         elif shot_id == 'MarisaA':
-            return 'Marisa A (High-Power Type)'
+            return pgettext('th10', 'Marisa A')
         elif shot_id == 'MarisaB':
-            return 'Marisa B (Piercing Type)'
+            return pgettext('th10', 'Marisa B')
         elif shot_id == 'MarisaC':
-            return 'Marisa C (Magician Type)'
+            return pgettext('th10', 'Marisa C')
+
     if game_id == GameIDs.TH11:
         if shot_id == 'ReimuA':
-            return 'Reimu A (Yukari Yakumo)'
+            return pgettext('th11', 'Reimu A')
         elif shot_id == 'ReimuB':
-            return 'Reimu B (Suika Ibuki)'
+            return pgettext('th11', 'Reimu B')
         elif shot_id == 'ReimuC':
-            return 'Reimu C (Aya Shameimaru)'
+            return pgettext('th11', 'Reimu C')
         elif shot_id == 'MarisaA':
-            return 'Marisa A (Alice Margatroid)'
+            return pgettext('th11', 'Marisa A')
         elif shot_id == 'MarisaB':
-            return 'Marisa B (Patchouli Knowledge)'
+            return pgettext('th11', 'Marisa B')
         elif shot_id == 'MarisaC':
-            return 'Marisa C (Nitori Kawashiro)'
+            return pgettext('th11', 'Marisa C')
+
     return 'Bug shot'
 
 
 def GetRouteName(game_id: str, route_id: str):
     if game_id == GameIDs.TH01:
         if route_id == 'Jigoku':
-            return pgettext('th01 route', 'Jigoku')
+            return pgettext('th01', 'Jigoku')
         elif route_id == 'Makai':
-            return pgettext('th01 route', 'Makai')
+            return pgettext('th01', 'Makai')
     return 'Bug route'
 
 
@@ -185,7 +205,8 @@ def GetDifficultyName(game_id: str, difficulty: int):
             return 'Lunatic'
         elif difficulty == 4:
             return 'Extra'
-        elif difficulty == 5:
+    if game_id in {GameIDs.TH07}:
+        if difficulty == 5:
             return 'Phantasm'
 
     return 'Bug difficulty'

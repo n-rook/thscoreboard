@@ -12,7 +12,7 @@ _ACCOUNTS_EMAIL = 'Silent Selene Accounts <accounts@silentselene.net>'
 
 
 def SendVerificationEmail(request, u: models.UnverifiedUser):
-    full_link = settings.SITE_BASE + '/' + urls.reverse('users:verify_email', kwargs={'token': u.token})
+    full_link = settings.SITE_BASE + urls.reverse('users:verify_email', kwargs={'token': u.token})
 
     text_message = loader.render_to_string(
         'registration/email/verification.txt',

@@ -1,10 +1,12 @@
 """Contains all of the models for the replay site."""
 
+
 import datetime
 
 from django.db import models
 from django.contrib import auth
 from django.utils import timezone
+from django.utils.translation import pgettext_lazy
 
 from replays import game_ids
 from replays import limits
@@ -83,20 +85,20 @@ class Shot(models.Model):
 class Category(models.IntegerChoices):
     """The category under which a replay is uploaded."""
 
-    REGULAR = 1
+    REGULAR = 1, pgettext_lazy('Category', 'Regular')
     """A normal upload; a legitimate replay played by a real player."""
 
-    TAS = 2
+    TAS = 2, pgettext_lazy('Category', 'TAS')
     """A tool-assisted replay."""
 
-    UNUSUAL = 3
+    UNUSUAL = 3, pgettext_lazy('Category', 'Unusual')
     """A special replay that isn't listed on the leaderboards.
 
     This category is for things like replays of modded games or high-FPS runs;
     replays that don't fall under the TAS category.
     """
 
-    PRIVATE = 4
+    PRIVATE = 4, pgettext_lazy('Category', 'Private')
     """A private replay that isn't shown to anyone."""
 
 
@@ -207,7 +209,7 @@ class Replay(models.Model):
 
     name = models.TextField(max_length=12, blank=True, null=True)
     """Username stored in the replay
-    
+
     The game only allows 8 characters to be added,
     but technically there are 12 bytes allocated, so space is reserved just in case
     """
