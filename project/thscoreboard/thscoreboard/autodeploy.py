@@ -4,18 +4,14 @@ import base64
 import logging
 import subprocess
 
-from sass_processor.management.commands import compilescss
 
 from django.http import HttpResponse
-from django.contrib.staticfiles.management.commands import collectstatic
 from django.core import management
-from django.core.management.commands import migrate
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.hashers import check_password
 from django.views.decorators import csrf
 
 from users.models import User
-from replays.management.commands import setup_constant_tables
 
 
 try:
@@ -54,11 +50,12 @@ def git_pull():
     # Retrieve the main branch from the github repo.
     outcome = subprocess.run(
         ['git', 'pull', '--ff-only'],
-        check=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True)
-    logging.info('Pulled recent changes from origin.\nOutput:\n%s', outcome.stdout)
+    logging.info('Git pull completed (exit code %d). Output:\n%s',
+                 outcome.returncode, outcome.stdout)
+    outcome.check_returncode()
 
 
 @csrf.csrf_exempt
