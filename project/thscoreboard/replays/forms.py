@@ -5,17 +5,11 @@ from urllib import parse
 
 from django import forms
 from django.core import exceptions
+from django.utils.translation import gettext as _
 
 from . import game_ids
 from . import models
 from . import limits
-
-game_names = (
-    ('th06', '東方紅魔郷 - Embodiment of Scarlet Devil'),
-    ('th07', '東方妖々夢 - Perfect Cherry Blossom'),
-    ('th10', '東方風神録 - Mountain of Faith'),
-    ('th11', '東方地霊殿 - Subterranean Animism')
-)
 
 difficulty_names = (
     ('0', 'Easy'),
@@ -26,20 +20,11 @@ difficulty_names = (
     ('5', 'Phantasm'),
 )
 
-shot_names = (
-    ('ReimuA', 'Reimu A'),
-    ('ReimuB', 'Reimu B'),
-    ('ReimuC', 'Reimu C'),
-    ('MarisaA', 'Marisa A'),
-    ('MarisaB', 'Marisa B'),
-    ('MarisaC', 'Marisa C'),
-)
-
 category_names = (
-    ('regular', 'Regular'),
-    ('tas', 'Tool-Assisted'),
-    ('unranked', 'Unranked'),
-    ('private', 'Private')
+    ('1', _('Regular')),
+    ('2', _('Tool-Assisted')),
+    ('3', _('Unranked')),
+    ('4', _('Private'))
 )
 
 
@@ -128,7 +113,7 @@ class PublishReplayForm(forms.Form):
         self.fields['name'].widget.attrs.update({'readonly': 'readonly'})
 
     score = forms.IntegerField(min_value=0)
-    category = forms.ChoiceField(choices=models.Category.choices)
+    category = forms.ChoiceField(choices=category_names)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)
     is_good = forms.BooleanField(initial=True, required=False)
     is_clear = forms.BooleanField(initial=True, required=False)

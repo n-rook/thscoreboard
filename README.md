@@ -77,3 +77,14 @@ score table; the games will be abbreviated in the style of "EoSD" if the
 names are translated into English, but will be in the style of "th06" otherwise.
 
 There isn't a hook yet to actually switch the language to Japanese.
+
+### Adding support for new games
+
+- add kaitai parser
+- add replay_parsing.py function
+- add table fields into game_fields.py (modify all if new fields are added)
+- add game_ids
+- if needed, update ReplayStage model and generate migrations
+- set up constant tables
+- add tests
+- add front end translations for added string literals
