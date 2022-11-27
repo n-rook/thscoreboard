@@ -15,4 +15,9 @@ server {
         location = /favicon.ico {
                 alias /home/silentselene/silentselene/project/thscoreboard/staticfiles/favicon.ico;
         }
+		
+        error_page 502 /epic-fail.html;
+        location = /epic-fail.html {
+                alias /home/silentselene/silentselene/ref/epic-fail.html;
+        }
 }
