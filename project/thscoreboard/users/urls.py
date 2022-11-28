@@ -5,6 +5,8 @@ from django.urls import path, reverse_lazy
 from users import other_views
 from users.views import profile
 
+from thscoreboard import settings
+
 app_name = 'users'
 
 urlpatterns = [
@@ -25,7 +27,10 @@ urlpatterns = [
     path(
         'forgot_password',
         auth_views.PasswordResetView.as_view(
-            success_url=reverse_lazy('users:forgot_password_sent')
+            success_url=reverse_lazy('users:forgot_password_sent'),
+            extra_email_context={
+                'site_base': settings.SITE_BASE
+            }
         ),
         name='forgot_password'
     ),
