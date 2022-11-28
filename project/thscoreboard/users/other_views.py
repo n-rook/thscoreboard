@@ -57,7 +57,7 @@ def register(request):
                     passcode=passcode)
                 send_email.SendVerificationEmail(request, unverified_user)
                 return HttpResponseRedirect('./preregistered')
-            
+
         except models.EarlyAccessPasscode.DoesNotExist:
             form.add_error('passcode', 'Early access; must provide a valid passcode')
     else:
@@ -118,7 +118,7 @@ def verify_email(request, token: str):
         # just do a forgot password anyway.
         auth.login(request, new_account)
         return redirect('users:registration_success')
-    
+
     return render(request, 'users/verify_email.html', {
         # TODO: It would be nice to tell the user if it's too late and they are doomed.
         'unverified_user': unverified_user,

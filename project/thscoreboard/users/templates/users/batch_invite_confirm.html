@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<h1>Invite many users by uploading a CSV file</h1>
+
+<p>
+    This page is for staff only. Invite many users by uploading a CSV file
+    containing their usernames and email addresses.
+</p>
+
+<table>
+    <tr>
+        <th scope="col">Username</th>
+        <th scope="col">Password</th>
+        <th score="col">Errors</th>
+        <th score="col">Warnings</th>
+    </tr>
+    {% for invite in invite_rows %}
+        <tr>
+            <td>{{invite.username}}</td>
+            <td>{{invite.email}}</td>
+            <td>{{invite.errors_str}}</td>
+            <td>{{invite.warnings_str}}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    {{ form.invite_file_contents.as_hidden }}
+
+    <input type="submit" name="submit-button" value="Confirm" {% if is_error %}disabled{% endif %}>
+</form>
+
+{% endblock %}

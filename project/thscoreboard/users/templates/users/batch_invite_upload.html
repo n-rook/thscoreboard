@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<h1>Invite many users by uploading a CSV file</h1>
+
+<p>
+    This page is for staff only. Invite many users by uploading a CSV file
+    containing their usernames and email addresses.
+</p>
+
+<form action="batch_invite_confirm" method="post" enctype="multipart/form-data" class="inline-form upload-form">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="field-wrapper">
+        {{ form.invite_file.errors }}
+        <label for="{{form.invite_file.id_for_label}}">{% translate "Upload invite file:" %}</label>
+        <input
+            type="file"
+            name="{{form.invite_file.name}}"
+            required
+            id="{{form.invite_file.id_for_label}}"
+            accept=".csv"
+            >
+    </div>
+
+    <input type="submit" name="submit-button" value="Upload">
+</form>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% autoescape off %}
+
+You have been invited to {{ site_name }}, a new Touhou replay repository and scoreboard!
+
+To complete registration, click here:
+{{ link }}
+
+If you did not apply for an invitation, you may ignore this message.
+{% endautoescape %}
