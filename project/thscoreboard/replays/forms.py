@@ -114,7 +114,7 @@ class PublishReplayForm(forms.Form):
 
     score = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=category_names)
-    comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)
+    comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False, widget=forms.Textarea)
     is_good = forms.BooleanField(initial=True, required=False)
     is_clear = forms.BooleanField(initial=True, required=False)
     video_link = VideoReplayLinkField(required=False)
@@ -149,5 +149,5 @@ class PublishReplayWithoutFileForm(forms.Form):
     score = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=models.Category.choices)
     is_clear = forms.BooleanField(initial=True, required=False)
-    comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False)
+    comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False, widget=forms.Textarea)
     video_link = VideoReplayLinkField(required=True)
