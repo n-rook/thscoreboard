@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-01 02:17+0000\n"
-"PO-Revision-Date: 2022-12-01 13:18+1100\n"
+"PO-Revision-Date: 2022-12-01 13:20+1100\n"
 "Last-Translator: nrook+admin@nrook.com\n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -43,7 +43,7 @@ msgstr ""
 
 #: replays/game_ids.py:30
 msgid "th02"
-msgstr ""
+msgstr "SoEW"
 
 #: replays/game_ids.py:32
 msgid "東方封魔録 - Story of Eastern Wonderland"
@@ -51,7 +51,7 @@ msgstr ""
 
 #: replays/game_ids.py:35
 msgid "th03"
-msgstr ""
+msgstr "PoDD"
 
 #: replays/game_ids.py:37
 msgid "東方夢時空 - The Phantasmagoria of Dim. Dream"
@@ -59,7 +59,7 @@ msgstr ""
 
 #: replays/game_ids.py:40
 msgid "th04"
-msgstr ""
+msgstr "LLS"
 
 #: replays/game_ids.py:42
 msgid "東方幻想郷 - Lotus Land Story"
@@ -91,7 +91,7 @@ msgstr ""
 
 #: replays/game_ids.py:60
 msgid "th08"
-msgstr ""
+msgstr "IN"
 
 #: replays/game_ids.py:62
 msgid "東方永夜抄 - Imperishable Night"

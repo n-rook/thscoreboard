@@ -68,7 +68,7 @@ _table_fields_th08 = immutabledict({
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
-    'th08_time': True
+    'th08_time': False  # i just realised this starts at 0 at each stage so there's no point
 })
 
 _table_fields_th11 = immutabledict({
