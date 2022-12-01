@@ -11,6 +11,7 @@ class GameIDs:
     TH05 = 'th05'
     TH06 = 'th06'
     TH07 = 'th07'
+    TH08 = 'th08'
     TH10 = 'th10'
     TH11 = 'th11'
 
@@ -54,6 +55,11 @@ def GetGameName(game_id: str, short=False):
             return _('th07')
         else:
             return _('東方妖々夢 - Perfect Cherry Blossom')
+    if game_id == GameIDs.TH08:
+        if short:
+            return _('th08')
+        else:
+            return _('東方永夜抄 - Imperishable Night')
     if game_id == GameIDs.TH10:
         if short:
             return _('th10')
@@ -79,6 +85,7 @@ def GetShotName(game_id: str, shot_id: str):
             return pgettext('th02', 'Defensive')
         elif shot_id == 'ReimuC':
             return pgettext('th02', 'Offensive')
+
     if game_id == GameIDs.TH03:
         if shot_id == 'Reimu':
             return pgettext('th03', 'Reimu')
@@ -144,6 +151,33 @@ def GetShotName(game_id: str, shot_id: str):
             return pgettext('th07', 'Sakuya B')
         return shot_id
 
+    if game_id == GameIDs.TH08:
+        if shot_id == 'Reimu & Yukari':
+            return pgettext('th08', 'Reimu & Yukari')
+        if shot_id == 'Marisa & Alice':
+            return pgettext('th08', 'Marisa & Alice')
+        if shot_id == 'Sakuya & Remilia':
+            return pgettext('th08', 'Sakuya & Remilia')
+        if shot_id == 'Youmu & Yuyuko':
+            return pgettext('th08', 'Youmu & Yuyuko')
+        if shot_id == 'Reimu':
+            return pgettext('th08', 'Reimu')
+        if shot_id == 'Yukari':
+            return pgettext('th08', 'Yukari')
+        if shot_id == 'Marisa':
+            return pgettext('th08', 'Marisa')
+        if shot_id == 'Alice':
+            return pgettext('th08', 'Alice')
+        if shot_id == 'Sakuya':
+            return pgettext('th08', 'Sakuya')
+        if shot_id == 'Remilia':
+            return pgettext('th08', 'Remilia')
+        if shot_id == 'Youmu':
+            return pgettext('th08', 'Youmu')
+        if shot_id == 'Yuyuko':
+            return pgettext('th08', 'Yuyuko')
+        return shot_id
+
     if game_id == GameIDs.TH10:
         if shot_id == 'ReimuA':
             return pgettext('th10', 'Reimu A')
@@ -193,6 +227,7 @@ def GetDifficultyName(game_id: str, difficulty: int):
             GameIDs.TH05,
             GameIDs.TH06,
             GameIDs.TH07,
+            GameIDs.TH08,
             GameIDs.TH10,
             GameIDs.TH11}:
         if difficulty == 0:
