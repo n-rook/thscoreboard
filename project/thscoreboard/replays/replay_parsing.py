@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from datetime import datetime
-import logging
+from kaitaistruct import KaitaiStructError
 
 from . import game_ids
 from .kaitai_parsers import th06
@@ -11,6 +11,7 @@ from .kaitai_parsers import th10
 from .kaitai_parsers import th11
 from .kaitai_parsers import th_modern
 
+import logging
 import tsadecode as td
 
 
@@ -212,14 +213,17 @@ def Parse(replay):
 
     gamecode = replay[:4]
 
-    if gamecode == b'T6RP':
-        return _Parse06(replay)
-    elif gamecode == b'T7RP':
-        return _Parse07(replay)
-    elif gamecode == b't10r':
-        return _Parse10(replay)
-    elif gamecode == b't11r':
-        return _Parse11(replay)
-    else:
-        logging.warning('Failed to comprehend gamecode %s', gamecode)
-        raise UnsupportedGameError('This game is unsupported.')
+    try:
+        if gamecode == b'T6RP':
+            return _Parse06(replay)
+        elif gamecode == b'T7RP':
+            return _Parse07(replay)
+        elif gamecode == b't10r':
+            return _Parse10(replay)
+        elif gamecode == b't11r':
+            return _Parse11(replay)
+        else:
+            logging.warning('Failed to comprehend gamecode %s', gamecode)
+            raise UnsupportedGameError('This game is unsupported.')
+    except (ValueError, IndexError, KaitaiStructError):
+        raise BadReplayError('This replay is corrupted or otherwise malformed')
