@@ -2,6 +2,7 @@ import unittest
 
 from replays.testing import test_replays
 from replays import replay_parsing
+from replays import game_fields
 
 
 def ParseTestReplay(filename):
@@ -95,7 +96,9 @@ class Th08ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.stages[0].th07_cherrymax, None)
 
         self.assertEqual(r.stages[3].stage, 4)
-        self.assertEqual(r.stages[5].stage, 8)
+        self.assertEqual(r.stages[5].stage, 7)
+        self.assertEqual(game_fields.GetFormatStage(r.game, r.stages[3].stage), '4B')
+        self.assertEqual(game_fields.GetFormatStage(r.game, r.stages[5].stage), '6B')
 
     def testExtra(self):
         r = ParseTestReplay('th8_extra')
