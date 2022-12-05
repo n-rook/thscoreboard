@@ -96,7 +96,6 @@ def publish_replay(request, temp_replay_id):
     replay_info = replay_parsing.Parse(bytes(temp_replay.replay))
     shot_instance = models.Shot.objects.select_related('game').get(game=replay_info.game, shot_id=replay_info.shot)
 
-
     if replay_info.game in ["th01", "th08"]:
         replay_info.route = models.Route.objects.select_related('game').get(game=replay_info.game, route_id=replay_info.route)
 
