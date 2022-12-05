@@ -335,9 +335,6 @@ class ReplayStage(models.Model):
     th07_cherrymax = models.IntegerField(blank=True, null=True)
     """Current cherry max for TH07"""
 
-    th08_time = models.IntegerField(blank=True, null=True)
-    """Current time value for TH08"""
-
 
 class ReplayFile(models.Model):
     """Represents a replay file for a given score."""

@@ -36,9 +36,6 @@
             {% if table_fields.th07_cherrymax %}
             <th>{% translate "CherryMax" %}</th>
             {% endif %}
-            {% if table_fields.th08_time %}
-            <th>{% translate "Time" %}</th>
-            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -76,9 +73,6 @@
             {% endif %}
             {% if table_fields.th07_cherrymax %}
             <td>{{stage.th07_cherrymax|intcomma}}</td>
-            {% endif %}
-            {% if table_fields.th08_time %}
-            <td>{{stage.th08_time|intcomma}}</td>
             {% endif %}
         </tr>
     {% endfor %}

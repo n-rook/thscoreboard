@@ -1,6 +1,7 @@
 """Parsing and gleaning information from individual replay files."""
 
 from dataclasses import dataclass
+from typing import Optional
 from datetime import datetime
 import logging
 
@@ -46,7 +47,6 @@ class ReplayStage:
     th06_rank: int = None
     th07_cherry: int = None
     th07_cherrymax: int = None
-    th08_time: int = None
 
     def __getitem__(self, item):
         return getattr(self, item)
@@ -60,7 +60,7 @@ class ReplayInfo:
     score: int
     timestamp: datetime
     name: str
-    route: str
+    route: Optional[str] = None
     stages = []
 
 
@@ -177,7 +177,6 @@ def _Parse08(rep_raw):
             s.point_items = score.point_items
             s.graze = score.graze
             s.piv = score.piv
-            s.th08_time = score.time
             if i == 6:
                 route = 'Final A'
             elif i == 7:
