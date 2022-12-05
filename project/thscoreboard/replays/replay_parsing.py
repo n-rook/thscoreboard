@@ -225,5 +225,5 @@ def Parse(replay):
         else:
             logging.warning('Failed to comprehend gamecode %s', gamecode)
             raise UnsupportedGameError('This game is unsupported.')
-    except (ValueError, IndexError, KaitaiStructError):
+    except (ValueError, IndexError, EOFError, KaitaiStructError):
         raise BadReplayError('This replay is corrupted or otherwise malformed')
