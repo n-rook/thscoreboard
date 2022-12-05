@@ -97,8 +97,6 @@ class Th08ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.stages[3].stage, 4)
         self.assertEqual(r.stages[5].stage, 8)
 
-
-
     def testExtra(self):
         r = ParseTestReplay('th8_extra')
 
