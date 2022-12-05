@@ -76,6 +76,41 @@ class Th07ReplayTestCase(unittest.TestCase):
         self.assertEqual(stage_2.th07_cherrymax, 311380)
 
 
+class Th08ReplayTestCase(unittest.TestCase):
+
+    def testNormal(self):
+        r = ParseTestReplay('th8_normal')
+
+        self.assertEqual(len(r.stages), 6)
+        self.assertEqual(r.name, 'AAAAAAAA')
+        self.assertEqual(r.shot, 'Yukari')
+        self.assertEqual(r.score, 1240093320)
+        self.assertEqual(r.difficulty, 1)
+
+        self.assertEqual(r.stages[0].score, 37008330)
+        self.assertEqual(r.stages[0].power, 0)
+        self.assertEqual(r.stages[0].point_items, 0)
+        self.assertEqual(r.stages[0].lives, 2)
+        self.assertEqual(r.stages[0].th07_cherry, None)
+        self.assertEqual(r.stages[0].th07_cherrymax, None)
+
+        self.assertEqual(r.stages[3].stage, 4)
+        self.assertEqual(r.stages[5].stage, 8)
+
+
+
+    def testExtra(self):
+        r = ParseTestReplay('th8_extra')
+
+        self.assertEqual(len(r.stages), 1)
+        self.assertEqual(r.name, 'AAAAAAAA')
+        self.assertEqual(r.shot, 'Marisa & Alice')
+        self.assertEqual(r.score, 1213587810)
+
+        self.assertEqual(r.stages[0].score, 1213587810)
+        self.assertEqual(r.stages[0].piv, 300000)
+
+
 class Th10ReplayTestCase(unittest.TestCase):
     
     def testNormal(self):
