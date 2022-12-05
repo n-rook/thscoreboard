@@ -7,6 +7,8 @@ from users.views import accept_invite
 from users.views import batch_invite_csv
 from users.views import profile
 
+from thscoreboard import settings
+
 app_name = 'users'
 
 urlpatterns = [
@@ -30,7 +32,10 @@ urlpatterns = [
     path(
         'forgot_password',
         auth_views.PasswordResetView.as_view(
-            success_url=reverse_lazy('users:forgot_password_sent')
+            success_url=reverse_lazy('users:forgot_password_sent'),
+            extra_email_context={
+                'site_base': settings.SITE_BASE
+            }
         ),
         name='forgot_password'
     ),
