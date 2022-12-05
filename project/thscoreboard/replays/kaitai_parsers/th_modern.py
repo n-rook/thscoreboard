@@ -69,7 +69,7 @@ class ThModern(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.value = (self._io.read_bytes_term(13, False, True, True)).decode(u"ASCII")
+            self.value = (self._io.read_bytes_term(13, False, True, True)).decode(u"SJIS")
             self.term = self._io.read_u1()
 
 
