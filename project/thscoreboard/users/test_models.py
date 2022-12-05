@@ -7,6 +7,40 @@ from django import test
 from . import models
 
 
+class InviteTestCase(test.TestCase):
+
+    def setUp(self) -> None:
+        super().setUp()
+
+        self._staff = models.User.objects.create_superuser(
+            username='root',
+            email='root@example.com',
+            password='root',
+        )
+
+    def testInviteUser(self):
+        invite = models.InvitedUser.CreateInvite(
+            'some-username',
+            'some-email@example.com',
+            self._staff
+        )
+        self.assertTrue(invite.token)
+        self.assertEqual(
+            invite,
+            models.InvitedUser.objects.get(token=invite.token),
+        )
+
+        invite.AcceptInvite('some-password')
+
+        with self.assertRaises(models.InvitedUser.DoesNotExist):
+            models.InvitedUser.objects.get(token=invite.token)
+
+        real_user = models.User.objects.get(username='some-username')
+        self.assertTrue(
+            real_user.check_password('some-password')
+        )
+
+
 class RegistrationTestCase(test.TestCase):
 
     def testUnverifiedUser(self):
