@@ -125,22 +125,23 @@ def publish_replay(request, temp_replay_id):
             'name': replay_info.name
         })
 
+    context = {
+        'form': form,
+        'game_name': shot_instance.game.GetName(),
+        'game_id': shot_instance.game.game_id,
+        'difficulty_name': shot_instance.game.GetDifficultyName(replay_info.difficulty),
+        'shot_name': shot_instance.GetName(),
+        'route_name': None,
+        'has_replay_file': True,
+        'replay': replay_info,
+    }
+
+    if replay_info.route:
+        context['route_name'] = replay_info.route.GetName()
+
     # When IN is supported, add "route" here too.
 
-    return render(
-        request,
-        'replays/publish.html',
-        {
-            'form': form,
-            'game_name': shot_instance.game.GetName(),
-            'game_id': shot_instance.game.game_id,
-            'difficulty_name': shot_instance.game.GetDifficultyName(replay_info.difficulty),
-            'shot_name': shot_instance.GetName(),
-            'route_name': None,
-            'has_replay_file': True,
-            'replay': replay_info,
-        }
-    )
+    return render(request, 'replays/publish.html', context)
 
 
 @auth_decorators.login_required
