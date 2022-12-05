@@ -132,3 +132,22 @@ def GetGameLifePieces(gameid: str):
     if gameid in _life_pieces:
         return _life_pieces[gameid]
     return None
+
+def GetFormatStage(game_id: str, stage: int) -> str:
+    if game_id == "th08":
+        stages = {
+            0: '1',
+            1: '2',
+            2: '3',
+            3: '4A',
+            4: '4B',
+            5: '5',
+            6: '6A',
+            7: '6B',
+            8: '7',
+        }
+        return stages[stage]
+    elif game_id in ['th06', 'th07']:
+        return str(stage+1)
+    else:
+        return str(stage)

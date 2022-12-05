@@ -22,6 +22,7 @@ def replay_details(request, game_id: str, replay_id: int):
     # format power for frontend to show like ingame
     for stage in replay_stages:
         stage.formatPower = game_fields.GetFormatPower(game_id, stage.power)
+        stage.formatStage = game_fields.GetFormatStage(game_id, stage.stage)
         if hasattr(stage, 'life_pieces'):
             stage.formatLives = game_fields.GetFormatLives(game_id, stage.lives, stage.life_pieces)
         else:
