@@ -96,16 +96,11 @@
         </td>
         </tr>
     {% endif %}
-        <tr>
-        <td>
-            <label for="{{form.comment.id_for_label}}">Comment</label>
-            {{ form.comment.errors }}
-        </td>
-        <td>
-            {{ form.comment }}
-        </td>
-        </tr>
     </table>
+    <div class="comment-input">
+        <label for="{{form.comment.id_for_label}}">Comment</label> {{ form.comment.errors }}<br>
+        {{ form.comment }}
+    </div>
     <input type="submit" value="Publish Replay">
 </form>
 {% endblock %}
