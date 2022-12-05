@@ -60,6 +60,7 @@ class ReplayInfo:
     score: int
     timestamp: datetime
     name: str
+    route: str
     stages = []
 
 
@@ -164,6 +165,7 @@ def _Parse08(rep_raw):
     rep_stages = []
 
     i = 0
+    route = None
     for score in replay.stages:
         if replay.file_header.stage_offsets[i] != 0:
             s = ReplayStage()
@@ -176,6 +178,10 @@ def _Parse08(rep_raw):
             s.graze = score.graze
             s.piv = score.piv
             s.th08_time = score.time
+            if i == 6:
+                route = 'Final A'
+            elif i == 7:
+                route = 'Final B'
             rep_stages.append(s)
         i += 1
 
@@ -185,7 +191,8 @@ def _Parse08(rep_raw):
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
         timestamp=datetime.strptime(replay.header.date, "%m/%d"),
-        name=replay.header.name.replace("\x00", "")
+        name=replay.header.name.replace("\x00", ""),
+        route=route
     )
 
     r.stages = rep_stages

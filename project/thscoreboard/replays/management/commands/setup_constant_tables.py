@@ -86,6 +86,11 @@ def _Create08():
         shot_row = models.Shot(game=th08, shot_id=shot)
         shot_row.save()
 
+    routes = ['Final A', 'Final B']
+    for i, route_id in enumerate(routes):
+        route = models.Route(game=th08, route_id=route_id, order_number=i)
+        route.save()
+
 
 @transaction.atomic
 def _Create07():

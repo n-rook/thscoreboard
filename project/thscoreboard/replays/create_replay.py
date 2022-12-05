@@ -60,7 +60,8 @@ def PublishNewReplay(
         is_clear=is_clear,
         rep_score=replay_info.score,
         timestamp=replay_info.timestamp,
-        name=replay_info.name
+        name=replay_info.name,
+        route=replay_info.route
     )
     replay_file_instance = models.ReplayFile(
         replay=replay_instance,
@@ -86,7 +87,8 @@ def PublishNewReplay(
             bomb_pieces=s.bomb_pieces,
             th06_rank=s.th06_rank,
             th07_cherry=s.th07_cherry,
-            th07_cherrymax=s.th07_cherrymax
+            th07_cherrymax=s.th07_cherrymax,
+            th08_time=s.th08_time
         )
         replay_stage.save()
 

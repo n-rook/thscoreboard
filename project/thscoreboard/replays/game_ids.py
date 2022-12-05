@@ -215,6 +215,11 @@ def GetRouteName(game_id: str, route_id: str):
             return pgettext('th01', 'Jigoku')
         elif route_id == 'Makai':
             return pgettext('th01', 'Makai')
+    if game_id == GameIDs.TH08:
+        if route_id == 'Final A':
+            return pgettext('th08', 'Final A')
+        elif route_id == 'Final B':
+            return pgettext('th08', 'Final B')
     return 'Bug route'
 
 
