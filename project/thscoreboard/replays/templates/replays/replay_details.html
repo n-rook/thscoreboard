@@ -2,6 +2,8 @@
 {% load humanize %}
 
 {% block content %}
+    <script src="/static/js/replays/replay_details.js"></script>
+
     <h2><a href="/replays/{{ game_id}}">{{ game_name }}</a></h2>
     <div>Uploaded on: {{ replay.created|date:"d F Y, h:i A" }}</div>
     {% if replay.timestamp %}
@@ -46,9 +48,21 @@
             </tr>
         </tbody>
     </table>
-    <p class="replay-comment">
+    <p class="replay-comment" id="replay-comment">
         {{ replay.comment }}
+        {% if can_edit %}
+        <br><a href="#" onclick="editReplayComment();">(Edit)</a>
+        {% endif %}
     </p>
+    {% if can_edit %}
+    <form action="{{ request.path }}/edit" method="post" class="replay-comment" id="replay-comment-edit">
+        {% csrf_token %}
+        {{ edit_form.non_field_errors }}
+        {{ edit_form.comment.errors }}
+        {{ edit_form.comment }}
+        <br><input type="submit" value="Save">
+    </form>
+    {% endif %}
     <p>
         {% if has_stages %}
         {% include "replays/replay_stages.html" %}
@@ -69,7 +83,7 @@
         <a href="{{replay.video_link}}">Watch replay on external site</a>
     </div>
     {% endif %}
-    {% if is_owner %}
+    {% if can_delete %}
     <div>
         <a href="/replays/{{ game_id }}/{{ replay.id }}/delete">Permanently delete this replay</a>
     </div>

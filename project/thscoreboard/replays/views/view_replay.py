@@ -8,7 +8,20 @@ from django.db import transaction
 
 from replays import models
 from replays.lib import http_util
+from replays import forms
 from replays import game_fields
+
+
+@http_decorators.require_POST
+def edit_replay(request, game_id: str, replay_id: int):
+    replay_instance, replay_stages = GetReplayWithStagesOr404(request.user, replay_id)
+
+    edit = forms.EditReplayForm(request.POST)
+    if edit.is_valid() and replay_instance.user == request.user:
+        replay_instance.comment = edit.cleaned_data['comment']
+        replay_instance.save()
+
+    return redirect(replay_details, game_id=game_id, replay_id=replay_id)
 
 
 @http_decorators.require_safe
@@ -28,17 +41,25 @@ def replay_details(request, game_id: str, replay_id: int):
         else:
             stage.formatLives = str(stage.lives)
 
+    edit_form = forms.EditReplayForm(
+        initial={
+            'comment': replay_instance.comment
+        }
+    )
+
     context = {
         'game_name': replay_instance.shot.game.GetName(),
         'shot_name': replay_instance.shot.GetName(),
         'difficulty_name': replay_instance.GetDifficultyName(),
         'game_id': game_id,
         'replay': replay_instance,
-        'is_owner': request.user == replay_instance.user or request.user.is_staff,
+        'can_edit': request.user == replay_instance.user,
+        'can_delete': request.user == replay_instance.user or request.user.is_staff,
         'replay_file_is_good': replay_instance.is_good,
         'has_stages': len(replay_stages) != 0,
         'replay_stages': replay_stages,
-        'table_fields': game_fields.GetGameField(game_id)
+        'table_fields': game_fields.GetGameField(game_id),
+        'edit_form': edit_form,
     }
 
     if hasattr(replay_instance, 'replayfile'):
