@@ -121,6 +121,14 @@ class Th10ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'ReimuB')
         self.assertEqual(r.score, 294127890)
         self.assertEqual(r.name, 'AAAAAAAA')
+        
+    def testNull(self):
+        with self.assertRaises(replay_parsing.BadReplayError):
+            ParseTestReplay('th10_null')
+
+    def testSmall(self):
+        with self.assertRaises(replay_parsing.BadReplayError):
+            ParseTestReplay('th10_small')
 
 
 class Th11ReplayTestCaseA(unittest.TestCase):
