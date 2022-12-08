@@ -151,3 +151,7 @@ class PublishReplayWithoutFileForm(forms.Form):
     is_clear = forms.BooleanField(initial=True, required=False)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False, widget=forms.Textarea)
     video_link = VideoReplayLinkField(required=True)
+
+
+class EditReplayForm(forms.Form):
+    comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, widget=forms.Textarea)
