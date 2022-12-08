@@ -60,7 +60,8 @@ def PublishNewReplay(
         is_clear=is_clear,
         rep_score=replay_info.score,
         timestamp=replay_info.timestamp,
-        name=replay_info.name
+        name=replay_info.name,
+        route=replay_info.route
     )
     replay_file_instance = models.ReplayFile(
         replay=replay_instance,

@@ -250,7 +250,8 @@ class Replay(models.Model):
 class ReplayStage(models.Model):
     """ Represents a stage split for a given replay
         Most games store the values from the start of the stage
-        TH07 and TH08 store the values from the end of the stage
+        TH07 stores the values from the end of the stage
+        TH08 is weird in that the score is stored from end of stage, but everything else is from the start
     """
 
     class Meta:

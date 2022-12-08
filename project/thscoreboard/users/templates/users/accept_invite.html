@@ -1,0 +1,45 @@
+{% extends "simple_centered.html" %}
+
+{% block centered-content %}
+<p>
+    Are you sure you want to register your account?
+</p>
+<p>
+    <form method="POST">
+        {% csrf_token %}
+
+        <table class="form-table">
+            <th style="width: 100%;"></th>
+            <tr>
+            <td>
+                <label for="{{ form.username.id_for_label }}">Username</label>
+                {{ form.username.errors }}
+            </td>
+            <td>
+                {{ form.username }}
+            </td>
+            </tr>
+            <tr>
+            <td>
+                <label for="{{ form.email.id_for_label }}">Email Address</label>
+                {{ form.email.errors }}
+            </td>
+            <td>
+                {{ form.email }}
+            </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.password.errors }}
+                    <label for="{{ form.password.id_for_label }}">Password</label>
+                </td>
+                <td>
+                    {{ form.password }}
+                </td>
+            </tr>
+        </table>
+
+        <input type="submit" name="register" value="Register" />
+    </form>
+</p>
+{% endblock %}

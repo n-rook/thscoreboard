@@ -32,6 +32,90 @@ class User(auth_models.AbstractUser):
 _USERNAME_MAX_LENGTH = 150
 
 
+class InvitedUser(models.Model):
+    """A user who has been invited to join the site."""
+
+    username = models.CharField(
+        max_length=_USERNAME_MAX_LENGTH,
+        validators=[auth_validators.UnicodeUsernameValidator()],
+    )
+
+    token = models.CharField(max_length=100, unique=True)
+    """The secret email token used to verify ownership of the email address.
+
+    We only expose this token in email messages, so if the user knows it, we
+    know the address is theirs.
+    """
+
+    email = models.EmailField()
+
+    created = models.DateTimeField(default=timezone.now)
+
+    invited_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
+    """The user who invited this person."""
+
+    TTL = datetime.timedelta(days=365)
+
+    @classmethod
+    def CleanUp(cls, now: datetime.datetime) -> None:
+        """Delete old invites.
+
+        Args:
+            now: The current time.
+
+        Returns:
+            The number of deleted invites.
+        """
+        model_ttl.CleanUpOldRows(cls, now)
+
+    @classmethod
+    def CreateInvite(cls, username, email, inviter):
+        """Create a new invite.
+
+        Be aware that this method does not check uniqueness for username and
+        email. To be nice to the user, do this yourself.
+
+        Args:
+            username: The username for the new invitation.
+            email: The email for the new invitation.
+            inviter: The person inviting the new user.
+        """
+
+        if (inviter is None):
+            raise ValueError('inviter cannot be None')
+
+        normalized_email = User.normalize_email(email)
+        token = secrets.token_urlsafe()
+
+        invite = cls(
+            username=username,
+            email=normalized_email,
+            invited_by=inviter,
+            token=token)
+        invite.save()
+        return invite
+
+    @transaction.atomic
+    def AcceptInvite(self, password) -> 'User':
+        """Convert an invite into a real, verified user.
+
+        This method also deletes all of the "losers": any UnverifiedUser
+        entries with the same username or email address. To the user,
+        it will appear that their token became invalid.
+
+        Returns:
+            The new user.
+        """
+        u = User(
+            username=User.normalize_username(self.username),
+            email=User.normalize_email(self.email))
+        u.set_password(password)
+        u.save()
+
+        self.delete()
+        return u
+
+
 class UnverifiedUser(models.Model):
     """A user who has not yet verified their email.
 

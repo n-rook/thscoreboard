@@ -14,6 +14,8 @@ tests = [
     (game_ids.GameIDs.TH10, 'th10_normal'),
     (game_ids.GameIDs.TH11, 'th11_normal'),
     (game_ids.GameIDs.TH06, 'th6_extra'),
+    (game_ids.GameIDs.TH08, 'th8_normal'),
+    (game_ids.GameIDs.TH08, 'th8_extra'),
 ]
 
 

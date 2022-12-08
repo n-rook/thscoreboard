@@ -14,9 +14,9 @@ class UsernameField(forms.CharField):
         value = super().to_python(value)
         if value is None:
             return None
-        
+
         return models.User.normalize_username(value)
-    
+
     def validate(self, value):
         if value is None:
             return True
@@ -32,7 +32,7 @@ class UserEmailField(forms.EmailField):
         value = super().to_python(value)
         if value is None:
             return None
-        
+
         return models.User.normalize_email(value)
 
     def validate(self, value):
@@ -68,3 +68,17 @@ class UserProfileForm(forms.Form):
             attrs={'placeholder': '●●●●●●●●'}
         ))
     email = forms.EmailField(label=_('Email address'), disabled=True)
+
+
+class UploadInviteFileForm(forms.Form):
+    invite_file = forms.FileField()
+
+
+class UploadInviteFileConfirmationForm(forms.Form):
+    invite_file_contents = forms.CharField(label=_('Invite File Contents'), max_length=1000000)
+
+
+class AcceptInviteForm(forms.Form):
+    username = forms.CharField(label=_('Username'), required=False, disabled=True)
+    email = UserEmailField(label='email', max_length=200, disabled=True)
+    password = forms.CharField(label='password', max_length=200, widget=forms.PasswordInput)

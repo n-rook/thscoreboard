@@ -28,3 +28,22 @@ def SendVerificationEmail(request, u: models.UnverifiedUser):
         to=[u.email],
     )
     email.send()
+
+
+def SendInviteEmail(u: models.InvitedUser):
+    full_link = settings.SITE_BASE + urls.reverse('users:accept_invite', kwargs={'token': u.token})
+
+    text_message = loader.render_to_string(
+        'registration/email/invite.txt',
+        context={
+            'site_name': 'Silent Selene',
+            'link': full_link
+        }
+    )
+    email = mail.EmailMessage(
+        subject='You have been invited to Silent Selene',
+        body=text_message,
+        from_email=_ACCOUNTS_EMAIL,
+        to=[u.email],
+    )
+    email.send()
