@@ -1,3 +1,13 @@
 """Register administration hooks in this module."""
 
-# This is empty, but in the future, we might register our models here.
+from django.contrib import admin
+
+from replays import models
+
+admin.site.register(models.Game)
+admin.site.register(models.Shot)
+admin.site.register(models.Route)
+admin.site.register(models.Replay)
+admin.site.register(models.ReplayStage)
+admin.site.register(models.ReplayFile)
+admin.site.register(models.TemporaryReplayFile)
