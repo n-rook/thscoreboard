@@ -42,7 +42,7 @@
     {% for stage in replay_stages %}
         <tr class="num-align">
             {% if table_fields.stage %}
-            <td>{{stage.stage}}</td>
+            <td>{{stage.formatStage}}</td>
             {% endif %}
             {% if table_fields.score %}
             <td>{{stage.score|intcomma}}</td>

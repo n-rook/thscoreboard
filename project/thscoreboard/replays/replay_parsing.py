@@ -1,12 +1,14 @@
 """Parsing and gleaning information from individual replay files."""
 
 from dataclasses import dataclass
+from typing import Optional
 from datetime import datetime
 import logging
 
 from . import game_ids
 from .kaitai_parsers import th06
 from .kaitai_parsers import th07
+from .kaitai_parsers import th08
 from .kaitai_parsers import th10
 from .kaitai_parsers import th11
 from .kaitai_parsers import th_modern
@@ -58,6 +60,7 @@ class ReplayInfo:
     score: int
     timestamp: datetime
     name: str
+    route: Optional[str] = None
     stages = []
 
 
@@ -131,6 +134,64 @@ def _Parse07(rep_raw):
         score=replay.header.score * 10,
         timestamp=datetime.strptime(replay.header.date, "%m/%d"),
         name=replay.header.name.replace("\x00", "")
+    )
+
+    r.stages = rep_stages
+    return r
+
+
+def _Parse08(rep_raw):
+    comp_data = bytearray(rep_raw[24:])
+    td.decrypt06(comp_data, rep_raw[21])
+    #   basically copied from _Parse07()
+    #   0x68 (104) - 24 = 80
+    replay = th08.Th08.from_bytes(bytearray(24) + comp_data[0:80] + td.unlzss(comp_data[80:]))
+    
+    shots = [
+        "Reimu & Yukari",
+        "Marisa & Alice",
+        "Sakuya & Remilia",
+        "Youmu & Yuyuko",
+        "Reimu",
+        "Yukari",
+        "Marisa",
+        "Alice",
+        "Sakuya",
+        "Remilia",
+        "Youmu",
+        "Yuyuko"
+    ]
+
+    rep_stages = []
+
+    i = 0
+    route = None
+    for score in replay.stages:
+        if replay.file_header.stage_offsets[i] != 0:
+            s = ReplayStage()
+            s.stage = i
+            s.score = score.score * 10
+            s.power = score.power
+            s.lives = score.lives
+            s.bombs = score.bombs
+            s.point_items = score.point_items
+            s.graze = score.graze
+            s.piv = score.piv
+            if i == 6:
+                route = 'Final A'
+            elif i == 7:
+                route = 'Final B'
+            rep_stages.append(s)
+        i += 1
+
+    r = ReplayInfo(
+        game=game_ids.GameIDs.TH08,
+        shot=shots[replay.header.shot],
+        difficulty=replay.header.difficulty,
+        score=replay.header.score * 10,
+        timestamp=datetime.strptime(replay.header.date, "%m/%d"),
+        name=replay.header.name.replace("\x00", ""),
+        route=route
     )
 
     r.stages = rep_stages
@@ -216,6 +277,8 @@ def Parse(replay):
         return _Parse06(replay)
     elif gamecode == b'T7RP':
         return _Parse07(replay)
+    elif gamecode == b'T8RP':
+        return _Parse08(replay)
     elif gamecode == b't10r':
         return _Parse10(replay)
     elif gamecode == b't11r':

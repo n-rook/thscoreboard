@@ -11,6 +11,7 @@ from replays import forms
 from replays import limits
 from replays import models
 from replays import replay_parsing
+from replays import game_ids
 from replays.views import view_replay
 
 
@@ -96,6 +97,9 @@ def publish_replay(request, temp_replay_id):
     replay_info = replay_parsing.Parse(bytes(temp_replay.replay))
     shot_instance = models.Shot.objects.select_related('game').get(game=replay_info.game, shot_id=replay_info.shot)
 
+    if replay_info.game in [game_ids.GameIDs.TH01, game_ids.GameIDs.TH08]:
+        replay_info.route = models.Route.objects.select_related('game').get(game=replay_info.game, route_id=replay_info.route)
+
     if request.method == 'POST':
         form = forms.PublishReplayForm(request.POST)
         if form.is_valid():
@@ -122,22 +126,23 @@ def publish_replay(request, temp_replay_id):
             'name': replay_info.name
         })
 
+    context = {
+        'form': form,
+        'game_name': shot_instance.game.GetName(),
+        'game_id': shot_instance.game.game_id,
+        'difficulty_name': shot_instance.game.GetDifficultyName(replay_info.difficulty),
+        'shot_name': shot_instance.GetName(),
+        'route_name': None,
+        'has_replay_file': True,
+        'replay': replay_info,
+    }
+
+    if replay_info.route:
+        context['route_name'] = replay_info.route.GetName()
+
     # When IN is supported, add "route" here too.
 
-    return render(
-        request,
-        'replays/publish.html',
-        {
-            'form': form,
-            'game_name': shot_instance.game.GetName(),
-            'game_id': shot_instance.game.game_id,
-            'difficulty_name': shot_instance.game.GetDifficultyName(replay_info.difficulty),
-            'shot_name': shot_instance.GetName(),
-            'route_name': None,
-            'has_replay_file': True,
-            'replay': replay_info,
-        }
-    )
+    return render(request, 'replays/publish.html', context)
 
 
 @auth_decorators.login_required

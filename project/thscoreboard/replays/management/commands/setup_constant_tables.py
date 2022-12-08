@@ -23,6 +23,7 @@ def SetUpConstantTables():
 
     _CreateIfNotLoaded('th11', _Create11)
     _CreateIfNotLoaded('th10', _Create10)
+    _CreateIfNotLoaded('th08', _Create08)
     _CreateIfNotLoaded('th07', _Create07)
     _CreateIfNotLoaded('th06', _Create06)
     _CreateIfNotLoaded('th05', _Create05)
@@ -60,6 +61,35 @@ def _Create10():
     for shot in shots:
         shot_row = models.Shot(game=th10, shot_id=shot)
         shot_row.save()
+
+
+@transaction.atomic
+def _Create08():
+    th08 = models.Game(game_id='th08', has_replays=True, num_difficulties=5)
+    th08.save()
+
+    shots = [
+        "Reimu & Yukari",
+        "Marisa & Alice",
+        "Sakuya & Remilia",
+        "Youmu & Yuyuko",
+        "Reimu",
+        "Yukari",
+        "Marisa",
+        "Alice",
+        "Sakuya",
+        "Remilia",
+        "Youmu",
+        "Yuyuko"
+    ]
+    for shot in shots:
+        shot_row = models.Shot(game=th08, shot_id=shot)
+        shot_row.save()
+
+    routes = ['Final A', 'Final B']
+    for i, route_id in enumerate(routes):
+        route = models.Route(game=th08, route_id=route_id, order_number=i)
+        route.save()
 
 
 @transaction.atomic
