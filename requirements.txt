@@ -5,7 +5,7 @@ bidict==0.22.0
 certifi==2022.6.15
 charset-normalizer==2.1.1
 dj-database-url==1.0.0
-Django==4.1
+Django==4.1.4
 django-appconf==1.0.5
 django-compressor==4.1
 django-rosetta==0.9.8
