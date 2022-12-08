@@ -34,7 +34,7 @@ def replay_details(request, game_id: str, replay_id: int):
         'difficulty_name': replay_instance.GetDifficultyName(),
         'game_id': game_id,
         'replay': replay_instance,
-        'is_owner': request.user == replay_instance.user,
+        'is_owner': request.user == replay_instance.user or request.user.is_staff,
         'replay_file_is_good': replay_instance.is_good,
         'has_stages': len(replay_stages) != 0,
         'replay_stages': replay_stages,
@@ -84,12 +84,12 @@ def delete_replay(request, game_id: str, replay_id: int):
 
     if replay_instance.shot.game.game_id != game_id:
         raise Http404()
-    if not replay_instance.user == request.user:
+    if not replay_instance.user == request.user and not request.user.is_staff:
         raise HttpResponseForbidden()
     
     if request.method == 'POST':
         replay_instance.delete()
-        return redirect(f'/replays/user/{request.user.username}')
+        return redirect(f'/replays/user/{replay_instance.user.username}')
     
     return render(
         request,
