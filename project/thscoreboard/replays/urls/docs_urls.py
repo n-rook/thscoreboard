@@ -9,4 +9,5 @@ urlpatterns = [
     path('privacy', docs.make_docs_page_route('privacy_policy.html'), name='Docs/Privacy'),
     path('rules', docs.make_docs_page_route('rules.html'), name='Docs/Rules'),
     path('replayrules', docs.make_docs_page_route('replay_rules.html'), name='Docs/Replay Rules'),
+    path('licenses', docs.make_docs_page_route('licenses.html'), name='Docs/Licenses'),
 ]
