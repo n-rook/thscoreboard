@@ -231,7 +231,6 @@ def _Parse09(rep_raw):
     rep_stages = []
     r_score = 0
     r_shot = "Bug shot"
-    
 
     highest_stage = 0
     if replay.file_header.stage_offsets[9] == 0:
@@ -288,7 +287,7 @@ def _Parse09(rep_raw):
     )
 
     r.stages = rep_stages
-    return r       
+    return r
 
 
 def _Parse10(rep_raw):
