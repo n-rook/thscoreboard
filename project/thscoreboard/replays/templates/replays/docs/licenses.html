@@ -1,0 +1,17 @@
+{% extends "replays/docs/docs_template.html" %}
+{% load i18n %}
+
+{% block main_text %}
+    <h1>{% translate "Licenses" %}</h1>
+    {% blocktranslate %}
+    <h2>This Site</h2>
+    <p>
+        Silent Selene is licensed under the Apache License 2.0. The <a href="https://github.com/n-rook/thscoreboard">source code</a> is available on GitHub.
+    </p>
+    <h2>Other Components</h2>
+    <p>
+        We use <a href="https://www.latofonts.com/">Lato</a>, a sans serif font, on Silent Selene. Lato was created by Łukasz Dziedzic, and is licensed under the <a href="http://scripts.sil.org/OFL">SIL Open Font License 1.1</a>.
+    </p>
+
+    {% endblocktranslate %}
+{% endblock %}
