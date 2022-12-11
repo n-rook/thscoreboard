@@ -35,22 +35,6 @@ _table_fields_th07 = immutabledict({
     'th07_cherrymax': True,
 })
 
-_table_fields_th10 = immutabledict({
-    'stage': True,
-    'score': True,
-    'piv': True,
-    'graze': False,
-    'point_items': False,
-    'power': True,
-    'lives': True,
-    'life_pieces': False,
-    'bombs': False,
-    'bomb_pieces': False,
-    'th06_rank': False,
-    'th07_cherry': False,
-    'th07_cherrymax': False,
-})
-
 _table_fields_th08 = immutabledict({
     'stage': True,
     'score': True,
@@ -61,6 +45,41 @@ _table_fields_th08 = immutabledict({
     'lives': True,
     'life_pieces': False,
     'bombs': True,
+    'bomb_pieces': False,
+    'th06_rank': False,
+    'th07_cherry': False,
+    'th07_cherrymax': False,
+})
+
+_table_fields_th09 = immutabledict({
+    'stage': True,
+    'score': True,
+    'piv': False,
+    'graze': False,
+    'point_items': False,
+    'power': False,
+    'lives': True,
+    'life_pieces': False,
+    'bombs': False,
+    'bomb_pieces': False,
+    'th06_rank': False,
+    'th07_cherry': False,
+    'th07_cherrymax': False,
+    'th09_p2_cpu': True,
+    'th09_p2_shot': True,
+    'th09_p2_score': True,
+})
+
+_table_fields_th10 = immutabledict({
+    'stage': True,
+    'score': True,
+    'piv': True,
+    'graze': False,
+    'point_items': False,
+    'power': True,
+    'lives': True,
+    'life_pieces': False,
+    'bombs': False,
     'bomb_pieces': False,
     'th06_rank': False,
     'th07_cherry': False,
@@ -148,7 +167,7 @@ def GetFormatStage(game_id: str, stage: int) -> str:
             8: '7',
         }
         return stages[stage]
-    elif game_id in ['th06', 'th07']:
+    elif game_id in ['th06', 'th07', 'th09']:
         return str(stage + 1)
     else:
         return str(stage)
