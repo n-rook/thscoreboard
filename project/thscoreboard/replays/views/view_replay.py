@@ -40,6 +40,8 @@ def replay_details(request, game_id: str, replay_id: int):
             stage.formatLives = game_fields.GetFormatLives(game_id, stage.lives, stage.life_pieces)
         else:
             stage.formatLives = str(stage.lives)
+        if hasattr(stage, 'th09_p2_shot'):
+            stage.th09_p2_shotFormat = stage.th09_p2_shot.GetName()
 
     edit_form = forms.EditReplayForm(
         initial={

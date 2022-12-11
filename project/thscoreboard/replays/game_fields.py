@@ -17,6 +17,10 @@ _table_fields_th06 = immutabledict({
     'th06_rank': True,
     'th07_cherry': False,
     'th07_cherrymax': False,
+    'th09_p1_cpu': False,
+    'th09_p2_cpu': False,
+    'th09_p2_shot': False,
+    'th09_p2_score': False,
 })
 
 _table_fields_th07 = immutabledict({
@@ -33,6 +37,10 @@ _table_fields_th07 = immutabledict({
     'th06_rank': False,
     'th07_cherry': True,
     'th07_cherrymax': True,
+    'th09_p1_cpu': False,
+    'th09_p2_cpu': False,
+    'th09_p2_shot': False,
+    'th09_p2_score': False,
 })
 
 _table_fields_th08 = immutabledict({
@@ -49,6 +57,10 @@ _table_fields_th08 = immutabledict({
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
+    'th09_p1_cpu': False,
+    'th09_p2_cpu': False,
+    'th09_p2_shot': False,
+    'th09_p2_score': False,
 })
 
 _table_fields_th09 = immutabledict({
@@ -65,6 +77,7 @@ _table_fields_th09 = immutabledict({
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
+    'th09_p1_cpu': True,
     'th09_p2_cpu': True,
     'th09_p2_shot': True,
     'th09_p2_score': True,
@@ -84,6 +97,10 @@ _table_fields_th10 = immutabledict({
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
+    'th09_p1_cpu': False,
+    'th09_p2_cpu': False,
+    'th09_p2_shot': False,
+    'th09_p2_score': False,
 })
 
 _table_fields_th11 = immutabledict({
@@ -100,6 +117,10 @@ _table_fields_th11 = immutabledict({
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
+    'th09_p1_cpu': False,
+    'th09_p2_cpu': False,
+    'th09_p2_shot': False,
+    'th09_p2_score': False,
 })
 
 _game_fields = immutabledict({
@@ -108,6 +129,7 @@ _game_fields = immutabledict({
     'th06': _table_fields_th06,
     'th07': _table_fields_th07,
     'th08': _table_fields_th08,
+    'th09': _table_fields_th09,
     'th10': _table_fields_th10,
     'th11': _table_fields_th11
 })
@@ -128,6 +150,7 @@ _life_pieces = immutabledict({
     'th06': None,
     'th07': None,
     'th08': None,
+    'th09': None,
     'th10': None,
     'th11': 5
 })

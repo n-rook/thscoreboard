@@ -9,6 +9,7 @@ from django.db import transaction
 
 from replays import models
 from replays import replay_parsing
+from . import game_ids
 
 
 @transaction.atomic
@@ -73,6 +74,11 @@ def PublishNewReplay(
     temp_replay_instance.delete()
 
     for s in replay_info.stages:
+        #   th09 shot foreign key
+        shot_instance = None
+        if replay_info.game == game_ids.GameIDs.TH09:
+            shot_instance = models.Shot.objects.select_related('game').get(game=game_ids.GameIDs.TH09, shot_id=s.th09_p2_shot)
+
         replay_stage = models.ReplayStage(
             replay=replay_instance,
             stage=s.stage,
@@ -87,7 +93,11 @@ def PublishNewReplay(
             bomb_pieces=s.bomb_pieces,
             th06_rank=s.th06_rank,
             th07_cherry=s.th07_cherry,
-            th07_cherrymax=s.th07_cherrymax
+            th07_cherrymax=s.th07_cherrymax,
+            th09_p1_cpu=s.th09_p1_cpu,
+            th09_p2_cpu=s.th09_p2_cpu,
+            th09_p2_score=s.th09_p2_score,
+            th09_p2_shot=shot_instance
         )
         replay_stage.save()
 

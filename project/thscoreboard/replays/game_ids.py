@@ -61,6 +61,11 @@ def GetGameName(game_id: str, short=False):
             return _('th08')
         else:
             return _('東方永夜抄 - Imperishable Night')
+    if game_id == GameIDs.TH09:
+        if short:
+            return _('th09')
+        else:
+            return _('東方花映塚 - Phantasmagoria of Flower View')
     if game_id == GameIDs.TH10:
         if short:
             return _('th10')
@@ -179,6 +184,41 @@ def GetShotName(game_id: str, shot_id: str):
             return pgettext('th08', 'Yuyuko')
         return shot_id
 
+    if game_id == GameIDs.TH09:
+        if shot_id == "Reimu":
+            return pgettext('th09', "Reimu",)
+        if shot_id == "Marisa":
+            return pgettext('th09', "Marisa",)
+        if shot_id == "Sakuya":
+            return pgettext('th09', "Sakuya",)
+        if shot_id == "Youmu":
+            return pgettext('th09', "Youmu",)
+        if shot_id == "Reisen":
+            return pgettext('th09', "Reisen",)
+        if shot_id == "Cirno":
+            return pgettext('th09', "Cirno",)
+        if shot_id == "Lyrica":
+            return pgettext('th09', "Lyrica",)
+        if shot_id == "Mystia":
+            return pgettext('th09', "Mystia",)
+        if shot_id == "Tewi":
+            return pgettext('th09', "Tewi",)
+        if shot_id == "Yuuka":
+            return pgettext('th09', "Yuuka",)
+        if shot_id == "Aya":
+            return pgettext('th09', "Aya",)
+        if shot_id == "Medicine":
+            return pgettext('th09', "Medicine",)
+        if shot_id == "Komachi":
+            return pgettext('th09', "Komachi",)
+        if shot_id == "Eiki":
+            return pgettext('th09', "Eiki",)
+        if shot_id == "Merlin":
+            return pgettext('th09', "Merlin",)
+        if shot_id == "Lunasa":
+            return pgettext('th09', "Lunasa")
+        return shot_id
+
     if game_id == GameIDs.TH10:
         if shot_id == 'ReimuA':
             return pgettext('th10', 'Reimu A')
@@ -234,6 +274,7 @@ def GetDifficultyName(game_id: str, difficulty: int):
             GameIDs.TH06,
             GameIDs.TH07,
             GameIDs.TH08,
+            GameIDs.TH09,
             GameIDs.TH10,
             GameIDs.TH11}:
         if difficulty == 0:

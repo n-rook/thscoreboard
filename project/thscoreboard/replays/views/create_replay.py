@@ -95,6 +95,10 @@ def publish_replay(request, temp_replay_id):
         raise Http404()
 
     replay_info = replay_parsing.Parse(bytes(temp_replay.replay))
+    
+    #   modify replays for fields that need to be adjusted to fit the db
+    #   like foreign key fields and stuff
+
     shot_instance = models.Shot.objects.select_related('game').get(game=replay_info.game, shot_id=replay_info.shot)
 
     if replay_info.game in [game_ids.GameIDs.TH01, game_ids.GameIDs.TH08]:
