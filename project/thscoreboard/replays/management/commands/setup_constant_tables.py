@@ -23,6 +23,7 @@ def SetUpConstantTables():
 
     _CreateIfNotLoaded('th11', _Create11)
     _CreateIfNotLoaded('th10', _Create10)
+    _CreateIfNotLoaded('th09', _Create09)
     _CreateIfNotLoaded('th08', _Create08)
     _CreateIfNotLoaded('th07', _Create07)
     _CreateIfNotLoaded('th06', _Create06)
@@ -60,6 +61,34 @@ def _Create10():
     shots = ['ReimuA', 'ReimuB', 'ReimuC', 'MarisaA', 'MarisaB', 'MarisaC']
     for shot in shots:
         shot_row = models.Shot(game=th10, shot_id=shot)
+        shot_row.save()
+
+
+@transaction.atomic
+def _Create09():
+    th09 = models.Game(game_id='th09', has_replays=True, num_difficulties=5)
+    th09.save()
+
+    shots = [
+        "Reimu",
+        "Marisa",
+        "Sakuya",
+        "Youmu",
+        "Reisen",
+        "Cirno",
+        "Lyrica",
+        "Mystia",
+        "Tewi",
+        "Yuuka",
+        "Aya",
+        "Medicine",
+        "Komachi",
+        "Eiki",
+        "Merlin",
+        "Lunasa"
+    ]
+    for shot in shots:
+        shot_row = models.Shot(game=th09, shot_id=shot)
         shot_row.save()
 
 

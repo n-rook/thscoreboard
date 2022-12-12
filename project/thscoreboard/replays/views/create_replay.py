@@ -95,19 +95,23 @@ def publish_replay(request, temp_replay_id):
         raise Http404()
 
     replay_info = replay_parsing.Parse(bytes(temp_replay.replay))
+    
+    #   modify replays for fields that need to be adjusted to fit the db
+    #   like foreign key fields and stuff
+
     shot_instance = models.Shot.objects.select_related('game').get(game=replay_info.game, shot_id=replay_info.shot)
 
     if replay_info.game in [game_ids.GameIDs.TH01, game_ids.GameIDs.TH08]:
         replay_info.route = models.Route.objects.select_related('game').get(game=replay_info.game, route_id=replay_info.route)
 
     if request.method == 'POST':
-        form = forms.PublishReplayForm(request.POST)
+        form = forms.PublishReplayForm(replay_info.game, request.POST)
         if form.is_valid():
             new_replay = create_replay.PublishNewReplay(
                 user=request.user,
                 difficulty=replay_info.difficulty,
                 shot=shot_instance,
-                score=replay_info.score,
+                score=form.cleaned_data['score'],
                 category=form.cleaned_data['category'],
                 comment=form.cleaned_data['comment'],
                 is_good=form.cleaned_data['is_good'],
@@ -121,6 +125,7 @@ def publish_replay(request, temp_replay_id):
             return render(request, 'replays/publish.html', {'form': form})
 
     form = forms.PublishReplayForm(
+        replay_info.game,
         initial={
             'score': replay_info.score,
             'name': replay_info.name

@@ -336,6 +336,18 @@ class ReplayStage(models.Model):
     th07_cherrymax = models.IntegerField(blank=True, null=True)
     """Current cherry max for TH07"""
 
+    th09_p1_cpu = models.BooleanField(blank=True, null=True)
+    """Whether player 1 in the stage split is a CPU or not in TH09"""
+
+    th09_p2_cpu = models.BooleanField(blank=True, null=True)
+    """Whether player 2 in the stage split is a CPU or not in TH09"""
+
+    th09_p2_shot = models.ForeignKey('Shot', on_delete=models.PROTECT, blank=True, null=True)
+    """The shot type stored for player 2 in the stage split in TH09"""
+
+    th09_p2_score = models.IntegerField(blank=True, null=True)
+    """The score stored for player 2 in the stage split in TH09"""
+
 
 class ReplayFile(models.Model):
     """Represents a replay file for a given score."""

@@ -106,11 +106,13 @@ class UploadReplayFileForm(forms.Form):
 
 class PublishReplayForm(forms.Form):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, gameID, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['score'].widget.attrs.update({'readonly': 'readonly'})
         self.fields['name'].widget.attrs.update({'readonly': 'readonly'})
+        #   i don't like using the negative here but it kind of has to be
+        if gameID not in [game_ids.GameIDs.TH09]:
+            self.fields['score'].widget.attrs.update({'readonly': 'readonly'})
 
     score = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=category_names)

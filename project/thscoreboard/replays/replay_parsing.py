@@ -9,6 +9,7 @@ from . import game_ids
 from .kaitai_parsers import th06
 from .kaitai_parsers import th07
 from .kaitai_parsers import th08
+from .kaitai_parsers import th09
 from .kaitai_parsers import th10
 from .kaitai_parsers import th11
 from .kaitai_parsers import th_modern
@@ -48,6 +49,10 @@ class ReplayStage:
     th06_rank: int = None
     th07_cherry: int = None
     th07_cherrymax: int = None
+    th09_p1_cpu: bool = None
+    th09_p2_cpu: bool = None
+    th09_p2_shot: str = None
+    th09_p2_score: int = None
 
     def __getitem__(self, item):
         return getattr(self, item)
@@ -199,6 +204,92 @@ def _Parse08(rep_raw):
     return r
 
 
+def _Parse09(rep_raw):
+    comp_data = bytearray(rep_raw[24:])
+    td.decrypt06(comp_data, rep_raw[21])
+    #   0xc0 (192) - 24 = 168
+    replay = th09.Th09.from_bytes(bytearray(24) + comp_data[0:168] + td.unlzss(comp_data[168:]))
+    shots = [
+        "Reimu",
+        "Marisa",
+        "Sakuya",
+        "Youmu",
+        "Reisen",
+        "Cirno",
+        "Lyrica",
+        "Mystia",
+        "Tewi",
+        "Yuuka",
+        "Aya",
+        "Medicine",
+        "Komachi",
+        "Eiki",
+        "Merlin",
+        "Lunasa"
+    ]
+
+    rep_stages = []
+    r_score = 0
+    r_shot = "Bug shot"
+
+    highest_stage = 0
+    if replay.file_header.stage_offsets[9] == 0:
+        #   story mode
+        for i in range(9):
+            if replay.file_header.stage_offsets[i] != 0:
+                #   real stage
+                p1 = replay.stages[i]
+                p2 = replay.stages[i + 10]
+
+                s = ReplayStage()
+                s.stage = i
+                s.score = p1.score * 10
+                s.lives = p1.lives
+
+                s.th09_p1_cpu = False
+                s.th09_p2_cpu = True
+                s.th09_p2_shot = shots[p2.shot]
+                s.th09_p2_score = p2.score * 10
+
+                highest_stage = i
+                rep_stages.append(s)
+
+            #   fill in replayinfo
+            p1 = replay.stages[highest_stage]
+            r_shot = shots[p1.shot]
+            r_score = p1.score * 10
+
+    else:
+        #   vs mode
+        p1 = replay.stages[9]
+        p2 = replay.stages[19]
+
+        r_shot = shots[p1.shot]
+        r_score = p1.score * 10
+        
+        s = ReplayStage()
+        s.stage = 0
+        s.score = p1.score * 10
+        s.th09_p1_cpu = p1.ai
+        s.th09_p2_cpu = p2.ai
+        s.th09_p2_shot = shots[p2.shot]
+        s.th09_p2_score = p2.score * 10
+
+        rep_stages.append(s)
+
+    r = ReplayInfo(
+        game=game_ids.GameIDs.TH09,
+        shot=r_shot,
+        difficulty=replay.header.difficulty,
+        score=r_score,
+        timestamp=datetime.strptime(replay.header.date, "%y/%m/%d"),
+        name=replay.header.name.replace("\x00", "")
+    )
+
+    r.stages = rep_stages
+    return r
+
+
 def _Parse10(rep_raw):
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
@@ -281,6 +372,8 @@ def Parse(replay):
             return _Parse07(replay)
         elif gamecode == b'T8RP':
             return _Parse08(replay)
+        elif gamecode == b'T9RP':
+            return _Parse09(replay)
         elif gamecode == b't10r':
             return _Parse10(replay)
         elif gamecode == b't11r':
