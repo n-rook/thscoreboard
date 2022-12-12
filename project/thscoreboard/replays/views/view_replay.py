@@ -11,6 +11,8 @@ from replays.lib import http_util
 from replays import forms
 from replays import game_fields
 
+from replays import game_ids
+
 
 @http_decorators.require_POST
 def edit_replay(request, game_id: str, replay_id: int):
@@ -40,7 +42,7 @@ def replay_details(request, game_id: str, replay_id: int):
             stage.formatLives = game_fields.GetFormatLives(game_id, stage.lives, stage.life_pieces)
         else:
             stage.formatLives = str(stage.lives)
-        if hasattr(stage, 'th09_p2_shot'):
+        if game_id == game_ids.GameIDs.TH09:
             stage.th09_p2_shotFormat = stage.th09_p2_shot.GetName()
 
     edit_form = forms.EditReplayForm(

@@ -75,9 +75,9 @@ def PublishNewReplay(
 
     for s in replay_info.stages:
         #   th09 shot foreign key
-        shot_instance = None
+        th09_shot_instance = None
         if replay_info.game == game_ids.GameIDs.TH09:
-            shot_instance = models.Shot.objects.select_related('game').get(game=game_ids.GameIDs.TH09, shot_id=s.th09_p2_shot)
+            th09_shot_instance = models.Shot.objects.select_related('game').get(game=game_ids.GameIDs.TH09, shot_id=s.th09_p2_shot)
 
         replay_stage = models.ReplayStage(
             replay=replay_instance,
@@ -97,7 +97,7 @@ def PublishNewReplay(
             th09_p1_cpu=s.th09_p1_cpu,
             th09_p2_cpu=s.th09_p2_cpu,
             th09_p2_score=s.th09_p2_score,
-            th09_p2_shot=shot_instance
+            th09_p2_shot=th09_shot_instance
         )
         replay_stage.save()
 
