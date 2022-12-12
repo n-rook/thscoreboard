@@ -114,7 +114,6 @@ class PublishReplayForm(forms.Form):
         if gameID not in [game_ids.GameIDs.TH09]:
             self.fields['score'].widget.attrs.update({'readonly': 'readonly'})
 
-
     score = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=category_names)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False, widget=forms.Textarea)
