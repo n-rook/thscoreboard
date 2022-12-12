@@ -112,6 +112,41 @@ class Th08ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.stages[0].piv, 300000)
 
 
+class Th09ReplayTestCase(unittest.TestCase):
+    
+    def testLunatic(self):
+        r = ParseTestReplay('th9_lunatic')
+
+        self.assertEqual(r.difficulty, 3)
+        self.assertEqual(r.shot, 'Reimu')
+        self.assertEqual(r.score, 49348230)
+        self.assertEqual(r.name, 'AAAAAAAA')
+
+        s = r.stages[8]
+
+        self.assertEqual(s.score, 49348230)
+        self.assertEqual(s.lives, 0)
+        self.assertEqual(s.th09_p2_cpu, True)
+        self.assertEqual(s.th09_p2_shot, 'Eiki')
+        self.assertEqual(s.th09_p2_score, 3169280)
+
+    def testPVP(self):
+        r = ParseTestReplay('th9_pvp')
+
+        self.assertEqual(r.difficulty, 3)
+        self.assertEqual(r.shot, 'Yuuka')
+        self.assertEqual(r.score, 0)
+        self.assertEqual(r.name, '17:49:20')
+
+        s = r.stages[0]
+
+        self.assertEqual(s.score, 0)
+        self.assertEqual(s.th09_p1_cpu, False)
+        self.assertEqual(s.th09_p2_cpu, False)
+        self.assertEqual(s.th09_p2_shot, 'Lunasa')
+        self.assertEqual(s.th09_p2_score, 0)
+
+
 class Th10ReplayTestCase(unittest.TestCase):
     
     def testNormal(self):

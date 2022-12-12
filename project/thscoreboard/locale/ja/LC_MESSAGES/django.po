@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-01 02:17+0000\n"
+"POT-Creation-Date: 2022-12-11 12:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,373 +34,471 @@ msgstr ""
 msgid "Private"
 msgstr ""
 
-#: replays/game_ids.py:25
+#: replays/game_ids.py:26
 msgid "th01"
 msgstr ""
 
-#: replays/game_ids.py:27
+#: replays/game_ids.py:28
 msgid "東方靈異伝 - The Highly Responsive to Prayers"
 msgstr ""
 
-#: replays/game_ids.py:30
+#: replays/game_ids.py:31
 msgid "th02"
 msgstr ""
 
-#: replays/game_ids.py:32
+#: replays/game_ids.py:33
 msgid "東方封魔録 - Story of Eastern Wonderland"
 msgstr ""
 
-#: replays/game_ids.py:35
+#: replays/game_ids.py:36
 msgid "th03"
 msgstr ""
 
-#: replays/game_ids.py:37
+#: replays/game_ids.py:38
 msgid "東方夢時空 - The Phantasmagoria of Dim. Dream"
 msgstr ""
 
-#: replays/game_ids.py:40
+#: replays/game_ids.py:41
 msgid "th04"
 msgstr ""
 
-#: replays/game_ids.py:42
+#: replays/game_ids.py:43
 msgid "東方幻想郷 - Lotus Land Story"
 msgstr ""
 
-#: replays/game_ids.py:45
+#: replays/game_ids.py:46
 msgid "th05"
 msgstr ""
 
-#: replays/game_ids.py:47
+#: replays/game_ids.py:48
 msgid "東方怪綺談 - Mystic Square"
 msgstr ""
 
-#: replays/game_ids.py:50
+#: replays/game_ids.py:51
 msgid "th06"
 msgstr ""
 
-#: replays/game_ids.py:52
+#: replays/game_ids.py:53
 msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
 msgstr ""
 
-#: replays/game_ids.py:55
+#: replays/game_ids.py:56
 msgid "th07"
 msgstr ""
 
-#: replays/game_ids.py:57
+#: replays/game_ids.py:58
 msgid "東方妖々夢 - Perfect Cherry Blossom"
 msgstr ""
 
-#: replays/game_ids.py:60
+#: replays/game_ids.py:61
 msgid "th08"
 msgstr ""
 
-#: replays/game_ids.py:62
+#: replays/game_ids.py:63
 msgid "東方永夜抄 - Imperishable Night"
 msgstr ""
 
-#: replays/game_ids.py:65
+#: replays/game_ids.py:66
+msgid "th09"
+msgstr ""
+
+#: replays/game_ids.py:68
+msgid "東方花映塚 - Phantasmagoria of Flower View"
+msgstr ""
+
+#: replays/game_ids.py:71
 msgid "th10"
 msgstr ""
 
-#: replays/game_ids.py:67
+#: replays/game_ids.py:73
 msgid "東方風神録 - Mountain of Faith"
 msgstr ""
 
-#: replays/game_ids.py:70
+#: replays/game_ids.py:76
 msgid "th11"
 msgstr ""
 
-#: replays/game_ids.py:72
+#: replays/game_ids.py:78
 msgid "東方地霊殿 - Subterranean Animism"
 msgstr ""
 
-#: replays/game_ids.py:73
+#: replays/game_ids.py:79
 msgid "Unknown game (bug!)"
 msgstr ""
 
-#: replays/game_ids.py:80
+#: replays/game_ids.py:86
 msgctxt "th01"
 msgid "Reimu"
 msgstr ""
 
-#: replays/game_ids.py:83
+#: replays/game_ids.py:89
 msgctxt "th02"
 msgid "Mobility"
 msgstr ""
 
-#: replays/game_ids.py:85
+#: replays/game_ids.py:91
 msgctxt "th02"
 msgid "Defensive"
 msgstr ""
 
-#: replays/game_ids.py:87
+#: replays/game_ids.py:93
 msgctxt "th02"
 msgid "Offensive"
 msgstr ""
 
-#: replays/game_ids.py:91
-msgctxt "th03"
-msgid "Reimu"
-msgstr ""
-
-#: replays/game_ids.py:93
-msgctxt "th03"
-msgid "Mima"
-msgstr ""
-
-#: replays/game_ids.py:95
-msgctxt "th03"
-msgid "Marisa"
-msgstr ""
-
 #: replays/game_ids.py:97
 msgctxt "th03"
-msgid "Ellen"
+msgid "Reimu"
 msgstr ""
 
 #: replays/game_ids.py:99
 msgctxt "th03"
-msgid "Kotohime"
+msgid "Mima"
 msgstr ""
 
 #: replays/game_ids.py:101
 msgctxt "th03"
-msgid "Kana"
+msgid "Marisa"
 msgstr ""
 
 #: replays/game_ids.py:103
 msgctxt "th03"
-msgid "Rikako"
+msgid "Ellen"
 msgstr ""
 
 #: replays/game_ids.py:105
 msgctxt "th03"
-msgid "Chiyuri"
+msgid "Kotohime"
 msgstr ""
 
 #: replays/game_ids.py:107
 msgctxt "th03"
-msgid "Yumemi"
+msgid "Kana"
+msgstr ""
+
+#: replays/game_ids.py:109
+msgctxt "th03"
+msgid "Rikako"
 msgstr ""
 
 #: replays/game_ids.py:111
-msgctxt "th04"
-msgid "Reimu A"
+msgctxt "th03"
+msgid "Chiyuri"
 msgstr ""
 
 #: replays/game_ids.py:113
-msgctxt "th04"
-msgid "Reimu B"
-msgstr ""
-
-#: replays/game_ids.py:115
-msgctxt "th04"
-msgid "Marisa A"
+msgctxt "th03"
+msgid "Yumemi"
 msgstr ""
 
 #: replays/game_ids.py:117
 msgctxt "th04"
-msgid "Marisa B"
+msgid "Reimu A"
+msgstr ""
+
+#: replays/game_ids.py:119
+msgctxt "th04"
+msgid "Reimu B"
 msgstr ""
 
 #: replays/game_ids.py:121
-msgctxt "th05"
-msgid "Reimu"
+msgctxt "th04"
+msgid "Marisa A"
 msgstr ""
 
 #: replays/game_ids.py:123
-msgctxt "th05"
-msgid "Marisa"
-msgstr ""
-
-#: replays/game_ids.py:125
-msgctxt "th05"
-msgid "Mima"
+msgctxt "th04"
+msgid "Marisa B"
 msgstr ""
 
 #: replays/game_ids.py:127
 msgctxt "th05"
-msgid "Yuuka"
+msgid "Reimu"
+msgstr ""
+
+#: replays/game_ids.py:129
+msgctxt "th05"
+msgid "Marisa"
 msgstr ""
 
 #: replays/game_ids.py:131
-msgctxt "th06"
-msgid "Reimu A"
+msgctxt "th05"
+msgid "Mima"
 msgstr ""
 
 #: replays/game_ids.py:133
-msgctxt "th06"
-msgid "Reimu B"
-msgstr ""
-
-#: replays/game_ids.py:135
-msgctxt "th06"
-msgid "Marisa A"
+msgctxt "th05"
+msgid "Yuuka"
 msgstr ""
 
 #: replays/game_ids.py:137
 msgctxt "th06"
-msgid "Marisa B"
-msgstr ""
-
-#: replays/game_ids.py:141
-msgctxt "th07"
 msgid "Reimu A"
 msgstr ""
 
-#: replays/game_ids.py:143
-msgctxt "th07"
+#: replays/game_ids.py:139
+msgctxt "th06"
 msgid "Reimu B"
 msgstr ""
 
-#: replays/game_ids.py:145
-msgctxt "th07"
+#: replays/game_ids.py:141
+msgctxt "th06"
 msgid "Marisa A"
+msgstr ""
+
+#: replays/game_ids.py:143
+msgctxt "th06"
+msgid "Marisa B"
 msgstr ""
 
 #: replays/game_ids.py:147
 msgctxt "th07"
-msgid "Marisa B"
+msgid "Reimu A"
 msgstr ""
 
 #: replays/game_ids.py:149
 msgctxt "th07"
-msgid "Sakuya A"
+msgid "Reimu B"
 msgstr ""
 
 #: replays/game_ids.py:151
 msgctxt "th07"
+msgid "Marisa A"
+msgstr ""
+
+#: replays/game_ids.py:153
+msgctxt "th07"
+msgid "Marisa B"
+msgstr ""
+
+#: replays/game_ids.py:155
+msgctxt "th07"
+msgid "Sakuya A"
+msgstr ""
+
+#: replays/game_ids.py:157
+msgctxt "th07"
 msgid "Sakuya B"
-msgstr ""
-
-#: replays/game_ids.py:156
-msgctxt "th08"
-msgid "Reimu & Yukari"
-msgstr ""
-
-#: replays/game_ids.py:158
-msgctxt "th08"
-msgid "Marisa & Alice"
-msgstr ""
-
-#: replays/game_ids.py:160
-msgctxt "th08"
-msgid "Sakuya & Remilia"
 msgstr ""
 
 #: replays/game_ids.py:162
 msgctxt "th08"
-msgid "Youmu & Yuyuko"
+msgid "Reimu & Yukari"
 msgstr ""
 
 #: replays/game_ids.py:164
 msgctxt "th08"
-msgid "Reimu"
+msgid "Marisa & Alice"
 msgstr ""
 
 #: replays/game_ids.py:166
 msgctxt "th08"
-msgid "Yukari"
+msgid "Sakuya & Remilia"
 msgstr ""
 
 #: replays/game_ids.py:168
 msgctxt "th08"
-msgid "Marisa"
+msgid "Youmu & Yuyuko"
 msgstr ""
 
 #: replays/game_ids.py:170
 msgctxt "th08"
-msgid "Alice"
+msgid "Reimu"
 msgstr ""
 
 #: replays/game_ids.py:172
 msgctxt "th08"
-msgid "Sakuya"
+msgid "Yukari"
 msgstr ""
 
 #: replays/game_ids.py:174
 msgctxt "th08"
-msgid "Remilia"
+msgid "Marisa"
 msgstr ""
 
 #: replays/game_ids.py:176
 msgctxt "th08"
-msgid "Youmu"
+msgid "Alice"
 msgstr ""
 
 #: replays/game_ids.py:178
 msgctxt "th08"
+msgid "Sakuya"
+msgstr ""
+
+#: replays/game_ids.py:180
+msgctxt "th08"
+msgid "Remilia"
+msgstr ""
+
+#: replays/game_ids.py:182
+msgctxt "th08"
+msgid "Youmu"
+msgstr ""
+
+#: replays/game_ids.py:184
+msgctxt "th08"
 msgid "Yuyuko"
 msgstr ""
 
-#: replays/game_ids.py:183
-msgctxt "th10"
-msgid "Reimu A"
-msgstr ""
-
-#: replays/game_ids.py:185
-msgctxt "th10"
-msgid "Reimu B"
-msgstr ""
-
-#: replays/game_ids.py:187
-msgctxt "th10"
-msgid "Reimu C"
-msgstr ""
-
 #: replays/game_ids.py:189
-msgctxt "th10"
-msgid "Marisa A"
+msgctxt "th09"
+msgid "Reimu"
 msgstr ""
 
 #: replays/game_ids.py:191
+msgctxt "th09"
+msgid "Marisa"
+msgstr ""
+
+#: replays/game_ids.py:193
+msgctxt "th09"
+msgid "Sakuya"
+msgstr ""
+
+#: replays/game_ids.py:195
+msgctxt "th09"
+msgid "Youmu"
+msgstr ""
+
+#: replays/game_ids.py:197
+msgctxt "th09"
+msgid "Reisen"
+msgstr ""
+
+#: replays/game_ids.py:199
+msgctxt "th09"
+msgid "Cirno"
+msgstr ""
+
+#: replays/game_ids.py:201
+msgctxt "th09"
+msgid "Lyrica"
+msgstr ""
+
+#: replays/game_ids.py:203
+msgctxt "th09"
+msgid "Mystia"
+msgstr ""
+
+#: replays/game_ids.py:205
+msgctxt "th09"
+msgid "Tewi"
+msgstr ""
+
+#: replays/game_ids.py:207
+msgctxt "th09"
+msgid "Yuuka"
+msgstr ""
+
+#: replays/game_ids.py:209
+msgctxt "th09"
+msgid "Aya"
+msgstr ""
+
+#: replays/game_ids.py:211
+msgctxt "th09"
+msgid "Medicine"
+msgstr ""
+
+#: replays/game_ids.py:213
+msgctxt "th09"
+msgid "Komachi"
+msgstr ""
+
+#: replays/game_ids.py:215
+msgctxt "th09"
+msgid "Eiki"
+msgstr ""
+
+#: replays/game_ids.py:217
+msgctxt "th09"
+msgid "Merlin"
+msgstr ""
+
+#: replays/game_ids.py:219
+msgctxt "th09"
+msgid "Lunasa"
+msgstr ""
+
+#: replays/game_ids.py:224
+msgctxt "th10"
+msgid "Reimu A"
+msgstr ""
+
+#: replays/game_ids.py:226
+msgctxt "th10"
+msgid "Reimu B"
+msgstr ""
+
+#: replays/game_ids.py:228
+msgctxt "th10"
+msgid "Reimu C"
+msgstr ""
+
+#: replays/game_ids.py:230
+msgctxt "th10"
+msgid "Marisa A"
+msgstr ""
+
+#: replays/game_ids.py:232
 msgctxt "th10"
 msgid "Marisa B"
 msgstr ""
 
-#: replays/game_ids.py:193
+#: replays/game_ids.py:234
 msgctxt "th10"
 msgid "Marisa C"
 msgstr ""
 
-#: replays/game_ids.py:197
+#: replays/game_ids.py:238
 msgctxt "th11"
 msgid "Reimu A"
 msgstr ""
 
-#: replays/game_ids.py:199
+#: replays/game_ids.py:240
 msgctxt "th11"
 msgid "Reimu B"
 msgstr ""
 
-#: replays/game_ids.py:201
+#: replays/game_ids.py:242
 msgctxt "th11"
 msgid "Reimu C"
 msgstr ""
 
-#: replays/game_ids.py:203
+#: replays/game_ids.py:244
 msgctxt "th11"
 msgid "Marisa A"
 msgstr ""
 
-#: replays/game_ids.py:205
+#: replays/game_ids.py:246
 msgctxt "th11"
 msgid "Marisa B"
 msgstr ""
 
-#: replays/game_ids.py:207
+#: replays/game_ids.py:248
 msgctxt "th11"
 msgid "Marisa C"
 msgstr ""
 
-#: replays/game_ids.py:215
+#: replays/game_ids.py:256
 msgctxt "th01"
 msgid "Jigoku"
 msgstr ""
 
-#: replays/game_ids.py:217
+#: replays/game_ids.py:258
 msgctxt "th01"
 msgid "Makai"
+msgstr ""
+
+#: replays/game_ids.py:261
+msgctxt "th08"
+msgid "Final A"
+msgstr ""
+
+#: replays/game_ids.py:263
+msgctxt "th08"
+msgid "Final B"
 msgstr ""
 
 #: replays/models.py:88
@@ -1176,10 +1274,6 @@ msgstr ""
 msgid "CherryMax"
 msgstr ""
 
-#: replays/templates/replays/replay_stages.html:40
-msgid "Time"
-msgstr ""
-
 #: replays/templates/replays/upload.html:5
 msgid "Publish a replay"
 msgstr ""
@@ -1229,7 +1323,7 @@ msgstr ""
 msgid "An account has already been registered with this email address."
 msgstr ""
 
-#: users/forms.py:60
+#: users/forms.py:60 users/forms.py:82
 msgid "Username"
 msgstr ""
 
@@ -1239,6 +1333,14 @@ msgstr ""
 
 #: users/forms.py:70
 msgid "Email address"
+msgstr ""
+
+#: users/forms.py:78
+msgid "Invite File Contents"
+msgstr ""
+
+#: users/templates/users/batch_invite_upload.html:17
+msgid "Upload invite file:"
 msgstr ""
 
 #: users/templates/users/profile.html:5

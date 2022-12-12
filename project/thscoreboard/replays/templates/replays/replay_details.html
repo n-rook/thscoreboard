@@ -7,7 +7,7 @@
     <h2><a href="/replays/{{ game_id}}">{{ game_name }}</a></h2>
     <div>Uploaded on: {{ replay.created|date:"d F Y, h:i A" }}</div>
     {% if replay.timestamp %}
-        {% if game_id == "th06" %}
+        {% if game_id == "th06" or game_id == "th09" %}
         <div>Replay Date: {{ replay.timestamp|date:"d F Y" }}</div>
         {% elif game_id == "th07" or game_id == "th08" %}
         <div>Replay Date: {{ replay.timestamp|date:"d F" }}</div>

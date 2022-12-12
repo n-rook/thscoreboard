@@ -36,6 +36,18 @@
             {% if table_fields.th07_cherrymax %}
             <th>{% translate "CherryMax" %}</th>
             {% endif %}
+            {% if table_fields.th09_p1_cpu %}
+            <th>{% translate "P1 CPU?" %}</th>
+            {% endif %}
+            {% if table_fields.th09_p2_cpu %}
+            <th>{% translate "P2 CPU?" %}</th>
+            {% endif %}
+            {% if table_fields.th09_p2_shot %}
+            <th>{% translate "P2 Shot" %}</th>
+            {% endif %}
+            {% if table_fields.th09_p2_score %}
+            <th>{% translate "P2 Score" %}</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -73,6 +85,18 @@
             {% endif %}
             {% if table_fields.th07_cherrymax %}
             <td>{{stage.th07_cherrymax|intcomma}}</td>
+            {% endif %}
+            {% if table_fields.th09_p1_cpu %}
+            <th>{{stage.th09_p1_cpu}}</th>
+            {% endif %}
+            {% if table_fields.th09_p2_cpu %}
+            <th>{{stage.th09_p2_cpu}}</th>
+            {% endif %}
+            {% if table_fields.th09_p2_shot %}
+            <th>{{stage.th09_p2_shotFormat}}</th>
+            {% endif %}
+            {% if table_fields.th09_p2_score %}
+            <th>{{stage.th09_p2_score|intcomma}}</th>
             {% endif %}
         </tr>
     {% endfor %}
