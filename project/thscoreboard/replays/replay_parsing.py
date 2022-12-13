@@ -147,7 +147,8 @@ def _Parse07(rep_raw):
 
 
 def _Parse08(rep_raw):
-    comp_data = bytearray(rep_raw[24:])
+    comp_data_size = int.from_bytes(rep_raw[12:16], byteorder='little') - 24
+    comp_data = bytearray(rep_raw[24:comp_data_size])
     td.decrypt06(comp_data, rep_raw[21])
     #   basically copied from _Parse07()
     #   0x68 (104) - 24 = 80
@@ -205,7 +206,8 @@ def _Parse08(rep_raw):
 
 
 def _Parse09(rep_raw):
-    comp_data = bytearray(rep_raw[24:])
+    comp_data_size = int.from_bytes(rep_raw[12:16], byteorder='little') - 24
+    comp_data = bytearray(rep_raw[24:comp_data_size])
     td.decrypt06(comp_data, rep_raw[21])
     #   0xc0 (192) - 24 = 168
     replay = th09.Th09.from_bytes(bytearray(24) + comp_data[0:168] + td.unlzss(comp_data[168:]))
