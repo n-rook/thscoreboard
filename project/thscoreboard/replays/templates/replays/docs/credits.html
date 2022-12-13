@@ -1,0 +1,19 @@
+{% extends "replays/docs/docs_template.html" %}
+{% load i18n %}
+
+{% block main_text %}
+    <h1>{% translate "Credits" %}</h1>
+    {% blocktranslate %}
+    <h2>Website development</h2>
+    <ul>
+        <li><a href="https://github.com/n-rook">nrook</a></li>
+        <li><a href="https://github.com/raviddog">raviddog</a></li>
+        <li><a href="https://github.com/32th-System">32th System</a></li>
+    </ul>
+    <h2>Fonts</h2>
+    <ul>
+        <li><a href="https://www.latofonts.com">Lato</a> by Łukasz Dziedzic</li>
+        <li><a href="https://github.com/octaviopardo/EBGaramond12">EB Garamond 12</a> by Claude Garamond, Geord Mayr-Duffner and Octavio Pardo</li>
+    </ul>
+    {% endblocktranslate %}
+{% endblock %}
