@@ -76,6 +76,9 @@ class Th07ReplayTestCase(unittest.TestCase):
         self.assertEqual(stage_2.th07_cherry, 29080)
         self.assertEqual(stage_2.th07_cherrymax, 311380)
 
+    def testExtraData(self):
+        ParseTestReplay('th7_extra_data')
+
 
 class Th08ReplayTestCase(unittest.TestCase):
 
@@ -110,6 +113,9 @@ class Th08ReplayTestCase(unittest.TestCase):
 
         self.assertEqual(r.stages[0].score, 1213587810)
         self.assertEqual(r.stages[0].piv, 300000)
+
+    def testLzss(self):
+        ParseTestReplay('th8_lzss')
 
 
 class Th09ReplayTestCase(unittest.TestCase):
