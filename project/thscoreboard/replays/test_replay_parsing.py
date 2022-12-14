@@ -111,6 +111,9 @@ class Th08ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.stages[0].score, 1213587810)
         self.assertEqual(r.stages[0].piv, 300000)
 
+    def testLzss(self):
+        ParseTestReplay('th8_lzss')
+
 
 class Th09ReplayTestCase(unittest.TestCase):
     
