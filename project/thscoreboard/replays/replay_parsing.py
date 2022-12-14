@@ -110,7 +110,9 @@ def _Parse07(rep_raw):
     td.decrypt06(comp_data, rep_raw[13])
     #   please don't ask what is going on here
     #   0x54 - 16 = 68
-    replay = th07.Th07.from_bytes(bytearray(16) + comp_data[0:68] + td.unlzss(comp_data[68:]))
+    
+    comp_size = int.from_bytes(comp_data[4:8], byteorder='little')
+    replay = th07.Th07.from_bytes(bytearray(16) + comp_data[0:68] + td.unlzss(comp_data[68:68 + comp_size]))
 
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"]
 
