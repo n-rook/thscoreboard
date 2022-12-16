@@ -117,6 +117,16 @@ class Th08ReplayTestCase(unittest.TestCase):
     def testLzss(self):
         ParseTestReplay('th8_lzss')
 
+    def testSpellPractice(self):
+        r = ParseTestReplay('th8_spell_practice')
+        self.assertEqual(len(r.stages), 0)
+        self.assertEqual(r.spell_card_id, 215)
+        self.assertEqual(r.difficulty, 1)
+
+        r = ParseTestReplay('th8_spell_practice_2')
+        self.assertEqual(r.spell_card_id, 34)
+        self.assertEqual(r.difficulty, 2)
+
 
 class Th09ReplayTestCase(unittest.TestCase):
     
