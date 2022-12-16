@@ -102,7 +102,8 @@ def publish_replay(request, temp_replay_id):
     shot_instance = models.Shot.objects.select_related('game').get(game=replay_info.game, shot_id=replay_info.shot)
 
     if replay_info.game in [game_ids.GameIDs.TH01, game_ids.GameIDs.TH08]:
-        replay_info.route = models.Route.objects.select_related('game').get(game=replay_info.game, route_id=replay_info.route)
+        if replay_info.route is not None:
+            replay_info.route = models.Route.objects.select_related('game').get(game=replay_info.game, route_id=replay_info.route)
 
     if request.method == 'POST':
         form = forms.PublishReplayForm(replay_info.game, request.POST)
