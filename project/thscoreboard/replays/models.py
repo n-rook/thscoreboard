@@ -214,6 +214,9 @@ class Replay(models.Model):
     but technically there are 12 bytes allocated, so space is reserved just in case
     """
 
+    spell_card_id = models.IntegerField(blank=True, null=True)
+    """In the case of a spell practice replay, the spell card ID attempted"""
+
     def IsVisible(self, viewer: auth.get_user_model()):
         """Returns whether this replay should be visible to this user."""
         # Add a unit test for this

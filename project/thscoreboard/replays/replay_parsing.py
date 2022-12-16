@@ -67,6 +67,7 @@ class ReplayInfo:
     timestamp: datetime
     name: str
     route: Optional[str] = None
+    spell_card_id: Optional[int] = None
     stages = []
 
 
@@ -172,6 +173,20 @@ def _Parse08(rep_raw):
     ]
 
     rep_stages = []
+
+    if replay.header.spell_card_id != 65535:    # FF FF
+        #   spell practice, so stage info isn't necessary
+        return ReplayInfo(
+            game=game_ids.GameIDs.TH08,
+            shot=shots[replay.header.shot],
+            difficulty=replay.header.difficulty,
+            score=replay.header.score * 10,
+            timestamp=datetime.strptime(replay.header.date, "%m/%d"),
+            name=replay.header.name.replace("\x00", ""),
+            spell_card_id=replay.header.spell_card_id
+        )
+
+    #   else regular run
 
     i = 0
     route = None
