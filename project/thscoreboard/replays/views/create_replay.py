@@ -12,6 +12,7 @@ from replays import limits
 from replays import models
 from replays import replay_parsing
 from replays import game_ids
+from replays import spell_cards
 from replays.views import view_replay
 
 
@@ -145,6 +146,9 @@ def publish_replay(request, temp_replay_id):
 
     if replay_info.route:
         context['route_name'] = replay_info.route.GetName()
+
+    if replay_info.spell_card_id:
+        context['spell_name'] = spell_cards.get_spell_name('en', shot_instance.game.game_id, replay_info.spell_card_id, replay_info.difficulty)
 
     # When IN is supported, add "route" here too.
 

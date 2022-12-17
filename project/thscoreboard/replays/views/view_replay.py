@@ -13,18 +13,7 @@ from replays import game_fields
 
 from replays import game_ids
 
-import json
-
-spell_names = dict()
-has_thcrap = [game_ids.GameIDs.TH06, game_ids.GameIDs.TH07, game_ids.GameIDs.TH08, game_ids.GameIDs.TH09, game_ids.GameIDs.TH10, game_ids.GameIDs.TH11]
-thcrap_langs = ['en']
-for lang in thcrap_langs:
-    for game_id in has_thcrap:
-        try:
-            with open(f'replays/spells/{lang}/{game_id}.json', 'rb') as f:
-                spell_names[game_id] = json.loads(f.read())
-        except FileNotFoundError:
-            pass
+from replays import spell_cards
 
 
 @http_decorators.require_POST
@@ -64,21 +53,13 @@ def replay_details(request, game_id: str, replay_id: int):
         }
     )
 
-    try:
-        spell_name = spell_names[game_id][f'{replay_instance.spell_card_id}']
-    except KeyError:
-        try:
-            spell_name = spell_names[game_id][f'{replay_instance.spell_card_id - replay_instance.spell_card_id - replay_instance.difficulty}']
-        except KeyError:
-            spell_name = None
-
     context = {
         'game_name': replay_instance.shot.game.GetName(),
         'shot_name': replay_instance.shot.GetName(),
         'difficulty_name': replay_instance.GetDifficultyName(),
         'game_id': game_id,
         'replay': replay_instance,
-        'spell_name': spell_name,
+        'spell_name': spell_cards.get_spell_name('en', game_id, replay_instance.spell_card_id, replay_instance.difficulty),
         'can_edit': request.user == replay_instance.user,
         'can_delete': request.user == replay_instance.user or request.user.is_staff,
         'replay_file_is_good': replay_instance.is_good,
