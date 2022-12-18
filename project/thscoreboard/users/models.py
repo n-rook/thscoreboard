@@ -1,6 +1,7 @@
 """Defines models for the users app, which contains account information."""
 
 import datetime
+from typing import Optional
 import secrets
 
 from django.contrib.auth import base_user
@@ -226,3 +227,48 @@ class UserPasscodeTie(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     unverified_user = models.ForeignKey(UnverifiedUser, null=True, on_delete=models.CASCADE)
     passcode = models.ForeignKey('users.EarlyAccessPasscode', on_delete=models.CASCADE)
+
+
+class Visits(models.Model):
+    """Records the IP addresses of users visiting the website.
+
+    This table exists to help identify users by IP if necessary.
+    """
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, on_delete=models.PROTECT)
+    """The user who visited the website. If null, no one was logged in.
+
+    Note that on_delete is PROTECT! Right now, it is not possible to delete a
+    user from the site anyway. Of course, we will add this functionality at
+    some point, but when we do it will be delayed; the user will request their
+    account be deleted, we will mark it as "deleted" but keep it in the
+    database, and then at some later point we will actually delete it from
+    the database.
+    """
+
+    ip = models.TextField()
+    """The IP address the user used to visit the site."""
+
+    created = models.DateTimeField(default=timezone.now)
+    """The time at which the user visited the site."""
+
+    @classmethod
+    def _WasThereARecentVisit(cls, user: Optional[settings.AUTH_USER_MODEL], ip: str, threshold: datetime.datetime):
+        return cls.objects.filter(user=user, ip=ip, created__gt=threshold)
+
+    @classmethod
+    def RecordVisit(cls, user: Optional[settings.AUTH_USER_MODEL], ip: str):
+        """Record a visit to this site.
+
+        Visits are only recorded at most once every hour.
+        """
+        now = timezone.now()
+        an_hour_ago = now - datetime.timedelta(hours=1)
+
+        with transaction.atomic():
+            if cls._WasThereARecentVisit(user, ip, an_hour_ago):
+                return
+
+            new_visit = cls(user=user, ip=ip, created=now)
+            new_visit.save()
