@@ -32,7 +32,12 @@
                 <td>{{ route_name }}</td>
             </tr>
             {% endif %}
-            {% if replay.spell_card_id %}
+            {% if spell_name %}
+            <tr>
+                <td>Spell Name</td>
+                <td>{{ spell_name }}</td>
+            </tr>
+            {% elif replay.spell_card_id %}
             <tr>
                 <td>Spell Card ID</td>
                 <td>{{ replay.spell_card_id }}</td>
@@ -99,25 +104,6 @@
         </td>
         <td>
             {{ form.is_good }}
-        </td>
-        </tr>
-    {% endif %}
-    {% if spell_name %}
-        <tr>
-        <td>
-            Spell Name
-        </td>
-        <td>
-            {{ spell_name }}
-        </td>
-        </tr>
-    {% elif replay.spell_card_id %}
-        <tr>
-        <td>
-            Spell Card ID
-        </td>
-        <td>
-            {{ replay.spell_card_id }}
         </td>
         </tr>
     {% endif %}
