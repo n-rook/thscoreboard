@@ -94,7 +94,7 @@ def _Parse06(rep_raw):
         i += 1
 
     r_type = 1
-    if len(rep_stages) == 1 and rep_raw[7] is not 4:
+    if len(rep_stages) == 1 and rep_raw[7] != 4:
         r_type = 2
 
     r = ReplayInfo(
@@ -221,7 +221,7 @@ def _Parse08(rep_raw):
         i += 1
 
     r_type = 1
-    if len(rep_stages) == 1 and replay.header.difficulty is not 4:
+    if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = 2
 
     r = ReplayInfo(
@@ -313,9 +313,9 @@ def _Parse09(rep_raw):
         s.th09_p2_score = p2.score * 10
 
         if s.th09_p1_cpu is False and s.th09_p2_cpu is False:
-            r_type = 4  #   mark pvp replays as such
+            r_type = 4  # mark pvp replays as such
         else:
-            r_type = 2  #   treat any "pvp" replay with an ai in it as stage practice
+            r_type = 2  # treat any "pvp" replay with an ai in it as stage practice
 
         rep_stages.append(s)
 
@@ -354,7 +354,7 @@ def _Parse10(rep_raw):
         rep_stages.append(s)
 
     r_type = 1
-    if len(rep_stages) == 1 and replay.header.difficulty is not 4:
+    if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = 2
 
     r = ReplayInfo(
@@ -395,7 +395,7 @@ def _Parse11(rep_raw):
         rep_stages.append(s)
 
     r_type = 1
-    if len(rep_stages) == 1 and replay.header.difficulty is not 4:
+    if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = 2
 
     r = ReplayInfo(
