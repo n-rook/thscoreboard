@@ -170,16 +170,13 @@ class Replay(models.Model):
                     models.Q(
                         replay_type=ReplayType.REGULAR,
                         spell_card_id__isnull=True
-                    )|
-                    models.Q(
+                    ) | models.Q(
                         replay_type=ReplayType.STAGE_PRACTICE,
                         spell_card_id__isnull=True
-                    )|
-                    models.Q(
+                    ) | models.Q(
                         replay_type=ReplayType.SPELL_PRACTICE,
                         spell_card_id__isnull=False
-                    )|
-                    models.Q(
+                    ) | models.Q(
                         replay_type=ReplayType.PVP,
                         spell_card_id__isnull=True
                     )
