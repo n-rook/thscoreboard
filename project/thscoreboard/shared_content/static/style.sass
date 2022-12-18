@@ -103,7 +103,6 @@ h3
     #simple-centered-title
         box-sizing: border-box
         font: 400 20px "Lato", "Arial", sans-serif
-        background-color: #ffe6ff
         height: 32px
         width: 100%
         padding: 0px
@@ -114,12 +113,17 @@ h3
 
     #simple-centered-content
         box-sizing: border-box
-        background-color: white
         width: 100%
         padding: 10px 8px
 
 #simple-centered-content form
     text-align: left
+
+.simple-centered-title
+    background-color: #ffe6ff
+
+.simple-centered-content
+    background-color: white
 
 form.inline-form
     box-sizing: border-box
@@ -181,3 +185,26 @@ th, td
 
 .replay-comment
     margin: 2em
+
+.darktheme
+    background-color: black
+    color: white
+
+.darktheme .replay-table
+    thead
+        background-color: #610061
+    tbody
+        tr:nth-child(odd)
+            background-color: #101010
+        tr:nth-child(even)
+            background-color: #1a1a1a
+
+.darktheme :is(select, input, textarea)
+    background-color: black
+    color: white
+
+.darktheme .simple-centered-title
+    background-color: #1a1a1a
+
+.darktheme .simple-centered-content
+    background-color: #101010

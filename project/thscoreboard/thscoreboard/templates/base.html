@@ -41,9 +41,13 @@
             <a href="/users/register">Sign up</a>
         </div>
         {% endif %}
+        <div id="topbar-link-button">
+            <a href="#" onclick="toggleTheme()">🌙</a>
+        </div>
     </div>
     <div id="content" class="{% block content-class %} {% endblock %}">
         {% block content %}{% endblock %}
     </div>
 </body>
+<script src="/static/js/main.js"></script>
 </html>
