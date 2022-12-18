@@ -142,6 +142,7 @@ def publish_replay(request, temp_replay_id):
         'route_name': None,
         'has_replay_file': True,
         'replay': replay_info,
+        'replayType': game_ids.GetReplayType(replay_info.replayType)
     }
 
     if replay_info.route:

@@ -17,6 +17,18 @@ class GameIDs:
     TH11 = 'th11'
 
 
+def GetReplayType(r_type: int):
+    if r_type == 1:
+        return _('Regular')
+    elif r_type == 2:
+        return _('Stage Practice')
+    elif r_type == 3:
+        return _('Spell Practice')
+    elif r_type == 4:
+        return _('PVP')
+    return 'Bug type'
+
+
 def GetGameName(game_id: str, short=False):
     # Believe it or not, this really is the best way I found to do this.
     # Having the translation strings on different lines makes it so that they
