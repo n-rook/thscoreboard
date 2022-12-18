@@ -164,6 +164,27 @@ class Replay(models.Model):
                 check=models.Q(difficulty__gte=0),
                 name='difficulty_gte_0'
             ),
+            models.CheckConstraint(
+                name='replay_type_spell_card_id_isnull',
+                check=(
+                    models.Q(
+                        replay_type=ReplayType.REGULAR,
+                        spell_card_id__isnull=True
+                    )|
+                    models.Q(
+                        replay_type=ReplayType.STAGE_PRACTICE,
+                        spell_card_id__isnull=True
+                    )|
+                    models.Q(
+                        replay_type=ReplayType.SPELL_PRACTICE,
+                        spell_card_id__isnull=False
+                    )|
+                    models.Q(
+                        replay_type=ReplayType.PVP,
+                        spell_card_id__isnull=True
+                    )
+                )
+            )
         ]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

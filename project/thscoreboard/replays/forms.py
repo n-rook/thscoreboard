@@ -27,6 +27,13 @@ category_names = (
     ('4', _('Private'))
 )
 
+replay_types = (
+    ('1', _('Regular')),
+    ('2', _('Stage Practice')),
+    # ('3', _('Spell Practice)) # cannot support spell practice in games without replays that include the spellcard id
+    ('4', _('PVP'))
+)
+
 
 _ALLOWED_REPLAY_HOSTS = [
     'www.youtube.com',
@@ -150,7 +157,7 @@ class PublishReplayWithoutFileForm(forms.Form):
     route = RouteField()
     score = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=models.Category.choices)
-    replayType = forms.ChoiceField(choices=models.ReplayType.choices)
+    replayType = forms.ChoiceField(choices=replay_types)
     is_clear = forms.BooleanField(initial=True, required=False)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False, widget=forms.Textarea)
     video_link = VideoReplayLinkField(required=True)
