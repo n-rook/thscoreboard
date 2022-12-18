@@ -15,9 +15,10 @@ def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, sho
     # Ancient wisdom: You don't need pagination if you don't have users yet!
     game = get_object_or_404(models.Game, game_id=game_id)
     all_replays = (
-        models.Replay.objects.select_related('shot', 'replayfile')
+        models.Replay.objects.select_related('shot')
         .filter(category=models.Category.REGULAR)
         .filter(shot__game=game_id)
+        .filter(replay_type=1)
         .order_by('-score')
     )
     extra_params = {}
