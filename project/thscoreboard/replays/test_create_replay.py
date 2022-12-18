@@ -114,3 +114,27 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertEqual(len(stages), 6)
 
         self.assertEqual(stages[1].score, 12996310)
+
+    def testPublishReplaySpellPractice(self):
+        replay_file_contents = test_replays.GetRaw('th8_spell_practice')
+
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user,
+            replay=replay_file_contents
+        )
+        temp_replay.save()
+        replay_info = replay_parsing.Parse(replay_file_contents)
+        shot = models.Shot.objects.get(game=replay_info.game, shot_id=replay_info.shot)
+        new_replay = create_replay.PublishNewReplay(
+            user=self.user,
+            difficulty=replay_info.difficulty,
+            shot=shot,
+            score=replay_info.score,
+            category=models.Category.REGULAR,
+            comment='',
+            video_link='',
+            is_good=True,
+            is_clear=True,
+            temp_replay_instance=temp_replay,
+            replay_info=replay_info,
+        )
