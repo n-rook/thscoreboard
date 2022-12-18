@@ -115,6 +115,9 @@ class ReplayType(models.IntegerChoices):
     """A spell practice replay. Note: stage practice replays that start at a spell using THPRAC will be detected as stage practice
         This is only for replays using the ingame spell practice option"""
 
+    PVP = 4, pgettext_lazy('Replay Type', 'PVP')
+    """Player vs player replays"""
+
 
 class Route(models.Model):
     """One of several sets of stages pickable by the player in a run.

@@ -267,6 +267,7 @@ def _Parse09(rep_raw):
     rep_stages = []
     r_score = 0
     r_shot = "Bug shot"
+    r_type = 1
 
     highest_stage = 0
     if replay.file_header.stage_offsets[9] == 0:
@@ -311,6 +312,11 @@ def _Parse09(rep_raw):
         s.th09_p2_shot = shots[p2.shot]
         s.th09_p2_score = p2.score * 10
 
+        if s.th09_p1_cpu is False and s.th09_p2_cpu is False:
+            r_type = 4  #   mark pvp replays as such
+        else:
+            r_type = 2  #   treat any "pvp" replay with an ai in it as stage practice
+
         rep_stages.append(s)
 
     r = ReplayInfo(
@@ -320,7 +326,7 @@ def _Parse09(rep_raw):
         score=r_score,
         timestamp=datetime.strptime(replay.header.date, "%y/%m/%d"),
         name=replay.header.name.replace("\x00", ""),
-        replayType=1    # I don't think you can stage or spell practice in PoFV
+        replayType=r_type
     )
 
     r.stages = rep_stages

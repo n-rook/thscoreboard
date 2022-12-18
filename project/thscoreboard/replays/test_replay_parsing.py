@@ -160,6 +160,7 @@ class Th09ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'Yuuka')
         self.assertEqual(r.score, 0)
         self.assertEqual(r.name, '17:49:20')
+        self.assertEqual(r.replayType, 4)
 
         s = r.stages[0]
 
