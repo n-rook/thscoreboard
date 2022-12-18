@@ -150,6 +150,7 @@ class PublishReplayWithoutFileForm(forms.Form):
     route = RouteField()
     score = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=models.Category.choices)
+    replayType = forms.ChoiceField(choices=models.ReplayType.choices)
     is_clear = forms.BooleanField(initial=True, required=False)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False, widget=forms.Textarea)
     video_link = VideoReplayLinkField(required=True)

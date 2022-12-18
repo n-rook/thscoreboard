@@ -26,6 +26,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             is_clear=True,
             video_link='https://www.youtube.com/example',
             route=None,
+            replayType=1,
         )
 
         self.assertEqual(new_replay.user, self.user)
@@ -77,6 +78,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertFalse(new_replay.is_clear)
         self.assertEqual(new_replay.category, models.Category.REGULAR)
         self.assertEqual(new_replay.comment, 'Hello')
+        self.assertEqual(new_replay.replay_type, 1)
 
         with self.assertRaises(models.TemporaryReplayFile.DoesNotExist):
             models.TemporaryReplayFile.objects.get(id=temp_replay.id)

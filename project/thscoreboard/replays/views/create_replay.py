@@ -174,6 +174,7 @@ def publish_replay_no_file(request, game_id: str):
                 is_clear=form.cleaned_data['is_clear'],
                 comment=form.cleaned_data['comment'],
                 video_link=form.cleaned_data['video_link'],
+                replayType=form.cleaned_data['replayType']
             )
             return redirect(view_replay.replay_details, game_id=game.game_id, replay_id=new_replay.id)
         else:

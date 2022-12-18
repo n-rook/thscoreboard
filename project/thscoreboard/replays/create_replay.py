@@ -63,7 +63,8 @@ def PublishNewReplay(
         timestamp=replay_info.timestamp,
         name=replay_info.name,
         route=replay_info.route,
-        spell_card_id=replay_info.spell_card_id
+        spell_card_id=replay_info.spell_card_id,
+        replay_type=replay_info.replayType
     )
     replay_file_instance = models.ReplayFile(
         replay=replay_instance,
@@ -114,6 +115,7 @@ def PublishReplayWithoutFile(
         comment: str,
         video_link: str,
         is_clear: bool,
+        replayType: int,
         route: Optional[models.Route]):
     """Create a new Replay for a game in which replay files don't exist.
 
@@ -141,6 +143,7 @@ def PublishReplayWithoutFile(
         is_clear=is_clear,
         comment=comment,
         video_link=video_link,
+        replay_type=replayType
     )
     replay_instance.save()
 
