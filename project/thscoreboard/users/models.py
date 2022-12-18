@@ -253,6 +253,8 @@ class Visits(models.Model):
     created = models.DateTimeField(default=timezone.now)
     """The time at which the user visited the site."""
 
+    TTL = datetime.timedelta(days=41)
+
     @classmethod
     def _WasThereARecentVisit(cls, user: Optional[settings.AUTH_USER_MODEL], ip: str, threshold: datetime.datetime):
         return cls.objects.filter(user=user, ip=ip, created__gt=threshold)
