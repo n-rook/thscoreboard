@@ -17,6 +17,13 @@ class GameIDs:
     TH11 = 'th11'
 
 
+class ReplayTypes:
+    REGULAR = 1
+    STAGE_PRACTICE = 2
+    SPELL_PRACTICE = 3
+    PVP = 4
+
+
 def GetReplayType(r_type: int):
     if r_type == 1:
         return _('Regular')

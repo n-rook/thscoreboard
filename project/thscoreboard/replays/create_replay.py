@@ -115,7 +115,7 @@ def PublishReplayWithoutFile(
         comment: str,
         video_link: str,
         is_clear: bool,
-        replayType: int,
+        replay_type: int,
         route: Optional[models.Route]):
     """Create a new Replay for a game in which replay files don't exist.
 

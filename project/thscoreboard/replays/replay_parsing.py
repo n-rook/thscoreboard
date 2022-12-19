@@ -93,9 +93,9 @@ def _Parse06(rep_raw):
             rep_stages.append(s)
         i += 1
 
-    r_type = 1
+    r_type = game_ids.ReplayTypes.REGULAR
     if len(rep_stages) == 1 and rep_raw[7] != 4:
-        r_type = 2
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
     r = ReplayInfo(
         game=game_ids.GameIDs.TH06,
@@ -142,9 +142,9 @@ def _Parse07(rep_raw):
             rep_stages.append(s)
         i += 1
 
-    r_type = 1
+    r_type = game_ids.ReplayTypes.REGULAR
     if len(rep_stages) == 1 and replay.header.difficulty not in [4, 5]:
-        r_type = 2
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
     r = ReplayInfo(
         game=game_ids.GameIDs.TH07,
@@ -194,7 +194,7 @@ def _Parse08(rep_raw):
             score=replay.header.score * 10,
             timestamp=datetime.strptime(replay.header.date, "%m/%d"),
             name=replay.header.name.replace("\x00", ""),
-            replayType=3,
+            replayType=game_ids.ReplayTypes.SPELL_PRACTICE,
             spell_card_id=replay.header.spell_card_id
         )
 
@@ -220,9 +220,9 @@ def _Parse08(rep_raw):
             rep_stages.append(s)
         i += 1
 
-    r_type = 1
+    r_type = game_ids.ReplayTypes.REGULAR
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
-        r_type = 2
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
     r = ReplayInfo(
         game=game_ids.GameIDs.TH08,
@@ -267,7 +267,7 @@ def _Parse09(rep_raw):
     rep_stages = []
     r_score = 0
     r_shot = "Bug shot"
-    r_type = 1
+    r_type = game_ids.ReplayTypes.REGULAR
 
     highest_stage = 0
     if replay.file_header.stage_offsets[9] == 0:
@@ -313,9 +313,9 @@ def _Parse09(rep_raw):
         s.th09_p2_score = p2.score * 10
 
         if s.th09_p1_cpu is False and s.th09_p2_cpu is False:
-            r_type = 4  # mark pvp replays as such
+            r_type = game_ids.ReplayTypes.PVP  # mark pvp replays as such
         else:
-            r_type = 2  # treat any "pvp" replay with an ai in it as stage practice
+            r_type = game_ids.ReplayTypes.STAGE_PRACTICE  # treat any "pvp" replay with an ai in it as stage practice
 
         rep_stages.append(s)
 
@@ -353,9 +353,9 @@ def _Parse10(rep_raw):
         s.lives = stage.lives
         rep_stages.append(s)
 
-    r_type = 1
+    r_type = game_ids.ReplayTypes.REGULAR
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
-        r_type = 2
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
     r = ReplayInfo(
         game=game_ids.GameIDs.TH10,
@@ -394,9 +394,9 @@ def _Parse11(rep_raw):
         s.life_pieces = stage.life_pieces
         rep_stages.append(s)
 
-    r_type = 1
+    r_type = game_ids.ReplayTypes.REGULAR
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
-        r_type = 2
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
     r = ReplayInfo(
         game=game_ids.GameIDs.TH11,
