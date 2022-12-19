@@ -354,7 +354,7 @@ def _Parse10(rep_raw):
         s.stage = stage.stage
         s.score = stage.score * 10
         s.power = stage.power
-        s.piv = stage.piv
+        s.piv = stage.piv * 10
         s.lives = stage.lives
         rep_stages.append(s)
 

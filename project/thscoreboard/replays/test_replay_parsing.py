@@ -182,6 +182,7 @@ class Th10ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'ReimuB')
         self.assertEqual(r.score, 294127890)
         self.assertEqual(r.name, 'AAAAAAAA')
+        self.assertEqual(r.stages[1].piv, 114270)
         
     def testNull(self):
         with self.assertRaises(replay_parsing.BadReplayError):
