@@ -195,7 +195,7 @@ def _Parse08(rep_raw):
             timestamp=datetime.strptime(replay.header.date, "%m/%d"),
             name=replay.header.name.replace("\x00", ""),
             replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
-            spell_card_id=replay.header.spell_card_id
+            spell_card_id=replay.header.spell_card_id+1
         )
 
     #   else regular run

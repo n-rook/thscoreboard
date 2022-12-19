@@ -124,7 +124,7 @@ class Th08ReplayTestCase(unittest.TestCase):
     def testSpellPractice(self):
         r = ParseTestReplay('th8_spell_practice')
         self.assertEqual(len(r.stages), 0)
-        self.assertEqual(r.spell_card_id, 215)
+        self.assertEqual(r.spell_card_id, 216)
         self.assertEqual(r.difficulty, 1)
         self.assertEqual(r.replay_type, 3)
 
