@@ -115,7 +115,7 @@ class TestConstraints(test_case.ReplayTestCase):
         replay_info = replay_parsing.Parse(replay_file_contents)
         shot = models.Shot.objects.get(game=replay_info.game, shot_id=replay_info.shot)
         
-        new_replay = create_replay.PublishNewReplay(
+        create_replay.PublishNewReplay(
             user=self.user,
             difficulty=replay_info.difficulty,
             shot=shot,
