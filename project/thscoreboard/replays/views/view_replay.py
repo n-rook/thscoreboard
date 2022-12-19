@@ -13,8 +13,6 @@ from replays import game_fields
 
 from replays import game_ids
 
-from replays import spell_cards
-
 
 @http_decorators.require_POST
 def edit_replay(request, game_id: str, replay_id: int):
@@ -53,7 +51,6 @@ def replay_details(request, game_id: str, replay_id: int):
         }
     )
 
-    spell_name = spell_cards.get_spell_name('en', game_id, replay_instance.spell_card_id, replay_instance.difficulty)
     if replay_instance.spell_card_id:
         replay_instance.spell_card_id += 1
 
@@ -63,7 +60,6 @@ def replay_details(request, game_id: str, replay_id: int):
         'difficulty_name': replay_instance.GetDifficultyName(),
         'game_id': game_id,
         'replay': replay_instance,
-        'spell_name': spell_name,
         'can_edit': request.user == replay_instance.user,
         'can_delete': request.user == replay_instance.user or request.user.is_staff,
         'replay_file_is_good': replay_instance.is_good,
