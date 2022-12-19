@@ -16,7 +16,7 @@ instances:
         0: dummy
         _: stage
     repeat: expr
-    repeat-expr: 40
+    repeat-expr: 20
 types:
   dummy:
     doc: blank type
@@ -27,7 +27,12 @@ types:
       - id: stage_offsets
         type: u4
         repeat: expr
-        repeat-expr: 40
+        repeat-expr: 20
+      - id: unknown_offsets
+        type: u4
+        repeat: expr
+        repeat-expr: 20
+        doc: These look like more stage offsets, but I have no idea what they do or what they're for, and they're causing EOF errors when trying to parse them as stages sometimes, so I've chosen to ignore them
   header:
     seq:
       - id: unknown_1
