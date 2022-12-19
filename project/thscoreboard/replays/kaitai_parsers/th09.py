@@ -40,8 +40,13 @@ class Th09(KaitaiStruct):
         def _read(self):
             self.padding = self._io.read_bytes(32)
             self.stage_offsets = []
-            for i in range(40):
+            for i in range(20):
                 self.stage_offsets.append(self._io.read_u4le())
+
+            self.unknown_offsets = []
+            for i in range(20):
+                self.unknown_offsets.append(self._io.read_u4le())
+
 
 
 
@@ -83,7 +88,7 @@ class Th09(KaitaiStruct):
 
         _pos = self._io.pos()
         self._m_stages = []
-        for i in range(40):
+        for i in range(20):
             _on = self.file_header.stage_offsets[i]
             if _on == 0:
                 self._m_stages.append(Th09.Dummy(self._io, self, self._root))
