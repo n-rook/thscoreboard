@@ -31,6 +31,8 @@ category_names = (
 _ALLOWED_REPLAY_HOSTS = [
     'www.youtube.com',
     'youtu.be',
+    'www.twitch.tv',
+    'www.bilibili.com',
 ]
 
 
