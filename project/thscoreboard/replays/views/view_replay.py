@@ -67,7 +67,7 @@ def replay_details(request, game_id: str, replay_id: int):
         'replay_stages': replay_stages,
         'table_fields': game_fields.GetGameField(game_id),
         'edit_form': edit_form,
-        'replayType': game_ids.GetReplayType(replay_instance.replay_type)
+        'replay_type': game_ids.GetReplayType(replay_instance.replay_type)
     }
 
     if hasattr(replay_instance, 'replayfile'):

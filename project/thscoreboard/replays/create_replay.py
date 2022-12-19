@@ -64,7 +64,7 @@ def PublishNewReplay(
         name=replay_info.name,
         route=replay_info.route,
         spell_card_id=replay_info.spell_card_id,
-        replay_type=replay_info.replayType
+        replay_type=replay_info.replay_type
     )
     replay_file_instance = models.ReplayFile(
         replay=replay_instance,
@@ -143,7 +143,7 @@ def PublishReplayWithoutFile(
         is_clear=is_clear,
         comment=comment,
         video_link=video_link,
-        replay_type=replayType
+        replay_type=replay_type
     )
     replay_instance.save()
 

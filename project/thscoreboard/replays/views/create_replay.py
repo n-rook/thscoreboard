@@ -142,7 +142,7 @@ def publish_replay(request, temp_replay_id):
         'route_name': None,
         'has_replay_file': True,
         'replay': replay_info,
-        'replayType': game_ids.GetReplayType(replay_info.replayType)
+        'replay_type': game_ids.GetReplayType(replay_info.replay_type)
     }
 
     if replay_info.route:
@@ -175,7 +175,7 @@ def publish_replay_no_file(request, game_id: str):
                 is_clear=form.cleaned_data['is_clear'],
                 comment=form.cleaned_data['comment'],
                 video_link=form.cleaned_data['video_link'],
-                replay_type=form.cleaned_data['replayType']
+                replay_type=form.cleaned_data['replay_type']
             )
             return redirect(view_replay.replay_details, game_id=game.game_id, replay_id=new_replay.id)
         else:

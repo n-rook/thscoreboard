@@ -66,7 +66,7 @@ class ReplayInfo:
     score: int
     timestamp: datetime
     name: str
-    replayType: int
+    replay_type: int
     route: Optional[str] = None
     spell_card_id: Optional[int] = None
     stages = []
@@ -104,7 +104,7 @@ def _Parse06(rep_raw):
         score=replay.header.score,
         timestamp=datetime.strptime(replay.header.date, "%m/%d/%y"),
         name=replay.header.name.replace("\x00", ""),
-        replayType=r_type
+        replay_type=r_type
     )
 
     r.stages = rep_stages
@@ -153,7 +153,7 @@ def _Parse07(rep_raw):
         score=replay.header.score * 10,
         timestamp=datetime.strptime(replay.header.date, "%m/%d"),
         name=replay.header.name.replace("\x00", ""),
-        replayType=r_type
+        replay_type=r_type
     )
 
     r.stages = rep_stages
@@ -194,7 +194,7 @@ def _Parse08(rep_raw):
             score=replay.header.score * 10,
             timestamp=datetime.strptime(replay.header.date, "%m/%d"),
             name=replay.header.name.replace("\x00", ""),
-            replayType=game_ids.ReplayTypes.SPELL_PRACTICE,
+            replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
             spell_card_id=replay.header.spell_card_id
         )
 
@@ -231,7 +231,7 @@ def _Parse08(rep_raw):
         score=replay.header.score * 10,
         timestamp=datetime.strptime(replay.header.date, "%m/%d"),
         name=replay.header.name.replace("\x00", ""),
-        replayType=r_type,
+        replay_type=r_type,
         route=route
     )
 
@@ -326,7 +326,7 @@ def _Parse09(rep_raw):
         score=r_score,
         timestamp=datetime.strptime(replay.header.date, "%y/%m/%d"),
         name=replay.header.name.replace("\x00", ""),
-        replayType=r_type
+        replay_type=r_type
     )
 
     r.stages = rep_stages
@@ -364,7 +364,7 @@ def _Parse10(rep_raw):
         score=replay.header.score * 10,
         timestamp=datetime.fromtimestamp(replay.header.timestamp),
         name=replay.header.name.replace("\x00", ""),
-        replayType=r_type
+        replay_type=r_type
     )
 
     r.stages = rep_stages
@@ -405,7 +405,7 @@ def _Parse11(rep_raw):
         score=replay.header.score * 10,
         timestamp=datetime.fromtimestamp(replay.header.timestamp),
         name=replay.header.name.replace("\x00", ""),
-        replayType=r_type
+        replay_type=r_type
     )
 
     r.stages = rep_stages
