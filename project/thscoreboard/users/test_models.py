@@ -2,8 +2,9 @@
 import datetime
 
 from django import test
+from django.utils import timezone
 
-
+from replays.testing import test_case
 from . import models
 
 
@@ -92,3 +93,35 @@ class RegistrationTestCase(test.TestCase):
 
         models.UnverifiedUser.objects.get(id=dont_delete_me.id)
         # Does not fail.
+
+
+class VisitsTestCase(test_case.UserTestCase):
+
+    def testRecordVisit(self):
+        u = self.createUser('somebody')
+        models.Visits.RecordVisit(u, '1.2.3.4')
+
+        models.Visits.objects.filter(user=u, ip='1.2.3.4').get()
+        # No error.
+
+    def testRecordVisit_RecordsTimestamp(self):
+        u = self.createUser('somebody')
+        models.Visits.RecordVisit(u, '1.2.3.4')
+
+        v = models.Visits.objects.filter(user=u, ip='1.2.3.4').get()
+        self.assertLess(v.created, timezone.now())
+        self.assertGreater(v.created, timezone.now() - datetime.timedelta(seconds=15))
+
+    def testRecordAnonymousVisit(self):
+        models.Visits.RecordVisit(None, '1.2.3.4')
+
+        models.Visits.objects.filter(user=None, ip='1.2.3.4').get()
+        # No error.
+
+    def testDoesNotRecordDuplicates(self):
+        u = self.createUser('somebody')
+        for _ in range(10):
+            models.Visits.RecordVisit(u, '1.2.3.4')
+
+        visit_count = models.Visits.objects.filter(user=u, ip='1.2.3.4').count()
+        self.assertEqual(visit_count, 1)
