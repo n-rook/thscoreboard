@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" href="{% static 'favicon.png' %}" sizes="48x48">
 </head>
 
-<body class="{% block body-class %}{% endblock %}">
+<body class="theme-light {% block body-class %}{% endblock %}">
     <div id="topbar">
         <div class="topbar-little-spacer">
         </div>
@@ -20,30 +20,34 @@
             <h1>Silent Selene</h1>
         </a>
         <div class="flex-1"></div>
-        <div id="topbar-link-button">
+        <div class="topbar-link-button">
             <a href="/docs">About</a>
         </div>
         {% if user.is_authenticated %}
-        <div id="topbar-link-button">
+        <div class="topbar-link-button">
             <a href="/replays/user/{{user.username}}">My Replays</a>
         </div>
-        <div id="topbar-link-button">
+        <div class="topbar-link-button">
             <a href="/users/profile">Profile</a>
         </div>
-        <div id="topbar-link-button">
+        <div class="topbar-link-button">
             <a href="/users/logout">{% translate "Log out" %}</a>
         </div>
         {% else %}
-        <div id="topbar-link-button">
+        <div class="topbar-link-button">
             <a href="/users/login">Log in</a>
         </div>
-        <div id="topbar-link-button">
+        <div class="topbar-link-button">
             <a href="/users/register">Sign up</a>
         </div>
         {% endif %}
+        <div class="theme-switcher">
+            <a href="#" onclick="toggleTheme()">🌙</a>
+        </div>
     </div>
     <div id="content" class="{% block content-class %} {% endblock %}">
         {% block content %}{% endblock %}
     </div>
 </body>
+<script src="/static/js/main.js"></script>
 </html>

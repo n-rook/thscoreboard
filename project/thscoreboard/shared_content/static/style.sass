@@ -30,7 +30,7 @@
     margin: auto 10px
     margin-block: 5px 5px
 
-#topbar-link-button > a
+.topbar-link-button :is(a, a:visited, a:hover, a:active)
     color: white
     margin: 10px 5px
     font: 14px "Lato", "Arial", sans-serif
@@ -103,7 +103,6 @@ h3
     #simple-centered-title
         box-sizing: border-box
         font: 400 20px "Lato", "Arial", sans-serif
-        background-color: #ffe6ff
         height: 32px
         width: 100%
         padding: 0px
@@ -114,7 +113,6 @@ h3
 
     #simple-centered-content
         box-sizing: border-box
-        background-color: white
         width: 100%
         padding: 10px 8px
 
@@ -164,13 +162,6 @@ th, td
     vertical-align: top
 
 .replay-table
-    thead
-        background-color: #ffb3ff
-    tbody
-        tr:nth-child(odd)
-            background-color: #fff3ff
-        tr:nth-child(even)
-            background-color: #ffe6ff
     .num-align
         td
             text-align: right
@@ -181,3 +172,59 @@ th, td
 
 .replay-comment
     margin: 2em
+
+
+.theme-dark
+    background-color: black
+    color: white
+
+.theme-dark .replay-table
+    thead
+        background-color: #610061
+    tbody
+        tr:nth-child(odd)
+            background-color: #101010
+        tr:nth-child(even)
+            background-color: #1a1a1a
+
+.theme-dark :is(select, input, textarea)
+    background-color: black
+    color: white
+
+.theme-dark .simple-centered-title
+    background-color: #1a1a1a
+
+.theme-dark .simple-centered-content
+    background-color: #101010
+
+
+.theme-light
+    background-color: white
+    color: black
+
+.theme-light .replay-table
+    thead
+        background-color: #ffb3ff
+    tbody
+        tr:nth-child(odd)
+            background-color: #fff3ff
+        tr:nth-child(even)
+            background-color: #ffe6ff
+
+.theme-light :is(select, input, textarea)
+    background-color: white
+    color: black
+
+.theme-light .simple-centered-title
+    background-color: #ffe6ff
+
+.theme-light .simple-centered-content
+    background-color: white
+
+.theme-switcher
+    text-decoration: none
+    margin: 10px 5px
+
+.theme-switcher :is(a, a:visited, a:hover, a:active)
+    text-decoration: none
+    color: inherit
