@@ -22,6 +22,9 @@
             <th>
                 Upload date
             </th>
+            <th>
+                Download
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -46,6 +49,9 @@
             </td>
             <td>
                 {{replay.created | date:"Y-m-d"}}
+            </td>
+            <td>
+                <a href="/replays/{{replay.shot.game.game_id}}/{{replay.id}}/download">Download</a>
             </td>
         </tr>
     {% endfor %}
