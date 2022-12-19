@@ -26,7 +26,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             is_clear=True,
             video_link='https://www.youtube.com/example',
             route=None,
-            replay_type=1,
+            replay_type=game_ids.ReplayTypes.REGULAR,
         )
 
         self.assertEqual(new_replay.user, self.user)
