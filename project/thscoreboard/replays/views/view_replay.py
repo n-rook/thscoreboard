@@ -51,9 +51,6 @@ def replay_details(request, game_id: str, replay_id: int):
         }
     )
 
-    if replay_instance.spell_card_id:
-        replay_instance.spell_card_id += 1
-
     context = {
         'game_name': replay_instance.shot.game.GetName(),
         'shot_name': replay_instance.shot.GetName(),

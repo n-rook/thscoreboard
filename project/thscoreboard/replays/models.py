@@ -287,6 +287,13 @@ class Replay(models.Model):
                 id=self.id,
             )
 
+    def GetSpellCardIDFormat(self):
+        """Get frontend formatted spellcard id (1-indexed instead of 0-indexed)"""
+        if self.spell_card_id is not None:
+            return self.spell_card_id + 1
+        else:
+            return None
+
 
 class ReplayStage(models.Model):
     """ Represents a stage split for a given replay

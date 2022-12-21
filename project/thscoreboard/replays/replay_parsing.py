@@ -71,6 +71,11 @@ class ReplayInfo:
     spell_card_id: Optional[int] = None
     stages = []
 
+    @property
+    def spell_card_id_format(self):
+        """Get frontend formatted spellcard id (1-indexed instead of 0-indexed)"""
+        return self.spell_card_id + 1
+
 
 def _Parse06(rep_raw):
     cryptdata = bytearray(rep_raw[15:])
