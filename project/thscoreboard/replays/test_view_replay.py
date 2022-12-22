@@ -26,21 +26,6 @@ class TestTableFields(test_case.ReplayTestCase):
         super().setUp()
         self.user = self.createUser('view-replay-user')
 
-    def testFields(self):
-        for gameid, file in tests:
-            logging.info('testing game fields %s %s', gameid, file)
-            rpy = test_replays.GetRaw(file)
-            replay_info = replay_parsing.Parse(rpy)
-            fields = game_fields.GetGameField(gameid)
-            for key in fields:
-                logging.info(key)
-                logging.info(fields[key])
-                for s in replay_info.stages:
-                    if fields[key]:
-                        self.assertIsNotNone(s[key])
-                    if not fields[key]:
-                        self.assertIsNone(s[key])
-
 
 class TestGetPower(test_case.ReplayTestCase):
 
