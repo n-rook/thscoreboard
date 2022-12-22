@@ -3,7 +3,7 @@
 import base64
 import logging
 import subprocess
-
+import threading
 
 from django.http import HttpResponse
 from django.core import management
@@ -22,28 +22,33 @@ except ImportError:
             pass
 
 
+_DEPLOY_LOCK = threading.Lock()
+
+
 def do_deploy():
-    git_pull()
+    # Something weird might happen if we try to do this concurrently.
+    with _DEPLOY_LOCK:
+        git_pull()
 
-    management.call_command(
-        'migrate',
-        interactive=False
-    )
+        management.call_command(
+            'migrate',
+            interactive=False
+        )
 
-    management.call_command(
-        'setup_constant_tables',
-    )
+        management.call_command(
+            'setup_constant_tables',
+        )
 
-    management.call_command(
-        'compilescss',
-    )
+        management.call_command(
+            'compilescss',
+        )
 
-    management.call_command(
-        'collectstatic',
-        interactive=False
-    )
+        management.call_command(
+            'collectstatic',
+            interactive=False
+        )
 
-    uwsgi.reload()
+        uwsgi.reload()
 
 
 def git_pull():
