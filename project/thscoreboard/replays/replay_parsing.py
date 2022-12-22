@@ -98,6 +98,21 @@ def _Parse06(rep_raw):
             rep_stages.append(s)
         i += 1
 
+    """adjust stage data to be end-of-stage"""
+    for i in range(len(rep_stages)):
+        if i < len(rep_stages) - 1:
+            """not the end yet"""
+            rep_stages[i].power = rep_stages[i+1].power
+            rep_stages[i].lives = rep_stages[i+1].lives
+            rep_stages[i].bombs = rep_stages[i+1].bombs
+            rep_stages[i].th06_rank = rep_stages[i+1].th06_rank
+        else:
+            rep_stages[i].power = None
+            rep_stages[i].lives = None
+            rep_stages[i].bombs = None
+            rep_stages[i].th06_rank = None
+
+
     r_type = game_ids.ReplayTypes.REGULAR
     if len(rep_stages) == 1 and rep_raw[7] != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
@@ -146,6 +161,26 @@ def _Parse07(rep_raw):
             s.th07_cherrymax = score.cherrymax
             rep_stages.append(s)
         i += 1
+
+    for i in range(len(rep_stages)):
+        if i < len(rep_stages) - 1:
+            rep_stages[i].power = rep_stages[i+1].power
+            rep_stages[i].lives = rep_stages[i+1].lives
+            rep_stages[i].bombs = rep_stages[i+1].bombs
+            rep_stages[i].point_items = rep_stages[i+1].point_items
+            rep_stages[i].graze = rep_stages[i+1].graze
+            rep_stages[i].piv = rep_stages[i+1].piv
+            rep_stages[i].th07_cherry = rep_stages[i+1].th07_cherry
+            rep_stages[i].th07_cherrymax = rep_stages[i+1].th07_cherrymax
+        else:
+            rep_stages[i].power = None
+            rep_stages[i].lives = None
+            rep_stages[i].bombs = None
+            rep_stages[i].point_items = None
+            rep_stages[i].graze = None
+            rep_stages[i].piv = None
+            rep_stages[i].th07_cherry = None
+            rep_stages[i].th07_cherrymax = None
 
     r_type = game_ids.ReplayTypes.REGULAR
     if len(rep_stages) == 1 and replay.header.difficulty not in [4, 5]:
@@ -225,6 +260,22 @@ def _Parse08(rep_raw):
             rep_stages.append(s)
         i += 1
 
+    for i in range(len(rep_stages)):
+        if i < len(rep_stages) - 1:
+            rep_stages[i].power = rep_stages[i+1].power
+            rep_stages[i].lives = rep_stages[i+1].lives
+            rep_stages[i].bombs = rep_stages[i+1].bombs
+            rep_stages[i].point_items = rep_stages[i+1].point_items
+            rep_stages[i].graze = rep_stages[i+1].graze
+            rep_stages[i].piv = rep_stages[i+1].piv
+        else:
+            rep_stages[i].power = None
+            rep_stages[i].lives = None
+            rep_stages[i].bombs = None
+            rep_stages[i].point_items = None
+            rep_stages[i].graze = None
+            rep_stages[i].piv = None
+
     r_type = game_ids.ReplayTypes.REGULAR
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
@@ -301,6 +352,16 @@ def _Parse09(rep_raw):
             r_shot = shots[p1.shot]
             r_score = p1.score * 10
 
+        for i in range(len(rep_stages)):
+            if i < len(rep_stages) - 1:
+                rep_stages[i].score = rep_stages[i+1].score
+                rep_stages[i].lives = rep_stages[i+1].lives
+                rep_stages[i].th09_p2_score = rep_stages[i+1].th09_p2_score
+            else:
+                rep_stages[i].score = None
+                rep_stages[i].lives = None
+                rep_stages[i].th09_p2_score = None
+
     else:
         #   vs mode
         p1 = replay.stages[9]
@@ -358,6 +419,18 @@ def _Parse10(rep_raw):
         s.lives = stage.lives
         rep_stages.append(s)
 
+    for i in range(len(rep_stages)):
+        if i < len(rep_stages) - 1:
+            rep_stages[i].score = rep_stages[i+1].score
+            rep_stages[i].power = rep_stages[i+1].power
+            rep_stages[i].piv = rep_stages[i+1].piv
+            rep_stages[i].lives = rep_stages[i+1].lives
+        else:
+            rep_stages[i].score = replay.header.score * 10
+            rep_stages[i].power = None
+            rep_stages[i].piv = None
+            rep_stages[i].lives = None
+
     r_type = game_ids.ReplayTypes.REGULAR
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
@@ -398,6 +471,22 @@ def _Parse11(rep_raw):
         s.lives = stage.lives
         s.life_pieces = stage.life_pieces
         rep_stages.append(s)
+
+    for i in range(len(rep_stages)):
+        if i < len(rep_stages) - 1:
+            rep_stages[i].score = rep_stages[i+1].score
+            rep_stages[i].piv = rep_stages[i+1].piv
+            rep_stages[i].graze = rep_stages[i+1].graze
+            rep_stages[i].power = rep_stages[i+1].power
+            rep_stages[i].lives = rep_stages[i+1].lives
+            rep_stages[i].life_pieces = rep_stages[i+1].life_pieces
+        else:
+            rep_stages[i].score = replay.header.score * 10
+            rep_stages[i].piv = None
+            rep_stages[i].graze = None
+            rep_stages[i].power = None
+            rep_stages[i].lives = None
+            rep_stages[i].life_pieces = None
 
     r_type = game_ids.ReplayTypes.REGULAR
     if len(rep_stages) == 1 and replay.header.difficulty != 4:

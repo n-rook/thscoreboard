@@ -319,7 +319,7 @@ class ReplayStage(models.Model):
                     all in all there are 40 offsets saved for potential stage data, most unused
     """
 
-    score = models.BigIntegerField()
+    score = models.BigIntegerField(blank=True, null=True)
     """ The current score stored at this stage"""
 
     piv = models.IntegerField(blank=True, null=True)
