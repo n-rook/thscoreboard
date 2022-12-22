@@ -113,7 +113,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         stages = list(models.ReplayStage.objects.filter(replay=new_replay))
         self.assertEqual(len(stages), 6)
 
-        self.assertEqual(stages[1].score, 12996310)
+        self.assertEqual(stages[0].score, 12996310)
 
     def testPublishReplaySpellPractice(self):
         replay_file_contents = test_replays.GetRaw('th8_spell_practice')
