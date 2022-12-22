@@ -57,13 +57,14 @@ types:
         type: str
         encoding: ASCII
         terminator: 0x0
-        size: 9
-      - id: unknown_2
-        size: 5
-      - id: unknown_3
-        type: u4
-        repeat: expr
-        repeat-expr: 12
+        size: 10
+      - id: spell_card_id
+        type: u2
+      - id: spell_card_name
+        type: str
+        size: 50
+        encoding: SJIS
+        terminator: 0x0
       - id: score
         type: u4
       - id: unknown_4

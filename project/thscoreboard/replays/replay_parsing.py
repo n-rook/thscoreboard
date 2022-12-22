@@ -66,8 +66,15 @@ class ReplayInfo:
     score: int
     timestamp: datetime
     name: str
+    replay_type: int
     route: Optional[str] = None
+    spell_card_id: Optional[int] = None
     stages = []
+
+    @property
+    def spell_card_id_format(self):
+        """Get frontend formatted spellcard id (1-indexed instead of 0-indexed)"""
+        return self.spell_card_id + 1
 
 
 def _Parse06(rep_raw):
@@ -91,13 +98,18 @@ def _Parse06(rep_raw):
             rep_stages.append(s)
         i += 1
 
+    r_type = game_ids.ReplayTypes.REGULAR
+    if len(rep_stages) == 1 and rep_raw[7] != 4:
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
+
     r = ReplayInfo(
         game=game_ids.GameIDs.TH06,
         shot=shots[rep_raw[6]],
         difficulty=rep_raw[7],
         score=replay.header.score,
         timestamp=datetime.strptime(replay.header.date, "%m/%d/%y"),
-        name=replay.header.name.replace("\x00", "")
+        name=replay.header.name.replace("\x00", ""),
+        replay_type=r_type
     )
 
     r.stages = rep_stages
@@ -135,13 +147,18 @@ def _Parse07(rep_raw):
             rep_stages.append(s)
         i += 1
 
+    r_type = game_ids.ReplayTypes.REGULAR
+    if len(rep_stages) == 1 and replay.header.difficulty not in [4, 5]:
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
+
     r = ReplayInfo(
         game=game_ids.GameIDs.TH07,
         shot=shots[replay.header.shot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
         timestamp=datetime.strptime(replay.header.date, "%m/%d"),
-        name=replay.header.name.replace("\x00", "")
+        name=replay.header.name.replace("\x00", ""),
+        replay_type=r_type
     )
 
     r.stages = rep_stages
@@ -173,6 +190,21 @@ def _Parse08(rep_raw):
 
     rep_stages = []
 
+    if replay.header.spell_card_id != 65535:    # FF FF
+        #   spell practice, so stage info isn't necessary
+        return ReplayInfo(
+            game=game_ids.GameIDs.TH08,
+            shot=shots[replay.header.shot],
+            difficulty=replay.header.difficulty,
+            score=replay.header.score * 10,
+            timestamp=datetime.strptime(replay.header.date, "%m/%d"),
+            name=replay.header.name.replace("\x00", ""),
+            replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
+            spell_card_id=replay.header.spell_card_id
+        )
+
+    #   else regular run
+
     i = 0
     route = None
     for score in replay.stages:
@@ -193,6 +225,10 @@ def _Parse08(rep_raw):
             rep_stages.append(s)
         i += 1
 
+    r_type = game_ids.ReplayTypes.REGULAR
+    if len(rep_stages) == 1 and replay.header.difficulty != 4:
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
+
     r = ReplayInfo(
         game=game_ids.GameIDs.TH08,
         shot=shots[replay.header.shot],
@@ -200,6 +236,7 @@ def _Parse08(rep_raw):
         score=replay.header.score * 10,
         timestamp=datetime.strptime(replay.header.date, "%m/%d"),
         name=replay.header.name.replace("\x00", ""),
+        replay_type=r_type,
         route=route
     )
 
@@ -235,6 +272,7 @@ def _Parse09(rep_raw):
     rep_stages = []
     r_score = 0
     r_shot = "Bug shot"
+    r_type = game_ids.ReplayTypes.REGULAR
 
     highest_stage = 0
     if replay.file_header.stage_offsets[9] == 0:
@@ -279,6 +317,11 @@ def _Parse09(rep_raw):
         s.th09_p2_shot = shots[p2.shot]
         s.th09_p2_score = p2.score * 10
 
+        if s.th09_p1_cpu is False and s.th09_p2_cpu is False:
+            r_type = game_ids.ReplayTypes.PVP  # mark pvp replays as such
+        else:
+            r_type = game_ids.ReplayTypes.STAGE_PRACTICE  # treat any "pvp" replay with an ai in it as stage practice
+
         rep_stages.append(s)
 
     r = ReplayInfo(
@@ -287,7 +330,8 @@ def _Parse09(rep_raw):
         difficulty=replay.header.difficulty,
         score=r_score,
         timestamp=datetime.strptime(replay.header.date, "%y/%m/%d"),
-        name=replay.header.name.replace("\x00", "")
+        name=replay.header.name.replace("\x00", ""),
+        replay_type=r_type
     )
 
     r.stages = rep_stages
@@ -314,13 +358,18 @@ def _Parse10(rep_raw):
         s.lives = stage.lives
         rep_stages.append(s)
 
+    r_type = game_ids.ReplayTypes.REGULAR
+    if len(rep_stages) == 1 and replay.header.difficulty != 4:
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
+
     r = ReplayInfo(
         game=game_ids.GameIDs.TH10,
         shot=shots[replay.header.shot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
         timestamp=datetime.fromtimestamp(replay.header.timestamp),
-        name=replay.header.name.replace("\x00", "")
+        name=replay.header.name.replace("\x00", ""),
+        replay_type=r_type
     )
 
     r.stages = rep_stages
@@ -350,13 +399,18 @@ def _Parse11(rep_raw):
         s.life_pieces = stage.life_pieces
         rep_stages.append(s)
 
+    r_type = game_ids.ReplayTypes.REGULAR
+    if len(rep_stages) == 1 and replay.header.difficulty != 4:
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
+
     r = ReplayInfo(
         game=game_ids.GameIDs.TH11,
         shot=shots[replay.header.shot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
         timestamp=datetime.fromtimestamp(replay.header.timestamp),
-        name=replay.header.name.replace("\x00", "")
+        name=replay.header.name.replace("\x00", ""),
+        replay_type=r_type
     )
 
     r.stages = rep_stages

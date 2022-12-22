@@ -102,6 +102,23 @@ class Category(models.IntegerChoices):
     """A private replay that isn't shown to anyone."""
 
 
+class ReplayType(models.IntegerChoices):
+    """Type of replay (regular, spell practice, etc)"""
+
+    REGULAR = 1, pgettext_lazy('Replay Type', 'Regular')
+    """A regular 1cc/scoring run"""
+
+    STAGE_PRACTICE = 2, pgettext_lazy('Replay Type', 'Stage Practice')
+    """Stage practice replay. Note: a regular replay that gameovers at stage 1 will be detected as a stage practice replay"""
+
+    SPELL_PRACTICE = 3, pgettext_lazy('Replay Type', 'Spell Practice')
+    """A spell practice replay. Note: stage practice replays that start at a spell using THPRAC will be detected as stage practice
+        This is only for replays using the ingame spell practice option"""
+
+    PVP = 4, pgettext_lazy('Replay Type', 'PVP')
+    """Player vs player replays"""
+
+
 class Route(models.Model):
     """One of several sets of stages pickable by the player in a run.
 
@@ -147,6 +164,24 @@ class Replay(models.Model):
                 check=models.Q(difficulty__gte=0),
                 name='difficulty_gte_0'
             ),
+            models.CheckConstraint(
+                name='replay_type_spell_card_id_isnull',
+                check=(
+                    models.Q(
+                        replay_type=ReplayType.REGULAR,
+                        spell_card_id__isnull=True
+                    ) | models.Q(
+                        replay_type=ReplayType.STAGE_PRACTICE,
+                        spell_card_id__isnull=True
+                    ) | models.Q(
+                        replay_type=ReplayType.SPELL_PRACTICE,
+                        spell_card_id__isnull=False
+                    ) | models.Q(
+                        replay_type=ReplayType.PVP,
+                        spell_card_id__isnull=True
+                    )
+                )
+            )
         ]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -214,6 +249,12 @@ class Replay(models.Model):
     but technically there are 12 bytes allocated, so space is reserved just in case
     """
 
+    spell_card_id = models.IntegerField(blank=True, null=True)
+    """In the case of a spell practice replay, the spell card ID attempted"""
+
+    replay_type = models.IntegerField(choices=ReplayType.choices)
+    """Type of replay (regular run, stage practice, etc)"""
+
     def IsVisible(self, viewer: auth.get_user_model()):
         """Returns whether this replay should be visible to this user."""
         # Add a unit test for this
@@ -245,6 +286,13 @@ class Replay(models.Model):
                 user=self.user.username,
                 id=self.id,
             )
+
+    def GetSpellCardIDFormat(self):
+        """Get frontend formatted spellcard id (1-indexed instead of 0-indexed)"""
+        if self.spell_card_id is not None:
+            return self.spell_card_id + 1
+        else:
+            return None
 
 
 class ReplayStage(models.Model):

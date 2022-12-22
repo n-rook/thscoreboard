@@ -26,6 +26,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             is_clear=True,
             video_link='https://www.youtube.com/example',
             route=None,
+            replay_type=game_ids.ReplayTypes.REGULAR,
         )
 
         self.assertEqual(new_replay.user, self.user)
@@ -77,6 +78,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertFalse(new_replay.is_clear)
         self.assertEqual(new_replay.category, models.Category.REGULAR)
         self.assertEqual(new_replay.comment, 'Hello')
+        self.assertEqual(new_replay.replay_type, 1)
 
         with self.assertRaises(models.TemporaryReplayFile.DoesNotExist):
             models.TemporaryReplayFile.objects.get(id=temp_replay.id)
@@ -112,3 +114,27 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertEqual(len(stages), 6)
 
         self.assertEqual(stages[1].score, 12996310)
+
+    def testPublishReplaySpellPractice(self):
+        replay_file_contents = test_replays.GetRaw('th8_spell_practice')
+
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user,
+            replay=replay_file_contents
+        )
+        temp_replay.save()
+        replay_info = replay_parsing.Parse(replay_file_contents)
+        shot = models.Shot.objects.get(game=replay_info.game, shot_id=replay_info.shot)
+        create_replay.PublishNewReplay(
+            user=self.user,
+            difficulty=replay_info.difficulty,
+            shot=shot,
+            score=replay_info.score,
+            category=models.Category.REGULAR,
+            comment='',
+            video_link='',
+            is_good=True,
+            is_clear=True,
+            temp_replay_instance=temp_replay,
+            replay_info=replay_info,
+        )

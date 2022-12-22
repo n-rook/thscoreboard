@@ -102,7 +102,8 @@ def publish_replay(request, temp_replay_id):
     shot_instance = models.Shot.objects.select_related('game').get(game=replay_info.game, shot_id=replay_info.shot)
 
     if replay_info.game in [game_ids.GameIDs.TH01, game_ids.GameIDs.TH08]:
-        replay_info.route = models.Route.objects.select_related('game').get(game=replay_info.game, route_id=replay_info.route)
+        if replay_info.route is not None:
+            replay_info.route = models.Route.objects.select_related('game').get(game=replay_info.game, route_id=replay_info.route)
 
     if request.method == 'POST':
         form = forms.PublishReplayForm(replay_info.game, request.POST)
@@ -140,6 +141,7 @@ def publish_replay(request, temp_replay_id):
         'route_name': None,
         'has_replay_file': True,
         'replay': replay_info,
+        'replay_type': game_ids.GetReplayType(replay_info.replay_type)
     }
 
     if replay_info.route:
@@ -169,6 +171,7 @@ def publish_replay_no_file(request, game_id: str):
                 is_clear=form.cleaned_data['is_clear'],
                 comment=form.cleaned_data['comment'],
                 video_link=form.cleaned_data['video_link'],
+                replay_type=form.cleaned_data['replay_type']
             )
             return redirect(view_replay.replay_details, game_id=game.game_id, replay_id=new_replay.id)
         else:

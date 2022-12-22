@@ -46,6 +46,16 @@
                 <td>Clears?</td>
                 <td>{% if replay.is_clear %}Yes{% else %}No{% endif %}</td>
             </tr>
+            <tr>
+                <td>Replay Type</td>
+                <td>{{ replay_type }}</td>
+            </tr>
+            {% if replay.spell_card_id %}
+            <tr>
+                <td>Spell Card ID</td>
+                <td>{{ replay.GetSpellCardIDFormat }}</td>
+            </tr>
+            {% endif %}
         </tbody>
     </table>
     <p class="replay-comment" id="replay-comment">

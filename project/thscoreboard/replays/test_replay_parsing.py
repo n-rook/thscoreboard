@@ -18,6 +18,7 @@ class Th06ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'ReimuA')
         self.assertEqual(r.score, 92245410)
         self.assertEqual(r.name, 'nrook   ')
+        self.assertEqual(r.replay_type, 1)
 
         self.assertEqual(r.stages[0].stage, 0)
         self.assertEqual(r.stages[0].score, 5204570)
@@ -42,6 +43,7 @@ class Th06ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'MarisaA')
         self.assertEqual(r.score, 181144360)
         self.assertEqual(r.name, 'AAAAAAAA')
+        self.assertEqual(r.replay_type, 1)
 
         self.assertEqual(r.stages[0].stage, 6)
         self.assertEqual(r.stages[0].score, 181144360)
@@ -65,6 +67,7 @@ class Th07ReplayTestCase(unittest.TestCase):
         r = ParseTestReplay('th7_lunatic')
 
         self.assertEqual(len(r.stages), 6)
+        self.assertEqual(r.replay_type, 1)
         stage_2 = r.stages[1]
         self.assertEqual(stage_2.score, 68342530)
         self.assertEqual(stage_2.piv, 92800)
@@ -113,9 +116,24 @@ class Th08ReplayTestCase(unittest.TestCase):
 
         self.assertEqual(r.stages[0].score, 1213587810)
         self.assertEqual(r.stages[0].piv, 300000)
+        self.assertEqual(r.replay_type, 1)
 
     def testLzss(self):
         ParseTestReplay('th8_lzss')
+
+    def testSpellPractice(self):
+        r = ParseTestReplay('th8_spell_practice')
+        self.assertEqual(len(r.stages), 0)
+        self.assertEqual(r.spell_card_id, 215)
+        self.assertEqual(r.spell_card_id_format, 216)
+        self.assertEqual(r.difficulty, 1)
+        self.assertEqual(r.replay_type, 3)
+
+        r = ParseTestReplay('th8_spell_practice_2')
+        self.assertEqual(r.spell_card_id, 34)
+        self.assertEqual(r.spell_card_id_format, 35)
+        self.assertEqual(r.difficulty, 2)
+        self.assertEqual(r.replay_type, 3)
 
 
 class Th09ReplayTestCase(unittest.TestCase):
@@ -127,6 +145,7 @@ class Th09ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'Reimu')
         self.assertEqual(r.score, 49348230)
         self.assertEqual(r.name, 'AAAAAAAA')
+        self.assertEqual(r.replay_type, 1)
 
         s = r.stages[8]
 
@@ -143,6 +162,7 @@ class Th09ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'Yuuka')
         self.assertEqual(r.score, 0)
         self.assertEqual(r.name, '17:49:20')
+        self.assertEqual(r.replay_type, 4)
 
         s = r.stages[0]
 
@@ -172,6 +192,10 @@ class Th10ReplayTestCase(unittest.TestCase):
         with self.assertRaises(replay_parsing.BadReplayError):
             ParseTestReplay('th10_small')
 
+    def testStagePractice(self):
+        r = ParseTestReplay('th10_stage_practice')
+        self.assertEqual(r.replay_type, 2)
+
 
 class Th11ReplayTestCaseA(unittest.TestCase):
 
@@ -182,6 +206,7 @@ class Th11ReplayTestCaseA(unittest.TestCase):
         self.assertEqual(r.score, 210042730)
         self.assertEqual(r.shot, "ReimuB")
         self.assertEqual(r.name, 'AAAAAAAA')
+        self.assertEqual(r.replay_type, 1)
 
         stage5 = r.stages[4]
         self.assertEqual(stage5.score, 59938190)

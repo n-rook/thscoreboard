@@ -58,6 +58,15 @@
         </td>
         </tr>
         <tr>
+            <td>
+                <label for="{{form.replay_type.id_for_label}}">Replay Type</label>
+                {{ form.replay_type.errors }}
+            </td>
+            <td>
+                {{ form.replay_type }}
+            </td>
+            </tr>
+        <tr>
         <td>
             <label for="{{form.video_link.id_for_label}}">Video link</label>
             {{ form.video_link.errors }}
