@@ -6,6 +6,7 @@ from users import other_views
 from users.views import accept_invite
 from users.views import batch_invite_csv
 from users.views import profile
+from users.views import request_invite
 
 from thscoreboard import settings
 
@@ -20,6 +21,7 @@ urlpatterns = [
     path('profile', profile.profile, name='profile'),
     path('batch_invite', batch_invite_csv.batch_invite, name='batch_invite'),
     path('batch_invite_confirm', batch_invite_csv.batch_invite_confirm, name='batch_invite_confirm'),
+    path('request_invite', request_invite.request_invite),
 
     path(
         'login',
