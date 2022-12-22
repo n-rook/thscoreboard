@@ -34,16 +34,7 @@ def replay_details(request, game_id: str, replay_id: int):
         # Wrong game, but IDs are unique anyway so we know the right game. Send the user there.
         return redirect(replay_details, game_id=replay_instance.shot.game.game_id, replay_id=replay_id)
 
-    # format power for frontend to show like ingame
-    for stage in replay_stages:
-        stage.formatPower = game_fields.GetFormatPower(game_id, stage.power)
-        stage.formatStage = game_fields.GetFormatStage(game_id, stage.stage)
-        if hasattr(stage, 'life_pieces'):
-            stage.formatLives = game_fields.GetFormatLives(game_id, stage.lives, stage.life_pieces)
-        else:
-            stage.formatLives = str(stage.lives)
-        if game_id == game_ids.GameIDs.TH09:
-            stage.th09_p2_shotFormat = stage.th09_p2_shot.GetName()
+    formatStages = game_fields.FormatStages(game_id, replay_stages)
 
     edit_form = forms.EditReplayForm(
         initial={
@@ -61,7 +52,7 @@ def replay_details(request, game_id: str, replay_id: int):
         'can_delete': request.user == replay_instance.user or request.user.is_staff,
         'replay_file_is_good': replay_instance.is_good,
         'has_stages': len(replay_stages) != 0,
-        'replay_stages': replay_stages,
+        'replay_stages': formatStages,
         'table_fields': game_fields.GetGameField(game_id),
         'edit_form': edit_form,
         'replay_type': game_ids.GetReplayType(replay_instance.replay_type)

@@ -102,16 +102,15 @@ def _Parse06(rep_raw):
     for i in range(len(rep_stages)):
         if i < len(rep_stages) - 1:
             """not the end yet"""
-            rep_stages[i].power = rep_stages[i+1].power
-            rep_stages[i].lives = rep_stages[i+1].lives
-            rep_stages[i].bombs = rep_stages[i+1].bombs
-            rep_stages[i].th06_rank = rep_stages[i+1].th06_rank
+            rep_stages[i].power = rep_stages[i + 1].power
+            rep_stages[i].lives = rep_stages[i + 1].lives
+            rep_stages[i].bombs = rep_stages[i + 1].bombs
+            rep_stages[i].th06_rank = rep_stages[i + 1].th06_rank
         else:
             rep_stages[i].power = None
             rep_stages[i].lives = None
             rep_stages[i].bombs = None
             rep_stages[i].th06_rank = None
-
 
     r_type = game_ids.ReplayTypes.REGULAR
     if len(rep_stages) == 1 and rep_raw[7] != 4:
@@ -164,14 +163,14 @@ def _Parse07(rep_raw):
 
     for i in range(len(rep_stages)):
         if i < len(rep_stages) - 1:
-            rep_stages[i].power = rep_stages[i+1].power
-            rep_stages[i].lives = rep_stages[i+1].lives
-            rep_stages[i].bombs = rep_stages[i+1].bombs
-            rep_stages[i].point_items = rep_stages[i+1].point_items
-            rep_stages[i].graze = rep_stages[i+1].graze
-            rep_stages[i].piv = rep_stages[i+1].piv
-            rep_stages[i].th07_cherry = rep_stages[i+1].th07_cherry
-            rep_stages[i].th07_cherrymax = rep_stages[i+1].th07_cherrymax
+            rep_stages[i].power = rep_stages[i + 1].power
+            rep_stages[i].lives = rep_stages[i + 1].lives
+            rep_stages[i].bombs = rep_stages[i + 1].bombs
+            rep_stages[i].point_items = rep_stages[i + 1].point_items
+            rep_stages[i].graze = rep_stages[i + 1].graze
+            rep_stages[i].piv = rep_stages[i + 1].piv
+            rep_stages[i].th07_cherry = rep_stages[i + 1].th07_cherry
+            rep_stages[i].th07_cherrymax = rep_stages[i + 1].th07_cherrymax
         else:
             rep_stages[i].power = None
             rep_stages[i].lives = None
@@ -262,12 +261,12 @@ def _Parse08(rep_raw):
 
     for i in range(len(rep_stages)):
         if i < len(rep_stages) - 1:
-            rep_stages[i].power = rep_stages[i+1].power
-            rep_stages[i].lives = rep_stages[i+1].lives
-            rep_stages[i].bombs = rep_stages[i+1].bombs
-            rep_stages[i].point_items = rep_stages[i+1].point_items
-            rep_stages[i].graze = rep_stages[i+1].graze
-            rep_stages[i].piv = rep_stages[i+1].piv
+            rep_stages[i].power = rep_stages[i + 1].power
+            rep_stages[i].lives = rep_stages[i + 1].lives
+            rep_stages[i].bombs = rep_stages[i + 1].bombs
+            rep_stages[i].point_items = rep_stages[i + 1].point_items
+            rep_stages[i].graze = rep_stages[i + 1].graze
+            rep_stages[i].piv = rep_stages[i + 1].piv
         else:
             rep_stages[i].power = None
             rep_stages[i].lives = None
@@ -354,9 +353,9 @@ def _Parse09(rep_raw):
 
         for i in range(len(rep_stages)):
             if i < len(rep_stages) - 1:
-                rep_stages[i].score = rep_stages[i+1].score
-                rep_stages[i].lives = rep_stages[i+1].lives
-                rep_stages[i].th09_p2_score = rep_stages[i+1].th09_p2_score
+                rep_stages[i].score = rep_stages[i + 1].score
+                rep_stages[i].lives = rep_stages[i + 1].lives
+                rep_stages[i].th09_p2_score = rep_stages[i + 1].th09_p2_score
             else:
                 rep_stages[i].score = None
                 rep_stages[i].lives = None
@@ -421,10 +420,10 @@ def _Parse10(rep_raw):
 
     for i in range(len(rep_stages)):
         if i < len(rep_stages) - 1:
-            rep_stages[i].score = rep_stages[i+1].score
-            rep_stages[i].power = rep_stages[i+1].power
-            rep_stages[i].piv = rep_stages[i+1].piv
-            rep_stages[i].lives = rep_stages[i+1].lives
+            rep_stages[i].score = rep_stages[i + 1].score
+            rep_stages[i].power = rep_stages[i + 1].power
+            rep_stages[i].piv = rep_stages[i + 1].piv
+            rep_stages[i].lives = rep_stages[i + 1].lives
         else:
             rep_stages[i].score = replay.header.score * 10
             rep_stages[i].power = None
@@ -474,12 +473,12 @@ def _Parse11(rep_raw):
 
     for i in range(len(rep_stages)):
         if i < len(rep_stages) - 1:
-            rep_stages[i].score = rep_stages[i+1].score
-            rep_stages[i].piv = rep_stages[i+1].piv
-            rep_stages[i].graze = rep_stages[i+1].graze
-            rep_stages[i].power = rep_stages[i+1].power
-            rep_stages[i].lives = rep_stages[i+1].lives
-            rep_stages[i].life_pieces = rep_stages[i+1].life_pieces
+            rep_stages[i].score = rep_stages[i + 1].score
+            rep_stages[i].piv = rep_stages[i + 1].piv
+            rep_stages[i].graze = rep_stages[i + 1].graze
+            rep_stages[i].power = rep_stages[i + 1].power
+            rep_stages[i].lives = rep_stages[i + 1].lives
+            rep_stages[i].life_pieces = rep_stages[i + 1].life_pieces
         else:
             rep_stages[i].score = replay.header.score * 10
             rep_stages[i].piv = None

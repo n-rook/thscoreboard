@@ -136,6 +136,8 @@ _game_fields = immutabledict({
 
 
 def GetFormatPower(game_id: str, power: int) -> str:
+    if power is None:
+        return ""
     if game_id in (game_ids.GameIDs.TH06, game_ids.GameIDs.TH07, game_ids.GameIDs.TH08):
         return str(power)
     if game_id in (game_ids.GameIDs.TH10, game_ids.GameIDs.TH11):
@@ -157,6 +159,8 @@ _life_pieces = immutabledict({
 
 
 def GetFormatLives(game_id: str, lives: int, life_pieces: int) -> str:
+    if lives is None:
+        return ""
     total_life_pieces = _life_pieces[game_id]
     if total_life_pieces is None:
         return str(lives)
@@ -177,6 +181,8 @@ def GetGameLifePieces(gameid: str):
 
 
 def GetFormatStage(game_id: str, stage: int) -> str:
+    if stage is None:
+        return ""
     if game_id == "th08":
         stages = {
             0: '1',
@@ -194,3 +200,48 @@ def GetFormatStage(game_id: str, stage: int) -> str:
         return str(stage + 1)
     else:
         return str(stage)
+
+
+def FormatStages(game_id: str, replay_stages):
+    """This function formats the stage values to be displayed in the front end"""
+    for stage in replay_stages:
+        stage.power = GetFormatPower(game_id, stage.power)
+        stage.stage = GetFormatStage(game_id, stage.stage)
+        stage.lives = GetFormatLives(game_id, stage.lives, stage.life_pieces)
+        if game_id == game_ids.GameIDs.TH09:
+            stage.th09_p2_shotFormat = stage.th09_p2_shot.GetName()
+
+        if stage.stage is None:
+            stage.stage = ""
+        if stage.score is None:
+            stage.score = ""
+        if stage.piv is None:
+            stage.piv = ""
+        if stage.graze is None:
+            stage.graze = ""
+        if stage.point_items is None:
+            stage.point_items = ""
+        if stage.power is None:
+            stage.power = ""
+        if stage.lives is None:
+            stage.lives = ""
+        if stage.life_pieces is None:
+            stage.life_pieces = ""
+        if stage.bombs is None:
+            stage.bombs = ""
+        if stage.bomb_pieces is None:
+            stage.bomb_pieces = ""
+        if stage.th06_rank is None:
+            stage.th06_rank = ""
+        if stage.th07_cherry is None:
+            stage.th07_cherry = ""
+        if stage.th07_cherrymax is None:
+            stage.th07_cherrymax = ""
+        if stage.th09_p1_cpu is None:
+            stage.th09_p1_cpu = ""
+        if stage.th09_p2_cpu is None:
+            stage.th09_p2_cpu = ""
+        if stage.th09_p2_score is None:
+            stage.th09_p2_score = ""
+    
+    return replay_stages
