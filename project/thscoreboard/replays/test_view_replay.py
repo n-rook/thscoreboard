@@ -1,11 +1,7 @@
-from replays import replay_parsing
 from replays.testing import test_case
-from replays.testing import test_replays
 
 from . import game_ids
 from . import game_fields
-
-import logging
 
 
 tests = [
