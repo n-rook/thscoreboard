@@ -1,5 +1,6 @@
 """A class that provides methods used to properly format and display replay data"""
 
+import copy
 from immutabledict import immutabledict
 from . import game_ids
 
@@ -204,7 +205,9 @@ def GetFormatStage(game_id: str, stage: int) -> str:
 
 def FormatStages(game_id: str, replay_stages):
     """This function formats the stage values to be displayed in the front end"""
-    for stage in replay_stages:
+    new_stages = copy.deepcopy(replay_stages)
+
+    for stage in new_stages:
         stage.power = GetFormatPower(game_id, stage.power)
         stage.stage = GetFormatStage(game_id, stage.stage)
         stage.lives = GetFormatLives(game_id, stage.lives, stage.life_pieces)
@@ -244,4 +247,4 @@ def FormatStages(game_id: str, replay_stages):
         if stage.th09_p2_score is None:
             stage.th09_p2_score = ""
     
-    return replay_stages
+    return new_stages
