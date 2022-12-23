@@ -98,7 +98,7 @@ def _Parse06(rep_raw):
             rep_stages.append(s)
         i += 1
 
-    """adjust stage data to be end-of-stage"""
+    # adjust stage data to be end-of-stage
     for i in range(len(rep_stages)):
         if i < len(rep_stages) - 1:
             """not the end yet"""
