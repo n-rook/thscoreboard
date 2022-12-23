@@ -14,7 +14,7 @@ gunicorn==20.1.0
 idna==3.3
 immutabledict==2.2.1
 kaitaistruct==0.10
-libsass==0.21.0
+libsass==0.22.0
 lzss==0.3
 polib==1.1.1
 psycopg2-binary==2.9.3
