@@ -2,6 +2,7 @@
 
 import copy
 from immutabledict import immutabledict
+from typing import Optional
 from . import game_ids
 
 _table_fields_th06 = immutabledict({
@@ -136,7 +137,7 @@ _game_fields = immutabledict({
 })
 
 
-def GetFormatPower(game_id: str, power: int) -> str:
+def GetFormatPower(game_id: str, power: Optional[int]) -> str:
     if power is None:
         return ""
     if game_id in (game_ids.GameIDs.TH06, game_ids.GameIDs.TH07, game_ids.GameIDs.TH08):
@@ -159,13 +160,15 @@ _life_pieces = immutabledict({
 })
 
 
-def GetFormatLives(game_id: str, lives: int, life_pieces: int) -> str:
+def GetFormatLives(game_id: str, lives: Optional[int], life_pieces: Optional[int]) -> str:
     if lives is None:
         return ""
     total_life_pieces = _life_pieces[game_id]
     if total_life_pieces is None:
         return str(lives)
     else:
+        if life_pieces is None:
+            life_pieces = 0
         return f"{lives} ({life_pieces}/{total_life_pieces})"
 
 
@@ -181,7 +184,7 @@ def GetGameLifePieces(gameid: str):
     return None
 
 
-def GetFormatStage(game_id: str, stage: int) -> str:
+def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
     if stage is None:
         return ""
     if game_id == "th08":

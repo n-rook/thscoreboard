@@ -1,7 +1,11 @@
+from replays import replay_parsing
 from replays.testing import test_case
+from replays.testing import test_replays
 
 from . import game_ids
 from . import game_fields
+
+import logging
 
 
 tests = [
@@ -21,6 +25,24 @@ class TestTableFields(test_case.ReplayTestCase):
     def setUp(self):
         super().setUp()
         self.user = self.createUser('view-replay-user')
+
+    def testFields(self):
+        for gameid, file in tests:
+            logging.info('testing game fields %s %s', gameid, file)
+            rpy = test_replays.GetRaw(file)
+            replay_info = replay_parsing.Parse(rpy)
+            fields = game_fields.GetGameField(gameid)
+            for key in fields:
+                logging.info(key)
+                logging.info(fields[key])
+                for i in range(len(replay_info.stages)):
+                    s = replay_info.stages[i]
+                    if i < len(replay_info.stages) - 1:
+                        # don't test last stage coz fields might be missing
+                        if fields[key]:
+                            self.assertIsNotNone(s[key])
+                        if not fields[key]:
+                            self.assertIsNone(s[key])
 
 
 class TestGetPower(test_case.ReplayTestCase):
