@@ -1,3 +1,5 @@
+@import "themes"
+
 @mixin font-body-text
     font: 16px "Lato", "Arial", sans-serif
 
@@ -43,8 +45,11 @@ body
     padding: 0
     @include font-body-text
 
+    background-color: var(--background-color)
+    color: var(--text-color)
+
 .light-background
-    background-color: #fff3ff
+    background-color: var(--backdrop-color)
 
 h1
     font: 500 36px  "EB Garamond", "Times New Roman", serif
@@ -162,6 +167,13 @@ th, td
     vertical-align: top
 
 .replay-table
+    thead
+        background-color: var(--table-header-color)
+    tbody
+        tr:nth-child(odd)
+            background-color: var(--table-row-odd-color)
+        tr:nth-child(even)
+            background-color: var(--table-row-even-color)
     .num-align
         td
             text-align: right
@@ -174,52 +186,19 @@ th, td
     margin: 2em
 
 
-.theme-dark
-    background-color: black
-    color: white
+// SASS does not seem to support :is() as the only selector yet,
+// so we list them explicitly.
+select
+    background-color: var(--background-color)
+    color: var(--text-color)
 
-.theme-dark .replay-table
-    thead
-        background-color: #610061
-    tbody
-        tr:nth-child(odd)
-            background-color: #101010
-        tr:nth-child(even)
-            background-color: #1a1a1a
+input
+    background-color: var(--background-color)
+    color: var(--text-color)
 
-.theme-dark :is(select, input, textarea)
-    background-color: black
-    color: white
-
-.theme-dark .simple-centered-title
-    background-color: #1a1a1a
-
-.theme-dark .simple-centered-content
-    background-color: #101010
-
-
-.theme-light
-    background-color: white
-    color: black
-
-.theme-light .replay-table
-    thead
-        background-color: #ffb3ff
-    tbody
-        tr:nth-child(odd)
-            background-color: #fff3ff
-        tr:nth-child(even)
-            background-color: #ffe6ff
-
-.theme-light :is(select, input, textarea)
-    background-color: white
-    color: black
-
-.theme-light .simple-centered-title
-    background-color: #ffe6ff
-
-.theme-light .simple-centered-content
-    background-color: white
+textarea
+    background-color: var(--background-color)
+    color: var(--text-color)
 
 .theme-switcher
     text-decoration: none
