@@ -3,6 +3,7 @@
 
 from typing import Optional
 from django.http import HttpResponseRedirect
+from ipaddress import ip_address, ip_network
 
 from django.contrib import auth
 from django.db import transaction
@@ -47,8 +48,11 @@ def register(request):
     if request.method == 'POST':
         try:
             form = RegisterForm(request.POST)
-
-            if form.is_valid():
+            request_ip = ip_address(request.META.get('REMOTE_ADDR'))
+            
+            if any(request_ip in ip_network(ip.ip) for ip in models.IPBan.objects.all()):
+                form.add_error(None, 'Signing up is prohibited from this IP address')
+            elif form.is_valid():
                 passcode = models.EarlyAccessPasscode.objects.get(passcode=form.cleaned_data['passcode'])
                 unverified_user = _preregister(
                     username=form.cleaned_data['username'],

@@ -3,6 +3,7 @@
 import datetime
 from typing import Optional
 import secrets
+import ipaddress
 
 from django.contrib.auth import base_user
 from django.contrib.auth import models as auth_models
@@ -274,3 +275,14 @@ class Visits(models.Model):
 
             new_visit = cls(user=user, ip=ip, created=now)
             new_visit.save()
+
+
+class IPBan(models.Model):
+    """Keeps a list of IP subnets of IPs banned from signup"""
+
+    ip = models.TextField()
+    """The IP address banned from signups"""
+
+    def save(self):
+        ipaddress.ip_network(self.ip)
+        super().save()
