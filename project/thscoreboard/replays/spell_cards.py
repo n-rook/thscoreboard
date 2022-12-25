@@ -6,7 +6,7 @@ import logging
 
 
 has_spell_practice = [game_ids.GameIDs.TH08]
-thcrap_langs = ['en']
+thcrap_langs = ['en', 'jp']
 
 
 def _ReadSpellNames():
