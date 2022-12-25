@@ -27,7 +27,14 @@ _SPELL_NAMES = immutabledict(_ReadSpellNames())
 
 
 def get_spell_name(lang: str, game_id: str, spell_id: int, difficulty: int = 0):
-    """Retrieves a spell card's name based on a language, the gameid of the game it's from, a 0 indexed spell ID, and a difficulty ID"""
+    """Retrieves a spell card's name.
+    
+    Args:
+      lang: A language code for the name.
+      game_id: The game the spell card came from.
+      spell_id: The spell card's ID (0-indexed).
+      difficulty: The difficulty for the game.
+    """
     for i in range(difficulty + 1):
         try:
             return _SPELL_NAMES[lang][game_id][f'{spell_id - i}']
