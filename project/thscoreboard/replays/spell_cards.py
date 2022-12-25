@@ -5,7 +5,7 @@ import json
 import logging
 
 
-has_thcrap = [game_ids.GameIDs.TH06, game_ids.GameIDs.TH07, game_ids.GameIDs.TH08, game_ids.GameIDs.TH09, game_ids.GameIDs.TH10, game_ids.GameIDs.TH11]
+has_spell_practice = [game_ids.GameIDs.TH08]
 thcrap_langs = ['en']
 
 
@@ -13,13 +13,13 @@ def _ReadSpellNames():
     spell_names = dict()
     for lang in thcrap_langs:
         spell_names[lang] = dict()
-        for game_id in has_thcrap:
+        for game_id in has_spell_practice:
             try:
                 with open(f'replays/spells/{lang}/{game_id}.json', 'rb') as f:
                     spell_names[lang][game_id] = json.loads(f.read())
                     logging.info(f'replays/spells/{lang}/{game_id}.json loaded!')
             except FileNotFoundError:
-                pass
+                logging.error(f'replays/spells/{lang}/{game_id}.json not found!')
     return spell_names
 
 
