@@ -54,7 +54,7 @@
     {% for stage in replay_stages %}
         <tr class="num-align">
             {% if table_fields.stage %}
-            <td>{{stage.formatStage}}</td>
+            <td>{{stage.stage}}</td>
             {% endif %}
             {% if table_fields.score %}
             <td>{{stage.score|intcomma}}</td>
@@ -69,10 +69,10 @@
             <td>{{stage.point_items}}</td>
             {% endif %}
             {% if table_fields.power %}
-            <td>{{stage.formatPower}}</td>
+            <td>{{stage.power}}</td>
             {% endif %}
             {% if table_fields.lives %}
-            <td>{{stage.formatLives}}</td>
+            <td>{{stage.lives}}</td>
             {% endif %}
             {% if table_fields.bombs %}
             <td>{{stage.bombs}}</td>

@@ -296,7 +296,8 @@ class Replay(models.Model):
 
 
 class ReplayStage(models.Model):
-    """ Represents a stage split for a given replay
+    """ Represents the end-of-stage data for a stage split for a given replay
+        The data may not directly correspond to how it is stored in-game, since some games store it differently
         Most games store the values from the start of the stage
         TH07 stores the values from the end of the stage
         TH08 is weird in that the score is stored from end of stage, but everything else is from the start
@@ -319,8 +320,9 @@ class ReplayStage(models.Model):
                     all in all there are 40 offsets saved for potential stage data, most unused
     """
 
-    score = models.BigIntegerField()
-    """ The current score stored at this stage"""
+    score = models.BigIntegerField(blank=True, null=True)
+    """ The current score stored at this stage
+        This should be set for all stages that we have data for, but some games do not store end-of-stage data"""
 
     piv = models.IntegerField(blank=True, null=True)
     """ The current PIV stored at this stage

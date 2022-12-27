@@ -23,14 +23,14 @@ class Th06ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.stages[0].stage, 0)
         self.assertEqual(r.stages[0].score, 5204570)
         self.assertEqual(r.stages[0].lives, 2)
-        self.assertEqual(r.stages[0].th06_rank, 16)
+        self.assertEqual(r.stages[0].th06_rank, 26)
 
         self.assertEqual(r.stages[5].stage, 5)
         self.assertEqual(r.stages[5].score, 92245410)
-        self.assertEqual(r.stages[5].power, 128)
-        self.assertEqual(r.stages[5].lives, 3)
-        self.assertEqual(r.stages[5].bombs, 1)
-        self.assertEqual(r.stages[5].th06_rank, 19)
+        self.assertEqual(r.stages[5].power, None)
+        self.assertEqual(r.stages[5].lives, None)
+        self.assertEqual(r.stages[5].bombs, None)
+        self.assertEqual(r.stages[5].th06_rank, None)
 
         # 6 stages (Hard 1cc)
         # Final score is 92245410
@@ -47,10 +47,10 @@ class Th06ReplayTestCase(unittest.TestCase):
 
         self.assertEqual(r.stages[0].stage, 6)
         self.assertEqual(r.stages[0].score, 181144360)
-        self.assertEqual(r.stages[0].power, 0)
-        self.assertEqual(r.stages[0].lives, 2)
-        self.assertEqual(r.stages[0].bombs, 3)
-        self.assertEqual(r.stages[0].th06_rank, 16)
+        self.assertEqual(r.stages[0].power, None)
+        self.assertEqual(r.stages[0].lives, None)
+        self.assertEqual(r.stages[0].bombs, None)
+        self.assertEqual(r.stages[0].th06_rank, None)
 
 
 class Th07ReplayTestCase(unittest.TestCase):
@@ -70,14 +70,14 @@ class Th07ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.replay_type, 1)
         stage_2 = r.stages[1]
         self.assertEqual(stage_2.score, 68342530)
-        self.assertEqual(stage_2.piv, 92800)
-        self.assertEqual(stage_2.graze, 374)
-        self.assertEqual(stage_2.power, 113)
-        self.assertEqual(stage_2.lives, 2)
+        self.assertEqual(stage_2.piv, 343790)
+        self.assertEqual(stage_2.graze, 868)
+        self.assertEqual(stage_2.power, 128)
+        self.assertEqual(stage_2.lives, 3)
         self.assertEqual(stage_2.bombs, 4)
         self.assertIsNone(stage_2.th06_rank)
-        self.assertEqual(stage_2.th07_cherry, 29080)
-        self.assertEqual(stage_2.th07_cherrymax, 311380)
+        self.assertEqual(stage_2.th07_cherry, 8400)
+        self.assertEqual(stage_2.th07_cherrymax, 345160)
 
     def testExtraData(self):
         ParseTestReplay('th7_extra_data')
@@ -95,8 +95,8 @@ class Th08ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.difficulty, 1)
 
         self.assertEqual(r.stages[0].score, 37008330)
-        self.assertEqual(r.stages[0].power, 0)
-        self.assertEqual(r.stages[0].point_items, 0)
+        self.assertEqual(r.stages[0].power, 113)
+        self.assertEqual(r.stages[0].point_items, 58)
         self.assertEqual(r.stages[0].lives, 2)
         self.assertEqual(r.stages[0].th07_cherry, None)
         self.assertEqual(r.stages[0].th07_cherrymax, None)
@@ -115,7 +115,7 @@ class Th08ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.score, 1213587810)
 
         self.assertEqual(r.stages[0].score, 1213587810)
-        self.assertEqual(r.stages[0].piv, 300000)
+        self.assertEqual(r.stages[0].piv, None)
         self.assertEqual(r.replay_type, 1)
 
     def testLzss(self):
@@ -149,11 +149,11 @@ class Th09ReplayTestCase(unittest.TestCase):
 
         s = r.stages[8]
 
-        self.assertEqual(s.score, 49348230)
-        self.assertEqual(s.lives, 0)
+        self.assertEqual(s.score, None)
+        self.assertEqual(s.lives, None)
         self.assertEqual(s.th09_p2_cpu, True)
         self.assertEqual(s.th09_p2_shot, 'Eiki')
-        self.assertEqual(s.th09_p2_score, 3169280)
+        self.assertEqual(s.th09_p2_score, None)
 
     def testPVP(self):
         r = ParseTestReplay('th9_pvp')
@@ -182,7 +182,7 @@ class Th10ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'ReimuB')
         self.assertEqual(r.score, 294127890)
         self.assertEqual(r.name, 'AAAAAAAA')
-        self.assertEqual(r.stages[1].piv, 114270)
+        self.assertEqual(r.stages[1].piv, 159660)
         
     def testNull(self):
         with self.assertRaises(replay_parsing.BadReplayError):
@@ -209,9 +209,9 @@ class Th11ReplayTestCaseA(unittest.TestCase):
         self.assertEqual(r.replay_type, 1)
 
         stage5 = r.stages[4]
-        self.assertEqual(stage5.score, 59938190)
-        self.assertEqual(stage5.power, 80)
-        self.assertEqual(stage5.piv, 66460)
-        self.assertEqual(stage5.lives, 8)
-        self.assertEqual(stage5.life_pieces, 1)
-        self.assertEqual(stage5.graze, 1582)
+        self.assertEqual(stage5.score, 92478530)
+        self.assertEqual(stage5.power, 63)
+        self.assertEqual(stage5.piv, 50040)
+        self.assertEqual(stage5.lives, 5)
+        self.assertEqual(stage5.life_pieces, 2)
+        self.assertEqual(stage5.graze, 2820)
