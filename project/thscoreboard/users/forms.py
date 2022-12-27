@@ -82,3 +82,8 @@ class AcceptInviteForm(forms.Form):
     username = forms.CharField(label=_('Username'), required=False, disabled=True)
     email = UserEmailField(label='email', max_length=200, disabled=True)
     password = forms.CharField(label='password', max_length=200, widget=forms.PasswordInput)
+
+
+class AddIPBanForm(forms.Form):
+    ip = forms.CharField(label='IP Address')
+    comment = forms.CharField(label='Comment', required=False)
