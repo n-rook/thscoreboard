@@ -3,8 +3,8 @@
 import datetime
 from typing import Optional
 import secrets
-import ipaddress
 
+from django.core.exceptions import ValidationError
 from django.contrib.auth import base_user
 from django.contrib.auth import models as auth_models
 from django.contrib.auth import hashers
@@ -12,6 +12,7 @@ from django.contrib.auth import validators as auth_validators
 from django.db import models
 from django.db import transaction
 from django.utils import timezone
+from ipaddress import ip_network
 
 from shared_content import model_ttl
 from thscoreboard import settings
@@ -277,12 +278,21 @@ class Visits(models.Model):
             new_visit.save()
 
 
+def validate_ip(ip):
+    try:
+        ip_network(ip)
+    except ValueError as e:
+        raise ValidationError(e)
+
+
 class IPBan(models.Model):
     """Keeps a list of IP subnets of IPs banned from signup"""
 
-    ip = models.TextField()
+    ip = models.TextField(validators=[validate_ip])
     """The IP address banned from signups"""
 
-    def save(self):
-        ipaddress.ip_network(self.ip)
-        super().save()
+    comment = models.TextField(null=True)
+    """Optional reason for the ban"""
+
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
+    """Who issued the ban"""
