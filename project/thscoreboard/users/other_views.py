@@ -2,8 +2,9 @@
 # TODO: Separate views in different files and put in views/.
 
 from typing import Optional
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from ipaddress import ip_address, ip_network
+from functools import wraps
 
 from django.contrib import auth
 from django.db import transaction
@@ -19,7 +20,23 @@ RegisterForm = forms.RegisterFormWithPasscode
 _USE_PASSCODE = True
 
 
+def check_ip_bans(methods_to_check: list):
+    def is_ip_banned(ip_to_check: str):
+        request_ip = ip_address(ip_to_check)
+        return any(request_ip in ip_network(ip.ip) for ip in models.IPBan.objects.all())
+
+    def decorator(func):
+        @wraps(func)
+        def inner(request, *args, **kwargs):
+            if request.method in methods_to_check and is_ip_banned(request.META.get('REMOTE_ADDR')):
+                return HttpResponseForbidden(content='Your IP address is banned')
+            return func(request, *args, **kwargs)
+        return inner
+    return decorator
+
+
 @http_decorators.require_http_methods(["GET", "HEAD", "POST"])
+@check_ip_bans(["POST"])
 def register(request):
     """Start trying to register an account.
 
@@ -48,11 +65,8 @@ def register(request):
     if request.method == 'POST':
         try:
             form = RegisterForm(request.POST)
-            request_ip = ip_address(request.META.get('REMOTE_ADDR'))
-            
-            if any(request_ip in ip_network(ip.ip) for ip in models.IPBan.objects.all()):
-                form.add_error(None, 'Signing up is prohibited from this IP address')
-            elif form.is_valid():
+
+            if form.is_valid():
                 passcode = models.EarlyAccessPasscode.objects.get(passcode=form.cleaned_data['passcode'])
                 unverified_user = _preregister(
                     username=form.cleaned_data['username'],
