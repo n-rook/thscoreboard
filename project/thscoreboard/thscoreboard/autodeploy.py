@@ -29,6 +29,7 @@ def do_deploy():
     # Something weird might happen if we try to do this concurrently.
     with _DEPLOY_LOCK:
         git_pull()
+        uwsgi.reload()
 
         management.call_command(
             'migrate',
@@ -47,8 +48,6 @@ def do_deploy():
             'collectstatic',
             interactive=False
         )
-
-        uwsgi.reload()
 
 
 def git_pull():
