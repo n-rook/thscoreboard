@@ -17,13 +17,22 @@ instances:
         _: stage
     repeat: expr
     repeat-expr: 7
+    size: 40
 types:
   dummy:
     doc: blank type
   file_header:
     seq:
-      - id: padding
-        size: 16
+      - id: magic
+        contents: T7RP
+      - id: version
+        size: 2
+      - id: unknown_1
+        size: 7
+      - id: key
+        type: u1
+      - id: unknown_2
+        type: u2
       - id: unknown_3
         type: u4
       - id: comp_size

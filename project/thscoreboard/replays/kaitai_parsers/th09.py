@@ -38,7 +38,16 @@ class Th09(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.padding = self._io.read_bytes(32)
+            self.magic = self._io.read_bytes(4)
+            if not self.magic == b"\x54\x39\x52\x50":
+                raise kaitaistruct.ValidationNotEqualError(b"\x54\x39\x52\x50", self.magic, self._io, u"/types/file_header/seq/0")
+            self.version = self._io.read_u2le()
+            self.unknown_1 = self._io.read_bytes(6)
+            self.comp_size = self._io.read_u4le()
+            self.unknown_2 = self._io.read_u4le()
+            self.key = self._io.read_u1()
+            self.unknown_3 = self._io.read_bytes(7)
+            self.decomp_size = self._io.read_u4le()
             self.stage_offsets = []
             for i in range(20):
                 self.stage_offsets.append(self._io.read_u4le())
@@ -46,7 +55,6 @@ class Th09(KaitaiStruct):
             self.unknown_offsets = []
             for i in range(20):
                 self.unknown_offsets.append(self._io.read_u4le())
-
 
 
 
@@ -93,7 +101,6 @@ class Th09(KaitaiStruct):
             if _on == 0:
                 self._m_stages.append(Th09.Dummy(self._io, self, self._root))
             else:
-                #   kaitai bug fix: move this line to this else section
                 self._io.seek(self.file_header.stage_offsets[i])
                 self._m_stages.append(Th09.Stage(self._io, self, self._root))
 

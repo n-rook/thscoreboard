@@ -38,7 +38,13 @@ class Th07(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.padding = self._io.read_bytes(16)
+            self.magic = self._io.read_bytes(4)
+            if not self.magic == b"\x54\x37\x52\x50":
+                raise kaitaistruct.ValidationNotEqualError(b"\x54\x37\x52\x50", self.magic, self._io, u"/types/file_header/seq/0")
+            self.version = self._io.read_bytes(2)
+            self.unknown_1 = self._io.read_bytes(7)
+            self.key = self._io.read_u1()
+            self.unknown_2 = self._io.read_u2le()
             self.unknown_3 = self._io.read_u4le()
             self.comp_size = self._io.read_u4le()
             self.size = self._io.read_u4le()
@@ -103,15 +109,19 @@ class Th07(KaitaiStruct):
             return self._m_stages
 
         _pos = self._io.pos()
+        self._raw__m_stages = []
         self._m_stages = []
         for i in range(7):
             _on = self.file_header.stage_offsets[i]
             if _on == 0:
-                self._m_stages.append(Th07.Dummy(self._io, self, self._root))
+                self._raw__m_stages.append(self._io.read_bytes(40))
+                _io__raw__m_stages = KaitaiStream(BytesIO(self._raw__m_stages[i]))
+                self._m_stages.append(Th07.Dummy(_io__raw__m_stages, self, self._root))
             else:
-                #   moving this line here fixes an occasional crash causeed by kaitai-struct's lazy loading
                 self._io.seek(self.file_header.stage_offsets[i])
-                self._m_stages.append(Th07.Stage(self._io, self, self._root))
+                self._raw__m_stages.append(self._io.read_bytes(40))
+                _io__raw__m_stages = KaitaiStream(BytesIO(self._raw__m_stages[i]))
+                self._m_stages.append(Th07.Stage(_io__raw__m_stages, self, self._root))
 
         self._io.seek(_pos)
         return getattr(self, '_m_stages', None)
