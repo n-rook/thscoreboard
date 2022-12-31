@@ -21,6 +21,7 @@ def SetUpConstantTables():
     separate function, so that tests can call it easily.
     """
 
+    _CreateIfNotLoaded('th12', _Create12)
     _CreateIfNotLoaded('th11', _Create11)
     _CreateIfNotLoaded('th10', _Create10)
     _CreateIfNotLoaded('th09', _Create09)
@@ -40,6 +41,17 @@ def _CreateIfNotLoaded(game_id, constant_creation_function):
     else:
         constant_creation_function()
         logging.info('Created %s', game_id)
+
+
+@transaction.atomic
+def _Create12():
+    th12 = models.Game(game_id='th12', has_replays=True, num_difficulties=5)
+    th12.save()
+
+    shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SanaeA", "SanaeB"]
+    for shot in shots:
+        shot_row = models.Shot(game=th12, shot_id=shot)
+        shot_row.save()
 
 
 @transaction.atomic

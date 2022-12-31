@@ -197,7 +197,7 @@ class Th10ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.replay_type, 2)
 
 
-class Th11ReplayTestCaseA(unittest.TestCase):
+class Th11ReplayTestCase(unittest.TestCase):
 
     def testNormal(self):
         r = ParseTestReplay('th11_normal')
@@ -215,3 +215,35 @@ class Th11ReplayTestCaseA(unittest.TestCase):
         self.assertEqual(stage5.lives, 5)
         self.assertEqual(stage5.life_pieces, 2)
         self.assertEqual(stage5.graze, 2820)
+
+
+class Th12ReplayTestCase(unittest.TestCase):
+
+    def testNormal(self):
+        r = ParseTestReplay('th12_normal')
+        self.assertEqual(r.game, 'th12')
+        self.assertEqual(r.difficulty, 1)
+        self.assertEqual(r.score, 168919360)
+        self.assertEqual(r.shot, 'ReimuB')
+        self.assertEqual(r.name, 'AAAAAAAA')
+        self.assertEqual(r.replay_type, 1)
+
+        stage4end = r.stages[3]
+        self.assertEqual(stage4end.score, 94202540)
+        self.assertEqual(stage4end.piv, 13100)
+        self.assertEqual(stage4end.life_pieces, 3)
+        self.assertEqual(game_fields.GetFormatPower('th12', stage4end.power), '4.00')
+
+    def testExtra(self):
+        r = ParseTestReplay('th12_extra')
+        self.assertEqual(r.game, 'th12')
+        self.assertEqual(r.difficulty, 4)
+        self.assertEqual(r.shot, 'SanaeB')
+        self.assertEqual(r.score, 131238030)
+
+        stage = r.stages[0]
+        self.assertEqual(stage.score, 131238030)
+        self.assertIsNone(stage.power)
+        self.assertIsNone(stage.piv)
+        self.assertIsNone(stage.lives)
+        self.assertIsNone(stage.bomb_pieces)
