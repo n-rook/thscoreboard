@@ -1,4 +1,6 @@
 
+import datetime
+
 from replays import game_ids
 from replays import models
 from replays import create_replay
@@ -79,6 +81,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertEqual(new_replay.category, models.Category.REGULAR)
         self.assertEqual(new_replay.comment, 'Hello')
         self.assertEqual(new_replay.replay_type, 1)
+        self.assertEqual(new_replay.timestamp, datetime.datetime(2018, 2, 19, 4, 44, 21, tzinfo=datetime.timezone.utc))
 
         with self.assertRaises(models.TemporaryReplayFile.DoesNotExist):
             models.TemporaryReplayFile.objects.get(id=temp_replay.id)
