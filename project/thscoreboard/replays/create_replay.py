@@ -58,14 +58,9 @@ def PublishNewReplay(
         comment=comment,
         video_link=video_link,
         is_good=is_good,
-        is_clear=is_clear,
-        rep_score=replay_info.score,
-        timestamp=replay_info.timestamp,
-        name=replay_info.name,
-        route=replay_info.route,
-        spell_card_id=replay_info.spell_card_id,
-        replay_type=replay_info.replay_type
+        is_clear=is_clear
     )
+    replay_instance.SetFromReplayInfo(replay_info)
     replay_file_instance = models.ReplayFile(
         replay=replay_instance,
         replay_file=temp_replay_instance.replay,
@@ -84,23 +79,9 @@ def PublishNewReplay(
         replay_stage = models.ReplayStage(
             replay=replay_instance,
             stage=s.stage,
-            score=s.score,
-            piv=s.piv,
-            graze=s.graze,
-            point_items=s.point_items,
-            power=s.power,
-            lives=s.lives,
-            life_pieces=s.life_pieces,
-            bombs=s.bombs,
-            bomb_pieces=s.bomb_pieces,
-            th06_rank=s.th06_rank,
-            th07_cherry=s.th07_cherry,
-            th07_cherrymax=s.th07_cherrymax,
-            th09_p1_cpu=s.th09_p1_cpu,
-            th09_p2_cpu=s.th09_p2_cpu,
-            th09_p2_score=s.th09_p2_score,
             th09_p2_shot=th09_shot_instance
         )
+        replay_stage.SetFromReplayStageInfo(s)
         replay_stage.save()
 
     return replay_instance
