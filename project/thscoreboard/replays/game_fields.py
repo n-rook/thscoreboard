@@ -249,5 +249,5 @@ def FormatStages(game_id: str, replay_stages):
             stage.th09_p2_cpu = ""
         if stage.th09_p2_score is None:
             stage.th09_p2_score = ""
-    
+
     return new_stages

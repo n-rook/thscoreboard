@@ -1,5 +1,7 @@
 """Defines generally useful test cases for replay tests."""
 
+import logging
+
 from django import test
 from django.contrib import auth
 
@@ -33,4 +35,11 @@ class ReplayTestCase(UserTestCase):
     """
 
     def setUp(self):
+        # Temporarily raise logging threshold to avoid log spam.
+        logger = logging.getLogger()
+        old_level = logger.level
+        logger.setLevel(logging.WARNING)
+
         setup_constant_tables.SetUpConstantTables()
+
+        logger.setLevel(old_level)
