@@ -1,3 +1,5 @@
+"""Functions to deal with time."""
+
 import datetime
 
 
