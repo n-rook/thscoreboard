@@ -185,7 +185,7 @@ class Th10ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.name, 'AAAAAAAA')
         self.assertEqual(
             r.timestamp,
-            datetime.datetime(2018, 2, 19, 4, 44, 21)
+            datetime.datetime(2018, 2, 19, 9, 44, 21, tzinfo=datetime.timezone.utc)
         )
         self.assertEqual(r.stages[1].piv, 159660)
 

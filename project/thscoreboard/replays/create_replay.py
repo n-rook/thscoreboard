@@ -6,7 +6,6 @@ not with web entities like views or forms.
 
 from typing import Optional
 from django.db import transaction
-from django.utils import timezone
 
 from replays import models
 from replays import replay_parsing
@@ -61,9 +60,7 @@ def PublishNewReplay(
         is_good=is_good,
         is_clear=is_clear,
         rep_score=replay_info.score,
-        # We convert all timestamps as UTC, in order to avoid Django's own
-        # timezone coercion logic.
-        timestamp=timezone.make_aware(replay_info.timestamp),
+        timestamp=replay_info.timestamp,
         name=replay_info.name,
         route=replay_info.route,
         spell_card_id=replay_info.spell_card_id,
