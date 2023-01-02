@@ -240,7 +240,11 @@ class Replay(models.Model):
     """A comment the user entered."""
 
     timestamp = models.DateTimeField(blank=True, null=True)
-    """Timestamp from the replay"""
+    """Timestamp from the replay.
+
+    Timestamps are stored in UTC. However, this may not actually reflect the
+    timestamp stored in the replay file.
+    """
 
     name = models.TextField(max_length=12, blank=True, null=True)
     """Username stored in the replay
