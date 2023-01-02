@@ -2,9 +2,10 @@
 
 from dataclasses import dataclass
 from typing import Optional
-from datetime import datetime
+import datetime
 from kaitaistruct import KaitaiStructError
 
+from replays.lib import time
 from . import game_ids
 from .kaitai_parsers import th06
 from .kaitai_parsers import th07
@@ -64,7 +65,12 @@ class ReplayInfo:
     shot: str
     difficulty: int
     score: int
-    timestamp: datetime
+    timestamp: datetime.datetime
+    """The timestamp for the replay.
+
+    This field is an aware datetime.
+    """
+
     name: str
     replay_type: int
     route: Optional[str] = None
@@ -75,6 +81,15 @@ class ReplayInfo:
     def spell_card_id_format(self):
         """Get frontend formatted spellcard id (1-indexed instead of 0-indexed)"""
         return self.spell_card_id + 1
+
+    def __post_init__(self):
+        if self.timestamp.tzinfo is None:
+            # Why require the datetime be aware?
+            # Basically, it's because Python timezone handling is a disaster.
+            # datetimes without explicit timezone info tend to be converted
+            # in weird ways by builtin methods, so it's way too easy to
+            # accidentally apply a timezone correction twice.
+            raise ValueError('timestamp datetime must be aware')
 
 
 def _Parse06(rep_raw):
@@ -125,7 +140,7 @@ def _Parse06(rep_raw):
         shot=shots[rep_raw[6]],
         difficulty=rep_raw[7],
         score=replay.header.score,
-        timestamp=datetime.strptime(replay.header.date, "%m/%d/%y"),
+        timestamp=time.strptime(replay.header.date, "%m/%d/%y"),
         name=replay.header.name.replace("\x00", ""),
         replay_type=r_type
     )
@@ -140,7 +155,7 @@ def _Parse07(rep_raw):
     td.decrypt06(comp_data, rep_raw[13])
     #   please don't ask what is going on here
     #   0x54 - 16 = 68
-    
+
     comp_size = int.from_bytes(comp_data[4:8], byteorder='little')
     replay = th07.Th07.from_bytes(bytearray(rep_raw[0:16]) + comp_data[0:68] + td.unlzss(comp_data[68:68 + comp_size]))
 
@@ -198,7 +213,7 @@ def _Parse07(rep_raw):
         shot=shots[replay.header.shot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.strptime(replay.header.date, "%m/%d"),
+        timestamp=time.strptime(replay.header.date, "%m/%d"),
         name=replay.header.name.replace("\x00", ""),
         replay_type=r_type
     )
@@ -214,7 +229,7 @@ def _Parse08(rep_raw):
     #   basically copied from _Parse07()
     #   0x68 (104) - 24 = 80
     replay = th08.Th08.from_bytes(bytearray(rep_raw[0:24]) + comp_data[0:80] + td.unlzss(comp_data[80:]))
-    
+
     shots = [
         "Reimu & Yukari",
         "Marisa & Alice",
@@ -239,7 +254,7 @@ def _Parse08(rep_raw):
             shot=shots[replay.header.shot],
             difficulty=replay.header.difficulty,
             score=replay.header.score * 10,
-            timestamp=datetime.strptime(replay.header.date, "%m/%d"),
+            timestamp=time.strptime(replay.header.date, "%m/%d"),
             name=replay.header.name.replace("\x00", ""),
             replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
             spell_card_id=replay.header.spell_card_id
@@ -296,7 +311,7 @@ def _Parse08(rep_raw):
         shot=shots[replay.header.shot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.strptime(replay.header.date, "%m/%d"),
+        timestamp=time.strptime(replay.header.date, "%m/%d"),
         name=replay.header.name.replace("\x00", ""),
         replay_type=r_type,
         route=route
@@ -384,7 +399,7 @@ def _Parse09(rep_raw):
 
         r_shot = shots[p1.shot]
         r_score = p1.score * 10
-        
+
         s = ReplayStage()
         s.stage = 0
         s.score = p1.score * 10
@@ -405,7 +420,7 @@ def _Parse09(rep_raw):
         shot=r_shot,
         difficulty=replay.header.difficulty,
         score=r_score,
-        timestamp=datetime.strptime(replay.header.date, "%y/%m/%d"),
+        timestamp=time.strptime(replay.header.date, "%y/%m/%d"),
         name=replay.header.name.replace("\x00", ""),
         replay_type=r_type
     )
@@ -459,7 +474,7 @@ def _Parse10(rep_raw):
         shot=shots[replay.header.shot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.fromtimestamp(replay.header.timestamp),
+        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
         name=replay.header.name.replace("\x00", ""),
         replay_type=r_type
     )
@@ -520,7 +535,7 @@ def _Parse11(rep_raw):
         shot=shots[replay.header.shot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.fromtimestamp(replay.header.timestamp),
+        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
         name=replay.header.name.replace("\x00", ""),
         replay_type=r_type
     )

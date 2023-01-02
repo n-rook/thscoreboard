@@ -1,3 +1,4 @@
+import datetime
 import unittest
 
 from replays.testing import test_replays
@@ -10,7 +11,7 @@ def ParseTestReplay(filename):
 
 
 class Th06ReplayTestCase(unittest.TestCase):
-    
+
     def testHard1cc(self):
         r = ParseTestReplay('th6_hard_1cc')
         self.assertEqual(r.game, 'th06')
@@ -137,7 +138,7 @@ class Th08ReplayTestCase(unittest.TestCase):
 
 
 class Th09ReplayTestCase(unittest.TestCase):
-    
+
     def testLunatic(self):
         r = ParseTestReplay('th9_lunatic')
 
@@ -174,7 +175,7 @@ class Th09ReplayTestCase(unittest.TestCase):
 
 
 class Th10ReplayTestCase(unittest.TestCase):
-    
+
     def testNormal(self):
         r = ParseTestReplay('th10_normal')
         self.assertEqual(r.game, 'th10')
@@ -182,8 +183,12 @@ class Th10ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'ReimuB')
         self.assertEqual(r.score, 294127890)
         self.assertEqual(r.name, 'AAAAAAAA')
+        self.assertEqual(
+            r.timestamp,
+            datetime.datetime(2018, 2, 19, 9, 44, 21, tzinfo=datetime.timezone.utc)
+        )
         self.assertEqual(r.stages[1].piv, 159660)
-        
+
     def testNull(self):
         with self.assertRaises(replay_parsing.BadReplayError):
             ParseTestReplay('th10_null')
