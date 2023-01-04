@@ -207,7 +207,7 @@ class Th11ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.score, 210042730)
         self.assertEqual(r.shot, "ReimuB")
         self.assertEqual(r.name, 'AAAAAAAA')
-        self.assertEqual(r.replay_type, REGULAR)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
 
         stage5 = r.stages[4]
         self.assertEqual(stage5.score, 92478530)
@@ -227,7 +227,7 @@ class Th12ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.score, 168919360)
         self.assertEqual(r.shot, 'ReimuB')
         self.assertEqual(r.name, 'AAAAAAAA')
-        self.assertEqual(r.replay_type, REGULAR)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
 
         stage4end = r.stages[3]
         self.assertEqual(stage4end.score, 94202540)

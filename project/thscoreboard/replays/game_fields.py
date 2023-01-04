@@ -170,6 +170,7 @@ def GetFormatPower(game_id: str, power: Optional[int]) -> str:
 
     return str(power)
 
+
 # used in GetFormatLives for string formatting the life/life piece counts
 _life_pieces = immutabledict({
     'th01': None,
@@ -185,6 +186,7 @@ _life_pieces = immutabledict({
     'th11': 5,
     'th12': 4
 })
+
 
 # used in GetFormatBombs for string formatting the bomb/bomb piece counts
 _bomb_pieces = immutabledict({
