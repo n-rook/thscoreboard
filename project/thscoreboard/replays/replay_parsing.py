@@ -1,6 +1,6 @@
 """Parsing and gleaning information from individual replay files."""
 
-from dataclasses import dataclass
+import dataclasses
 from typing import Optional
 import datetime
 from kaitaistruct import KaitaiStructError
@@ -37,7 +37,7 @@ class UnsupportedReplayError(Error):
     pass
 
 
-@dataclass
+@dataclasses.dataclass
 class ReplayStage:
     stage: int = None
     score: int = None
@@ -61,7 +61,7 @@ class ReplayStage:
         return getattr(self, item)
 
 
-@dataclass
+@dataclasses.dataclass
 class ReplayInfo:
     game: str
     shot: str
@@ -77,7 +77,7 @@ class ReplayInfo:
     replay_type: int
     route: Optional[str] = None
     spell_card_id: Optional[int] = None
-    stages = []
+    stages: list[ReplayStage] = dataclasses.field(default_factory=list)
 
     @property
     def spell_card_id_format(self):
@@ -620,6 +620,10 @@ def _Parse12(rep_raw):
 def Parse(replay):
     """Parse a replay file."""
 
+    # If replay is a memoryview, cast it to bytes.
+    if isinstance(replay, memoryview):
+        replay = bytes(replay)
+
     gamecode = replay[:4]
 
     try:
@@ -638,7 +642,7 @@ def Parse(replay):
         elif gamecode == b't12r':
             return _Parse12(replay)
         else:
-            logging.warning('Failed to comprehend gamecode %s', gamecode)
+            logging.warning('Failed to comprehend gamecode %s', str(gamecode))
             raise UnsupportedGameError('This game is unsupported.')
     except (ValueError, IndexError, EOFError, KaitaiStructError):
         raise BadReplayError('This replay is corrupted or otherwise malformed')
