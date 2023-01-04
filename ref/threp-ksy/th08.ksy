@@ -22,15 +22,23 @@ types:
     doc: blank type
   file_header:
     seq:
-      - id: padding
-        size: 16
+      - id: magic
+        contents: T8RP
+      - id: version
+        size: 2
+      - id: unknown
+        size: 6
+      - id: userdata_offset
+        type: u4
+      - id: unknown_2
+        type: u4
+      - id: key
+        type: u1
       - id: unknown_3
-        type: u4
-      - id: unknown_5
-        type: u4
+        size: 3
       - id: comp_size
         type: u4
-      - id: unknown_6
+      - id: decomp_size
         type: u4
       - id: stage_offsets
         type: u4

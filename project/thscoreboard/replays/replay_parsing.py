@@ -157,7 +157,7 @@ def _Parse07(rep_raw):
     #   0x54 - 16 = 68
 
     comp_size = int.from_bytes(comp_data[4:8], byteorder='little')
-    replay = th07.Th07.from_bytes(bytearray(16) + comp_data[0:68] + td.unlzss(comp_data[68:68 + comp_size]))
+    replay = th07.Th07.from_bytes(bytearray(rep_raw[0:16]) + comp_data[0:68] + td.unlzss(comp_data[68:68 + comp_size]))
 
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"]
 
@@ -228,7 +228,7 @@ def _Parse08(rep_raw):
     td.decrypt06(comp_data, rep_raw[21])
     #   basically copied from _Parse07()
     #   0x68 (104) - 24 = 80
-    replay = th08.Th08.from_bytes(bytearray(24) + comp_data[0:80] + td.unlzss(comp_data[80:]))
+    replay = th08.Th08.from_bytes(bytearray(rep_raw[0:24]) + comp_data[0:80] + td.unlzss(comp_data[80:]))
 
     shots = [
         "Reimu & Yukari",
@@ -326,7 +326,7 @@ def _Parse09(rep_raw):
     comp_data = bytearray(rep_raw[24:comp_data_size])
     td.decrypt06(comp_data, rep_raw[21])
     #   0xc0 (192) - 24 = 168
-    replay = th09.Th09.from_bytes(bytearray(24) + comp_data[0:168] + td.unlzss(comp_data[168:]))
+    replay = th09.Th09.from_bytes(bytearray(rep_raw[0:24]) + comp_data[0:168] + td.unlzss(comp_data[168:]))
     shots = [
         "Reimu",
         "Marisa",
