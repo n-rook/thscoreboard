@@ -22,8 +22,22 @@ types:
     doc: blank type
   file_header:
     seq:
-      - id: padding
-        size: 32
+      - id: magic
+        contents: T9RP
+      - id: version
+        type: u2
+      - id: unknown_1
+        size: 6
+      - id: comp_size
+        type: u4
+      - id: unknown_2
+        type: u4
+      - id: key
+        type: u1
+      - id: unknown_3
+        size: 7
+      - id: decomp_size
+        type: u4
       - id: stage_offsets
         type: u4
         repeat: expr
