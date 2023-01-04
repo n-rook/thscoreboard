@@ -607,7 +607,7 @@ def _Parse12(rep_raw):
         shot=shots[replay.header.shot * 2 + replay.header.subshot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.fromtimestamp(replay.header.timestamp),
+        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
         name=replay.header.name.replace("\x00", ""),
         replay_type=r_type
     )
