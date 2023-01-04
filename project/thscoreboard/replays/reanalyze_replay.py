@@ -79,7 +79,7 @@ def _Diff(old_model: Optional[django_models.Model], new_model: Optional[django_m
 
     if old_model is None and new_model is None:
         pass  # Do nothing; just return empty string
-    if old_model is None:
+    elif old_model is None:
         for f in _GetComparableFields(new_model):
             diff.append('[{field}] (No model!) -> {new}'.format(
                 field=f.name, new=f.value_to_string(new_model)
