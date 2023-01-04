@@ -10,6 +10,7 @@ from replays import models
 from replays.lib import http_util
 from replays import forms
 from replays import game_fields
+from replays import reanalyze_replay
 
 from replays import game_ids
 
@@ -70,14 +71,30 @@ def replay_details(request, game_id: str, replay_id: int):
 
 
 @http_decorators.require_safe
-def download_replay(request, game_id: str, replay_id: int):
+@auth_decorators.permission_required('staff', raise_exception=True)
+def view_replay_reanalysis(request, game_id: str, replay_id: int):
     replay_instance = GetReplayOr404(request.user, replay_id)
-    
+
     if replay_instance.shot.game.game_id != game_id:
         raise Http404()
     if not replay_instance.shot.game.has_replays:
         raise HttpResponseBadRequest()
-    
+    reanalysis = reanalyze_replay.CheckReplay(replay_id)
+    return render(request, 'replays/reanalyze_replay.html', {
+        'replay': replay_instance,
+        'reanalysis': reanalysis,
+    })
+
+
+@http_decorators.require_safe
+def download_replay(request, game_id: str, replay_id: int):
+    replay_instance = GetReplayOr404(request.user, replay_id)
+
+    if replay_instance.shot.game.game_id != game_id:
+        raise Http404()
+    if not replay_instance.shot.game.has_replays:
+        raise HttpResponseBadRequest()
+
     try:
         replay_file_instance = models.ReplayFile.objects.get(replay=replay_instance)
     except models.ReplayFile.DoesNotExist:
@@ -103,11 +120,11 @@ def delete_replay(request, game_id: str, replay_id: int):
         raise Http404()
     if not replay_instance.user == request.user and not request.user.is_staff:
         raise HttpResponseForbidden()
-    
+
     if request.method == 'POST':
         replay_instance.delete()
         return redirect(f'/replays/user/{replay_instance.user.username}')
-    
+
     return render(
         request,
         'replays/delete_replay.html',

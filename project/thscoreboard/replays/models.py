@@ -10,6 +10,7 @@ from django.utils.translation import pgettext_lazy
 
 from replays import game_ids
 from replays import limits
+from replays import replay_parsing
 from shared_content import model_ttl
 from thscoreboard import settings
 
@@ -298,6 +299,16 @@ class Replay(models.Model):
         else:
             return None
 
+    def SetFromReplayInfo(self, r: replay_parsing.ReplayInfo):
+        """Set certain derived fields on this replay from parsed information."""
+
+        self.rep_score = r.score
+        self.timestamp = r.timestamp
+        self.name = r.name
+        self.route = r.route
+        self.spell_card_id = r.spell_card_id
+        self.replay_type = r.replay_type
+
 
 class ReplayStage(models.Model):
     """ Represents the end-of-stage data for a stage split for a given replay
@@ -401,6 +412,44 @@ class ReplayStage(models.Model):
 
     th09_p2_score = models.IntegerField(blank=True, null=True)
     """The score stored for player 2 in the stage split in TH09"""
+
+    def SetFromReplayStageInfo(self, s: replay_parsing.ReplayStage):
+        """Set derived fields on this row from a replay stage.
+
+        Be aware that s.stage must match the current stage of this model
+        instance. It is not practical to update the index of a row (since the
+        index is part of a unique constraint, so changing it could easily make
+        this instance collide with another.)
+
+        Note: In order to avoid unnecessary database calls, for PoFV shots
+        the p2 shot type is not updated here.
+
+        Raises:
+            ValueError: If this instance's stage index does not match the
+                index of the stage passed in.
+        """
+
+        if self.stage != s.stage:
+            raise ValueError('Stage does not match (old {}, new {})'.format(
+                self.stage, s.stage
+            ))
+
+        self.stage = s.stage
+        self.score = s.score
+        self.piv = s.piv
+        self.graze = s.graze
+        self.point_items = s.point_items
+        self.power = s.power
+        self.lives = s.lives
+        self.life_pieces = s.life_pieces
+        self.bombs = s.bombs
+        self.bomb_pieces = s.bomb_pieces
+        self.th06_rank = s.th06_rank
+        self.th07_cherry = s.th07_cherry
+        self.th07_cherrymax = s.th07_cherrymax
+        self.th09_p1_cpu = s.th09_p1_cpu
+        self.th09_p2_cpu = s.th09_p2_cpu
+        self.th09_p2_score = s.th09_p2_score
 
 
 class ReplayFile(models.Model):

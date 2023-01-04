@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block content %}
+    <h2><a href="{% url 'Replays/Details' replay.shot.game.game_id replay.id %}">Back to view</a></h2>
+    <pre>{{ reanalysis }}</pre>
+{% endblock %}
