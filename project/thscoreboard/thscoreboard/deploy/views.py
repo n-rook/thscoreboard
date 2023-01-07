@@ -10,6 +10,7 @@ from django.views.decorators import csrf
 from thscoreboard.deploy import deploy as deploy_lib
 from users import models
 
+
 @csrf.csrf_exempt
 def deploy(request):
     if "Authorization" in request.headers:

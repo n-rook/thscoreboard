@@ -1,10 +1,11 @@
 """Update the local version of the website."""
 
-import logging
-import subprocess
 import threading
 
 from django.core import management
+
+from thscoreboard.deploy import discord_announce
+from thscoreboard.deploy import git
 
 try:
     import uwsgi
@@ -22,7 +23,7 @@ def update_and_deploy():
 
     # Something weird might happen if we try to do this concurrently.
     with _DEPLOY_LOCK:
-        _git_pull()
+        git.pull()
 
         management.call_command(
             'migrate',
@@ -42,16 +43,17 @@ def update_and_deploy():
             interactive=False
         )
 
+        revision = git.head_revision()
+        discord_announce.announce(
+            'Updated to commit {rev}:\n{rev_link}'.format(
+                rev=revision,
+                rev_link=_get_github_link(revision),
+            )
+        )
+
         uwsgi.reload()
 
 
-def _git_pull():
-    # Retrieve the main branch from the github repo.
-    outcome = subprocess.run(
-        ['git', 'pull', '--ff-only'],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        text=True)
-    logging.info('Git pull completed (exit code %d). Output:\n%s',
-                 outcome.returncode, outcome.stdout)
-    outcome.check_returncode()
+def _get_github_link(revision):
+    """Get a link to GitHub for a given revision."""
+    return f'https://github.com/n-rook/thscoreboard/commit/{revision}'
