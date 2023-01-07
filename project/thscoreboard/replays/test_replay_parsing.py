@@ -253,3 +253,7 @@ class Th12ReplayTestCase(unittest.TestCase):
         self.assertIsNone(stage.piv)
         self.assertIsNone(stage.lives)
         self.assertIsNone(stage.bomb_pieces)
+
+    def testStagePractice(self):
+        r = ParseTestReplay('th12_stage_practice')
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.STAGE_PRACTICE)
