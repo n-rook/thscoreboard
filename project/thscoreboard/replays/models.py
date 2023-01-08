@@ -89,7 +89,7 @@ class Category(models.IntegerChoices):
     REGULAR = 1, pgettext_lazy('Category', 'Regular')
     """A normal upload; a legitimate replay played by a real player."""
 
-    TAS = 2, pgettext_lazy('Category', 'TAS')
+    TAS = 2, pgettext_lazy('Category', 'Tool-Assisted')
     """A tool-assisted replay."""
 
     UNUSUAL = 3, pgettext_lazy('Category', 'Unusual')
@@ -100,7 +100,11 @@ class Category(models.IntegerChoices):
     """
 
     PRIVATE = 4, pgettext_lazy('Category', 'Private')
-    """A private replay that isn't shown to anyone."""
+    """A private replay that isn't shown to anyone.
+
+    Private is deprecated; it will be removed soon. (If someone didn't
+    want to share a replay, why would they upload it?)
+    """
 
 
 class ReplayType(models.IntegerChoices):

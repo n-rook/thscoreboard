@@ -7,9 +7,9 @@ from django import forms
 from django.core import exceptions
 from django.utils.translation import gettext as _
 
-from . import game_ids
-from . import models
-from . import limits
+from replays import game_ids
+from replays import models
+from replays import limits
 
 difficulty_names = (
     ('0', 'Easy'),
@@ -20,12 +20,10 @@ difficulty_names = (
     ('5', 'Phantasm'),
 )
 
-category_names = (
-    ('1', _('Regular')),
-    ('2', _('Tool-Assisted')),
-    ('3', _('Unranked')),
-    ('4', _('Private'))
-)
+category_names = [
+    (category, name) for (category, name) in models.Category.choices
+    if category != models.Category.PRIVATE
+]
 
 replay_types = (
     ('1', _('Regular')),
