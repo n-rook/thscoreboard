@@ -50,7 +50,12 @@
                 <td>Replay Type</td>
                 <td>{{ replay_type }}</td>
             </tr>
-            {% if replay.spell_card_id %}
+            {% if spell_name %}
+            <tr>
+                <td>Spell Card</td>
+                <td>{{ spell_name }}
+            </tr>
+            {% elif replay.spell_card_id %}
             <tr>
                 <td>Spell Card ID</td>
                 <td>{{ replay.GetSpellCardIDFormat }}</td>
