@@ -130,7 +130,7 @@ if 'DATABASE_SOCKET' in os.environ:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'thscoreboard',
+            'NAME': os.environ.get('LOCAL_DATABASE_NAME', 'thscoreboard'),
             'USER': os.environ.get('LOCAL_DATABASE_USER', 'thscoreboard'),
             'PASSWORD': os.environ['LOCAL_DATABASE_PASSWORD'],
         },
@@ -140,7 +140,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'thscoreboard',
+            'NAME': os.environ.get('LOCAL_DATABASE_NAME', 'thscoreboard'),
             'HOST': 'localhost',
             'PORT': '5432',
             'USER': os.environ.get('LOCAL_DATABASE_USER', 'thscoreboard'),
