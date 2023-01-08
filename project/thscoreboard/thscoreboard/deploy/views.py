@@ -21,7 +21,7 @@ def deploy(request):
                 user = models.User.objects.get(username=creds[0])
                 if hashers.check_password(creds[1], user.password) and user.is_superuser:
                     logging.info('Deploying on behalf of %s', user.username)
-                    deploy_lib.update_and_deploy()
+                    deploy_lib.update_and_deploy(user.username)
                     return http.HttpResponse(status=200, content="Success!!!")
             except models.User.DoesNotExist:
                 response = http.HttpResponse(status=401, content=f"Failed to authenticate user {creds[0]}")

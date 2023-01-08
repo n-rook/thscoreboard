@@ -18,7 +18,7 @@ except ImportError:
 _DEPLOY_LOCK = threading.Lock()
 
 
-def update_and_deploy():
+def update_and_deploy(user: str):
     """Update the local website, and restart to pick up the update."""
 
     # Something weird might happen if we try to do this concurrently.
@@ -45,7 +45,8 @@ def update_and_deploy():
 
         revision = git.head_revision()
         discord_announce.announce(
-            'Updated to commit {rev}:\n{rev_link}'.format(
+            '{user} updated to commit {rev}:\n{rev_link}'.format(
+                user=user,
                 rev=revision,
                 rev_link=_get_github_link(revision),
             )
