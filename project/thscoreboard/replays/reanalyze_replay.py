@@ -12,6 +12,7 @@ import copy
 from typing import Optional
 
 from django.db import models as django_models
+from django.db import transaction
 
 from replays import game_ids
 from replays import models
@@ -24,6 +25,13 @@ def CheckReplay(replay_id: int) -> str:
     differ = _Differ()
     _Reanalyze(replay_id, differ)
     return differ.GetOutput()
+
+
+@transaction.atomic
+def UpdateReplay(replay_id: int) -> None:
+    """Update a replay by recomputing its derived fields."""
+    updater = _Updater()
+    _Reanalyze(replay_id, updater)
 
 
 class _Recorder(abc.ABC):
@@ -72,6 +80,19 @@ class _Differ(_Recorder):
 
     def GetOutput(self):
         return '\n\n'.join([d for d in self._output if d])
+
+
+class _Updater(_Recorder):
+    """A Differ that actually makes changes to an update."""
+
+    def Change(self, name: str, old_model: django_models.Model, new_model: django_models.Model):
+        new_model.save()
+
+    def New(self, name: str, new_model: django_models.Model):
+        new_model.save()
+
+    def Deleted(self, name: str, old_model: django_models.Model):
+        old_model.delete()
 
 
 def _Reanalyze(replay_id: int, recorder: _Recorder) -> str:
