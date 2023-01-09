@@ -125,6 +125,26 @@ _table_fields_th11 = immutabledict({
     'th09_p2_score': False,
 })
 
+_table_fields_th12 = immutabledict({
+    'stage': True,
+    'score': True,
+    'piv': True,
+    'graze': True,
+    'point_items': False,
+    'power': True,
+    'lives': True,
+    'life_pieces': True,
+    'bombs': True,
+    'bomb_pieces': True,
+    'th06_rank': False,
+    'th07_cherry': False,
+    'th07_cherrymax': False,
+    'th09_p1_cpu': False,
+    'th09_p2_cpu': False,
+    'th09_p2_shot': False,
+    'th09_p2_score': False,
+})
+
 _game_fields = immutabledict({
     'th01': None,
     'th05': None,
@@ -133,7 +153,8 @@ _game_fields = immutabledict({
     'th08': _table_fields_th08,
     'th09': _table_fields_th09,
     'th10': _table_fields_th10,
-    'th11': _table_fields_th11
+    'th11': _table_fields_th11,
+    'th12': _table_fields_th12,
 })
 
 
@@ -144,19 +165,43 @@ def GetFormatPower(game_id: str, power: Optional[int]) -> str:
         return str(power)
     if game_id in (game_ids.GameIDs.TH10, game_ids.GameIDs.TH11):
         return "%.2f" % (float(power) * 0.05)
+    if game_id in (game_ids.GameIDs.TH12):
+        return '{:.2f}'.format(power / 100)
 
     return str(power)
 
 
+# used in GetFormatLives for string formatting the life/life piece counts
 _life_pieces = immutabledict({
     'th01': None,
+    'th02': None,
+    'th03': None,
+    'th04': None,
     'th05': None,
     'th06': None,
     'th07': None,
     'th08': None,
     'th09': None,
     'th10': None,
-    'th11': 5
+    'th11': 5,
+    'th12': 4
+})
+
+
+# used in GetFormatBombs for string formatting the bomb/bomb piece counts
+_bomb_pieces = immutabledict({
+    'th01': None,
+    'th02': None,
+    'th03': None,
+    'th04': None,
+    'th05': None,
+    'th06': None,
+    'th07': None,
+    'th08': None,
+    'th09': None,
+    'th10': None,
+    'th11': None,
+    'th12': 3
 })
 
 
@@ -170,6 +215,18 @@ def GetFormatLives(game_id: str, lives: Optional[int], life_pieces: Optional[int
         if life_pieces is None:
             life_pieces = 0
         return f"{lives} ({life_pieces}/{total_life_pieces})"
+
+
+def GetFormatBombs(game_id: str, bombs: Optional[int], bomb_pieces: Optional[int]) -> str:
+    if bombs is None:
+        return ""
+    total_bomb_pieces = _bomb_pieces[game_id]
+    if total_bomb_pieces is None:
+        return str(bombs)
+    else:
+        if bomb_pieces is None:
+            bomb_pieces = 0
+        return f"{bombs} ({bomb_pieces}/{total_bomb_pieces})"
 
 
 def GetGameField(gameid: str):
@@ -214,6 +271,7 @@ def FormatStages(game_id: str, replay_stages):
         stage.power = GetFormatPower(game_id, stage.power)
         stage.stage = GetFormatStage(game_id, stage.stage)
         stage.lives = GetFormatLives(game_id, stage.lives, stage.life_pieces)
+        stage.bombs = GetFormatBombs(game_id, stage.bombs, stage.bomb_pieces)
         if game_id == game_ids.GameIDs.TH09:
             stage.th09_p2_shotFormat = stage.th09_p2_shot.GetName()
 

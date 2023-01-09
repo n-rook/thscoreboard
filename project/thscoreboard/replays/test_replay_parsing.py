@@ -4,6 +4,7 @@ import unittest
 from replays.testing import test_replays
 from replays import replay_parsing
 from replays import game_fields
+from replays import game_ids
 
 
 def ParseTestReplay(filename):
@@ -19,7 +20,7 @@ class Th06ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'ReimuA')
         self.assertEqual(r.score, 92245410)
         self.assertEqual(r.name, 'nrook   ')
-        self.assertEqual(r.replay_type, 1)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
 
         self.assertEqual(r.stages[0].stage, 0)
         self.assertEqual(r.stages[0].score, 5204570)
@@ -44,7 +45,7 @@ class Th06ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'MarisaA')
         self.assertEqual(r.score, 181144360)
         self.assertEqual(r.name, 'AAAAAAAA')
-        self.assertEqual(r.replay_type, 1)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
 
         self.assertEqual(r.stages[0].stage, 6)
         self.assertEqual(r.stages[0].score, 181144360)
@@ -128,13 +129,13 @@ class Th08ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.spell_card_id, 215)
         self.assertEqual(r.spell_card_id_format, 216)
         self.assertEqual(r.difficulty, 1)
-        self.assertEqual(r.replay_type, 3)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.SPELL_PRACTICE)
 
         r = ParseTestReplay('th8_spell_practice_2')
         self.assertEqual(r.spell_card_id, 34)
         self.assertEqual(r.spell_card_id_format, 35)
         self.assertEqual(r.difficulty, 2)
-        self.assertEqual(r.replay_type, 3)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.SPELL_PRACTICE)
 
 
 class Th09ReplayTestCase(unittest.TestCase):
@@ -146,7 +147,7 @@ class Th09ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'Reimu')
         self.assertEqual(r.score, 49348230)
         self.assertEqual(r.name, 'AAAAAAAA')
-        self.assertEqual(r.replay_type, 1)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
 
         s = r.stages[8]
 
@@ -163,7 +164,7 @@ class Th09ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'Yuuka')
         self.assertEqual(r.score, 0)
         self.assertEqual(r.name, '17:49:20')
-        self.assertEqual(r.replay_type, 4)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.PVP)
 
         s = r.stages[0]
 
@@ -199,10 +200,10 @@ class Th10ReplayTestCase(unittest.TestCase):
 
     def testStagePractice(self):
         r = ParseTestReplay('th10_stage_practice')
-        self.assertEqual(r.replay_type, 2)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.STAGE_PRACTICE)
 
 
-class Th11ReplayTestCaseA(unittest.TestCase):
+class Th11ReplayTestCase(unittest.TestCase):
 
     def testNormal(self):
         r = ParseTestReplay('th11_normal')
@@ -211,7 +212,7 @@ class Th11ReplayTestCaseA(unittest.TestCase):
         self.assertEqual(r.score, 210042730)
         self.assertEqual(r.shot, "ReimuB")
         self.assertEqual(r.name, 'AAAAAAAA')
-        self.assertEqual(r.replay_type, 1)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
 
         stage5 = r.stages[4]
         self.assertEqual(stage5.score, 92478530)
@@ -220,3 +221,39 @@ class Th11ReplayTestCaseA(unittest.TestCase):
         self.assertEqual(stage5.lives, 5)
         self.assertEqual(stage5.life_pieces, 2)
         self.assertEqual(stage5.graze, 2820)
+
+
+class Th12ReplayTestCase(unittest.TestCase):
+
+    def testNormal(self):
+        r = ParseTestReplay('th12_normal')
+        self.assertEqual(r.game, 'th12')
+        self.assertEqual(r.difficulty, 1)
+        self.assertEqual(r.score, 168919360)
+        self.assertEqual(r.shot, 'ReimuB')
+        self.assertEqual(r.name, 'AAAAAAAA')
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+
+        stage4end = r.stages[3]
+        self.assertEqual(stage4end.score, 94202540)
+        self.assertEqual(stage4end.piv, 13100)
+        self.assertEqual(stage4end.life_pieces, 3)
+        self.assertEqual(game_fields.GetFormatPower('th12', stage4end.power), '4.00')
+
+    def testExtra(self):
+        r = ParseTestReplay('th12_extra')
+        self.assertEqual(r.game, 'th12')
+        self.assertEqual(r.difficulty, 4)
+        self.assertEqual(r.shot, 'SanaeB')
+        self.assertEqual(r.score, 131238030)
+
+        stage = r.stages[0]
+        self.assertEqual(stage.score, 131238030)
+        self.assertIsNone(stage.power)
+        self.assertIsNone(stage.piv)
+        self.assertIsNone(stage.lives)
+        self.assertIsNone(stage.bomb_pieces)
+
+    def testStagePractice(self):
+        r = ParseTestReplay('th12_stage_practice')
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.STAGE_PRACTICE)
