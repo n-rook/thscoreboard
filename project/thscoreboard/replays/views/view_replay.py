@@ -54,7 +54,7 @@ def replay_details(request, game_id: str, replay_id: int):
         'replay_file_is_good': replay_instance.is_good,
         'has_stages': len(replay_stages) != 0,
         'replay_stages': formatStages,
-        'table_fields': game_fields.GetGameField(game_id),
+        'table_fields': game_fields.GetGameField(game_id, replay_instance.replay_type),
         'edit_form': edit_form,
         'replay_type': game_ids.GetReplayType(replay_instance.replay_type)
     }
