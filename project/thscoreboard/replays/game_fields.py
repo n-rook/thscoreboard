@@ -79,10 +79,30 @@ _table_fields_th09 = immutabledict({
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
+    'th09_p1_cpu': False,
+    'th09_p2_cpu': False,
+    'th09_p2_shot': True,
+    'th09_p2_score': True,
+})
+
+_table_fields_th09_PVP = immutabledict({
+    'stage': True,
+    'score': False,
+    'piv': False,
+    'graze': False,
+    'point_items': False,
+    'power': False,
+    'lives': False,
+    'life_pieces': False,
+    'bombs': False,
+    'bomb_pieces': False,
+    'th06_rank': False,
+    'th07_cherry': False,
+    'th07_cherrymax': False,
     'th09_p1_cpu': True,
     'th09_p2_cpu': True,
     'th09_p2_shot': True,
-    'th09_p2_score': True,
+    'th09_p2_score': False,
 })
 
 _table_fields_th10 = immutabledict({
@@ -157,6 +177,18 @@ _game_fields = immutabledict({
     'th12': _table_fields_th12,
 })
 
+_game_fields_PVP = immutabledict({
+    'th01': None,
+    'th05': None,
+    'th06': None,
+    'th07': None,
+    'th08': None,
+    'th09': _table_fields_th09_PVP,
+    'th10': None,
+    'th11': None,
+    'th12': None,
+})
+
 
 def GetFormatPower(game_id: str, power: Optional[int]) -> str:
     if power is None:
@@ -229,9 +261,13 @@ def GetFormatBombs(game_id: str, bombs: Optional[int], bomb_pieces: Optional[int
         return f"{bombs} ({bomb_pieces}/{total_bomb_pieces})"
 
 
-def GetGameField(gameid: str):
-    if gameid in _game_fields:
-        return _game_fields[gameid]
+def GetGameField(gameid: str, replay_type: game_ids.ReplayTypes):
+    if replay_type is game_ids.ReplayTypes.PVP:
+        if gameid in _game_fields_PVP:
+            return _game_fields_PVP[gameid]
+    else:
+        if gameid in _game_fields:
+            return _game_fields[gameid]
     return None
 
 

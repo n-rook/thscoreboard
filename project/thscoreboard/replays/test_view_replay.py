@@ -29,7 +29,7 @@ class TestTableFields(test_case.ReplayTestCase):
             with self.subTest(gameid=gameid, file=file):
                 rpy = test_replays.GetRaw(file)
                 replay_info = replay_parsing.Parse(rpy)
-                fields = game_fields.GetGameField(gameid)
+                fields = game_fields.GetGameField(gameid, replay_info.replay_type)
                 for key in fields:
                     for (i, s) in enumerate(replay_info.stages):
                         if i < len(replay_info.stages) - 1:
