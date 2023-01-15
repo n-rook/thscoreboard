@@ -6,13 +6,7 @@ from django.core import management
 
 from thscoreboard.deploy import discord_announce
 from thscoreboard.deploy import git
-
-try:
-    import uwsgi
-except ImportError:
-    class uwsgi:
-        def reload():
-            pass
+from thscoreboard.deploy import uwsgi
 
 
 _DEPLOY_LOCK = threading.Lock()

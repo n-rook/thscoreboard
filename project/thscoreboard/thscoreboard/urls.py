@@ -30,6 +30,7 @@ urlpatterns = [
     path('docs/', include('replays.urls.docs_urls')),
     path('admin/', admin.site.urls),
     path('deploy', deploy_views.deploy),
+    path('sysadmin/reload', deploy_views.reload),
 
     # When fetching non-HTML pages, the browser looks at /favicon.ico
     # to find an icon.
