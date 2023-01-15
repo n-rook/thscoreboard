@@ -21,6 +21,7 @@ class Th06ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.score, 92245410)
         self.assertEqual(r.name, 'nrook   ')
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertAlmostEqual(r.slowdown, 0.0246, 4)
 
         self.assertEqual(r.stages[0].stage, 0)
         self.assertEqual(r.stages[0].score, 5204570)
@@ -64,6 +65,7 @@ class Th07ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, "SakuyaB")
         self.assertEqual(r.score, 702864100)
         self.assertEqual(r.name, 'AAAAAAAA')
+        self.assertAlmostEqual(r.slowdown, 0.094, 3)
 
     def testStages(self):
         r = ParseTestReplay('th7_lunatic')
@@ -95,6 +97,7 @@ class Th08ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'Yukari')
         self.assertEqual(r.score, 1240093320)
         self.assertEqual(r.difficulty, 1)
+        self.assertEqual(r.slowdown, 0.0)
 
         self.assertEqual(r.stages[0].score, 37008330)
         self.assertEqual(r.stages[0].power, 113)
@@ -189,6 +192,7 @@ class Th10ReplayTestCase(unittest.TestCase):
             datetime.datetime(2018, 2, 19, 9, 44, 21, tzinfo=datetime.timezone.utc)
         )
         self.assertEqual(r.stages[1].piv, 159660)
+        self.assertEqual(r.slowdown, 0.0)
 
     def testNull(self):
         with self.assertRaises(replay_parsing.BadReplayError):
@@ -213,6 +217,7 @@ class Th11ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, "ReimuB")
         self.assertEqual(r.name, 'AAAAAAAA')
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertEqual(r.slowdown, 0.0)
 
         stage5 = r.stages[4]
         self.assertEqual(stage5.score, 92478530)
@@ -233,6 +238,7 @@ class Th12ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, 'ReimuB')
         self.assertEqual(r.name, 'AAAAAAAA')
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertEqual(r.slowdown, 0.0)
 
         stage4end = r.stages[3]
         self.assertEqual(stage4end.score, 94202540)

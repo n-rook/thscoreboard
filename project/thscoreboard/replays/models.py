@@ -255,7 +255,9 @@ class Replay(models.Model):
     """
 
     slowdown = models.FloatField(blank=True, null=True)
-    """Slowdown percentage in the replay"""
+    """Slowdown percentage in the replay
+    
+    Should range from 0 to 100, unless ZUN decides otherwise"""
 
     spell_card_id = models.IntegerField(blank=True, null=True)
     """In the case of a spell practice replay, the spell card ID attempted"""
