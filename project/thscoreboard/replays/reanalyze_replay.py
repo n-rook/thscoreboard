@@ -19,6 +19,11 @@ from replays import models
 from replays import replay_parsing
 
 
+def DoesReplayNeedUpdate(replay_id: int) -> str:
+    """Return whether a replay would be updated."""
+    return bool(CheckReplay(replay_id))
+
+
 def CheckReplay(replay_id: int) -> str:
     """Check a replay and return information about how it would be updated."""
 
