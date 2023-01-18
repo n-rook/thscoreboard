@@ -76,6 +76,7 @@ class ReplayInfo:
     route: Optional[str] = None
     spell_card_id: Optional[int] = None
     stages: list[ReplayStage] = dataclasses.field(default_factory=list)
+    slowdown: Optional[float] = None
 
     @property
     def spell_card_id_format(self):
@@ -142,6 +143,7 @@ def _Parse06(rep_raw):
         score=replay.header.score,
         timestamp=time.strptime(replay.header.date, "%m/%d/%y"),
         name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
         replay_type=r_type
     )
 
@@ -215,6 +217,7 @@ def _Parse07(rep_raw):
         score=replay.header.score * 10,
         timestamp=time.strptime(replay.header.date, "%m/%d"),
         name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
         replay_type=r_type
     )
 
@@ -256,6 +259,7 @@ def _Parse08(rep_raw):
             score=replay.header.score * 10,
             timestamp=time.strptime(replay.header.date, "%m/%d"),
             name=replay.header.name.replace("\x00", ""),
+            slowdown=replay.header.slowdown,
             replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
             spell_card_id=replay.header.spell_card_id
         )
@@ -313,6 +317,7 @@ def _Parse08(rep_raw):
         score=replay.header.score * 10,
         timestamp=time.strptime(replay.header.date, "%m/%d"),
         name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
         replay_type=r_type,
         route=route
     )
@@ -476,6 +481,7 @@ def _Parse10(rep_raw):
         score=replay.header.score * 10,
         timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
         name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
         replay_type=r_type
     )
 
@@ -537,6 +543,7 @@ def _Parse11(rep_raw):
         score=replay.header.score * 10,
         timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
         name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
         replay_type=r_type
     )
 
@@ -607,6 +614,7 @@ def _Parse12(rep_raw):
         score=replay.header.score * 10,
         timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
         name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
         replay_type=r_type
     )
 

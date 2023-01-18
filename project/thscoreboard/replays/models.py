@@ -254,6 +254,11 @@ class Replay(models.Model):
     but technically there are 12 bytes allocated, so space is reserved just in case
     """
 
+    slowdown = models.FloatField(blank=True, null=True)
+    """Slowdown percentage in the replay
+    
+    Should range from 0 to 100, unless ZUN decides otherwise"""
+
     spell_card_id = models.IntegerField(blank=True, null=True)
     """In the case of a spell practice replay, the spell card ID attempted"""
 
@@ -308,6 +313,7 @@ class Replay(models.Model):
         self.route = r.route
         self.spell_card_id = r.spell_card_id
         self.replay_type = r.replay_type
+        self.slowdown = r.slowdown
 
 
 class ReplayStage(models.Model):
