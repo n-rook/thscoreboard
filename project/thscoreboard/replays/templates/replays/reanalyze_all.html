@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block content %}
+    <h2>Replays to reanalyze:</h2>
+    <ul>
+        {% for replay_info in replays %}
+            <li><a href="{{ replay_info.url }}">{{replay_info.name}}</a></li>
+        {% empty %}
+            <li>None!</li>
+        {% endfor %}
+    </ul>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" />
+    </form>
+{% endblock %}

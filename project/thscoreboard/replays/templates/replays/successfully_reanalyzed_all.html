@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block content %}
+    <h2>Reanalyzed replays:</h2>
+    <ul>
+        {% for replay_info in replays %}
+            <li><a href="{{ replay_info.url }}">{{replay_info.name}}</a></li>
+        {% empty %}
+            <li>None!</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

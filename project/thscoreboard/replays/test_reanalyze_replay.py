@@ -19,6 +19,7 @@ class ReanalyzeReplayTest(test_case.ReplayTestCase):
 
     def AssertNoDiff(self, id):
         self.assertEqual(reanalyze_replay.CheckReplay(id), '')
+        self.assertFalse(reanalyze_replay.DoesReplayNeedUpdate(id))
 
     def testNoDiff(self):
         replay = test_replays.CreateAsPublishedReplay('th10_normal', self.user)
@@ -42,6 +43,14 @@ class ReanalyzeReplayTest(test_case.ReplayTestCase):
         self.assertIn(
             '2018-02-19T10:44:21+00:00 -> 2018-02-19T09:44:21+00:00', diff
         )
+
+    def testTimestampDiff_HasUpdate(self):
+        replay = test_replays.CreateAsPublishedReplay('th10_normal', self.user)
+
+        replay.timestamp += datetime.timedelta(hours=1)
+        replay.save()
+
+        self.assertTrue(reanalyze_replay.DoesReplayNeedUpdate(replay.id))
 
     def testTimestampDiff_Update(self):
         replay = test_replays.CreateAsPublishedReplay('th10_normal', self.user)
@@ -68,6 +77,15 @@ class ReanalyzeReplayTest(test_case.ReplayTestCase):
         self.assertIn(
             '[piv] 259660 -> 159660', diff
         )
+
+    def testStage2Diff_HasUpdate(self):
+        replay = test_replays.CreateAsPublishedReplay('th10_normal', self.user)
+
+        stage2 = models.ReplayStage.objects.get(replay=replay, stage=2)
+        stage2.piv += 100000
+        stage2.save()
+
+        self.assertTrue(reanalyze_replay.DoesReplayNeedUpdate(replay.id))
 
     def testStage2Diff_Update(self):
         replay = test_replays.CreateAsPublishedReplay('th10_normal', self.user)
@@ -96,6 +114,14 @@ class ReanalyzeReplayTest(test_case.ReplayTestCase):
             '[piv] (No model!) -> 159660', diff
         )
 
+    def testStage2Missing_HasUpdate(self):
+        replay = test_replays.CreateAsPublishedReplay('th10_normal', self.user)
+
+        stage2 = models.ReplayStage.objects.get(replay=replay, stage=2)
+        stage2.delete()
+
+        self.assertTrue(reanalyze_replay.DoesReplayNeedUpdate(replay.id))
+
     def testStage2Missing_Update(self):
         replay = test_replays.CreateAsPublishedReplay('th10_normal', self.user)
 
@@ -112,6 +138,14 @@ class ReanalyzeReplayTest(test_case.ReplayTestCase):
         self.assertEqual(new_stages[1].piv, stage2_piv)
 
         self.AssertNoDiff(replay.id)
+
+    def testStage9_HasUpdate(self):
+        replay = test_replays.CreateAsPublishedReplay('th10_normal', self.user)
+
+        fake_stage_9 = models.ReplayStage(replay=replay, stage=8, piv=999999)
+        fake_stage_9.save()
+
+        self.assertTrue(reanalyze_replay.DoesReplayNeedUpdate(replay.id))
 
     def testStage9(self):
         replay = test_replays.CreateAsPublishedReplay('th10_normal', self.user)
