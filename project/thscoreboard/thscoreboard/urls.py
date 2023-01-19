@@ -32,7 +32,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('deploy', deploy_views.deploy),
     path('sysadmin/reload', deploy_views.reload),
-    path('staff', lambda req : render(req, 'staff.html')),
+    path('staff', lambda req: render(req, 'staff.html')),
 
     # When fetching non-HTML pages, the browser looks at /favicon.ico
     # to find an icon.
