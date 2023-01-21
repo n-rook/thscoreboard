@@ -19,6 +19,9 @@
             <img src="{% static 'topbar_logo.png' %}" />
             <h1>Silent Selene</h1>
         </a>
+        {% if user.is_staff or user.is_superuser %}
+        <a href="/staff">⚔️</a>
+        {% endif %}
         <div class="flex-1"></div>
         <div class="topbar-link-button">
             <a href="/docs">About</a>

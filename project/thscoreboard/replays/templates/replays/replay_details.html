@@ -104,4 +104,9 @@
         <a href="/replays/{{ game_id }}/{{ replay.id }}/delete">Permanently delete this replay</a>
     </div>
     {% endif %}
+    {% if user.is_staff %}
+    <div>
+        <a href="/replays/{{ game_id }}/{{ replay.id }}/reanalyze">Reanalyze this replay</a>
+    </div>
+    {% endif %}
 {% endblock %}
