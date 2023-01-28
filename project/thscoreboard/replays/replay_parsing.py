@@ -637,6 +637,20 @@ def _Parse13(rep_raw):
     shots = ["Reimu", "Marisa", "Sanae", "Youmu"]
 
     rep_stages = []
+
+    if replay.header.spell_practice_id != 0xFFFFFFFF:
+        return ReplayInfo(
+            game=game_ids.GameIDs.TH13,
+            shot=shots[replay.header.shot],
+            difficulty=replay.header.difficulty,
+            score=replay.header.score * 10,
+            timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+            name=replay.header.name.replace("\x00", ""),
+            slowdown=replay.header.slowdown,
+            replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
+            spell_card_id=replay.header.spell_practice_id
+        )
+
     for stage in replay.stages:
         s = ReplayStage()
         s.stage = stage.stage_num
@@ -695,8 +709,7 @@ def _Parse13(rep_raw):
         replay_type=r_type
     )
 
-    if r_type != game_ids.ReplayTypes.STAGE_PRACTICE:
-        r.stages = rep_stages
+    r.stages = rep_stages
 
     return r
 
