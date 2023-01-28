@@ -419,6 +419,19 @@ class ReplayStage(models.Model):
     th09_p2_score = models.IntegerField(blank=True, null=True)
     """The score stored for player 2 in the stage split in TH09"""
 
+    th13_trance = models.IntegerField(blank=True, null=True)
+    """Trance gauge value at the stage split in TH13
+    This value ranges from 0 to 600, with 1 ingame trance level equalling 200 points"""
+
+    extends = models.IntegerField(blank=True, null=True)
+    """Number of extends (1ups) this run has gotten so far
+    More testing needs to be done to find the exact nature of this value,
+    whether 1up items affect it or if its just score/life piece extends
+    But it's in the data so I will include it
+    
+    This value first appears in TH13, but it is present in many modern games so I've
+    opted not to specify a game for its name"""
+
     def SetFromReplayStageInfo(self, s: replay_parsing.ReplayStage):
         """Set derived fields on this row from a replay stage.
 
@@ -456,6 +469,7 @@ class ReplayStage(models.Model):
         self.th09_p1_cpu = s.th09_p1_cpu
         self.th09_p2_cpu = s.th09_p2_cpu
         self.th09_p2_score = s.th09_p2_score
+        self.th13_trance = s.th13_trance
 
 
 class ReplayFile(models.Model):
