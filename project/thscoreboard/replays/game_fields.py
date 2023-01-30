@@ -346,6 +346,20 @@ def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
         return str(stage)
 
 
+def GetFormatLifePieces(game_id: str, life_pieces: Optional[int], extends: Optional[int] = 0) -> str:
+    if life_pieces is None:
+        return ""
+    if extends is None:
+        return str(life_pieces)
+    if game_id == 'th13':
+        threshholds = [8, 10, 12, 15, 18, 20, 25]
+        if extends > 5:
+            extends = 6
+        return f'{life_pieces}/{threshholds[extends]}'
+    else:
+        return str(life_pieces)
+
+
 def FormatStages(game_id: str, replay_stages):
     """This function formats the stage values to be displayed in the front end"""
     new_stages = copy.deepcopy(replay_stages)
@@ -355,6 +369,7 @@ def FormatStages(game_id: str, replay_stages):
         stage.stage = GetFormatStage(game_id, stage.stage)
         stage.lives = GetFormatLives(game_id, stage.lives, stage.life_pieces)
         stage.bombs = GetFormatBombs(game_id, stage.bombs, stage.bomb_pieces)
+        stage.life_pieces = GetFormatLifePieces(game_id, stage.life_pieces, stage.extends)
         if game_id == game_ids.GameIDs.TH09:
             stage.th09_p2_shotFormat = stage.th09_p2_shot.GetName()
 

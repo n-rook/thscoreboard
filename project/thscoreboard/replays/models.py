@@ -471,6 +471,7 @@ class ReplayStage(models.Model):
         self.th09_p1_cpu = s.th09_p1_cpu
         self.th09_p2_cpu = s.th09_p2_cpu
         self.th09_p2_score = s.th09_p2_score
+        self.extends = s.extends
         self.th13_trance = s.th13_trance
 
 
