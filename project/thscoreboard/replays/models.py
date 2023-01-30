@@ -421,7 +421,8 @@ class ReplayStage(models.Model):
 
     th13_trance = models.IntegerField(blank=True, null=True)
     """Trance gauge value at the stage split in TH13
-    This value ranges from 0 to 600, with 1 ingame trance level equalling 200 points"""
+    This value ranges from 0 to 600, with 1 ingame trance level equalling 200 points
+    """
 
     extends = models.IntegerField(blank=True, null=True)
     """Number of extends (1ups) this run has gotten so far
@@ -430,7 +431,8 @@ class ReplayStage(models.Model):
     But it's in the data so I will include it
     
     This value first appears in TH13, but it is present in many modern games so I've
-    opted not to specify a game for its name"""
+    opted not to specify a game for its name
+    """
 
     def SetFromReplayStageInfo(self, s: replay_parsing.ReplayStage):
         """Set derived fields on this row from a replay stage.

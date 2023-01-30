@@ -37,7 +37,11 @@ class TestTableFields(test_case.ReplayTestCase):
                             if fields[key]:
                                 self.assertIsNotNone(s[key], msg=f'Expected field {key} not found')
                             if not fields[key]:
-                                self.assertIsNone(s[key], msg=f'Unexpected field {key} found')
+                                """games with varying life piece threshholds cannot have them hardcoded
+                                so the life pieces column needs to be visible for them, but not visible for those with static threshholds
+                                """
+                                if key != 'life_pieces':
+                                    self.assertIsNone(s[key], msg=f'Unexpected field {key} found')
 
 
 class TestGetPower(test_case.ReplayTestCase):
