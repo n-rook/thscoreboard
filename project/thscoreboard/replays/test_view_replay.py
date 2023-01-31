@@ -37,10 +37,14 @@ class TestTableFields(test_case.ReplayTestCase):
                             if fields[key]:
                                 self.assertIsNotNone(s[key], msg=f'Expected field {key} not found')
                             if not fields[key]:
-                                self.assertIsNone(s[key], msg=f'Unexpected field {key} found')
+                                """games with varying life piece threshholds cannot have them hardcoded
+                                so the life pieces column needs to be visible for them, but not visible for those with static threshholds
+                                """
+                                if key != 'life_pieces':
+                                    self.assertIsNone(s[key], msg=f'Unexpected field {key} found')
 
 
-class TestGetPower(test_case.ReplayTestCase):
+class TestGameFields(test_case.ReplayTestCase):
 
     def testGetPower(self):
         self.assertEqual(game_fields.GetFormatPower(game_ids.GameIDs.TH06, 100), '100')
@@ -52,3 +56,9 @@ class TestGetPower(test_case.ReplayTestCase):
 
         self.assertEqual(game_fields.GetFormatLives(game_ids.GameIDs.TH11, 5, 2), '5 (2/5)')
         self.assertEqual(game_fields.GetFormatLives(game_ids.GameIDs.TH10, 5, 2), '5')
+
+    def testGetFormatLifePieces(self):
+        self.assertEqual(game_fields.GetFormatLifePieces(game_ids.GameIDs.TH13, 3, 0), '3/8')
+        self.assertEqual(game_fields.GetFormatLifePieces(game_ids.GameIDs.TH13, 7, 3), '7/15')
+        self.assertEqual(game_fields.GetFormatLifePieces(game_ids.GameIDs.TH13, 1, 9), '1/25')
+        self.assertEqual(game_fields.GetFormatLifePieces(game_ids.GameIDs.TH13, None, 0), '')

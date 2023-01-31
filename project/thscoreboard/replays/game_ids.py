@@ -16,6 +16,7 @@ class GameIDs:
     TH10 = 'th10'
     TH11 = 'th11'
     TH12 = 'th12'
+    TH13 = 'th13'
 
 
 class ReplayTypes:
@@ -101,6 +102,11 @@ def GetGameName(game_id: str, short=False):
             return _('th12')
         else:
             return _('東方星蓮船 - Undefined Fantastic Object')
+    if game_id == GameIDs.TH13:
+        if short:
+            return _('th13')
+        else:
+            return _('東方神霊廟 - Ten Desires')
     return _('Unknown game (bug!)')
 
 
@@ -286,6 +292,16 @@ def GetShotName(game_id: str, shot_id: str):
         elif shot_id == 'SanaeB':
             return pgettext('th12', 'Sanae B')
 
+    if game_id == GameIDs.TH13:
+        if shot_id == 'Reimu':
+            return pgettext('th13', 'Reimu')
+        elif shot_id == 'Marisa':
+            return pgettext('th13', 'Marisa')
+        elif shot_id == 'Sanae':
+            return pgettext('th13', 'Sanae')
+        elif shot_id == 'Youmu':
+            return pgettext('th13', 'Youmu')
+
     return 'Bug shot'
 
 
@@ -316,7 +332,8 @@ def GetDifficultyName(game_id: str, difficulty: int):
             GameIDs.TH09,
             GameIDs.TH10,
             GameIDs.TH11,
-            GameIDs.TH12}:
+            GameIDs.TH12,
+            GameIDs.TH13}:
         if difficulty == 0:
             return 'Easy'
         elif difficulty == 1:
@@ -330,5 +347,8 @@ def GetDifficultyName(game_id: str, difficulty: int):
     if game_id in {GameIDs.TH07}:
         if difficulty == 5:
             return 'Phantasm'
+    if game_id in {GameIDs.TH13}:
+        if difficulty == 5:
+            return 'Overdrive'
 
     return 'Bug difficulty'

@@ -5,6 +5,11 @@ from immutabledict import immutabledict
 from typing import Optional
 from . import game_ids
 
+#   These table fields configure the display of the stage split columns
+#   These may differ from whether the replay file actually has the field or not
+#       depending on whether it is relevant to show that field
+#   eg. life_pieces will almost always be False as displaying it is integrated into Lives
+
 _table_fields_th06 = immutabledict({
     'stage': True,
     'score': True,
@@ -23,6 +28,8 @@ _table_fields_th06 = immutabledict({
     'th09_p2_cpu': False,
     'th09_p2_shot': False,
     'th09_p2_score': False,
+    'th13_trance': False,
+    'extends': False,
 })
 
 _table_fields_th07 = immutabledict({
@@ -43,6 +50,8 @@ _table_fields_th07 = immutabledict({
     'th09_p2_cpu': False,
     'th09_p2_shot': False,
     'th09_p2_score': False,
+    'th13_trance': False,
+    'extends': False,
 })
 
 _table_fields_th08 = immutabledict({
@@ -63,6 +72,8 @@ _table_fields_th08 = immutabledict({
     'th09_p2_cpu': False,
     'th09_p2_shot': False,
     'th09_p2_score': False,
+    'th13_trance': False,
+    'extends': False,
 })
 
 _table_fields_th09 = immutabledict({
@@ -83,6 +94,8 @@ _table_fields_th09 = immutabledict({
     'th09_p2_cpu': False,
     'th09_p2_shot': True,
     'th09_p2_score': True,
+    'th13_trance': False,
+    'extends': False,
 })
 
 _table_fields_th09_PVP = immutabledict({
@@ -103,6 +116,8 @@ _table_fields_th09_PVP = immutabledict({
     'th09_p2_cpu': True,
     'th09_p2_shot': True,
     'th09_p2_score': False,
+    'th13_trance': False,
+    'extends': False,
 })
 
 _table_fields_th10 = immutabledict({
@@ -123,6 +138,8 @@ _table_fields_th10 = immutabledict({
     'th09_p2_cpu': False,
     'th09_p2_shot': False,
     'th09_p2_score': False,
+    'th13_trance': False,
+    'extends': False,
 })
 
 _table_fields_th11 = immutabledict({
@@ -133,7 +150,7 @@ _table_fields_th11 = immutabledict({
     'point_items': False,
     'power': True,
     'lives': True,
-    'life_pieces': True,
+    'life_pieces': False,
     'bombs': False,
     'bomb_pieces': False,
     'th06_rank': False,
@@ -143,6 +160,8 @@ _table_fields_th11 = immutabledict({
     'th09_p2_cpu': False,
     'th09_p2_shot': False,
     'th09_p2_score': False,
+    'th13_trance': False,
+    'extends': False,
 })
 
 _table_fields_th12 = immutabledict({
@@ -153,9 +172,9 @@ _table_fields_th12 = immutabledict({
     'point_items': False,
     'power': True,
     'lives': True,
-    'life_pieces': True,
+    'life_pieces': False,
     'bombs': True,
-    'bomb_pieces': True,
+    'bomb_pieces': False,
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
@@ -163,6 +182,30 @@ _table_fields_th12 = immutabledict({
     'th09_p2_cpu': False,
     'th09_p2_shot': False,
     'th09_p2_score': False,
+    'th13_trance': False,
+    'extends': False,
+})
+
+_table_fields_th13 = immutabledict({
+    'stage': True,
+    'score': True,
+    'piv': True,
+    'graze': True,
+    'point_items': False,
+    'power': True,
+    'lives': True,
+    'life_pieces': True,
+    'bombs': True,
+    'bomb_pieces': False,
+    'th06_rank': False,
+    'th07_cherry': False,
+    'th07_cherrymax': False,
+    'th09_p1_cpu': False,
+    'th09_p2_cpu': False,
+    'th09_p2_shot': False,
+    'th09_p2_score': False,
+    'th13_trance': True,
+    'extends': True,
 })
 
 _game_fields = immutabledict({
@@ -175,6 +218,7 @@ _game_fields = immutabledict({
     'th10': _table_fields_th10,
     'th11': _table_fields_th11,
     'th12': _table_fields_th12,
+    'th13': _table_fields_th13,
 })
 
 _game_fields_PVP = immutabledict({
@@ -187,6 +231,7 @@ _game_fields_PVP = immutabledict({
     'th10': None,
     'th11': None,
     'th12': None,
+    'th13': None,
 })
 
 
@@ -197,7 +242,7 @@ def GetFormatPower(game_id: str, power: Optional[int]) -> str:
         return str(power)
     if game_id in (game_ids.GameIDs.TH10, game_ids.GameIDs.TH11):
         return "%.2f" % (float(power) * 0.05)
-    if game_id in (game_ids.GameIDs.TH12):
+    if game_id in (game_ids.GameIDs.TH12, game_ids.GameIDs.TH13):
         return '{:.2f}'.format(power / 100)
 
     return str(power)
@@ -216,7 +261,8 @@ _life_pieces = immutabledict({
     'th09': None,
     'th10': None,
     'th11': 5,
-    'th12': 4
+    'th12': 4,
+    'th13': None,   # this game has variable life pieces, so hardcoding it doesn't work
 })
 
 
@@ -233,7 +279,8 @@ _bomb_pieces = immutabledict({
     'th09': None,
     'th10': None,
     'th11': None,
-    'th12': 3
+    'th12': 3,
+    'th13': 8,
 })
 
 
@@ -299,6 +346,20 @@ def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
         return str(stage)
 
 
+def GetFormatLifePieces(game_id: str, life_pieces: Optional[int], extends: Optional[int] = 0) -> str:
+    if life_pieces is None:
+        return ""
+    if extends is None:
+        return str(life_pieces)
+    if game_id == 'th13':
+        threshholds = [8, 10, 12, 15, 18, 20, 25]
+        if extends > 5:
+            extends = 6
+        return f'{life_pieces}/{threshholds[extends]}'
+    else:
+        return str(life_pieces)
+
+
 def FormatStages(game_id: str, replay_stages):
     """This function formats the stage values to be displayed in the front end"""
     new_stages = copy.deepcopy(replay_stages)
@@ -308,6 +369,7 @@ def FormatStages(game_id: str, replay_stages):
         stage.stage = GetFormatStage(game_id, stage.stage)
         stage.lives = GetFormatLives(game_id, stage.lives, stage.life_pieces)
         stage.bombs = GetFormatBombs(game_id, stage.bombs, stage.bomb_pieces)
+        stage.life_pieces = GetFormatLifePieces(game_id, stage.life_pieces, stage.extends)
         if game_id == game_ids.GameIDs.TH09:
             stage.th09_p2_shotFormat = stage.th09_p2_shot.GetName()
 
@@ -343,5 +405,9 @@ def FormatStages(game_id: str, replay_stages):
             stage.th09_p2_cpu = ""
         if stage.th09_p2_score is None:
             stage.th09_p2_score = ""
+        if stage.th13_trance is None:
+            stage.th13_trance = ""
+        if stage.extends is None:
+            stage.extends = ""
 
     return new_stages
