@@ -40,7 +40,7 @@ DEBUG = not IS_PROD
 
 
 def _GetAllowedHosts():
-    hosts = ['localhost']
+    hosts = ['localhost', 'local.silentselene.net']
     env_host = os.environ.get('MY_HOST')
     if env_host:
         hosts.append(env_host)
