@@ -16,7 +16,7 @@
         <div class="topbar-little-spacer">
         </div>
         <a id="topbar-banner" href="/">
-            <img src="{% static 'topbar_logo.png' %}" />
+            <img id="topbar-logo" src="{% static 'topbar_logo.png' %}" />
             <h1>Silent Selene</h1>
         </a>
         {% if user.is_staff or user.is_superuser %}

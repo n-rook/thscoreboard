@@ -7,7 +7,7 @@
     flex: 1
 
 #topbar
-    background-color: rgb(66, 0, 128)
+    background-color: var(--topbar-color)
     min-height: 50px
     display: flex
     align-items: center
@@ -17,13 +17,14 @@
     display: flex
     justify-content: center
     align-items: center
+    text-decoration: none
 
-#topbar-banner > img
+#topbar-logo
     object-fit: contain
     display: block
     border: 1px solid
     border-color: black
-    background-color: rgb(87, 53, 118)
+    background-color: var(--topbar-logo-background-color)
 
 #topbar-banner h1
     display: block
@@ -31,6 +32,7 @@
     font: 600 27px "EB Garamond", "Times New Roman", serif
     margin: auto 10px
     margin-block: 5px 5px
+    text-decoration: none
 
 .topbar-link-button :is(a, a:visited, a:hover, a:active)
     color: white
@@ -50,6 +52,15 @@ body
 
 .light-background
     background-color: var(--backdrop-color)
+
+a
+    color: var(--link-color)
+
+    &:visited
+        color: var(--visited-link-color)
+
+    &:active
+        color: var(--active-link-color)
 
 h1
     font: 500 36px  "EB Garamond", "Times New Roman", serif
@@ -193,10 +204,6 @@ th, td
 // SASS does not seem to support :is() as the only selector yet,
 // so we list them explicitly.
 select
-    background-color: var(--background-color)
-    color: var(--text-color)
-
-input
     background-color: var(--background-color)
     color: var(--text-color)
 
