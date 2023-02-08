@@ -1,0 +1,18 @@
+{% extends "simple_centered.html" %}
+{% load i18n %}
+
+{% block centered-title %}<p>Suspended</p>{% endblock %}
+
+{% block centered-content %}
+{% url 'Users/logout' as logout_url %}
+<p>{% blocktranslate %}Your account has been suspended.{% endblocktranslate %}</p>
+
+<p>{{reason}}</p>
+
+<p>
+    {% blocktranslate %}
+        Your ban will end at {{ expiration }}, at which point you can use Silent Selene again.
+        You may also <a href="{{ logout_url }}">log out</a> and browse anonymously.
+    {% endblocktranslate %}
+</p>
+{% endblock %}

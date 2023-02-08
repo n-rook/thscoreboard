@@ -1,10 +1,12 @@
 [flake8]
-ignore = 
+ignore =
     # Blank line contains whitespace? Who cares?
     W293
+    # Starting a line with a boolean operator is now standard in Python.
+    W503,
     # We have not decided on a max line length yet.
     E501,
-exclude = 
+exclude =
 	replays/kaitai_parsers/*
 per-file-ignores =
     # settings.py must import dependencies oddly in order to make sure they

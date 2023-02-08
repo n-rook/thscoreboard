@@ -125,3 +125,66 @@ class VisitsTestCase(test_case.UserTestCase):
 
         visit_count = models.Visits.objects.filter(user=u, ip='1.2.3.4').count()
         self.assertEqual(visit_count, 1)
+
+
+class BanTestCase(test_case.UserTestCase):
+
+    def setUp(self):
+        super().setUp()
+
+        self.banner = self.createUser('banner')
+        self.target = self.createUser('target')
+
+        self.now = datetime.datetime.now(datetime.timezone.utc)
+
+    def testNotBanned(self):
+        self.assertFalse(self.target.CheckIfBanned())
+
+    def testBanUser(self):
+        b = self.target.BanUser(
+            self.banner,
+            'test',
+            datetime.timedelta(hours=6),
+            expiration=self.now
+        )
+        self.assertEqual(b.author, self.banner)
+        self.assertEqual(b.target, self.target)
+        self.assertEqual(b.reason, 'test')
+        self.assertEqual(b.duration, datetime.timedelta(hours=6))
+        self.assertAlmostEqual(b.expiration, self.now, delta=datetime.timedelta(minutes=1))
+
+        self.assertEqual(b, models.Ban.objects.filter(target=self.target).get())
+
+        self.assertEqual(self.target.might_be_banned, True)
+
+    def testBanUserComputesExpirationTime(self):
+        b = self.target.BanUser(
+            self.banner,
+            'test',
+            datetime.timedelta(hours=6)
+        )
+        self.assertAlmostEqual(
+            b.expiration,
+            self.now + datetime.timedelta(hours=6),
+            delta=datetime.timedelta(minutes=1))
+
+    def testBanned(self):
+        self.target.BanUser(
+            self.banner,
+            'test',
+            datetime.timedelta(hours=6),
+            expiration=self.now + datetime.timedelta(hours=3)
+        )
+        self.assertTrue(self.target.CheckIfBanned())
+
+    def testBanExpired(self):
+        self.target.BanUser(
+            self.banner,
+            'test',
+            datetime.timedelta(hours=6),
+            expiration=self.now - datetime.timedelta(hours=3)
+        )
+        self.assertFalse(self.target.CheckIfBanned())
+
+        updated_target = models.User.objects.get(id=self.target.id)
+        self.assertFalse(updated_target.might_be_banned)
