@@ -2,9 +2,11 @@
 from django.contrib.auth import views as auth_views
 from django.urls import path, reverse_lazy
 
+from users.middleware import check_ban
 from users import other_views
 from users.views import accept_invite
 from users.views import batch_invite_csv
+from users.views import banned
 from users.views import profile
 from users.views import request_invite
 
@@ -25,6 +27,7 @@ urlpatterns = [
     path('ip_bans/', other_views.view_ip_bans),
     path('ip_bans/add', other_views.add_ip_ban),
     path('ip_bans/<int:ban_id>/delete', other_views.delete_ip_ban),
+    path('banned', banned.banned_notification, name='banned'),
 
     path(
         'login',
@@ -32,7 +35,7 @@ urlpatterns = [
         name='login'),
     path(
         'logout',
-        auth_views.LogoutView.as_view(),
+        check_ban.allow_access_by_banned_users(auth_views.LogoutView.as_view()),
         name='logout'),
     path(
         'forgot_password',
