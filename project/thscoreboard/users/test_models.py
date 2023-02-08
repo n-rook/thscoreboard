@@ -163,7 +163,10 @@ class BanTestCase(test_case.UserTestCase):
             'test',
             datetime.timedelta(hours=6)
         )
-        self.assertAlmostEqual(b.expiration, self.now + datetime.timedelta(hours=6), datetime.timedelta(minutes=1))
+        self.assertAlmostEqual(
+            b.expiration,
+            self.now + datetime.timedelta(hours=6),
+            delta=datetime.timedelta(minutes=1))
 
     def testBanned(self):
         self.target.BanUser(

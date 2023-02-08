@@ -55,7 +55,6 @@ class User(auth_models.AbstractUser):
 
         now = datetime.datetime.now(datetime.timezone.utc)
         if Ban.objects.filter(target=self, expiration__gt=now).exists():
-            print('rip; banned')
             return True
 
         # The user is not really banned, but might_be_banned is true!
