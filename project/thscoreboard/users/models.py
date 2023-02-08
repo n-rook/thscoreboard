@@ -28,8 +28,23 @@ class User(auth_models.AbstractUser):
 
     class Meta(auth_models.AbstractUser.Meta):
         constraints = [
-            models.UniqueConstraint('email', name='unique_email')
+            models.UniqueConstraint('email', name='unique_email'),
+            models.CheckConstraint(
+            check=(
+                models.Q(deleted_on__isnull=False) & models.Q(is_active=False)
+            ) | (
+                models.Q(deleted_on__isnull=True) & models.Q(is_active=True)
+            ),
+            name='deleted_on_set_iff_not_active'),
         ]
+
+    deleted_on = models.DateTimeField(null=True, blank=True)
+    """The time at which the user requested their account be deleted.
+
+    In order to protect users whose accounts were hacked or who had second thoughts,
+    we keep deleted accounts around for a while even after the user requests they
+    be deleted.
+    """
 
     might_be_banned = models.BooleanField(default=False)
     """A field that is false if the user is definitely not banned.
@@ -94,6 +109,12 @@ class User(auth_models.AbstractUser):
         self.save()
         return b
 
+    @transaction.atomic
+    def MarkForDeletion(self):
+        """Mark this account for deletion."""
+        self.is_active = False
+        self.deleted_on = datetime.datetime.now(datetime.timezone.utc)
+        self.save()
 
 _USERNAME_MAX_LENGTH = 150
 
