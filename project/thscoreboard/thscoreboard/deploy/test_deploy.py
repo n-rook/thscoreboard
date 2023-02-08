@@ -18,3 +18,16 @@ class MigrateFromCallCommandTestCase(test.TestCase):
 
     def testMigrateDownUp_Replays(self):
         self._CheckDownUp('replays')
+
+
+class ModelsMatchMigrationsTestCase(test.TestCase):
+
+    def testModelsMatchMigrations(self):
+        # Raise an error if migration files need to be created.
+        management.call_command(
+            'makemigrations',
+            '--check',
+            '--noinput',
+            '--dry-run',
+            '--traceback'
+        )
