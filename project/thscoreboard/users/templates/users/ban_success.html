@@ -1,0 +1,10 @@
+{% extends "simple_centered.html" %}
+{% load i18n %}
+
+{% block centered-title %}<p>Ban recorded</p>{% endblock %}
+
+{% block centered-content %}
+<p>{% blocktranslate with target_username=target.username %}
+    The user {{target_username}} has been temporarily banned.
+{% endblocktranslate %}</p>
+{% endblock %}
