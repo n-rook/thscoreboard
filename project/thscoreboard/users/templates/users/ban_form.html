@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Add Ban</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <table class="form-table">
+        <th style="width: 50%;"></th>
+        <tr>
+            <td>
+                <label for="{{ form.target.id_for_label }}">{{form.target.label}}</label>
+                {{ form.target.errors }}
+            </td>
+            <td>
+                {{ form.target }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="{{ form.reason.id_for_label }}">{{form.reason.label}}</label>
+                {{ form.reason.errors }}
+            </td>
+            <td>
+                {{ form.reason }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="{{ form.days.id_for_label }}">{{form.days.label}}</label>
+                {{ form.days.errors }}
+            </td>
+            <td>
+                {{ form.days }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="{{ form.hours.id_for_label }}">{{form.hours.label}}</label>
+                {{ form.hours.errors }}
+            </td>
+            <td>
+                {{ form.hours }}
+            </td>
+        </tr>
+    </table>
+    <input type="submit">
+</form>
+{% endblock %}

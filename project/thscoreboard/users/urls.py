@@ -25,10 +25,12 @@ urlpatterns = [
     path('batch_invite', batch_invite_csv.batch_invite, name='batch_invite'),
     path('batch_invite_confirm', batch_invite_csv.batch_invite_confirm, name='batch_invite_confirm'),
     path('request_invite', request_invite.request_invite),
+    path('banned', banned.banned_notification, name='banned'),
+
     path('ip_bans/', other_views.view_ip_bans),
     path('ip_bans/add', other_views.add_ip_ban),
     path('ip_bans/<int:ban_id>/delete', other_views.delete_ip_ban),
-    path('banned', banned.banned_notification, name='banned'),
+    path('staff_ban', banned.staff_ban, name='staff_ban'),
 
     path(
         'login',

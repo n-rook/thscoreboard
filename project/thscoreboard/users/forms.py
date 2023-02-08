@@ -1,4 +1,5 @@
 
+import datetime
 from typing import Any, Optional
 
 from django import forms
@@ -87,3 +88,26 @@ class AcceptInviteForm(forms.Form):
 class AddIPBanForm(forms.Form):
     ip = forms.CharField(label='IP Address')
     comment = forms.CharField(label='Comment', required=False)
+
+
+class BanForm(forms.Form):
+    target = forms.CharField(label=_('Username'), required=True)
+    reason = forms.CharField(label=_('Reason'), required=True)
+    days = forms.IntegerField(label=_('Days'), required=False)
+    hours = forms.IntegerField(label=_('Hours'), required=False)
+
+    def clean_target(self):
+        t = self.cleaned_data['target']
+        try:
+            user = models.User.objects.get(username=t)
+        except models.User.DoesNotExist as e:
+            raise forms.ValidationError(
+                _('User %(username)s does not exist.'),
+                params={'username': t}) from e
+        return user
+
+    def GetDuration(self):
+        """Get the intended duration of the ban."""
+        return datetime.timedelta(
+            days=self.cleaned_data['days'] or 0,
+            hours=self.cleaned_data['hours'] or 0)
