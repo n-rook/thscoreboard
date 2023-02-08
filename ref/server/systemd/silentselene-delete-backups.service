@@ -1,0 +1,12 @@
+[Unit]
+Description=silentselene: clear out backups older than a week
+Wants=silentselene-delete-backups.timer
+
+[Service]
+Type=oneshot
+User=silentselene
+WorkingDirectory=/home/silentselene/backups/
+ExecStart=sh -c 'find /home/silentselene/backups/* -mtime +7 -daystart -exec rm {} \;'
+
+[Install]
+WantedBy=multi-user.target
