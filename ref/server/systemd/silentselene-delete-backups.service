@@ -6,7 +6,7 @@ Wants=silentselene-delete-backups.timer
 Type=oneshot
 User=silentselene
 WorkingDirectory=/home/silentselene/backups/
-ExecStart=sh -c 'find /home/silentselene/backups/* -mtime +7 -daystart -exec rm {} \;'
+ExecStart=sh -c 'find /home/silentselene/backups/* -mtime +30 -daystart -exec rm {} \;'
 
 [Install]
 WantedBy=multi-user.target
