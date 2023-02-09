@@ -373,10 +373,11 @@ class Visits(models.Model):
 
         with transaction.atomic():
             if cls._WasThereARecentVisit(user, ip, an_hour_ago):
-                return
+                return None
 
             new_visit = cls(user=user, ip=ip, created=now)
             new_visit.save()
+            return new_visit
 
 
 def validate_ip(ip):
