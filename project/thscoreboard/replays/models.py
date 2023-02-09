@@ -102,8 +102,8 @@ class Category(models.IntegerChoices):
     PRIVATE = 4, pgettext_lazy('Category', 'Private')
     """A private replay that isn't shown to anyone.
 
-    Private is deprecated; it will be removed soon. (If someone didn't
-    want to share a replay, why would they upload it?)
+    Private is deprecated; it will be removed soon. (It does not make sense as a category,
+    since a private replay could be REGULAR, TAS or UNUSUAL.)
     """
 
 
@@ -260,7 +260,7 @@ class Replay(models.Model):
 
     slowdown = models.FloatField(blank=True, null=True)
     """Slowdown percentage in the replay
-    
+
     Should range from 0 to 100, unless ZUN decides otherwise"""
 
     spell_card_id = models.IntegerField(blank=True, null=True)
@@ -433,7 +433,7 @@ class ReplayStage(models.Model):
     More testing needs to be done to find the exact nature of this value,
     whether 1up items affect it or if its just score/life piece extends
     But it's in the data so I will include it
-    
+
     This value first appears in TH13, but it is present in many modern games so I've
     opted not to specify a game for its name
     """
