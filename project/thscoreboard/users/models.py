@@ -1,6 +1,7 @@
 """Defines models for the users app, which contains account information."""
 
 import datetime
+import logging
 from typing import Optional
 import secrets
 
@@ -19,6 +20,9 @@ from thscoreboard import settings
 
 class User(auth_models.AbstractUser):
     """A user."""
+
+    _DELETED_ACCOUNT_TTL = datetime.timedelta(days=60)
+    """The amount of time for which a deleted account persists."""
 
     @classmethod
     def normalize_email(cls, email: str) -> str:
@@ -53,6 +57,23 @@ class User(auth_models.AbstractUser):
     to find out if the user is banned or not, but it should not be taken as
     authoritative (unless its value is False).
     """
+
+    @classmethod
+    def CleanUp(cls, now: datetime.datetime):
+        """Remove long-deleted accounts and other data."""
+
+        earliest_surviving_time = now - User._DELETED_ACCOUNT_TTL
+        logging.info('Deleting accounts marked for deletion before %s', earliest_surviving_time)
+
+        count = 0
+        for user in User.objects.filter(
+            is_active=False,
+            deleted_on__lte=earliest_surviving_time
+        ):
+            with transaction.atomic():
+                user.delete()
+            count += 1
+        logging.info('Cleaned up %d accounts marked for deletion.', count)
 
     def CheckIfBanned(self) -> bool:
         """Check whether this user is banned or not.
@@ -322,15 +343,11 @@ class Visits(models.Model):
     """
 
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, null=True, on_delete=models.PROTECT)
+        settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     """The user who visited the website. If null, no one was logged in.
 
-    Note that on_delete is PROTECT! Right now, it is not possible to delete a
-    user from the site anyway. Of course, we will add this functionality at
-    some point, but when we do it will be delayed; the user will request their
-    account be deleted, we will mark it as "deleted" but keep it in the
-    database, and then at some later point we will actually delete it from
-    the database.
+    on_delete is CASCADE, but the on_delete mode has no effect anyway: the time between a user marking
+    their account for deletion and it actually being deleted is greater than the TTL of this table.
     """
 
     ip = models.TextField()
