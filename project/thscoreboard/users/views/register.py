@@ -13,9 +13,12 @@ from users import forms
 from users import ip_bans
 from users import models
 
-
-RegisterForm = forms.RegisterFormWithPasscode
 _USE_PASSCODE = True
+
+if _USE_PASSCODE:
+    RegisterForm = forms.RegisterFormWithPasscode
+else:
+    RegisterForm = forms.RegisterForm
 
 
 @http_decorators.require_http_methods(["GET", "HEAD", "POST"])
@@ -50,7 +53,11 @@ def register(request):
             form = RegisterForm(request.POST)
 
             if form.is_valid():
-                passcode = models.EarlyAccessPasscode.objects.get(passcode=form.cleaned_data['passcode'])
+                if _USE_PASSCODE:
+                    passcode = models.EarlyAccessPasscode.objects.get(passcode=form.cleaned_data['passcode'])
+                else:
+                    passcode = None
+                
                 unverified_user = _preregister(
                     username=form.cleaned_data['username'],
                     email=form.cleaned_data['email'],
