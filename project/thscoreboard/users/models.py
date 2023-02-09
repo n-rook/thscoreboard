@@ -5,7 +5,6 @@ from typing import Optional
 import secrets
 
 from django.core.exceptions import ValidationError
-from django.contrib.auth import base_user
 from django.contrib.auth import models as auth_models
 from django.contrib.auth import hashers
 from django.contrib.auth import validators as auth_validators
@@ -24,7 +23,7 @@ class User(auth_models.AbstractUser):
     @classmethod
     def normalize_email(cls, email: str) -> str:
         """Provide access to normalize_email in a sensible place."""
-        return base_user.BaseUserManager.normalize_email(email)
+        return cls.objects.normalize_email(email)
 
     class Meta(auth_models.AbstractUser.Meta):
         constraints = [

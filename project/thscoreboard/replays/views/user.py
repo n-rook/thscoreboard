@@ -10,17 +10,17 @@ from replays import models
 
 @http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
 def user_page(request, username: str):
-    user = get_object_or_404(auth.get_user_model(), username=username)
-    
+    user = get_object_or_404(auth.get_user_model(), username=username, is_active=True)
+
     def GetUserReplays():
         # Yields (game, list_of_replays_for_the_game) tuples.
-        
+
         replays = (
             models.Replay.objects
+            .visible_to(request.user)
             .filter(user=user)
-            .exclude(category=models.Category.PRIVATE)
             .order_by('shot__game_id', 'shot_id', 'created'))
-        
+
         current_game = None
         for replay in replays:
             if current_game is None:
