@@ -5,6 +5,7 @@
 
 {% block centered-content %}
 {% url 'Users/logout' as logout_url %}
+{% url 'users:delete_account' as delete_account_url %}
 <p>{% blocktranslate %}Your account has been suspended.{% endblocktranslate %}</p>
 
 <p>{{reason}}</p>
@@ -13,6 +14,12 @@
     {% blocktranslate %}
         Your ban will end at {{ expiration }}, at which point you can use Silent Selene again.
         You may also <a href="{{ logout_url }}">log out</a> and browse anonymously.
+    {% endblocktranslate %}
+</p>
+<p>
+    {% blocktranslate %}
+        You may still <a href="{{delete_account_url}}">delete your account</a>, though this
+        will not shorten the length of the suspension.
     {% endblocktranslate %}
 </p>
 {% endblock %}
