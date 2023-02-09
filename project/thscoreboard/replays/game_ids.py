@@ -15,6 +15,8 @@ class GameIDs:
     TH09 = 'th09'
     TH10 = 'th10'
     TH11 = 'th11'
+    TH12 = 'th12'
+    TH13 = 'th13'
 
 
 class ReplayTypes:
@@ -95,6 +97,16 @@ def GetGameName(game_id: str, short=False):
             return _('th11')
         else:
             return _('東方地霊殿 - Subterranean Animism')
+    if game_id == GameIDs.TH12:
+        if short:
+            return _('th12')
+        else:
+            return _('東方星蓮船 - Undefined Fantastic Object')
+    if game_id == GameIDs.TH13:
+        if short:
+            return _('th13')
+        else:
+            return _('東方神霊廟 - Ten Desires')
     return _('Unknown game (bug!)')
 
 
@@ -266,6 +278,30 @@ def GetShotName(game_id: str, shot_id: str):
         elif shot_id == 'MarisaC':
             return pgettext('th11', 'Marisa C')
 
+    if game_id == GameIDs.TH12:
+        if shot_id == 'ReimuA':
+            return pgettext('th12', 'Reimu A')
+        elif shot_id == 'ReimuB':
+            return pgettext('th12', 'Reimu B')
+        elif shot_id == 'MarisaA':
+            return pgettext('th12', 'Marisa A')
+        elif shot_id == 'MarisaB':
+            return pgettext('th12', 'Marisa B')
+        elif shot_id == 'SanaeA':
+            return pgettext('th12', 'Sanae A')
+        elif shot_id == 'SanaeB':
+            return pgettext('th12', 'Sanae B')
+
+    if game_id == GameIDs.TH13:
+        if shot_id == 'Reimu':
+            return pgettext('th13', 'Reimu')
+        elif shot_id == 'Marisa':
+            return pgettext('th13', 'Marisa')
+        elif shot_id == 'Sanae':
+            return pgettext('th13', 'Sanae')
+        elif shot_id == 'Youmu':
+            return pgettext('th13', 'Youmu')
+
     return 'Bug shot'
 
 
@@ -295,7 +331,9 @@ def GetDifficultyName(game_id: str, difficulty: int):
             GameIDs.TH08,
             GameIDs.TH09,
             GameIDs.TH10,
-            GameIDs.TH11}:
+            GameIDs.TH11,
+            GameIDs.TH12,
+            GameIDs.TH13}:
         if difficulty == 0:
             return 'Easy'
         elif difficulty == 1:
@@ -309,5 +347,8 @@ def GetDifficultyName(game_id: str, difficulty: int):
     if game_id in {GameIDs.TH07}:
         if difficulty == 5:
             return 'Phantasm'
+    if game_id in {GameIDs.TH13}:
+        if difficulty == 5:
+            return 'Overdrive'
 
     return 'Bug difficulty'

@@ -31,6 +31,69 @@ class User(auth_models.AbstractUser):
             models.UniqueConstraint('email', name='unique_email')
         ]
 
+    might_be_banned = models.BooleanField(default=False)
+    """A field that is false if the user is definitely not banned.
+
+    If this field is True, the user might or might not be banned. As such,
+    this is useful as a cache, so that an extra database call isn't necessary
+    to find out if the user is banned or not, but it should not be taken as
+    authoritative (unless its value is False).
+    """
+
+    def CheckIfBanned(self) -> bool:
+        """Check whether this user is banned or not.
+
+        This method will not conduct a database call in most cases, but in
+        some cases it will. Sometimes, it will even write to the database.
+        """
+
+        if not self.is_authenticated:
+            return False
+
+        if not self.might_be_banned:
+            return False
+
+        now = datetime.datetime.now(datetime.timezone.utc)
+        if Ban.objects.filter(target=self, expiration__gt=now).exists():
+            return True
+
+        # The user is not really banned, but might_be_banned is true!
+        # Better fix that.
+        self.might_be_banned = False
+        self.save()
+        return False
+
+    def BanUser(self, author: 'User', reason: str, duration: datetime.timedelta, expiration: Optional[datetime.datetime] = None) -> 'Ban':
+        """Ban this user for a specified period of time.
+
+        Note that this method calls save() on this instance.
+
+        Args:
+            author: The user doing the banning.
+            reason: The reason why the user is going to be banned.
+            duration: How long the ban should last.
+            expiration: The time at which the ban should expire. Here mostly
+                for testing; if not set, the expiration time is calculated from
+                the current time and the duration specified.
+
+        Returns:
+            The Ban created.
+        """
+
+        if expiration is None:
+            expiration = datetime.datetime.now(datetime.timezone.utc) + duration
+
+        b = Ban.objects.create(
+            author=author,
+            target=self,
+            reason=reason,
+            duration=duration,
+            expiration=expiration
+        )
+        self.might_be_banned = True
+        self.save()
+        return b
+
 
 _USERNAME_MAX_LENGTH = 150
 
@@ -296,3 +359,43 @@ class IPBan(models.Model):
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
     """Who issued the ban"""
+
+
+class Ban(models.Model):
+    """Records users who have been temporarily banned from the site.
+
+    Bans are permanently recorded in this table. However, all bans are
+    temporary; the time a ban expires is also recorded here.
+    """
+
+    indexes = [
+        models.Index(
+            ['target', 'expiration'],
+            name='BanLookupByTargetAndExpiration')
+    ]
+
+    target = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    """The user who was banned."""
+
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='created_ban')
+    """Who issued the ban."""
+
+    reason = models.TextField(blank=True)
+    """The reason the user was banned.
+
+    This will be visible to the banned user.
+    """
+
+    expiration = models.DateTimeField()
+    """The time at which the ban will expire."""
+
+    duration = models.DurationField()
+    """The duration of the ban.
+
+    This field has no direct effect, but the duration of bans is recorded for posterity.
+    """

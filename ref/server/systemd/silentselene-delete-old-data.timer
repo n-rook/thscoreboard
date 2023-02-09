@@ -1,0 +1,9 @@
+[Unit]
+Description=silentselene: run delete_old_data
+Requires=silentselene-old-data.service
+
+[Timer]
+OnCalendar=daily
+
+[Install]
+WantedBy=timers.target

@@ -1,5 +1,3 @@
-"""Parsing and gleaning information from individual replay files."""
-
 import dataclasses
 from typing import Optional
 import datetime
@@ -13,8 +11,11 @@ from .kaitai_parsers import th08
 from .kaitai_parsers import th09
 from .kaitai_parsers import th10
 from .kaitai_parsers import th11
+from .kaitai_parsers import th12
+from .kaitai_parsers import th13
 from .kaitai_parsers import th_modern
 
+import math
 import logging
 import tsadecode as td
 
@@ -54,6 +55,8 @@ class ReplayStage:
     th09_p2_cpu: bool = None
     th09_p2_shot: str = None
     th09_p2_score: int = None
+    th13_trance: int = None
+    extends: int = None
 
     def __getitem__(self, item):
         return getattr(self, item)
@@ -76,6 +79,7 @@ class ReplayInfo:
     route: Optional[str] = None
     spell_card_id: Optional[int] = None
     stages: list[ReplayStage] = dataclasses.field(default_factory=list)
+    slowdown: Optional[float] = None
 
     @property
     def spell_card_id_format(self):
@@ -142,6 +146,7 @@ def _Parse06(rep_raw):
         score=replay.header.score,
         timestamp=time.strptime(replay.header.date, "%m/%d/%y"),
         name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
         replay_type=r_type
     )
 
@@ -215,6 +220,7 @@ def _Parse07(rep_raw):
         score=replay.header.score * 10,
         timestamp=time.strptime(replay.header.date, "%m/%d"),
         name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
         replay_type=r_type
     )
 
@@ -256,6 +262,7 @@ def _Parse08(rep_raw):
             score=replay.header.score * 10,
             timestamp=time.strptime(replay.header.date, "%m/%d"),
             name=replay.header.name.replace("\x00", ""),
+            slowdown=replay.header.slowdown,
             replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
             spell_card_id=replay.header.spell_card_id
         )
@@ -313,6 +320,7 @@ def _Parse08(rep_raw):
         score=replay.header.score * 10,
         timestamp=time.strptime(replay.header.date, "%m/%d"),
         name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
         replay_type=r_type,
         route=route
     )
@@ -476,6 +484,7 @@ def _Parse10(rep_raw):
         score=replay.header.score * 10,
         timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
         name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
         replay_type=r_type
     )
 
@@ -537,6 +546,166 @@ def _Parse11(rep_raw):
         score=replay.header.score * 10,
         timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
         name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
+        replay_type=r_type
+    )
+
+    r.stages = rep_stages
+
+    return r
+
+
+def _Parse12(rep_raw):
+    header = th_modern.ThModern.from_bytes(rep_raw)
+    comp_data = bytearray(header.main.comp_data)
+
+    td.decrypt(comp_data, 0x800, 0x5e, 0xe1)
+    td.decrypt(comp_data, 0x40, 0x7d, 0x3a)
+    replay = th12.Th12.from_bytes(td.unlzss(comp_data))
+
+    shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SanaeA", "SanaeB"]
+
+    rep_stages = []
+    for stage in replay.stages:
+        s = ReplayStage()
+        s.stage = stage.stage
+        s.score = stage.score * 10
+        s.power = stage.power
+        s.piv = (math.trunc(stage.piv / 1000)) * 10
+        s.lives = stage.lives
+        s.life_pieces = stage.life_pieces
+        #   fix zun fuckery
+        if s.life_pieces > 0:
+            s.life_pieces -= 1
+        s.bombs = stage.bombs
+        s.bomb_pieces = stage.bomb_pieces
+        s.graze = stage.graze
+        rep_stages.append(s)
+
+    for i in range(len(rep_stages)):
+        if i < len(rep_stages) - 1:
+            stage = rep_stages[i]
+            next_stage = rep_stages[i + 1]
+
+            stage.score = next_stage.score
+            stage.power = next_stage.power
+            stage.piv = next_stage.piv
+            stage.lives = next_stage.lives
+            stage.life_pieces = next_stage.life_pieces
+            stage.bombs = next_stage.bombs
+            stage.bomb_pieces = next_stage.bomb_pieces
+            stage.graze = next_stage.graze
+        else:
+            stage = rep_stages[i]
+            stage.score = replay.header.score * 10
+            stage.power = None
+            stage.piv = None
+            stage.lives = None
+            stage.life_pieces = None
+            stage.bombs = None
+            stage.bomb_pieces = None
+            stage.graze = None
+
+    r_type = game_ids.ReplayTypes.REGULAR
+    if len(rep_stages) == 1 and replay.header.difficulty != 4:
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
+
+    r = ReplayInfo(
+        game=game_ids.GameIDs.TH12,
+        shot=shots[replay.header.shot * 2 + replay.header.subshot],
+        difficulty=replay.header.difficulty,
+        score=replay.header.score * 10,
+        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+        name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
+        replay_type=r_type
+    )
+
+    r.stages = rep_stages
+
+    return r
+
+
+def _Parse13(rep_raw):
+    header = th_modern.ThModern.from_bytes(rep_raw)
+    comp_data = bytearray(header.main.comp_data)
+
+    td.decrypt(comp_data, 0x400, 0x5c, 0xe1)
+    td.decrypt(comp_data, 0x100, 0x7d, 0x3a)
+    replay = th13.Th13.from_bytes(td.unlzss(comp_data))
+
+    shots = ["Reimu", "Marisa", "Sanae", "Youmu"]
+
+    rep_stages = []
+
+    if replay.header.spell_practice_id != 0xFFFFFFFF:
+        return ReplayInfo(
+            game=game_ids.GameIDs.TH13,
+            shot=shots[replay.header.shot],
+            difficulty=replay.header.difficulty,
+            score=replay.header.score * 10,
+            timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+            name=replay.header.name.replace("\x00", ""),
+            slowdown=replay.header.slowdown,
+            replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
+            spell_card_id=replay.header.spell_practice_id
+        )
+
+    for stage in replay.stages:
+        s = ReplayStage()
+        s.stage = stage.stage_num
+        s.score = stage.score * 10
+        s.power = stage.power
+        s.piv = (math.trunc(stage.piv / 1000)) * 10
+        s.lives = stage.lives
+        s.life_pieces = stage.life_pieces
+        s.bombs = stage.bombs
+        s.bomb_pieces = stage.bomb_pieces
+        s.graze = stage.graze
+        s.th13_trance = stage.trance
+        s.extends = stage.extends
+        rep_stages.append(s)
+
+    for i in range(len(rep_stages)):
+        if i < len(rep_stages) - 1:
+            stage = rep_stages[i]
+            next_stage = rep_stages[i + 1]
+
+            stage.score = next_stage.score
+            stage.power = next_stage.power
+            stage.piv = next_stage.piv
+            stage.lives = next_stage.lives
+            stage.life_pieces = next_stage.life_pieces
+            stage.bombs = next_stage.bombs
+            stage.bomb_pieces = next_stage.bomb_pieces
+            stage.graze = next_stage.graze
+            stage.th13_trance = next_stage.th13_trance
+            stage.extends = next_stage.extends
+        else:
+            stage = rep_stages[i]
+            stage.score = replay.header.score * 10
+            stage.power = None
+            stage.piv = None
+            stage.lives = None
+            stage.life_pieces = None
+            stage.bombs = None
+            stage.bomb_pieces = None
+            stage.graze = None
+            stage.th13_trance = None
+            stage.extends = None
+
+    r_type = game_ids.ReplayTypes.REGULAR
+    if len(rep_stages) == 1 and replay.header.difficulty != 4:
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
+
+    r = ReplayInfo(
+        game=game_ids.GameIDs.TH13,
+        shot=shots[replay.header.shot],
+        difficulty=replay.header.difficulty,
+        score=replay.header.score * 10,
+        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+        name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
         replay_type=r_type
     )
 
@@ -567,6 +736,10 @@ def Parse(replay):
             return _Parse10(replay)
         elif gamecode == b't11r':
             return _Parse11(replay)
+        elif gamecode == b't12r':
+            return _Parse12(replay)
+        elif gamecode == b't13r':
+            return _Parse13(replay)
         else:
             logging.warning('Failed to comprehend gamecode %s', str(gamecode))
             raise UnsupportedGameError('This game is unsupported.')

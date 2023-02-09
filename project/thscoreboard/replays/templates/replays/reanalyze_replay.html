@@ -4,4 +4,8 @@
 {% block content %}
     <h2><a href="{% url 'Replays/Details' replay.shot.game.game_id replay.id %}">Back to view</a></h2>
     <pre>{{ reanalysis }}</pre>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" />
+    </form>
 {% endblock %}

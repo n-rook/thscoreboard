@@ -40,7 +40,7 @@ DEBUG = not IS_PROD
 
 
 def _GetAllowedHosts():
-    hosts = ['localhost']
+    hosts = ['localhost', 'local.silentselene.net']
     env_host = os.environ.get('MY_HOST')
     if env_host:
         hosts.append(env_host)
@@ -83,6 +83,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'users.middleware.record_ip.RecordIPMiddleware',
+    'users.middleware.check_ban.CheckBanMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]

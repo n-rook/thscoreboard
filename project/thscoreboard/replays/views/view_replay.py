@@ -54,7 +54,7 @@ def replay_details(request, game_id: str, replay_id: int):
         'replay_file_is_good': replay_instance.is_good,
         'has_stages': len(replay_stages) != 0,
         'replay_stages': formatStages,
-        'table_fields': game_fields.GetGameField(game_id),
+        'table_fields': game_fields.GetGameField(game_id, replay_instance.replay_type),
         'edit_form': edit_form,
         'replay_type': game_ids.GetReplayType(replay_instance.replay_type)
     }
@@ -70,7 +70,7 @@ def replay_details(request, game_id: str, replay_id: int):
     return render(request, 'replays/replay_details.html', context)
 
 
-@http_decorators.require_safe
+@http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
 @auth_decorators.permission_required('staff', raise_exception=True)
 def view_replay_reanalysis(request, game_id: str, replay_id: int):
     replay_instance = GetReplayOr404(request.user, replay_id)
@@ -79,11 +79,16 @@ def view_replay_reanalysis(request, game_id: str, replay_id: int):
         raise Http404()
     if not replay_instance.shot.game.has_replays:
         raise HttpResponseBadRequest()
-    reanalysis = reanalyze_replay.CheckReplay(replay_id)
-    return render(request, 'replays/reanalyze_replay.html', {
-        'replay': replay_instance,
-        'reanalysis': reanalysis,
-    })
+
+    if request.method == 'POST':
+        reanalyze_replay.UpdateReplay(replay_id)
+        return redirect(replay_details, game_id=replay_instance.shot.game_id, replay_id=replay_id)
+    else:
+        reanalysis = reanalyze_replay.CheckReplay(replay_id)
+        return render(request, 'replays/reanalyze_replay.html', {
+            'replay': replay_instance,
+            'reanalysis': reanalysis,
+        })
 
 
 @http_decorators.require_safe

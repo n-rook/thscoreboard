@@ -2,10 +2,13 @@
 from django.contrib.auth import views as auth_views
 from django.urls import path, reverse_lazy
 
+from users.middleware import check_ban
 from users import other_views
 from users.views import accept_invite
 from users.views import batch_invite_csv
+from users.views import banned
 from users.views import profile
+from users.views import register
 from users.views import request_invite
 
 from thscoreboard import settings
@@ -13,18 +16,21 @@ from thscoreboard import settings
 app_name = 'users'
 
 urlpatterns = [
-    path('register', other_views.register, name='register'),
-    path('registration_success', other_views.registration_success, name='registration_success'),
-    path('preregistered', other_views.preregistered, name='preregistered'),
-    path('verify_email/<str:token>', other_views.verify_email, name='verify_email'),
+    path('register', register.register, name='register'),
+    path('registration_success', register.registration_success, name='registration_success'),
+    path('preregistered', register.preregistered, name='preregistered'),
+    path('verify_email/<str:token>', register.verify_email, name='verify_email'),
     path('accept_invite/<str:token>', accept_invite.accept_invite, name='accept_invite'),
     path('profile', profile.profile, name='profile'),
     path('batch_invite', batch_invite_csv.batch_invite, name='batch_invite'),
     path('batch_invite_confirm', batch_invite_csv.batch_invite_confirm, name='batch_invite_confirm'),
     path('request_invite', request_invite.request_invite),
+    path('banned', banned.banned_notification, name='banned'),
+
     path('ip_bans/', other_views.view_ip_bans),
     path('ip_bans/add', other_views.add_ip_ban),
     path('ip_bans/<int:ban_id>/delete', other_views.delete_ip_ban),
+    path('staff_ban', banned.staff_ban, name='staff_ban'),
 
     path(
         'login',
@@ -32,7 +38,7 @@ urlpatterns = [
         name='login'),
     path(
         'logout',
-        auth_views.LogoutView.as_view(),
+        check_ban.allow_access_by_banned_users(auth_views.LogoutView.as_view()),
         name='logout'),
     path(
         'forgot_password',

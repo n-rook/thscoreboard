@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Staff tools</h1>
+<ul>
+    {% if user.is_superuser and user.is_staff %}
+        <li><a href="/admin">Django admin panel</a></li>
+        <br>
+    {% endif %}
+        {% if user.is_staff %}
+        <li><a href="/users/staff_ban">Bans</a></li>
+        <li><a href="/users/ip_bans">IP Bans</a></li>
+        <li><a href="/users/batch_invite">Batch invite</a></li>
+        <li><a href="/replays/reanalyze_all">Reanalyze all replays</a></li>
+        <br>
+    {% endif %}
+    {% if user.is_superuser %}
+        <li><a href="/deploy">Deploy to latest commit</a></li>
+        <li><a href="/sysadmin/reload">Soft-reload server</a></li>
+    {% endif %}
+</ul>
+
+{% endblock %}

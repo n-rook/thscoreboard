@@ -19,6 +19,7 @@ import logging
 from django.contrib import admin
 from django.urls import include, re_path, path
 from django.views.generic import base as base_views
+from django.shortcuts import render
 from replays.views import index
 from thscoreboard import settings
 from thscoreboard.deploy import views as deploy_views
@@ -30,6 +31,8 @@ urlpatterns = [
     path('docs/', include('replays.urls.docs_urls')),
     path('admin/', admin.site.urls),
     path('deploy', deploy_views.deploy),
+    path('sysadmin/reload', deploy_views.reload),
+    path('staff', lambda req: render(req, 'staff.html')),
 
     # When fetching non-HTML pages, the browser looks at /favicon.ico
     # to find an icon.

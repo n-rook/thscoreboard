@@ -7,33 +7,116 @@ As this module is used only for administrative work, it is not optimized
 for speed.
 """
 
+import abc
 import copy
 from typing import Optional
 
 from django.db import models as django_models
+from django.db import transaction
 
 from replays import game_ids
 from replays import models
 from replays import replay_parsing
 
 
+def DoesReplayNeedUpdate(replay_id: int) -> str:
+    """Return whether a replay would be updated."""
+    return bool(CheckReplay(replay_id))
+
+
 def CheckReplay(replay_id: int) -> str:
     """Check a replay and return information about how it would be updated."""
+
+    differ = _Differ()
+    _Reanalyze(replay_id, differ)
+    return differ.GetOutput()
+
+
+@transaction.atomic
+def UpdateReplay(replay_id: int) -> None:
+    """Update a replay by recomputing its derived fields."""
+    updater = _Updater()
+    _Reanalyze(replay_id, updater)
+
+
+class _Recorder(abc.ABC):
+    """Internal class that records a difference that happened during reanalysis."""
+
+    @abc.abstractmethod
+    def Change(self, name: str, old_model: django_models.Model, new_model: django_models.Model):
+        """Record a change to a row."""
+
+    @abc.abstractmethod
+    def New(self, name: str, new_model: django_models.Model):
+        """Record a new row."""
+
+    @abc.abstractmethod
+    def Deleted(self, name: str, old_model: django_models.Model):
+        """Record a row being deleted."""
+
+
+class _Differ(_Recorder):
+    """A Differ just records changes in text."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._output = []
+
+    def _PrefaceWithName(self, name, diff_str):
+        if not diff_str:
+            # Don't preface the empty string.
+            return ''
+        return f'{name}:\n{diff_str}'
+
+    def Change(self, name: str, old_model: django_models.Model, new_model: django_models.Model):
+        diff = _Diff(old_model, new_model)
+        if diff:
+            self._output.append(self._PrefaceWithName(name, diff))
+
+    def New(self, name: str, new_model: django_models.Model):
+        diff = _Diff(None, new_model)
+        if diff:
+            self._output.append(self._PrefaceWithName(name, diff))
+
+    def Deleted(self, name: str, old_model: django_models.Model):
+        diff = _Diff(old_model, None)
+        if diff:
+            self._output.append(self._PrefaceWithName(name, diff))
+
+    def GetOutput(self):
+        return '\n\n'.join([d for d in self._output if d])
+
+
+class _Updater(_Recorder):
+    """A Differ that actually makes changes to an update."""
+
+    def Change(self, name: str, old_model: django_models.Model, new_model: django_models.Model):
+        new_model.save()
+
+    def New(self, name: str, new_model: django_models.Model):
+        new_model.save()
+
+    def Deleted(self, name: str, old_model: django_models.Model):
+        old_model.delete()
+
+
+def _Reanalyze(replay_id: int, recorder: _Recorder) -> str:
+    """Reanalyze computed fields on a replay."""
 
     replay = models.Replay.objects.get(id=replay_id)
     replay_file = models.ReplayFile.objects.get(replay=replay)
     replay_info = replay_parsing.Parse(replay_file.replay_file)
     replay_to_update = copy.deepcopy(replay)
-    replay_diffs = []
 
     replay_to_update.SetFromReplayInfo(replay_info)
-    replay_diffs.append(_Diff(replay, replay_to_update))
+    recorder.Change('Replay', replay, replay_to_update)
 
     replay_stages = models.ReplayStage.objects.filter(replay=replay_id).order_by('stage')
     seen_stages = set()
     for replay_file_stage_info in replay_info.stages:
         matching_stages = [r for r in replay_stages
                            if r.stage == replay_file_stage_info.stage]
+        stage_name = f'Stage {replay_file_stage_info.stage}'
 
         if len(matching_stages) > 1:
             raise AssertionError(
@@ -43,7 +126,7 @@ def CheckReplay(replay_id: int) -> str:
             matching_stage = matching_stages[0]
             matching_stage_to_update = copy.deepcopy(matching_stage)
             matching_stage_to_update.SetFromReplayStageInfo(replay_file_stage_info)
-            stage_diff = _Diff(matching_stage, matching_stage_to_update)
+            recorder.Change(stage_name, matching_stage, matching_stage_to_update)
         else:
             # TODO: Deduplicate this with the real logic in create_replay.py somehow.
             new_stage = models.ReplayStage(
@@ -53,17 +136,11 @@ def CheckReplay(replay_id: int) -> str:
             if replay_info.game == game_ids.GameIDs.TH09:
                 new_stage.th09_p2_shot = models.Shot.objects.select_related('game').get(game=game_ids.GameIDs.TH09, shot_id=replay_file_stage_info.th09_p2_shot)
             new_stage.SetFromReplayStageInfo(replay_file_stage_info)
-            stage_diff = _Diff(None, new_stage)
+            recorder.New(stage_name, new_stage)
 
-        if stage_diff:
-            stage_diff = f'Stage {replay_file_stage_info.stage}:\n' + stage_diff
-            replay_diffs.append(stage_diff)
     for replay_stage in replay_stages:
         if replay_stage.stage not in seen_stages:
-            stage_diff = f'Stage {replay_stage.stage}:\n' + _Diff(replay_stage, None)
-            replay_diffs.append(stage_diff)
-
-    return '\n\n'.join([d for d in replay_diffs if d])
+            recorder.Deleted(f'Stage {replay_stage.stage}', replay_stage)
 
 
 def _GetComparableFields(m: django_models.Model):

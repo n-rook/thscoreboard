@@ -38,6 +38,12 @@
                 <td>{{ route_name }}</td>
             </tr>
             {% endif %}
+            {% if replay.slowdown is not None %}
+            <tr>
+                <td>Slowdown</td>
+                <td>{{ replay.slowdown|floatformat:4 }}%</td>
+            </tr>
+            {% endif %}
             <tr>
                 <td>Score</td>
                 <td>{{ replay.score|intcomma }}</td>
@@ -96,6 +102,11 @@
     {% if can_delete %}
     <div>
         <a href="/replays/{{ game_id }}/{{ replay.id }}/delete">Permanently delete this replay</a>
+    </div>
+    {% endif %}
+    {% if user.is_staff %}
+    <div>
+        <a href="/replays/{{ game_id }}/{{ replay.id }}/reanalyze">Reanalyze this replay</a>
     </div>
     {% endif %}
 {% endblock %}

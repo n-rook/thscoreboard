@@ -1,0 +1,12 @@
+[Unit]
+Description=silentselene: run delete_old_data
+Wants=silentselene-delete-old-data.timer
+
+[Service]
+Type=oneshot
+User=silentselene
+WorkingDirectory=/home/silentselene/silentselene/project/thscoreboard
+ExecStart=/usr/bin/python3 manage.py delete_old_data
+
+[Install]
+WantedBy=multi-user.target
