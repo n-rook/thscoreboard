@@ -2,6 +2,7 @@
 import datetime
 
 from django import test
+from django.db import utils
 from django.utils import timezone
 
 from replays.testing import test_case
@@ -189,6 +190,7 @@ class BanTestCase(test_case.UserTestCase):
         updated_target = models.User.objects.get(id=self.target.id)
         self.assertFalse(updated_target.might_be_banned)
 
+
 class DeletedUserTest(test_case.UserTestCase):
 
     def setUp(self):
@@ -205,3 +207,13 @@ class DeletedUserTest(test_case.UserTestCase):
             self.now,
             delta=datetime.timedelta(minutes=1)
         )
+
+    def testCannotSetDeletedOnForActiveUser(self):
+        self.user.deleted_on = self.now
+        with self.assertRaises(utils.IntegrityError):
+            self.user.save()
+
+    def testCannotMakeUserInactiveWithoutDeletedOn(self):
+        self.user.is_active = False
+        with self.assertRaises(utils.IntegrityError):
+            self.user.save()

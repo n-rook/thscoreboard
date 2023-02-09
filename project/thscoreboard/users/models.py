@@ -30,12 +30,12 @@ class User(auth_models.AbstractUser):
         constraints = [
             models.UniqueConstraint('email', name='unique_email'),
             models.CheckConstraint(
-            check=(
-                models.Q(deleted_on__isnull=False) & models.Q(is_active=False)
-            ) | (
-                models.Q(deleted_on__isnull=True) & models.Q(is_active=True)
-            ),
-            name='deleted_on_set_iff_not_active'),
+                check=(
+                    models.Q(deleted_on__isnull=False) & models.Q(is_active=False)
+                ) | (
+                    models.Q(deleted_on__isnull=True) & models.Q(is_active=True)
+                ),
+                name='deleted_on_set_iff_not_active'),
         ]
 
     deleted_on = models.DateTimeField(null=True, blank=True)
@@ -115,6 +115,7 @@ class User(auth_models.AbstractUser):
         self.is_active = False
         self.deleted_on = datetime.datetime.now(datetime.timezone.utc)
         self.save()
+
 
 _USERNAME_MAX_LENGTH = 150
 
