@@ -308,6 +308,62 @@ class BanTestCase(test_case.UserTestCase):
         self.assertFalse(models.Ban.IsUsernameBanned('target', now=self.now + datetime.timedelta(days=3)))
         self.assertFalse(models.Ban.IsEmailBanned(target_email, now=self.now + datetime.timedelta(days=3)))
 
+    def testCleanUpBan_NotDeleted(self):
+        b = self.target.BanUser(
+            self.banner,
+            'test',
+            datetime.timedelta(hours=6),
+            expiration=self.now - datetime.timedelta(days=90)
+        )
+
+        models.Ban.CleanUp(self.now)
+        self.assertTrue(models.Ban.objects.filter(id=b.id).exists())
+
+    def testCleanUpBan_NotExpired(self):
+        b = self.target.BanUser(
+            self.banner,
+            'test',
+            datetime.timedelta(hours=6),
+            expiration=self.now + datetime.timedelta(days=90)
+        )
+        self.target.MarkForDeletion()
+        self.target.deleted_on -= datetime.timedelta(days=180)
+        self.target.save()
+        models.User.CleanUp(self.now)
+
+        models.Ban.CleanUp(self.now)
+        self.assertTrue(models.Ban.objects.filter(id=b.id).exists())
+
+    def testCleanUpBan_RecentlyExpired(self):
+        b = self.target.BanUser(
+            self.banner,
+            'test',
+            datetime.timedelta(hours=6),
+            expiration=self.now - datetime.timedelta(days=5)
+        )
+        self.target.MarkForDeletion()
+        self.target.deleted_on -= datetime.timedelta(days=180)
+        self.target.save()
+        models.User.CleanUp(self.now)
+
+        models.Ban.CleanUp(self.now)
+        self.assertTrue(models.Ban.objects.filter(id=b.id).exists())
+
+    def testCleanUpBan_LongExpired(self):
+        b = self.target.BanUser(
+            self.banner,
+            'test',
+            datetime.timedelta(hours=6),
+            expiration=self.now - datetime.timedelta(days=90)
+        )
+        self.target.MarkForDeletion()
+        self.target.deleted_on -= datetime.timedelta(days=180)
+        self.target.save()
+        models.User.CleanUp(self.now)
+
+        models.Ban.CleanUp(self.now)
+        self.assertFalse(models.Ban.objects.filter(id=b.id).exists())
+
 
 class DeletedUserTest(test_case.UserTestCase):
 

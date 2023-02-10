@@ -460,6 +460,13 @@ class Ban(models.Model):
         ),
     ]
 
+    _DELETED_ACCOUNT_TTL = datetime.timedelta(days=30)
+    """How long to keep bans from deleted accounts after the ban expires.
+
+    This is 30 days so that if the person tries to reregister immediately, we have
+    historical context on why they were banned in the first place.
+    """
+
     target = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True)
     """The user who was banned.
 
@@ -536,3 +543,28 @@ class Ban(models.Model):
         if not now:
             now = datetime.datetime.now(datetime.timezone.utc)
         return cls.objects.filter(deleted_account_email=email, expiration__gte=now).exists()
+
+    @classmethod
+    def CleanUp(cls, now: datetime.datetime) -> None:
+        """Delete long-expired bans from deleted accounts.
+
+        Args:
+            now: The current time.
+
+        Returns:
+            The number of deleted bans.
+        """
+        earliest_surviving_time = now - cls._DELETED_ACCOUNT_TTL
+        logging.info('Deleting bans of deleted accounts which expired before %s',
+                     earliest_surviving_time)
+
+        count = 0
+        for b in cls.objects.filter(
+            target__isnull=True,
+            expiration__lte=earliest_surviving_time
+        ):
+            with transaction.atomic():
+                b.delete()
+            count += 1
+
+        logging.info('Cleaned up %d bans.', count)

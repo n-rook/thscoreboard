@@ -25,3 +25,4 @@ def _DeleteExpiredTemporaryData():
     user_models.InvitedUser.CleanUp(now)
     user_models.Visits.CleanUp(now)
     user_models.User.CleanUp(now)
+    user_models.Ban.CleanUp(now)
