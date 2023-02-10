@@ -20,6 +20,8 @@ def _DeleteExpiredTemporaryData():
 
     now = timezone.now()
 
-    replay_models.TemporaryReplayFile().CleanUp(now)
+    replay_models.TemporaryReplayFile.CleanUp(now)
     user_models.UnverifiedUser.CleanUp(now)
+    user_models.InvitedUser.CleanUp(now)
+    user_models.Visits.CleanUp(now)
     user_models.User.CleanUp(now)

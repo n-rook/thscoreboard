@@ -394,6 +394,18 @@ class Visits(models.Model):
             new_visit.save()
             return new_visit
 
+    @classmethod
+    def CleanUp(cls, now: datetime.datetime) -> None:
+        """Delete old visits.
+
+        Args:
+            now: The current time.
+
+        Returns:
+            The number of deleted visits.
+        """
+        model_ttl.CleanUpOldRows(cls, now)
+
 
 def validate_ip(ip):
     try:
