@@ -53,6 +53,8 @@ class RegisterForm(forms.Form):
     # email = forms.EmailField(label='email', max_length=200)
     email = UserEmailField(label='email', max_length=200)
     password = forms.CharField(label='password', max_length=200, widget=forms.PasswordInput)
+    accept_terms = forms.BooleanField()
+    accept_privacy = forms.BooleanField()
 
 
 class DeleteAccountForm(forms.Form):

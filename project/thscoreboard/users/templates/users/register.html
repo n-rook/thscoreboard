@@ -46,8 +46,22 @@
             {{ form.passcode }}
         </td>
         </tr>
-        {% endif %}
+        {% endif %}           
     </table>
+    <br>
+    <div>
+        {{ form.accept_terms.errors }}
+        {{ form.accept_terms }}
+        <label for="{{ form.accept_terms.id_for_label }}">I accept the <a href="/docs/terms">terms of service</a></label>
+    </div>
+
+    <div>
+    {{ form.accept_privacy.errors }}
+    {{ form.accept_privacy }}
+    <label for="{{ form.accept_privacy.id_for_label }}">I accept the <a href="/docs/privacy">privacy policy</a></label>
+    </div>
+    <br>
+
     <input type="submit" value="Register">
 </form>
 {% endblock %}

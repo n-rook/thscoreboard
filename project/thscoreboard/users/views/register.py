@@ -52,6 +52,12 @@ def register(request):
         try:
             form = RegisterForm(request.POST)
 
+            if not form.cleaned_data['accept_terms']:
+                form.add_error('accept_terms', 'You must accept the terms of service to register')
+                
+            if not form.cleaned_data['accept_privacy']:
+                form.add_error('accept_privacy', 'You must accept the privacy policy to register')
+
             if form.is_valid():
                 if _USE_PASSCODE:
                     passcode = models.EarlyAccessPasscode.objects.get(passcode=form.cleaned_data['passcode'])
