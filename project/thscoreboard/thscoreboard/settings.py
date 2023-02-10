@@ -116,6 +116,12 @@ LOGGING = {
             'class': 'logging.StreamHandler',
         },
     },
+    'loggers': {
+        # This logger will log all SQL queries. It is useful when debugging.
+        # 'django.db.backends': {
+        #     'level': 'DEBUG',
+        # },
+    },
     'root': {
         'handlers': ['console'],
         'level': 'DEBUG',

@@ -2,6 +2,7 @@
 
 
 import datetime
+from typing import Optional
 
 from django.db import models
 from django.contrib import auth
@@ -158,8 +159,28 @@ class Route(models.Model):
         return game_ids.GetRouteName(self.game.game_id, self.route_id)
 
 
+class ReplayQuerySet(models.QuerySet):
+
+    def visible_to(self, viewer: Optional[auth.get_user_model()]) -> 'ReplayQuerySet':
+        """Filter out replays that should not be visible to someone.
+
+        This method is closely related to the IsVisible() method on individual replays, but changes the query
+        itself instead. As such, it mostly should be preferred to that method, since the unwanted replays are
+        not even returned.
+        """
+
+        q = self.filter(user__is_active=True)
+        if viewer and viewer.is_authenticated:
+            q = q.filter(~models.Q(category=Category.PRIVATE) | models.Q(user=viewer))
+        else:
+            q = q.exclude(category=Category.PRIVATE)
+        return q
+
+
 class Replay(models.Model):
     """Represents a score recorded on the scoreboard."""
+
+    objects = ReplayQuerySet.as_manager()
 
     class Meta:
         ordering = ['shot', 'difficulty', '-score']
@@ -261,7 +282,8 @@ class Replay(models.Model):
     slowdown = models.FloatField(blank=True, null=True)
     """Slowdown percentage in the replay
 
-    Should range from 0 to 100, unless ZUN decides otherwise"""
+    Should range from 0 to 100, unless ZUN decides otherwise.
+    """
 
     spell_card_id = models.IntegerField(blank=True, null=True)
     """In the case of a spell practice replay, the spell card ID attempted"""
@@ -271,7 +293,9 @@ class Replay(models.Model):
 
     def IsVisible(self, viewer: auth.get_user_model()):
         """Returns whether this replay should be visible to this user."""
-        # Add a unit test for this
+
+        if not self.user.is_active:
+            return False
 
         if self.category != Category.PRIVATE:
             return True

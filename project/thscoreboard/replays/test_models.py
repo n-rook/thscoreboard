@@ -14,6 +14,57 @@ REPLAY_1 = test_replays.GetRaw('th6_extra')
 REPLAY_2 = test_replays.GetRaw('th10_normal')
 
 
+class ReplayTest(test_case.ReplayTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.author = self.createUser('author')
+        self.viewer = self.createUser('viewer')
+
+    def testVisible(self):
+        should_be_visible = test_replays.CreateAsPublishedReplay(
+            filename='th6_extra',
+            user=self.author,
+            category=models.Category.REGULAR
+        )
+
+        self.assertTrue(should_be_visible.IsVisible(viewer=None))
+        self.assertTrue(models.Replay.objects.visible_to(viewer=None).filter(id=should_be_visible.id).exists())
+
+        self.assertTrue(should_be_visible.IsVisible(viewer=self.viewer))
+        self.assertTrue(models.Replay.objects.visible_to(viewer=self.viewer).filter(id=should_be_visible.id).exists())
+
+    def testVisible_AuthorDeletedAccount(self):
+        should_be_visible = test_replays.CreateAsPublishedReplay(
+            filename='th6_extra',
+            user=self.author,
+            category=models.Category.REGULAR
+        )
+        self.author.MarkForDeletion()
+
+        self.assertFalse(should_be_visible.IsVisible(viewer=None))
+        self.assertFalse(models.Replay.objects.visible_to(viewer=None).filter(id=should_be_visible.id).exists())
+
+        self.assertFalse(should_be_visible.IsVisible(viewer=self.viewer))
+        self.assertFalse(models.Replay.objects.visible_to(viewer=self.viewer).filter(id=should_be_visible.id).exists())
+
+    def testVisible_Private(self):
+        should_be_visible = test_replays.CreateAsPublishedReplay(
+            filename='th6_extra',
+            user=self.author,
+            category=models.Category.PRIVATE
+        )
+
+        self.assertFalse(should_be_visible.IsVisible(viewer=None))
+        self.assertFalse(models.Replay.objects.visible_to(viewer=None).filter(id=should_be_visible.id).exists())
+
+        self.assertFalse(should_be_visible.IsVisible(viewer=self.viewer))
+        self.assertFalse(models.Replay.objects.visible_to(viewer=self.viewer).filter(id=should_be_visible.id).exists())
+
+        self.assertTrue(should_be_visible.IsVisible(viewer=self.author))
+        self.assertTrue(models.Replay.objects.visible_to(viewer=self.author).filter(id=should_be_visible.id).exists())
+
+
 class TemporaryReplayFileTest(test_case.ReplayTestCase):
 
     def setUp(self):
@@ -47,7 +98,7 @@ class TemporaryReplayFileTest(test_case.ReplayTestCase):
 
         with self.assertRaises(models.TemporaryReplayFile.DoesNotExist):
             models.TemporaryReplayFile.objects.get(id=delete_me.id)
-        
+
         models.TemporaryReplayFile.objects.get(id=dont_delete_me.id)
         # No exception; it does exist.
 
@@ -86,7 +137,7 @@ class TestConstraints(test_case.ReplayTestCase):
         temp_replay.save()
         replay_info = replay_parsing.Parse(replay_file_contents)
         shot = models.Shot.objects.get(game=replay_info.game, shot_id=replay_info.shot)
-        
+
         replay_info.replay_type = game_ids.ReplayTypes.REGULAR
 
         with self.assertRaises(django.db.utils.IntegrityError):
