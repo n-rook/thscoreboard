@@ -7,6 +7,7 @@ from users import other_views
 from users.views import accept_invite
 from users.views import batch_invite_csv
 from users.views import banned
+from users.views import delete_account
 from users.views import profile
 from users.views import register
 from users.views import request_invite
@@ -22,6 +23,7 @@ urlpatterns = [
     path('verify_email/<str:token>', register.verify_email, name='verify_email'),
     path('accept_invite/<str:token>', accept_invite.accept_invite, name='accept_invite'),
     path('profile', profile.profile, name='profile'),
+    path('delete_account', delete_account.delete_account, name='delete_account'),
     path('batch_invite', batch_invite_csv.batch_invite, name='batch_invite'),
     path('batch_invite_confirm', batch_invite_csv.batch_invite_confirm, name='batch_invite_confirm'),
     path('request_invite', request_invite.request_invite),

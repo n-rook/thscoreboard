@@ -2,7 +2,9 @@
 import datetime
 from typing import Any, Optional
 
+
 from django import forms
+from django.contrib import auth
 from django.core import exceptions
 from django.utils.translation import gettext_lazy as _
 
@@ -51,6 +53,27 @@ class RegisterForm(forms.Form):
     # email = forms.EmailField(label='email', max_length=200)
     email = UserEmailField(label='email', max_length=200)
     password = forms.CharField(label='password', max_length=200, widget=forms.PasswordInput)
+
+
+class DeleteAccountForm(forms.Form):
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+    password = forms.CharField(label='password', max_length=200, widget=forms.PasswordInput)
+
+    def clean_password(self):
+        u = auth.authenticate(
+            username=self.user.username,
+            password=self.cleaned_data['password'])
+        if u is None:
+            raise forms.ValidationError('Your password was incorrect.')
+        elif u != self.user:
+            raise AssertionError(
+                'Authenticated user did not match. This should be impossible.'
+            )
+        return None  # Don't keep the password around.
 
 
 class RegisterFormWithPasscode(RegisterForm):

@@ -1,0 +1,40 @@
+{% extends "simple_centered.html" %}
+{% load i18n %}
+
+{% block centered-title %}<p>Delete your account</p>{% endblock %}
+
+{% block centered-content %}
+
+<p>
+    {% blocktranslate %}
+    Are you sure you want to delete your account? This action cannot be undone,
+    and will delete all of your replays.
+    {% endblocktranslate %}
+</p>
+
+<p>
+    {% blocktranslate %}
+    If you're completely sure, confirm your password below.
+    {% endblocktranslate %}
+</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <table class="form-table">
+        <th style="width: 100%;"></th>
+        <tr>
+        <td>
+            <label for="{{ form.password.id_for_label }}">{% translate 'Password' %}</label>
+            {{ form.password.errors }}
+        </td>
+        <td>
+            {{ form.password }}
+        </td>
+        </tr>
+    </table>
+    <input type="submit" value="Delete it!">
+</form>
+
+{% endblock %}
