@@ -42,8 +42,6 @@ def register(request):
     4. If the user clicks that page, they see a confirmation page because
        I don't want to confirm somebody's account with a GET.
     5. If they POST there, they get a real account.
-    6. TODO: We set up a cleanup cron job to delete temporary users so that we
-       are not indefinitely holding these rows.
 
     TODO: If a user tries to log in as an unverified user, we should resend
     the notification email, even though they cannot log in yet.
@@ -57,7 +55,7 @@ def register(request):
                     passcode = models.EarlyAccessPasscode.objects.get(passcode=form.cleaned_data['passcode'])
                 else:
                     passcode = None
-                
+
                 unverified_user = _preregister(
                     username=form.cleaned_data['username'],
                     email=form.cleaned_data['email'],
@@ -100,6 +98,9 @@ def registration_success(request):
 
 @http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
 def verify_email(request, token: str):
+    # TODO: This view does not handle errors well. Errors here should be rare, but it
+    # is still not good not to handle them.
+
     try:
         unverified_user = models.UnverifiedUser.objects.get(token=token)
     except models.UnverifiedUser.DoesNotExist:
@@ -117,6 +118,5 @@ def verify_email(request, token: str):
         return redirect('users:registration_success')
 
     return render(request, 'users/verify_email.html', {
-        # TODO: It would be nice to tell the user if it's too late and they are doomed.
         'unverified_user': unverified_user,
     })

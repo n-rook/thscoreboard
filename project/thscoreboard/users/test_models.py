@@ -3,6 +3,7 @@ import datetime
 
 from django import test
 from django.db import utils
+from django.db.models import deletion
 from django.utils import timezone
 
 from replays import models as replay_models
@@ -45,7 +46,7 @@ class InviteTestCase(test.TestCase):
         )
 
 
-class RegistrationTestCase(test.TestCase):
+class RegistrationTestCase(test_case.UserTestCase):
 
     def testUnverifiedUser(self):
         unverified_user = models.UnverifiedUser.CreateUser(
@@ -69,6 +70,50 @@ class RegistrationTestCase(test.TestCase):
         self.assertTrue(
             real_user.check_password('some-password')
         )
+
+    def testBannedUnverifiedUser(self):
+        unverified_user = models.UnverifiedUser.CreateUser(
+            'banned-username',
+            'some-email@example.com',
+            'some-password',
+        )
+
+        now = datetime.datetime.now(datetime.timezone.utc)
+        ban = models.Ban(
+            author=self.createUser('banner'),
+            reason='something',
+            expiration=now + datetime.timedelta(minutes=15),
+            duration=datetime.timedelta(minutes=15),
+            target=None,
+            deleted_account_username='banned-username',
+            deleted_account_email='email@example.com'
+        )
+        ban.save()
+
+        with self.assertRaises(models.BannedError):
+            unverified_user.VerifyUser()
+
+    def testBannedUnverifiedEmail(self):
+        unverified_user = models.UnverifiedUser.CreateUser(
+            'some-username',
+            'banned@example.com',
+            'some-password',
+        )
+
+        now = datetime.datetime.now(datetime.timezone.utc)
+        ban = models.Ban(
+            author=self.createUser('banner'),
+            reason='something',
+            expiration=now + datetime.timedelta(minutes=15),
+            duration=datetime.timedelta(minutes=15),
+            target=None,
+            deleted_account_username='blah-blah',
+            deleted_account_email='banned@example.com'
+        )
+        ban.save()
+
+        with self.assertRaises(models.BannedError):
+            unverified_user.VerifyUser()
 
     def testUnverifiedUserCleanUp_DeletesExpectedUsers(self):
         now = datetime.datetime(2020, 1, 1, tzinfo=datetime.timezone.utc)
@@ -191,6 +236,77 @@ class BanTestCase(test_case.UserTestCase):
 
         updated_target = models.User.objects.get(id=self.target.id)
         self.assertFalse(updated_target.might_be_banned)
+
+    def testCannotDirectlyDeleteBannedUser(self):
+        self.target.BanUser(
+            self.banner,
+            'test',
+            datetime.timedelta(hours=6),
+            expiration=self.now + datetime.timedelta(hours=3)
+        )
+        with self.assertRaises(deletion.ProtectedError):
+            self.target.delete()
+
+    def testCleanUpBannedUserSetsSecondaryFields(self):
+        b = self.target.BanUser(
+            self.banner,
+            'test',
+            datetime.timedelta(hours=6),
+            expiration=self.now + datetime.timedelta(hours=3)
+        )
+
+        self.target.MarkForDeletion()
+        self.target.deleted_on -= datetime.timedelta(days=180)
+        self.target.save()
+
+        models.User.CleanUp(self.now)
+
+        b = models.Ban.objects.get(id=b.id)
+        self.assertIsNone(b.target)
+        self.assertEquals('target', b.deleted_account_username)
+        self.assertEquals(self.target.email, b.deleted_account_email)
+
+    def testCleanUpBannedUser_IsXBanned(self):
+        target_email = self.target.email
+
+        self.target.BanUser(
+            self.banner,
+            'test',
+            datetime.timedelta(hours=6),
+            expiration=self.now + datetime.timedelta(hours=3)
+        )
+
+        self.assertFalse(models.Ban.IsUsernameBanned('target'))
+        self.assertFalse(models.Ban.IsEmailBanned(target_email))
+
+        self.target.MarkForDeletion()
+        self.target.deleted_on -= datetime.timedelta(days=180)
+        self.target.save()
+
+        models.User.CleanUp(self.now)
+
+        self.assertTrue(models.Ban.IsUsernameBanned('target'))
+        self.assertTrue(models.Ban.IsEmailBanned(target_email))
+
+    def testCleanUpBannedUser_IsXBannedRespectExpirationTime(self):
+        target_email = self.target.email
+
+        self.target.BanUser(
+            self.banner,
+            'test',
+            datetime.timedelta(hours=6),
+            expiration=self.now + datetime.timedelta(hours=3)
+        )
+        self.target.MarkForDeletion()
+        self.target.deleted_on -= datetime.timedelta(days=180)
+        self.target.save()
+        models.User.CleanUp(self.now)
+
+        self.assertTrue(models.Ban.IsUsernameBanned('target'))
+        self.assertTrue(models.Ban.IsEmailBanned(target_email))
+
+        self.assertFalse(models.Ban.IsUsernameBanned('target', now=self.now + datetime.timedelta(days=3)))
+        self.assertFalse(models.Ban.IsEmailBanned(target_email, now=self.now + datetime.timedelta(days=3)))
 
 
 class DeletedUserTest(test_case.UserTestCase):

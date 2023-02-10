@@ -18,6 +18,10 @@ from shared_content import model_ttl
 from thscoreboard import settings
 
 
+class BannedError(Exception):
+    """Raised if an operation is impossible because a username or email is banned."""
+
+
 class User(auth_models.AbstractUser):
     """A user."""
 
@@ -71,6 +75,7 @@ class User(auth_models.AbstractUser):
             deleted_on__lte=earliest_surviving_time
         ):
             with transaction.atomic():
+                Ban.PropagateAccountDeletion(user)
                 user.delete()
             count += 1
         logging.info('Cleaned up %d accounts marked for deletion.', count)
@@ -309,7 +314,17 @@ class UnverifiedUser(models.Model):
 
         Returns:
             The new user.
+
+        Raises:
+            BannedError: If the username or email are taken by a banned user. This should be
+                very rare--- how did the UnverifiedUser get created in the first place if this
+                is the case?--- but it is not impossible.
         """
+        if Ban.IsUsernameBanned(self.username):
+            raise BannedError(f'The username {self.username} is currently suspended.')
+        if Ban.IsEmailBanned(self.email):
+            raise BannedError(f'The address {self.email} is currently suspended.')
+
         u = User(
             username=User.normalize_username(self.username),
             email=User.normalize_email(self.email),
@@ -407,14 +422,39 @@ class Ban(models.Model):
     temporary; the time a ban expires is also recorded here.
     """
 
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check=(
+                    models.Q(target__isnull=True) & models.Q(deleted_account_username__isnull=False) & models.Q(deleted_account_email__isnull=False)
+                ) | (
+                    models.Q(target__isnull=False) & models.Q(deleted_account_username__isnull=True) & models.Q(deleted_account_email__isnull=True)
+                ),
+                name='target_null_iff_deleted_account_fields_are_set'
+            )
+        ]
+
     indexes = [
         models.Index(
             ['target', 'expiration'],
-            name='BanLookupByTargetAndExpiration')
+            name='BanLookupByTargetAndExpiration'),
+        models.Index(
+            ['deleted_account_username', 'expiration'],
+            name='BanLookupByDeletedAccountUsernameAndExpiration'
+        ),
+        models.Index(
+            ['deleted_account_email', 'expiration'],
+            name='BanLookupByDeletedAccountEmailAndExpiration'
+        ),
     ]
 
-    target = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    """The user who was banned."""
+    target = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True)
+    """The user who was banned.
+
+    This field is defined with a PROTECT on_delete policy. If you need to delete a user,
+    first call PropagateAccountDeletion() to remove that user from target fields in the
+    ban table.
+    """
 
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -438,3 +478,49 @@ class Ban(models.Model):
 
     This field has no direct effect, but the duration of bans is recorded for posterity.
     """
+
+    # These two fields are only set for users who delete their accounts while
+    # they are banned. This way, banned users can delete their accounts and remove
+    # all their content from the site, but cannot reregister under the same
+    # name or email address.
+    deleted_account_username = models.TextField(null=True, blank=True)
+    """The username this ban's target had before they deleted their account."""
+
+    deleted_account_email = models.EmailField(null=True, blank=True)
+    """The email this ban's target had before they deleted their account."""
+
+    @classmethod
+    @transaction.atomic
+    def PropagateAccountDeletion(cls, user_being_deleted: 'User'):
+        """If a User row is about to be deleted, update their bans accordingly.
+
+        This method makes the following changes:
+        * The "target" field is set to null.
+        * The "deleted_account_username" and "deleted_account_email" fields are set to the user's
+        * current name and email.
+        """
+        for b in cls.objects.filter(target=user_being_deleted):
+            b.deleted_account_username = user_being_deleted.username
+            b.deleted_account_email = user_being_deleted.email
+            b.target = None
+            b.save()
+
+    @classmethod
+    def IsUsernameBanned(cls, username: str, now: Optional[datetime.datetime] = None) -> bool:
+        """Returns whether a username is banned (as a deleted account).
+
+        Note that this will return False if a user has an active, banned account with this username.
+        """
+        if not now:
+            now = datetime.datetime.now(datetime.timezone.utc)
+        return cls.objects.filter(deleted_account_username=username, expiration__gte=now).exists()
+
+    @classmethod
+    def IsEmailBanned(cls, email: str, now: Optional[datetime.datetime] = None) -> bool:
+        """Returns whether an email address is banned (as a deleted account).
+
+        Note that this will return False if a user has an active, banned account with this address.
+        """
+        if not now:
+            now = datetime.datetime.now(datetime.timezone.utc)
+        return cls.objects.filter(deleted_account_email=email, expiration__gte=now).exists()
