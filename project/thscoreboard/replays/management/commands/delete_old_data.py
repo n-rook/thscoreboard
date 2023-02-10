@@ -22,3 +22,4 @@ def _DeleteExpiredTemporaryData():
 
     replay_models.TemporaryReplayFile().CleanUp(now)
     user_models.UnverifiedUser.CleanUp(now)
+    user_models.User.CleanUp(now)

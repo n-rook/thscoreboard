@@ -5,8 +5,10 @@ from django import test
 from django.db import utils
 from django.utils import timezone
 
+from replays import models as replay_models
 from replays.testing import test_case
-from . import models
+from replays.testing import test_replays
+from users import models
 
 
 class InviteTestCase(test.TestCase):
@@ -217,3 +219,52 @@ class DeletedUserTest(test_case.UserTestCase):
         self.user.is_active = False
         with self.assertRaises(utils.IntegrityError):
             self.user.save()
+
+    def testCleanUpDeletesMarkedUsers(self):
+        self.user.delete()  # not used in this test.
+
+        long_deleted_user = self.createUser('long-deleted-user')
+        long_deleted_user.MarkForDeletion()
+        long_deleted_user = models.User.objects.get(username='long-deleted-user')
+        long_deleted_user.deleted_on = self.now - datetime.timedelta(days=75)
+        long_deleted_user.save()
+
+        recently_deleted_user = self.createUser('recently-deleted-user')
+        recently_deleted_user.MarkForDeletion()
+        recently_deleted_user = models.User.objects.get(username='recently-deleted-user')
+        recently_deleted_user.deleted_on = self.now - datetime.timedelta(days=15)
+        recently_deleted_user.save()
+
+        _ = self.createUser('active-user')
+
+        models.User.CleanUp(self.now)
+
+        usernames = {u.username for u in models.User.objects.all()}
+        self.assertEqual(usernames, {'recently-deleted-user', 'active-user'})
+
+
+class DeleteAnAccountWithReplaysTestCase(test_case.ReplayTestCase):
+
+    def testDeleteAnAccountWithAReplay(self):
+        u = self.createUser('doomed')
+        now = datetime.datetime.now(datetime.timezone.utc)
+
+        r = test_replays.CreateAsPublishedReplay(
+            filename='th6_extra',
+            user=u
+        )
+
+        models.Visits.RecordVisit(
+            user=u,
+            ip='127.0.0.1'
+        )
+
+        u.MarkForDeletion()
+        u.deleted_on -= datetime.timedelta(days=90)
+        u.save()
+
+        models.User.CleanUp(now)
+
+        self.assertFalse(models.User.objects.filter(id=u.id).exists())
+        self.assertFalse(replay_models.Replay.objects.filter(id=r.id).exists())
+        self.assertFalse(models.Visits.objects.filter(ip='127.0.0.1').exists())
