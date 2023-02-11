@@ -52,7 +52,7 @@ def register(request):
             form = RegisterForm(request.POST)
 
             if form.is_valid():
-                if _USE_PASSCODE:
+                if settings.REQUIRE_PASSCODE:
                     passcode = models.EarlyAccessPasscode.objects.get(passcode=form.cleaned_data['passcode'])
                 else:
                     passcode = None
@@ -74,7 +74,7 @@ def register(request):
         request, 'users/register.html',
         {
             'form': form,
-            'require_passcode': _USE_PASSCODE
+            'require_passcode': settings.REQUIRE_PASSCODE
         })
 
 
