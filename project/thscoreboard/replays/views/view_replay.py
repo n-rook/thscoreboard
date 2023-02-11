@@ -12,6 +12,7 @@ from replays import forms
 from replays import game_fields
 from replays import reanalyze_replay
 
+from thscoreboard import settings
 from replays import game_ids
 
 
@@ -56,7 +57,8 @@ def replay_details(request, game_id: str, replay_id: int):
         'replay_stages': formatStages,
         'table_fields': game_fields.GetGameField(game_id, replay_instance.replay_type),
         'edit_form': edit_form,
-        'replay_type': game_ids.GetReplayType(replay_instance.replay_type)
+        'replay_type': game_ids.GetReplayType(replay_instance.replay_type),
+        'site_base': settings.SITE_BASE
     }
 
     if hasattr(replay_instance, 'replayfile'):

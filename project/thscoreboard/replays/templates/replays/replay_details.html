@@ -109,4 +109,7 @@
         <a href="/replays/{{ game_id }}/{{ replay.id }}/reanalyze">Reanalyze this replay</a>
     </div>
     {% endif %}
+    <div>
+        <a href="mailto:reports@silentselene.net?subject={{ site_base }}{{ request.path }}&body=[Please%20leave%20the%20subject%20line%20unchanged.%20Specify%20details%20here]">Report</a>
+    </div>
 {% endblock %}
