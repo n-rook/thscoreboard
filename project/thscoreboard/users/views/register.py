@@ -8,14 +8,15 @@ from django.db import transaction
 from django.shortcuts import render, redirect
 from django.views.decorators import http as http_decorators
 
+from thscoreboard import settings
+
 from users import send_email
 from users import forms
 from users import ip_bans
 from users import models
 
-_USE_PASSCODE = False
 
-if _USE_PASSCODE:
+if settings.REQUIRE_PASSCODE:
     RegisterForm = forms.RegisterFormWithPasscode
 else:
     RegisterForm = forms.RegisterForm
@@ -51,7 +52,7 @@ def register(request):
             form = RegisterForm(request.POST)
 
             if form.is_valid():
-                if _USE_PASSCODE:
+                if settings.REQUIRE_PASSCODE:
                     passcode = models.EarlyAccessPasscode.objects.get(passcode=form.cleaned_data['passcode'])
                 else:
                     passcode = None
@@ -73,7 +74,7 @@ def register(request):
         request, 'users/register.html',
         {
             'form': form,
-            'require_passcode': _USE_PASSCODE
+            'require_passcode': settings.REQUIRE_PASSCODE
         })
 
 
