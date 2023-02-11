@@ -38,6 +38,7 @@ else:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not IS_PROD
 
+REQUIRE_PASSCODE = os.environ.get('REQUIRE_PASSCODE', True)
 
 def _GetAllowedHosts():
     hosts = ['localhost', 'local.silentselene.net']
