@@ -33,6 +33,10 @@ def update_and_deploy(user: str):
         )
 
         management.call_command(
+            'compilemessages',
+        )
+
+        management.call_command(
             'collectstatic',
             interactive=False
         )
