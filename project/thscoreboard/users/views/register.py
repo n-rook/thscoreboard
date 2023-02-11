@@ -13,7 +13,7 @@ from users import forms
 from users import ip_bans
 from users import models
 
-_USE_PASSCODE = True
+_USE_PASSCODE = False
 
 if _USE_PASSCODE:
     RegisterForm = forms.RegisterFormWithPasscode
