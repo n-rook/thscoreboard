@@ -167,7 +167,7 @@ class InvitedUser(models.Model):
     invited_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
     """The user who invited this person."""
 
-    TTL = datetime.timedelta(days=30)
+    TTL = datetime.timedelta(days=365)
 
     @classmethod
     def CleanUp(cls, now: datetime.datetime) -> None:
