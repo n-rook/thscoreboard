@@ -6,138 +6,162 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-12 19:15+0100\n"
-"PO-Revision-Date: 2022-12-01 13:20+1100\n"
-"Last-Translator: nrook+admin@nrook.com\n"
+"POT-Creation-Date: 2023-02-11 22:34+0000\n"
+"PO-Revision-Date: 2023-02-11 22:43+0000\n"
+"Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: \n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Translated-Using: django-rosetta 0.9.8\n"
 "X-Generator: Poedit 3.1.1\n"
+"X-Translated-Using: django-rosetta 0.9.8\n"
 
-#: .\replays\forms.py:24
+#: replays/forms.py:29 replays/game_ids.py:31
 msgid "Regular"
-msgstr ""
+msgstr "Regular"
 
-#: .\replays\forms.py:25
-msgid "Tool-Assisted"
-msgstr ""
+#: replays/forms.py:30 replays/game_ids.py:33
+msgid "Stage Practice"
+msgstr "Stage Practice"
 
-#: .\replays\forms.py:26
-msgid "Unranked"
-msgstr ""
+#: replays/forms.py:32 replays/game_ids.py:37
+msgid "PVP"
+msgstr "PVP"
 
-#: .\replays\forms.py:27
-msgid "Private"
-msgstr ""
+#: replays/game_ids.py:35
+msgid "Spell Practice"
+msgstr "Spell Practice"
 
-#: .\replays\game_ids.py:25
+#: replays/game_ids.py:47
 msgid "th01"
 msgstr "HRtP"
 
-#: .\replays\game_ids.py:27
+#: replays/game_ids.py:49
 msgid "東方靈異伝 - The Highly Responsive to Prayers"
-msgstr ""
+msgstr "東方靈異伝 - The Highly Responsive to Prayers"
 
-#: .\replays\game_ids.py:30
+#: replays/game_ids.py:52
 msgid "th02"
 msgstr "SoEW"
 
-#: .\replays\game_ids.py:32
+#: replays/game_ids.py:54
 msgid "東方封魔録 - Story of Eastern Wonderland"
-msgstr ""
+msgstr "東方封魔録 - Story of Eastern Wonderland"
 
-#: .\replays\game_ids.py:35
+#: replays/game_ids.py:57
 msgid "th03"
 msgstr "PoDD"
 
-#: .\replays\game_ids.py:37
+#: replays/game_ids.py:59
 msgid "東方夢時空 - The Phantasmagoria of Dim. Dream"
-msgstr ""
+msgstr "東方夢時空 - The Phantasmagoria of Dim. Dream"
 
-#: .\replays\game_ids.py:40
+#: replays/game_ids.py:62
 msgid "th04"
 msgstr "LLS"
 
-#: .\replays\game_ids.py:42
+#: replays/game_ids.py:64
 msgid "東方幻想郷 - Lotus Land Story"
-msgstr ""
+msgstr "東方幻想郷 - Lotus Land Story"
 
-#: .\replays\game_ids.py:45
+#: replays/game_ids.py:67
 msgid "th05"
 msgstr "MS"
 
-#: .\replays\game_ids.py:47
+#: replays/game_ids.py:69
 msgid "東方怪綺談 - Mystic Square"
-msgstr ""
+msgstr "東方怪綺談 - Mystic Square"
 
-#: .\replays\game_ids.py:50
+#: replays/game_ids.py:72
 msgid "th06"
 msgstr "EoSD"
 
-#: .\replays\game_ids.py:52
+#: replays/game_ids.py:74
 msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
-msgstr ""
+msgstr "東方紅魔郷 - Embodiment of Scarlet Devil"
 
-#: .\replays\game_ids.py:55
+#: replays/game_ids.py:77
 msgid "th07"
 msgstr "PCB"
 
-#: .\replays\game_ids.py:57
+#: replays/game_ids.py:79
 msgid "東方妖々夢 - Perfect Cherry Blossom"
-msgstr ""
+msgstr "東方妖々夢 - Perfect Cherry Blossom"
 
-#: .\replays\game_ids.py:60
+#: replays/game_ids.py:82
 msgid "th08"
 msgstr "IN"
 
-#: .\replays\game_ids.py:62
+#: replays/game_ids.py:84
 msgid "東方永夜抄 - Imperishable Night"
-msgstr ""
+msgstr "東方永夜抄 - Imperishable Night"
 
-#: .\replays\game_ids.py:65
+#: replays/game_ids.py:87
+msgid "th09"
+msgstr "PoFV"
+
+#: replays/game_ids.py:89
+msgid "東方花映塚 - Phantasmagoria of Flower View"
+msgstr "東方花映塚 - Phantasmagoria of Flower View"
+
+#: replays/game_ids.py:92
 msgid "th10"
 msgstr "MoF"
 
-#: .\replays\game_ids.py:67
+#: replays/game_ids.py:94
 msgid "東方風神録 - Mountain of Faith"
-msgstr ""
+msgstr "東方風神録 - Mountain of Faith"
 
-#: .\replays\game_ids.py:70
+#: replays/game_ids.py:97
 msgid "th11"
 msgstr "SA"
 
-#: .\replays\game_ids.py:72
+#: replays/game_ids.py:99
 msgid "東方地霊殿 - Subterranean Animism"
-msgstr ""
+msgstr "東方地霊殿 - Subterranean Animism"
 
-#: .\replays\game_ids.py:73
+#: replays/game_ids.py:102
+msgid "th12"
+msgstr "UFO"
+
+#: replays/game_ids.py:104
+msgid "東方星蓮船 - Undefined Fantastic Object"
+msgstr "東方星蓮船 - Undefined Fantastic Object"
+
+#: replays/game_ids.py:107
+msgid "th13"
+msgstr "TD"
+
+#: replays/game_ids.py:109
+msgid "東方神霊廟 - Ten Desires"
+msgstr "東方神霊廟 - Ten Desires"
+
+#: replays/game_ids.py:110
 msgid "Unknown game (bug!)"
-msgstr ""
+msgstr "Unknown game (bug!)"
 
-#: .\replays\game_ids.py:80
+#: replays/game_ids.py:117
 msgctxt "th01"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: .\replays\game_ids.py:83
+#: replays/game_ids.py:120
 msgctxt "th02"
 msgid "Mobility"
-msgstr ""
+msgstr "Mobility"
 
-#: .\replays\game_ids.py:85
+#: replays/game_ids.py:122
 msgctxt "th02"
 msgid "Defensive"
-msgstr ""
+msgstr "Defensive"
 
-#: .\replays\game_ids.py:87
+#: replays/game_ids.py:124
 msgctxt "th02"
 msgid "Offensive"
-msgstr ""
+msgstr "Offensive"
 
-#: .\replays\game_ids.py:91
+#: replays/game_ids.py:128
 #, fuzzy
 #| msgctxt "th01"
 #| msgid "Reimu"
@@ -145,7 +169,7 @@ msgctxt "th03"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: .\replays\game_ids.py:93
+#: replays/game_ids.py:130
 #, fuzzy
 #| msgctxt "th05"
 #| msgid "Mima"
@@ -153,7 +177,7 @@ msgctxt "th03"
 msgid "Mima"
 msgstr "Mima"
 
-#: .\replays\game_ids.py:95
+#: replays/game_ids.py:132
 #, fuzzy
 #| msgctxt "th05"
 #| msgid "Marisa"
@@ -161,37 +185,37 @@ msgctxt "th03"
 msgid "Marisa"
 msgstr "Marisa"
 
-#: .\replays\game_ids.py:97
+#: replays/game_ids.py:134
 msgctxt "th03"
 msgid "Ellen"
-msgstr ""
+msgstr "Ellen"
 
-#: .\replays\game_ids.py:99
+#: replays/game_ids.py:136
 msgctxt "th03"
 msgid "Kotohime"
-msgstr ""
+msgstr "Kotohime"
 
-#: .\replays\game_ids.py:101
+#: replays/game_ids.py:138
 msgctxt "th03"
 msgid "Kana"
-msgstr ""
+msgstr "Kana"
 
-#: .\replays\game_ids.py:103
+#: replays/game_ids.py:140
 msgctxt "th03"
 msgid "Rikako"
-msgstr ""
+msgstr "Rikako"
 
-#: .\replays\game_ids.py:105
+#: replays/game_ids.py:142
 msgctxt "th03"
 msgid "Chiyuri"
-msgstr ""
+msgstr "Chiyuri"
 
-#: .\replays\game_ids.py:107
+#: replays/game_ids.py:144
 msgctxt "th03"
 msgid "Yumemi"
-msgstr ""
+msgstr "Yumemi"
 
-#: .\replays\game_ids.py:111
+#: replays/game_ids.py:148
 #, fuzzy
 #| msgctxt "th06"
 #| msgid "Reimu A"
@@ -199,7 +223,7 @@ msgctxt "th04"
 msgid "Reimu A"
 msgstr "Reimu A"
 
-#: .\replays\game_ids.py:113
+#: replays/game_ids.py:150
 #, fuzzy
 #| msgctxt "th06"
 #| msgid "Reimu B"
@@ -207,7 +231,7 @@ msgctxt "th04"
 msgid "Reimu B"
 msgstr "Reimu B"
 
-#: .\replays\game_ids.py:115
+#: replays/game_ids.py:152
 #, fuzzy
 #| msgctxt "th06"
 #| msgid "Marisa A"
@@ -215,7 +239,7 @@ msgctxt "th04"
 msgid "Marisa A"
 msgstr "Marisa A"
 
-#: .\replays\game_ids.py:117
+#: replays/game_ids.py:154
 #, fuzzy
 #| msgctxt "th06"
 #| msgid "Marisa B"
@@ -223,97 +247,97 @@ msgctxt "th04"
 msgid "Marisa B"
 msgstr "Marisa B"
 
-#: .\replays\game_ids.py:121
+#: replays/game_ids.py:158
 msgctxt "th05"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: .\replays\game_ids.py:123
+#: replays/game_ids.py:160
 msgctxt "th05"
 msgid "Marisa"
 msgstr "Marisa"
 
-#: .\replays\game_ids.py:125
+#: replays/game_ids.py:162
 msgctxt "th05"
 msgid "Mima"
 msgstr "Mima"
 
-#: .\replays\game_ids.py:127
+#: replays/game_ids.py:164
 msgctxt "th05"
 msgid "Yuuka"
 msgstr "Yuuka"
 
-#: .\replays\game_ids.py:131
+#: replays/game_ids.py:168
 msgctxt "th06"
 msgid "Reimu A"
 msgstr "Reimu A"
 
-#: .\replays\game_ids.py:133
+#: replays/game_ids.py:170
 msgctxt "th06"
 msgid "Reimu B"
 msgstr "Reimu B"
 
-#: .\replays\game_ids.py:135
+#: replays/game_ids.py:172
 msgctxt "th06"
 msgid "Marisa A"
 msgstr "Marisa A"
 
-#: .\replays\game_ids.py:137
+#: replays/game_ids.py:174
 msgctxt "th06"
 msgid "Marisa B"
 msgstr "Marisa B"
 
-#: .\replays\game_ids.py:141
+#: replays/game_ids.py:178
 msgctxt "th07"
 msgid "Reimu A"
 msgstr "Reimu A"
 
-#: .\replays\game_ids.py:143
+#: replays/game_ids.py:180
 msgctxt "th07"
 msgid "Reimu B"
 msgstr "Reimu B"
 
-#: .\replays\game_ids.py:145
+#: replays/game_ids.py:182
 msgctxt "th07"
 msgid "Marisa A"
 msgstr "Marisa A"
 
-#: .\replays\game_ids.py:147
+#: replays/game_ids.py:184
 msgctxt "th07"
 msgid "Marisa B"
 msgstr "Marisa B"
 
-#: .\replays\game_ids.py:149
+#: replays/game_ids.py:186
 msgctxt "th07"
 msgid "Sakuya A"
 msgstr "Sakuya A"
 
-#: .\replays\game_ids.py:151
+#: replays/game_ids.py:188
 msgctxt "th07"
 msgid "Sakuya B"
 msgstr "Sakuya B"
 
-#: .\replays\game_ids.py:156
+#: replays/game_ids.py:193
 msgctxt "th08"
 msgid "Reimu & Yukari"
 msgstr "Reimu & Yukari"
 
-#: .\replays\game_ids.py:158
+#: replays/game_ids.py:195
 msgctxt "th08"
 msgid "Marisa & Alice"
 msgstr "Marisa & Alice"
 
-#: .\replays\game_ids.py:160
+#: replays/game_ids.py:197
 msgctxt "th08"
 msgid "Sakuya & Remilia"
 msgstr ""
 
-#: .\replays\game_ids.py:162
+#: replays/game_ids.py:199
 msgctxt "th08"
 msgid "Youmu & Yuyuko"
 msgstr ""
 
-#: .\replays\game_ids.py:164
+#: replays/game_ids.py:201
 #, fuzzy
 #| msgctxt "th01"
 #| msgid "Reimu"
@@ -321,12 +345,12 @@ msgctxt "th08"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: .\replays\game_ids.py:166
+#: replays/game_ids.py:203
 msgctxt "th08"
 msgid "Yukari"
 msgstr ""
 
-#: .\replays\game_ids.py:168
+#: replays/game_ids.py:205
 #, fuzzy
 #| msgctxt "th05"
 #| msgid "Marisa"
@@ -334,171 +358,338 @@ msgctxt "th08"
 msgid "Marisa"
 msgstr "Marisa"
 
-#: .\replays\game_ids.py:170
+#: replays/game_ids.py:207
 msgctxt "th08"
 msgid "Alice"
 msgstr ""
 
-#: .\replays\game_ids.py:172
+#: replays/game_ids.py:209
 msgctxt "th08"
 msgid "Sakuya"
 msgstr "Sakuya"
 
-#: .\replays\game_ids.py:174
+#: replays/game_ids.py:211
 msgctxt "th08"
 msgid "Remilia"
 msgstr ""
 
-#: .\replays\game_ids.py:176
+#: replays/game_ids.py:213
 msgctxt "th08"
 msgid "Youmu"
 msgstr ""
 
-#: .\replays\game_ids.py:178
+#: replays/game_ids.py:215
 msgctxt "th08"
 msgid "Yuyuko"
 msgstr ""
 
-#: .\replays\game_ids.py:183
+#: replays/game_ids.py:220
+#, fuzzy
+#| msgctxt "th01"
+#| msgid "Reimu"
+msgctxt "th09"
+msgid "Reimu"
+msgstr "Reimu"
+
+#: replays/game_ids.py:222
+#, fuzzy
+#| msgctxt "th05"
+#| msgid "Marisa"
+msgctxt "th09"
+msgid "Marisa"
+msgstr "Marisa"
+
+#: replays/game_ids.py:224
+#, fuzzy
+#| msgctxt "th08"
+#| msgid "Sakuya"
+msgctxt "th09"
+msgid "Sakuya"
+msgstr "Sakuya"
+
+#: replays/game_ids.py:226
+msgctxt "th09"
+msgid "Youmu"
+msgstr ""
+
+#: replays/game_ids.py:228
+msgctxt "th09"
+msgid "Reisen"
+msgstr ""
+
+#: replays/game_ids.py:230
+msgctxt "th09"
+msgid "Cirno"
+msgstr ""
+
+#: replays/game_ids.py:232
+msgctxt "th09"
+msgid "Lyrica"
+msgstr "Lyrica"
+
+#: replays/game_ids.py:234
+msgctxt "th09"
+msgid "Mystia"
+msgstr "Mystia"
+
+#: replays/game_ids.py:236
+msgctxt "th09"
+msgid "Tewi"
+msgstr "Tewi"
+
+#: replays/game_ids.py:238
+#, fuzzy
+#| msgctxt "th05"
+#| msgid "Yuuka"
+msgctxt "th09"
+msgid "Yuuka"
+msgstr "Yuuka"
+
+#: replays/game_ids.py:240
+msgctxt "th09"
+msgid "Aya"
+msgstr "Aya"
+
+#: replays/game_ids.py:242
+msgctxt "th09"
+msgid "Medicine"
+msgstr "Medicine"
+
+#: replays/game_ids.py:244
+msgctxt "th09"
+msgid "Komachi"
+msgstr "Komachi"
+
+#: replays/game_ids.py:246
+msgctxt "th09"
+msgid "Eiki"
+msgstr "Eiki"
+
+#: replays/game_ids.py:248
+msgctxt "th09"
+msgid "Merlin"
+msgstr "Merlin"
+
+#: replays/game_ids.py:250
+msgctxt "th09"
+msgid "Lunasa"
+msgstr "Lunasa"
+
+#: replays/game_ids.py:255
 msgctxt "th10"
 msgid "Reimu A"
 msgstr "Reimu A"
 
-#: .\replays\game_ids.py:185
+#: replays/game_ids.py:257
 msgctxt "th10"
 msgid "Reimu B"
 msgstr "Reimu B"
 
-#: .\replays\game_ids.py:187
+#: replays/game_ids.py:259
 msgctxt "th10"
 msgid "Reimu C"
 msgstr "Reimu C (Sealing Type)"
 
-#: .\replays\game_ids.py:189
+#: replays/game_ids.py:261
 msgctxt "th10"
 msgid "Marisa A"
 msgstr "Marisa A"
 
-#: .\replays\game_ids.py:191
+#: replays/game_ids.py:263
 msgctxt "th10"
 msgid "Marisa B"
 msgstr "Marisa B"
 
-#: .\replays\game_ids.py:193
+#: replays/game_ids.py:265
 msgctxt "th10"
 msgid "Marisa C"
 msgstr "Marisa C (Magician Type)"
 
-#: .\replays\game_ids.py:197
+#: replays/game_ids.py:269
 msgctxt "th11"
 msgid "Reimu A"
 msgstr "Reimu A (Yukari Yakumo)"
 
-#: .\replays\game_ids.py:199
+#: replays/game_ids.py:271
 msgctxt "th11"
 msgid "Reimu B"
 msgstr "Reimu B (Suika Ibuki)"
 
-#: .\replays\game_ids.py:201
+#: replays/game_ids.py:273
 msgctxt "th11"
 msgid "Reimu C"
 msgstr "Reimu C (Aya Shameimaru)"
 
-#: .\replays\game_ids.py:203
+#: replays/game_ids.py:275
 msgctxt "th11"
 msgid "Marisa A"
 msgstr "Marisa A (Alice Margatroid)"
 
-#: .\replays\game_ids.py:205
+#: replays/game_ids.py:277
 msgctxt "th11"
 msgid "Marisa B"
 msgstr "Marisa B (Patchouli Knowledge)"
 
-#: .\replays\game_ids.py:207
+#: replays/game_ids.py:279
 msgctxt "th11"
 msgid "Marisa C"
 msgstr "Marisa C (Nitori Kawashiro)"
 
-#: .\replays\game_ids.py:215
+#: replays/game_ids.py:283
+#, fuzzy
+#| msgctxt "th06"
+#| msgid "Reimu A"
+msgctxt "th12"
+msgid "Reimu A"
+msgstr "Reimu A"
+
+#: replays/game_ids.py:285
+#, fuzzy
+#| msgctxt "th06"
+#| msgid "Reimu B"
+msgctxt "th12"
+msgid "Reimu B"
+msgstr "Reimu B"
+
+#: replays/game_ids.py:287
+#, fuzzy
+#| msgctxt "th06"
+#| msgid "Marisa A"
+msgctxt "th12"
+msgid "Marisa A"
+msgstr "Marisa A"
+
+#: replays/game_ids.py:289
+#, fuzzy
+#| msgctxt "th06"
+#| msgid "Marisa B"
+msgctxt "th12"
+msgid "Marisa B"
+msgstr "Marisa B"
+
+#: replays/game_ids.py:291
+msgctxt "th12"
+msgid "Sanae A"
+msgstr "Sanae A"
+
+#: replays/game_ids.py:293
+msgctxt "th12"
+msgid "Sanae B"
+msgstr ""
+
+#: replays/game_ids.py:297
+#, fuzzy
+#| msgctxt "th01"
+#| msgid "Reimu"
+msgctxt "th13"
+msgid "Reimu"
+msgstr "Reimu"
+
+#: replays/game_ids.py:299
+#, fuzzy
+#| msgctxt "th05"
+#| msgid "Marisa"
+msgctxt "th13"
+msgid "Marisa"
+msgstr "Marisa"
+
+#: replays/game_ids.py:301
+msgctxt "th13"
+msgid "Sanae"
+msgstr ""
+
+#: replays/game_ids.py:303
+msgctxt "th13"
+msgid "Youmu"
+msgstr ""
+
+#: replays/game_ids.py:311
 msgctxt "th01"
 msgid "Jigoku"
 msgstr "Jigoku"
 
-#: .\replays\game_ids.py:217
+#: replays/game_ids.py:313
 msgctxt "th01"
 msgid "Makai"
 msgstr "Makai"
 
-#: .\replays\game_ids.py:220
+#: replays/game_ids.py:316
 msgctxt "th08"
 msgid "Final A"
 msgstr ""
 
-#: .\replays\game_ids.py:222
+#: replays/game_ids.py:318
 msgctxt "th08"
 msgid "Final B"
 msgstr ""
 
-#: .\replays\models.py:88
+#: replays/models.py:90
 msgctxt "Category"
 msgid "Regular"
 msgstr ""
 
-#: .\replays\models.py:91
+#: replays/models.py:93
 msgctxt "Category"
-msgid "TAS"
+msgid "Tool-Assisted"
 msgstr ""
 
-#: .\replays\models.py:94
+#: replays/models.py:96
 msgctxt "Category"
 msgid "Unusual"
 msgstr ""
 
-#: .\replays\models.py:101
+#: replays/models.py:103
 msgctxt "Category"
 msgid "Private"
 msgstr ""
 
-#: .\replays\templates\replays\docs\about.html:5
-msgid "About Silent Selene"
+#: replays/models.py:114
+msgctxt "Replay Type"
+msgid "Regular"
 msgstr ""
 
-#: .\replays\templates\replays\docs\about.html:6
+#: replays/models.py:117
+msgctxt "Replay Type"
+msgid "Stage Practice"
+msgstr "Stage Practice"
+
+#: replays/models.py:120
+msgctxt "Replay Type"
+msgid "Spell Practice"
+msgstr "Spell Practice"
+
+#: replays/models.py:124
+msgctxt "Replay Type"
+msgid "PVP"
+msgstr "PVP"
+
+#: replays/templates/replays/docs/about.html:5
+msgid "About Silent Selene"
+msgstr "About Silent Selene"
+
+#: replays/templates/replays/docs/about.html:6
 #, python-format
 msgid ""
 "\n"
 "    <h2>What is Silent Selene?</h2>\n"
 "    <p>\n"
-"        Silent Selene is an online repository and scoreboard for Team "
-"Shanghai Alice's popular Touhou Project shooting games. We welcome all "
-"replays and videos of runs, from a new player's first clear to the great "
-"achievements of elite players. Silent Selene is free to use, and will never "
-"collect a profit. We are not affiliated with Team Shanghai Alice or ZUN; we "
-"just love his games.\n"
+"        Silent Selene is an online repository and scoreboard for Team Shanghai Alice's popular Touhou Project shooting games. We welcome all replays and videos of runs, from a new player's first clear to the great achievements of elite players. Silent Selene is free to use, and will never collect a profit. We are not affiliated with Team Shanghai Alice or ZUN; we just love his games.\n"
 "    </p>\n"
 "    <h2>What is Touhou?</h2>\n"
 "    <p>\n"
-"        The Touhou Project is a series of games, books, and other media. The "
-"Touhou Project is largely created by ZUN, acting as the sole member of Team "
-"Shanghai Alice. All the games are made by ZUN.\n"
+"        The Touhou Project is a series of games, books, and other media. The Touhou Project is largely created by ZUN, acting as the sole member of Team Shanghai Alice. All the games are made by ZUN.\n"
 "    </p>\n"
 "    <p>\n"
-"        You can buy most of the official Touhou games on <a href=\"https://"
-"store.steampowered.com/search/?developer=%%e4%%b8%%8a"
-"%%e6%%b5%%b7%%e3%%82%%a2%%e3%%83%%aa%%e3%%82%%b9%%e5%%b9%%bb"
-"%%e6%%a8%%82%%e5%%9b%%a3\">Steam</a>, <a href=\"https://www.dlsite.com/"
-"maniax/circle/profile/=/maker_id/RG46179.html\">DLSite</a> or many other "
-"online stores. A few are not sold as online downloads, but can be purchased "
-"as CDs.\n"
+"        You can buy most of the official Touhou games on <a href=\"https://store.steampowered.com/search/?developer=%%e4%%b8%%8a%%e6%%b5%%b7%%e3%%82%%a2%%e3%%83%%aa%%e3%%82%%b9%%e5%%b9%%bb%%e6%%a8%%82%%e5%%9b%%a3\">Steam</a>, <a href=\"https://www.dlsite.com/maniax/circle/profile/=/maker_id/RG46179.html\">DLSite</a> or many other online stores. A few are not sold as online downloads, but can be purchased as CDs.\n"
 "    </p>\n"
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\docs\credits.html:5
+#: replays/templates/replays/docs/credits.html:5
 msgid "Credits"
 msgstr ""
 
-#: .\replays\templates\replays\docs\credits.html:6
+#: replays/templates/replays/docs/credits.html:6
 msgid ""
 "\n"
 "    <h2>Website development</h2>\n"
@@ -509,52 +700,41 @@ msgid ""
 "    </ul>\n"
 "    <h2>Fonts</h2>\n"
 "    <ul>\n"
-"        <li><a href=\"https://www.latofonts.com\">Lato</a> by Łukasz "
-"Dziedzic</li>\n"
-"        <li><a href=\"https://github.com/octaviopardo/EBGaramond12\">EB "
-"Garamond 12</a> by Claude Garamond, Geord Mayr-Duffner and Octavio Pardo</"
-"li>\n"
+"        <li><a href=\"https://www.latofonts.com\">Lato</a> by Łukasz Dziedzic</li>\n"
+"        <li><a href=\"https://github.com/octaviopardo/EBGaramond12\">EB Garamond 12</a> by Claude Garamond, Geord Mayr-Duffner and Octavio Pardo</li>\n"
 "    </ul>\n"
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\docs\licenses.html:5
+#: replays/templates/replays/docs/licenses.html:5
 msgid "Licenses"
 msgstr ""
 
-#: .\replays\templates\replays\docs\licenses.html:6
+#: replays/templates/replays/docs/licenses.html:6
 msgid ""
 "\n"
 "    <h2>This Site</h2>\n"
 "    <p>\n"
-"        Silent Selene is licensed under the Apache License 2.0. The <a href="
-"\"https://github.com/n-rook/thscoreboard\">source code</a> is available on "
-"GitHub.\n"
+"        Silent Selene is licensed under the Apache License 2.0. The <a href=\"https://github.com/n-rook/thscoreboard\">source code</a> is available on GitHub.\n"
 "    </p>\n"
 "    <h2>Other Components</h2>\n"
 "    <p>\n"
-"        We use the fonts <a href=\"https://www.latofonts.com/\">Lato</a> and "
-"<a href=\"https://github.com/octaviopardo/EBGaramond12\">EB Garamond 12</a>, "
-"both of which are licensed under the <a href=\"http://scripts.sil.org/OFL"
-"\">SIL Open Font License 1.1</a>.\n"
+"        We use the fonts <a href=\"https://www.latofonts.com/\">Lato</a> and <a href=\"https://github.com/octaviopardo/EBGaramond12\">EB Garamond 12</a>, both of which are licensed under the <a href=\"http://scripts.sil.org/OFL\">SIL Open Font License 1.1</a>.\n"
 "    </p>\n"
 "\n"
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\docs\privacy_policy.html:5
+#: replays/templates/replays/docs/privacy_policy.html:5
 msgid "Privacy Policy"
 msgstr ""
 
-#: .\replays\templates\replays\docs\privacy_policy.html:6
+#: replays/templates/replays/docs/privacy_policy.html:6
 msgid ""
 "\n"
 "    <h2>Overview</h2>\n"
 "    <p>\n"
-"        Hello! At Silent Selene, you can upload your Touhou replays, as well "
-"as take a look at other replays that interest you. We need to collect and "
-"store some information in order to make this happen; here we describe how "
-"that happens.\n"
+"        Hello! At Silent Selene, you can upload your Touhou replays, as well as take a look at other replays that interest you. We need to collect and store some information in order to make this happen; here we describe how that happens.\n"
 "    </p>\n"
 "    <h2>What this document covers</h2>\n"
 "    <p>\n"
@@ -563,27 +743,18 @@ msgid ""
 "    <h2>Information We Collect</h2>\n"
 "    <h3>Information You Provide to Us</h3>\n"
 "    <p>\n"
-"        Most of the information we collect is information that is provided "
-"to us by you. For example:\n"
+"        Most of the information we collect is information that is provided to us by you. For example:\n"
 "    </p>\n"
 "    <p>\n"
 "        <ul>\n"
 "            <li>\n"
-"                <b>Basic account information:</b> We collect certain "
-"information, such as a username and password, so that you can have and log "
-"into an account. Of course, we store any settings or preferences you set on "
-"your account, too, such as language preference or what games you're "
-"interested in.\n"
+"                <b>Basic account information:</b> We collect certain information, such as a username, password and email address, so that you can have and log into an account. Of course, we store any settings or preferences you set on your account, too, such as language preference or what games you're interested in.\n"
 "            </li>\n"
 "            <li>\n"
-"                <b>Public profile information:</b> Some information, such as "
-"your username, is present on your public profile, and is considered public "
-"information. Note that your email address is not public information.\n"
+"                <b>Public profile information:</b> Some information, such as your username, is present on your public profile, and is considered public information. Note that your email address is not public information.\n"
 "            </li>\n"
 "            <li>\n"
-"                <b>Content:</b> Silent Selene is primarily a site to share "
-"replays. As such, we will store replays and information about them, so that "
-"you or other people can check them out later.\n"
+"                <b>Content:</b> Silent Selene is primarily a site to share replays. As such, we will store replays and information about them, so that you or other people can check them out later.\n"
 "            </li>\n"
 "        </ul>\n"
 "    </p>\n"
@@ -594,20 +765,10 @@ msgid ""
 "    <p>\n"
 "        <ul>\n"
 "            <li>\n"
-"                <b>Log information:</b> Like most online service provides, "
-"we collect information that web browsers, mobile devices, and servers "
-"typically make available, including the browser type, IP address, unique "
-"device identifiers, language preference, referring site, the date and time "
-"of access, operation system, and mobile network information.\n"
+"                <b>Log information:</b> Like most online service providers, we collect information that web browsers, mobile devices, and servers typically make available, including the browser type, IP address, unique device identifiers, language preference, referring site, the date and time of access, operation system, and mobile network information.\n"
 "            </li>\n"
 "            <li>\n"
-"                <b>Location information:</b> We may use your IP address or "
-"other identifiers to guess your location, in order to provide features such "
-"as automatic language detection.\n"
-"            </li>\n"
-"            <li>\n"
-"                <b>Cookies:</b> Cookies are a foundational technology of the "
-"Internet. We use cookies to allow users to log in.\n"
+"                <b>Cookies:</b> Cookies are a foundational technology of the Internet. We use cookies to allow users to log in; these cookies are essential to Silent Selene's functionality.\n"
 "            </li>\n"
 "        </ul>\n"
 "    </p>\n"
@@ -618,45 +779,26 @@ msgid ""
 "        We use information about you for the purposes below:\n"
 "        <ul>\n"
 "            <li>\n"
-"                <b>To provide our Services.</b> For example, to set up and "
-"maintain your account, make your replays available, and provide additional "
-"fun information about your experiences with Touhou.\n"
+"                <b>To make our site function.</b> For example, to set up and maintain your account, make your replays available, and provide additional fun information about your experiences with Touhou.\n"
 "            </li>\n"
 "            <li>\n"
-"                <b>To improve our Services.</b> For example, by seeing how "
-"users interact with our Services to see what features are popular.\n"
+"                <b>To make our site better.</b> For example, by seeing how users interact with our Services to see what features are popular.\n"
 "            </li>\n"
 "            <li>\n"
-"                <b>To protect our Services, our users, and the public.</b> "
-"For example, by detecting security incidents, or detecting malicious, "
-"deceptive, fraudulent, or illegal activity on the site. In the past, "
-"malicious actors have used Touhou fansites harm other people, such as by "
-"publicizing personal information about innocent figures, or impersonating "
-"other players to destroy their reputation; we wish to prevent Silent Selene "
-"from becoming a venue for these attacks, or from being attacked itself.\n"
+"                <b>To protect Silent Selene, our users, and the public.</b> For example, by detecting security incidents, or detecting malicious, deceptive, fraudulent, or illegal activity on the site. In the past, malicious actors have used Touhou fansites harm other people, such as by publicizing personal information about innocent figures, or impersonating other players to destroy their reputation; we wish to prevent Silent Selene from becoming a venue for these attacks, or from being attacked itself.\n"
 "            </li>\n"
 "            <li>\n"
-"                <b>To fix problems with our Services.</b> For example, by "
-"detecting or fixing bugs on our website.\n"
+"                <b>To fix problems with Silent Selene.</b> For example, by detecting or fixing bugs on our website.\n"
 "            </li>\n"
 "            <li>\n"
-"                <b>To communicate with you.</b> For example, to share "
-"information about your content with you.\n"
+"                <b>To communicate with you.</b> For example, to share information about your content with you.\n"
 "            </li>\n"
 "        </ul>\n"
 "    </p>\n"
 "\n"
 "    <h3>EU note: What's our legal basis?</h3>\n"
 "    <p>\n"
-"        Our processing of personal data is based on two bases. Most of our "
-"processing occurs after the user has consented; for example, a person may "
-"create an account, and then we use their username and password to let them "
-"use the account later. Or, a user may upload Content to be seen by others, "
-"and then we show that Content to others. Some information is processed to "
-"protect our legitimate interests, such as our interest in not allowing "
-"Silent Selene to be used as a venue for attacks on other people; for "
-"example, we collect and store IP addresses in order to make it more "
-"difficult for a banned user to access the site in the future.\n"
+"        Our processing of personal data is based on two bases. Most of our processing occurs after the user has consented; for example, a person may create an account, and then we use their username, password and email address to let them use the account later. Or, a user may upload content to be seen by others, and then we show that content to others. Some information is processed to protect our legitimate interests, such as our interest in not allowing Silent Selene to be used as a venue for attacks on other people; for example, we collect and store IP addresses in order to make it more difficult for a banned user to access the site in the future.\n"
 "    </p>\n"
 "    <h2>Sharing Information</h2>\n"
 "    <h3>How We Share Information</h3>\n"
@@ -664,43 +806,34 @@ msgid ""
 "        We share information about you in only limited circumstances.\n"
 "        <ul>\n"
 "            <li>\n"
-"                <b>Third-party services:</b> We use third-party services in "
-"order to provide our Services. For example, our website is hosted by another "
-"company. We only use third-party services in a manner consistent with this "
-"Privacy Policy.\n"
+"                <b>Third-party services:</b> We use third-party services in order to provide our Services. For example, the server for our website is provided by Vultr, and e-mails are sent out using the Amazon Simple Email Service. We only use third-party services in a manner consistent with this Privacy Policy.\n"
 "            </li>\n"
 "            <li>\n"
-"                <b>Legal and regulatory requirements:</b> We may disclose "
-"information about you in response to a subpoena, court order, or other "
-"governmental request. This seems like a rather unlikely scenario, but it is "
-"listed here for completeness. Please do not commit crimes in your Touhou "
-"replays. Capturing Sakuya's final spell, \"Eternal Meek\", by using a "
-"safespot is not considered a crime for the purposes of this Privacy Policy, "
-"though it may lead to bad karma or punishment in the afterlife.\n"
+"                <b>Legal and regulatory requirements:</b> We may disclose information about you in response to a subpoena, court order, or other governmental request. This seems like a rather unlikely scenario, but it is listed here for completeness. Please do not commit crimes in your Touhou replays. Capturing Sakuya's final spell, \"Eternal Meek\", by using a safespot is not considered a crime for the purposes of this Privacy Policy, though it may lead to bad karma or punishment in the afterlife.\n"
 "            </li>\n"
 "        </ul>\n"
 "    </p>\n"
 "\n"
 "    <h3>Public Information</h3>\n"
 "    <p>\n"
-"        Public information is, in fact, public. If you choose to make "
-"information public, we will disclose it publicly. Visitors on the website "
-"may see it, and we may provide it to third-party services such as Discord if "
-"other people share links to it there. In addition, we may make the public "
-"replays posted on our site available in bulk to other people.\n"
+"        Public information is, in fact, public. If you choose to make information public, we will disclose it publicly. Visitors on the website may see it, and we may provide it to third-party services such as Discord if other people share links to it there. In addition, we may make the public replays posted on our site available in bulk to other people.\n"
 "    </p>\n"
 "\n"
 "    <h2>How Long We Keep Information</h2>\n"
 "    <p>\n"
-"        We generally discard information about you when it's no longer "
-"needed for the purposes for which we collect and use it. For example, if "
-"content is deleted, we stop storing it in our database within 30 days after "
-"its deletion. After this time period is up, we may still store it in caches "
-"or backups, but these backups will eventually be purged.\n"
+"        We only keep information for as long as it is necessary for the purposes for which we collect and use it. For some information, this means we keep it indefinitely unless you request it be removed; for example, if you upload a replay, we will keep it until you delete it.\n"
 "    </p>\n"
 "    <p>\n"
-"        We may store IP addresses and other information for longer periods "
-"of time if we deem it necessary to protect our site.\n"
+"        If a user has requested that information be deleted, we may retain that information for a short period of time, in order to preserve backups, investigate problems with the site, let the user change their mind, or other necessary purposes. However, in almost all cases, we will not preserve such information for over 120 days. All exceptions to this 120-day rule are explicitly listed below.\n"
+"    </p>\n"
+"    <p>\n"
+"        We record the IP addresses of visitors to the site. If the visitor is logged in with their account, we associate it with the account in question. This is necessary to protect the website from people who would misuse it. As above, these IP addresses are not stored for over 120 days.\n"
+"    </p>\n"
+"    <p>\n"
+"        We may ban IP addresses from accessing the site, if necessary to protect it. In this case, we will continue to store the IP address in question, as well as why it was banned. This information will not be kept for over 15 years.\n"
+"    </p>\n"
+"    <p>\n"
+"        If an account is suspended, we will keep its username, email address, and the reason for the suspension in our records for the duration of the suspension, even if the user in question requests their account be deleted. This is necessary to prevent them from evading their ban, and thus to protect the site as a whole. This information will not be kept for longer than 120 days after either the suspension expires or after the account's deletion is requested, whichever is later. Suspensions will always expire at most 15 years after they are instituted.\n"
 "    </p>\n"
 "\n"
 "    <h2>\n"
@@ -708,29 +841,21 @@ msgid ""
 "    </h2>\n"
 "\n"
 "    <p>\n"
-"        No service is completely secure, but we work hard to protect the "
-"information about you from unauthorized access or use.\n"
+"        No service is completely secure, but we work hard to protect the information about you from unauthorized access or use.\n"
 "    </p>\n"
 "\n"
 "    <h2>\n"
 "        Choices\n"
 "    </h2>\n"
 "\n"
-"    If you do not want us using your information, the best solution is to "
-"refrain from providing it to us. Most notably, if you do not wish to give us "
-"an email address or online identifier, don't create an account. If you "
-"create an account and later regret it, you can request we delete your "
-"existing account.\n"
+"    If you do not want us using your information, the best solution is to refrain from providing it to us. Most notably, if you don't wish to give us an email address or online identifier, don't create an account. If you create an account and later regret it, you can request we delete your existing account.\n"
 "\n"
 "    <h2>\n"
 "        GDPR\n"
 "    </h2>\n"
 "\n"
 "    <p>\n"
-"        If you are located in a country that falls under the scope of the "
-"GDPR, data protection laws give you certain rights with respect to your "
-"personal data, subject to any exemptions provided by the law, including the "
-"rights to:\n"
+"        If you are located in a country that falls under the scope of the GDPR, data protection laws give you certain rights with respect to your personal data, subject to any exemptions provided by the law, including the rights to:\n"
 "        <ul>\n"
 "            <li>\n"
 "                Request access to your personal data;\n"
@@ -742,8 +867,7 @@ msgid ""
 "                Object to our use and processing of your personal data;\n"
 "            </li>\n"
 "            <li>\n"
-"                Request that we limit our use and processing of your "
-"personal data; and\n"
+"                Request that we limit our use and processing of your personal data; and\n"
 "            </li>\n"
 "            <li>\n"
 "                Request portability of your personal data.\n"
@@ -751,8 +875,7 @@ msgid ""
 "        </ul>\n"
 "    </p>\n"
 "    <p>\n"
-"        You also have the right to make a complaint to a government "
-"supervisory authority.\n"
+"        You also have the right to make a complaint to a government supervisory authority.\n"
 "    </p>\n"
 "\n"
 "    <h2>\n"
@@ -760,9 +883,7 @@ msgid ""
 "    </h2>\n"
 "\n"
 "    <p>\n"
-"        If you have a question about this Privacy Policy, or you would like "
-"to contact us for any reason, please contact us through our email address at "
-"privacy@silentselene.net.\n"
+"        If you have a question about this Privacy Policy, or you would like to contact us for any reason, please contact us through our email address at <a href=\"mailto:privacy@silentselene.net\">privacy@silentselene.net</a>.\n"
 "    </p>\n"
 "\n"
 "    <h2>\n"
@@ -770,72 +891,46 @@ msgid ""
 "    </h2>\n"
 "\n"
 "    <p>\n"
-"        Silent Selene is not yet fully released. As such, we may make "
-"significant changes to our Privacy Policy over time. Your further use of the "
-"Services after a change to our Privacy Policy will be subject to the updated "
-"policy.\n"
+"        Silent Selene is not yet fully released. As such, we may make significant changes to our Privacy Policy over time. Your further use of the Services after a change to our Privacy Policy will be subject to the updated policy.\n"
 "    </p>\n"
 "\n"
 "    <h2>\n"
 "        Translation\n"
 "    </h2>\n"
 "    <p>\n"
-"        Our Privacy Policy was originally written in English (US). We may "
-"translate it into other languages, but if there is a conflict between the "
-"translated version and the English version, the English version will "
-"control.\n"
+"        Our Privacy Policy was originally written in English (US). We may translate it into other languages, but if there is a conflict between the translated version and the English version, the English version will control.\n"
 "    </p>\n"
 "\n"
 "    <h2>License and Attribution</h2>\n"
 "        <p>\n"
-"            This privacy policy is licensed under <a href=\"https://"
-"creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>, so if you like "
-"it, you can use it on your own site. It's based on <a href=\"https://github."
-"com/Automattic/legalmattic/blob/master/Privacy-Policy.md\">the Automattic "
-"Privacy Policy.</a>.\n"
+"            This privacy policy is licensed under <a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>, so if you like it, you can use it on your own site. It's based on <a href=\"https://github.com/Automattic/legalmattic/blob/master/Privacy-Policy.md\">the Automattic Privacy Policy.</a>.\n"
 "        </p>\n"
 "\n"
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\docs\replay_rules.html:5
+#: replays/templates/replays/docs/replay_rules.html:5
 msgid "Replay Rules"
 msgstr ""
 
-#: .\replays\templates\replays\docs\replay_rules.html:6
+#: replays/templates/replays/docs/replay_rules.html:6
 msgid ""
 "\n"
 "    <h2>Disclaimer</h2>\n"
-"    <p>These rules are preliminary; we will adjust them based on feedback "
-"from the community. If we do, we might have to recategorize some replays.</"
-"p>\n"
+"    <p>These rules are preliminary; we will adjust them based on feedback from the community. If we do, we might have to recategorize some replays.</p>\n"
 "    <h2>Overview</h2>\n"
 "    <p>\n"
-"        There are three types of replays on Silent Selene: regular, TAS, and "
-"unlisted. Most replays are <b>regular</b>; that describes runs that are "
-"played normally, without any unusual tools to assist the player. (Tools that "
-"do not change the character of the run are still allowed in regular "
-"replays.) <b>TAS</b> replays are tool-assisted; any helper tools are "
-"allowed, even ones that are obviously \"cheating\" like save states. But the "
-"replay still has to be a replay of the actual game. And <b>unlisted</b> runs "
-"are everything else; this category mostly applies to replays that changed "
-"the game's patterns somehow or made other crazy changes.\n"
+"        There are three types of replays on Silent Selene: regular, TAS, and unlisted. Most replays are <b>regular</b>; that describes runs that are played normally, without any unusual tools to assist the player. (Tools that do not change the character of the run are still allowed in regular replays.) <b>TAS</b> replays are tool-assisted; any helper tools are allowed, even ones that are obviously \"cheating\" like save states. But the replay still has to be a replay of the actual game. And <b>unlisted</b> runs are everything else; this category mostly applies to replays that changed the game's patterns somehow or made other crazy changes.\n"
 "    </p>\n"
 "    <h2>tl;dr</h2>\n"
 "    <p>\n"
-"        For regular runs, most tools like vpatch are allowed. Translation "
-"patches are allowed. Pause buffering is not allowed.\n"
+"        For regular runs, most tools like vpatch are allowed. Translation patches are allowed. Pause buffering is not allowed.\n"
 "    </p>\n"
 "    <h2>Is My Replay Regular?</h2>\n"
 "    <h3>General Rules</h3>\n"
 "    <h4>Expert replays</h4>\n"
 "    <p>\n"
-"        A few things are not allowed in <b>expert replays</b>, but are "
-"allowed for everyone else. Some things shouldn't be allowed at high levels "
-"of competition, but we don't want to restrict novice and intermediate "
-"players too much, especially if they're excited to upload replays of their "
-"successful runs. An expert replay is any replay which meets any of these "
-"criteria:\n"
+"        A few things are not allowed in <b>expert replays</b>, but are allowed for everyone else. Some things shouldn't be allowed at high levels of competition, but we don't want to restrict novice and intermediate players too much, especially if they're excited to upload replays of their successful runs. An expert replay is any replay which meets any of these criteria:\n"
 "    </p>\n"
 "    <ul>\n"
 "        <li>\n"
@@ -848,35 +943,28 @@ msgid ""
 "            Does not miss; that is, does not lose a life\n"
 "        </li>\n"
 "        <li>\n"
-"            Has a good score: a score noticeably higher than that of an "
-"average 1cc that does not engage with the scoring mechanics\n"
+"            Has a good score: a score noticeably higher than that of an average 1cc that does not engage with the scoring mechanics\n"
 "        </li>\n"
 "    </ul>\n"
 "    <h4>What's Allowed</h4>\n"
 "    <p>\n"
-"        These tools (and classes of tools) are OK to use in regular "
-"replays.\n"
+"        These tools (and classes of tools) are OK to use in regular replays.\n"
 "    </p>\n"
 "    <ul>\n"
 "        <li>\n"
 "            The low-latency tool \"vpatch\" is allowed.\n"
 "        </li>\n"
 "        <li>\n"
-"            Special DLLs to translate DirectX to other graphics APIs are "
-"allowed. For example, \"ENB Converter\" and \"dgVoodoo\" are allowed.\n"
+"            Special DLLs to translate DirectX to other graphics APIs are allowed. For example, \"ENB Converter\" and \"dgVoodoo\" are allowed.\n"
 "        </li>\n"
 "        <li>\n"
-"            Emulators, or other tools that run a binary on an operation "
-"system or computer for which it was not designed, are allowed. This includes "
-"PC-98 emulators such as \"Neko Project II\", as well as programs like \"Wine"
-"\" that allow players to run Windows games on other operating systems.\n"
+"            Emulators, or other tools that run a binary on an operation system or computer for which it was not designed, are allowed. This includes PC-98 emulators such as \"Neko Project II\", as well as programs like \"Wine\" that allow players to run Windows games on other operating systems.\n"
 "        </li>\n"
 "        <li>\n"
 "            Patches which translate the game's text are allowed.\n"
 "        </li>\n"
 "        <li>\n"
-"            Patches which modify the way the game's score is displayed so as "
-"to avoid a \"counterstop\" are allowed.\n"
+"            Patches which modify the way the game's score is displayed so as to avoid a \"counterstop\" are allowed.\n"
 "        </li>\n"
 "    </ul>\n"
 "    <h4>What's Banned</h4>\n"
@@ -888,34 +976,26 @@ msgid ""
 "            Any patch that modifies the game's behavior is not allowed.\n"
 "        </li>\n"
 "        <li>\n"
-"            Loading save states is not allowed. This includes any \"runahead"
-"\" emulator functionality that relies on save states.\n"
+"            Loading save states is not allowed. This includes any \"runahead\" emulator functionality that relies on save states.\n"
 "        </li>\n"
 "        <li>\n"
-"            Pause buffering, the technique of repeatedly pausing in quick "
-"succession to gain an advantage, is not allowed.\n"
+"            Pause buffering, the technique of repeatedly pausing in quick succession to gain an advantage, is not allowed.\n"
 "        </li>\n"
 "        <li>\n"
-"            Pausing to gain an advantage, such as pausing when bullets are "
-"onscreen in order to read them, is not allowed. We may exempt specific "
-"replays from this rule if we deem the advantage unintentional.\n"
+"            Pausing to gain an advantage, such as pausing when bullets are onscreen in order to read them, is not allowed. We may exempt specific replays from this rule if we deem the advantage unintentional.\n"
 "        </li>\n"
 "        <li>\n"
-"            Editing a replay file after it has been saved is not allowed "
-"(except for renaming it).\n"
+"            Editing a replay file after it has been saved is not allowed (except for renaming it).\n"
 "        </li>\n"
 "    </ul>\n"
 "    <h4>My tool isn't mentioned!</h4>\n"
 "    <p>\n"
-"        If a type of tool isn't listed above, feel free to ask the Silent "
-"Selene staff to clarify the situation; we will judge these tools on a case-"
-"by-case basis and update the rules accordingly.\n"
+"        If a type of tool isn't listed above, feel free to ask the Silent Selene staff to clarify the situation; we will judge these tools on a case-by-case basis and update the rules accordingly.\n"
 "    </p>\n"
 "    <h3>Game-specific rules</h3>\n"
 "    <ul>\n"
 "        <li>\n"
-"            <b>TH06</b>: Texture patches that affect the appearance of the "
-"game, such as the \"hitbox patch\", are not allowed in expert replays.\n"
+"            <b>TH06</b>: Texture patches that affect the appearance of the game, such as the \"hitbox patch\", are not allowed in expert replays.\n"
 "        </li>\n"
 "        <li>\n"
 "            <b>TH10</b>: \"Hint files\" are allowed.\n"
@@ -927,61 +1007,49 @@ msgid ""
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\docs\rules.html:6
+#: replays/templates/replays/docs/rules.html:6
 msgid "Rules"
 msgstr ""
 
-#: .\replays\templates\replays\docs\rules.html:7
+#: replays/templates/replays/docs/rules.html:7
 #, python-format
 msgid ""
 "\n"
 "    <h2>General Rules</h2>\n"
 "    <ul>\n"
 "        <li>Do not use the site if you are under 13 (or 16 in Europe).</li>\n"
-"        <li>Do not impersonate other members of the Touhou community, or "
-"upload replays that are not yours.</li>\n"
+"        <li>Do not impersonate other members of the Touhou community, or upload replays that are not yours.</li>\n"
 "        <li>Do not create multiple accounts.</li>\n"
-"        <li>Do not try to pass off tool-assisted replays as having been "
-"played without the use of restricted tools. (For more information on which "
-"tools are allowed, see the <a href=\"%(replay_rules_url)s\">Replay Rules</"
-"a>.)</li>\n"
-"        <li>Do not encourage illegal activity or provide information about "
-"piracy. (Note that using an emulator is not illegal.)</li>\n"
+"        <li>Do not try to pass off tool-assisted replays as having been played without the use of restricted tools. (For more information on which tools are allowed, see the <a href=\"%(replay_rules_url)s\">Replay Rules</a>.)</li>\n"
+"        <li>Do not encourage illegal activity or provide information about piracy. (Note that using an emulator is not illegal.)</li>\n"
 "    </ul>\n"
 "    <p>\n"
-"        The rules above are not exhaustive; we may enforce bans or other "
-"punishment at our own discretion for any behavior we judge harmful to the "
-"Touhou community.\n"
+"        The rules above are not exhaustive; we may enforce bans or other punishment at our own discretion for any behavior we judge harmful to the Touhou community.\n"
 "    </p>\n"
 "    <h2>Replay Rules</h2>\n"
 "    <p>\n"
-"        For detailed rules on what is allowed for regular replays, see the "
-"<a href=\"%(replay_rules_url)s\">Replay Rules</a>.\n"
+"        For detailed rules on what is allowed for regular replays, see the <a href=\"%(replay_rules_url)s\">Replay Rules</a>.\n"
 "    </p>\n"
 "    <ul>\n"
 "        <li>Be sure the replay information you specify is correct.</li>\n"
-"        <li>If your replay links to a video, the video must be publicly "
-"accessible, and must show your run of the game.</li>\n"
+"        <li>If your replay links to a video, the video must be publicly accessible, and must show your run of the game.</li>\n"
 "    </ul>\n"
 "\n"
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\docs\terms_of_use.html:6
+#: replays/templates/replays/docs/terms_of_use.html:6
 msgid "Terms of Service"
-msgstr ""
+msgstr "Terms of Service"
 
-#: .\replays\templates\replays\docs\terms_of_use.html:7
+#: replays/templates/replays/docs/terms_of_use.html:7
 #, python-format
 msgid ""
 "\n"
 "    <h2>Overview</h2>\n"
 "\n"
 "    <p>\n"
-"        The Silent Selene site exists to let people share their experiences "
-"in Touhou games. These Terms of Service (\"Terms\") define our commitments "
-"to you, and your rights and responsibilities when using this our services. "
-"<b>If you don't agree to these Terms, don't use our services.</b>\n"
+"        The Silent Selene site exists to let people share their experiences in Touhou games. These Terms of Service (\"Terms\") define our commitments to you, and your rights and responsibilities when using this our services. <b>If you don't agree to these Terms, don't use our services.</b>\n"
 "    </p>\n"
 "\n"
 "    <h2>Terms of Service</h2>\n"
@@ -989,349 +1057,336 @@ msgid ""
 "        <i>Last Updated November 5, 2022</i>\n"
 "    </p>\n"
 "    <p>\n"
-"        These Terms govern your access to <a href=\"https://silentselene.net"
-"\">silentselene.net</a> and any other sites we may operate in the future "
-"(hereafter referred to as \"Services\"). By accessing or using any part of "
-"our Services, you agree to be bound by all of the Terms and other procedures "
-"that we may publish via the Services from time to time (the \"Agreement\").\n"
+"        These Terms govern your access to <a href=\"https://silentselene.net\">silentselene.net</a> and any other sites we may operate in the future (hereafter referred to as \"Services\"). By accessing or using any part of our Services, you agree to be bound by all of the Terms and other procedures that we may publish via the Services from time to time (the \"Agreement\").\n"
 "    </p>\n"
 "\n"
 "    <h3>Terminology</h3>\n"
 "    <p>\n"
-"        \"You\" means any individual or entity using our Services. \"We\", "
-"or \"Silent Selene\", refers specifically at this time to \"nrook\", the "
-"owner of the site, reachable at webmaster@silentselene.net or on Discord as "
-"\"nrook#1848\". \"Our Services\" refers to silentselene.net, the website, "
-"and any other websites or tools we use.\n"
+"        \"You\" means any individual or entity using our Services. \"We\", or \"Silent Selene\", refers specifically at this time to \"nrook\", the owner of the site, reachable at webmaster@silentselene.net or on Discord as \"nrook#1848\". \"Our Services\" refers to silentselene.net, the website, and any other websites or tools we use.\n"
 "    </p>\n"
 "\n"
 "    <h3>Creating an Account</h3>\n"
 "    <p>\n"
-"        By creating an account, you agree that we may send you transactional "
-"e-mail based on activity on the site, or announcing new features or changes "
-"to our Terms of Service or Privacy Policy. You're solely responsible and "
-"liable for all activity under your account. We may suspend or delete your "
-"account for any or no reason.\n"
+"        By creating an account, you agree that we may send you transactional e-mail based on activity on the site, or announcing new features or changes to our Terms of Service or Privacy Policy. You're solely responsible and liable for all activity under your account. We may suspend or delete your account for any or no reason.\n"
 "    </p>\n"
 "    <p>\n"
-"        If you're like to learn how we handle the data provided as part of "
-"your account, please see our <a href=\"%(privacy_url)s\">Privacy Policy</"
-"a>.\n"
+"        If you're like to learn how we handle the data provided as part of your account, please see our <a href=\"%(privacy_url)s\">Privacy Policy</a>.\n"
 "    </p>\n"
 "\n"
 "    <h3>Age Requirements</h3>\n"
 "    <p>\n"
-"        You are not allowed to access or use our services if you're under "
-"the age of 13 (or 16 in Europe).\n"
+"        You are not allowed to access or use our services if you're under the age of 13 (or 16 in Europe).\n"
 "    </p>\n"
 "\n"
 "    <h3>Responsibility of Visitors and Users</h3>\n"
 "    <p>\n"
-"        We haven't and can't review all of the content (such as replays or "
-"comments) posted or made available through our Services (\"Content\").\n"
+"        We haven't and can't review all of the content (such as replays or comments) posted or made available through our Services (\"Content\").\n"
 "    </p>\n"
 "    <p>\n"
-"        We specifically are not responsible for ensuring that any replays "
-"obtained from this site are safe to view.\n"
+"        We specifically are not responsible for ensuring that any replays obtained from this site are safe to view.\n"
 "    </p>\n"
 "\n"
 "    <h3>General Representation and Warranty</h3>\n"
 "    <p>\n"
-"        Our goal is to provide a venue by which the Touhou community can "
-"share and enjoy replays. You represent and warrant that your use of our "
-"Services:\n"
+"        Our goal is to provide a venue by which the Touhou community can share and enjoy replays. You represent and warrant that your use of our Services:\n"
 "        <ul>\n"
 "            <li>Will be in strict accordance with the Agreement;</li>\n"
-"            <li>Will not be for any unlawful purposes, to publish illegal "
-"content, or in furtherance of illegal activities;</li>\n"
-"            <li>Will not infringe or misappropriate the intellectual "
-"property rights of Silent Selene, any contributors to the site, or any third "
-"party;</li>\n"
-"            <li>Will not overburden or interfere with our systems or impose "
-"an unreasonable or disproportionately large load on our infrastructure, as "
-"determined by us in our sole discretion;</li>\n"
+"            <li>Will not be for any unlawful purposes, to publish illegal content, or in furtherance of illegal activities;</li>\n"
+"            <li>Will not infringe or misappropriate the intellectual property rights of Silent Selene, any contributors to the site, or any third party;</li>\n"
+"            <li>Will not overburden or interfere with our systems or impose an unreasonable or disproportionately large load on our infrastructure, as determined by us in our sole discretion;</li>\n"
 "            <li>Will not disclose the personal information of others;</li>\n"
-"            <li>Will not be used to send spam or bulk unsolicited messages;</"
-"li>\n"
-"            <li>Will not interfere with, disrupt, or attack any service or "
-"network;</li>\n"
-"            <li>Will not be used to create, distribute, or enable material "
-"that is, facilitates, or operates in conjunction with, malware, spyware, "
-"adware, or other malicious programs or code.</li>\n"
+"            <li>Will not be used to send spam or bulk unsolicited messages;</li>\n"
+"            <li>Will not interfere with, disrupt, or attack any service or network;</li>\n"
+"            <li>Will not be used to create, distribute, or enable material that is, facilitates, or operates in conjunction with, malware, spyware, adware, or other malicious programs or code.</li>\n"
 "        </ul>\n"
 "    </p>\n"
 "\n"
 "    <h3>Your Content</h3>\n"
 "    <p>\n"
-"        <b>License.</b> Our Services exist to share Content provided by our "
-"users. By uploading or sharing Content, you grant us a worldwide, royalty-"
-"free, transferable, sub-licensable, and non-exclusive license to use, "
-"reproduce, modify, distribute, adapt, publicly display, and publish the "
-"Content on our Services.\n"
+"        <b>License.</b> Our Services exist to share Content provided by our users. By uploading or sharing Content, you grant us a worldwide, royalty-free, transferable, sub-licensable, and non-exclusive license to use, reproduce, modify, distribute, adapt, publicly display, and publish the Content on our Services.\n"
 "    </p>\n"
 "    <p>\n"
-"        <b>Removing Content.</b> If you delete Content, we'll use reasonable "
-"efforts to remove it from public view (or in the case of a private website, "
-"from view by the authorized visitors), but you acknowledge that cached "
-"versions of the Content or references to the Content may not be immediately "
-"unavailable.\n"
+"        <b>Removing Content.</b> If you delete Content, we'll use reasonable efforts to remove it from public view (or in the case of a private website, from view by the authorized visitors), but you acknowledge that cached versions of the Content or references to the Content may not be immediately unavailable.\n"
 "    </p>\n"
 "    <p>\n"
-"        <b>Our Modification of Content.</b> At our sole discretion, we may "
-"modify Content provided by you, in order to make it more accurate or for any "
-"other reason. (For example, if a replay has the wrong final score, we may "
-"correct this score.) If you object to such changes, you may delete your "
-"Content.\n"
+"        <b>Our Modification of Content.</b> At our sole discretion, we may modify Content provided by you, in order to make it more accurate or for any other reason. (For example, if a replay has the wrong final score, we may correct this score.) If you object to such changes, you may delete your Content.\n"
 "    </p>\n"
 "\n"
 "    <h3>Changes</h3>\n"
 "    <p>\n"
-"        We may modify the Terms from time to time, for example, to reflect "
-"changes to our Services or for legal, regulatory, or security reasons. If we "
-"do this, we'll provide notice of the changes, such as by posting the amended "
-"Terms and updating the “Last Updated” date or, if the changes, in our sole "
-"discretion, are material, we may notify you through our Services or other "
-"communications. Any changes will apply on a going-forward basis, and, unless "
-"we say otherwise, the amended Terms will be effective immediately. By "
-"continuing to use our Services after we've notified you, you agree to be "
-"bound by the new Terms. You have the right to object to any changes at any "
-"time by ceasing your use of our Services and deleting all Content you have "
-"uploaded on our website.\n"
+"        We may modify the Terms from time to time, for example, to reflect changes to our Services or for legal, regulatory, or security reasons. If we do this, we'll provide notice of the changes, such as by posting the amended Terms and updating the “Last Updated” date or, if the changes, in our sole discretion, are material, we may notify you through our Services or other communications. Any changes will apply on a going-forward basis, and, unless we say otherwise, the amended Terms will be effective immediately. By continuing to use our Services after we've notified you, you agree to be bound by the new Terms. You have the right to object to any changes at any time by ceasing your use of our Services and deleting all Content you have uploaded on our website.\n"
 "    </p>\n"
 "\n"
 "    <h3>Termination</h3>\n"
 "    <p>\n"
-"        We may terminate your access to all or any part of our Services at "
-"any time, with or without cause or notice, effective immediately. We have "
-"the right to delete any Content available on our Services.\n"
+"        We may terminate your access to all or any part of our Services at any time, with or without cause or notice, effective immediately. We have the right to delete any Content available on our Services.\n"
 "    </p>\n"
 "\n"
 "    <h3>Feedback</h3>\n"
 "    <p>\n"
-"        We love hearing from you and are always looking to improve our "
-"Services. When you share comments, ideas, or feedback with us, you agree "
-"that we're free to use them without any restriction or compensation from "
-"you.\n"
+"        We love hearing from you and are always looking to improve our Services. When you share comments, ideas, or feedback with us, you agree that we're free to use them without any restriction or compensation from you.\n"
 "    </p>\n"
 "\n"
 "    <h3>Disclaimers</h3>\n"
 "    <p>\n"
-"        Our Services are provided \"as is.\" Silent Selene hereby disclaim "
-"all warranties of any kind, express or implied, to the maximum extent "
-"allowed by applicable law, including, without limitation, the warranties of "
-"merchantability, fitness for a particular purpose and non-infringement. "
-"Neither the Silent Selene, nor its suppliers and licensors, makes any "
-"warranty that our Services will be error free or that access thereto will be "
-"continuous or uninterrupted. You understand that you download from, or "
-"otherwise obtain content or services through, our Services at your own "
-"discretion and risk.\n"
+"        Our Services are provided \"as is.\" Silent Selene hereby disclaim all warranties of any kind, express or implied, to the maximum extent allowed by applicable law, including, without limitation, the warranties of merchantability, fitness for a particular purpose and non-infringement. Neither the Silent Selene, nor its suppliers and licensors, makes any warranty that our Services will be error free or that access thereto will be continuous or uninterrupted. You understand that you download from, or otherwise obtain content or services through, our Services at your own discretion and risk.\n"
 "    </p>\n"
 "\n"
 "    <h3>Jurisdiction and Applicable Law</h3>\n"
 "    <p>\n"
-"        Except to the extent any applicable law provides otherwise, the "
-"Agreement and any access to or use of our Services will be governed by the "
-"laws of the state of New York, U.S.A. Nothing in this Agreement affects your "
-"rights as a consumer to rely on mandatory provisions in your country of "
-"residence.\n"
+"        Except to the extent any applicable law provides otherwise, the Agreement and any access to or use of our Services will be governed by the laws of the state of New York, U.S.A. Nothing in this Agreement affects your rights as a consumer to rely on mandatory provisions in your country of residence.\n"
 "    </p>\n"
 "\n"
 "    <h3>Limitation of Liability</h3>\n"
 "    <p>\n"
-"        In no event will Silent Selene, or its suppliers, partners, or "
-"licensors, be liable (including for any third-party products or services "
-"purchased or used through our Services) with respect to any subject matter "
-"of the Agreement under any contract, negligence, strict liability or other "
-"legal or equitable theory for: (i) any special, incidental or consequential "
-"damages; (ii) the cost of procurement for substitute products or services; "
-"(iii) for interruption of use or loss or corruption of data; or (iv) for any "
-"amounts that exceed $50. Silent Selene shall have no liability for any "
-"failure or delay due to matters beyond its reasonable control. The foregoing "
-"shall not apply to the extent prohibited by applicable law.\n"
+"        In no event will Silent Selene, or its suppliers, partners, or licensors, be liable with respect to our Services under any contract, negligence, strict liability or other legal or equitable theory for: (i) any special, incidental or consequential damages; (ii) the cost of procurement for substitute products or services; (iii) for interruption of use or loss or corruption of data; or (iv) for any amounts that exceed $50. Silent Selene shall have no liability for any failure or delay due to matters beyond its reasonable control. The foregoing shall not apply to the extent prohibited by applicable law.\n"
 "    </p>\n"
 "    <p>\n"
-"        European Users: If we cause damage to you and you are a consumer in "
-"Europe, we limit our liability to the maximum amount permissible in your "
-"country of residence. Liability will be limited to foreseeable damages "
-"arising due to a breach of material contractual obligations typical for this "
-"type of contract. Silent Selene isn't liable for damages that result from a "
-"non-material breach of any other applicable duty of care. This limitation of "
-"liability will not apply to any statutory liability that cannot be limited, "
-"to liability for death or personal injury caused by our negligence, "
-"liability caused by our willful misconduct or gross negligence, or our "
-"responsibility for something we have specifically promised to you. You and "
-"we agree that we and our affiliates' total liability is limited to $50. To "
-"the extent that our liability is limited or excluded, the limitations or "
-"exclusions will also apply to the personal liability of our legal "
-"representatives and vicarious agents.\n"
+"        European Users: If we cause damage to you and you are in Europe, we limit our liability to the maximum amount permissible in your country of residence. Liability will be limited to foreseeable damages arising due to a breach of material contractual obligations typical for this type of contract. Silent Selene isn't liable for damages that result from a non-material breach of any other applicable duty of care. This limitation of liability will not apply to any statutory liability that cannot be limited, to liability for death or personal injury caused by our negligence, liability caused by our willful misconduct or gross negligence, or our responsibility for something we have specifically promised to you. To the extent that our liability is limited or excluded, the limitations or exclusions will also apply to the personal liability of our legal representatives and vicarious agents.\n"
 "    </p>\n"
 "\n"
 "    <h3>Indemnification</h3>\n"
 "    <p>\n"
-"        You agree to indemnify and hold harmless Silent Selene, its "
-"contractors, and its licensors, and their respective directors, officers, "
-"employees, and agents from and against any and all losses, liabilities, "
-"demands, damages, costs, claims, and expenses, including attorneys' fees, "
-"arising out of or related to your use of our Services, including but not "
-"limited to your violation of the Agreement or any agreement with a provider "
-"of third-party services used in connection with the Services or Content that "
-"you post.\n"
+"        You agree to indemnify and hold harmless Silent Selene, its contractors, and its licensors, and their respective directors, officers, employees, and agents from and against any and all losses, liabilities, demands, damages, costs, claims, and expenses, including attorneys' fees, arising out of or related to your use of our Services, including but not limited to your violation of the Agreement or any agreement with a provider of third-party services used in connection with the Services or Content that you post.\n"
 "    </p>\n"
 "\n"
 "    <h3>Translation</h3>\n"
 "    <p>\n"
-"        These Terms were originally written in English (US). We may "
-"translate these terms into other languages, and in the event of a conflict "
-"between a translated version of these Terms and the English version, the "
-"English version will control.\n"
+"        These Terms were originally written in English (US). We may translate these terms into other languages, and in the event of a conflict between a translated version of these Terms and the English version, the English version will control.\n"
 "    </p>\n"
 "\n"
 "    <h3>Miscellaneous</h3>\n"
 "    <p>\n"
-"        The Agreement (together with any other terms we provide that apply "
-"to any specific Service) constitutes the entire agreement between Silent "
-"Selene and you concerning our Services. If any part of the Agreement is "
-"unlawful, void, or unenforceable, that part is severable from the Agreement, "
-"and does not affect the validity or enforceability of the rest of the "
-"Agreement. A waiver by either party of any term or condition of the "
-"Agreement or any breach thereof, in any one instance, will not waive such "
-"term or condition or any subsequent breach thereof.\n"
+"        The Agreement (together with any other terms we provide that apply to any specific Service) constitutes the entire agreement between Silent Selene and you concerning our Services. If any part of the Agreement is unlawful, void, or unenforceable, that part is severable from the Agreement, and does not affect the validity or enforceability of the rest of the Agreement. A waiver by either party of any term or condition of the Agreement or any breach thereof, in any one instance, will not waive such term or condition or any subsequent breach thereof.\n"
 "    </p>\n"
 "    <p>\n"
-"        Silent Selene may assign its rights under the Agreement without "
-"condition. You may only assign your rights under the Agreement with our "
-"prior written consent.\n"
+"        Silent Selene may assign its rights under the Agreement without condition. You may only assign your rights under the Agreement with our prior written consent.\n"
 "    </p>\n"
 "\n"
 "    <h2>Privacy Policy</h2>\n"
-"    <p>Not written yet!</p>\n"
+"    <p>For more details on how we handle your personal data, see our <a href=\"%(privacy_url)s\">Privacy Policy</a>.</p>\n"
 "\n"
 "    <h2>License and Attribution</h3>\n"
 "    <p>\n"
-"        These terms of use are licensed under <a href=\"https://"
-"creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>, so if you like "
-"them, you can use them on your own site. They were based on <a href="
-"\"https://wordpress.com/tos/\">the WordPress Terms of Service</a>.\n"
+"        These terms of use are licensed under <a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>, so if you like them, you can use them on your own site. They were based on <a href=\"https://wordpress.com/tos/\">the WordPress Terms of Service</a>.\n"
 "    </p>\n"
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:7
+#: replays/templates/replays/replay_stages.html:7
 msgid "Stage"
-msgstr ""
+msgstr "Stage"
 
-#: .\replays\templates\replays\replay_stages.html:10
+#: replays/templates/replays/replay_stages.html:10
 msgid "Score"
-msgstr ""
+msgstr "Score"
 
-#: .\replays\templates\replays\replay_stages.html:13
+#: replays/templates/replays/replay_stages.html:13
 msgid "PIV"
-msgstr ""
+msgstr "PIV"
 
-#: .\replays\templates\replays\replay_stages.html:16
+#: replays/templates/replays/replay_stages.html:16
 msgid "Graze"
-msgstr ""
+msgstr "Graze"
 
-#: .\replays\templates\replays\replay_stages.html:19
+#: replays/templates/replays/replay_stages.html:19
 msgid "Point Items"
-msgstr ""
+msgstr "Point Items"
 
-#: .\replays\templates\replays\replay_stages.html:22
+#: replays/templates/replays/replay_stages.html:22
 msgid "Power"
-msgstr ""
+msgstr "Power"
 
-#: .\replays\templates\replays\replay_stages.html:25
+#: replays/templates/replays/replay_stages.html:25
 msgid "Lives"
+msgstr "Lives"
+
+#: replays/templates/replays/replay_stages.html:28
+msgid "Life Pieces"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:28
+#: replays/templates/replays/replay_stages.html:31
 msgid "Bombs"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:31
+#: replays/templates/replays/replay_stages.html:34
 msgid "Rank"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:34
+#: replays/templates/replays/replay_stages.html:37
 msgid "Cherry"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:37
+#: replays/templates/replays/replay_stages.html:40
 msgid "CherryMax"
 msgstr ""
 
-#: .\replays\templates\replays\upload.html:5
+#: replays/templates/replays/replay_stages.html:43
+msgid "P1 CPU?"
+msgstr ""
+
+#: replays/templates/replays/replay_stages.html:46
+msgid "P2 CPU?"
+msgstr ""
+
+#: replays/templates/replays/replay_stages.html:49
+msgid "P2 Shot"
+msgstr ""
+
+#: replays/templates/replays/replay_stages.html:52
+msgid "P2 Score"
+msgstr "P2 Score"
+
+#: replays/templates/replays/upload.html:5
 msgid "Publish a replay"
-msgstr ""
+msgstr "Publish a replay"
 
-#: .\replays\templates\replays\upload.html:6
+#: replays/templates/replays/upload.html:6
 msgid "Upload a replay file"
-msgstr ""
+msgstr "Upload a replay file"
 
-#: .\replays\templates\replays\upload.html:8
+#: replays/templates/replays/upload.html:8
 msgid "Upload a new replay from one of the following games:"
-msgstr ""
+msgstr "Upload a new replay from one of the following games:"
 
-#: .\replays\templates\replays\upload.html:14
+#: replays/templates/replays/upload.html:14
 msgid ""
 "\n"
-"        This site is still under construction; we hope to support all "
-"official\n"
+"        This site is still under construction; we hope to support all official\n"
 "        Touhou games soon.\n"
 "    "
 msgstr ""
+"\n"
+"This site is still under construction; we hope to support all official Touhou games soon."
 
-#: .\replays\templates\replays\upload.html:25
+#: replays/templates/replays/upload.html:25
 msgid "Choose replay:"
-msgstr ""
+msgstr "Choose replay:"
 
-#: .\replays\templates\replays\upload.html:37
+#: replays/templates/replays/upload.html:37
 msgid "Publish a replay for a game without replay files"
-msgstr ""
+msgstr "Publish a replay for a game without replay files"
 
-#: .\thscoreboard\settings.py:185
+#: thscoreboard/settings.py:209
 msgid "English"
-msgstr ""
+msgstr "English"
 
-#: .\thscoreboard\settings.py:186
+#: thscoreboard/settings.py:210
 msgid "Japanese"
-msgstr ""
+msgstr "Japanese"
 
-#: .\thscoreboard\templates\base.html:34
+#: thscoreboard/templates/base.html:37
+msgid "Upload a Replay"
+msgstr "Upload a Replay"
+
+#: thscoreboard/templates/base.html:40
 msgid "Log out"
 msgstr ""
 
-#: .\users\forms.py:26
+#: users/forms.py:29
 msgid "An account has already been registered with this username."
 msgstr ""
 
-#: .\users\forms.py:44
+#: users/forms.py:47
 msgid "An account has already been registered with this email address."
 msgstr ""
 
-#: .\users\forms.py:60 .\users\forms.py:82
+#: users/forms.py:82 users/forms.py:104 users/forms.py:115
 msgid "Username"
 msgstr ""
 
-#: .\users\forms.py:62
+#: users/forms.py:84 users/templates/users/delete_account.html:29
 msgid "Password"
 msgstr ""
 
-#: .\users\forms.py:70
+#: users/forms.py:92
 msgid "Email address"
 msgstr ""
 
-#: .\users\forms.py:78
+#: users/forms.py:100
 msgid "Invite File Contents"
 msgstr ""
 
-#: .\users\templates\users\batch_invite_upload.html:17
+#: users/forms.py:116
+msgid "Reason"
+msgstr ""
+
+#: users/forms.py:117
+msgid "Days"
+msgstr ""
+
+#: users/forms.py:118
+msgid "Hours"
+msgstr ""
+
+#: users/forms.py:126
+#, python-format
+msgid "User %(username)s does not exist."
+msgstr ""
+
+#: users/templates/users/ban_success.html:7
+#, python-format
+msgid ""
+"\n"
+"    The user %(target_username)s has been temporarily banned.\n"
+msgstr ""
+
+#: users/templates/users/banned.html:9
+msgid "Your account has been suspended."
+msgstr ""
+
+#: users/templates/users/banned.html:14
+#, python-format
+msgid ""
+"\n"
+"        Your ban will end at %(expiration)s, at which point you can use Silent Selene again.\n"
+"        You may also <a href=\"%(logout_url)s\">log out</a> and browse anonymously.\n"
+"    "
+msgstr ""
+
+#: users/templates/users/banned.html:20
+#, python-format
+msgid ""
+"\n"
+"        You may still <a href=\"%(delete_account_url)s\">delete your account</a>, though this\n"
+"        will not shorten the length of the suspension.\n"
+"    "
+msgstr ""
+
+#: users/templates/users/batch_invite_upload.html:17
 msgid "Upload invite file:"
 msgstr ""
 
-#: .\users\templates\users\profile.html:5
-msgid "My Profile"
+#: users/templates/users/delete_account.html:9
+msgid ""
+"\n"
+"    Are you sure you want to delete your account? This action cannot be undone,\n"
+"    and will delete all of your replays.\n"
+"    "
 msgstr ""
+
+#: users/templates/users/delete_account.html:16
+msgid ""
+"\n"
+"    If you're completely sure, confirm your password below.\n"
+"    "
+msgstr ""
+
+#: users/templates/users/delete_account_successful.html:6
+msgid ""
+"\n"
+"<p>\n"
+"    Your account has been deleted. Records and backups of your account may persist for some time after deletion.\n"
+"</p>\n"
+"\n"
+"<p>\n"
+"    Thank you for using Silent Selene.\n"
+"</p>\n"
+msgstr ""
+
+#: users/templates/users/profile.html:5
+msgid "My Profile"
+msgstr "My Profile"
 
 #~ msgid "th05 Reimu"
 #~ msgstr "Reimu"
