@@ -10,7 +10,6 @@ from users.views import banned
 from users.views import delete_account
 from users.views import profile
 from users.views import register
-from users.views import request_invite
 
 from thscoreboard import settings
 
@@ -26,7 +25,6 @@ urlpatterns = [
     path('delete_account', delete_account.delete_account, name='delete_account'),
     path('batch_invite', batch_invite_csv.batch_invite, name='batch_invite'),
     path('batch_invite_confirm', batch_invite_csv.batch_invite_confirm, name='batch_invite_confirm'),
-    path('request_invite', request_invite.request_invite),
     path('banned', banned.banned_notification, name='banned'),
 
     path('ip_bans/', other_views.view_ip_bans),
