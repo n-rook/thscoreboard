@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-11 22:34+0000\n"
-"PO-Revision-Date: 2023-02-11 22:40+0000\n"
+"PO-Revision-Date: 2023-02-11 22:43+0000\n"
 "Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -87,7 +87,7 @@ msgstr "PCB"
 
 #: replays/game_ids.py:79
 msgid "東方妖々夢 - Perfect Cherry Blossom"
-msgstr ""
+msgstr "東方妖々夢 - Perfect Cherry Blossom"
 
 #: replays/game_ids.py:82
 msgid "th08"
@@ -95,15 +95,15 @@ msgstr "IN"
 
 #: replays/game_ids.py:84
 msgid "東方永夜抄 - Imperishable Night"
-msgstr ""
+msgstr "東方永夜抄 - Imperishable Night"
 
 #: replays/game_ids.py:87
 msgid "th09"
-msgstr ""
+msgstr "PoFV"
 
 #: replays/game_ids.py:89
 msgid "東方花映塚 - Phantasmagoria of Flower View"
-msgstr ""
+msgstr "東方花映塚 - Phantasmagoria of Flower View"
 
 #: replays/game_ids.py:92
 msgid "th10"
@@ -111,7 +111,7 @@ msgstr "MoF"
 
 #: replays/game_ids.py:94
 msgid "東方風神録 - Mountain of Faith"
-msgstr ""
+msgstr "東方風神録 - Mountain of Faith"
 
 #: replays/game_ids.py:97
 msgid "th11"
@@ -119,23 +119,23 @@ msgstr "SA"
 
 #: replays/game_ids.py:99
 msgid "東方地霊殿 - Subterranean Animism"
-msgstr ""
+msgstr "東方地霊殿 - Subterranean Animism"
 
 #: replays/game_ids.py:102
 msgid "th12"
-msgstr ""
+msgstr "UFO"
 
 #: replays/game_ids.py:104
 msgid "東方星蓮船 - Undefined Fantastic Object"
-msgstr ""
+msgstr "東方星蓮船 - Undefined Fantastic Object"
 
 #: replays/game_ids.py:107
 msgid "th13"
-msgstr ""
+msgstr "TD"
 
 #: replays/game_ids.py:109
 msgid "東方神霊廟 - Ten Desires"
-msgstr ""
+msgstr "東方神霊廟 - Ten Desires"
 
 #: replays/game_ids.py:110
 msgid "Unknown game (bug!)"
