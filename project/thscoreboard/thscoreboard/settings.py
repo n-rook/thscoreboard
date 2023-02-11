@@ -21,6 +21,19 @@ from pathlib import Path
 
 from django.utils.translation import gettext_lazy as _
 
+
+def GetBooleanFromEnvironment(key, default):
+    if key not in os.environ:
+        return default
+    elif os.environ[key].lower() == 'true':
+        return True
+    elif os.environ[key].lower() == 'false':
+        return False
+    else:
+        value = os.environ[key]
+        raise EnvironmentError(f'Environment variable for key {key} was {value}, not true or false.')
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,7 +52,7 @@ else:
 DEBUG = not IS_PROD
 
 # Whether or not to require a passcode to sign up for the site.
-REQUIRE_PASSCODE = os.environ.get('REQUIRE_PASSCODE', True)
+REQUIRE_PASSCODE = GetBooleanFromEnvironment('REQUIRE_PASSCODE', True)
 
 def _GetAllowedHosts():
     hosts = ['localhost', 'local.silentselene.net']
