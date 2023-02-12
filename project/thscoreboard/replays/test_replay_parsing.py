@@ -142,6 +142,9 @@ class Th08ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.difficulty, 2)
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.SPELL_PRACTICE)
 
+    def testUnpatched_game(self):
+        ParseTestReplay('th8_unpatched_game')
+
 
 class Th09ReplayTestCase(unittest.TestCase):
 
