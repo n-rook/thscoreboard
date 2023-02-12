@@ -1,6 +1,7 @@
 import datetime
 import unittest
 
+from replays.lib import time
 from replays.testing import test_replays
 from replays import replay_parsing
 from replays import game_fields
@@ -98,6 +99,7 @@ class Th08ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.score, 1240093320)
         self.assertEqual(r.difficulty, 1)
         self.assertEqual(r.slowdown, 0.0)
+        self.assertEqual(r.timestamp, time.strptime("2018/05/25 21:47:26", "%Y/%m/%d %H:%M:%S"))
 
         self.assertEqual(r.stages[0].score, 37008330)
         self.assertEqual(r.stages[0].power, 113)

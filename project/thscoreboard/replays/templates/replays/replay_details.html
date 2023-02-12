@@ -9,7 +9,7 @@
     {% if replay.timestamp %}
         {% if game_id == "th06" or game_id == "th09" %}
         <div>Replay Date: {{ replay.timestamp|date:"d F Y" }}</div>
-        {% elif game_id == "th07" or game_id == "th08" %}
+        {% elif game_id == "th07" %}
         <div>Replay Date: {{ replay.timestamp|date:"d F" }}</div>
         {% else %}
         <div>Replay Date: {{ replay.timestamp|date:"d F Y, h:i A" }}</div>
