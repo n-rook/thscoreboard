@@ -541,7 +541,7 @@ def _Parse11(rep_raw):
 
     r = ReplayInfo(
         game=game_ids.GameIDs.TH11,
-        shot=shots[replay.header.shot],
+        shot=shots[replay.header.shot * 3 + replay.header.subshot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
         timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
