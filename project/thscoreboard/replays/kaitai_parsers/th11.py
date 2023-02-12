@@ -35,8 +35,8 @@ class Th11(KaitaiStruct):
             self.unknown_1 = self._io.read_bytes(60)
             self.slowdown = self._io.read_f4le()
             self.stagecount = self._io.read_u4le()
-            self.unknown_2 = self._io.read_u4le()
             self.shot = self._io.read_u4le()
+            self.subshot = self._io.read_u4le()
             self.difficulty = self._io.read_u4le()
             self.unknown_3 = self._io.read_bytes(8)
 

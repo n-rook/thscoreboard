@@ -27,9 +27,9 @@ types:
         type: f4
       - id: stagecount
         type: u4
-      - id: unknown_2
-        type: u4
       - id: shot
+        type: u4
+      - id: subshot
         type: u4
       - id: difficulty
         type: u4
