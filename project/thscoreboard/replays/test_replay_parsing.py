@@ -227,6 +227,10 @@ class Th11ReplayTestCase(unittest.TestCase):
         self.assertEqual(stage5.life_pieces, 2)
         self.assertEqual(stage5.graze, 2820)
 
+    def testSubshot(self):
+        r = ParseTestReplay('th11_marisa')
+        self.assertEqual(r.shot, "MarisaB")
+
 
 class Th12ReplayTestCase(unittest.TestCase):
 
