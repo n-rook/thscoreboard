@@ -66,8 +66,8 @@ class Th08Userdata(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.name = (self._io.read_bytes_term(9, False, True, True)).decode(u"ASCII")
-            self.value = (self._io.read_bytes_term(13, False, True, True)).decode(u"ASCII")
+            self.name = (self._io.read_bytes_term(9, False, True, True)).decode(u"SJIS")
+            self.value = (self._io.read_bytes_term(13, False, True, True)).decode(u"SJIS")
             self.term = self._io.read_u1()
 
 
