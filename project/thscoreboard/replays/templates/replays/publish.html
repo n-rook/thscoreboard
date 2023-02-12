@@ -11,7 +11,7 @@
                 <td>Replay Date</td>
                 {% if game_id == "th06" or game_id == "th09" %}
                 <td>{{ replay.timestamp|date:"d F Y" }}</td>
-                {% elif game_id == "th07" or game_id == "th08" %}
+                {% elif game_id == "th07" %}
                 <td>{{ replay.timestamp|date:"d F" }}</td>
                 {% else %}
                 <td>{{ replay.timestamp|date:"d F Y, h:i A" }}</td>

@@ -14,6 +14,7 @@ from .kaitai_parsers import th11
 from .kaitai_parsers import th12
 from .kaitai_parsers import th13
 from .kaitai_parsers import th_modern
+from .kaitai_parsers import th08_userdata
 
 import math
 import logging
@@ -231,6 +232,11 @@ def _Parse07(rep_raw):
 def _Parse08(rep_raw):
     comp_data_size = int.from_bytes(rep_raw[12:16], byteorder='little') - 24
     comp_data = bytearray(rep_raw[24:comp_data_size])
+
+    #   read the userdata section to use the date for later
+    #   th08_userdata is a modified version of thmodern adapted to ZUN's early userdata format
+    user = th08_userdata.Th08Userdata.from_bytes(rep_raw)
+
     td.decrypt06(comp_data, rep_raw[21])
     #   basically copied from _Parse07()
     #   0x68 (104) - 24 = 80
@@ -260,7 +266,7 @@ def _Parse08(rep_raw):
             shot=shots[replay.header.shot],
             difficulty=replay.header.difficulty,
             score=replay.header.score * 10,
-            timestamp=time.strptime(replay.header.date, "%m/%d"),
+            timestamp=time.strptime(user.userdata.date.value, "%Y/%m/%d %H:%M:%S"),
             name=replay.header.name.replace("\x00", ""),
             slowdown=replay.header.slowdown,
             replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
@@ -318,7 +324,7 @@ def _Parse08(rep_raw):
         shot=shots[replay.header.shot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=time.strptime(replay.header.date, "%m/%d"),
+        timestamp=time.strptime(user.userdata.date.value, "%Y/%m/%d %H:%M:%S"),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
