@@ -7,16 +7,16 @@ not with web entities like views or forms.
 from typing import Optional
 from django.db import transaction
 
+from replays import constant_helpers
+from replays import game_ids
 from replays import models
 from replays import replay_parsing
-from . import game_ids
 
 
 @transaction.atomic
 def PublishNewReplay(
         user,
         difficulty: int,
-        shot: models.Shot,
         score: int,
         category: str,
         comment: str,
@@ -33,7 +33,6 @@ def PublishNewReplay(
     Args:
         user: The User object who will own the new replay.
         difficulty: The difficulty of the new replay.
-        shot: The Shot model instance for the replay.
         score: What score the run had at its end.
         category: The category for the replay (whether it's TAS, unlisted, etc.)
         comment: A string comment describing the replay from its creator.
@@ -49,9 +48,11 @@ def PublishNewReplay(
     Returns:
         The new Replay model instance.
     """
+    constants = constant_helpers.GetModelInstancesForReplay(replay_info)
     replay_instance = models.Replay(
         user=user,
-        shot=shot,
+        shot=constants.shot,
+        route=constants.route,
         difficulty=difficulty,
         score=score,
         category=category,

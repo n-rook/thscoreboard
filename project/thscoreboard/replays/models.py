@@ -333,12 +333,14 @@ class Replay(models.Model):
             return None
 
     def SetFromReplayInfo(self, r: replay_parsing.ReplayInfo):
-        """Set certain derived fields on this replay from parsed information."""
+        """Set certain derived fields on this replay from parsed information.
+
+        Note that this function does not affect foreign key fields, such as shot or route.
+        """
 
         self.rep_score = r.score
         self.timestamp = r.timestamp
         self.name = r.name
-        self.route = r.route
         self.spell_card_id = r.spell_card_id
         self.replay_type = r.replay_type
         self.slowdown = r.slowdown
