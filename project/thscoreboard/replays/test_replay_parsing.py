@@ -236,6 +236,9 @@ class Th11ReplayTestCase(unittest.TestCase):
         r = ParseTestReplay('th11_marisa')
         self.assertEqual(r.shot, "MarisaB")
 
+    def testSmallFile(self):
+        ParseTestReplay('th11_small_file')
+
 
 class Th12ReplayTestCase(unittest.TestCase):
 
