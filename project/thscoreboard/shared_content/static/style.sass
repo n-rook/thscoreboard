@@ -163,12 +163,6 @@ form.inline-form
 form.upload-form
     width: 350px
 
-form.finish-uploading-form
-    input
-        &:read-only:not([type=button]):not([type=submit])
-            background-color: #f0f0f0
-
-
 table
     table-layout: fixed
     border-collapse: collapse
@@ -211,9 +205,13 @@ textarea
     background-color: var(--background-color)
     color: var(--text-color)
 
-input[type=number], input[type=url]
+input[type=text], [type=number], input[type=url]
     background-color: var(--background-color)
     color: var(--text-color)
+
+    &:read-only
+        background-color: var(--disabled-input-background-color)
+        color: var(--disabled-input-text-color)
 
 .theme-switcher
     text-decoration: none
