@@ -55,10 +55,10 @@ types:
       - id: name
         type: str
         terminator: 0x09
-        encoding: ASCII
+        encoding: SJIS
       - id: value
         type: str
         terminator: 0xd
-        encoding: ASCII
+        encoding: SJIS
       - id: term
         type: u1
