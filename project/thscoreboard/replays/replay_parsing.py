@@ -13,6 +13,7 @@ from .kaitai_parsers import th10
 from .kaitai_parsers import th11
 from .kaitai_parsers import th12
 from .kaitai_parsers import th13
+from .kaitai_parsers import th14
 from .kaitai_parsers import th_modern
 from .kaitai_parsers import th08_userdata
 
@@ -720,6 +721,101 @@ def _Parse13(rep_raw):
     return r
 
 
+def _Parse14(rep_raw):
+    header = th_modern.ThModern.from_bytes(rep_raw)
+    comp_data = bytearray(header.main.comp_data)
+
+    td.decrypt(comp_data, 0x400, 0x5c, 0xe1)
+    td.decrypt(comp_data, 0x100, 0x7d, 0x3a)
+    replay = th14.Th14.from_bytes(td.unlzss(comp_data))
+
+    shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"]
+    rep_stages = []
+
+    if replay.header.spell_practice_id != 0xFFFFFFFF:
+        return ReplayInfo(
+            game=game_ids.GameIDs.TH14,
+            shot=shots[replay.header.shot * 2 + replay.header.subshot],
+            difficulty=replay.header.difficulty,
+            score=replay.header.score * 10,
+            timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+            name=replay.header.name.replace("\x00", ""),
+            slowdown=replay.header.slowdown,
+            replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
+            spell_card_id=replay.header.spell_practice_id
+        )
+    
+    for stage in replay.stages:
+        s = ReplayStage()
+        s.stage = stage.stage_num
+        s.score = stage.score * 10
+        s.power = stage.power
+        s.piv = (math.trunc(stage.piv / 1000)) * 10
+        s.lives = stage.lives
+        s.life_pieces = stage.life_pieces
+        s.bombs = stage.bombs
+        s.bomb_pieces = stage.bomb_pieces
+        s.graze = stage.graze
+        rep_stages.append(s)
+
+    for i in range(len(rep_stages)):
+        if i < len(rep_stages) - 1:
+            stage = rep_stages[i]
+            next_stage = rep_stages[i + 1]
+
+            stage.score = next_stage.score
+            stage.power = next_stage.power
+            stage.piv = next_stage.piv
+            stage.lives = next_stage.lives
+            stage.life_pieces = next_stage.life_pieces
+            stage.bombs = next_stage.bombs
+            stage.bomb_pieces = next_stage.bomb_pieces
+            stage.graze = next_stage.graze
+        else:
+            stage = rep_stages[i]
+            stage.score = replay.header.score * 10
+            stage.power = None
+            stage.piv = None
+            stage.lives = None
+            stage.life_pieces = None
+            stage.bombs = None
+            stage.bomb_pieces = None
+            stage.graze = None
+    
+    r_type = game_ids.ReplayTypes.REGULAR
+    if len(rep_stages) == 1 and replay.header.difficulty != 4:
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
+
+    r = ReplayInfo(
+        game=game_ids.GameIDs.TH14,
+        shot=shots[replay.header.shot * 2 + replay.header.subshot],
+        difficulty=replay.header.difficulty,
+        score=replay.header.score * 10,
+        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+        name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
+        replay_type=r_type,
+    )
+
+    r.stages = rep_stages
+
+    return r
+
+
+def _DetermineTH13orTH14(replay):
+    # thank you ZUN
+    header = th_modern.ThModern.from_bytes(replay)
+    if header.userdata.user_desc[4] == '廟':
+        # the raw byte is 0x90 or 144
+        # you'll get that if you encode to 'shift_jis' and test the byte then
+        return _Parse13(replay)
+    elif header.userdata.user_desc[4] == '城':
+        # the raw byte is 0x8b or 139
+        return _Parse14(replay)
+    # if its not either of the two above, then I don't know
+    raise ValueError()    
+
+
 def Parse(replay):
     """Parse a replay file."""
 
@@ -745,7 +841,10 @@ def Parse(replay):
         elif gamecode == b't12r':
             return _Parse12(replay)
         elif gamecode == b't13r':
-            return _Parse13(replay)
+            # ZUN was drunk and did not change the gamecode for TH14, so this is now used for two games
+            # and thus we have to do fuckery to find which one it is
+            # fun fact: the games themselves don't test this so if you rename the file you can crash them
+            return _DetermineTH13orTH14(replay)
         else:
             logging.warning('Failed to comprehend gamecode %s', str(gamecode))
             raise UnsupportedGameError('This game is unsupported.')
