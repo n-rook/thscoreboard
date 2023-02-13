@@ -813,7 +813,7 @@ def _DetermineTH13orTH14(replay):
         # the raw byte is 0x8b or 139
         return _Parse14(replay)
     # if its not either of the two above, then I don't know
-    raise ValueError()    
+    raise ValueError()
 
 
 def Parse(replay):
