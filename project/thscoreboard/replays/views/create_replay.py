@@ -168,7 +168,7 @@ def publish_replay_no_file(request, game_id: str):
         else:
             return render(
                 request,
-                'replays/publish.html',
+                'replays/publish_no_replay.html',
                 {
                     'game': game,
                     'form': form,
