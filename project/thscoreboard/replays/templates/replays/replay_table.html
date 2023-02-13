@@ -23,7 +23,7 @@
                 Upload date
             </th>
             <th>
-                Download
+                Replay
             </th>
         </tr>
     </thead>
@@ -50,8 +50,12 @@
             <td>
                 {{replay.created | date:"Y-m-d"}}
             </td>
-            <td>
+            <td style="text-align:center;">
+            {% if replay.is_good %}
                 <a href="/replays/{{replay.shot.game.game_id}}/{{replay.id}}/download">Download</a>
+            {% elif replay.video_link %}
+                <a href="{{replay.video_link}}">Watch</a>
+            {% endif %}
             </td>
         </tr>
     {% endfor %}
