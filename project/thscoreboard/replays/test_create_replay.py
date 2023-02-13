@@ -56,12 +56,9 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
 
         replay_info = replay_parsing.Parse(replay_file_contents)
 
-        shot = models.Shot.objects.get(game='th10', shot_id='ReimuB')
-
         new_replay = create_replay.PublishNewReplay(
             user=self.user,
             difficulty=3,
-            shot=shot,
             score=294127890,
             category=models.Category.REGULAR,
             comment='Hello',
@@ -71,6 +68,8 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             temp_replay_instance=temp_replay,
             replay_info=replay_info,
         )
+
+        shot = models.Shot.objects.get(game='th10', shot_id='ReimuB')
 
         self.assertEqual(new_replay.user, self.user)
         self.assertEqual(new_replay.GetDifficultyName(), 'Lunatic')
@@ -86,6 +85,33 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         with self.assertRaises(models.TemporaryReplayFile.DoesNotExist):
             models.TemporaryReplayFile.objects.get(id=temp_replay.id)
 
+    def testPublishReplaySavesRoutes_TH08(self):
+        replay_file_contents = test_replays.GetRaw('th8_normal')
+
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user,
+            replay=replay_file_contents
+        )
+        temp_replay.save()
+
+        replay_info = replay_parsing.Parse(replay_file_contents)
+
+        new_replay = create_replay.PublishNewReplay(
+            user=self.user,
+            difficulty=replay_info.difficulty,
+            score=replay_info.score,
+            category=models.Category.REGULAR,
+            comment='Hello',
+            video_link='',
+            is_good=True,
+            is_clear=True,
+            temp_replay_instance=temp_replay,
+            replay_info=replay_info
+        )
+
+        self.assertIsNotNone(new_replay.route)
+        self.assertEqual(new_replay.route.route_id, 'Final B')
+
     def testPublishReplaySavesStages_TH10(self):
         replay_file_contents = test_replays.GetRaw('th10_normal')
 
@@ -97,12 +123,9 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
 
         replay_info = replay_parsing.Parse(replay_file_contents)
 
-        shot = models.Shot.objects.get(game='th10', shot_id='ReimuB')
-
         new_replay = create_replay.PublishNewReplay(
             user=self.user,
             difficulty=3,
-            shot=shot,
             score=294127890,
             category=models.Category.REGULAR,
             comment='',
@@ -127,11 +150,9 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         )
         temp_replay.save()
         replay_info = replay_parsing.Parse(replay_file_contents)
-        shot = models.Shot.objects.get(game=replay_info.game, shot_id=replay_info.shot)
         create_replay.PublishNewReplay(
             user=self.user,
             difficulty=replay_info.difficulty,
-            shot=shot,
             score=replay_info.score,
             category=models.Category.REGULAR,
             comment='',

@@ -166,3 +166,8 @@ class ReanalyzeReplayTest(test_case.ReplayTestCase):
         reanalyze_replay.UpdateReplay(replay.id)
         with self.assertRaises(models.ReplayStage.DoesNotExist):
             models.ReplayStage.objects.get(replay=replay, stage=9)
+
+    def testTH08(self):
+        # Regression test for https://github.com/n-rook/thscoreboard/issues/244
+        replay = test_replays.CreateAsPublishedReplay('th8_normal', self.user)
+        self.assertFalse(reanalyze_replay.DoesReplayNeedUpdate(replay.id))

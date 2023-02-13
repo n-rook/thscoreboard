@@ -51,9 +51,6 @@ def CreateAsPublishedReplay(
 
     replay_info = replay_parsing.Parse(replay_file_contents)
 
-    shot_instance = models.Shot.objects.select_related('game').get(
-        game=replay_info.game, shot_id=replay_info.shot)
-
     if difficulty is None:
         difficulty = replay_info.difficulty
     if score is None:
@@ -62,7 +59,6 @@ def CreateAsPublishedReplay(
     return create_replay.PublishNewReplay(
         user=user,
         difficulty=difficulty,
-        shot=shot_instance,
         score=score,
         category=category,
         comment=comment,

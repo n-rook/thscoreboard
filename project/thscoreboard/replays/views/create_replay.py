@@ -6,6 +6,7 @@ from django.views.decorators import http as http_decorators
 from django.contrib.auth import decorators as auth_decorators
 from django.core.exceptions import ValidationError
 
+from replays import constant_helpers
 from replays import create_replay
 from replays import forms
 from replays import limits
@@ -95,15 +96,6 @@ def publish_replay(request, temp_replay_id):
         raise Http404()
 
     replay_info = replay_parsing.Parse(bytes(temp_replay.replay))
-    
-    #   modify replays for fields that need to be adjusted to fit the db
-    #   like foreign key fields and stuff
-
-    shot_instance = models.Shot.objects.select_related('game').get(game=replay_info.game, shot_id=replay_info.shot)
-
-    if replay_info.game in [game_ids.GameIDs.TH01, game_ids.GameIDs.TH08]:
-        if replay_info.route is not None:
-            replay_info.route = models.Route.objects.select_related('game').get(game=replay_info.game, route_id=replay_info.route)
 
     if request.method == 'POST':
         form = forms.PublishReplayForm(replay_info.game, request.POST)
@@ -111,7 +103,6 @@ def publish_replay(request, temp_replay_id):
             new_replay = create_replay.PublishNewReplay(
                 user=request.user,
                 difficulty=replay_info.difficulty,
-                shot=shot_instance,
                 score=form.cleaned_data['score'],
                 category=form.cleaned_data['category'],
                 comment=form.cleaned_data['comment'],
@@ -125,6 +116,8 @@ def publish_replay(request, temp_replay_id):
         else:
             return render(request, 'replays/publish.html', {'form': form})
 
+    constants = constant_helpers.GetModelInstancesForReplay(replay_info)
+
     form = forms.PublishReplayForm(
         replay_info.game,
         initial={
@@ -134,10 +127,10 @@ def publish_replay(request, temp_replay_id):
 
     context = {
         'form': form,
-        'game_name': shot_instance.game.GetName(),
-        'game_id': shot_instance.game.game_id,
-        'difficulty_name': shot_instance.game.GetDifficultyName(replay_info.difficulty),
-        'shot_name': shot_instance.GetName(),
+        'game_name': constants.game.GetName(),
+        'game_id': constants.game.game_id,
+        'difficulty_name': constants.game.GetDifficultyName(replay_info.difficulty),
+        'shot_name': constants.shot.GetName(),
         'route_name': None,
         'has_replay_file': True,
         'replay': replay_info,
@@ -145,9 +138,7 @@ def publish_replay(request, temp_replay_id):
     }
 
     if replay_info.route:
-        context['route_name'] = replay_info.route.GetName()
-
-    # When IN is supported, add "route" here too.
+        context['route_name'] = constants.route.GetName()
 
     return render(request, 'replays/publish.html', context)
 
