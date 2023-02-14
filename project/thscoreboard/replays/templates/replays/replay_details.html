@@ -1,5 +1,14 @@
 {% extends "base.html" %}
+{% load static %}
 {% load humanize %}
+
+{% block favicon %}
+{% if replay.lesanae %}
+<link rel="icon" type="image/png" href="{% static 'favicon_lesanae.png' %}" sizes="48x48">
+{% else %}
+{{ block.super }}
+{% endif %}
+{% endblock %}
 
 {% block content %}
     <script src="/static/js/replays/replay_details.js"></script>
