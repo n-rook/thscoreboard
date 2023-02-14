@@ -7,9 +7,7 @@ on:
 
 jobs:
   request_deployment:
-    
-    if: ${{ secrets.STAGING_DEPLOYER_PASSWORD }}
-    
+
     runs-on: ubuntu-latest
 
     steps:
