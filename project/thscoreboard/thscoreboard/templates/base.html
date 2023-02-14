@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% sass_src 'style.sass' %}">
     <link rel="stylesheet" href="{% static 'fonts/Lato.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/EBGaramond.css' %}">
-    <link rel="icon" type="image/png" href="{% static 'favicon.png' %}" sizes="48x48">
+    {% block favicon %}<link rel="icon" type="image/png" href="{% static 'favicon.png' %}" sizes="48x48">{% endblock %}
 </head>
 
 <body class="theme-light {% block body-class %}{% endblock %}">

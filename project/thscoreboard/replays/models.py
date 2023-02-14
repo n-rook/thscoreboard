@@ -291,6 +291,11 @@ class Replay(models.Model):
     replay_type = models.IntegerField(choices=ReplayType.choices)
     """Type of replay (regular run, stage practice, etc)"""
 
+    @property
+    def lesanae(self):
+        """An easter egg."""
+        return self.shot.shot_id == 'Sanae' and self.shot.game.game_id == game_ids.GameIDs.TH13
+
     def IsVisible(self, viewer: auth.get_user_model()):
         """Returns whether this replay should be visible to this user."""
 
