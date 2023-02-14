@@ -9,7 +9,7 @@ jobs:
   request_deployment:
 
     runs-on: ubuntu-latest
-    if: secrets.STAGING_DEPLOYER_PASSWORD
+    if: github.repository == 'n-rook/thscoreboard'
 
     steps:
     - uses: actions/checkout@v3
