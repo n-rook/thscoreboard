@@ -9,7 +9,6 @@ jobs:
   request_deployment:
 
     runs-on: ubuntu-latest
-    if: ${{ secrets.STAGING_DEPLOYER_PASSWORD }}
 
     steps:
     - uses: actions/checkout@v3
