@@ -318,3 +318,22 @@ class Th13ReplayTestCase(unittest.TestCase):
         self.assertIsNone(s.piv)
         self.assertIsNone(s.lives)
         self.assertEqual(s.score, r.score)
+
+
+class Th14ReplayTestCase(unittest.TestCase):
+
+    def testNormal(self):
+        r = ParseTestReplay('th14_normal')
+        self.assertEqual(r.game, 'th14')
+        self.assertEqual(r.score, 441887950)
+        self.assertEqual(r.shot, 'SakuyaA')
+
+        s1 = r.stages[0]
+        self.assertEqual(s1.score, 8906850)
+        self.assertEqual(game_fields.GetFormatPower('th14', s1.power), '2.79')
+        self.assertEqual(s1.piv, 11840)
+
+    def testExtra(self):
+        r = ParseTestReplay('th14_extra')
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertEqual(r.difficulty, 4)

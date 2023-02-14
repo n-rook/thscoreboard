@@ -208,6 +208,28 @@ _table_fields_th13 = immutabledict({
     'extends': True,
 })
 
+_table_fields_th14 = immutabledict({
+    'stage': True,
+    'score': True,
+    'piv': True,
+    'graze': True,
+    'point_items': False,
+    'power': True,
+    'lives': True,
+    'life_pieces': False,
+    'bombs': True,
+    'bomb_pieces': True,
+    'th06_rank': False,
+    'th07_cherry': False,
+    'th07_cherrymax': False,
+    'th09_p1_cpu': False,
+    'th09_p2_cpu': False,
+    'th09_p2_shot': False,
+    'th09_p2_score': False,
+    'th13_trance': False,
+    'extends': False,
+})
+
 _game_fields = immutabledict({
     'th01': None,
     'th05': None,
@@ -219,6 +241,7 @@ _game_fields = immutabledict({
     'th11': _table_fields_th11,
     'th12': _table_fields_th12,
     'th13': _table_fields_th13,
+    'th14': _table_fields_th14,
 })
 
 _game_fields_PVP = immutabledict({
@@ -232,6 +255,7 @@ _game_fields_PVP = immutabledict({
     'th11': None,
     'th12': None,
     'th13': None,
+    'th14': None,
 })
 
 
@@ -242,13 +266,14 @@ def GetFormatPower(game_id: str, power: Optional[int]) -> str:
         return str(power)
     if game_id in (game_ids.GameIDs.TH10, game_ids.GameIDs.TH11):
         return "%.2f" % (float(power) * 0.05)
-    if game_id in (game_ids.GameIDs.TH12, game_ids.GameIDs.TH13):
+    if game_id in (game_ids.GameIDs.TH12, game_ids.GameIDs.TH13, game_ids.GameIDs.TH14):
         return '{:.2f}'.format(power / 100)
 
     return str(power)
 
 
 # used in GetFormatLives for string formatting the life/life piece counts
+# if this is None, lives will be displayed standalone instead of including the life piece counts
 _life_pieces = immutabledict({
     'th01': None,
     'th02': None,
@@ -263,6 +288,7 @@ _life_pieces = immutabledict({
     'th11': 5,
     'th12': 4,
     'th13': None,   # this game has variable life pieces, so hardcoding it doesn't work
+    'th14': 3,
 })
 
 
@@ -281,6 +307,7 @@ _bomb_pieces = immutabledict({
     'th11': None,
     'th12': 3,
     'th13': 8,
+    'th14': 8,
 })
 
 
