@@ -116,7 +116,7 @@ def _Reanalyze(replay_id: int, recorder: _Recorder) -> str:
     for replay_file_stage_info in replay_info.stages:
         matching_stages = [r for r in replay_stages
                            if r.stage == replay_file_stage_info.stage]
-        stage_name = f'Stage {replay_file_stage_info.stage}'
+        stage_name = f'Stage {replay_file_stage_info.stage + 1}'
 
         if len(matching_stages) > 1:
             raise AssertionError(
@@ -140,7 +140,7 @@ def _Reanalyze(replay_id: int, recorder: _Recorder) -> str:
 
     for replay_stage in replay_stages:
         if replay_stage.stage not in seen_stages:
-            recorder.Deleted(f'Stage {replay_stage.stage}', replay_stage)
+            recorder.Deleted(f'Stage {replay_stage.stage + 1}', replay_stage)
 
 
 def _GetComparableFields(m: django_models.Model):

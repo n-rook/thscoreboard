@@ -49,7 +49,7 @@ class Th11(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.stage = self._io.read_u2le()
+            self.stage_num = self._io.read_u2le()
             self.seed = self._io.read_u2le()
             self.ignore = self._io.read_u4le()
             self.stage_size = self._io.read_u4le()
