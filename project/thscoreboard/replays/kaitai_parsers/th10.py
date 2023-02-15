@@ -50,7 +50,7 @@ class Th10(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.stage = self._io.read_u2le()
+            self.stage_num = self._io.read_u2le()
             self.unknown_1 = self._io.read_u2le()
             self.unknown_2 = self._io.read_u4le()
             self.next_stage_offset = self._io.read_u4le()

@@ -149,10 +149,9 @@ def _Parse06(rep_raw):
         timestamp=time.strptime(replay.header.date, "%m/%d/%y"),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
-        replay_type=r_type
+        replay_type=r_type,
+        stages=rep_stages
     )
-
-    r.stages = rep_stages
 
     return r
 
@@ -223,10 +222,10 @@ def _Parse07(rep_raw):
         timestamp=time.strptime(replay.header.date, "%m/%d"),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
-        replay_type=r_type
+        replay_type=r_type,
+        stages=rep_stages
     )
 
-    r.stages = rep_stages
     return r
 
 
@@ -329,10 +328,10 @@ def _Parse08(rep_raw):
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
-        route=route
+        route=route,
+        stages=rep_stages
     )
 
-    r.stages = rep_stages
     return r
 
 
@@ -437,10 +436,10 @@ def _Parse09(rep_raw):
         score=r_score,
         timestamp=time.strptime(replay.header.date, "%y/%m/%d"),
         name=replay.header.name.replace("\x00", ""),
-        replay_type=r_type
+        replay_type=r_type,
+        stages=rep_stages
     )
 
-    r.stages = rep_stages
     return r
 
 
@@ -457,7 +456,7 @@ def _Parse10(rep_raw):
     rep_stages = []
     for stage in replay.stages:
         s = ReplayStage()
-        s.stage = stage.stage
+        s.stage = stage.stage_num - 1  # ReplayStage.stage is 0-indexed
         s.score = stage.score * 10
         s.power = stage.power
         s.piv = stage.piv * 10
@@ -492,10 +491,9 @@ def _Parse10(rep_raw):
         timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
-        replay_type=r_type
+        replay_type=r_type,
+        stages=rep_stages
     )
-
-    r.stages = rep_stages
 
     return r
 
@@ -513,7 +511,7 @@ def _Parse11(rep_raw):
     rep_stages = []
     for stage in replay.stages:
         s = ReplayStage()
-        s.stage = stage.stage
+        s.stage = stage.stage_num - 1  # ReplayStage.stage is 0-indexed
         s.score = stage.score * 10
         s.piv = stage.piv
         s.graze = stage.graze
@@ -554,10 +552,9 @@ def _Parse11(rep_raw):
         timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
-        replay_type=r_type
+        replay_type=r_type,
+        stages=rep_stages
     )
-
-    r.stages = rep_stages
 
     return r
 
@@ -575,7 +572,7 @@ def _Parse12(rep_raw):
     rep_stages = []
     for stage in replay.stages:
         s = ReplayStage()
-        s.stage = stage.stage
+        s.stage = stage.stage_num - 1  # ReplayStage.stage is 0-indexed
         s.score = stage.score * 10
         s.power = stage.power
         s.piv = (math.trunc(stage.piv / 1000)) * 10
@@ -625,10 +622,9 @@ def _Parse12(rep_raw):
         timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
-        replay_type=r_type
+        replay_type=r_type,
+        stages=rep_stages
     )
-
-    r.stages = rep_stages
 
     return r
 
@@ -660,7 +656,7 @@ def _Parse13(rep_raw):
 
     for stage in replay.stages:
         s = ReplayStage()
-        s.stage = stage.stage_num
+        s.stage = stage.stage_num - 1  # ReplayStage.stage is 0-indexed
         s.score = stage.score * 10
         s.power = stage.power
         s.piv = (math.trunc(stage.piv / 1000)) * 10
@@ -713,10 +709,9 @@ def _Parse13(rep_raw):
         timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
-        replay_type=r_type
+        replay_type=r_type,
+        stages=rep_stages
     )
-
-    r.stages = rep_stages
 
     return r
 
@@ -744,10 +739,10 @@ def _Parse14(rep_raw):
             replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
             spell_card_id=replay.header.spell_practice_id
         )
-    
+
     for stage in replay.stages:
         s = ReplayStage()
-        s.stage = stage.stage_num
+        s.stage = stage.stage_num - 1  # ReplayStage.stage is 0-indexed
         s.score = stage.score * 10
         s.power = stage.power
         s.piv = (math.trunc(stage.piv / 1000)) * 10
@@ -781,7 +776,7 @@ def _Parse14(rep_raw):
             stage.bombs = None
             stage.bomb_pieces = None
             stage.graze = None
-    
+
     r_type = game_ids.ReplayTypes.REGULAR
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
@@ -795,9 +790,8 @@ def _Parse14(rep_raw):
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
+        stages=rep_stages
     )
-
-    r.stages = rep_stages
 
     return r
 
@@ -816,7 +810,7 @@ def _DetermineTH13orTH14(replay):
     raise ValueError()
 
 
-def Parse(replay):
+def Parse(replay) -> ReplayInfo:
     """Parse a replay file."""
 
     # If replay is a memoryview, cast it to bytes.
