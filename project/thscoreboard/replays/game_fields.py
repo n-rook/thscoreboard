@@ -353,24 +353,27 @@ def GetGameLifePieces(gameid: str):
 
 def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
     if stage is None:
-        return ""
+        return ''
+    format_ex = 'Extra'
     if game_id == "th08":
         stages = {
-            0: '1',
-            1: '2',
-            2: '3',
-            3: '4A',
-            4: '4B',
-            5: '5',
-            6: '6A',
-            7: '6B',
-            8: '7',
+            1: '1',
+            2: '2',
+            3: '3',
+            4: '4A',
+            5: '4B',
+            6: '5',
+            7: '6A',
+            8: '6B',
+            9: format_ex,
         }
         return stages[stage]
-    elif game_id in ['th06', 'th07', 'th09']:
-        return str(stage + 1)
-    else:
-        return str(stage)
+    if game_id == 'th09':
+        if stage == 10:
+            return format_ex
+    elif stage == 7:
+        return format_ex
+    return str(stage)
 
 
 def GetFormatLifePieces(game_id: str, life_pieces: Optional[int], extends: Optional[int] = 0) -> str:
