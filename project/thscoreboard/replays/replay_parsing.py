@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Optional
+from typing import List, Optional
 import datetime
 from kaitaistruct import KaitaiStructError
 
@@ -80,7 +80,7 @@ class ReplayInfo:
     replay_type: int
     route: Optional[str] = None
     spell_card_id: Optional[int] = None
-    stages: list[ReplayStage] = dataclasses.field(default_factory=list)
+    stages: List[ReplayStage] = dataclasses.field(default_factory=list)
     slowdown: Optional[float] = None
 
     @property
@@ -106,18 +106,16 @@ def _Parse06(rep_raw):
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
 
     rep_stages = []
-    i = 0
-    for score in replay.stages:
+    for i, score in enumerate(replay.stages):
         if replay.header.stage_offsets[i] != 0:
             s = ReplayStage()
-            s.stage = i
+            s.stage = i + 1
             s.score = score.score
             s.power = score.power
             s.lives = score.lives
             s.bombs = score.bombs
             s.th06_rank = score.rank
             rep_stages.append(s)
-        i += 1
 
     # adjust stage data to be end-of-stage
     for i in range(len(rep_stages)):
@@ -169,11 +167,10 @@ def _Parse07(rep_raw):
 
     rep_stages = []
 
-    i = 0
-    for score in replay.stages:
+    for i, score in enumerate(replay.stages):
         if replay.file_header.stage_offsets[i] != 0:
             s = ReplayStage()
-            s.stage = i
+            s.stage = i + 1
             s.score = score.score * 10
             s.power = score.power
             s.lives = score.lives
@@ -184,7 +181,6 @@ def _Parse07(rep_raw):
             s.th07_cherry = score.cherry
             s.th07_cherrymax = score.cherrymax
             rep_stages.append(s)
-        i += 1
 
     for i in range(len(rep_stages)):
         if i < len(rep_stages) - 1:
@@ -275,12 +271,11 @@ def _Parse08(rep_raw):
 
     #   else regular run
 
-    i = 0
     route = None
-    for score in replay.stages:
+    for i, score in enumerate(replay.stages):
         if replay.file_header.stage_offsets[i] != 0:
             s = ReplayStage()
-            s.stage = i
+            s.stage = i + 1
             s.score = score.score * 10
             s.power = score.power
             s.lives = score.lives
@@ -293,7 +288,6 @@ def _Parse08(rep_raw):
             elif i == 7:
                 route = 'Final B'
             rep_stages.append(s)
-        i += 1
 
     for i in range(len(rep_stages)):
         if i < len(rep_stages) - 1:
@@ -375,7 +369,7 @@ def _Parse09(rep_raw):
                 p2 = replay.stages[i + 10]
 
                 s = ReplayStage()
-                s.stage = i
+                s.stage = i + 1
                 s.score = p1.score * 10
                 s.lives = p1.lives
 
@@ -415,7 +409,7 @@ def _Parse09(rep_raw):
         r_score = p1.score * 10
 
         s = ReplayStage()
-        s.stage = 0
+        s.stage = 1
         s.score = p1.score * 10
         s.th09_p1_cpu = p1.ai
         s.th09_p2_cpu = p2.ai
@@ -456,7 +450,7 @@ def _Parse10(rep_raw):
     rep_stages = []
     for stage in replay.stages:
         s = ReplayStage()
-        s.stage = stage.stage_num - 1  # ReplayStage.stage is 0-indexed
+        s.stage = stage.stage_num
         s.score = stage.score * 10
         s.power = stage.power
         s.piv = stage.piv * 10
@@ -511,7 +505,7 @@ def _Parse11(rep_raw):
     rep_stages = []
     for stage in replay.stages:
         s = ReplayStage()
-        s.stage = stage.stage_num - 1  # ReplayStage.stage is 0-indexed
+        s.stage = stage.stage_num
         s.score = stage.score * 10
         s.piv = stage.piv
         s.graze = stage.graze
@@ -572,7 +566,7 @@ def _Parse12(rep_raw):
     rep_stages = []
     for stage in replay.stages:
         s = ReplayStage()
-        s.stage = stage.stage_num - 1  # ReplayStage.stage is 0-indexed
+        s.stage = stage.stage_num
         s.score = stage.score * 10
         s.power = stage.power
         s.piv = (math.trunc(stage.piv / 1000)) * 10
