@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Optional
+from typing import List, Optional
 import datetime
 from kaitaistruct import KaitaiStructError
 
@@ -80,7 +80,7 @@ class ReplayInfo:
     replay_type: int
     route: Optional[str] = None
     spell_card_id: Optional[int] = None
-    stages: list[ReplayStage] = dataclasses.field(default_factory=list)
+    stages: List[ReplayStage] = dataclasses.field(default_factory=list)
     slowdown: Optional[float] = None
 
     @property
