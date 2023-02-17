@@ -17,6 +17,14 @@ class FormatStageTestCase(unittest.TestCase):
         format_stage = GetFormatStage(GameIDs.TH06, None)
         self.assertEqual(format_stage, "")
 
+    def testTh07(self) -> None:
+        format_stage_2 = GetFormatStage(GameIDs.TH07, 2)
+        self.assertEqual(format_stage_2, "2")
+        format_stage_ex = GetFormatStage(GameIDs.TH07, 7)
+        self.assertEqual(format_stage_ex, "Extra")
+        format_stage_ex = GetFormatStage(GameIDs.TH07, 8)
+        self.assertEqual(format_stage_ex, "Phantasm")
+
     def testTh08(self) -> None:
         format_stage_2 = GetFormatStage(GameIDs.TH08, 2)
         self.assertEqual(format_stage_2, "2")

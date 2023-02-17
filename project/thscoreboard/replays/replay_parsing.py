@@ -1,5 +1,5 @@
 import dataclasses
-from typing import List, Optional
+from typing import Optional
 import datetime
 from kaitaistruct import KaitaiStructError
 
@@ -80,7 +80,7 @@ class ReplayInfo:
     replay_type: int
     route: Optional[str] = None
     spell_card_id: Optional[int] = None
-    stages: List[ReplayStage] = dataclasses.field(default_factory=list)
+    stages: list[ReplayStage] = dataclasses.field(default_factory=list)
     slowdown: Optional[float] = None
 
     @property
@@ -650,7 +650,7 @@ def _Parse13(rep_raw):
 
     for stage in replay.stages:
         s = ReplayStage()
-        s.stage = stage.stage_num - 1  # ReplayStage.stage is 0-indexed
+        s.stage = stage.stage_num
         s.score = stage.score * 10
         s.power = stage.power
         s.piv = (math.trunc(stage.piv / 1000)) * 10
@@ -736,7 +736,7 @@ def _Parse14(rep_raw):
 
     for stage in replay.stages:
         s = ReplayStage()
-        s.stage = stage.stage_num - 1  # ReplayStage.stage is 0-indexed
+        s.stage = stage.stage_num
         s.score = stage.score * 10
         s.power = stage.power
         s.piv = (math.trunc(stage.piv / 1000)) * 10

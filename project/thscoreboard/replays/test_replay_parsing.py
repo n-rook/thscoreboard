@@ -305,7 +305,7 @@ class Th13ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.slowdown, 0.0)
 
         s1end = r.stages[0]
-        self.assertEqual(s1end.stage, 0)
+        self.assertEqual(s1end.stage, 1)
         self.assertEqual(s1end.score, 7387680)
         self.assertEqual(s1end.piv, 11400)
         self.assertEqual(s1end.th13_trance, 600)
