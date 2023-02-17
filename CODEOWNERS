@@ -1,6 +1,0 @@
-# Define who is responsible for reviewing what code.
-#
-# For now, n-rook should review all changes made to the repository. The plan
-# is to add more people to this list if and when they get comfortable
-# writing code and get used to doing code reviews.
-* @n-rook
