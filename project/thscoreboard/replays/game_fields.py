@@ -354,6 +354,7 @@ def GetGameLifePieces(gameid: str):
 FORMAT_EXTRA = 'Extra'
 FORMAT_PHANTASM = 'Phantasm'
 
+
 def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
     if stage is None:
         return ''

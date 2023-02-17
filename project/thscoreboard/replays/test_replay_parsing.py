@@ -89,8 +89,26 @@ class Th07ReplayTestCase(unittest.TestCase):
         self.assertEqual(stage_2.th07_cherry, 8400)
         self.assertEqual(stage_2.th07_cherrymax, 345160)
 
-    def testExtraData(self):
-        ParseTestReplay('th7_extra_data')
+    def testAdditionalData(self):
+        ParseTestReplay('th7_additional_data')
+
+    def testExtra(self):
+        r = ParseTestReplay('th7_extra')
+        
+        stage_ex = r.stages[0]
+        self.assertEqual(stage_ex.stage, 7)
+        self.assertEqual(
+            game_fields.GetFormatStage(r.game, stage_ex.stage), 'Extra'
+        )
+
+    def testPhantasm(self):
+        r = ParseTestReplay('th7_phantasm')
+
+        stage_ph = r.stages[0]
+        self.assertEqual(stage_ph.stage, 8)
+        self.assertEqual(
+            game_fields.GetFormatStage(r.game, stage_ph.stage), 'Phantasm'
+        )
 
 
 class Th08ReplayTestCase(unittest.TestCase):

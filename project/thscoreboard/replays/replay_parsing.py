@@ -167,10 +167,15 @@ def _Parse07(rep_raw):
 
     rep_stages = []
 
+    def is_phantasm(difficulty_code: int) -> bool:
+        return difficulty_code == 5
+
     for i, score in enumerate(replay.stages):
         if replay.file_header.stage_offsets[i] != 0:
             s = ReplayStage()
             s.stage = i + 1
+            if is_phantasm(replay.header.difficulty):
+                s.stage = i + 2
             s.score = score.score * 10
             s.power = score.power
             s.lives = score.lives
