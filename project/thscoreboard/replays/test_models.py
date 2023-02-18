@@ -1,6 +1,3 @@
-
-import datetime
-
 from replays import game_ids
 from replays import models
 from replays import create_replay
@@ -48,11 +45,11 @@ class ReplayTest(test_case.ReplayTestCase):
         self.assertFalse(should_be_visible.IsVisible(viewer=self.viewer))
         self.assertFalse(models.Replay.objects.visible_to(viewer=self.viewer).filter(id=should_be_visible.id).exists())
 
-    def testVisible_Private(self):
+    def testVisible_PENDING(self):
         should_be_visible = test_replays.CreateAsPublishedReplay(
             filename='th6_extra',
             user=self.author,
-            category=models.Category.PRIVATE
+            category=models.Category.PENDING
         )
 
         self.assertFalse(should_be_visible.IsVisible(viewer=None))
@@ -63,44 +60,6 @@ class ReplayTest(test_case.ReplayTestCase):
 
         self.assertTrue(should_be_visible.IsVisible(viewer=self.author))
         self.assertTrue(models.Replay.objects.visible_to(viewer=self.author).filter(id=should_be_visible.id).exists())
-
-
-class TemporaryReplayFileTest(test_case.ReplayTestCase):
-
-    def setUp(self):
-        super().setUp()
-        self.user = self.createUser('somebody')
-
-    def testCleanUpDoesNothingWithNoReplays(self):
-
-        now = datetime.datetime.now(tz=datetime.timezone.utc)
-        models.TemporaryReplayFile.CleanUp(now)
-
-    def testCleanUpDeletesOldReplaysButNotNewOnes(self):
-
-        now = datetime.datetime(2020, 1, 1, tzinfo=datetime.timezone.utc)
-
-        delete_me = models.TemporaryReplayFile(
-            user=self.user,
-            replay=REPLAY_1,
-            created=now - datetime.timedelta(days=32)
-        )
-        delete_me.save()
-
-        dont_delete_me = models.TemporaryReplayFile(
-            user=self.user,
-            replay=REPLAY_2,
-            created=now - datetime.timedelta(days=28)
-        )
-        dont_delete_me.save()
-
-        models.TemporaryReplayFile.CleanUp(now)
-
-        with self.assertRaises(models.TemporaryReplayFile.DoesNotExist):
-            models.TemporaryReplayFile.objects.get(id=delete_me.id)
-
-        models.TemporaryReplayFile.objects.get(id=dont_delete_me.id)
-        # No exception; it does exist.
 
 
 class TestConstraints(test_case.ReplayTestCase):
@@ -130,24 +89,17 @@ class TestConstraints(test_case.ReplayTestCase):
     def testReplayTypeConstraint2(self):
         replay_file_contents = test_replays.GetRaw('th8_spell_practice')
 
-        temp_replay = models.TemporaryReplayFile(
-            user=self.user,
-            replay=replay_file_contents
-        )
-        temp_replay.save()
         replay_info = replay_parsing.Parse(replay_file_contents)
         replay_info.replay_type = game_ids.ReplayTypes.REGULAR
 
         with self.assertRaises(django.db.utils.IntegrityError):
             create_replay.PublishNewReplay(
                 user=self.user,
-                difficulty=replay_info.difficulty,
-                score=replay_info.score,
                 category=models.Category.REGULAR,
                 comment='',
                 video_link='',
                 is_good=True,
                 is_clear=True,
-                temp_replay_instance=temp_replay,
+                file=replay_file_contents,
                 replay_info=replay_info,
             )

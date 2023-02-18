@@ -16,14 +16,12 @@ from replays import replay_parsing
 @transaction.atomic
 def PublishNewReplay(
         user,
-        difficulty: int,
-        score: int,
         category: str,
         comment: str,
         video_link: str,
         is_good: bool,
         is_clear: bool,
-        temp_replay_instance: models.TemporaryReplayFile,
+        file: bytes,
         replay_info: replay_parsing.ReplayInfo):
     """Publish a new replay file.
 
@@ -32,29 +30,25 @@ def PublishNewReplay(
 
     Args:
         user: The User object who will own the new replay.
-        difficulty: The difficulty of the new replay.
-        score: What score the run had at its end.
         category: The category for the replay (whether it's TAS, unlisted, etc.)
         comment: A string comment describing the replay from its creator.
         video_link: An optional link to a video of the replay.
         is_good: Whether the replay is valid (that is, whether it does not
             desync). If false, a video link is required.
         is_clear: Whether the replay cleared.
-        temp_replay_instance: A TemporaryReplayFile model instance for the
-            replay file. If the replay is published successfully, this is
-            deleted.
-        replay_info: The parsed replay info for the TemporaryReplayFile.
+        file: A buffer containing the raw replay file to be written in the replays_replayfile table
+        replay_info: The parsed replay info.
 
     Returns:
         The new Replay model instance.
     """
-    constants = constant_helpers.GetModelInstancesForReplay(replay_info)
+    constants = constant_helpers.GetModelInstancesForReplay(replay_info.game, replay_info.shot, replay_info.route)
     replay_instance = models.Replay(
         user=user,
         shot=constants.shot,
         route=constants.route,
-        difficulty=difficulty,
-        score=score,
+        difficulty=replay_info.difficulty,
+        score=replay_info.score,
         category=category,
         comment=comment,
         video_link=video_link,
@@ -64,12 +58,11 @@ def PublishNewReplay(
     replay_instance.SetFromReplayInfo(replay_info)
     replay_file_instance = models.ReplayFile(
         replay=replay_instance,
-        replay_file=temp_replay_instance.replay,
+        replay_file=file,
     )
 
     replay_instance.save()
     replay_file_instance.save()
-    temp_replay_instance.delete()
 
     for s in replay_info.stages:
         #   th09 shot foreign key
