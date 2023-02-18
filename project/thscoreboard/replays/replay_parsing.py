@@ -14,6 +14,7 @@ from .kaitai_parsers import th11
 from .kaitai_parsers import th12
 from .kaitai_parsers import th13
 from .kaitai_parsers import th14
+from .kaitai_parsers import th15
 from .kaitai_parsers import th_modern
 from .kaitai_parsers import th08_userdata
 
@@ -685,6 +686,55 @@ def _Parse14(rep_raw):
     return r
 
 
+def _Parse15(rep_raw) -> ReplayInfo:
+    header = th_modern.ThModern.from_bytes(rep_raw)
+    comp_data = bytearray(header.main.comp_data)
+
+    td.decrypt(comp_data, 0x400, 0x5c, 0xe1)
+    td.decrypt(comp_data, 0x100, 0x7d, 0x3a)
+    replay = th15.Th15.from_bytes(td.unlzss(comp_data))
+
+    shots = ["Reimu", "Marisa", "Sanae", "Reisen"]
+    rep_stages = []
+    
+    for current_stage, next_stage in zip(
+        replay.stages, replay.stages[1:] + [None]
+    ):
+        s = ReplayStage(
+            stage=current_stage.stage_num,
+        )
+        if next_stage is not None:
+            s.score = next_stage.score * 10
+            s.power = next_stage.power
+            s.piv = (math.trunc(next_stage.piv / 1000)) * 10
+            s.lives = next_stage.lives
+            s.life_pieces = next_stage.life_pieces
+            s.bombs = next_stage.bombs
+            s.bomb_pieces = next_stage.bomb_pieces
+            s.graze = next_stage.graze
+        else:
+            s.score = replay.header.score * 10
+        rep_stages.append(s)
+
+    r_type = game_ids.ReplayTypes.REGULAR
+    if len(rep_stages) == 1 and replay.header.difficulty != 4:
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
+
+    r = ReplayInfo(
+        game=game_ids.GameIDs.TH15,
+        shot=shots[replay.header.shot],
+        difficulty=replay.header.difficulty,
+        score=replay.header.score * 10,
+        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+        name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
+        replay_type=r_type,
+        stages=rep_stages
+    )
+
+    return r
+
+
 def _DetermineTH13orTH14(replay):
     # thank you ZUN
     header = th_modern.ThModern.from_bytes(replay)
@@ -728,6 +778,8 @@ def Parse(replay) -> ReplayInfo:
             # and thus we have to do fuckery to find which one it is
             # fun fact: the games themselves don't test this so if you rename the file you can crash them
             return _DetermineTH13orTH14(replay)
+        elif gamecode == b't15r':
+            return _Parse15(replay)
         else:
             logging.warning('Failed to comprehend gamecode %s', str(gamecode))
             raise UnsupportedGameError('This game is unsupported.')

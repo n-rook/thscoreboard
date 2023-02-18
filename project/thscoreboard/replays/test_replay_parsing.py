@@ -372,3 +372,37 @@ class Th14ReplayTestCase(unittest.TestCase):
         r = ParseTestReplay('th14_extra')
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
         self.assertEqual(r.difficulty, 4)
+
+
+class Th15ReplayTestCase(unittest.TestCase):
+
+    def testHard(self) -> None:
+        r = ParseTestReplay('th15_hard')
+        self.assertEqual(r.game, 'th15')
+        self.assertEqual(r.shot, 'Reisen')
+        self.assertEqual(r.difficulty, 2)
+        self.assertEqual(r.score, 3_206_264_130)
+        self.assertEqual(r.timestamp.date(), datetime.date(2022, 12, 16))
+        self.assertEqual(r.name.rstrip(), "Ruby")
+        self.assertEqual(r.slowdown, 0.0)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+
+        s1end = r.stages[0]
+        self.assertEqual(s1end.stage, 1)
+        self.assertEqual(s1end.score, 127_173_790)
+        self.assertEqual(game_fields.GetFormatPower('th15', s1end.power), '3.13')
+        self.assertEqual(s1end.piv, 56680)
+        self.assertEqual(s1end.lives, 5)
+        self.assertEqual(s1end.life_pieces, 2)
+        self.assertEqual(s1end.bombs, 0)
+        self.assertEqual(s1end.bomb_pieces, 0)
+        self.assertEqual(s1end.graze, 23629)
+        
+    def testExtra(self):
+        r = ParseTestReplay('th15_extra')
+        self.assertEqual(r.difficulty, 4)
+        self.assertEqual(r.slowdown, 0.028594970703125)
+        s = r.stages[0]
+        self.assertIsNone(s.piv)
+        self.assertIsNone(s.lives)
+        self.assertEqual(s.score, r.score)
