@@ -406,3 +406,39 @@ class Th15ReplayTestCase(unittest.TestCase):
         self.assertIsNone(s.piv)
         self.assertIsNone(s.lives)
         self.assertEqual(s.score, r.score)
+
+
+class Th16ReplayTestCase(unittest.TestCase):
+
+    def testHard(self) -> None:
+        r = ParseTestReplay('th16_normal')
+        self.assertEqual(r.game, 'th16')
+        self.assertEqual(r.shot, 'CirnoAutumn')
+        self.assertEqual(r.difficulty, 1)
+        self.assertEqual(r.score, 4_443_764_340)
+        self.assertEqual(r.timestamp.date(), datetime.date(2020, 10, 29))
+        self.assertEqual(r.name.rstrip(), "MTR")
+        self.assertEqual(r.slowdown, 0.00881195068359375)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+
+        s1end = r.stages[0]
+        self.assertEqual(s1end.stage, 1)
+        self.assertEqual(s1end.score, 18_206_640)
+        self.assertEqual(game_fields.GetFormatPower('th16', s1end.power), '3.09')
+        self.assertEqual(s1end.piv, 95300)
+        self.assertEqual(s1end.lives, 3)
+        self.assertEqual(s1end.life_pieces, 0)
+        self.assertEqual(s1end.bombs, 3)
+        self.assertEqual(s1end.bomb_pieces, 3)
+        self.assertEqual(s1end.graze, 4605)
+        self.assertEqual(s1end.th16_season_power, 443)
+        
+    def testExtra(self):
+        r = ParseTestReplay('th16_extra')
+        self.assertEqual(r.difficulty, 4)
+        self.assertEqual(r.slowdown, 0.0)
+        self.assertEqual(r.shot, "Marisa")
+        s = r.stages[0]
+        self.assertIsNone(s.piv)
+        self.assertIsNone(s.lives)
+        self.assertEqual(s.score, r.score)
