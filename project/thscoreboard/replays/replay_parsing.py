@@ -17,6 +17,7 @@ from .kaitai_parsers import th14
 from .kaitai_parsers import th15
 from .kaitai_parsers import th16
 from .kaitai_parsers import th17
+from .kaitai_parsers import th18
 from .kaitai_parsers import th_modern
 from .kaitai_parsers import th08_userdata
 
@@ -845,6 +846,58 @@ def _Parse17(rep_raw) -> ReplayInfo:
     return r
 
 
+def _Parse18(rep_raw) -> ReplayInfo:
+    header = th_modern.ThModern.from_bytes(rep_raw)
+    comp_data = bytearray(header.main.comp_data)
+
+    td.decrypt(comp_data, 0x400, 0x5c, 0xe1)
+    td.decrypt(comp_data, 0x100, 0x7d, 0x3a)
+    replay = th18.Th18.from_bytes(td.unlzss(comp_data))
+
+    shots = ["Reimu", "Marisa", "Sakuya", "Sanae"]
+    rep_stages = []
+    
+    for current_stage, next_stage in zip(
+        replay.stages, replay.stages[1:] + [None]
+    ):
+        current_stage_end_data = current_stage.stage_data_end
+        s = ReplayStage(
+            stage=current_stage.stage_num,
+            power=current_stage_end_data.power,
+            piv=(math.trunc(current_stage_end_data.piv / 1000)) * 10,
+            lives=current_stage_end_data.lives,
+            life_pieces=current_stage_end_data.life_pieces,
+            bombs=current_stage_end_data.bombs,
+            bomb_pieces=current_stage_end_data.bomb_pieces,
+            graze=current_stage_end_data.graze,
+        )
+        if next_stage is not None:
+            # The end-of-stage data does not add the stage's clear bonus.
+            # Therefore, we have to use the next stage's data.
+            s.score = next_stage.stage_data_start.score * 10
+        else:
+            s.score = replay.header.score * 10
+        rep_stages.append(s)
+
+    r_type = game_ids.ReplayTypes.REGULAR
+    if len(rep_stages) == 1 and replay.header.difficulty != 4:
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
+
+    r = ReplayInfo(
+        game=game_ids.GameIDs.TH18,
+        shot=shots[replay.header.shot],
+        difficulty=replay.header.difficulty,
+        score=replay.header.score * 10,
+        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+        name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
+        replay_type=r_type,
+        stages=rep_stages
+    )
+
+    return r
+
+
 def _DetermineTH13orTH14(replay):
     # thank you ZUN
     header = th_modern.ThModern.from_bytes(replay)
@@ -894,6 +947,8 @@ def Parse(replay) -> ReplayInfo:
             return _Parse16(replay)
         elif gamecode == b't17r':
             return _Parse17(replay)
+        elif gamecode == b't18r':
+            return _Parse18(replay)
         else:
             logging.warning('Failed to comprehend gamecode %s', str(gamecode))
             raise UnsupportedGameError('This game is unsupported.')

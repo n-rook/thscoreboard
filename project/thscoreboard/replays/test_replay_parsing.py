@@ -477,3 +477,37 @@ class Th17ReplayTestCase(unittest.TestCase):
         self.assertIsNone(s.piv)
         self.assertIsNone(s.lives)
         self.assertEqual(s.score, r.score)
+
+
+class Th18ReplayTestCase(unittest.TestCase):
+
+    def testLunatic(self) -> None:
+        r = ParseTestReplay('th18_normal')
+        self.assertEqual(r.game, 'th18')
+        self.assertEqual(r.shot, 'Sanae')
+        self.assertEqual(r.difficulty, 1)
+        self.assertEqual(r.score, 4_552_510_430)
+        self.assertEqual(r.timestamp.date(), datetime.date(2022, 5, 4))
+        self.assertEqual(r.name.rstrip(), "Aeteas")
+        self.assertEqual(r.slowdown, 0.0)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+
+        s1end = r.stages[0]
+        self.assertEqual(s1end.stage, 1)
+        self.assertEqual(s1end.score, 271_832_620)
+        self.assertEqual(game_fields.GetFormatPower('th18', s1end.power), '4.00')
+        self.assertEqual(s1end.piv, 500_000)
+        self.assertEqual(s1end.lives, 2)
+        self.assertEqual(s1end.life_pieces, 2)
+        self.assertEqual(s1end.bombs, 2)
+        self.assertEqual(s1end.bomb_pieces, 2)
+        self.assertEqual(s1end.graze, 397)
+        
+    def testExtra(self):
+        r = ParseTestReplay('th18_extra')
+        self.assertEqual(r.difficulty, 4)
+        self.assertEqual(r.slowdown, 1.3594741821289062)
+        self.assertEqual(r.shot, "Marisa")
+        s = r.stages[0]
+        self.assertEqual(s.piv, 500000)
+        self.assertEqual(s.score, r.score)
