@@ -746,6 +746,24 @@ def _Parse16(rep_raw) -> ReplayInfo:
     td.decrypt(comp_data, 0x400, 0x5c, 0xe1)
     td.decrypt(comp_data, 0x100, 0x7d, 0x3a)
     replay = th16.Th16.from_bytes(td.unlzss(comp_data))
+    
+    def get_shot(shot_id: int, season_id: int) -> str:
+        shots = ["Reimu", "Cirno", "Aya", "Marisa"]
+        seasons = ["Spring", "Summer", "Autumn", "Winter", ""]
+        return shots[shot_id] + seasons[season_id]
+
+    if _is_spell_practice_modern(replay.header):
+        return ReplayInfo(
+            game=game_ids.GameIDs.TH16,
+            shot=get_shot(replay.header.shot, replay.header.season),
+            difficulty=replay.header.difficulty,
+            score=replay.header.score * 10,
+            timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+            name=replay.header.name.replace("\x00", ""),
+            slowdown=replay.header.slowdown,
+            replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
+            spell_card_id=replay.header.spell_practice_id,
+        )
 
     rep_stages = []
     
@@ -773,11 +791,6 @@ def _Parse16(rep_raw) -> ReplayInfo:
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
-    def get_shot(shot_id: int, season_id: int) -> str:
-        shots = ["Reimu", "Cirno", "Aya", "Marisa"]
-        seasons = ["Spring", "Summer", "Autumn", "Winter", ""]
-        return shots[shot_id] + seasons[season_id]
-
     r = ReplayInfo(
         game=game_ids.GameIDs.TH16,
         shot=get_shot(replay.header.shot, replay.header.season),
@@ -800,6 +813,26 @@ def _Parse17(rep_raw) -> ReplayInfo:
     td.decrypt(comp_data, 0x400, 0x5c, 0xe1)
     td.decrypt(comp_data, 0x100, 0x7d, 0x3a)
     replay = th17.Th17.from_bytes(td.unlzss(comp_data))
+
+    def get_shot(shot_id: int, subshot_id: int) -> str:
+        shots = ["Reimu", "Marisa", "Youmu"]
+        seasons = ["Wolf", "Otter", "Eagle"]
+        return shots[shot_id] + seasons[subshot_id]
+    
+    if _is_spell_practice_modern(replay.header):
+        return ReplayInfo(
+            game=game_ids.GameIDs.TH17,
+            shot=get_shot(replay.header.shot, replay.header.subshot),
+            difficulty=replay.header.difficulty,
+            score=replay.header.score * 10,
+            timestamp=datetime.datetime.fromtimestamp(
+                replay.header.timestamp, tz=datetime.timezone.utc
+            ),
+            name=replay.header.name.replace("\x00", ""),
+            slowdown=replay.header.slowdown,
+            replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
+            spell_card_id=replay.header.spell_practice_id,
+        )
 
     rep_stages = []
     
@@ -826,11 +859,6 @@ def _Parse17(rep_raw) -> ReplayInfo:
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
-    def get_shot(shot_id: int, subshot_id: int) -> str:
-        shots = ["Reimu", "Marisa", "Youmu"]
-        seasons = ["Wolf", "Otter", "Eagle"]
-        return shots[shot_id] + seasons[subshot_id]
-
     r = ReplayInfo(
         game=game_ids.GameIDs.TH17,
         shot=get_shot(replay.header.shot, replay.header.subshot),
@@ -855,6 +883,22 @@ def _Parse18(rep_raw) -> ReplayInfo:
     replay = th18.Th18.from_bytes(td.unlzss(comp_data))
 
     shots = ["Reimu", "Marisa", "Sakuya", "Sanae"]
+    
+    if _is_spell_practice_modern(replay.header):
+        return ReplayInfo(
+            game=game_ids.GameIDs.TH18,
+            shot=shots[replay.header.shot],
+            difficulty=replay.header.difficulty,
+            score=replay.header.score * 10,
+            timestamp=datetime.datetime.fromtimestamp(
+                replay.header.timestamp, tz=datetime.timezone.utc
+            ),
+            name=replay.header.name.replace("\x00", ""),
+            slowdown=replay.header.slowdown,
+            replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
+            spell_card_id=replay.header.spell_practice_id,
+        )
+
     rep_stages = []
     
     for current_stage, next_stage in zip(
@@ -910,6 +954,10 @@ def _DetermineTH13orTH14(replay):
         return _Parse14(replay)
     # if its not either of the two above, then I don't know
     raise ValueError()
+
+    
+def _is_spell_practice_modern(replay_header) -> bool:
+    return replay_header.spell_practice_id != 0xFFFFFFFF
 
 
 def Parse(replay) -> ReplayInfo:

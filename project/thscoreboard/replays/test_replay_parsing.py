@@ -443,6 +443,13 @@ class Th16ReplayTestCase(unittest.TestCase):
         self.assertIsNone(s.lives)
         self.assertEqual(s.score, r.score)
 
+    def testSpellPractice(self):
+        r = ParseTestReplay('th16_spell_practice')
+        self.assertEqual(len(r.stages), 0)
+        self.assertEqual(r.spell_card_id_format, 9)
+        self.assertEqual(r.difficulty, 0)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.SPELL_PRACTICE)
+
 
 class Th17ReplayTestCase(unittest.TestCase):
 
@@ -477,6 +484,13 @@ class Th17ReplayTestCase(unittest.TestCase):
         self.assertIsNone(s.piv)
         self.assertIsNone(s.lives)
         self.assertEqual(s.score, r.score)
+    
+    def testSpellPractice(self):
+        r = ParseTestReplay('th17_spell_practice')
+        self.assertEqual(len(r.stages), 0)
+        self.assertEqual(r.spell_card_id, 67)
+        self.assertEqual(r.difficulty, 3)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.SPELL_PRACTICE)
 
 
 class Th18ReplayTestCase(unittest.TestCase):
@@ -511,3 +525,10 @@ class Th18ReplayTestCase(unittest.TestCase):
         s = r.stages[0]
         self.assertEqual(s.piv, 500000)
         self.assertEqual(s.score, r.score)
+    
+    def testSpellPractice(self):
+        r = ParseTestReplay('th18_spell_practice')
+        self.assertEqual(len(r.stages), 0)
+        self.assertEqual(r.spell_card_id_format, 36)
+        self.assertEqual(r.difficulty, 3)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.SPELL_PRACTICE)
