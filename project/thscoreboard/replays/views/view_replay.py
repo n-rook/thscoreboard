@@ -11,6 +11,7 @@ from replays.lib import http_util
 from replays import forms
 from replays import game_fields
 from replays import reanalyze_replay
+from replays import spell_names
 
 from thscoreboard import settings
 from replays import game_ids
@@ -49,6 +50,7 @@ def replay_details(request, game_id: str, replay_id: int):
         'shot_name': replay_instance.shot.GetName(),
         'difficulty_name': replay_instance.GetDifficultyName(),
         'game_id': game_id,
+        'spell_name': spell_names.get(game_id, replay_instance.spell_card_id),
         'replay': replay_instance,
         'can_edit': request.user == replay_instance.user,
         'can_delete': request.user == replay_instance.user or request.user.is_staff,
