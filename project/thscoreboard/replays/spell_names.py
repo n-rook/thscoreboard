@@ -953,11 +953,16 @@ spell_names_jp = immutabledict({
         '八鼓「雷神の怒り」',
         '「ブルーレディショー」',
         '「プリスティンビート」',
-    ]),
+    ),
 })
 
 
 def get(game_id: str, spell_id: int):
+    """
+    Obtains a spell card name given a game ID and a spell ID
+    
+    Uses the language set in gettext to automatically retrieve the spell name in English or in Japanese
+    """
     try:
         if get_language() == 'ja':
             return spell_names_jp[game_id][spell_id]
