@@ -2,7 +2,7 @@ from immutabledict import immutabledict
 from django.utils.translation import get_language
 
 spell_names_en = immutabledict({
-    'th08': tuple([
+    'th08': (
         'Firefly Sign "Earthly Meteor"',
         'Firefly Sign "Earthly Comet"',
         'Lamp Sign "Firefly Phenomenon"',
@@ -225,8 +225,8 @@ spell_names_en = immutabledict({
         '"Scarlet Destiny"',
         '"Saigyouji Parinirvana"',
         '"Profound Danmaku Barrier -Phantasm, Foam, and Shadow-"',
-    ]),
-    'th13': tuple([
+    ),
+    'th13': (
         'Symbol "Dance of the Dead Butterflies"',
         'Symbol "Dance of the Dead Butterflies"',
         'Symbol "Dance of the Dead Butterflies - Cherry Blossoms -"',
@@ -354,8 +354,8 @@ spell_names_en = immutabledict({
         'Saint Girl "Sun Goddess\'s Sacrifice"',
         '"Divine Spirits\' Universe"',
         '"Wild Carpet"',
-    ]),
-    'th14': tuple([
+    ),
+    'th14': (
         'Ice Sign "Ultimate Blizzard"',
         'Ice Sign "Ultimate Blizzard"',
         'Water Sign "Tail Fin Slap"',
@@ -476,11 +476,11 @@ spell_names_en = immutabledict({
         'Eighth Drum "Thunder God\'s Anger"',
         '"Blue Lady Show"',
         '"Pristine Beat"',
-    ]),
+    ),
 })
 
 spell_names_jp = immutabledict({
-    'th08': tuple([
+    'th08': (
         '蛍符「地上の流星」',
         '蛍符「地上の彗星」',
         '灯符「ファイヤフライフェノメノン」',
@@ -703,8 +703,8 @@ spell_names_jp = immutabledict({
         '「スカーレットディスティニー」',
         '「西行寺無余涅槃」',
         '「深弾幕結界　-夢幻泡影-」',
-    ]),
-    'th13': tuple([
+    ),
+    'th13': (
         '符牒「死蝶の舞」',
         '符牒「死蝶の舞」',
         '符牒「死蝶の舞　- 桜花 -」',
@@ -831,8 +831,8 @@ spell_names_jp = immutabledict({
         '聖童女「太陽神の贄」',
         '「神霊大宇宙」',
         '「ワイルドカーペット」',
-    ]),
-    'th14': tuple([
+    ),
+    'th14': (
         '氷符「アルティメットブリザード」',
         '氷符「アルティメットブリザード」',
         '水符「テイルフィンスラップ」',
