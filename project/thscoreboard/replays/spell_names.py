@@ -957,6 +957,20 @@ spell_names_jp = immutabledict({
 })
 
 
+def _CheckDictIntegrity() -> bool:
+    for i in spell_names_en:
+        try:
+            if len(spell_names_en[i]) != len(spell_names_jp[i]):
+                return False
+        except KeyError:
+            return False
+    return True
+
+
+assert len(spell_names_en) == len(spell_names_jp)
+assert _CheckDictIntegrity()
+
+
 def get(game_id: str, spell_id: int):
     """
     Obtains a spell card name given a game ID and a spell ID
