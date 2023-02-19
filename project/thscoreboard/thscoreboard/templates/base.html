@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="{% static 'fonts/Lato.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/EBGaramond.css' %}">
     {% block favicon %}<link rel="icon" type="image/png" href="{% static 'favicon.png' %}" sizes="48x48">{% endblock %}
+    <meta property="og:title" content="{% block embed_title %}Silent Selene{% endblock %}" />
+    <meta property="og:site_name" content="Silent Selene" />
+    <meta property="og:description" content="{% block embed_description %}Upload and view Touhou replays at Silent Selene, the modern replay hub.{% endblock %}" />
+    <meta property="og:image" content="{% block embed_favicon %}{% static 'favicon.png' %}{% endblock %}" />
 </head>
 
 <body class="theme-light {% block body-class %}{% endblock %}">
