@@ -1,4 +1,4 @@
--r requirenments.txt
+-r requirements.txt
 
 django-rosetta==0.9.8
 flake8==6.0.0
