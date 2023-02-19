@@ -4,6 +4,7 @@ import dataclasses
 from typing import Optional
 
 from replays import models
+from replays import replay_parsing
 
 
 @dataclasses.dataclass(frozen=True)
@@ -13,11 +14,11 @@ class ReplayConstantModels:
     route: Optional[models.Route]
 
 
-def GetModelInstancesForReplay(game: str, shot: str, route: str) -> ReplayConstantModels:
+def GetModelInstancesForReplay(replay_info: replay_parsing.ReplayInfo) -> ReplayConstantModels:
     """Get the constant model instances related to this replay."""
-    shot = models.Shot.objects.select_related('game').get(game=game, shot_id=shot)
-    if route:
-        route = models.Route.objects.get(game=shot.game, route_id=route)
+    shot = models.Shot.objects.select_related('game').get(game=replay_info.game, shot_id=replay_info.shot)
+    if replay_info.route:
+        route = models.Route.objects.get(game=shot.game, route_id=replay_info.route)
     else:
         route = None
 

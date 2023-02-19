@@ -16,7 +16,7 @@ class ConstantHelpersTest(test_case.ReplayTestCase):
     def testGetWithoutRoute(self):
         replay_file_contents = test_replays.GetRaw('th10_normal')
         replay_info = replay_parsing.Parse(replay_file_contents)
-        constants = constant_helpers.GetModelInstancesForReplay(replay_info.game, replay_info.shot, replay_info.route)
+        constants = constant_helpers.GetModelInstancesForReplay(replay_info)
 
         self.assertEqual(constants.game.game_id, game_ids.GameIDs.TH10)
         self.assertEqual(constants.shot.shot_id, 'ReimuB')
@@ -25,7 +25,7 @@ class ConstantHelpersTest(test_case.ReplayTestCase):
     def testGetWithRoute(self):
         replay_file_contents = test_replays.GetRaw('th8_normal')
         replay_info = replay_parsing.Parse(replay_file_contents)
-        constants = constant_helpers.GetModelInstancesForReplay(replay_info.game, replay_info.shot, replay_info.route)
+        constants = constant_helpers.GetModelInstancesForReplay(replay_info)
 
         self.assertEqual(constants.game.game_id, game_ids.GameIDs.TH08)
         self.assertEqual(constants.shot.shot_id, 'Yukari')

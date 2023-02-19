@@ -48,23 +48,31 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
     def testPublishReplay(self):
         replay_file_contents = test_replays.GetRaw('th10_normal')
 
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user,
+            replay=replay_file_contents
+        )
+        temp_replay.save()
+
         replay_info = replay_parsing.Parse(replay_file_contents)
 
         new_replay = create_replay.PublishNewReplay(
             user=self.user,
+            difficulty=3,
+            score=294127890,
             category=models.Category.REGULAR,
             comment='Hello',
             video_link='',
             is_good=True,
             is_clear=False,
-            file=replay_file_contents,
+            temp_replay_instance=temp_replay,
             replay_info=replay_info,
         )
 
         shot = models.Shot.objects.get(game='th10', shot_id='ReimuB')
 
         self.assertEqual(new_replay.user, self.user)
-        self.assertEqual(new_replay.GetDifficultyName(), 'Normal')
+        self.assertEqual(new_replay.GetDifficultyName(), 'Lunatic')
         self.assertEqual(new_replay.shot, shot)
         self.assertEqual(new_replay.score, 294127890)
         self.assertEqual(new_replay.rep_score, 294127890)
@@ -74,18 +82,30 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertEqual(new_replay.replay_type, 1)
         self.assertEqual(new_replay.timestamp, datetime.datetime(2018, 2, 19, 9, 44, 21, tzinfo=datetime.timezone.utc))
 
+        with self.assertRaises(models.TemporaryReplayFile.DoesNotExist):
+            models.TemporaryReplayFile.objects.get(id=temp_replay.id)
+
     def testPublishReplaySavesRoutes_TH08(self):
         replay_file_contents = test_replays.GetRaw('th8_normal')
+
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user,
+            replay=replay_file_contents
+        )
+        temp_replay.save()
+
         replay_info = replay_parsing.Parse(replay_file_contents)
 
         new_replay = create_replay.PublishNewReplay(
             user=self.user,
+            difficulty=replay_info.difficulty,
+            score=replay_info.score,
             category=models.Category.REGULAR,
             comment='Hello',
             video_link='',
             is_good=True,
             is_clear=True,
-            file=replay_file_contents,
+            temp_replay_instance=temp_replay,
             replay_info=replay_info
         )
 
@@ -94,16 +114,25 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
 
     def testPublishReplaySavesStages_TH10(self):
         replay_file_contents = test_replays.GetRaw('th10_normal')
+
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user,
+            replay=replay_file_contents
+        )
+        temp_replay.save()
+
         replay_info = replay_parsing.Parse(replay_file_contents)
 
         new_replay = create_replay.PublishNewReplay(
             user=self.user,
+            difficulty=3,
+            score=294127890,
             category=models.Category.REGULAR,
             comment='',
             video_link='',
             is_good=True,
             is_clear=True,
-            file=replay_file_contents,
+            temp_replay_instance=temp_replay,
             replay_info=replay_info,
         )
 
@@ -114,15 +143,22 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
 
     def testPublishReplaySpellPractice(self):
         replay_file_contents = test_replays.GetRaw('th8_spell_practice')
-        replay_info = replay_parsing.Parse(replay_file_contents)
 
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user,
+            replay=replay_file_contents
+        )
+        temp_replay.save()
+        replay_info = replay_parsing.Parse(replay_file_contents)
         create_replay.PublishNewReplay(
             user=self.user,
+            difficulty=replay_info.difficulty,
+            score=replay_info.score,
             category=models.Category.REGULAR,
             comment='',
             video_link='',
             is_good=True,
             is_clear=True,
-            file=replay_file_contents,
+            temp_replay_instance=temp_replay,
             replay_info=replay_info,
         )

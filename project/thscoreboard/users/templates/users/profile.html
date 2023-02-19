@@ -38,22 +38,6 @@
     </table>
 </form>
 
-{% if pending_replays %}
-<p>
-<h2>{% translate "Pending Replays" %}</h2>
-
-{% for game, replays in pending_replays %}
-<h3>{{game.GetName}}</h3>
-<ul>
-    {% for replay in replays %}
-    <li><a href="/replays/publish/{{ replay.id }}">{{ replay.id }}</a>
-        <a href="/replays/{{ game.game_id }}/{{ replay.id }}/delete">(Delete)</a></li>
-    {% endfor %}
-</ul>
-{% endfor %}
-</p>
-{% endif %}
-
 <p><a href="{% url 'users:delete_account' %}">Permanently delete my account</a></p>
 
 {% endblock %}

@@ -43,6 +43,12 @@ def CreateAsPublishedReplay(
     """Create a replay according to a file, with sensible defaults."""
 
     replay_file_contents = GetRaw(filename)
+    temp_replay = models.TemporaryReplayFile(
+        user=user,
+        replay=replay_file_contents
+    )
+    temp_replay.save()
+
     replay_info = replay_parsing.Parse(replay_file_contents)
 
     if difficulty is None:
@@ -52,11 +58,13 @@ def CreateAsPublishedReplay(
 
     return create_replay.PublishNewReplay(
         user=user,
+        difficulty=difficulty,
+        score=score,
         category=category,
         comment=comment,
         is_good=is_good,
         is_clear=is_clear,
         video_link=video_link,
-        file=replay_file_contents,
+        temp_replay_instance=temp_replay,
         replay_info=replay_info
     )

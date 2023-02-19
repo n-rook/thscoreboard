@@ -46,19 +46,19 @@ def upload_file(request):
         if form.is_valid():
             try:
                 file_contents = _ReadFile(request.FILES['replay_file'])
-                replay_info = _HandleReplay(request, file_contents)
-                replay = create_replay.PublishNewReplay(
-                    request.user,
-                    models.Category.PENDING,
-                    '', '', None, False,
-                    file_contents, replay_info
-                )
+                _ = _HandleReplay(request, file_contents)
                 # We check that the replay can be parsed, but don't care about its
                 # contents.
 
+                temp_replay = models.TemporaryReplayFile(
+                    user=request.user,
+                    replay=file_contents
+                )
+                temp_replay.save()
+
                 return redirect(
                     publish_replay,
-                    replay.id
+                    temp_replay.id
                 )
 
             except ValidationError as e:
@@ -89,59 +89,55 @@ def publish_replay(request, temp_replay_id):
     """The publish view is used to finalize uploaded replay files."""
 
     try:
-        replay = models.Replay.objects.get(
+        temp_replay = models.TemporaryReplayFile.objects.get(
             user=request.user,
             id=temp_replay_id)
-        shot = models.Shot.objects.get(id=replay.shot_id)
-    except (models.Replay.DoesNotExist, models.Shot.DoesNotExist):
+    except models.TemporaryReplayFile.DoesNotExist:
         raise Http404()
 
+    replay_info = replay_parsing.Parse(bytes(temp_replay.replay))
+
     if request.method == 'POST':
-        form = forms.PublishReplayForm(shot.game, request.POST)
+        form = forms.PublishReplayForm(replay_info.game, request.POST)
         if form.is_valid():
-
-            if shot.game == game_ids.GameIDs.TH09:
-                replay.score = form.cleaned_data['score']
-
-            replay.category = form.cleaned_data['category']
-            replay.comment = form.cleaned_data['comment']
-            replay.is_good = form.cleaned_data['is_good']
-            replay.is_clear = form.cleaned_data['is_clear']
-            replay.video_link = form.cleaned_data['video_link']
-
-            replay.save()
-
-            return redirect(view_replay.replay_details, game_id=shot.game, replay_id=replay.id)
+            new_replay = create_replay.PublishNewReplay(
+                user=request.user,
+                difficulty=replay_info.difficulty,
+                score=form.cleaned_data['score'],
+                category=form.cleaned_data['category'],
+                comment=form.cleaned_data['comment'],
+                is_good=form.cleaned_data['is_good'],
+                is_clear=form.cleaned_data['is_clear'],
+                video_link=form.cleaned_data['video_link'],
+                temp_replay_instance=temp_replay,
+                replay_info=replay_info
+            )
+            return redirect(view_replay.replay_details, game_id=replay_info.game, replay_id=new_replay.id)
         else:
             return render(request, 'replays/publish.html', {'form': form})
 
-    constants = constant_helpers.GetModelInstancesForReplay(shot.game, shot.shot_id, replay.route)
+    constants = constant_helpers.GetModelInstancesForReplay(replay_info)
 
     form = forms.PublishReplayForm(
-        shot.game,
+        replay_info.game,
         initial={
-            'score': replay.score,
-            'category': replay.category if replay.category != models.Category.PENDING else None,
-            'comment': replay.comment,
-            'is_good': replay.is_good,
-            'is_clear': replay.is_clear,
-            'video_link': replay.video_link,
-            'name': replay.name
+            'score': replay_info.score,
+            'name': replay_info.name
         })
 
     context = {
         'form': form,
         'game_name': constants.game.GetName(),
         'game_id': constants.game.game_id,
-        'difficulty_name': constants.game.GetDifficultyName(replay.difficulty),
+        'difficulty_name': constants.game.GetDifficultyName(replay_info.difficulty),
         'shot_name': constants.shot.GetName(),
         'route_name': None,
         'has_replay_file': True,
-        'replay': replay,
-        'replay_type': game_ids.GetReplayType(replay.replay_type)
+        'replay': replay_info,
+        'replay_type': game_ids.GetReplayType(replay_info.replay_type)
     }
 
-    if replay.route:
+    if replay_info.route:
         context['route_name'] = constants.route.GetName()
 
     return render(request, 'replays/publish.html', context)

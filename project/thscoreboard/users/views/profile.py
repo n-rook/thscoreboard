@@ -9,7 +9,6 @@ from django.shortcuts import render
 from django.views.decorators import http as http_decorators
 
 from users import forms
-from replays import models
 
 
 @auth_decorators.login_required
@@ -27,30 +26,8 @@ def profile(request):
         }
     )
 
-    def GetPendingReplays():
-        # Yields (game, list_of_replays_for_the_game) tuples.
-
-        replays = (
-            models.Replay.objects
-            .filter(user=request.user, category=models.Category.PENDING)
-            .order_by('shot__game_id', 'shot_id', 'created'))
-
-        current_game = None
-        for replay in replays:
-            if current_game is None:
-                current_game = replay.shot.game
-                current_replays = []
-            if current_game != replay.shot.game:
-                yield (current_game, current_replays)
-                current_game = replay.shot.game
-                current_replays = []
-            current_replays.append(replay)
-        if current_game is not None:
-            yield (current_game, current_replays)
-
     return render(
         request, 'users/profile.html',
         {
             'form': form,
-            'pending_replays': list(GetPendingReplays())
         })

@@ -1,15 +1,18 @@
 """Contains all of the models for the replay site."""
 
 
+import datetime
 from typing import Optional
 
 from django.db import models
 from django.contrib import auth
+from django.utils import timezone
 from django.utils.translation import pgettext_lazy
 
 from replays import game_ids
 from replays import limits
 from replays import replay_parsing
+from shared_content import model_ttl
 from thscoreboard import settings
 
 
@@ -97,8 +100,12 @@ class Category(models.IntegerChoices):
     replays that don't fall under the TAS category.
     """
 
-    PENDING = 4, pgettext_lazy('Category', 'Pending')
-    """A pending replay that isn't shown to anyone."""
+    PRIVATE = 4, pgettext_lazy('Category', 'Private')
+    """A private replay that isn't shown to anyone.
+
+    Private is deprecated; it will be removed soon. (It does not make sense as a category,
+    since a private replay could be REGULAR, TAS or UNUSUAL.)
+    """
 
 
 class ReplayType(models.IntegerChoices):
@@ -164,9 +171,9 @@ class ReplayQuerySet(models.QuerySet):
 
         q = self.filter(user__is_active=True)
         if viewer and viewer.is_authenticated:
-            q = q.filter(~models.Q(category=Category.PENDING) | models.Q(user=viewer))
+            q = q.filter(~models.Q(category=Category.PRIVATE) | models.Q(user=viewer))
         else:
-            q = q.exclude(category=Category.PENDING)
+            q = q.exclude(category=Category.PRIVATE)
         return q
 
 
@@ -295,7 +302,7 @@ class Replay(models.Model):
         if not self.user.is_active:
             return False
 
-        if self.category != Category.PENDING:
+        if self.category != Category.PRIVATE:
             return True
         return self.user == viewer
 
@@ -510,4 +517,36 @@ class ReplayFile(models.Model):
     """The submission to which this replay corresponds."""
 
     replay_file = models.BinaryField(max_length=limits.MAX_REPLAY_SIZE, blank=True, null=True)
+    """The replay file itself."""
+
+
+class TemporaryReplayFile(models.Model):
+    """Represents a temporarily held replay file a user is uploading.
+
+    When the user is uploading a replay file, we want the server to receive the
+    file and parse metadata from it to help the user. However, this means that the
+    replay must be saved before it is published.
+    """
+
+    TTL = datetime.timedelta(days=30)
+
+    @classmethod
+    def CleanUp(cls, now: datetime.datetime) -> None:
+        """Delete old temporary replay files.
+
+        Args:
+            now: The current time.
+
+        Returns:
+            The number of deleted files.
+        """
+        return model_ttl.CleanUpOldRows(cls, now)
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    """The user who uploaded the temporary replay."""
+
+    created = models.DateTimeField(default=timezone.now)
+    """When the replay file was uploaded."""
+
+    replay = models.BinaryField(max_length=limits.MAX_REPLAY_SIZE)
     """The replay file itself."""
