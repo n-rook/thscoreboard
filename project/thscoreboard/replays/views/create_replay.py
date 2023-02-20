@@ -50,7 +50,7 @@ def upload_file(request):
                 replay = create_replay.PublishNewReplay(
                     request.user,
                     models.Category.PENDING,
-                    '', '', None, False,
+                    '', '', None, None,
                     file_contents, replay_info
                 )
                 # We check that the replay can be parsed, but don't care about its
@@ -123,8 +123,8 @@ def publish_replay(request, temp_replay_id):
             'score': replay.score,
             'category': replay.category if replay.category != models.Category.PENDING else None,
             'comment': replay.comment,
-            'is_good': replay.is_good,
-            'is_clear': replay.is_clear,
+            'is_good': replay.is_good if replay.is_good is not None else True,
+            'is_clear': replay.is_clear if replay.is_clear is not None else True,
             'video_link': replay.video_link,
             'name': replay.name
         })

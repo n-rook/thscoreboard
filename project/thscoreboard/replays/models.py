@@ -200,6 +200,17 @@ class Replay(models.Model):
                         spell_card_id__isnull=True
                     )
                 )
+            ),
+            models.CheckConstraint(
+                name='is_clear_null_for_pending',
+                check=(
+                    models.Q(
+                        is_clear__isnull=True,
+                        category=Category.PENDING
+                    ) | models.Q(
+                        is_clear__isnull=False
+                    )
+                )
             )
         ]
 
@@ -239,7 +250,7 @@ class Replay(models.Model):
     If this submission has no replay file, this field will be null.
     """
 
-    is_clear = models.BooleanField()
+    is_clear = models.BooleanField(blank=True, null=True)
     """Whether the replay cleared the game."""
 
     rep_score = models.BigIntegerField(blank=True, null=True)
