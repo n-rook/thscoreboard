@@ -103,3 +103,19 @@ class TestConstraints(test_case.ReplayTestCase):
                 file=replay_file_contents,
                 replay_info=replay_info,
             )
+
+    def testReplayPendingConstraint1(self):
+        replay_file_contents = test_replays.GetRaw('th7_extra')
+        replay_info = replay_parsing.Parse(replay_file_contents)
+
+        with self.assertRaises(django.db.utils.IntegrityError):
+            create_replay.PublishNewReplay(
+                user=self.user,
+                category=models.Category.REGULAR,
+                comment='',
+                video_link='',
+                is_good=True,
+                is_clear=None,
+                file=replay_file_contents,
+                replay_info=replay_info
+            )
