@@ -51,6 +51,12 @@
             {% if table_fields.th09_p2_score %}
             <th>{% translate "P2 Score" %}</th>
             {% endif %}
+            {% if table_fields.th13_trance %}
+            <th>{% translate "Trance Gauge" %}</th>
+            {% endif %}
+            {% if table_fields.th16_season_power %}
+            <th>{% translate "Season Power" %}</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -93,16 +99,22 @@
             <td>{{stage.th07_cherrymax|intcomma}}</td>
             {% endif %}
             {% if table_fields.th09_p1_cpu %}
-            <th>{{stage.th09_p1_cpu}}</th>
+            <td>{{stage.th09_p1_cpu}}</td>
             {% endif %}
             {% if table_fields.th09_p2_cpu %}
-            <th>{{stage.th09_p2_cpu}}</th>
+            <td>{{stage.th09_p2_cpu}}</td>
             {% endif %}
             {% if table_fields.th09_p2_shot %}
-            <th>{{stage.th09_p2_shotFormat}}</th>
+            <td>{{stage.th09_p2_shotFormat}}</td>
             {% endif %}
             {% if table_fields.th09_p2_score %}
-            <th>{{stage.th09_p2_score|intcomma}}</th>
+            <td>{{stage.th09_p2_score|intcomma}}</td>
+            {% endif %}
+            {% if table_fields.th13_trance %}
+            <td>{{stage.th13_trance}}</td>
+            {% endif %}
+            {% if table_fields.th16_season_power %}
+            <td>{{stage.th16_season_power}}</td>
             {% endif %}
         </tr>
     {% endfor %}

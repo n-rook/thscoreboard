@@ -464,6 +464,9 @@ class ReplayStage(models.Model):
     opted not to specify a game for its name
     """
 
+    th16_season_power = models.IntegerField(blank=True, null=True)
+    """Value of the season gauge in TH16"""
+
     def SetFromReplayStageInfo(self, s: replay_parsing.ReplayStage):
         """Set derived fields on this row from a replay stage.
 
@@ -503,6 +506,7 @@ class ReplayStage(models.Model):
         self.th09_p2_score = s.th09_p2_score
         self.extends = s.extends
         self.th13_trance = s.th13_trance
+        self.th16_season_power = s.th16_season_power
 
 
 class ReplayFile(models.Model):
