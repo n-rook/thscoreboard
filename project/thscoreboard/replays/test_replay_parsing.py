@@ -372,3 +372,163 @@ class Th14ReplayTestCase(unittest.TestCase):
         r = ParseTestReplay('th14_extra')
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
         self.assertEqual(r.difficulty, 4)
+
+
+class Th15ReplayTestCase(unittest.TestCase):
+
+    def testHard(self) -> None:
+        r = ParseTestReplay('th15_hard')
+        self.assertEqual(r.game, 'th15')
+        self.assertEqual(r.shot, 'Reisen')
+        self.assertEqual(r.difficulty, 2)
+        self.assertEqual(r.score, 3_206_264_130)
+        self.assertEqual(r.timestamp.date(), datetime.date(2022, 12, 16))
+        self.assertEqual(r.name.rstrip(), "Ruby")
+        self.assertEqual(r.slowdown, 0.0)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+
+        s1end = r.stages[0]
+        self.assertEqual(s1end.stage, 1)
+        self.assertEqual(s1end.score, 127_173_790)
+        self.assertEqual(game_fields.GetFormatPower('th15', s1end.power), '3.13')
+        self.assertEqual(s1end.piv, 56680)
+        self.assertEqual(s1end.lives, 5)
+        self.assertEqual(s1end.life_pieces, 2)
+        self.assertEqual(s1end.bombs, 0)
+        self.assertEqual(s1end.bomb_pieces, 0)
+        self.assertEqual(s1end.graze, 23629)
+        
+    def testExtra(self):
+        r = ParseTestReplay('th15_extra')
+        self.assertEqual(r.difficulty, 4)
+        self.assertEqual(r.slowdown, 0.028594970703125)
+        s = r.stages[0]
+        self.assertIsNone(s.piv)
+        self.assertIsNone(s.lives)
+        self.assertEqual(s.score, r.score)
+
+
+class Th16ReplayTestCase(unittest.TestCase):
+
+    def testHard(self) -> None:
+        r = ParseTestReplay('th16_normal')
+        self.assertEqual(r.game, 'th16')
+        self.assertEqual(r.shot, 'CirnoAutumn')
+        self.assertEqual(r.difficulty, 1)
+        self.assertEqual(r.score, 4_443_764_340)
+        self.assertEqual(r.timestamp.date(), datetime.date(2020, 10, 29))
+        self.assertEqual(r.name.rstrip(), "MTR")
+        self.assertEqual(r.slowdown, 0.00881195068359375)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+
+        s1end = r.stages[0]
+        self.assertEqual(s1end.stage, 1)
+        self.assertEqual(s1end.score, 18_206_640)
+        self.assertEqual(game_fields.GetFormatPower('th16', s1end.power), '3.09')
+        self.assertEqual(s1end.piv, 95300)
+        self.assertEqual(s1end.lives, 3)
+        self.assertEqual(s1end.life_pieces, 0)
+        self.assertEqual(s1end.bombs, 3)
+        self.assertEqual(s1end.bomb_pieces, 3)
+        self.assertEqual(s1end.graze, 4605)
+        self.assertEqual(s1end.th16_season_power, 443)
+        
+    def testExtra(self):
+        r = ParseTestReplay('th16_extra')
+        self.assertEqual(r.difficulty, 4)
+        self.assertEqual(r.slowdown, 0.0)
+        self.assertEqual(r.shot, "Marisa")
+        s = r.stages[0]
+        self.assertIsNone(s.piv)
+        self.assertIsNone(s.lives)
+        self.assertEqual(s.score, r.score)
+
+    def testSpellPractice(self):
+        r = ParseTestReplay('th16_spell_practice')
+        self.assertEqual(len(r.stages), 0)
+        self.assertEqual(r.spell_card_id_format, 9)
+        self.assertEqual(r.difficulty, 0)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.SPELL_PRACTICE)
+
+
+class Th17ReplayTestCase(unittest.TestCase):
+
+    def testLunatic(self) -> None:
+        r = ParseTestReplay('th17_lunatic')
+        self.assertEqual(r.game, 'th17')
+        self.assertEqual(r.shot, 'MarisaOtter')
+        self.assertEqual(r.difficulty, 3)
+        self.assertEqual(r.score, 9_999_999_990)
+        self.assertEqual(r.timestamp.date(), datetime.date(2022, 12, 29))
+        self.assertEqual(r.name.rstrip(), "myon")
+        self.assertEqual(r.slowdown, 0.02701568603515625)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+
+        s1end = r.stages[0]
+        self.assertEqual(s1end.stage, 1)
+        self.assertEqual(s1end.score, 29_065_620)
+        self.assertEqual(game_fields.GetFormatPower('th17', s1end.power), '4.00')
+        self.assertEqual(s1end.piv, 47380)
+        self.assertEqual(s1end.lives, 3)
+        self.assertEqual(s1end.life_pieces, 1)
+        self.assertEqual(s1end.bombs, 2)
+        self.assertEqual(s1end.bomb_pieces, 2)
+        self.assertEqual(s1end.graze, 304)
+        
+    def testExtra(self):
+        r = ParseTestReplay('th17_extra')
+        self.assertEqual(r.difficulty, 4)
+        self.assertEqual(r.slowdown, 0.05368804931640625)
+        self.assertEqual(r.shot, "YoumuOtter")
+        s = r.stages[0]
+        self.assertIsNone(s.piv)
+        self.assertIsNone(s.lives)
+        self.assertEqual(s.score, r.score)
+    
+    def testSpellPractice(self):
+        r = ParseTestReplay('th17_spell_practice')
+        self.assertEqual(len(r.stages), 0)
+        self.assertEqual(r.spell_card_id, 67)
+        self.assertEqual(r.difficulty, 3)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.SPELL_PRACTICE)
+
+
+class Th18ReplayTestCase(unittest.TestCase):
+
+    def testLunatic(self) -> None:
+        r = ParseTestReplay('th18_normal')
+        self.assertEqual(r.game, 'th18')
+        self.assertEqual(r.shot, 'Sanae')
+        self.assertEqual(r.difficulty, 1)
+        self.assertEqual(r.score, 4_552_510_430)
+        self.assertEqual(r.timestamp.date(), datetime.date(2022, 5, 4))
+        self.assertEqual(r.name.rstrip(), "Aeteas")
+        self.assertEqual(r.slowdown, 0.0)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+
+        s1end = r.stages[0]
+        self.assertEqual(s1end.stage, 1)
+        self.assertEqual(s1end.score, 271_832_620)
+        self.assertEqual(game_fields.GetFormatPower('th18', s1end.power), '4.00')
+        self.assertEqual(s1end.piv, 500_000)
+        self.assertEqual(s1end.lives, 2)
+        self.assertEqual(s1end.life_pieces, 2)
+        self.assertEqual(s1end.bombs, 2)
+        self.assertEqual(s1end.bomb_pieces, 2)
+        self.assertEqual(s1end.graze, 397)
+        
+    def testExtra(self):
+        r = ParseTestReplay('th18_extra')
+        self.assertEqual(r.difficulty, 4)
+        self.assertEqual(r.slowdown, 1.3594741821289062)
+        self.assertEqual(r.shot, "Marisa")
+        s = r.stages[0]
+        self.assertEqual(s.piv, 500000)
+        self.assertEqual(s.score, r.score)
+    
+    def testSpellPractice(self):
+        r = ParseTestReplay('th18_spell_practice')
+        self.assertEqual(len(r.stages), 0)
+        self.assertEqual(r.spell_card_id_format, 36)
+        self.assertEqual(r.difficulty, 3)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.SPELL_PRACTICE)
