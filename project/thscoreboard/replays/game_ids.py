@@ -18,6 +18,10 @@ class GameIDs:
     TH12 = 'th12'
     TH13 = 'th13'
     TH14 = 'th14'
+    TH15 = 'th15'
+    TH16 = 'th16'
+    TH17 = 'th17'
+    TH18 = 'th18'
 
 
 class ReplayTypes:
@@ -113,6 +117,26 @@ def GetGameName(game_id: str, short=False):
             return _('th14')
         else:
             return _('東方輝針城 - Double Dealing Character')
+    if game_id == GameIDs.TH15:
+        if short:
+            return _('th15')
+        else:
+            return _('東方紺珠伝 - Legacy of Lunatic Kingdom')
+    if game_id == GameIDs.TH16:
+        if short:
+            return _('th16')
+        else:
+            return _('東方天空璋 - Hidden Star in Four Seasons')
+    if game_id == GameIDs.TH17:
+        if short:
+            return _('th17')
+        else:
+            return _('東方鬼形獣 - Wily Beast and Weakest Creature')
+    if game_id == GameIDs.TH18:
+        if short:
+            return _('th18')
+        else:
+            return _('東方虹龍洞 - Unconnected Marketeers')
     return _('Unknown game (bug!)')
 
 
@@ -321,6 +345,88 @@ def GetShotName(game_id: str, shot_id: str):
             return pgettext('th14', "SakuyaA")
         elif shot_id == "SakuyaB":
             return pgettext('th14', "SakuyaB")
+
+    if game_id == GameIDs.TH15:
+        if shot_id == "Reimu":
+            return pgettext('th15', "Reimu")
+        elif shot_id == "Marisa":
+            return pgettext('th15', "Marisa")
+        elif shot_id == "Sanae":
+            return pgettext('th15', "Sanae")
+        elif shot_id == "Reisen":
+            return pgettext('th15', "Reisen")
+
+    if game_id == GameIDs.TH16:
+        if shot_id == "Reimu":
+            return pgettext('th16', "Reimu")
+        elif shot_id == "ReimuSpring":
+            return pgettext('th16', "Reimu Spring")
+        elif shot_id == "ReimuSummer":
+            return pgettext('th16', "Reimu Summer")
+        elif shot_id == "ReimuAutumn":
+            return pgettext('th16', "Reimu Autumn")
+        elif shot_id == "ReimuWinter":
+            return pgettext('th16', "Reimu Winter")
+        elif shot_id == "Cirno":
+            return pgettext('th16', "Cirno")
+        elif shot_id == "CirnoSpring":
+            return pgettext('th16', "Cirno Spring")
+        elif shot_id == "CirnoSummer":
+            return pgettext('th16', "Cirno Summer")
+        elif shot_id == "CirnoAutumn":
+            return pgettext('th16', "Cirno Autumn")
+        elif shot_id == "CirnoWinter":
+            return pgettext('th16', "Cirno Winter")
+        elif shot_id == "Aya":
+            return pgettext('th16', "Aya")
+        elif shot_id == "AyaSpring":
+            return pgettext('th16', "Aya Spring")
+        elif shot_id == "AyaSummer":
+            return pgettext('th16', "Aya Summer")
+        elif shot_id == "AyaAutumn":
+            return pgettext('th16', "Aya Autumn")
+        elif shot_id == "AyaWinter":
+            return pgettext('th16', "Aya Winter")
+        elif shot_id == "Marisa":
+            return pgettext('th16', "Marisa")
+        elif shot_id == "MarisaSpring":
+            return pgettext('th16', "Marisa Spring")
+        elif shot_id == "MarisaSummer":
+            return pgettext('th16', "Marisa Summer")
+        elif shot_id == "MarisaAutumn":
+            return pgettext('th16', "Marisa Autumn")
+        elif shot_id == "MarisaWinter":
+            return pgettext('th16', "Marisa Winter")
+
+    if game_id == GameIDs.TH17:
+        if shot_id == 'ReimuWolf':
+            return pgettext('th17', 'Reimu Wolf')
+        elif shot_id == 'ReimuOtter':
+            return pgettext('th17', 'Reimu Otter')
+        elif shot_id == 'ReimuEagle':
+            return pgettext('th17', 'Reimu Eagle')
+        elif shot_id == 'MarisaWolf':
+            return pgettext('th17', 'Marisa Wolf')
+        elif shot_id == 'MarisaOtter':
+            return pgettext('th17', 'Marisa Otter')
+        elif shot_id == 'MarisaEagle':
+            return pgettext('th17', 'Marisa Eagle')
+        elif shot_id == 'YoumuWolf':
+            return pgettext('th17', 'Youmu Wolf')
+        elif shot_id == 'YoumuOtter':
+            return pgettext('th17', 'Youmu Otter')
+        elif shot_id == 'YoumuEagle':
+            return pgettext('th17', 'Youmu Eagle')
+
+    if game_id == GameIDs.TH18:
+        if shot_id == "Reimu":
+            return pgettext('th18', "Reimu")
+        elif shot_id == "Marisa":
+            return pgettext('th18', "Marisa")
+        elif shot_id == "Sakuya":
+            return pgettext('th18', "Sakuya")
+        elif shot_id == "Sanae":
+            return pgettext('th18', "Sanae")
         
     return 'Bug shot'
 
@@ -354,7 +460,12 @@ def GetDifficultyName(game_id: str, difficulty: int):
             GameIDs.TH11,
             GameIDs.TH12,
             GameIDs.TH13,
-            GameIDs.TH14}:
+            GameIDs.TH14,
+            GameIDs.TH15,
+            GameIDs.TH16,
+            GameIDs.TH17,
+            GameIDs.TH18,
+    }:
         if difficulty == 0:
             return 'Easy'
         elif difficulty == 1:
