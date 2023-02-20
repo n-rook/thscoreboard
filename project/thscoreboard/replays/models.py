@@ -338,13 +338,6 @@ class Replay(models.Model):
                 id=self.id,
             )
 
-    def GetSpellCardIDFormat(self):
-        """Get frontend formatted spellcard id (1-indexed instead of 0-indexed)"""
-        if self.spell_card_id is not None:
-            return self.spell_card_id + 1
-        else:
-            return None
-
     def SetFromReplayInfo(self, r: replay_parsing.ReplayInfo):
         """Set certain derived fields on this replay from parsed information.
 
