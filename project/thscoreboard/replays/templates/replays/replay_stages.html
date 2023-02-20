@@ -24,9 +24,6 @@
             {% if table_fields.lives %}
             <th>{% translate "Lives" %}</th>
             {% endif %}
-            {% if table_fields.life_pieces %}
-            <th>{% translate "Life Pieces" %}</th>
-            {% endif %}
             {% if table_fields.bombs %}
             <th>{% translate "Bombs" %}</th>
             {% endif %}
@@ -76,9 +73,6 @@
             {% endif %}
             {% if table_fields.lives %}
             <td>{{stage.lives}}</td>
-            {% endif %}
-            {% if table_fields.life_pieces %}
-            <td>{{stage.life_pieces}}</td>
             {% endif %}
             {% if table_fields.bombs %}
             <td>{{stage.bombs}}</td>
