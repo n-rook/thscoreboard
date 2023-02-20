@@ -2,6 +2,7 @@
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from users import models as user_models
+from replays import models as replay_models
 
 
 class Command(BaseCommand):
@@ -19,6 +20,7 @@ def _DeleteExpiredTemporaryData():
 
     now = timezone.now()
 
+    replay_models.Replay.CleanUp(now)
     user_models.UnverifiedUser.CleanUp(now)
     user_models.InvitedUser.CleanUp(now)
     user_models.Visits.CleanUp(now)

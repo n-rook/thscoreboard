@@ -6,6 +6,7 @@ from replays.testing import test_case
 from replays.testing import test_replays
 
 import django.db.utils
+import datetime
 
 REPLAY_1 = test_replays.GetRaw('th6_extra')
 REPLAY_2 = test_replays.GetRaw('th10_normal')
@@ -60,6 +61,18 @@ class ReplayTest(test_case.ReplayTestCase):
 
         self.assertTrue(should_be_visible.IsVisible(viewer=self.author))
         self.assertTrue(models.Replay.objects.visible_to(viewer=self.author).filter(id=should_be_visible.id).exists())
+
+    def testPendingReplayDeletion(self):
+        id = test_replays.CreateAsPublishedReplay(
+            filename='th6_extra',
+            user=self.author,
+            category=models.Category.PENDING
+        ).id
+
+        now_in_30_days = datetime.now(datetime.timezone.utc) + datetime.timedelta(days=30, minutes=5)
+
+        models.Replay.CleanUp(now_in_30_days)
+        self.assertFalse(models.Replay.objects.filter(id=id).exists())
 
 
 class TestConstraints(test_case.ReplayTestCase):

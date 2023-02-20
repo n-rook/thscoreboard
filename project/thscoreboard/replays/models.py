@@ -1,6 +1,7 @@
 """Contains all of the models for the replay site."""
 
-
+import datetime
+import logging
 from typing import Optional
 
 from django.db import models
@@ -174,6 +175,9 @@ class Replay(models.Model):
     """Represents a score recorded on the scoreboard."""
 
     objects = ReplayQuerySet.as_manager()
+
+    """Maximum amount of time for which pending replays are allowed to stay"""
+    _PENDING_REPLAYS_TTL = datetime.timedelta(days=30)
 
     class Meta:
         ordering = ['shot', 'difficulty', '-score']
@@ -353,6 +357,20 @@ class Replay(models.Model):
         self.spell_card_id = r.spell_card_id
         self.replay_type = r.replay_type
         self.slowdown = r.slowdown
+
+    @classmethod
+    def CleanUp(cls, now: datetime.datetime):
+        earliest_surviving_time = now - Replay._PENDING_REPLAYS_TTL
+        logging.info('Deleting pending replays marked for deletion before %s', earliest_surviving_time)
+
+        count = 0
+        for replay in Replay.objects.filter(
+            category=Category.PENDING,
+            created__lte=earliest_surviving_time 
+        ):
+            replay.delete()
+            count += 1
+        logging.info('Cleaned up %d accounts marked for deletion.', count)
 
 
 class ReplayStage(models.Model):
