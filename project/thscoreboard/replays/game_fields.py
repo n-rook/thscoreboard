@@ -395,14 +395,14 @@ _bomb_pieces = immutabledict({
 })
 
 
-def GetFormatLives(game_id: str, lives: Optional[int], life_pieces: Optional[int], extends: Optional[int] = 0) -> str:
-    lives_str = ""
-    life_pieces_str = ""
-
+# Takes the lives and life pieces and formats them accordingly for viewing in frontend
+# A special case is made here for TH13, since it has a variable number of life pieces needed
+#   so the amount is calculated off of the current extends
+def GetFormatLives(game_id: str, lives: Optional[int], life_pieces: Optional[int], extends: Optional[int] = 0) -> Optional[str]:
     if lives is None:
         return None
-    else:
-        lives_str = f"{lives}"
+
+    life_pieces_str = ""
 
     if game_id == 'th13':
         threshholds = [8, 10, 12, 15, 18, 20, 25]
@@ -422,7 +422,7 @@ def GetFormatLives(game_id: str, lives: Optional[int], life_pieces: Optional[int
             if life_pieces is None:
                 life_pieces = 0
             life_pieces_str = f" ({life_pieces}/{total_life_pieces})"
-    return f"{lives_str}{life_pieces_str}"
+    return f"{lives}{life_pieces_str}"
 
 
 def GetFormatBombs(game_id: str, bombs: Optional[int], bomb_pieces: Optional[int]) -> str:
