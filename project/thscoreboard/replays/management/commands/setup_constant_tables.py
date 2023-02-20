@@ -81,7 +81,8 @@ def _Create16():
     shots = ["ReimuSpring", "ReimuSummer", "ReimuAutumn", "ReimuWinter",
              "CirnoSpring", "CirnoSummer", "CirnoAutumn", "CirnoWinter",
              "AyaSpring", "AyaSummer", "AyaAutumn", "AyaWinter",
-             "MarisaSpring", "MarisaSummer", "MarisaAutumn", "MarisaWinter"]
+             "MarisaSpring", "MarisaSummer", "MarisaAutumn", "MarisaWinter",
+             "Reimu", "Cirno", "Aya", "Marisa"]
     for shot in shots:
         shot_row = models.Shot(game=th16, shot_id=shot)
         shot_row.save()
