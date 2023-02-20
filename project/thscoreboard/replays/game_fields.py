@@ -29,6 +29,7 @@ _table_fields_th06 = immutabledict({
     'th09_p2_shot': False,
     'th09_p2_score': False,
     'th13_trance': False,
+    'th16_season_power': False,
     'extends': False,
 })
 
@@ -51,6 +52,7 @@ _table_fields_th07 = immutabledict({
     'th09_p2_shot': False,
     'th09_p2_score': False,
     'th13_trance': False,
+    'th16_season_power': False,
     'extends': False,
 })
 
@@ -73,6 +75,7 @@ _table_fields_th08 = immutabledict({
     'th09_p2_shot': False,
     'th09_p2_score': False,
     'th13_trance': False,
+    'th16_season_power': False,
     'extends': False,
 })
 
@@ -95,6 +98,7 @@ _table_fields_th09 = immutabledict({
     'th09_p2_shot': True,
     'th09_p2_score': True,
     'th13_trance': False,
+    'th16_season_power': False,
     'extends': False,
 })
 
@@ -117,6 +121,7 @@ _table_fields_th09_PVP = immutabledict({
     'th09_p2_shot': True,
     'th09_p2_score': False,
     'th13_trance': False,
+    'th16_season_power': False,
     'extends': False,
 })
 
@@ -139,6 +144,7 @@ _table_fields_th10 = immutabledict({
     'th09_p2_shot': False,
     'th09_p2_score': False,
     'th13_trance': False,
+    'th16_season_power': False,
     'extends': False,
 })
 
@@ -161,6 +167,7 @@ _table_fields_th11 = immutabledict({
     'th09_p2_shot': False,
     'th09_p2_score': False,
     'th13_trance': False,
+    'th16_season_power': False,
     'extends': False,
 })
 
@@ -183,6 +190,7 @@ _table_fields_th12 = immutabledict({
     'th09_p2_shot': False,
     'th09_p2_score': False,
     'th13_trance': False,
+    'th16_season_power': False,
     'extends': False,
 })
 
@@ -205,6 +213,7 @@ _table_fields_th13 = immutabledict({
     'th09_p2_shot': False,
     'th09_p2_score': False,
     'th13_trance': True,
+    'th16_season_power': False,
     'extends': True,
 })
 
@@ -227,6 +236,7 @@ _table_fields_th14 = immutabledict({
     'th09_p2_shot': False,
     'th09_p2_score': False,
     'th13_trance': False,
+    'th16_season_power': False,
     'extends': False,
 })
 
@@ -249,6 +259,7 @@ _table_fields_th15 = immutabledict({
     'th09_p2_shot': False,
     'th09_p2_score': False,
     'th13_trance': False,
+    'th16_season_power': False,
     'extends': False,
 })
 
@@ -271,6 +282,7 @@ _table_fields_th16 = immutabledict({
     'th09_p2_shot': False,
     'th09_p2_score': False,
     'th13_trance': False,
+    'th16_season_power': True,
     'extends': False,
 })
 
@@ -293,6 +305,7 @@ _table_fields_th17 = immutabledict({
     'th09_p2_shot': False,
     'th09_p2_score': False,
     'th13_trance': False,
+    'th16_season_power': False,
     'extends': False,
 })
 
@@ -315,6 +328,7 @@ _table_fields_th18 = immutabledict({
     'th09_p2_shot': False,
     'th09_p2_score': False,
     'th13_trance': False,
+    'th16_season_power': False,
     'extends': False,
 })
 
@@ -554,6 +568,8 @@ def FormatStages(game_id: str, replay_stages):
             stage.th09_p2_score = ""
         if stage.th13_trance is None:
             stage.th13_trance = ""
+        if stage.th16_season_power is None:
+            stage.th16_season_power = ""
         if stage.extends is None:
             stage.extends = ""
 
