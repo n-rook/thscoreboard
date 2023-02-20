@@ -376,6 +376,8 @@ class ReplayStage(models.Model):
 
     class Meta:
         constraints = [models.UniqueConstraint(fields=['replay', 'stage'], name='unique_stage_per_game')]
+        indexes = [models.Index(name='replay_and_stage', fields=['replay', 'stage'])]
+        ordering = ['replay', 'stage']
 
     replay = models.ForeignKey('Replay', on_delete=models.CASCADE)
     """The replay this split corresponds to"""
