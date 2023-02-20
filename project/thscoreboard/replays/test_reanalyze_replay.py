@@ -171,3 +171,16 @@ class ReanalyzeReplayTest(test_case.ReplayTestCase):
         # Regression test for https://github.com/n-rook/thscoreboard/issues/244
         replay = test_replays.CreateAsPublishedReplay('th8_normal', self.user)
         self.assertFalse(reanalyze_replay.DoesReplayNeedUpdate(replay.id))
+
+    def testReanalyzeDoesNotCauseStagesToBeFetchedInAWeirdOrder(self):
+        replay = test_replays.CreateAsPublishedReplay('th10_normal', self.user)
+
+        old_stages = list(models.ReplayStage.objects.filter(replay=replay).order_by('stage'))
+        stage2 = old_stages[1]
+        self.assertEqual(stage2.stage, 2)
+        stage2.delete()
+
+        reanalyze_replay.UpdateReplay(replay.id)
+        new_stages = list(replay.replaystage_set.all())
+        self.assertEqual(len(new_stages), 6)
+        self.assertEqual(new_stages[1].stage, 2)
