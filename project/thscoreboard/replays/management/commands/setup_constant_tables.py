@@ -21,6 +21,10 @@ def SetUpConstantTables():
     separate function, so that tests can call it easily.
     """
 
+    _CreateIfNotLoaded('th18', _Create18)
+    _CreateIfNotLoaded('th17', _Create17)
+    _CreateIfNotLoaded('th16', _Create16)
+    _CreateIfNotLoaded('th15', _Create15)
     _CreateIfNotLoaded('th14', _Create14)
     _CreateIfNotLoaded('th13', _Create13)
     _CreateIfNotLoaded('th12', _Create12)
@@ -43,6 +47,55 @@ def _CreateIfNotLoaded(game_id, constant_creation_function):
     else:
         constant_creation_function()
         logging.info('Created %s', game_id)
+
+
+@transaction.atomic
+def _Create18():
+    th18 = models.Game(game_id='th18', has_replays=True, num_difficulties=5)
+    th18.save()
+
+    shots = ["Reimu", "Marisa", "Sakuya", "Sanae"]
+    for shot in shots:
+        shot_row = models.Shot(game=th18, shot_id=shot)
+        shot_row.save()
+
+
+@transaction.atomic
+def _Create17():
+    th17 = models.Game(game_id='th17', has_replays=True, num_difficulties=5)
+    th17.save()
+
+    shots = ["ReimuWolf", "ReimuOtter", "ReimuEagle",
+             "MarisaWolf", "MarisaOtter", "MarisaEagle",
+             "YoumuWolf", "YoumuOtter", "YoumuEagle"]
+    for shot in shots:
+        shot_row = models.Shot(game=th17, shot_id=shot)
+        shot_row.save()
+
+
+@transaction.atomic
+def _Create16():
+    th16 = models.Game(game_id='th16', has_replays=True, num_difficulties=5)
+    th16.save()
+
+    shots = ["ReimuSpring", "ReimuSummer", "ReimuAutumn", "ReimuWinter",
+             "CirnoSpring", "CirnoSummer", "CirnoAutumn", "CirnoWinter",
+             "AyaSpring", "AyaSummer", "AyaAutumn", "AyaWinter",
+             "MarisaSpring", "MarisaSummer", "MarisaAutumn", "MarisaWinter"]
+    for shot in shots:
+        shot_row = models.Shot(game=th16, shot_id=shot)
+        shot_row.save()
+
+
+@transaction.atomic
+def _Create15():
+    th15 = models.Game(game_id='th15', has_replays=True, num_difficulties=5)
+    th15.save()
+
+    shots = ["Reimu", "Marisa", "Sanae", "Reisen"]
+    for shot in shots:
+        shot_row = models.Shot(game=th15, shot_id=shot)
+        shot_row.save()
 
 
 @transaction.atomic
