@@ -359,7 +359,7 @@ class Replay(models.Model):
         count = 0
         for replay in Replay.objects.filter(
             category=Category.PENDING,
-            created__lte=earliest_surviving_time 
+            created__lte=earliest_surviving_time
         ):
             replay.delete()
             count += 1
