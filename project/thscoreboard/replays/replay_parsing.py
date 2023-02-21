@@ -115,7 +115,7 @@ def _Parse06(rep_raw):
     enumerated_non_dummy_stages = [
         (i, _stage)
         for i, _stage in enumerate(replay.stages)
-        if replay.header.stage_offsets[i] != 0
+        if replay.file_header.stage_offsets[i] != 0
     ]
     for (i, current_stage), (j, next_stage) in zip(
         enumerated_non_dummy_stages, enumerated_non_dummy_stages[1:] + [(None, None)]
@@ -140,10 +140,10 @@ def _Parse06(rep_raw):
         game=game_ids.GameIDs.TH06,
         shot=shots[rep_raw[6]],
         difficulty=rep_raw[7],
-        score=replay.header.score,
-        timestamp=time.strptime(replay.header.date, "%m/%d/%y"),
-        name=replay.header.name.replace("\x00", ""),
-        slowdown=replay.header.slowdown,
+        score=replay.file_header.score,
+        timestamp=time.strptime(replay.file_header.date, "%m/%d/%y"),
+        name=replay.file_header.name.replace("\x00", ""),
+        slowdown=replay.file_header.slowdown,
         replay_type=r_type,
         stages=rep_stages
     )
