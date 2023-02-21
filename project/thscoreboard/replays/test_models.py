@@ -69,7 +69,7 @@ class ReplayTest(test_case.ReplayTestCase):
             category=models.Category.PENDING
         ).id
 
-        now_in_30_days = datetime.now(datetime.timezone.utc) + datetime.timedelta(days=30, minutes=5)
+        now_in_30_days = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=30, minutes=5)
 
         models.Replay.CleanUp(now_in_30_days)
         self.assertFalse(models.Replay.objects.filter(id=id).exists())
