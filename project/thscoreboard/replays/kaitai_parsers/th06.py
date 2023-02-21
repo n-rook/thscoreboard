@@ -15,7 +15,7 @@ class Th06(KaitaiStruct):
         self._read()
 
     def _read(self):
-        self.header = Th06.Header(self._io, self, self._root)
+        self.file_header = Th06.FileHeader(self._io, self, self._root)
 
     class Dummy(KaitaiStruct):
         """blank type."""
@@ -29,7 +29,7 @@ class Th06(KaitaiStruct):
             pass
 
 
-    class Header(KaitaiStruct):
+    class FileHeader(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
             self._parent = _parent
@@ -76,14 +76,14 @@ class Th06(KaitaiStruct):
         _pos = self._io.pos()
         self._m_stages = []
         for i in range(7):
-            _on = self.header.stage_offsets[i]
+            _on = self.file_header.stage_offsets[i]
             if _on == 0:
                 self._m_stages.append(Th06.Dummy(self._io, self, self._root))
             else:
                 #   the th06 decryptor only returns the decrypted data instead of the full file
                 #   the game stores these stage offsets from the start of the file
                 #   thus we must adjust them to account for this difference when reading the stage data
-                self._io.seek(self.header.stage_offsets[i]-15)
+                self._io.seek(self.file_header.stage_offsets[i]-15)
                 self._m_stages.append(Th06.Stage(self._io, self, self._root))
 
         self._io.seek(_pos)

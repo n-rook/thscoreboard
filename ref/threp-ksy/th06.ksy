@@ -3,13 +3,13 @@ meta:
   file-extension: rpy
   endian: le
 seq:
-  - id: header
-    type: header
+  - id: file_header
+    type: file_header
 instances:
   stages:
-    pos: header.stage_offsets[_index] - 15
+    pos: file_header.stage_offsets[_index] - 15
     type:
-      switch-on: header.stage_offsets[_index]
+      switch-on: file_header.stage_offsets[_index]
       cases:
         0: dummy
         _: stage
@@ -18,7 +18,7 @@ instances:
 types:
   dummy:
     doc: blank type
-  header:
+  file_header:
     seq:
       - id: unknown_2
         type: u1
