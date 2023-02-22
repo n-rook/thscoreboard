@@ -461,12 +461,6 @@ def GetGameField(gameid: str, replay_type: game_ids.ReplayTypes):
     return None
 
 
-def GetGameLifePieces(gameid: str):
-    if gameid in _life_pieces:
-        return _life_pieces[gameid]
-    return None
-
-
 FORMAT_EXTRA = 'Extra'
 FORMAT_PHANTASM = 'Phantasm'
 
