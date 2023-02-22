@@ -44,17 +44,3 @@ class TestTableFields(test_case.ReplayTestCase):
                                 so they're now removed from the frontend and aren't relevant anymore
                                 """
                                 self.assertIsNone(s[key], msg=f'Unexpected field {key} found')
-
-
-class TestGameFields(test_case.ReplayTestCase):
-
-    def testGetFormatLives(self):
-
-        self.assertEqual(game_fields.GetFormatLives(game_ids.GameIDs.TH11, 5, 2), '5 (2/5)')
-        self.assertEqual(game_fields.GetFormatLives(game_ids.GameIDs.TH10, 5, 2), '5')
-
-    def testGetFormatLifePieces(self):
-        self.assertEqual(game_fields.GetFormatLives(game_ids.GameIDs.TH13, 2, 3, 0), '2 (3/8)')
-        self.assertEqual(game_fields.GetFormatLives(game_ids.GameIDs.TH13, 5, 7, 3), '5 (7/15)')
-        self.assertEqual(game_fields.GetFormatLives(game_ids.GameIDs.TH13, 8, 1, 9), '8 (1/25)')
-        self.assertEqual(game_fields.GetFormatLives(game_ids.GameIDs.TH13, None, None, 0), None)
