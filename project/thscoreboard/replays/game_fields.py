@@ -18,9 +18,7 @@ _table_fields_th06 = immutabledict({
     'point_items': False,
     'power': True,
     'lives': True,
-    'life_pieces': False,
     'bombs': True,
-    'bomb_pieces': False,
     'th06_rank': True,
     'th07_cherry': False,
     'th07_cherrymax': False,
@@ -41,9 +39,7 @@ _table_fields_th07 = immutabledict({
     'point_items': True,
     'power': True,
     'lives': True,
-    'life_pieces': False,
     'bombs': True,
-    'bomb_pieces': False,
     'th06_rank': False,
     'th07_cherry': True,
     'th07_cherrymax': True,
@@ -64,9 +60,7 @@ _table_fields_th08 = immutabledict({
     'point_items': True,
     'power': True,
     'lives': True,
-    'life_pieces': False,
     'bombs': True,
-    'bomb_pieces': False,
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
@@ -87,9 +81,7 @@ _table_fields_th09 = immutabledict({
     'point_items': False,
     'power': False,
     'lives': True,
-    'life_pieces': False,
     'bombs': False,
-    'bomb_pieces': False,
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
@@ -110,9 +102,7 @@ _table_fields_th09_PVP = immutabledict({
     'point_items': False,
     'power': False,
     'lives': False,
-    'life_pieces': False,
     'bombs': False,
-    'bomb_pieces': False,
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
@@ -133,9 +123,7 @@ _table_fields_th10 = immutabledict({
     'point_items': False,
     'power': True,
     'lives': True,
-    'life_pieces': False,
     'bombs': False,
-    'bomb_pieces': False,
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
@@ -156,9 +144,7 @@ _table_fields_th11 = immutabledict({
     'point_items': False,
     'power': True,
     'lives': True,
-    'life_pieces': False,
     'bombs': False,
-    'bomb_pieces': False,
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
@@ -179,9 +165,7 @@ _table_fields_th12 = immutabledict({
     'point_items': False,
     'power': True,
     'lives': True,
-    'life_pieces': False,
     'bombs': True,
-    'bomb_pieces': False,
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
@@ -202,9 +186,7 @@ _table_fields_th13 = immutabledict({
     'point_items': False,
     'power': True,
     'lives': True,
-    'life_pieces': True,
     'bombs': True,
-    'bomb_pieces': False,
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
@@ -225,9 +207,7 @@ _table_fields_th14 = immutabledict({
     'point_items': False,
     'power': True,
     'lives': True,
-    'life_pieces': False,
     'bombs': True,
-    'bomb_pieces': True,
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
@@ -248,9 +228,7 @@ _table_fields_th15 = immutabledict({
     'point_items': False,
     'power': True,
     'lives': True,
-    'life_pieces': False,
     'bombs': True,
-    'bomb_pieces': False,
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
@@ -271,9 +249,7 @@ _table_fields_th16 = immutabledict({
     'point_items': False,
     'power': True,
     'lives': True,
-    'life_pieces': False,
     'bombs': True,
-    'bomb_pieces': False,
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
@@ -294,9 +270,7 @@ _table_fields_th17 = immutabledict({
     'point_items': False,
     'power': True,
     'lives': True,
-    'life_pieces': False,
     'bombs': True,
-    'bomb_pieces': False,
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
@@ -317,9 +291,7 @@ _table_fields_th18 = immutabledict({
     'point_items': False,
     'power': True,
     'lives': True,
-    'life_pieces': False,
     'bombs': True,
-    'bomb_pieces': False,
     'th06_rank': False,
     'th07_cherry': False,
     'th07_cherrymax': False,
@@ -437,16 +409,34 @@ _bomb_pieces = immutabledict({
 })
 
 
-def GetFormatLives(game_id: str, lives: Optional[int], life_pieces: Optional[int]) -> str:
+# Takes the lives and life pieces and formats them accordingly for viewing in frontend
+# A special case is made here for TH13, since it has a variable number of life pieces needed
+#   so the amount is calculated off of the current extends
+def GetFormatLives(game_id: str, lives: Optional[int], life_pieces: Optional[int], extends: Optional[int] = 0) -> Optional[str]:
     if lives is None:
-        return ""
-    total_life_pieces = _life_pieces[game_id]
-    if total_life_pieces is None:
-        return str(lives)
+        return None
+
+    life_pieces_str = ""
+
+    if game_id == 'th13':
+        threshholds = [8, 10, 12, 15, 18, 20, 25]
+        if extends is None:
+            life_pieces_str = ""
+        else:
+            if extends > 5:
+                extends = 6
+            if extends < 0:
+                extends = 0
+            life_pieces_str = f" ({life_pieces}/{threshholds[extends]})"
     else:
-        if life_pieces is None:
-            life_pieces = 0
-        return f"{lives} ({life_pieces}/{total_life_pieces})"
+        total_life_pieces = _life_pieces[game_id]
+        if total_life_pieces is None:
+            life_pieces_str = ""
+        else:
+            if life_pieces is None:
+                life_pieces = 0
+            life_pieces_str = f" ({life_pieces}/{total_life_pieces})"
+    return f"{lives}{life_pieces_str}"
 
 
 def GetFormatBombs(game_id: str, bombs: Optional[int], bomb_pieces: Optional[int]) -> str:
@@ -507,20 +497,6 @@ def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
     return str(stage)
 
 
-def GetFormatLifePieces(game_id: str, life_pieces: Optional[int], extends: Optional[int] = 0) -> str:
-    if life_pieces is None:
-        return ""
-    if extends is None:
-        return str(life_pieces)
-    if game_id == 'th13':
-        threshholds = [8, 10, 12, 15, 18, 20, 25]
-        if extends > 5:
-            extends = 6
-        return f'{life_pieces}/{threshholds[extends]}'
-    else:
-        return str(life_pieces)
-
-
 def FormatStages(game_id: str, replay_stages):
     """This function formats the stage values to be displayed in the front end"""
     new_stages = copy.deepcopy(replay_stages)
@@ -528,9 +504,8 @@ def FormatStages(game_id: str, replay_stages):
     for stage in new_stages:
         stage.power = GetFormatPower(game_id, stage.power)
         stage.stage = GetFormatStage(game_id, stage.stage)
-        stage.lives = GetFormatLives(game_id, stage.lives, stage.life_pieces)
+        stage.lives = GetFormatLives(game_id, stage.lives, stage.life_pieces, stage.extends)
         stage.bombs = GetFormatBombs(game_id, stage.bombs, stage.bomb_pieces)
-        stage.life_pieces = GetFormatLifePieces(game_id, stage.life_pieces, stage.extends)
         if game_id == game_ids.GameIDs.TH09:
             stage.th09_p2_shotFormat = stage.th09_p2_shot.GetName()
 
@@ -548,12 +523,8 @@ def FormatStages(game_id: str, replay_stages):
             stage.power = ""
         if stage.lives is None:
             stage.lives = ""
-        if stage.life_pieces is None:
-            stage.life_pieces = ""
         if stage.bombs is None:
             stage.bombs = ""
-        if stage.bomb_pieces is None:
-            stage.bomb_pieces = ""
         if stage.th06_rank is None:
             stage.th06_rank = ""
         if stage.th07_cherry is None:
