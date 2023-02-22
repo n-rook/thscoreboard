@@ -68,8 +68,13 @@ class FormatPowerTestCase(unittest.TestCase):
         self.assertEqual(format_20_power, "1.00")
         format_49_power = GetFormatPower(GameIDs.TH11, 49, "ReimuA")
         self.assertEqual(format_49_power, "2.45")
+
+        format_0_power_marisa_a = GetFormatPower(GameIDs.TH11, 0, "MarisaA")
+        self.assertEqual(format_0_power_marisa_a, "0.00")
         format_49_power_marisa_a = GetFormatPower(GameIDs.TH11, 49, "MarisaA")
         self.assertEqual(format_49_power_marisa_a, "4.08")
+        format_8_power_marisa_a = GetFormatPower(GameIDs.TH11, 8, "MarisaA")
+        self.assertEqual(format_8_power_marisa_a, "0.67")
 
     def testTh12(self) -> None:
         format_100_power = GetFormatPower(GameIDs.TH12, 100)

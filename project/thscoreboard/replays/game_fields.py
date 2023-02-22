@@ -342,13 +342,13 @@ _game_fields_PVP = immutabledict({
 })
 
 
-def GetFormatPower(game_id: str, power: Optional[int], shot_name: Optional[str] = None) -> str:
+def GetFormatPower(game_id: str, power: Optional[int], shot: Optional[str] = None) -> str:
     if power is None:
         return ""
     if game_id in (game_ids.GameIDs.TH06, game_ids.GameIDs.TH07, game_ids.GameIDs.TH08):
         return str(power)
-    if game_id == game_ids.GameIDs.TH11 and shot_name == "MarisaA":
-        return "%.2f" % (float(power) / 12)
+    if game_id == game_ids.GameIDs.TH11 and shot == "MarisaA":
+        return "%.2f" % round(float(power) / 12, ndigits=2)
     if game_id in (game_ids.GameIDs.TH10, game_ids.GameIDs.TH11):
         return "%.2f" % (float(power) * 0.05)
     if game_id in (
@@ -494,12 +494,12 @@ def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
     return str(stage)
 
 
-def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot_name: str):
+def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot: str):
     """This function formats the stage values to be displayed in the front end"""
     new_stages = copy.deepcopy(replay_stages)
 
     for stage in new_stages:
-        stage.power = GetFormatPower(game_id, stage.power, shot_name)
+        stage.power = GetFormatPower(game_id, stage.power, shot)
         stage.stage = GetFormatStage(game_id, stage.stage)
         stage.lives = GetFormatLives(game_id, stage.lives, stage.life_pieces, stage.extends)
         stage.bombs = GetFormatBombs(game_id, stage.bombs, stage.bomb_pieces)

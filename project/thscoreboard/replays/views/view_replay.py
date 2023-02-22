@@ -38,7 +38,7 @@ def replay_details(request, game_id: str, replay_id: int):
         # Wrong game, but IDs are unique anyway so we know the right game. Send the user there.
         return redirect(replay_details, game_id=replay_instance.shot.game.game_id, replay_id=replay_id)
 
-    formatStages = game_fields.FormatStages(game_id, replay_stages, replay_instance.shot.GetName())
+    formatStages = game_fields.FormatStages(game_id, replay_stages, replay_instance.shot.shot_id)
 
     edit_form = forms.EditReplayForm(
         initial={
