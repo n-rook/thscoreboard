@@ -24,7 +24,7 @@ class UsernameField(forms.CharField):
         if value is None:
             return True
 
-        if (models.User.objects.filter(username=value) or models.Ban.IsUsernameBanned(value)):
+        if (models.User.objects.filter(username=value) or models.Ban.IsUsernameBanned(value) or models.InvitedUser.objects.filter(username=value)):
             raise exceptions.ValidationError(
                 _('An account has already been registered with this username.'))
 
@@ -42,7 +42,7 @@ class UserEmailField(forms.EmailField):
         if value is None:
             return True
 
-        if (models.User.objects.filter(email=value) or models.Ban.IsEmailBanned(value)):
+        if (models.User.objects.filter(email=value) or models.Ban.IsEmailBanned(value) or models.InvitedUser.objects.filter(email=value)):
             raise exceptions.ValidationError(
                 _('An account has already been registered with this email address.'))
 
