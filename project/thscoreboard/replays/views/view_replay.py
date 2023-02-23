@@ -1,5 +1,6 @@
 """Views related to looking at a saved replay."""
 
+from typing import Iterable, Tuple
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, Http404
 from django.contrib.auth import decorators as auth_decorators
 from django.views.decorators import http as http_decorators
@@ -37,7 +38,7 @@ def replay_details(request, game_id: str, replay_id: int):
         # Wrong game, but IDs are unique anyway so we know the right game. Send the user there.
         return redirect(replay_details, game_id=replay_instance.shot.game.game_id, replay_id=replay_id)
 
-    formatStages = game_fields.FormatStages(game_id, replay_stages)
+    formatStages = game_fields.FormatStages(game_id, replay_stages, replay_instance.shot.shot_id)
 
     edit_form = forms.EditReplayForm(
         initial={
@@ -155,7 +156,7 @@ def GetReplayOr404(user, replay_id):
 
 
 @transaction.atomic
-def GetReplayWithStagesOr404(user, replay_id):
+def GetReplayWithStagesOr404(user, replay_id) -> Tuple[models.Replay, Iterable[models.ReplayStage]]:
     try:
         replay_instance = models.Replay.objects.select_related('shot').visible_to(user).get(id=replay_id)
     except models.Replay.DoesNotExist:
