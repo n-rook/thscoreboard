@@ -305,7 +305,7 @@ class Replay(models.Model):
         if self.category != Category.PRIVATE:
             return True
         return self.user == viewer
-
+    
     def GetNiceFilename(self, id: Optional[int]):
         """Returns a nice filename for this replay.
 
@@ -313,21 +313,10 @@ class Replay(models.Model):
         have a replay file.
         """
 
-        def numberToBase(n: int, b: str) -> str:
-            if n == 0:
-                return str[0]
-            digits = ''
-            while n:
-                digits += b[n % len(b)]
-                n //= len(b)
-            return digits[::-1]
-
-        id = self.id if id is not None else id
-
         gamecode = game_ids.GetRpyGameCode(self.shot.game.game_id)
-        ret_id = numberToBase(self.id, '0123456789abcdefghijklmnopqrstuvwxyz').zfill(4)
+        rpy_id = game_ids.MakeReplayId(self.id if id is not None else id)
 
-        return f'{gamecode}_ud{ret_id}.rpy'
+        return f'{gamecode}_ud{rpy_id}.rpy'
 
     def SetFromReplayInfo(self, r: replay_parsing.ReplayInfo):
         """Set certain derived fields on this replay from parsed information.
