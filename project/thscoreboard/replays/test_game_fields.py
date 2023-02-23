@@ -4,7 +4,7 @@ from replays.testing import test_replays
 from replays import replay_parsing
 from replays.game_ids import GameIDs
 from replays.replay_parsing import ReplayInfo
-from replays.game_fields import GetFormatPower, GetFormatStage
+from replays.game_fields import GetFormatBombs, GetFormatLives, GetFormatPower, GetFormatStage
 
 
 def ParseTestReplay(filename: str) -> ReplayInfo:
@@ -81,3 +81,48 @@ class FormatPowerTestCase(unittest.TestCase):
         self.assertEqual(format_100_power, "1.00")
         format_49_power = GetFormatPower(GameIDs.TH12, 49)
         self.assertEqual(format_49_power, "0.49")
+
+
+class FormatLivesTestCase(unittest.TestCase):
+    def testNoneLives(self) -> None:
+        format_lives = GetFormatLives(GameIDs.TH06, None, None)
+        self.assertEqual(format_lives, "")
+
+    def testTh06(self) -> None:
+        format_lives = GetFormatLives(GameIDs.TH06, lives=5, life_pieces=4)
+        self.assertEqual(format_lives, "5")
+
+    def testTh11(self) -> None:
+        format_lives = GetFormatLives(GameIDs.TH11, lives=5, life_pieces=4)
+        self.assertEqual(format_lives, "5 (4/5)")
+
+    def testTh13(self) -> None:
+        format_lives = GetFormatLives(GameIDs.TH13, lives=2, life_pieces=1, extends=0)
+        self.assertEqual(format_lives, "2 (1/8)")
+        
+        format_lives = GetFormatLives(GameIDs.TH13, lives=3, life_pieces=9, extends=1)
+        self.assertEqual(format_lives, "3 (9/10)")
+        
+        format_lives = GetFormatLives(GameIDs.TH13, lives=5, life_pieces=14, extends=6)
+        self.assertEqual(format_lives, "5 (14/25)")
+
+    def testTh15(self) -> None:
+        format_lives = GetFormatLives(GameIDs.TH15, lives=5, life_pieces=0)
+        self.assertEqual(format_lives, "5 (0/3)")
+
+
+class FormatBombsTestCase(unittest.TestCase):
+    def testNoneBombs(self) -> None:
+        format_bombs = GetFormatBombs(GameIDs.TH06, None, None)
+        self.assertEqual(format_bombs, "")
+
+    def testTh06(self) -> None:
+        format_bombs = GetFormatBombs(GameIDs.TH06, bombs=5, bomb_pieces=None)
+        self.assertEqual(format_bombs, "5")
+
+    def testTh12(self) -> None:
+        format_bombs = GetFormatBombs(GameIDs.TH12, bombs=3, bomb_pieces=0)
+        self.assertEqual(format_bombs, "3 (0/3)")
+        
+        format_bombs = GetFormatBombs(GameIDs.TH12, bombs=4, bomb_pieces=2)
+        self.assertEqual(format_bombs, "4 (2/3)")

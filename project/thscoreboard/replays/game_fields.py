@@ -415,9 +415,9 @@ _bomb_pieces = immutabledict({
 # Takes the lives and life pieces and formats them accordingly for viewing in frontend
 # A special case is made here for TH13, since it has a variable number of life pieces needed
 #   so the amount is calculated off of the current extends
-def GetFormatLives(game_id: str, lives: Optional[int], life_pieces: Optional[int], extends: Optional[int] = 0) -> Optional[str]:
+def GetFormatLives(game_id: str, lives: Optional[int], life_pieces: Optional[int], extends: Optional[int] = 0) -> str:
     if lives is None:
-        return None
+        return ""
 
     life_pieces_str = ""
 
