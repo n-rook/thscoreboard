@@ -140,7 +140,7 @@ def GetGameName(game_id: str, short=False):
     return _('Unknown game (bug!)')
 
 
-def GetShotName(game_id: str, shot_id: str):
+def GetShotName(game_id: str, shot_id: str) -> str:
 
     if game_id == GameIDs.TH01:
         if shot_id == 'Reimu':
@@ -334,17 +334,17 @@ def GetShotName(game_id: str, shot_id: str):
 
     if game_id == GameIDs.TH14:
         if shot_id == "ReimuA":
-            return pgettext('th14', "ReimuA")
+            return pgettext('th14', "Reimu A")
         elif shot_id == "ReimuB":
-            return pgettext('th14', "ReimuB")
+            return pgettext('th14', "Reimu B")
         elif shot_id == "MarisaA":
-            return pgettext('th14', "MarisaA")
+            return pgettext('th14', "Marisa A")
         elif shot_id == "MarisaB":
-            return pgettext('th14', "MarisaB")
+            return pgettext('th14', "Marisa B")
         elif shot_id == "SakuyaA":
-            return pgettext('th14', "SakuyaA")
+            return pgettext('th14', "Sakuya A")
         elif shot_id == "SakuyaB":
-            return pgettext('th14', "SakuyaB")
+            return pgettext('th14', "Sakuya B")
 
     if game_id == GameIDs.TH15:
         if shot_id == "Reimu":
