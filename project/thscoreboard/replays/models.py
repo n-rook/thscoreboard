@@ -305,30 +305,18 @@ class Replay(models.Model):
         if self.category != Category.PRIVATE:
             return True
         return self.user == viewer
-
-    def GetNiceFilename(self, ascii_only=False):
+    
+    def GetNiceFilename(self, id: Optional[int]):
         """Returns a nice filename for this replay.
 
         This always returns something, even if this submission does not actually
         have a replay file.
-
-        Args:
-            ascii_only: If True, don't include the username, so that this can
-            safely be included in a "filename" Content-Disposition field.
         """
-        gamecode = self.shot.game.game_id
 
-        if ascii_only:
-            return '{gamecode}_{id}.rpy'.format(
-                gamecode=gamecode,
-                id=self.id
-            )
-        else:
-            return '{gamecode}_{user}_{id}.rpy'.format(
-                gamecode=gamecode,
-                user=self.user.username,
-                id=self.id,
-            )
+        gamecode = game_ids.GetRpyGameCode(self.shot.game.game_id)
+        rpy_id = game_ids.MakeBase36ReplayId(self.id if id is None else id)
+
+        return f'{gamecode}_ud{rpy_id}.rpy'
 
     def SetFromReplayInfo(self, r: replay_parsing.ReplayInfo):
         """Set certain derived fields on this replay from parsed information.

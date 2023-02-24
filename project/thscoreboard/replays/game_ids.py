@@ -484,3 +484,25 @@ def GetDifficultyName(game_id: str, difficulty: int):
             return 'Overdrive'
 
     return 'Bug difficulty'
+
+
+def GetRpyGameCode(game_id: str) -> str:
+    if game_id == GameIDs.TH06:
+        return 'th6'
+    elif game_id == GameIDs.TH07:
+        return 'th7'
+    elif game_id == GameIDs.TH08:
+        return 'th8'
+    elif game_id == GameIDs.TH09:
+        return 'th9'
+    else:
+        return game_id
+
+
+def MakeBase36ReplayId(id: int) -> str:
+    base36 = '0123456789abcdefghijklmnopqrstuvwxyz'
+    digits = ''
+    while id:
+        digits += base36[id % len(base36)]
+        id //= len(base36)
+    return digits[::-1].zfill(4)

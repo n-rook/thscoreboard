@@ -82,3 +82,12 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
                 self.AssertNoBug(
                     game_ids.GetRouteName(game_id=game.game_id, route_id=route.route_id)
                 )
+
+
+class ReplayIdTestCase(test.SimpleTestCase):
+    
+    def testMakeBase36ReplayId(self):
+        self.assertEqual(game_ids.MakeBase36ReplayId(1679615), 'zzzz')
+        self.assertEqual(game_ids.MakeBase36ReplayId(1679616), '10000')
+        self.assertEqual(game_ids.MakeBase36ReplayId(3 * 36 + 1), '0031')
+        self.assertEqual(game_ids.MakeBase36ReplayId(0), '0000')

@@ -111,8 +111,7 @@ def download_replay(request, game_id: str, replay_id: int):
         raise ValueError('No replay file for this submission. This should not be possible')
 
     download_headers = http_util.GetDownloadFileHeaders(
-        ascii_filename=replay_instance.GetNiceFilename(ascii_only=True),
-        full_filename=replay_instance.GetNiceFilename(ascii_only=False)
+        replay_instance.GetNiceFilename(replay_file_instance.id)
     )
 
     return HttpResponse(
