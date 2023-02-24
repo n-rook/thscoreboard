@@ -499,7 +499,7 @@ def GetRpyGameCode(game_id: str) -> str:
         return game_id
 
 
-def MakeReplayId(id: int) -> str:
+def MakeBase36ReplayId(id: int) -> str:
     base36 = '0123456789abcdefghijklmnopqrstuvwxyz'
     digits = ''
     while id:

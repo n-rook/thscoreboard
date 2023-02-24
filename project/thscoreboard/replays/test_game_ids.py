@@ -86,8 +86,8 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
 
 class ReplayIdTestCase(test.SimpleTestCase):
     
-    def testMakeReplayId(self):
-        self.assertEqual(game_ids.MakeReplayId(1679615), 'zzzz')
-        self.assertEqual(game_ids.MakeReplayId(1679616), '10000')
-        self.assertEqual(game_ids.MakeReplayId(3 * 36 + 1), '0031')
-        self.assertEqual(game_ids.MakeReplayId(0), '0000')
+    def testMakeBase36ReplayId(self):
+        self.assertEqual(game_ids.MakeBase36ReplayId(1679615), 'zzzz')
+        self.assertEqual(game_ids.MakeBase36ReplayId(1679616), '10000')
+        self.assertEqual(game_ids.MakeBase36ReplayId(3 * 36 + 1), '0031')
+        self.assertEqual(game_ids.MakeBase36ReplayId(0), '0000')
