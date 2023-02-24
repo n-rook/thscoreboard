@@ -314,7 +314,7 @@ class Replay(models.Model):
         """
 
         gamecode = game_ids.GetRpyGameCode(self.shot.game.game_id)
-        rpy_id = game_ids.MakeReplayId(self.id if id is not None else id)
+        rpy_id = game_ids.MakeReplayId(self.id if id is None else id)
 
         return f'{gamecode}_ud{rpy_id}.rpy'
 
