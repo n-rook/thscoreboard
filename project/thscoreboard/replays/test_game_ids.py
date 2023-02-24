@@ -89,5 +89,5 @@ class ReplayIdTestCase(test.SimpleTestCase):
     def testMakeReplayId(self):
         self.assertEqual(game_ids.MakeReplayId(1679615), 'zzzz')
         self.assertEqual(game_ids.MakeReplayId(1679616), '10000')
-        self.assertEqual(game_ids.MakeReplayId(96), '002o')
+        self.assertEqual(game_ids.MakeReplayId(3 * 36 + 1), '0031')
         self.assertEqual(game_ids.MakeReplayId(0), '0000')
