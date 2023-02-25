@@ -41,6 +41,11 @@ urlpatterns = [
         check_ban.allow_access_by_banned_users(auth_views.LogoutView.as_view()),
         name='logout'),
     path(
+        'change_password',
+        auth_views.PasswordChangeView.as_view(),
+        name='change_password'
+    ),
+    path(
         'forgot_password',
         auth_views.PasswordResetView.as_view(
             success_url=reverse_lazy('users:forgot_password_sent'),
