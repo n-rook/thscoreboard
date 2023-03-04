@@ -51,8 +51,6 @@ def PublishNewReplay(
     constants = constant_helpers.GetModelInstancesForReplay(replay_info)
     replay_instance = models.Replay(
         user=user,
-        shot=constants.shot,
-        route=constants.route,
         difficulty=difficulty,
         score=score,
         category=category,
@@ -61,6 +59,7 @@ def PublishNewReplay(
         is_good=is_good,
         is_clear=is_clear
     )
+    constants.SetOnReplay(replay_instance)
     replay_instance.SetFromReplayInfo(replay_info)
     replay_file_instance = models.ReplayFile(
         replay=replay_instance,

@@ -13,6 +13,11 @@ class ReplayConstantModels:
     shot: models.Shot
     route: Optional[models.Route]
 
+    def SetOnReplay(self, r: models.Replay):
+        """Set the shot and route on a Replay instance."""
+        r.shot = self.shot
+        r.route = self.route
+
 
 def GetModelInstancesForReplay(replay_info: replay_parsing.ReplayInfo) -> ReplayConstantModels:
     """Get the constant model instances related to this replay."""

@@ -14,6 +14,7 @@ from typing import Optional
 from django.db import models as django_models
 from django.db import transaction
 
+from replays import constant_helpers
 from replays import game_ids
 from replays import models
 from replays import replay_parsing
@@ -106,8 +107,10 @@ def _Reanalyze(replay_id: int, recorder: _Recorder) -> str:
     replay = models.Replay.objects.get(id=replay_id)
     replay_file = models.ReplayFile.objects.get(replay=replay)
     replay_info = replay_parsing.Parse(replay_file.replay_file)
+    constants = constant_helpers.GetModelInstancesForReplay(replay_info)
     replay_to_update = copy.deepcopy(replay)
 
+    constants.SetOnReplay(replay_to_update)
     replay_to_update.SetFromReplayInfo(replay_info)
     recorder.Change('Replay', replay, replay_to_update)
 
@@ -145,10 +148,14 @@ def _Reanalyze(replay_id: int, recorder: _Recorder) -> str:
 
 def _GetComparableFields(m: django_models.Model):
     return [
-        f for f in m._meta.get_fields()
-        # TODO: This should really return some relations, just not all of them.
-        if not f.is_relation
+        f for f in m._meta.get_fields() if IsComparable(f)
     ]
+
+
+def IsComparable(f: django_models.Field) -> bool:
+    return (
+        (not f.is_relation)  # All non-relations are comparable
+        or isinstance(f, django_models.ForeignKey))
 
 
 def _Diff(old_model: Optional[django_models.Model], new_model: Optional[django_models.Model]) -> str:
@@ -159,17 +166,17 @@ def _Diff(old_model: Optional[django_models.Model], new_model: Optional[django_m
     elif old_model is None:
         for f in _GetComparableFields(new_model):
             diff.append('[{field}] (No model!) -> {new}'.format(
-                field=f.name, new=f.value_to_string(new_model)
+                field=f.name, new=_GetStringForField(f, new_model)
             ))
     elif new_model is None:
         for f in _GetComparableFields(old_model):
             diff.append('[{field}] {old} -> (No model!)'.format(
-                field=f.name, old=f.value_to_string(old_model)
+                field=f.name, old=_GetStringForField(f, old_model)
             ))
     else:
         for f in _GetComparableFields(old_model):
-            old_value = f.value_to_string(old_model)
-            new_value = f.value_to_string(new_model)
+            old_value = _GetStringForField(f, old_model)
+            new_value = _GetStringForField(f, new_model)
             if old_value != new_value:
                 diff.append('[{field}] {old} -> {new}'.format(
                     field=f.name,
@@ -177,3 +184,23 @@ def _Diff(old_model: Optional[django_models.Model], new_model: Optional[django_m
                     new=new_value
                 ))
     return '\n'.join(diff)
+
+
+def _GetStringForField(f: django_models.Field, m: django_models.Model) -> str:
+    """Get a nice-looking string version of a field."""
+    if not f.is_relation:
+        return f.value_to_string(m)
+
+    val = f.value_from_object(m)
+    if val is None:
+        return 'None'
+
+    # This is not terribly efficient, but it has not caused issues yet.
+    # In the future, consider using a cache for these.
+    if f.remote_field.model is models.Shot:
+        return models.Shot.objects.get(id=val).shot_id
+    elif f.remote_field.model is models.Route:
+        return models.Route.objects.get(id=val).route_id
+    else:
+        # No special handling for these ones.
+        return f.value_to_string(m)
