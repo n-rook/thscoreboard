@@ -18,14 +18,12 @@ class Migration(migrations.Migration):
             r.replay_hash = h.digest()
             r.save()
 
-
     def alter_replayfile_replayhash_calculate_value_undo(apps, _):
         replay_file = apps.get_model('replays', 'replayfile')
         rf = replay_file.objects.all()
         for r in rf:
             r.replay_hash = 0
             r.save()
-
 
     operations = [
         migrations.AddField(

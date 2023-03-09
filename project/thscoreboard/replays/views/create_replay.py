@@ -17,6 +17,7 @@ from replays.views import view_replay
 
 import hashlib
 
+
 def _ReadFile(file_from_form):
     """Read a file.
 
@@ -102,8 +103,6 @@ def publish_replay(request, temp_replay_id):
             id=temp_replay_id)
     except models.TemporaryReplayFile.DoesNotExist:
         raise Http404()
-
-    
 
     replay_info = replay_parsing.Parse(bytes(temp_replay.replay))
 
