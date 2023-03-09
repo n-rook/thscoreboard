@@ -175,7 +175,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
 
         replay_info = replay_parsing.Parse(replay_file_contents)
 
-        new_replay = create_replay.PublishNewReplay(
+        create_replay.PublishNewReplay(
             user=self.user,
             difficulty=3,
             score=294127890,
@@ -197,7 +197,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         replay_info = replay_parsing.Parse(replay_file_contents)
 
         with self.assertRaises(utils.IntegrityError):
-            new_replay = create_replay.PublishNewReplay(
+            create_replay.PublishNewReplay(
                 user=self.user,
                 difficulty=3,
                 score=294127890,
