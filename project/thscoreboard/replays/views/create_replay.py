@@ -15,6 +15,7 @@ from replays import replay_parsing
 from replays import game_ids
 from replays.views import view_replay
 
+import hashlib
 
 def _ReadFile(file_from_form):
     """Read a file.
@@ -32,6 +33,13 @@ def _HandleReplay(request, replay_bytes):
 
     May raise ValidationError.
     """
+    
+    # test if replay already exists, and return an error if so
+    hash = hashlib.sha256(replay_bytes).digest()
+    duplicate = models.ReplayFile.objects.filter(replay_hash=hash)
+    if duplicate.exists():
+        raise ValidationError("This replay already exists")
+
     try:
         return replay_parsing.Parse(replay_bytes)
     except replay_parsing.Error as e:
@@ -95,10 +103,20 @@ def publish_replay(request, temp_replay_id):
     except models.TemporaryReplayFile.DoesNotExist:
         raise Http404()
 
+    
+
     replay_info = replay_parsing.Parse(bytes(temp_replay.replay))
 
     if request.method == 'POST':
         form = forms.PublishReplayForm(replay_info.game, request.POST)
+
+        # test if replay already exists, and return an error if so
+        hash = hashlib.sha256(temp_replay.replay).digest()
+        duplicate = models.ReplayFile.objects.filter(replay_hash=hash)
+        if duplicate.exists():
+            # I don't know a better way of doing this right now
+            raise Http404()
+
         if form.is_valid():
             new_replay = create_replay.PublishNewReplay(
                 user=request.user,
