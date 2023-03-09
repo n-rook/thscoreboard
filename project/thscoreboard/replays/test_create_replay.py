@@ -7,6 +7,7 @@ from replays import create_replay
 from replays import replay_parsing
 from replays.testing import test_case
 from replays.testing import test_replays
+from django.db import utils
 
 
 class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
@@ -162,3 +163,49 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             temp_replay_instance=temp_replay,
             replay_info=replay_info,
         )
+
+    def testReplayDuplicates(self):
+        replay_file_contents = test_replays.GetRaw('th10_normal')
+
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user,
+            replay=replay_file_contents
+        )
+        temp_replay.save()
+
+        replay_info = replay_parsing.Parse(replay_file_contents)
+
+        new_replay = create_replay.PublishNewReplay(
+            user=self.user,
+            difficulty=3,
+            score=294127890,
+            category=models.Category.REGULAR,
+            comment='',
+            video_link='',
+            is_good=True,
+            is_clear=True,
+            temp_replay_instance=temp_replay,
+            replay_info=replay_info,
+        )
+
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user,
+            replay=replay_file_contents
+        )
+        temp_replay.save()
+
+        replay_info = replay_parsing.Parse(replay_file_contents)
+
+        with self.assertRaises(utils.IntegrityError):
+            new_replay = create_replay.PublishNewReplay(
+                user=self.user,
+                difficulty=3,
+                score=294127890,
+                category=models.Category.REGULAR,
+                comment='',
+                video_link='',
+                is_good=True,
+                is_clear=True,
+                temp_replay_instance=temp_replay,
+                replay_info=replay_info,
+            )
