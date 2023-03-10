@@ -5,6 +5,7 @@ from typing import Optional
 
 from replays import models
 from replays import replay_parsing
+import hashlib
 
 
 @dataclasses.dataclass(frozen=True)
@@ -27,3 +28,13 @@ def GetModelInstancesForReplay(replay_info: replay_parsing.ReplayInfo) -> Replay
         shot=shot,
         route=route
     )
+
+
+def CheckReplayFileDuplicate(file):
+    hash = hashlib.sha256(file).digest()
+    duplicate = models.ReplayFile.objects.filter(replay_hash=hash)
+    return duplicate.exists()
+
+
+def CalculateReplayFileHash(file):
+    return hashlib.sha256(file).digest()

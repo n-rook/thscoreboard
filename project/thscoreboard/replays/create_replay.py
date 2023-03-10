@@ -12,8 +12,6 @@ from replays import game_ids
 from replays import models
 from replays import replay_parsing
 
-import hashlib
-
 
 @transaction.atomic
 def PublishNewReplay(
@@ -67,7 +65,7 @@ def PublishNewReplay(
     replay_file_instance = models.ReplayFile(
         replay=replay_instance,
         replay_file=temp_replay_instance.replay,
-        replay_hash=hashlib.sha256(temp_replay_instance.replay).digest()
+        replay_hash=constant_helpers.CalculateReplayFileHash(temp_replay_instance.replay)
     )
 
     replay_instance.save()
