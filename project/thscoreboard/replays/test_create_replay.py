@@ -5,6 +5,7 @@ from replays import game_ids
 from replays import models
 from replays import create_replay
 from replays import replay_parsing
+from replays import constant_helpers
 from replays.testing import test_case
 from replays.testing import test_replays
 from django.db import utils
@@ -209,3 +210,5 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
                 temp_replay_instance=temp_replay,
                 replay_info=replay_info,
             )
+
+        self.assertEqual(constant_helpers.CheckReplayFileDuplicate(replay_file_contents), True)

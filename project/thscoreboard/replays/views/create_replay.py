@@ -107,6 +107,9 @@ def publish_replay(request, temp_replay_id):
 
         # test if replay already exists, and return an error if so
         if constant_helpers.CheckReplayFileDuplicate(temp_replay.replay):
+            # if the temp replay doesn't exist anymore, the user can't even get to this page so this code doesn't really help
+            # when submitting twice
+            # but I'll keep it in here for potential situations I haven't thought of
             raise Http404()
 
         if form.is_valid():
