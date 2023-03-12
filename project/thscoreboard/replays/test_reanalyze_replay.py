@@ -1,6 +1,7 @@
 
 import datetime
 
+from replays import game_ids
 from replays import models
 from replays import reanalyze_replay
 from replays.testing import test_case
@@ -184,3 +185,32 @@ class ReanalyzeReplayTest(test_case.ReplayTestCase):
         new_stages = list(replay.replaystage_set.all())
         self.assertEqual(len(new_stages), 6)
         self.assertEqual(new_stages[1].stage, 2)
+
+    def testReanalyzeFixesShot(self):
+        replay = test_replays.CreateAsPublishedReplay('th7_lunatic', self.user)
+        self.assertEqual(replay.shot.shot_id, 'SakuyaB')
+
+        # Intentionally give the replay the wrong shot type.
+        replay.shot = models.Shot.objects.get(game=game_ids.GameIDs.TH07, shot_id='MarisaA')
+        replay.save()
+
+        diff = reanalyze_replay.CheckReplay(replay.id)
+        self.assertIn('MarisaA -> SakuyaB', diff)
+        reanalyze_replay.UpdateReplay(replay.id)
+        new_replay = models.Replay.objects.get(id=replay.id)
+        self.assertEqual(new_replay.shot.shot_id, 'SakuyaB')
+
+    def testReanalyzeFixesRoute(self):
+        replay = test_replays.CreateAsPublishedReplay('th8_normal', self.user)
+        self.assertEqual(replay.route.route_id, 'Final B')
+
+        # Intentionally give the replay the wrong route.
+        replay.route = models.Route.objects.get(game=game_ids.GameIDs.TH08, route_id='Final A')
+        replay.save()
+
+        diff = reanalyze_replay.CheckReplay(replay.id)
+        self.assertIn('Final A -> Final B', diff)
+
+        reanalyze_replay.UpdateReplay(replay.id)
+        new_replay = models.Replay.objects.get(id=replay.id)
+        self.assertEqual(new_replay.route.route_id, 'Final B')

@@ -3,6 +3,7 @@ import datetime
 
 from replays import game_ids
 from replays import models
+from replays import constant_helpers
 from replays import create_replay
 from replays import replay_parsing
 from replays.testing import test_case
@@ -63,6 +64,36 @@ class ReplayTest(test_case.ReplayTestCase):
 
         self.assertTrue(should_be_visible.IsVisible(viewer=self.author))
         self.assertTrue(models.Replay.objects.visible_to(viewer=self.author).filter(id=should_be_visible.id).exists())
+
+    def testSetFromConstantHelpers_WithRoute(self):
+        to_be_modified = test_replays.CreateAsPublishedReplay('th7_lunatic', self.author)
+
+        th08 = models.Game.objects.get(game_id='th08')
+        new_constants = constant_helpers.ReplayConstantModels(
+            game=th08,
+            shot=models.Shot.objects.get(game=th08, shot_id='Marisa & Alice'),
+            route=models.Route.objects.get(route_id='Final A'),
+        )
+
+        to_be_modified.SetForeignKeysFromConstantModels(new_constants)
+        self.assertEqual(to_be_modified.shot.game.game_id, 'th08')
+        self.assertEqual(to_be_modified.shot.shot_id, 'Marisa & Alice')
+        self.assertEqual(to_be_modified.route.route_id, 'Final A')
+
+    def testSetFromConstantHelpers_NoRoute(self):
+        to_be_modified = test_replays.CreateAsPublishedReplay('th8_normal', self.author)
+
+        th08 = models.Game.objects.get(game_id='th08')
+        new_constants = constant_helpers.ReplayConstantModels(
+            game=th08,
+            shot=models.Shot.objects.get(game=th08, shot_id='Marisa & Alice'),
+            route=None
+        )
+
+        to_be_modified.SetForeignKeysFromConstantModels(new_constants)
+        self.assertEqual(to_be_modified.shot.game.game_id, 'th08')
+        self.assertEqual(to_be_modified.shot.shot_id, 'Marisa & Alice')
+        self.assertIsNone(to_be_modified.route)
 
 
 class TemporaryReplayFileTest(test_case.ReplayTestCase):
