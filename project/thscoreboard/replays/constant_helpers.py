@@ -31,9 +31,8 @@ def GetModelInstancesForReplay(replay_info: replay_parsing.ReplayInfo) -> Replay
 
 
 def CheckReplayFileDuplicate(file):
-    hash = hashlib.sha256(file).digest()
-    duplicate = models.ReplayFile.objects.filter(replay_hash=hash)
-    return duplicate.exists()
+    hash = CalculateReplayFileHash(file)
+    return models.ReplayFile.objects.filter(replay_hash=hash).exists()
 
 
 def CalculateReplayFileHash(file):
