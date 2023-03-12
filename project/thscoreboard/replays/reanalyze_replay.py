@@ -110,8 +110,8 @@ def _Reanalyze(replay_id: int, recorder: _Recorder) -> str:
     constants = constant_helpers.GetModelInstancesForReplay(replay_info)
     replay_to_update = copy.deepcopy(replay)
 
-    constants.SetOnReplay(replay_to_update)
     replay_to_update.SetFromReplayInfo(replay_info)
+    replay_to_update.SetForeignKeysFromConstantModels(constants)
     recorder.Change('Replay', replay, replay_to_update)
 
     replay_stages = models.ReplayStage.objects.filter(replay=replay_id).order_by('stage')

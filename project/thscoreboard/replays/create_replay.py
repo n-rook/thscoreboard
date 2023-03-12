@@ -59,8 +59,8 @@ def PublishNewReplay(
         is_good=is_good,
         is_clear=is_clear
     )
-    constants.SetOnReplay(replay_instance)
     replay_instance.SetFromReplayInfo(replay_info)
+    replay_instance.SetForeignKeysFromConstantModels(constants)
     replay_file_instance = models.ReplayFile(
         replay=replay_instance,
         replay_file=temp_replay_instance.replay,

@@ -9,6 +9,7 @@ from django.contrib import auth
 from django.utils import timezone
 from django.utils.translation import pgettext_lazy
 
+from replays import constant_helpers
 from replays import game_ids
 from replays import limits
 from replays import replay_parsing
@@ -305,7 +306,7 @@ class Replay(models.Model):
         if self.category != Category.PRIVATE:
             return True
         return self.user == viewer
-    
+
     def GetNiceFilename(self, id: Optional[int]):
         """Returns a nice filename for this replay.
 
@@ -330,6 +331,11 @@ class Replay(models.Model):
         self.spell_card_id = r.spell_card_id
         self.replay_type = r.replay_type
         self.slowdown = r.slowdown
+
+    def SetForeignKeysFromConstantModels(self, c: constant_helpers.ReplayConstantModels):
+        """Set the shot and route foreign keys on this Replay."""
+        self.shot = c.shot
+        self.route = c.route
 
 
 class ReplayStage(models.Model):
