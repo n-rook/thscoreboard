@@ -8,7 +8,7 @@
     
     <l>
         {% for difficulty_name in difficulties %}
-            <li>{{ difficulty_name }}</li>
+            <li filterType="difficulty" value={{difficulty_name}} onclick="onClick(this)">{{ difficulty_name }}</li>
         {% endfor %}
     </l>
 
@@ -16,11 +16,38 @@
 
     <l>
         {% for shot in shots %}
-            <li>{{ shot.GetName }}</li>
+          <li filterType="shot" value={{shot.shot_id}} onclick="onClick(this)">{{ shot.GetName }}</li>
         {% endfor %}
     </l>
 
     <br />
 
     {% include "replays/replay_table.html" %}
+
+    <script>
+
+      var activeFilters = []
+
+      function onClick(elm) {
+        const filterType = elm.getAttribute('filterType');
+        const value = elm.getAttribute('value');
+        updateFilterList(filterType, value)
+      }
+
+      function updateFilterList(filterType, value) {
+        const indexOfFilterInActiveFiltersList = activeFilters.findIndex(
+          f => f["filterType"] == filterType && f["value"] == value
+        );
+        console.log(indexOfFilterInActiveFiltersList);
+        if (indexOfFilterInActiveFiltersList == -1) {
+          activeFilters.push({filterType: filterType, value: value});
+        }
+        else {
+          activeFilters.splice(indexOfFilterInActiveFiltersList);
+        }
+      }
+      
+
+    </script>
+
 {% endblock %}
