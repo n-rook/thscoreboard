@@ -1,5 +1,5 @@
 {% load humanize %}
-<table class="replay-table">
+<table id="replayTable" class="replay-table">
     <thead>
         <tr>
             <th>
@@ -18,9 +18,6 @@
             </th>
             <th>
                 Score
-            </th>
-            <th>
-                Upload date
             </th>
             <th>
                 Replay
@@ -46,9 +43,6 @@
             </td>
             <td>
                 <a href="/replays/{{replay.shot.game.game_id}}/{{replay.id}}">{{replay.score|intcomma}}</a>
-            </td>
-            <td>
-                {{replay.created | date:"Y-m-d"}}
             </td>
             <td style="text-align:center;">
             {% if replay.is_good %}
