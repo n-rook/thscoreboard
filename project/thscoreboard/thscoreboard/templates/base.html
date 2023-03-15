@@ -13,6 +13,19 @@
     <meta property="og:site_name" content="Silent Selene" />
     <meta property="og:description" content="{% block embed_description %}Upload and view Touhou replays at Silent Selene, the modern replay hub.{% endblock %}" />
     <meta property="og:image" content="{% block embed_favicon %}{% static 'favicon.png' %}{% endblock %}" />
+
+    <style>
+		.checkbox-list {
+			display: inline-block;
+			vertical-align: top;
+			margin-right: 50px;
+			margin-bottom: 20px;
+			line-height: 1.15; /* reduce spacing between lines */
+		}
+		.checkbox-list label {
+			display: block;
+		}
+	</style>
 </head>
 
 <body class="theme-light {% block body-class %}{% endblock %}">
