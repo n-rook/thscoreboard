@@ -12,11 +12,9 @@ import json
 
 @http_decorators.require_safe
 def game_scoreboard(request, game_id: str):
-    # Ancient wisdom: You don't need pagination if you don't have users yet!
     game: Game = get_object_or_404(Game, game_id=game_id)
     all_shots: Iterable[Shot] = Shot.objects.filter(game=game_id)
-    all_difficulties: list[int] = list(range(game.num_difficulties))
-    difficulty_names = [game.GetDifficultyName(d) for d in all_difficulties]
+    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
     
     replays_for_game = _get_all_replay_for_game(request, game_id)
     replays_json = convert_replays_to_json_string(replays_for_game)
@@ -27,19 +25,19 @@ def game_scoreboard(request, game_id: str):
         {
             'game': game,
             'shots': all_shots,
-            'difficulties': difficulty_names,
+            'difficulties': all_difficulties,
             'replaysJSON': replays_json,
         })
 
 
 def convert_replays_to_json_string(replays: Iterable[models.Replay]) -> str:
     replay_dicts = [{
-        "username": replay.user.username,
-        "game": replay.shot.game.GetShortName(),
-        "difficulty": replay.GetDifficultyName(),
-        "shotId": replay.shot.shot_id,
-        "score": replay.score,
-        "downloadLink": f"/replays/{replay.shot.game.game_id}/{replay.id}/download",
+        "User": replay.user.username,
+        "Game": replay.shot.game.GetShortName(),
+        "Difficulty": replay.GetDifficultyName(),
+        "Shot": replay.shot.GetName(),
+        "Score": replay.score,
+        "Replay": f"/replays/{replay.shot.game.game_id}/{replay.id}/download",
     } for replay in replays
     ]
     return json.dumps(replay_dicts)

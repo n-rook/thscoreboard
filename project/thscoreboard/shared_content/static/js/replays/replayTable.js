@@ -1,6 +1,6 @@
 var activeFilters = [];
-const allReplays = allReplaysJson;
-const showGame = showGameColumn;
+const allReplays = htmlAllReplays;
+const showGameColumn = htmlShowGameColumn;
 
 // initialize table content
 populateTable(allReplays);
@@ -56,29 +56,35 @@ function populateTable(replays) {
 
   for (let i = 0; i < replays.length; i++) {
     const row = document.createElement('tr');
-    const replayKeysAndValues = Object.entries(replays[i]);
+    const replay  = replays[i]
+    const replayKeysAndValues = Object.entries(replay);
     for (let j = 0; j < replayKeysAndValues.length; j++) {
-      const key = replayKeysAndValues[j][0];
+      const columnName = replayKeysAndValues[j][0];
       const value = replayKeysAndValues[j][1];
-
-      const cell = document.createElement('td');
-      console.log(key);
-      if (key === "game" && !showGame) {
-        continue;
+      const cell = createTableCell(columnName, value)
+      if (cell) {
+        row.appendChild(cell);
       }
-      if (key === "downloadLink") {
-        const link = document.createElement('a');
-        link.href = value;
-        const linkText = document.createTextNode('Download');
-        link.appendChild(linkText);
-        cell.appendChild(link);
-      }
-      else {
-        const text = document.createTextNode(value);
-        cell.appendChild(text);
-      }
-      row.appendChild(cell);
     }
     tbody.appendChild(row);
   }
+}
+
+function createTableCell(columnName, value) {
+  const cell = document.createElement('td');
+  if (columnName === "Game" && !showGameColumn) {
+    return null;
+  }
+  if (columnName === "Replay") {
+    const link = document.createElement('a');
+    link.href = value;
+    const linkText = document.createTextNode('Download');
+    link.appendChild(linkText);
+    cell.appendChild(link);
+  }
+  else {
+    const text = document.createTextNode(value);
+    cell.appendChild(text);
+  }
+  return cell;
 }
