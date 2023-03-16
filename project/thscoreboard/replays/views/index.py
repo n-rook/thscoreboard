@@ -19,7 +19,6 @@ def index(request):
         [:10]
     )
     
-    
     recent_replays = (
         models.Replay.objects
         .visible_to(request.user)
