@@ -15,32 +15,27 @@ function onClick(elm) {
   const filterType = elm.getAttribute('filterType');
   const value = elm.getAttribute('value');
   
-  activeFilters = updateFilterList(activeFilters, filterType, value);
+  activeFilters = updateFilters(activeFilters, filterType, value);
   const filteredReplays = filterReplays();
   console.log(activeFilters)
   populateTable(filteredReplays);
 }
 
-function updateFilterList(activeFilters, filterType, value) {
-  const indexOfFilterType = activeFilters.findIndex(
-    f => f["filterType"] == filterType
-  );
-  if (indexOfFilterType == -1) {
-    activeFilters.push({filterType: filterType, values: [value]});
-  } else {
-    const activeFilterValues = activeFilters[indexOfFilterType].values;
-    indexOfValue = activeFilterValues.indexOf(value);
-    if (indexOfValue == -1) {
-      activeFilterValues.push(value);
-    }
-    else {
-      activeFilterValues.splice(indexOfValue);
-      if (activeFilterValues.length == 0) {
-        activeFilters.splice(indexOfFilterType);
-      }
+function updateFilters(filters, filterType, value) {
+  if (filters[filterType] === undefined) {
+    filters[filterType] = [];
+  }
+  const indexOfValue = filters[filterType].indexOf(value);
+  if (indexOfValue == -1) {
+    filters[filterType].push(value);
+  }
+  else {
+    filters[filterType].splice(indexOfValue, 1);
+    if (filters[filterType].length == 0) {
+      delete filters[filterType];
     }
   }
-  return activeFilters;
+  return filters;
 }
 
 function filterReplays() {
@@ -98,4 +93,4 @@ function createTableCell(columnName, value) {
   return cell;
 }
 
-module.exports = updateFilterList;
+module.exports = updateFilters;
