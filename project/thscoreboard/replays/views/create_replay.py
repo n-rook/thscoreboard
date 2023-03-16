@@ -32,6 +32,11 @@ def _HandleReplay(request, replay_bytes):
 
     May raise ValidationError.
     """
+    
+    # test if replay already exists, and return an error if so
+    if constant_helpers.CheckReplayFileDuplicate(replay_bytes):
+        raise ValidationError("This replay already exists")
+
     try:
         return replay_parsing.Parse(replay_bytes)
     except replay_parsing.Error as e:
@@ -99,6 +104,14 @@ def publish_replay(request, temp_replay_id):
 
     if request.method == 'POST':
         form = forms.PublishReplayForm(replay_info.game, request.POST)
+
+        # test if replay already exists, and return an error if so
+        if constant_helpers.CheckReplayFileDuplicate(temp_replay.replay):
+            # if the temp replay doesn't exist anymore, the user can't even get to this page so this code doesn't really help
+            # when submitting twice
+            # but I'll keep it in here for potential situations I haven't thought of
+            raise Http404()
+
         if form.is_valid():
             new_replay = create_replay.PublishNewReplay(
                 user=request.user,

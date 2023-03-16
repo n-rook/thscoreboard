@@ -64,6 +64,7 @@ def PublishNewReplay(
     replay_file_instance = models.ReplayFile(
         replay=replay_instance,
         replay_file=temp_replay_instance.replay,
+        replay_hash=constant_helpers.CalculateReplayFileHash(temp_replay_instance.replay)
     )
 
     replay_instance.save()

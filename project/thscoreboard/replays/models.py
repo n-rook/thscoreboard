@@ -506,11 +506,17 @@ class ReplayStage(models.Model):
 class ReplayFile(models.Model):
     """Represents a replay file for a given score."""
 
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['replay_hash'], name='unique_hash')]
+
     replay = models.OneToOneField('Replay', on_delete=models.CASCADE)
     """The submission to which this replay corresponds."""
 
     replay_file = models.BinaryField(max_length=limits.MAX_REPLAY_SIZE, blank=True, null=True)
     """The replay file itself."""
+
+    replay_hash = models.BinaryField(max_length=32)
+    """A SHA-256 hash of the replay file, to check for duplicates"""
 
 
 class TemporaryReplayFile(models.Model):

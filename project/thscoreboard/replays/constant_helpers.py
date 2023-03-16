@@ -9,6 +9,7 @@ from typing import Optional
 from django import apps
 
 from replays import replay_parsing
+import hashlib
 
 if typing.TYPE_CHECKING:
     # Avoid cyclic import.
@@ -43,3 +44,12 @@ def GetModelInstancesForReplay(replay_info: replay_parsing.ReplayInfo) -> Replay
         shot=shot,
         route=route
     )
+
+
+def CheckReplayFileDuplicate(file):
+    hash = CalculateReplayFileHash(file)
+    return models.ReplayFile.objects.filter(replay_hash=hash).exists()
+
+
+def CalculateReplayFileHash(file):
+    return hashlib.sha256(file).digest()
