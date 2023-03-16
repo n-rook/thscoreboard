@@ -1,6 +1,6 @@
 const { JSDOM } = require('jsdom');
 setupTestDom();
-const updateFilters = require('./replayTable.js');
+const {updateFilters, filterReplays} = require('./replayTable.js');
 
 describe('updateFilters', () => {
     test('Adds filters', () => {
@@ -29,7 +29,23 @@ describe('updateFilters', () => {
         filters = updateFilters(filters, "Shot", "Reimu A");
         expect(filters).toEqual({});
     });
-  });
+});
+
+describe('filterReplays', () => {
+    test('filters replays', () => {
+        const filters = {"Difficulty": ["Hard"], "Shot": ["Cirno", "Reimu"]};
+        const replays = [
+            {"Score": 1000, "Difficulty": "Hard", "Shot": "Cirno", "Season": "Autumn"},
+            {"Score": 2000, "Difficulty": "Hard", "Shot": "Reimu", "Season": "Autumn"},
+            {"Score": 3000, "Difficulty": "Easy", "Shot": "Cirno", "Season": "Autumn"},
+            {"Score": 4000, "Difficulty": "Hard", "Shot": "Marisa", "Season": "Autumn"},
+            {"Score": 5000, "Difficulty": "Extra", "Shot": "Marisa", "Season": "Autumn"},
+        ]
+        const filteredReplays = filterReplays(filters, replays);
+        const expectedFilteredReplays = [replays[0], replays[1]];
+        expect(filteredReplays).toEqual(expect.arrayContaining(expectedFilteredReplays));
+    });
+});
 
 function setupTestDom() {
     const dom = new JSDOM(`

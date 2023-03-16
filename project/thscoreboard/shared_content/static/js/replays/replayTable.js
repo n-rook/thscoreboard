@@ -5,7 +5,7 @@ if (typeof allReplays === 'undefined') {
   showGameColumn = true;
 }
 
-var activeFilters = [];
+var activeFilters = {};
 
 // initialize table content
 populateTable(allReplays);
@@ -16,8 +16,7 @@ function onClick(elm) {
   const value = elm.getAttribute('value');
   
   activeFilters = updateFilters(activeFilters, filterType, value);
-  const filteredReplays = filterReplays();
-  console.log(activeFilters)
+  const filteredReplays = filterReplays(activeFilters, allReplays);
   populateTable(filteredReplays);
 }
 
@@ -38,16 +37,13 @@ function updateFilters(filters, filterType, value) {
   return filters;
 }
 
-function filterReplays() {
-  let filteredReplays = [...allReplays];
-  activeFilters.forEach((filter) => {
-    filterType = filter.filterType;
-    allowedValues = filter.values;
-    filteredReplays = filteredReplays.filter((tableEntry) => {
-      console.log(tableEntry);
-      return allowedValues.includes(tableEntry[filterType]);
+function filterReplays(filters, replays) {
+  let filteredReplays = [...replays];
+  for (const [filterType, allowedValues] of Object.entries(filters)) {
+    filteredReplays = filteredReplays.filter((replay) => {
+      return allowedValues.includes(replay[filterType]);
     });
-  });
+  };
   return filteredReplays;
 }
 
@@ -93,4 +89,4 @@ function createTableCell(columnName, value) {
   return cell;
 }
 
-module.exports = updateFilters;
+module.exports = {updateFilters, filterReplays};
