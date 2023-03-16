@@ -1,20 +1,27 @@
+// Initialize global variables if they were not provided by html
+// Needed for jest environment
+if (typeof allReplays === 'undefined') {
+  allReplays = [];
+  showGameColumn = true;
+}
+
 var activeFilters = [];
-const allReplays = htmlAllReplays;
-const showGameColumn = htmlShowGameColumn;
 
 // initialize table content
 populateTable(allReplays);
+
 
 function onClick(elm) {
   const filterType = elm.getAttribute('filterType');
   const value = elm.getAttribute('value');
   
-  updateFilterList(filterType, value);
+  activeFilters = updateFilterList(activeFilters, filterType, value);
   const filteredReplays = filterReplays();
+  console.log(activeFilters)
   populateTable(filteredReplays);
 }
 
-function updateFilterList(filterType, value) {
+function updateFilterList(activeFilters, filterType, value) {
   const indexOfFilterType = activeFilters.findIndex(
     f => f["filterType"] == filterType
   );
@@ -33,6 +40,7 @@ function updateFilterList(filterType, value) {
       }
     }
   }
+  return activeFilters;
 }
 
 function filterReplays() {
@@ -41,6 +49,7 @@ function filterReplays() {
     filterType = filter.filterType;
     allowedValues = filter.values;
     filteredReplays = filteredReplays.filter((tableEntry) => {
+      console.log(tableEntry);
       return allowedValues.includes(tableEntry[filterType]);
     });
   });
@@ -88,3 +97,5 @@ function createTableCell(columnName, value) {
   }
   return cell;
 }
+
+module.exports = updateFilterList;

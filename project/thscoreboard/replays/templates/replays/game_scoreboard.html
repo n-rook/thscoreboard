@@ -7,7 +7,7 @@
         {% for difficulty_name in difficulties %}
             <label><input
                 type="checkbox"
-                filterType="difficulty"
+                filterType="Difficulty"
                 value={{difficulty_name}}
                 onclick="onClick(this)"
             >{{ difficulty_name }}</label>
@@ -17,23 +17,15 @@
         {% for shot in shots %}
         <label><input
             type="checkbox"
-            filterType="shotId"
-            value={{shot.GetName}}
+            filterType="Shot"
+            value={{shot}}
             onclick="onClick(this)"
-        >{{ shot.GetName }}</label>
+        >{{ shot }}</label>
         {% endfor %}
 	</div>
 
     <br />
 
-    <!--TODO: Prettify Shot names. Add date column. Add video links for those games.-->
-    
-    <!--This script defines global variables that can be accessed from external scripts-->
-    <!-- <script>
-        const allReplaysJson = JSON.parse("{{replaysJSON|escapejs}}");
-    </script>
-    
-    <script src="/static/js/replays/replayTable.js"></script> -->
     {% include "replays/replay_table.html" %}
 
 {% endblock %}
