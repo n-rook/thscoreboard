@@ -17,21 +17,9 @@ def game_scoreboard(request, game_id: str):
     all_shots: Iterable[Shot] = Shot.objects.filter(game=game_id)
     all_difficulties: list[int] = list(range(game.num_difficulties))
     difficulty_names = [game.GetDifficultyName(d) for d in all_difficulties]
-
-    print([shot.GetName() for shot in all_shots])
-    print([d for d in all_difficulties])
-
-    all_replays = (
-        models.Replay.objects.select_related('shot')
-        .filter_visible()
-        .filter(category=models.Category.REGULAR)
-        .filter(shot__game=game_id)
-        .filter(replay_type=1)
-        .order_by('-score')
-    )
-    extra_params = {}
-    replay_data = _get_all_replay_data(request, game_id)
-    replay_data_json = json.dumps(replay_data)
+    
+    replays_for_game = _get_all_replay_for_game(request, game_id)
+    replays_json = convert_replays_to_json_string(replays_for_game)
 
     return render(
         request,
@@ -40,14 +28,25 @@ def game_scoreboard(request, game_id: str):
             'game': game,
             'shots': all_shots,
             'difficulties': difficulty_names,
-            'replays': all_replays,
-            'replaysJSON': replay_data_json,
-            **extra_params
+            'replaysJSON': replays_json,
         })
 
 
-def _get_all_replay_data(request, game_id: str) -> dict:
-    all_replays = (
+def convert_replays_to_json_string(replays: Iterable[models.Replay]) -> str:
+    replay_dicts = [{
+        "username": replay.user.username,
+        "game": replay.shot.game.GetShortName(),
+        "difficulty": replay.GetDifficultyName(),
+        "shotId": replay.shot.shot_id,
+        "score": replay.score,
+        "downloadLink": f"/replays/{replay.shot.game.game_id}/{replay.id}/download",
+    } for replay in replays
+    ]
+    return json.dumps(replay_dicts)
+
+
+def _get_all_replay_for_game(request, game_id: str) -> dict:
+    return (
         models.Replay.objects.select_related('shot')
         .visible_to(request.user)
         .filter(category=models.Category.REGULAR)
@@ -55,11 +54,3 @@ def _get_all_replay_data(request, game_id: str) -> dict:
         .filter(replay_type=1)
         .order_by('-score')
     )
-    return [{
-        "username": replay.user.username,
-        "difficulty": replay.GetDifficultyName(),
-        "shotId": replay.shot.shot_id,
-        "score": replay.score,
-        "downloadLink": f"/replays/{replay.shot.game.game_id}/{replay.id}/download",
-    } for replay in all_replays
-    ]

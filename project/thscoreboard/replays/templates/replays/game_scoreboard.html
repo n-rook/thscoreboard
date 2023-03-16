@@ -26,39 +26,14 @@
 
     <br />
 
-    <table id="replayTable" class="replay-table">
-        <thead>
-            <tr>
-                <th>
-                    User
-                </th>
-                {% if show_game %}
-                <th>
-                    Game
-                </th>
-                {% endif %}
-                <th>
-                    Difficulty
-                </th>
-                <th>
-                    Shot
-                </th>
-                <th>
-                    Score
-                </th>
-                <th>
-                    Replay
-                </th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-
     <!--TODO: Prettify Shot names. Add date column. Add video links for those games.-->
     
-    <script>
+    <!--This script defines global variables that can be accessed from external scripts-->
+    <!-- <script>
         const allReplaysJson = JSON.parse("{{replaysJSON|escapejs}}");
     </script>
-    <script src="/static/js/replays/replayTable.js"></script>
+    
+    <script src="/static/js/replays/replayTable.js"></script> -->
+    {% include "replays/replay_table.html" %}
 
 {% endblock %}

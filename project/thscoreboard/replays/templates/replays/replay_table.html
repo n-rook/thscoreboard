@@ -1,0 +1,37 @@
+{% load humanize %}
+<table id="replay-table" class="replay-table">
+    <thead>
+        <tr>
+            <th>
+                User
+            </th>
+            {% if show_game %}
+            <th>
+                Game
+            </th>
+            {% endif %}
+            <th>
+                Difficulty
+            </th>
+            <th>
+                Shot
+            </th>
+            <th>
+                Score
+            </th>
+            <th>
+                Replay
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<!-- This script is a hack to get variables from python into a js file  -->
+<script>
+    const allReplaysJson = JSON.parse("{{replaysJSON|escapejs}}");
+    const showGameColumn = "{{show_game}}";
+</script>
+
+<script src="/static/js/replays/replayTable.js"></script>

@@ -1,5 +1,6 @@
 var activeFilters = [];
-const allReplays = allReplaysJson;  // defined in the html
+const allReplays = allReplaysJson;
+const showGame = showGameColumn;
 
 // initialize table content
 populateTable(allReplays);
@@ -47,8 +48,8 @@ function filterReplays() {
 }
 
 function populateTable(replays) {
-  const replayTableHtml = document.getElementById('replayTable');
-  let tbody = replayTableHtml.getElementsByTagName('tbody')[0];
+  const replayTableHtml = document.getElementById('replay-table');
+  const tbody = replayTableHtml.getElementsByTagName('tbody')[0];
   
   // Clear the existing rows from the table body
   tbody.innerHTML = '';
@@ -61,6 +62,10 @@ function populateTable(replays) {
       const value = replayKeysAndValues[j][1];
 
       const cell = document.createElement('td');
+      console.log(key);
+      if (key === "game" && !showGame) {
+        continue;
+      }
       if (key === "downloadLink") {
         const link = document.createElement('a');
         link.href = value;
