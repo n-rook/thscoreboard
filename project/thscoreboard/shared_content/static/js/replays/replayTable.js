@@ -14,6 +14,7 @@ populateTable(allReplays);
 function onClick(elm) {
   const filterType = elm.getAttribute('filterType');
   const value = elm.getAttribute('value');
+  console.log(value);
   
   activeFilters = updateFilters(activeFilters, filterType, value);
   const filteredReplays = filterReplays(activeFilters, allReplays);

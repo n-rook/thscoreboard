@@ -15,9 +15,6 @@ def game_scoreboard(request, game_id: str):
     game: Game = get_object_or_404(Game, game_id=game_id)
     all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game_id)]
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    # all_shots = ["a a", "b b"]
-
-    print(all_shots)
     
     replays_for_game = _get_all_replay_for_game(request, game_id)
     replays_json = convert_replays_to_json_string(replays_for_game)
