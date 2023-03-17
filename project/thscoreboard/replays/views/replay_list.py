@@ -37,6 +37,7 @@ def convert_replays_to_json_string(replays: Iterable[models.Replay]) -> str:
         "Difficulty": replay.GetDifficultyName(),
         "Shot": replay.shot.GetName(),
         "Score": replay.score,
+        "Date": replay.timestamp.strftime("%Y-%m-%d"),
         "Replay": f"/replays/{replay.shot.game.game_id}/{replay.id}/download",
     } for replay in replays
     ]
