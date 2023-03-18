@@ -12,7 +12,7 @@ def index(request):
 
     recent_uploads = (
         models.Replay.objects
-        .visible_to(request.user)
+        .filter_visible()
         .filter(category__in=[models.Category.REGULAR, models.Category.TAS])
         .order_by('-created')
         [:10]

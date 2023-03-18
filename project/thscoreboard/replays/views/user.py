@@ -17,7 +17,7 @@ def user_page(request, username: str):
 
         replays = (
             models.Replay.objects
-            .visible_to(request.user)
+            .filter_visible()
             .filter(user=user)
             .order_by('shot__game_id', 'shot_id', 'created'))
 

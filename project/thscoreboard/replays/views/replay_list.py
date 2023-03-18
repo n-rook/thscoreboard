@@ -16,7 +16,7 @@ def game_scoreboard(request, game_id: str, difficulty: Optional[int] = None, sho
     game = get_object_or_404(models.Game, game_id=game_id)
     all_replays = (
         models.Replay.objects.select_related('shot')
-        .visible_to(request.user)
+        .filter_visible()
         .filter(category=models.Category.REGULAR)
         .filter(shot__game=game_id)
         .filter(replay_type=1)

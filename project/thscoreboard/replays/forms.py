@@ -22,7 +22,6 @@ difficulty_names = (
 
 category_names = [
     (category, name) for (category, name) in models.Category.choices
-    if category != models.Category.PRIVATE
 ]
 
 replay_types = (

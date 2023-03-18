@@ -148,7 +148,7 @@ def delete_replay(request, game_id: str, replay_id: int):
 
 def GetReplayOr404(user, replay_id):
     try:
-        replay_instance = models.Replay.objects.select_related('shot').visible_to(user).get(id=replay_id)
+        replay_instance = models.Replay.objects.select_related('shot').filter_visible().get(id=replay_id)
     except models.Replay.DoesNotExist:
         raise Http404()
     return replay_instance
@@ -157,7 +157,7 @@ def GetReplayOr404(user, replay_id):
 @transaction.atomic
 def GetReplayWithStagesOr404(user, replay_id) -> Tuple[models.Replay, Iterable[models.ReplayStage]]:
     try:
-        replay_instance = models.Replay.objects.select_related('shot').visible_to(user).get(id=replay_id)
+        replay_instance = models.Replay.objects.select_related('shot').filter_visible().get(id=replay_id)
     except models.Replay.DoesNotExist:
         raise Http404()
     replay_stages = models.ReplayStage.objects.filter(replay=replay_id)
