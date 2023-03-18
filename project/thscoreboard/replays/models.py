@@ -1,6 +1,7 @@
 """Contains all of the models for the replay site."""
 
 
+import dataclasses
 import datetime
 from typing import Optional
 
@@ -9,7 +10,6 @@ from django.contrib import auth
 from django.utils import timezone
 from django.utils.translation import pgettext_lazy
 
-from replays import constant_helpers
 from replays import game_ids
 from replays import limits
 from replays import replay_parsing
@@ -178,6 +178,13 @@ class ReplayQuerySet(models.QuerySet):
         return q
 
 
+@dataclasses.dataclass(frozen=True)
+class ReplayConstantModels:
+    game: Game
+    shot: Shot
+    route: Optional[Route]
+
+
 class Replay(models.Model):
     """Represents a score recorded on the scoreboard."""
 
@@ -332,7 +339,7 @@ class Replay(models.Model):
         self.replay_type = r.replay_type
         self.slowdown = r.slowdown
 
-    def SetForeignKeysFromConstantModels(self, c: constant_helpers.ReplayConstantModels):
+    def SetForeignKeysFromConstantModels(self, c: ReplayConstantModels):
         """Set the shot and route foreign keys on this Replay."""
         self.shot = c.shot
         self.route = c.route

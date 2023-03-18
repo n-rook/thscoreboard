@@ -3,17 +3,13 @@
 from __future__ import annotations
 
 import dataclasses
-import typing
 from typing import Optional
 
 from django import apps
 
 from replays import replay_parsing
 import hashlib
-
-if typing.TYPE_CHECKING:
-    # Avoid cyclic import.
-    from replays import models
+from replays import models
 
 
 def _Route():
@@ -31,7 +27,7 @@ class ReplayConstantModels:
     route: Optional[models.Route]
 
 
-def GetModelInstancesForReplay(replay_info: replay_parsing.ReplayInfo) -> ReplayConstantModels:
+def GetModelInstancesForReplay(replay_info: replay_parsing.ReplayInfo) -> models.ReplayConstantModels:
     """Get the constant model instances related to this replay."""
     shot = _Shot().objects.select_related('game').get(game=replay_info.game, shot_id=replay_info.shot)
     if replay_info.route:
