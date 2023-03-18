@@ -29,11 +29,12 @@ class ReplayTest(test_case.ReplayTestCase):
             category=models.Category.REGULAR
         )
 
-        self.assertTrue(should_be_visible.IsVisible(viewer=None))
-        self.assertTrue(models.Replay.objects.visible_to(viewer=None).filter(id=should_be_visible.id).exists())
-
-        self.assertTrue(should_be_visible.IsVisible(viewer=self.viewer))
-        self.assertTrue(models.Replay.objects.visible_to(viewer=self.viewer).filter(id=should_be_visible.id).exists())
+        self.assertTrue(should_be_visible.IsVisible())
+        self.assertTrue(
+            models.Replay.objects.filter_visible()
+            .filter(id=should_be_visible.id)
+            .exists()
+        )
 
     def testVisible_AuthorDeletedAccount(self):
         should_be_visible = test_replays.CreateAsPublishedReplay(
@@ -43,27 +44,11 @@ class ReplayTest(test_case.ReplayTestCase):
         )
         self.author.MarkForDeletion()
 
-        self.assertFalse(should_be_visible.IsVisible(viewer=None))
-        self.assertFalse(models.Replay.objects.visible_to(viewer=None).filter(id=should_be_visible.id).exists())
+        self.assertFalse(should_be_visible.IsVisible())
+        self.assertFalse(models.Replay.objects.filter_visible().filter(id=should_be_visible.id).exists())
 
-        self.assertFalse(should_be_visible.IsVisible(viewer=self.viewer))
-        self.assertFalse(models.Replay.objects.visible_to(viewer=self.viewer).filter(id=should_be_visible.id).exists())
-
-    def testVisible_Private(self):
-        should_be_visible = test_replays.CreateAsPublishedReplay(
-            filename='th6_extra',
-            user=self.author,
-            category=models.Category.PRIVATE
-        )
-
-        self.assertFalse(should_be_visible.IsVisible(viewer=None))
-        self.assertFalse(models.Replay.objects.visible_to(viewer=None).filter(id=should_be_visible.id).exists())
-
-        self.assertFalse(should_be_visible.IsVisible(viewer=self.viewer))
-        self.assertFalse(models.Replay.objects.visible_to(viewer=self.viewer).filter(id=should_be_visible.id).exists())
-
-        self.assertTrue(should_be_visible.IsVisible(viewer=self.author))
-        self.assertTrue(models.Replay.objects.visible_to(viewer=self.author).filter(id=should_be_visible.id).exists())
+        self.assertFalse(should_be_visible.IsVisible())
+        self.assertFalse(models.Replay.objects.filter_visible().filter(id=should_be_visible.id).exists())
 
     def testSetFromConstantHelpers_WithRoute(self):
         to_be_modified = test_replays.CreateAsPublishedReplay('th7_lunatic', self.author)

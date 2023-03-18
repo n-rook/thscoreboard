@@ -6,7 +6,6 @@ import datetime
 from typing import Optional
 
 from django.db import models
-from django.contrib import auth
 from django.utils import timezone
 from django.utils.translation import pgettext_lazy
 
@@ -101,13 +100,6 @@ class Category(models.IntegerChoices):
     replays that don't fall under the TAS category.
     """
 
-    PRIVATE = 4, pgettext_lazy('Category', 'Private')
-    """A private replay that isn't shown to anyone.
-
-    Private is deprecated; it will be removed soon. (It does not make sense as a category,
-    since a private replay could be REGULAR, TAS or UNUSUAL.)
-    """
-
 
 class ReplayType(models.IntegerChoices):
     """Type of replay (regular, spell practice, etc)"""
@@ -162,20 +154,15 @@ class Route(models.Model):
 
 class ReplayQuerySet(models.QuerySet):
 
-    def visible_to(self, viewer: Optional[auth.get_user_model()]) -> 'ReplayQuerySet':
-        """Filter out replays that should not be visible to someone.
+    def filter_visible(self) -> 'ReplayQuerySet':
+        """Filter out replays that should not be visible.
 
         This method is closely related to the IsVisible() method on individual replays, but changes the query
         itself instead. As such, it mostly should be preferred to that method, since the unwanted replays are
         not even returned.
         """
 
-        q = self.filter(user__is_active=True)
-        if viewer and viewer.is_authenticated:
-            q = q.filter(~models.Q(category=Category.PRIVATE) | models.Q(user=viewer))
-        else:
-            q = q.exclude(category=Category.PRIVATE)
-        return q
+        return self.filter(user__is_active=True)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -304,15 +291,9 @@ class Replay(models.Model):
         """An easter egg."""
         return self.shot.shot_id == 'Sanae' and self.shot.game.game_id == game_ids.GameIDs.TH13
 
-    def IsVisible(self, viewer: auth.get_user_model()):
+    def IsVisible(self):
         """Returns whether this replay should be visible to this user."""
-
-        if not self.user.is_active:
-            return False
-
-        if self.category != Category.PRIVATE:
-            return True
-        return self.user == viewer
+        return self.user.is_active
 
     def GetNiceFilename(self, id: Optional[int]):
         """Returns a nice filename for this replay.
