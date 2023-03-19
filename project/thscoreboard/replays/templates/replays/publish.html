@@ -112,6 +112,28 @@
         </td>
         </tr>
     {% endif %}
+    {% if form.uses_bombs %}
+        <tr>
+            <td>
+                <label for="{{form.uses_bombs.id_for_label}}">Did you use bombs?</label>
+                {{ form.uses_bombs.errors }}
+            </td>
+            <td>
+                {{ form.uses_bombs }}
+            </td>
+        </tr>
+    {% endif %}
+    {% if form.misses %}
+        <tr>
+            <td>
+                <label for="{{form.misses.id_for_label}}">Miss count (optional)</label>
+                {{ form.misses.errors }}
+            </td>
+            <td>
+                {{ form.misses }}
+            </td>
+        </tr>
+    {% endif %}
     </table>
     <div class="comment-input">
         <label for="{{form.comment.id_for_label}}">Comment</label> {{ form.comment.errors }}<br>

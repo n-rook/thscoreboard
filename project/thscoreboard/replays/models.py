@@ -286,6 +286,25 @@ class Replay(models.Model):
     replay_type = models.IntegerField(choices=ReplayType.choices)
     """Type of replay (regular run, stage practice, etc)"""
 
+    no_bomb = models.BooleanField(blank=True, null=True)
+    """Whether the replay uses no bombs (a popular challenge condition).
+
+    If null, one of these two things is the case:
+    - NB doesn't make sense for the game, because it has no bombs (like PoFV)
+    - This is an old replay, and we don't know if it used bombs or not.
+
+    You may ask, "why is this 'no_bomb' and not 'used_bombs'"? Two reasons: First,
+    Touhou players tend to think about 'no_bomb' as a positive trait, despite
+    the name. Second, it means that we can call a replay no_bomb if bool(no_bomb)
+    is True (collapsing False and None into one value).
+    """
+
+    miss_count = models.IntegerField(blank=True, null=True)
+    """The number of times the player died during the run.
+
+    This field is optional; if it is null, the player probably just didn't set it.
+    """
+
     @property
     def lesanae(self):
         """An easter egg."""

@@ -112,13 +112,18 @@ class UploadReplayFileForm(forms.Form):
 
 class PublishReplayForm(forms.Form):
 
-    def __init__(self, gameID, *args, **kwargs):
+    def __init__(self, gameID: str, replay_type: models.ReplayType, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.fields['name'].widget.attrs.update({'readonly': 'readonly'})
         #   i don't like using the negative here but it kind of has to be
         if gameID not in [game_ids.GameIDs.TH09]:
             self.fields['score'].widget.attrs.update({'readonly': 'readonly'})
+
+        if not game_ids.HasBombs(gameID, replay_type=replay_type):
+            del self.fields['uses_bombs']
+        if not game_ids.HasLives(gameID, replay_type=replay_type):
+            del self.fields['misses']
 
     score = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=category_names)
@@ -127,6 +132,9 @@ class PublishReplayForm(forms.Form):
     is_clear = forms.BooleanField(initial=True, required=False)
     video_link = VideoReplayLinkField(required=False)
     name = forms.CharField(max_length=12, required=False)
+
+    uses_bombs = forms.BooleanField(initial=True, required=False)
+    misses = forms.IntegerField(required=False)
 
     def clean(self):
         cleaned_data = super().clean()
@@ -151,6 +159,11 @@ class PublishReplayWithoutFileForm(forms.Form):
 
         self.fields['difficulty'].choices = _GetDifficultyChoices(game)
 
+        if not game_ids.HasBombs(game.game_id):
+            del self.fields['uses_bombs']
+        if not game_ids.HasLives(game.game_id):
+            del self.fields['misses']
+
     difficulty = forms.ChoiceField(choices=difficulty_names, initial=1)
     shot = ShotField()
     route = RouteField()
@@ -160,6 +173,9 @@ class PublishReplayWithoutFileForm(forms.Form):
     is_clear = forms.BooleanField(initial=True, required=False)
     comment = forms.CharField(max_length=limits.MAX_COMMENT_LENGTH, required=False, widget=forms.Textarea)
     video_link = VideoReplayLinkField(required=True)
+
+    uses_bombs = forms.BooleanField(initial=True, required=False)
+    misses = forms.IntegerField(required=False)
 
 
 class EditReplayForm(forms.Form):

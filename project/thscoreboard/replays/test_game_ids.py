@@ -6,7 +6,7 @@ from replays.testing import test_case
 
 
 class GameIDsTestCase(test.SimpleTestCase):
-    
+
     def testGetLongName(self):
         eosd_name = game_ids.GetGameName(game_id=game_ids.GameIDs.TH06, short=False)
         self.assertIn('Embodiment of Scarlet Devil', eosd_name)
@@ -30,6 +30,40 @@ class GameIDsTestCase(test.SimpleTestCase):
     def testGetRouteName(self):
         difficulty_name = game_ids.GetRouteName(game_id=game_ids.GameIDs.TH01, route_id='Jigoku')
         self.assertEqual(difficulty_name, 'Jigoku')
+
+    def testHasBombs(self):
+        cases = [
+            ['TH05', game_ids.GameIDs.TH05, None, True],
+            ['TH06', game_ids.GameIDs.TH06, None, True],
+            ['TH09', game_ids.GameIDs.TH09, None, False],
+            ['TH13', game_ids.GameIDs.TH13, None, True],
+            ['TH13_Full', game_ids.GameIDs.TH13, game_ids.ReplayTypes.REGULAR, True],
+            ['TH13_SpellPractice', game_ids.GameIDs.TH13, game_ids.ReplayTypes.SPELL_PRACTICE, False],
+        ]
+
+        for (name, game_id, replay_type, expected_outcome) in cases:
+            with self.subTest(name):
+                self.assertIs(
+                    bool(game_ids.HasBombs(game_id, replay_type=replay_type)),
+                    expected_outcome
+                )
+
+    def testHasLives(self):
+        cases = [
+            ['TH05', game_ids.GameIDs.TH05, None, True],
+            ['TH06', game_ids.GameIDs.TH06, None, True],
+            ['TH09', game_ids.GameIDs.TH09, None, True],
+            ['TH13', game_ids.GameIDs.TH13, None, True],
+            ['TH13_Full', game_ids.GameIDs.TH13, game_ids.ReplayTypes.REGULAR, True],
+            ['TH13_SpellPractice', game_ids.GameIDs.TH13, game_ids.ReplayTypes.SPELL_PRACTICE, False],
+        ]
+
+        for (name, game_id, replay_type, expected_outcome) in cases:
+            with self.subTest(name):
+                self.assertIs(
+                    bool(game_ids.HasLives(game_id, replay_type=replay_type)),
+                    expected_outcome
+                )
 
 
 class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
@@ -73,7 +107,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
                 self.AssertNoBug(
                     game_ids.GetShotName(game_id=game.game_id, shot_id=shot.shot_id)
                 )
-    
+
     def testNoBugRouteNamesForGames(self):
         games = models.Game.objects.all()
         for game in games:
@@ -85,7 +119,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
 
 
 class ReplayIdTestCase(test.SimpleTestCase):
-    
+
     def testMakeBase36ReplayId(self):
         self.assertEqual(game_ids.MakeBase36ReplayId(1679615), 'zzzz')
         self.assertEqual(game_ids.MakeBase36ReplayId(1679616), '10000')

@@ -1,5 +1,7 @@
 """Various human-readable game IDs, used in low-level libraries like game_ids.py."""
 
+from typing import Optional
+
 from django.utils.translation import gettext as _, pgettext
 
 
@@ -506,3 +508,42 @@ def MakeBase36ReplayId(id: int) -> str:
         digits += base36[id % len(base36)]
         id //= len(base36)
     return digits[::-1].zfill(4)
+
+
+def HasBombs(game_id: str, replay_type: Optional[int] = None) -> bool:
+    """Returns whether a given game and mode have bombs.
+
+    Args:
+        game_id: The game.
+        replay_type: The type of replay. If unset, this function returns True
+            if any replay type (for the given game) has bombs.
+    """
+    if game_id == GameIDs.TH09:
+        # PoFV does not have traditional bombs.
+        return False
+
+    if replay_type == ReplayTypes.SPELL_PRACTICE:
+        # You can't bomb in spell practice.
+        return False
+
+    return True
+
+
+def HasLives(game_id: str, replay_type: Optional[int] = None) -> bool:
+    """Returns whether a given game and mode have lives.
+
+    Args:
+        game_id: The game.
+        replay_type: The type of replay. If unset, this function returns True
+            if any replay type (for the given game) has bombs.
+    """
+
+    # All currently supported games have lives, but scene games don't, so in
+    # the future we will return False sometimes here.
+    del game_id  # Stop flake8 from complaining that it is unused.
+
+    if replay_type == ReplayTypes.SPELL_PRACTICE:
+        # You can't die in spell practice.
+        return False
+
+    return True

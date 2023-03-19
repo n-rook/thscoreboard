@@ -31,6 +31,8 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             video_link='https://www.youtube.com/example',
             route=None,
             replay_type=game_ids.ReplayTypes.REGULAR,
+            no_bomb=False,
+            miss_count=3
         )
 
         self.assertEqual(new_replay.user, self.user)
@@ -41,6 +43,8 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertTrue(new_replay.is_clear)
         self.assertEqual(new_replay.video_link, 'https://www.youtube.com/example')
         self.assertEqual(new_replay.comment, 'Hello')
+        self.assertFalse(new_replay.no_bomb)
+        self.assertEqual(new_replay.miss_count, 3)
 
         self.assertEqual(
             new_replay,
@@ -69,6 +73,8 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             is_clear=False,
             temp_replay_instance=temp_replay,
             replay_info=replay_info,
+            no_bomb=False,
+            miss_count=3
         )
 
         shot = models.Shot.objects.get(game='th10', shot_id='ReimuB')
@@ -82,6 +88,8 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertEqual(new_replay.category, models.Category.REGULAR)
         self.assertEqual(new_replay.comment, 'Hello')
         self.assertEqual(new_replay.replay_type, 1)
+        self.assertFalse(new_replay.no_bomb)
+        self.assertEqual(new_replay.miss_count, 3)
         self.assertEqual(new_replay.timestamp, datetime.datetime(2018, 2, 19, 9, 44, 21, tzinfo=datetime.timezone.utc))
 
         with self.assertRaises(models.TemporaryReplayFile.DoesNotExist):
@@ -107,12 +115,42 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             video_link='',
             is_good=True,
             is_clear=True,
+            no_bomb=False,
+            miss_count=None,
             temp_replay_instance=temp_replay,
             replay_info=replay_info
         )
 
         self.assertIsNotNone(new_replay.route)
         self.assertEqual(new_replay.route.route_id, 'Final B')
+
+    def testPublishReplayIgnoresNoBombWhenNotApplicable(self):
+        replay_file_contents = test_replays.GetRaw('th9_lunatic')
+
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user,
+            replay=replay_file_contents
+        )
+        temp_replay.save()
+
+        replay_info = replay_parsing.Parse(replay_file_contents)
+
+        new_replay = create_replay.PublishNewReplay(
+            user=self.user,
+            difficulty=3,
+            score=49348230,
+            category=models.Category.REGULAR,
+            comment='',
+            video_link='',
+            is_good=True,
+            is_clear=True,
+            no_bomb=False,
+            miss_count=None,
+            temp_replay_instance=temp_replay,
+            replay_info=replay_info,
+        )
+
+        self.assertIsNone(new_replay.no_bomb)
 
     def testPublishReplaySavesStages_TH10(self):
         replay_file_contents = test_replays.GetRaw('th10_normal')
@@ -134,6 +172,8 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             video_link='',
             is_good=True,
             is_clear=True,
+            no_bomb=False,
+            miss_count=None,
             temp_replay_instance=temp_replay,
             replay_info=replay_info,
         )
@@ -161,6 +201,8 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             video_link='',
             is_good=True,
             is_clear=True,
+            no_bomb=None,
+            miss_count=None,
             temp_replay_instance=temp_replay,
             replay_info=replay_info,
         )
@@ -185,6 +227,8 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             video_link='',
             is_good=True,
             is_clear=True,
+            no_bomb=False,
+            miss_count=None,
             temp_replay_instance=temp_replay,
             replay_info=replay_info,
         )
@@ -207,6 +251,8 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
                 video_link='',
                 is_good=True,
                 is_clear=True,
+                no_bomb=False,
+                miss_count=None,
                 temp_replay_instance=temp_replay,
                 replay_info=replay_info,
             )
