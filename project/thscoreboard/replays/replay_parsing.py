@@ -42,6 +42,7 @@ class UnsupportedReplayError(Error):
     pass
 
 
+# when adding new fields, they must be appended to the bottom regardless of the order you'd actually like them to be in
 @dataclasses.dataclass
 class ReplayStage:
     stage: int = None
@@ -112,11 +113,14 @@ def _Parse06(rep_raw):
 
     rep_stages = []
 
+    # TH06 stores stage data values from the start of the stage but score from the end
+    # This code enables us to loop through and pull from both current and next stage data in a single loop cleanly
     enumerated_non_dummy_stages = [
         (i, _stage)
         for i, _stage in enumerate(replay.stages)
         if replay.file_header.stage_offsets[i] != 0
     ]
+
     for (i, current_stage), (j, next_stage) in zip(
         enumerated_non_dummy_stages, enumerated_non_dummy_stages[1:] + [(None, None)]
     ):
@@ -164,6 +168,8 @@ def _Parse07(rep_raw):
 
     rep_stages = []
 
+    # TH07 stores stage data values from the start of the stage but score from the end
+    # This code enables us to loop through and pull from both current and next stage data in a single loop cleanly
     enumerated_non_dummy_stages = [
         (i, _stage)
         for i, _stage in enumerate(replay.stages)
@@ -257,6 +263,8 @@ def _Parse08(rep_raw):
 
     #   else regular run
 
+    # TH08 stores stage data values from the start of the stage but score from the end
+    # This code enables us to loop through and pull from both current and next stage data in a single loop cleanly
     route = None
     enumerated_non_dummy_stages = [
         (i, _stage)
@@ -335,6 +343,7 @@ def _Parse09(rep_raw):
     r_shot = "Bug shot"
     r_type = game_ids.ReplayTypes.REGULAR
 
+    # TH09 stores values from the start of the stage
     highest_stage = 0
     if replay.file_header.stage_offsets[9] == 0:
         #  story mode
@@ -363,7 +372,7 @@ def _Parse09(rep_raw):
             r_shot = shots[p1.shot]
             r_score = p1.score * 10
 
-        #  adjust stage data to be end-of-stage
+        #  adjust stage data to be end-of-stage by shuffling them down from the next stage
         for i in range(len(rep_stages)):
             if i < len(rep_stages) - 1:
                 stage = rep_stages[i]
@@ -427,6 +436,7 @@ def _Parse10(rep_raw):
 
     rep_stages = []
     
+    # TH10 stores all stage data values from the start of the stage so we need to retrieve them from the next stage
     for current_stage, next_stage in zip(
         replay.stages, replay.stages[1:] + [None]
     ):
@@ -439,6 +449,7 @@ def _Parse10(rep_raw):
             s.piv = next_stage.piv * 10
             s.lives = next_stage.lives
         else:
+            # no next stage means this is the last stage, so use the final run score
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
@@ -473,6 +484,7 @@ def _Parse11(rep_raw):
 
     rep_stages = []
 
+    # TH11 stores all stage data values from the start of the stage so we need to retrieve them from the next stage
     for current_stage, next_stage in zip(
         replay.stages, replay.stages[1:] + [None]
     ):
@@ -487,6 +499,7 @@ def _Parse11(rep_raw):
             s.life_pieces = next_stage.life_pieces
             s.graze = next_stage.graze
         else:
+            # no next stage means this is the last stage, so use the final run score
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
@@ -521,6 +534,7 @@ def _Parse12(rep_raw):
 
     rep_stages = []
 
+    # TH12 stores all stage data values from the start of the stage so we need to retrieve them from the next stage
     for current_stage, next_stage in zip(
         replay.stages, replay.stages[1:] + [None]
     ):
@@ -530,6 +544,7 @@ def _Parse12(rep_raw):
         if next_stage is not None:
             s.score = next_stage.score * 10
             s.power = next_stage.power
+            # piv is stored with extra precision, we trunctate the value to what is shown ingame
             s.piv = (math.trunc(next_stage.piv / 1000)) * 10
             s.lives = next_stage.lives
             s.life_pieces = next_stage.life_pieces
@@ -540,6 +555,7 @@ def _Parse12(rep_raw):
             s.bomb_pieces = next_stage.bomb_pieces
             s.graze = next_stage.graze
         else:
+            # no next stage means this is the last stage, so use the final run score
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
@@ -587,6 +603,8 @@ def _Parse13(rep_raw):
             spell_card_id=replay.header.spell_practice_id
         )
 
+    # TH13 stores stage data values from the start of the stage but score from the end
+    # This code enables us to loop through and pull from both current and next stage data in a single loop cleanly
     for current_stage, next_stage in zip(
         replay.stages, replay.stages[1:] + [None]
     ):
@@ -597,6 +615,7 @@ def _Parse13(rep_raw):
         if next_stage is not None:
             s.score = next_stage.score * 10
             s.power = next_stage.power
+            # piv is stored with extra precision, we trunctate the value to what is shown ingame
             s.piv = (math.trunc(next_stage.piv / 1000)) * 10
             s.lives = next_stage.lives
             s.life_pieces = next_stage.life_pieces
@@ -606,6 +625,7 @@ def _Parse13(rep_raw):
             s.th13_trance = next_stage.trance
             s.extends = next_stage.extends
         else:
+            # no next stage means this is the last stage, so use the final run score
             s.score = replay.header.score * 10
         rep_stages.append(s)
         
@@ -652,6 +672,7 @@ def _Parse14(rep_raw):
             spell_card_id=replay.header.spell_practice_id
         )
 
+    # TH14 stores all stage data values from the start of the stage so we need to retrieve them from the next stage
     for current_stage, next_stage in zip(
         replay.stages, replay.stages[1:] + [None]
     ):
@@ -661,6 +682,7 @@ def _Parse14(rep_raw):
         if next_stage is not None:
             s.score = next_stage.score * 10
             s.power = next_stage.power
+            # piv is stored with extra precision, we truncate the value to what is shown ingame
             s.piv = (math.trunc(next_stage.piv / 1000)) * 10
             s.lives = next_stage.lives
             s.life_pieces = next_stage.life_pieces
@@ -668,6 +690,7 @@ def _Parse14(rep_raw):
             s.bomb_pieces = next_stage.bomb_pieces
             s.graze = next_stage.graze
         else:
+            # no next stage means this is the last stage, so use the final run score
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
@@ -701,6 +724,7 @@ def _Parse15(rep_raw) -> ReplayInfo:
     shots = ["Reimu", "Marisa", "Sanae", "Reisen"]
     rep_stages = []
     
+    # TH15 stores all stage data values from the start of the stage so we need to retrieve them from the next stage
     for current_stage, next_stage in zip(
         replay.stages, replay.stages[1:] + [None]
     ):
@@ -710,6 +734,7 @@ def _Parse15(rep_raw) -> ReplayInfo:
         if next_stage is not None:
             s.score = next_stage.score * 10
             s.power = next_stage.power
+            # piv is stored with extra precision, we trunctate the value to what is shown ingame
             s.piv = (math.trunc(next_stage.piv / 1000)) * 10
             s.lives = next_stage.lives
             s.life_pieces = next_stage.life_pieces
@@ -717,6 +742,7 @@ def _Parse15(rep_raw) -> ReplayInfo:
             s.bomb_pieces = next_stage.bomb_pieces
             s.graze = next_stage.graze
         else:
+            # no next stage means this is the last stage, so use the final run score
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
@@ -767,6 +793,7 @@ def _Parse16(rep_raw) -> ReplayInfo:
 
     rep_stages = []
     
+    # TH16 stores all stage data values from the start of the stage so we need to retrieve them from the next stage
     for current_stage, next_stage in zip(
         replay.stages, replay.stages[1:] + [None]
     ):
@@ -776,6 +803,7 @@ def _Parse16(rep_raw) -> ReplayInfo:
         if next_stage is not None:
             s.score = next_stage.score * 10
             s.power = next_stage.power
+            # piv is stored with extra precision, we trunctate the value to what is shown ingame
             s.piv = (math.trunc(next_stage.piv / 1000)) * 10
             s.lives = next_stage.lives
             s.life_pieces = next_stage.life_pieces
@@ -784,6 +812,7 @@ def _Parse16(rep_raw) -> ReplayInfo:
             s.graze = next_stage.graze
             s.th16_season_power = next_stage.season_power
         else:
+            # no next stage means this is the last stage, so use the final run score
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
@@ -836,6 +865,7 @@ def _Parse17(rep_raw) -> ReplayInfo:
 
     rep_stages = []
     
+    # TH17 stores all stage data values from the start of the stage so we need to retrieve them from the next stage
     for current_stage, next_stage in zip(
         replay.stages, replay.stages[1:] + [None]
     ):
@@ -845,6 +875,7 @@ def _Parse17(rep_raw) -> ReplayInfo:
         if next_stage is not None:
             s.score = next_stage.score * 10
             s.power = next_stage.power
+            # piv is stored with extra precision, we trunctate the value to what is shown ingame
             s.piv = (math.trunc(next_stage.piv / 1000)) * 10
             s.lives = next_stage.lives
             s.life_pieces = next_stage.life_pieces
@@ -852,6 +883,7 @@ def _Parse17(rep_raw) -> ReplayInfo:
             s.bomb_pieces = next_stage.bomb_pieces
             s.graze = next_stage.graze
         else:
+            # no next stage means this is the last stage, so use the final run score
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
@@ -901,6 +933,8 @@ def _Parse18(rep_raw) -> ReplayInfo:
 
     rep_stages = []
     
+    # TH18 contains both stage start and end data for each stage
+    # However the end-of-stage data is inaccurate as explained below, so the next stage data is still required
     for current_stage, next_stage in zip(
         replay.stages, replay.stages[1:] + [None]
     ):
@@ -908,6 +942,7 @@ def _Parse18(rep_raw) -> ReplayInfo:
         s = ReplayStage(
             stage=current_stage.stage_num,
             power=current_stage_end_data.power,
+            # piv is stored with extra precision, we trunctate the value to what is shown ingame
             piv=(math.trunc(current_stage_end_data.piv / 1000)) * 10,
             lives=current_stage_end_data.lives,
             life_pieces=current_stage_end_data.life_pieces,
@@ -920,6 +955,7 @@ def _Parse18(rep_raw) -> ReplayInfo:
             # Therefore, we have to use the next stage's data.
             s.score = next_stage.stage_data_start.score * 10
         else:
+            # no next stage means this is the last stage, so use the final run score
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
@@ -944,6 +980,7 @@ def _Parse18(rep_raw) -> ReplayInfo:
 
 def _DetermineTH13orTH14(replay):
     # thank you ZUN
+    # yes, one of the only indications of which game a replay is from here is from a USERDATA string
     header = th_modern.ThModern.from_bytes(replay)
     if header.userdata.user_desc[4] == '廟':
         # the raw byte is 0x90 or 144
