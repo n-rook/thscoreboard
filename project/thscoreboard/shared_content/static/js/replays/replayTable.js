@@ -16,7 +16,6 @@ populateTable(allReplays);
 function onClick(elm) {
   const filterType = elm.getAttribute('filterType');
   const value = elm.getAttribute('value');
-  console.log(value);
   
   activeFilters = updateFilters(activeFilters, filterType, value);
   const filteredReplays = filterReplays(activeFilters, allReplays);
@@ -28,12 +27,12 @@ function updateFilters(filters, filterType, value) {
     filters[filterType] = [];
   }
   const indexOfValue = filters[filterType].indexOf(value);
-  if (indexOfValue == -1) {
+  if (indexOfValue === -1) {
     filters[filterType].push(value);
   }
   else {
     filters[filterType].splice(indexOfValue, 1);
-    if (filters[filterType].length == 0) {
+    if (filters[filterType].length === 0) {
       delete filters[filterType];
     }
   }
@@ -57,13 +56,9 @@ function populateTable(replays) {
   // Clear the existing rows from the table body
   tbody.innerHTML = '';
 
-  for (let i = 0; i < replays.length; i++) {
+  for (const replay of replays) {
     const row = document.createElement('tr');
-    const replay  = replays[i]
-    const replayKeysAndValues = Object.entries(replay);
-    for (let j = 0; j < replayKeysAndValues.length; j++) {
-      const columnName = replayKeysAndValues[j][0];
-      const value = replayKeysAndValues[j][1];
+    for (const [columnName, value] of Object.entries(replay)) {
       const cell = createTableCell(columnName, value)
       if (cell) {
         row.appendChild(cell);
