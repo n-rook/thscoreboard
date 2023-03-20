@@ -1,5 +1,6 @@
 """Contains views which list various replays."""
 
+import locale
 from typing import Iterable
 
 from django.views.decorators import http as http_decorators
@@ -36,9 +37,15 @@ def convert_replays_to_json_string(replays: Iterable[models.Replay]) -> str:
         "Game": replay.shot.game.GetShortName(),
         "Difficulty": replay.GetDifficultyName(),
         "Shot": replay.shot.GetName(),
-        "Score": replay.score,
+        "Score": {
+            "text": f"{int(replay.score):,}",
+            "url": f"/replays/{replay.shot.game.game_id}/{replay.id}"
+        },
         "Date": replay.timestamp.strftime("%Y-%m-%d"),
-        "Replay": f"/replays/{replay.shot.game.game_id}/{replay.id}/download",
+        "Replay": {
+            "text": "Download",
+            "url": f"/replays/{replay.shot.game.game_id}/{replay.id}"
+        },
     } for replay in replays
     ]
     return json.dumps(replay_dicts)

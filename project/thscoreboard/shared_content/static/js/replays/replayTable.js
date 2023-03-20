@@ -3,6 +3,8 @@
 if (typeof allReplays === 'undefined') {
   allReplays = [];
   showGameColumn = true;
+  gameId = "th01";
+  replayId = "aaaa";
 }
 
 var activeFilters = {};
@@ -76,14 +78,15 @@ function createTableCell(columnName, value) {
   if (columnName === "Game" && !showGameColumn) {
     return null;
   }
-  if (columnName === "Replay") {
-    const link = document.createElement('a');
-    link.href = value;
-    const linkText = document.createTextNode('Download');
+
+  // Value is primitive or has type {"text": ..., "url": ...}
+  if (typeof value === "object") {
+    const link = document.createElement('a'); // 'a' as in html <a> tag
+    link.href = value.url;
+    const linkText = document.createTextNode(value.text);
     link.appendChild(linkText);
     cell.appendChild(link);
-  }
-  else {
+  } else {
     const text = document.createTextNode(value);
     cell.appendChild(text);
   }
