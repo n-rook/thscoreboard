@@ -14,7 +14,7 @@ def convert_replays_to_json_string(replays: Iterable[models.Replay]) -> str:
                 "text": f"{int(replay.score):,}",
                 "url": f"/replays/{replay.shot.game.game_id}/{replay.id}",
             },
-            "Date": replay.timestamp.strftime("%Y-%m-%d"),
+            "Upload Date": replay.created.strftime("%Y-%m-%d"),
             "Replay": {
                 "text": "Download",
                 "url": f"/replays/{replay.shot.game.game_id}/{replay.id}",

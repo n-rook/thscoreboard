@@ -67,7 +67,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
                 "Difficulty",
                 "Shot",
                 "Score",
-                "Date",
+                "Upload Date",
                 "Replay",
             }
             assert json_replay_data["User"] == self.user.username

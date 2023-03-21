@@ -14,7 +14,7 @@ def game_scoreboard(request, game_id: str):
     all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game_id)]
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
 
-    replays_for_game = _get_all_replay_for_game(request, game_id)
+    replays_for_game = _get_all_replay_for_game(game_id)
     replays_json = convert_replays_to_json_string(replays_for_game)
 
     return render(
@@ -29,7 +29,7 @@ def game_scoreboard(request, game_id: str):
     )
 
 
-def _get_all_replay_for_game(request, game_id: str) -> dict:
+def _get_all_replay_for_game(game_id: str) -> dict:
     return (
         models.Replay.objects.select_related("shot")
         .filter(category=models.Category.REGULAR)
