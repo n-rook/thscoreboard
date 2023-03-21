@@ -14,7 +14,7 @@ def user_page(request, username: str):
     user = get_object_or_404(auth.get_user_model(), username=username, is_active=True)
 
     user_replays = (
-        models.Replay.objects.visible_to(request.user)
+        models.Replay.objects
         .filter(user=user)
         .order_by("shot__game_id", "shot_id", "created")
     )

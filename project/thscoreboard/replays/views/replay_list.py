@@ -32,7 +32,6 @@ def game_scoreboard(request, game_id: str):
 def _get_all_replay_for_game(request, game_id: str) -> dict:
     return (
         models.Replay.objects.select_related("shot")
-        .visible_to(request.user)
         .filter(category=models.Category.REGULAR)
         .filter(shot__game=game_id)
         .filter(replay_type=1)

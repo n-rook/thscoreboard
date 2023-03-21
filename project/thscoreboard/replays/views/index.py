@@ -12,7 +12,7 @@ def index(request):
     all_games = models.Game.objects.all()
 
     recent_replays = (
-        models.Replay.objects.visible_to(request.user)
+        models.Replay.objects
         .filter(category__in=[models.Category.REGULAR, models.Category.TAS])
         .order_by("-created")[:10]
     )
