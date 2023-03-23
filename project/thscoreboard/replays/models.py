@@ -329,7 +329,6 @@ class Replay(models.Model):
 class ReplayStage(models.Model):
     """ Represents the end-of-stage data for a stage split for a given replay
         The data may not directly correspond to how it is stored in-game, since some games store it differently
-        All differences/quirks in how this data is stored in-game is handled in the relevant replay_parsing.Parse() functions
         Many games only store the data from the start of a replay, so many of the fields for the final stage will be null
     """
 
@@ -344,7 +343,6 @@ class ReplayStage(models.Model):
     stage = models.IntegerField()
     """ The stage this split corresponds to in the replay
         This is 1-indexed, regular stages are numbered in order, typically 1-6, extra is the stage after, usually 7
-        Certain games have slight differences, these are handled in game_fields.GetFormatStage()
     """
 
     score = models.BigIntegerField(blank=True, null=True)
@@ -355,7 +353,6 @@ class ReplayStage(models.Model):
     """ The current PIV stored at this stage
         This may be named as a different mechanic in some games, but it functions and is stored the same
         The actual value stored in some games might have extra precision, we are only storing the functional amount visible to the player
-        These calculations are performed in the relevant Parse functions
     """
 
     graze = models.IntegerField(blank=True, null=True)
@@ -369,7 +366,6 @@ class ReplayStage(models.Model):
     power = models.IntegerField(blank=True, null=True)
     """ The player's power at this stage
         In the modern windows games (TH10 onwards), the displayed power is in a different format to the stored/internal power
-        These formatting changes are handled in game_fields.GetFormatPower()
     """
 
     lives = models.IntegerField(blank=True, null=True)
@@ -418,7 +414,6 @@ class ReplayStage(models.Model):
     """Number of extends (1ups) this run has gotten so far
     More testing needs to be done to find the exact nature of this value,
     whether 1up items affect it or if its just score/life piece extends
-    But it's in the data so I will include it
 
     This value first appears in TH13 and is used to determine the number of life pieces needed for a 1up
     It is present in many modern games so I've opted not to specify a game for its name
@@ -497,14 +492,7 @@ class TemporaryReplayFile(models.Model):
 
     @classmethod
     def CleanUp(cls, now: datetime.datetime) -> None:
-        """Delete old temporary replay files.
-
-        Args:
-            now: The current time.
-
-        Returns:
-            The number of deleted files.
-        """
+        """Delete old temporary replay files"""
         return model_ttl.CleanUpOldRows(cls, now)
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
