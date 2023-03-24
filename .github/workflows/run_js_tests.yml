@@ -1,0 +1,21 @@
+name: Run JavaScript tests
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+      - run: npm install
+        working-directory: ./project/thscoreboard
+      - run: npm ci
+        working-directory: ./project/thscoreboard
+      - run: npm test
+        working-directory: ./project/thscoreboard
