@@ -1,9 +1,8 @@
-import json
 from typing import Iterable
 from replays import models
 
 
-def convert_replays_to_json_string(replays: Iterable[models.Replay]) -> str:
+def convert_replays_to_json_string(replays: Iterable[models.Replay]) -> Iterable[any]:
     replay_dicts = [
         {
             "User": replay.user.username,
@@ -22,4 +21,4 @@ def convert_replays_to_json_string(replays: Iterable[models.Replay]) -> str:
         }
         for replay in replays
     ]
-    return json.dumps(replay_dicts)
+    return replay_dicts

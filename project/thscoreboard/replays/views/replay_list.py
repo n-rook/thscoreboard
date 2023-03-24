@@ -1,5 +1,6 @@
 """Contains views which list various replays."""
 
+from django.http import JsonResponse
 from django.views.decorators import http as http_decorators
 from django.shortcuts import get_object_or_404, render
 
@@ -9,13 +10,15 @@ from replays.replays_to_json import convert_replays_to_json_string
 
 
 @http_decorators.require_safe
+def game_scoreboard_json(request, game_id: str):
+    return JsonResponse(convert_replays_to_json_string(_get_all_replay_for_game(game_id)), safe=False)
+
+
+@http_decorators.require_safe
 def game_scoreboard(request, game_id: str):
     game: Game = get_object_or_404(Game, game_id=game_id)
     all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game_id)]
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-
-    replays_for_game = _get_all_replay_for_game(game_id)
-    replays_json = convert_replays_to_json_string(replays_for_game)
 
     return render(
         request,
@@ -23,8 +26,7 @@ def game_scoreboard(request, game_id: str):
         {
             "game": game,
             "shots": all_shots,
-            "difficulties": all_difficulties,
-            "replaysJSON": replays_json,
+            "difficulties": all_difficulties
         },
     )
 
