@@ -91,15 +91,13 @@ function createLink(url, text) {
 
 function createTableCell(columnName, value) {
   const cell = document.createElement('td');
-  if (columnName === "Game" && !showGameColumn) {
+  if ((columnName === "Game" && !showGameColumn) || columnName === "Id") {
     return null;
   }
 
   // Value is primitive or has type {"text": ..., "url": ...}
   if (typeof value === "object") {
     cell.appendChild(createLink(value.url, value.text));
-  } else if(columnName == 'User') {
-    cell.appendChild(createLink(window.location.origin + '/replays/user/' + value, value));
   } else { 
     const text = document.createTextNode(value);
     cell.appendChild(text);

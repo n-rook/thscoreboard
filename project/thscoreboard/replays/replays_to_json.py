@@ -2,10 +2,14 @@ from typing import Iterable
 from replays import models
 
 
-def convert_replays_to_json_string(replays: Iterable[models.Replay]) -> Iterable[any]:
+def convert_replays_to_serializable_list(replays: Iterable[models.Replay]) -> list[dict[str, any]]:
     replay_dicts = [
         {
-            "User": replay.user.username,
+            "Id": replay.id,
+            "User": {
+                "text": f"{replay.user.username}",
+                "url": f"/replays/user/{replay.user.username}",
+            },
             "Game": replay.shot.game.GetShortName(),
             "Difficulty": replay.GetDifficultyName(),
             "Shot": replay.shot.GetName(),
