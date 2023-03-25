@@ -23,3 +23,4 @@ const toggleTheme = () => {
     document.body.classList.add(theme);
     localStorage.setItem("theme", theme);
 }
+

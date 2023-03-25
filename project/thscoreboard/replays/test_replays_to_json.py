@@ -1,6 +1,5 @@
-import json
 from replays.testing import test_case
-from replays.replays_to_json import convert_replays_to_json_string
+from replays.replays_to_json import convert_replays_to_serializable_list
 from replays.test_replay_parsing import ParseTestReplay
 from replays.create_replay import PublishNewReplay
 from replays import models
@@ -53,15 +52,14 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
         replays = [replay_1, replay_2]
 
-        json_str = convert_replays_to_json_string(replays)
-
-        json_data = json.loads(json_str)
+        json_data = convert_replays_to_serializable_list(replays)
 
         assert len(json_data) == len(replays)
 
         for replay, json_replay_data in zip(replays, json_data):
             assert json_replay_data
             assert set(json_replay_data.keys()) == {
+                "Id",
                 "User",
                 "Game",
                 "Difficulty",
@@ -70,7 +68,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
                 "Upload Date",
                 "Replay",
             }
-            assert json_replay_data["User"] == self.user.username
+            assert json_replay_data["User"]["text"] == self.user.username
             assert json_replay_data["Game"] == replay.shot.game.GetShortName()
 
             assert type(json_replay_data["Score"]) == dict

@@ -1,17 +1,30 @@
 // Initialize global variables if they were not provided by html
 // Needed for jest environment
-if (typeof allReplays === 'undefined') {
-  allReplays = [];
-  showGameColumn = true;
-  gameId = "th01";
-  replayId = "aaaa";
-}
 
 var activeFilters = {};
+var allReplays = [];
 
-// initialize table content
-populateTable(allReplays);
-
+try {
+  // initialize table content
+  const xhr = new XMLHttpRequest();
+  if(window.location.pathname === '/') {
+    xhr.open('GET', window.location.href + 'replays/index/json', true);
+  } else {
+    xhr.open('GET', window.location.toString() + "/json", true);
+  }
+  xhr.responseType = 'json';
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      populateTable(xhr.response);
+      allReplays = xhr.response;
+    } else {
+      document.getElementById('replay-table').innerHTML = '<p style="color: red;">Failed to load replays</p>';
+    }
+  };
+  xhr.send();
+} catch(error) {
+  // Catch ReferenceError for test suite but do nothing
+}
 
 function onClick(elm) {
   const filterType = elm.getAttribute('filterType');
@@ -68,24 +81,32 @@ function populateTable(replays) {
   }
 }
 
+function createLink(url, text) {
+  const link = document.createElement('a'); // 'a' as in the <a> HTML tag
+  link.href = url;
+  const linkText = document.createTextNode(text);
+  link.appendChild(linkText)
+  return link;
+}
+
 function createTableCell(columnName, value) {
   const cell = document.createElement('td');
-  if (columnName === "Game" && !showGameColumn) {
+  if ((columnName === "Game" && !showGameColumn) || columnName === "Id") {
     return null;
   }
 
   // Value is primitive or has type {"text": ..., "url": ...}
   if (typeof value === "object") {
-    const link = document.createElement('a'); // 'a' as in html <a> tag
-    link.href = value.url;
-    const linkText = document.createTextNode(value.text);
-    link.appendChild(linkText);
-    cell.appendChild(link);
-  } else {
+    cell.appendChild(createLink(value.url, value.text));
+  } else { 
     const text = document.createTextNode(value);
     cell.appendChild(text);
   }
   return cell;
 }
 
-module.exports = {updateFilters, filterReplays};
+try {
+  module.exports = {updateFilters, filterReplays};
+} catch(error) {
+  // Shut up error in console but do nothing
+}
