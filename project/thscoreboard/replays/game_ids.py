@@ -429,7 +429,7 @@ def GetShotName(game_id: str, shot_id: str) -> str:
             return pgettext('th18', "Sakuya")
         elif shot_id == "Sanae":
             return pgettext('th18', "Sanae")
-        
+
     return 'Bug shot'
 
 
@@ -511,7 +511,7 @@ def MakeBase36ReplayId(id: int) -> str:
 
 
 def HasBombs(game_id: str, replay_type: Optional[int] = None) -> bool:
-    """Returns whether a given game and mode have bombs.
+    """Returns whether we track bomb usage for a given game and mode.
 
     Args:
         game_id: The game.
@@ -523,19 +523,22 @@ def HasBombs(game_id: str, replay_type: Optional[int] = None) -> bool:
         return False
 
     if replay_type == ReplayTypes.SPELL_PRACTICE:
-        # You can't bomb in spell practice.
+        # In most cases, you cannot bomb in spell practice.
+        # In rare cases, you can (for example, in TH16 you can get a score
+        # extend, allowing you to die and then bomb), but even then, it is
+        # not worth tracking.
         return False
 
     return True
 
 
 def HasLives(game_id: str, replay_type: Optional[int] = None) -> bool:
-    """Returns whether a given game and mode have lives.
+    """Returns whether we track misses for a given game and mode.
 
     Args:
         game_id: The game.
         replay_type: The type of replay. If unset, this function returns True
-            if any replay type (for the given game) has bombs.
+            if we should track misses for any replay type (for the given game).
     """
 
     # All currently supported games have lives, but scene games don't, so in
@@ -543,7 +546,10 @@ def HasLives(game_id: str, replay_type: Optional[int] = None) -> bool:
     del game_id  # Stop flake8 from complaining that it is unused.
 
     if replay_type == ReplayTypes.SPELL_PRACTICE:
-        # You can't die in spell practice.
+        # In most cases, you cannot bomb in spell practice.
+        # In rare cases, you can (for example, in TH16 you can get a score
+        # extend, allowing you to die and then bomb), but even then, it is
+        # not worth tracking.
         return False
 
     return True
