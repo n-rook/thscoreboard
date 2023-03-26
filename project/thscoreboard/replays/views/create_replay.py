@@ -32,7 +32,7 @@ def _HandleReplay(request, replay_bytes):
 
     May raise ValidationError.
     """
-    
+
     # test if replay already exists, and return an error if so
     if constant_helpers.CheckReplayFileDuplicate(replay_bytes):
         raise ValidationError("This replay already exists")
@@ -103,7 +103,8 @@ def publish_replay(request, temp_replay_id):
     replay_info = replay_parsing.Parse(bytes(temp_replay.replay))
 
     if request.method == 'POST':
-        form = forms.PublishReplayForm(replay_info.game, request.POST)
+        form = forms.PublishReplayForm(
+            replay_info.game, replay_info.replay_type, request.POST)
 
         # test if replay already exists, and return an error if so
         if constant_helpers.CheckReplayFileDuplicate(temp_replay.replay):
@@ -113,6 +114,10 @@ def publish_replay(request, temp_replay_id):
             raise Http404()
 
         if form.is_valid():
+            if 'uses_bombs' in form.cleaned_data:
+                no_bomb = not form.cleaned_data['uses_bombs']
+            else:
+                no_bomb = None
             new_replay = create_replay.PublishNewReplay(
                 user=request.user,
                 difficulty=replay_info.difficulty,
@@ -121,6 +126,8 @@ def publish_replay(request, temp_replay_id):
                 comment=form.cleaned_data['comment'],
                 is_good=form.cleaned_data['is_good'],
                 is_clear=form.cleaned_data['is_clear'],
+                no_bomb=no_bomb,
+                miss_count=form.cleaned_data.get('misses'),
                 video_link=form.cleaned_data['video_link'],
                 temp_replay_instance=temp_replay,
                 replay_info=replay_info
@@ -133,6 +140,7 @@ def publish_replay(request, temp_replay_id):
 
     form = forms.PublishReplayForm(
         replay_info.game,
+        replay_info.replay_type,
         initial={
             'score': replay_info.score,
             'name': replay_info.name
@@ -165,6 +173,10 @@ def publish_replay_no_file(request, game_id: str):
     if request.method == 'POST':
         form = forms.PublishReplayWithoutFileForm(request.POST, game=game)
         if form.is_valid():
+            if 'uses_bombs' in form.cleaned_data:
+                no_bomb = not form.cleaned_data['uses_bombs']
+            else:
+                no_bomb = None
             new_replay = create_replay.PublishReplayWithoutFile(
                 user=request.user,
                 difficulty=form.cleaned_data['difficulty'],
@@ -175,7 +187,9 @@ def publish_replay_no_file(request, game_id: str):
                 is_clear=form.cleaned_data['is_clear'],
                 comment=form.cleaned_data['comment'],
                 video_link=form.cleaned_data['video_link'],
-                replay_type=form.cleaned_data['replay_type']
+                replay_type=form.cleaned_data['replay_type'],
+                no_bomb=no_bomb,
+                miss_count=form.cleaned_data.get('misses'),
             )
             return redirect(view_replay.replay_details, game_id=game.game_id, replay_id=new_replay.id)
         else:

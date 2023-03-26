@@ -141,6 +141,8 @@ class TestConstraints(test_case.ReplayTestCase):
                 video_link='https://www.youtube.com/example',
                 route=None,
                 replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
+                no_bomb=False,
+                miss_count=None,
             )
 
     def testReplayTypeConstraint2(self):
@@ -166,4 +168,6 @@ class TestConstraints(test_case.ReplayTestCase):
                 is_clear=True,
                 temp_replay_instance=temp_replay,
                 replay_info=replay_info,
+                no_bomb=False,
+                miss_count=None,
             )

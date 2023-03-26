@@ -39,7 +39,9 @@ def CreateAsPublishedReplay(
         comment='',
         is_good=True,
         is_clear=True,
-        video_link=''):
+        video_link='',
+        no_bomb=False,
+        miss_count=None):
     """Create a replay according to a file, with sensible defaults."""
 
     replay_file_contents = GetRaw(filename)
@@ -66,5 +68,7 @@ def CreateAsPublishedReplay(
         is_clear=is_clear,
         video_link=video_link,
         temp_replay_instance=temp_replay,
-        replay_info=replay_info
+        replay_info=replay_info,
+        no_bomb=no_bomb,
+        miss_count=miss_count
     )

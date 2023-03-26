@@ -50,10 +50,10 @@ class ReplayStage:
     graze: int = None
     point_items: int = None
     power: int = None
-    lives: int = None
-    life_pieces: int = None
-    bombs: int = None
-    bomb_pieces: int = None
+    lives: Optional[int] = None
+    life_pieces: Optional[int] = None
+    bombs: Optional[int] = None
+    bomb_pieces: Optional[int] = None
     th06_rank: int = None
     th07_cherry: int = None
     th07_cherrymax: int = None

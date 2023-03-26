@@ -65,6 +65,18 @@
                 <td>Replay Type</td>
                 <td>{{ replay_type }}</td>
             </tr>
+            {% if replay.no_bomb is not None %}
+            <tr>
+                <td>Bombs?</td>
+                <td>{% if replay.no_bomb %}No bombs!{% else %}Yes{% endif %}</td>
+            </tr>
+            {% endif %}
+            {% if replay.miss_count is not None %}
+            <tr>
+                <td>Misses</td>
+                <td>{{ replay.miss_count }}</td>
+            </tr>
+            {% endif %}
             {% if spell_name %}
             <tr>
                 <td>Spell Card</td>

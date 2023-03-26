@@ -1,5 +1,7 @@
 """Various human-readable game IDs, used in low-level libraries like game_ids.py."""
 
+from typing import Optional
+
 from django.utils.translation import gettext as _, pgettext
 
 
@@ -427,7 +429,7 @@ def GetShotName(game_id: str, shot_id: str) -> str:
             return pgettext('th18', "Sakuya")
         elif shot_id == "Sanae":
             return pgettext('th18', "Sanae")
-        
+
     return 'Bug shot'
 
 
@@ -506,3 +508,48 @@ def MakeBase36ReplayId(id: int) -> str:
         digits += base36[id % len(base36)]
         id //= len(base36)
     return digits[::-1].zfill(4)
+
+
+def HasBombs(game_id: str, replay_type: Optional[int] = None) -> bool:
+    """Returns whether we track bomb usage for a given game and mode.
+
+    Args:
+        game_id: The game.
+        replay_type: The type of replay. If unset, this function returns True
+            if any replay type (for the given game) has bombs.
+    """
+    if game_id == GameIDs.TH09:
+        # PoFV does not have traditional bombs.
+        return False
+
+    if replay_type == ReplayTypes.SPELL_PRACTICE:
+        # In most cases, you cannot bomb in spell practice.
+        # In rare cases, you can (for example, in TH16 you can get a score
+        # extend, allowing you to die and then bomb), but even then, it is
+        # not worth tracking.
+        return False
+
+    return True
+
+
+def HasLives(game_id: str, replay_type: Optional[int] = None) -> bool:
+    """Returns whether we track misses for a given game and mode.
+
+    Args:
+        game_id: The game.
+        replay_type: The type of replay. If unset, this function returns True
+            if we should track misses for any replay type (for the given game).
+    """
+
+    # All currently supported games have lives, but scene games don't, so in
+    # the future we will return False sometimes here.
+    del game_id  # Stop flake8 from complaining that it is unused.
+
+    if replay_type == ReplayTypes.SPELL_PRACTICE:
+        # In most cases, you cannot bomb in spell practice.
+        # In rare cases, you can (for example, in TH16 you can get a score
+        # extend, allowing you to die and then bomb), but even then, it is
+        # not worth tracking.
+        return False
+
+    return True
