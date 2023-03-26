@@ -18,6 +18,7 @@ settings.py is configured to use a local instance of PostgreSQL by default. To s
 1. Create a .env file in ./project/thscoreboard. This file will contain environment variables loaded when running locally. An environment variable named `LOCAL_DATABASE_PASSWORD` is required; set it to your password. .env is gitignored by default, so you do not need to worry about committing it by accident.
 1. Run "python manage.py runserver" and see if it successfully connects. If so, run "python manage.py migrate" to set up the initial database contents.
 1. Run "python manage.py setup_constant_tables" to set up constant tables, like the Game and Shot tables.
+1. Install jest, for example with `npm install jest --global`, and run `jest` to run js tests.
 
 ### Email configuration
 

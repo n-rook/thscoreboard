@@ -2,8 +2,5 @@
 
 {% block content %}
     <h2>{{viewed_user.username}}</h2>
-    {% for game, replays in replays_by_game %}
-    <h3>{{game.GetName}}</h3>
-    {% include "replays/replay_table.html" %}
-    {% endfor %}
+    {% include "replays/replay_table.html" with show_game=True %}
 {% endblock %}

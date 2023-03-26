@@ -2,43 +2,33 @@
 
 
 from django.contrib import auth
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators import http as http_decorators
 
 from replays import models
+from replays.replays_to_json import convert_replays_to_serializable_list
 
 
-@http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
+@http_decorators.require_safe
+def user_page_json(request, username: str):
+    user = get_object_or_404(auth.get_user_model(), username=username, is_active=True)
+    user_replays = (
+        models.Replay.objects
+        .filter(user=user)
+        .order_by("shot__game_id", "shot_id", "created")
+    )
+    return JsonResponse(convert_replays_to_serializable_list(user_replays), safe=False)
+
+
+@http_decorators.require_safe
 def user_page(request, username: str):
     user = get_object_or_404(auth.get_user_model(), username=username, is_active=True)
 
-    def GetUserReplays():
-        # Yields (game, list_of_replays_for_the_game) tuples.
-
-        replays = (
-            models.Replay.objects
-            .filter_visible()
-            .filter(user=user)
-            .order_by('shot__game_id', 'shot_id', 'created'))
-
-        current_game = None
-        for replay in replays:
-            if current_game is None:
-                current_game = replay.shot.game
-                current_replays = []
-            if current_game != replay.shot.game:
-                yield (current_game, current_replays)
-                current_game = replay.shot.game
-                current_replays = []
-            current_replays.append(replay)
-        if current_game is not None:
-            yield (current_game, current_replays)
-
     return render(
         request,
-        'replays/user_page.html',
+        "replays/user_page.html",
         {
-            'viewed_user': user,
-            'replays_by_game': list(GetUserReplays())
-        }
+            "viewed_user": user
+        },
     )

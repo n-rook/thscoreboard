@@ -2,8 +2,30 @@
 
 {% block content %}
     <h2><a href="/replays/{{game.game_id}}">{{ game.GetName }}</a></h2>
-    {% if difficulty and shot %}<h3>{{ difficulty_name }} — {{ shot.GetName }}</h3>
-    {% elif difficulty %}<h3>{{difficulty_name}}</h3>
-    {% endif %}
+
+    <div class="checkbox-list">
+        {% for difficulty_name in difficulties %}
+            <label><input
+                type="checkbox"
+                filterType="Difficulty"
+                value="{{difficulty_name}}"
+                onclick="onClick(this)"
+            >{{ difficulty_name }}</label>
+        {% endfor %}
+	</div>
+	<div class="checkbox-list">
+        {% for shot in shots %}
+        <label><input
+            type="checkbox"
+            filterType="Shot"
+            value="{{shot}}"
+            onclick="onClick(this)"
+        >{{ shot }}</label>
+        {% endfor %}
+	</div>
+
+    <br />
+
     {% include "replays/replay_table.html" %}
+
 {% endblock %}

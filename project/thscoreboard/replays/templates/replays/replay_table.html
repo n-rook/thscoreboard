@@ -1,5 +1,5 @@
 {% load humanize %}
-<table class="replay-table">
+<table id="replay-table" class="replay-table">
     <thead>
         <tr>
             <th>
@@ -20,7 +20,7 @@
                 Score
             </th>
             <th>
-                Upload date
+                Upload Date
             </th>
             <th>
                 Replay
@@ -28,36 +28,12 @@
         </tr>
     </thead>
     <tbody>
-    {% for replay in replays %}
-        <tr>
-            <td>
-                <a href="/replays/user/{{replay.user.username}}">{{replay.user.username}}</a>
-            </td>
-            {% if show_game %}
-            <td>
-                <a href="/replays/{{replay.shot.game.game_id}}">{{replay.shot.game.GetShortName}}</a>
-            </td>
-            {% endif %}
-            <td>
-                <a href="/replays/{{replay.shot.game.game_id}}/d{{replay.difficulty}}">{{replay.GetDifficultyName}}</a>
-            </td>
-            <td>
-                <a href="/replays/{{replay.shot.game.game_id}}/d{{replay.difficulty}}/{{replay.shot.shot_id}}">{{replay.shot.GetName}}</a>
-            </td>
-            <td>
-                <a href="/replays/{{replay.shot.game.game_id}}/{{replay.id}}">{{replay.score|intcomma}}</a>
-            </td>
-            <td>
-                {{replay.created | date:"Y-m-d"}}
-            </td>
-            <td style="text-align:center;">
-            {% if replay.is_good %}
-                <a href="/replays/{{replay.shot.game.game_id}}/{{replay.id}}/download">Download</a>
-            {% elif replay.video_link %}
-                <a href="{{replay.video_link}}">Watch</a>
-            {% endif %}
-            </td>
-        </tr>
-    {% endfor %}
     </tbody>
 </table>
+
+<!-- This script is a hack to get variables from python into a js file  -->
+<script>
+    const showGameColumn = "{{show_game}}";
+</script>
+
+<script src="/static/js/replays/replayTable.js"></script>
