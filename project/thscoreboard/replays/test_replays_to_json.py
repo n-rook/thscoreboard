@@ -28,6 +28,8 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             temp_replay_instance=temp_replay_1,
             is_good=True,
             is_clear=True,
+            no_bomb=False,
+            miss_count=None,
             replay_info=replay_info_1,
         )
 
@@ -47,6 +49,8 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             temp_replay_instance=temp_replay_2,
             is_good=True,
             is_clear=True,
+            no_bomb=False,
+            miss_count=None,
             replay_info=replay_info_2,
         )
 
