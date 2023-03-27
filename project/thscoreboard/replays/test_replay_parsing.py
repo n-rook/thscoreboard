@@ -233,6 +233,10 @@ class Th10ReplayTestCase(unittest.TestCase):
     def testStagePractice(self):
         r = ParseTestReplay("th10_stage_practice")
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.STAGE_PRACTICE)
+    
+    def testMarisa(self):
+        r = ParseTestReplay("th10_marisa")
+        self.assertEqual(r.shot, "MarisaC")
 
 
 class Th11ReplayTestCase(unittest.TestCase):

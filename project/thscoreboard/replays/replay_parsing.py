@@ -453,7 +453,7 @@ def _Parse10(rep_raw):
 
     r = ReplayInfo(
         game=game_ids.GameIDs.TH10,
-        shot=shots[replay.header.shot],
+        shot=shots[replay.header.shot * 3 + replay.header.subshot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
         timestamp=datetime.datetime.fromtimestamp(
