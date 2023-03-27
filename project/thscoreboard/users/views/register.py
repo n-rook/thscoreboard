@@ -47,41 +47,45 @@ def register(request):
     TODO: If a user tries to log in as an unverified user, we should resend
     the notification email, even though they cannot log in yet.
     """
-    if request.method == 'POST':
+    if request.method == "POST":
         try:
             form = RegisterForm(request.POST)
 
             if form.is_valid():
                 if settings.REQUIRE_PASSCODE:
-                    passcode = models.EarlyAccessPasscode.objects.get(passcode=form.cleaned_data['passcode'])
+                    passcode = models.EarlyAccessPasscode.objects.get(
+                        passcode=form.cleaned_data["passcode"]
+                    )
                 else:
                     passcode = None
 
                 unverified_user = _preregister(
-                    username=form.cleaned_data['username'],
-                    email=form.cleaned_data['email'],
-                    password=form.cleaned_data['password'],
-                    passcode=passcode)
+                    username=form.cleaned_data["username"],
+                    email=form.cleaned_data["email"],
+                    password=form.cleaned_data["password"],
+                    passcode=passcode,
+                )
                 send_email.SendVerificationEmail(request, unverified_user)
-                return HttpResponseRedirect('./preregistered')
+                return HttpResponseRedirect("./preregistered")
 
         except models.EarlyAccessPasscode.DoesNotExist:
-            form.add_error('passcode', 'Early access; must provide a valid passcode')
+            form.add_error("passcode", "Early access; must provide a valid passcode")
     else:
         form = RegisterForm()
 
     return render(
-        request, 'users/register.html',
-        {
-            'form': form,
-            'require_passcode': settings.REQUIRE_PASSCODE
-        })
+        request,
+        "users/register.html",
+        {"form": form, "require_passcode": settings.REQUIRE_PASSCODE},
+    )
 
 
 @transaction.atomic
 def _preregister(username, password, email, passcode: Optional[str]):
     # Create an unverified user.
-    unverified_user = models.UnverifiedUser.CreateUser(username=username, email=email, raw_password=password)
+    unverified_user = models.UnverifiedUser.CreateUser(
+        username=username, email=email, raw_password=password
+    )
     if passcode is not None:
         tie = models.UserPasscodeTie(unverified_user=unverified_user, passcode=passcode)
         tie.save()
@@ -89,15 +93,15 @@ def _preregister(username, password, email, passcode: Optional[str]):
 
 
 def preregistered(request):
-    return render(request, 'users/preregistered.html')
+    return render(request, "users/preregistered.html")
 
 
 @http_decorators.require_safe
 def registration_success(request):
-    return render(request, 'users/registration_success.html')
+    return render(request, "users/registration_success.html")
 
 
-@http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
+@http_decorators.require_http_methods(["GET", "HEAD", "POST"])
 def verify_email(request, token: str):
     # TODO: This view does not handle errors well. Errors here should be rare, but it
     # is still not good not to handle them.
@@ -105,19 +109,21 @@ def verify_email(request, token: str):
     try:
         unverified_user = models.UnverifiedUser.objects.get(token=token)
     except models.UnverifiedUser.DoesNotExist:
-        return render(request, 'users/verify_email.html', {
-            'unverified_user': None
-        })
+        return render(request, "users/verify_email.html", {"unverified_user": None})
 
-    if request.method == 'POST':
+    if request.method == "POST":
         new_account = unverified_user.VerifyUser()
         # Log the user in.
         # Note that this does mean a user with access to the confirmation email
         # gets to log in. But if they have the user's email account, they could
         # just do a forgot password anyway.
         auth.login(request, new_account)
-        return redirect('users:registration_success')
+        return redirect("users:registration_success")
 
-    return render(request, 'users/verify_email.html', {
-        'unverified_user': unverified_user,
-    })
+    return render(
+        request,
+        "users/verify_email.html",
+        {
+            "unverified_user": unverified_user,
+        },
+    )

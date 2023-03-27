@@ -2,7 +2,9 @@ from typing import Iterable
 from replays import models
 
 
-def convert_replays_to_serializable_list(replays: Iterable[models.Replay]) -> list[dict[str, any]]:
+def convert_replays_to_serializable_list(
+    replays: Iterable[models.Replay],
+) -> list[dict[str, any]]:
     replay_dicts = [
         {
             "Id": replay.id,

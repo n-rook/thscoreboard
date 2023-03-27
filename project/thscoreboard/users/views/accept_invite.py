@@ -10,30 +10,32 @@ from users import forms
 from users import models
 
 
-@http_decorators.require_http_methods(['GET', 'HEAD', 'POST'])
+@http_decorators.require_http_methods(["GET", "HEAD", "POST"])
 def accept_invite(request, token: str):
     try:
         invited_user = models.InvitedUser.objects.get(token=token)
     except models.InvitedUser.DoesNotExist:
-        raise Http404('We could not find your invite.')
+        raise Http404("We could not find your invite.")
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = forms.AcceptInviteForm(request.POST)
         if form.is_valid():
-            new_acct = invited_user.AcceptInvite(form.cleaned_data['password'])
+            new_acct = invited_user.AcceptInvite(form.cleaned_data["password"])
             auth.login(request, new_acct)
-            return redirect('users:registration_success')
+            return redirect("users:registration_success")
     else:
-        form = forms.AcceptInviteForm(initial={
-            'username': invited_user.username,
-            'email': invited_user.email,
-        })
+        form = forms.AcceptInviteForm(
+            initial={
+                "username": invited_user.username,
+                "email": invited_user.email,
+            }
+        )
 
     return render(
         request,
-        'users/accept_invite.html',
+        "users/accept_invite.html",
         {
-            'form': form,
-            'invited_user': invited_user,
-        }
+            "form": form,
+            "invited_user": invited_user,
+        },
     )
