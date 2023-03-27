@@ -11,7 +11,10 @@ from replays.replays_to_json import convert_replays_to_serializable_list
 
 @http_decorators.require_safe
 def game_scoreboard_json(request, game_id: str):
-    return JsonResponse(convert_replays_to_serializable_list(_get_all_replay_for_game(game_id)), safe=False)
+    return JsonResponse(
+        convert_replays_to_serializable_list(_get_all_replay_for_game(game_id)),
+        safe=False,
+    )
 
 
 @http_decorators.require_safe
@@ -23,11 +26,7 @@ def game_scoreboard(request, game_id: str):
     return render(
         request,
         "replays/game_scoreboard.html",
-        {
-            "game": game,
-            "shots": all_shots,
-            "difficulties": all_difficulties
-        },
+        {"game": game, "shots": all_shots, "difficulties": all_difficulties},
     )
 
 

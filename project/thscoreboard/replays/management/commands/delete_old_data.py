@@ -1,4 +1,3 @@
-
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from replays import models as replay_models
@@ -6,8 +5,7 @@ from users import models as user_models
 
 
 class Command(BaseCommand):
-
-    help = 'Delete expired temporary data.'
+    help = "Delete expired temporary data."
 
     def handle(self, *args, **kwargs):
         """Delete expired temporary data."""

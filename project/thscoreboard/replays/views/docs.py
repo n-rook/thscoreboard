@@ -9,5 +9,6 @@ def make_docs_page_route(template_name: str):
 
     @http_decorators.require_safe
     def route(request):
-        return render(request, f'replays/docs/{template_name}')
+        return render(request, f"replays/docs/{template_name}")
+
     return route

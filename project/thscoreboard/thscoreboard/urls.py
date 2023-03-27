@@ -25,29 +25,27 @@ from thscoreboard import settings
 from thscoreboard.deploy import views as deploy_views
 
 urlpatterns = [
-    path('users/', include('users.urls')),
-    path('', index.index),
-    path('replays/', include('replays.urls.replay_urls')),
-    path('docs/', include('replays.urls.docs_urls')),
-    path('admin/', admin.site.urls),
-    path('deploy', deploy_views.deploy),
-    path('sysadmin/reload', deploy_views.reload),
-    path('staff', lambda req: render(req, 'staff.html')),
-
+    path("users/", include("users.urls")),
+    path("", index.index),
+    path("replays/", include("replays.urls.replay_urls")),
+    path("docs/", include("replays.urls.docs_urls")),
+    path("admin/", admin.site.urls),
+    path("deploy", deploy_views.deploy),
+    path("sysadmin/reload", deploy_views.reload),
+    path("staff", lambda req: render(req, "staff.html")),
     # When fetching non-HTML pages, the browser looks at /favicon.ico
     # to find an icon.
     path(
-        'favicon.ico',
+        "favicon.ico",
         base_views.RedirectView.as_view(
-            url='/static/favicon.ico',
+            url="/static/favicon.ico",
             permanent=True,
-        )),
+        ),
+    ),
 ]
 
 # Install django-rosetta if (and only if) it is listed as an installed app.
 # This should not be the case in prod.
-if 'rosetta' in settings.INSTALLED_APPS:
-    logging.info('Including django-rosetta at /rosetta')
-    urlpatterns += [
-        re_path(r'^rosetta/', include('rosetta.urls'))
-    ]
+if "rosetta" in settings.INSTALLED_APPS:
+    logging.info("Including django-rosetta at /rosetta")
+    urlpatterns += [re_path(r"^rosetta/", include("rosetta.urls"))]

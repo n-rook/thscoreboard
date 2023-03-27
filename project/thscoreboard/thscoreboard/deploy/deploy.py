@@ -19,31 +19,25 @@ def update_and_deploy(user: str):
     with _DEPLOY_LOCK:
         git.pull()
 
+        management.call_command("migrate", interactive=False)
+
         management.call_command(
-            'migrate',
-            interactive=False
+            "setup_constant_tables",
         )
 
         management.call_command(
-            'setup_constant_tables',
+            "compilescss",
         )
 
         management.call_command(
-            'compilescss',
+            "compilemessages",
         )
 
-        management.call_command(
-            'compilemessages',
-        )
-
-        management.call_command(
-            'collectstatic',
-            interactive=False
-        )
+        management.call_command("collectstatic", interactive=False)
 
         revision = git.head_revision()
         discord_announce.announce(
-            '{user} updated to commit {rev}:\n{rev_link}'.format(
+            "{user} updated to commit {rev}:\n{rev_link}".format(
                 user=user,
                 rev=revision,
                 rev_link=_get_github_link(revision),
@@ -55,4 +49,4 @@ def update_and_deploy(user: str):
 
 def _get_github_link(revision):
     """Get a link to GitHub for a given revision."""
-    return f'https://github.com/n-rook/thscoreboard/commit/{revision}'
+    return f"https://github.com/n-rook/thscoreboard/commit/{revision}"

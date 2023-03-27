@@ -26,8 +26,12 @@ def check_ip_bans(methods_to_check: list):
     def decorator(func):
         @wraps(func)
         def inner(request, *args, **kwargs):
-            if request.method in methods_to_check and is_ip_banned(request.META.get('REMOTE_ADDR')):
-                return HttpResponseForbidden(content='Your IP address is banned')
+            if request.method in methods_to_check and is_ip_banned(
+                request.META.get("REMOTE_ADDR")
+            ):
+                return HttpResponseForbidden(content="Your IP address is banned")
             return func(request, *args, **kwargs)
+
         return inner
+
     return decorator

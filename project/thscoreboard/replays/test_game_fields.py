@@ -4,7 +4,12 @@ from replays.testing import test_replays
 from replays import replay_parsing
 from replays.game_ids import GameIDs
 from replays.replay_parsing import ReplayInfo
-from replays.game_fields import GetFormatBombs, GetFormatLives, GetFormatPower, GetFormatStage
+from replays.game_fields import (
+    GetFormatBombs,
+    GetFormatLives,
+    GetFormatPower,
+    GetFormatStage,
+)
 
 
 def ParseTestReplay(filename: str) -> ReplayInfo:
@@ -99,10 +104,10 @@ class FormatLivesTestCase(unittest.TestCase):
     def testTh13(self) -> None:
         format_lives = GetFormatLives(GameIDs.TH13, lives=2, life_pieces=1, extends=0)
         self.assertEqual(format_lives, "2 (1/8)")
-        
+
         format_lives = GetFormatLives(GameIDs.TH13, lives=3, life_pieces=9, extends=1)
         self.assertEqual(format_lives, "3 (9/10)")
-        
+
         format_lives = GetFormatLives(GameIDs.TH13, lives=5, life_pieces=14, extends=6)
         self.assertEqual(format_lives, "5 (14/25)")
 
@@ -123,6 +128,6 @@ class FormatBombsTestCase(unittest.TestCase):
     def testTh12(self) -> None:
         format_bombs = GetFormatBombs(GameIDs.TH12, bombs=3, bomb_pieces=0)
         self.assertEqual(format_bombs, "3 (0/3)")
-        
+
         format_bombs = GetFormatBombs(GameIDs.TH12, bombs=4, bomb_pieces=2)
         self.assertEqual(format_bombs, "4 (2/3)")

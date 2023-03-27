@@ -20,8 +20,8 @@ class UserTestCase(test.TestCase):
         User = auth.get_user_model()
         u = User(
             username=User.normalize_username(username),
-            email=User.normalize_email(f'{username}@example.com'),
-            password='password'
+            email=User.normalize_email(f"{username}@example.com"),
+            password="password",
         )
         u.save()
         return u

@@ -11,338 +11,372 @@ from replays import models
 #       depending on whether it is relevant to show that field
 #   eg. life_pieces will almost always be False as displaying it is integrated into Lives
 
-_table_fields_th06 = immutabledict({
-    'stage': True,
-    'score': True,
-    'piv': False,
-    'graze': False,
-    'point_items': False,
-    'power': True,
-    'lives': True,
-    'bombs': True,
-    'th06_rank': True,
-    'th07_cherry': False,
-    'th07_cherrymax': False,
-    'th09_p1_cpu': False,
-    'th09_p2_cpu': False,
-    'th09_p2_shot': False,
-    'th09_p2_score': False,
-    'th13_trance': False,
-    'th16_season_power': False,
-    'extends': False,
-})
+_table_fields_th06 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": False,
+        "graze": False,
+        "point_items": False,
+        "power": True,
+        "lives": True,
+        "bombs": True,
+        "th06_rank": True,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+    }
+)
 
-_table_fields_th07 = immutabledict({
-    'stage': True,
-    'score': True,
-    'piv': True,
-    'graze': True,
-    'point_items': True,
-    'power': True,
-    'lives': True,
-    'bombs': True,
-    'th06_rank': False,
-    'th07_cherry': True,
-    'th07_cherrymax': True,
-    'th09_p1_cpu': False,
-    'th09_p2_cpu': False,
-    'th09_p2_shot': False,
-    'th09_p2_score': False,
-    'th13_trance': False,
-    'th16_season_power': False,
-    'extends': False,
-})
+_table_fields_th07 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": True,
+        "graze": True,
+        "point_items": True,
+        "power": True,
+        "lives": True,
+        "bombs": True,
+        "th06_rank": False,
+        "th07_cherry": True,
+        "th07_cherrymax": True,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+    }
+)
 
-_table_fields_th08 = immutabledict({
-    'stage': True,
-    'score': True,
-    'piv': True,
-    'graze': True,
-    'point_items': True,
-    'power': True,
-    'lives': True,
-    'bombs': True,
-    'th06_rank': False,
-    'th07_cherry': False,
-    'th07_cherrymax': False,
-    'th09_p1_cpu': False,
-    'th09_p2_cpu': False,
-    'th09_p2_shot': False,
-    'th09_p2_score': False,
-    'th13_trance': False,
-    'th16_season_power': False,
-    'extends': False,
-})
+_table_fields_th08 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": True,
+        "graze": True,
+        "point_items": True,
+        "power": True,
+        "lives": True,
+        "bombs": True,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+    }
+)
 
-_table_fields_th09 = immutabledict({
-    'stage': True,
-    'score': True,
-    'piv': False,
-    'graze': False,
-    'point_items': False,
-    'power': False,
-    'lives': True,
-    'bombs': False,
-    'th06_rank': False,
-    'th07_cherry': False,
-    'th07_cherrymax': False,
-    'th09_p1_cpu': False,
-    'th09_p2_cpu': False,
-    'th09_p2_shot': True,
-    'th09_p2_score': True,
-    'th13_trance': False,
-    'th16_season_power': False,
-    'extends': False,
-})
+_table_fields_th09 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": False,
+        "graze": False,
+        "point_items": False,
+        "power": False,
+        "lives": True,
+        "bombs": False,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": True,
+        "th09_p2_score": True,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+    }
+)
 
-_table_fields_th09_PVP = immutabledict({
-    'stage': True,
-    'score': False,
-    'piv': False,
-    'graze': False,
-    'point_items': False,
-    'power': False,
-    'lives': False,
-    'bombs': False,
-    'th06_rank': False,
-    'th07_cherry': False,
-    'th07_cherrymax': False,
-    'th09_p1_cpu': True,
-    'th09_p2_cpu': True,
-    'th09_p2_shot': True,
-    'th09_p2_score': False,
-    'th13_trance': False,
-    'th16_season_power': False,
-    'extends': False,
-})
+_table_fields_th09_PVP = immutabledict(
+    {
+        "stage": True,
+        "score": False,
+        "piv": False,
+        "graze": False,
+        "point_items": False,
+        "power": False,
+        "lives": False,
+        "bombs": False,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": True,
+        "th09_p2_cpu": True,
+        "th09_p2_shot": True,
+        "th09_p2_score": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+    }
+)
 
-_table_fields_th10 = immutabledict({
-    'stage': True,
-    'score': True,
-    'piv': True,
-    'graze': False,
-    'point_items': False,
-    'power': True,
-    'lives': True,
-    'bombs': False,
-    'th06_rank': False,
-    'th07_cherry': False,
-    'th07_cherrymax': False,
-    'th09_p1_cpu': False,
-    'th09_p2_cpu': False,
-    'th09_p2_shot': False,
-    'th09_p2_score': False,
-    'th13_trance': False,
-    'th16_season_power': False,
-    'extends': False,
-})
+_table_fields_th10 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": True,
+        "graze": False,
+        "point_items": False,
+        "power": True,
+        "lives": True,
+        "bombs": False,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+    }
+)
 
-_table_fields_th11 = immutabledict({
-    'stage': True,
-    'score': True,
-    'piv': True,
-    'graze': True,
-    'point_items': False,
-    'power': True,
-    'lives': True,
-    'bombs': False,
-    'th06_rank': False,
-    'th07_cherry': False,
-    'th07_cherrymax': False,
-    'th09_p1_cpu': False,
-    'th09_p2_cpu': False,
-    'th09_p2_shot': False,
-    'th09_p2_score': False,
-    'th13_trance': False,
-    'th16_season_power': False,
-    'extends': False,
-})
+_table_fields_th11 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": True,
+        "graze": True,
+        "point_items": False,
+        "power": True,
+        "lives": True,
+        "bombs": False,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+    }
+)
 
-_table_fields_th12 = immutabledict({
-    'stage': True,
-    'score': True,
-    'piv': True,
-    'graze': True,
-    'point_items': False,
-    'power': True,
-    'lives': True,
-    'bombs': True,
-    'th06_rank': False,
-    'th07_cherry': False,
-    'th07_cherrymax': False,
-    'th09_p1_cpu': False,
-    'th09_p2_cpu': False,
-    'th09_p2_shot': False,
-    'th09_p2_score': False,
-    'th13_trance': False,
-    'th16_season_power': False,
-    'extends': False,
-})
+_table_fields_th12 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": True,
+        "graze": True,
+        "point_items": False,
+        "power": True,
+        "lives": True,
+        "bombs": True,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+    }
+)
 
-_table_fields_th13 = immutabledict({
-    'stage': True,
-    'score': True,
-    'piv': True,
-    'graze': True,
-    'point_items': False,
-    'power': True,
-    'lives': True,
-    'bombs': True,
-    'th06_rank': False,
-    'th07_cherry': False,
-    'th07_cherrymax': False,
-    'th09_p1_cpu': False,
-    'th09_p2_cpu': False,
-    'th09_p2_shot': False,
-    'th09_p2_score': False,
-    'th13_trance': True,
-    'th16_season_power': False,
-    'extends': True,
-})
+_table_fields_th13 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": True,
+        "graze": True,
+        "point_items": False,
+        "power": True,
+        "lives": True,
+        "bombs": True,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th13_trance": True,
+        "th16_season_power": False,
+        "extends": True,
+    }
+)
 
-_table_fields_th14 = immutabledict({
-    'stage': True,
-    'score': True,
-    'piv': True,
-    'graze': True,
-    'point_items': False,
-    'power': True,
-    'lives': True,
-    'bombs': True,
-    'th06_rank': False,
-    'th07_cherry': False,
-    'th07_cherrymax': False,
-    'th09_p1_cpu': False,
-    'th09_p2_cpu': False,
-    'th09_p2_shot': False,
-    'th09_p2_score': False,
-    'th13_trance': False,
-    'th16_season_power': False,
-    'extends': False,
-})
+_table_fields_th14 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": True,
+        "graze": True,
+        "point_items": False,
+        "power": True,
+        "lives": True,
+        "bombs": True,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+    }
+)
 
-_table_fields_th15 = immutabledict({
-    'stage': True,
-    'score': True,
-    'piv': True,
-    'graze': True,
-    'point_items': False,
-    'power': True,
-    'lives': True,
-    'bombs': True,
-    'th06_rank': False,
-    'th07_cherry': False,
-    'th07_cherrymax': False,
-    'th09_p1_cpu': False,
-    'th09_p2_cpu': False,
-    'th09_p2_shot': False,
-    'th09_p2_score': False,
-    'th13_trance': False,
-    'th16_season_power': False,
-    'extends': False,
-})
+_table_fields_th15 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": True,
+        "graze": True,
+        "point_items": False,
+        "power": True,
+        "lives": True,
+        "bombs": True,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+    }
+)
 
-_table_fields_th16 = immutabledict({
-    'stage': True,
-    'score': True,
-    'piv': True,
-    'graze': True,
-    'point_items': False,
-    'power': True,
-    'lives': True,
-    'bombs': True,
-    'th06_rank': False,
-    'th07_cherry': False,
-    'th07_cherrymax': False,
-    'th09_p1_cpu': False,
-    'th09_p2_cpu': False,
-    'th09_p2_shot': False,
-    'th09_p2_score': False,
-    'th13_trance': False,
-    'th16_season_power': True,
-    'extends': False,
-})
+_table_fields_th16 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": True,
+        "graze": True,
+        "point_items": False,
+        "power": True,
+        "lives": True,
+        "bombs": True,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th13_trance": False,
+        "th16_season_power": True,
+        "extends": False,
+    }
+)
 
-_table_fields_th17 = immutabledict({
-    'stage': True,
-    'score': True,
-    'piv': True,
-    'graze': True,
-    'point_items': False,
-    'power': True,
-    'lives': True,
-    'bombs': True,
-    'th06_rank': False,
-    'th07_cherry': False,
-    'th07_cherrymax': False,
-    'th09_p1_cpu': False,
-    'th09_p2_cpu': False,
-    'th09_p2_shot': False,
-    'th09_p2_score': False,
-    'th13_trance': False,
-    'th16_season_power': False,
-    'extends': False,
-})
+_table_fields_th17 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": True,
+        "graze": True,
+        "point_items": False,
+        "power": True,
+        "lives": True,
+        "bombs": True,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+    }
+)
 
-_table_fields_th18 = immutabledict({
-    'stage': True,
-    'score': True,
-    'piv': True,
-    'graze': True,
-    'point_items': False,
-    'power': True,
-    'lives': True,
-    'bombs': True,
-    'th06_rank': False,
-    'th07_cherry': False,
-    'th07_cherrymax': False,
-    'th09_p1_cpu': False,
-    'th09_p2_cpu': False,
-    'th09_p2_shot': False,
-    'th09_p2_score': False,
-    'th13_trance': False,
-    'th16_season_power': False,
-    'extends': False,
-})
+_table_fields_th18 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": True,
+        "graze": True,
+        "point_items": False,
+        "power": True,
+        "lives": True,
+        "bombs": True,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+    }
+)
 
-_game_fields = immutabledict({
-    'th01': None,
-    'th05': None,
-    'th06': _table_fields_th06,
-    'th07': _table_fields_th07,
-    'th08': _table_fields_th08,
-    'th09': _table_fields_th09,
-    'th10': _table_fields_th10,
-    'th11': _table_fields_th11,
-    'th12': _table_fields_th12,
-    'th13': _table_fields_th13,
-    'th14': _table_fields_th14,
-    'th15': _table_fields_th15,
-    'th16': _table_fields_th16,
-    'th17': _table_fields_th17,
-    'th18': _table_fields_th18,
-})
+_game_fields = immutabledict(
+    {
+        "th01": None,
+        "th05": None,
+        "th06": _table_fields_th06,
+        "th07": _table_fields_th07,
+        "th08": _table_fields_th08,
+        "th09": _table_fields_th09,
+        "th10": _table_fields_th10,
+        "th11": _table_fields_th11,
+        "th12": _table_fields_th12,
+        "th13": _table_fields_th13,
+        "th14": _table_fields_th14,
+        "th15": _table_fields_th15,
+        "th16": _table_fields_th16,
+        "th17": _table_fields_th17,
+        "th18": _table_fields_th18,
+    }
+)
 
-_game_fields_PVP = immutabledict({
-    'th01': None,
-    'th05': None,
-    'th06': None,
-    'th07': None,
-    'th08': None,
-    'th09': _table_fields_th09_PVP,
-    'th10': None,
-    'th11': None,
-    'th12': None,
-    'th13': None,
-    'th14': None,
-    'th15': None,
-    'th16': None,
-    'th17': None,
-    'th18': None,
-})
+_game_fields_PVP = immutabledict(
+    {
+        "th01": None,
+        "th05": None,
+        "th06": None,
+        "th07": None,
+        "th08": None,
+        "th09": _table_fields_th09_PVP,
+        "th10": None,
+        "th11": None,
+        "th12": None,
+        "th13": None,
+        "th14": None,
+        "th15": None,
+        "th16": None,
+        "th17": None,
+        "th18": None,
+    }
+)
 
 
-def GetFormatPower(game_id: str, power: Optional[int], shot: Optional[str] = None) -> str:
+def GetFormatPower(
+    game_id: str, power: Optional[int], shot: Optional[str] = None
+) -> str:
     if power is None:
         return ""
     if game_id in (game_ids.GameIDs.TH06, game_ids.GameIDs.TH07, game_ids.GameIDs.TH08):
@@ -360,68 +394,77 @@ def GetFormatPower(game_id: str, power: Optional[int], shot: Optional[str] = Non
         game_ids.GameIDs.TH17,
         game_ids.GameIDs.TH18,
     ):
-        return '{:.2f}'.format(power / 100)
+        return "{:.2f}".format(power / 100)
 
     return str(power)
 
 
 # used in GetFormatLives for string formatting the life/life piece counts
 # if this is None, lives will be displayed standalone instead of including the life piece counts
-_life_pieces = immutabledict({
-    'th01': None,
-    'th02': None,
-    'th03': None,
-    'th04': None,
-    'th05': None,
-    'th06': None,
-    'th07': None,
-    'th08': None,
-    'th09': None,
-    'th10': None,
-    'th11': 5,
-    'th12': 4,
-    'th13': None,   # this game has variable life pieces, so hardcoding it doesn't work
-    'th14': 3,
-    'th15': 3,
-    'th16': None,
-    'th17': 3,
-    'th18': 3,
-})
+_life_pieces = immutabledict(
+    {
+        "th01": None,
+        "th02": None,
+        "th03": None,
+        "th04": None,
+        "th05": None,
+        "th06": None,
+        "th07": None,
+        "th08": None,
+        "th09": None,
+        "th10": None,
+        "th11": 5,
+        "th12": 4,
+        "th13": None,  # this game has variable life pieces, so hardcoding it doesn't work
+        "th14": 3,
+        "th15": 3,
+        "th16": None,
+        "th17": 3,
+        "th18": 3,
+    }
+)
 
 
 # used in GetFormatBombs for string formatting the bomb/bomb piece counts
-_bomb_pieces = immutabledict({
-    'th01': None,
-    'th02': None,
-    'th03': None,
-    'th04': None,
-    'th05': None,
-    'th06': None,
-    'th07': None,
-    'th08': None,
-    'th09': None,
-    'th10': None,
-    'th11': None,
-    'th12': 3,
-    'th13': 8,
-    'th14': 8,
-    'th15': 5,
-    'th16': 5,
-    'th17': 3,
-    'th18': 3,
-})
+_bomb_pieces = immutabledict(
+    {
+        "th01": None,
+        "th02": None,
+        "th03": None,
+        "th04": None,
+        "th05": None,
+        "th06": None,
+        "th07": None,
+        "th08": None,
+        "th09": None,
+        "th10": None,
+        "th11": None,
+        "th12": 3,
+        "th13": 8,
+        "th14": 8,
+        "th15": 5,
+        "th16": 5,
+        "th17": 3,
+        "th18": 3,
+    }
+)
 
 
 # Takes the lives and life pieces and formats them accordingly for viewing in frontend
 # A special case is made here for TH13, since it has a variable number of life pieces needed
 #   so the amount is calculated off of the current extends
-def GetFormatLives(game_id: str, lives: Optional[int], life_pieces: Optional[int], extends: Optional[int] = 0) -> str:
+def GetFormatLives(
+    game_id: str,
+    lives: Optional[int],
+    life_pieces: Optional[int],
+    extends: Optional[int] = 0,
+) -> str:
     if lives is None:
         return ""
 
     life_pieces_str = ""
 
-    if game_id == 'th13':
+    if game_id == "th13":
         threshholds = [8, 10, 12, 15, 18, 20, 25]
         if extends is None:
             life_pieces_str = ""
@@ -442,7 +485,9 @@ def GetFormatLives(game_id: str, lives: Optional[int], life_pieces: Optional[int
     return f"{lives}{life_pieces_str}"
 
 
-def GetFormatBombs(game_id: str, bombs: Optional[int], bomb_pieces: Optional[int]) -> str:
+def GetFormatBombs(
+    game_id: str, bombs: Optional[int], bomb_pieces: Optional[int]
+) -> str:
     if bombs is None:
         return ""
     total_bomb_pieces = _bomb_pieces[game_id]
@@ -464,30 +509,30 @@ def GetGameField(gameid: str, replay_type: game_ids.ReplayTypes):
     return None
 
 
-FORMAT_EXTRA = 'Extra'
-FORMAT_PHANTASM = 'Phantasm'
+FORMAT_EXTRA = "Extra"
+FORMAT_PHANTASM = "Phantasm"
 
 
 def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
     if stage is None:
-        return ''
+        return ""
     if game_id == "th08":
         stages = {
-            1: '1',
-            2: '2',
-            3: '3',
-            4: '4A',
-            5: '4B',
-            6: '5',
-            7: '6A',
-            8: '6B',
+            1: "1",
+            2: "2",
+            3: "3",
+            4: "4A",
+            5: "4B",
+            6: "5",
+            7: "6A",
+            8: "6B",
             9: FORMAT_EXTRA,
         }
         return stages[stage]
-    if game_id == 'th09':
+    if game_id == "th09":
         if stage == 10:
             return FORMAT_EXTRA
-    elif game_id == 'th07' and stage == 8:
+    elif game_id == "th07" and stage == 8:
         return FORMAT_PHANTASM
     elif stage == 7:
         return FORMAT_EXTRA
@@ -501,7 +546,9 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
     for stage in new_stages:
         stage.power = GetFormatPower(game_id, stage.power, shot)
         stage.stage = GetFormatStage(game_id, stage.stage)
-        stage.lives = GetFormatLives(game_id, stage.lives, stage.life_pieces, stage.extends)
+        stage.lives = GetFormatLives(
+            game_id, stage.lives, stage.life_pieces, stage.extends
+        )
         stage.bombs = GetFormatBombs(game_id, stage.bombs, stage.bomb_pieces)
         if game_id == game_ids.GameIDs.TH09:
             stage.th09_p2_shotFormat = stage.th09_p2_shot.GetName()

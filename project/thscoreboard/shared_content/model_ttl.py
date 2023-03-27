@@ -41,12 +41,12 @@ def CleanUpOldRows(model_class: TTLModelType, now: datetime.datetime):
     earliest_surviving_time = now - model_class.TTL
 
     logging.info(
-        'Deleting all %s rows before %s',
+        "Deleting all %s rows before %s",
         model_class.__name__,
         earliest_surviving_time,
     )
 
-    deleted_count, _ = (
-        model_class.objects.filter(created__lt=earliest_surviving_time)
-        .delete())
-    logging.info('Deleted %d %s rows', deleted_count, model_class.__name__)
+    deleted_count, _ = model_class.objects.filter(
+        created__lt=earliest_surviving_time
+    ).delete()
+    logging.info("Deleted %d %s rows", deleted_count, model_class.__name__)

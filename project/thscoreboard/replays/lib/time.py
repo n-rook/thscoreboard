@@ -9,4 +9,6 @@ def strptime(date_string: str, format: str) -> datetime.datetime:
     Unlike datetime.datetime.strptime, this always returns a UTC datetime.
     """
 
-    return datetime.datetime.strptime(date_string, format).replace(tzinfo=datetime.timezone.utc)
+    return datetime.datetime.strptime(date_string, format).replace(
+        tzinfo=datetime.timezone.utc
+    )

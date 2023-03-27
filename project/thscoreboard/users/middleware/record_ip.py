@@ -13,7 +13,7 @@ _MAX_WORKERS = 100
 
 
 def _get_ip(request: request_lib.HttpRequest) -> Optional[str]:
-    return request.META.get('REMOTE_ADDR')
+    return request.META.get("REMOTE_ADDR")
 
 
 class RecordIPMiddleware:
@@ -23,8 +23,8 @@ class RecordIPMiddleware:
         self._get_response = get_response
 
         self._executor = futures.ThreadPoolExecutor(
-            max_workers=_MAX_WORKERS,
-            thread_name_prefix='RecordIPMiddleware')
+            max_workers=_MAX_WORKERS, thread_name_prefix="RecordIPMiddleware"
+        )
 
     def __call__(self, request: request_lib.HttpRequest):
         ip = _get_ip(request)
@@ -38,7 +38,7 @@ class RecordIPMiddleware:
 
     def _SaveIP(self, ip: str, user: models.User):
         if not ip:
-            logging.warning('No IP detected for this request; this should not happen')
+            logging.warning("No IP detected for this request; this should not happen")
             return
 
         if user.is_anonymous:

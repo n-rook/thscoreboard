@@ -20,7 +20,7 @@ class Game(models.Model):
     """Represents a single Touhou game."""
 
     class Meta:
-        ordering = ['game_id']
+        ordering = ["game_id"]
 
     game_id = models.TextField(primary_key=True)
     """A unique ID for the game, based on its number.
@@ -66,7 +66,9 @@ class Shot(models.Model):
     """
 
     class Meta:
-        constraints = [models.UniqueConstraint('shot_id', 'game', name='unique_shot_per_game')]
+        constraints = [
+            models.UniqueConstraint("shot_id", "game", name="unique_shot_per_game")
+        ]
 
     shot_id = models.TextField()
     """A unique ID for the shot.
@@ -76,7 +78,7 @@ class Shot(models.Model):
     "MarisaB".
     """
 
-    game = models.ForeignKey('Game', on_delete=models.CASCADE)
+    game = models.ForeignKey("Game", on_delete=models.CASCADE)
     """The game in which this shot appears."""
 
     def GetName(self):
@@ -87,13 +89,13 @@ class Shot(models.Model):
 class Category(models.IntegerChoices):
     """The category under which a replay is uploaded."""
 
-    REGULAR = 1, pgettext_lazy('Category', 'Regular')
+    REGULAR = 1, pgettext_lazy("Category", "Regular")
     """A normal upload; a legitimate replay played by a real player."""
 
-    TAS = 2, pgettext_lazy('Category', 'Tool-Assisted')
+    TAS = 2, pgettext_lazy("Category", "Tool-Assisted")
     """A tool-assisted replay."""
 
-    UNUSUAL = 3, pgettext_lazy('Category', 'Unusual')
+    UNUSUAL = 3, pgettext_lazy("Category", "Unusual")
     """A special replay that isn't listed on the leaderboards.
 
     This category is for things like replays of modded games or high-FPS runs;
@@ -104,17 +106,17 @@ class Category(models.IntegerChoices):
 class ReplayType(models.IntegerChoices):
     """Type of replay (regular, spell practice, etc)"""
 
-    REGULAR = 1, pgettext_lazy('Replay Type', 'Regular')
+    REGULAR = 1, pgettext_lazy("Replay Type", "Regular")
     """A regular 1cc/scoring run"""
 
-    STAGE_PRACTICE = 2, pgettext_lazy('Replay Type', 'Stage Practice')
+    STAGE_PRACTICE = 2, pgettext_lazy("Replay Type", "Stage Practice")
     """Stage practice replay. Note: a regular replay that gameovers at stage 1 will be detected as a stage practice replay"""
 
-    SPELL_PRACTICE = 3, pgettext_lazy('Replay Type', 'Spell Practice')
+    SPELL_PRACTICE = 3, pgettext_lazy("Replay Type", "Spell Practice")
     """A spell practice replay. Note: stage practice replays that start at a spell using THPRAC will be detected as stage practice
         This is only for replays using the ingame spell practice option"""
 
-    PVP = 4, pgettext_lazy('Replay Type', 'PVP')
+    PVP = 4, pgettext_lazy("Replay Type", "PVP")
     """Player vs player replays"""
 
 
@@ -132,9 +134,11 @@ class Route(models.Model):
     """
 
     class Meta:
-        constraints = [models.UniqueConstraint('route_id', 'game', name='unique_route_per_game')]
+        constraints = [
+            models.UniqueConstraint("route_id", "game", name="unique_route_per_game")
+        ]
 
-    game = models.ForeignKey('Game', on_delete=models.CASCADE)
+    game = models.ForeignKey("Game", on_delete=models.CASCADE)
     """The game in which this shot appears."""
 
     route_id = models.TextField()
@@ -153,8 +157,7 @@ class Route(models.Model):
 
 
 class ReplayQuerySet(models.QuerySet):
-
-    def filter_visible(self) -> 'ReplayQuerySet':
+    def filter_visible(self) -> "ReplayQuerySet":
         """Filter out replays that should not be visible.
 
         This method is closely related to the IsVisible() method on individual replays, but changes the query
@@ -178,31 +181,27 @@ class Replay(models.Model):
     objects = ReplayQuerySet.as_manager()
 
     class Meta:
-        ordering = ['shot', 'difficulty', '-score']
+        ordering = ["shot", "difficulty", "-score"]
 
         constraints = [
             models.CheckConstraint(
-                check=models.Q(difficulty__gte=0),
-                name='difficulty_gte_0'
+                check=models.Q(difficulty__gte=0), name="difficulty_gte_0"
             ),
             models.CheckConstraint(
-                name='replay_type_spell_card_id_isnull',
+                name="replay_type_spell_card_id_isnull",
                 check=(
-                    models.Q(
-                        replay_type=ReplayType.REGULAR,
-                        spell_card_id__isnull=True
-                    ) | models.Q(
+                    models.Q(replay_type=ReplayType.REGULAR, spell_card_id__isnull=True)
+                    | models.Q(
                         replay_type=ReplayType.STAGE_PRACTICE,
-                        spell_card_id__isnull=True
-                    ) | models.Q(
-                        replay_type=ReplayType.SPELL_PRACTICE,
-                        spell_card_id__isnull=False
-                    ) | models.Q(
-                        replay_type=ReplayType.PVP,
-                        spell_card_id__isnull=True
+                        spell_card_id__isnull=True,
                     )
-                )
-            )
+                    | models.Q(
+                        replay_type=ReplayType.SPELL_PRACTICE,
+                        spell_card_id__isnull=False,
+                    )
+                    | models.Q(replay_type=ReplayType.PVP, spell_card_id__isnull=True)
+                ),
+            ),
         ]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -213,13 +212,13 @@ class Replay(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     """When the replay was uploaded."""
 
-    shot = models.ForeignKey('Shot', on_delete=models.PROTECT)
+    shot = models.ForeignKey("Shot", on_delete=models.PROTECT)
     """The shot type the player used."""
 
     difficulty = models.IntegerField()
     """The difficulty on which the player played."""
 
-    route = models.ForeignKey('Route', on_delete=models.PROTECT, blank=True, null=True)
+    route = models.ForeignKey("Route", on_delete=models.PROTECT, blank=True, null=True)
     """The route on which the game was played."""
 
     def GetDifficultyName(self):
@@ -227,7 +226,7 @@ class Replay(models.Model):
         return game_ids.GetDifficultyName(self.shot.game.game_id, self.difficulty)
 
     def GetDifficultyUrlCode(self):
-        return f'd{self.difficulty}'
+        return f"d{self.difficulty}"
 
     score = models.BigIntegerField()
     """The score of the replay."""
@@ -308,7 +307,10 @@ class Replay(models.Model):
     @property
     def lesanae(self):
         """An easter egg."""
-        return self.shot.shot_id == 'Sanae' and self.shot.game.game_id == game_ids.GameIDs.TH13
+        return (
+            self.shot.shot_id == "Sanae"
+            and self.shot.game.game_id == game_ids.GameIDs.TH13
+        )
 
     def IsVisible(self):
         """Returns whether this replay should be visible to this user."""
@@ -324,7 +326,7 @@ class Replay(models.Model):
         gamecode = game_ids.GetRpyGameCode(self.shot.game.game_id)
         rpy_id = game_ids.MakeBase36ReplayId(self.id if id is None else id)
 
-        return f'{gamecode}_ud{rpy_id}.rpy'
+        return f"{gamecode}_ud{rpy_id}.rpy"
 
     def SetFromReplayInfo(self, r: replay_parsing.ReplayInfo):
         """Set certain derived fields on this replay from parsed information.
@@ -346,19 +348,23 @@ class Replay(models.Model):
 
 
 class ReplayStage(models.Model):
-    """ Represents the end-of-stage data for a stage split for a given replay
-        The data may not directly correspond to how it is stored in-game, since some games store it differently
-        Most games store the values from the start of the stage
-        TH07 stores the values from the end of the stage
-        TH08 is weird in that the score is stored from end of stage, but everything else is from the start
+    """Represents the end-of-stage data for a stage split for a given replay
+    The data may not directly correspond to how it is stored in-game, since some games store it differently
+    Most games store the values from the start of the stage
+    TH07 stores the values from the end of the stage
+    TH08 is weird in that the score is stored from end of stage, but everything else is from the start
     """
 
     class Meta:
-        constraints = [models.UniqueConstraint(fields=['replay', 'stage'], name='unique_stage_per_game')]
-        indexes = [models.Index(name='replay_and_stage', fields=['replay', 'stage'])]
-        ordering = ['replay', 'stage']
+        constraints = [
+            models.UniqueConstraint(
+                fields=["replay", "stage"], name="unique_stage_per_game"
+            )
+        ]
+        indexes = [models.Index(name="replay_and_stage", fields=["replay", "stage"])]
+        ordering = ["replay", "stage"]
 
-    replay = models.ForeignKey('Replay', on_delete=models.CASCADE)
+    replay = models.ForeignKey("Replay", on_delete=models.CASCADE)
     """The replay this split corresponds to"""
 
     stage = models.IntegerField()
@@ -444,7 +450,9 @@ class ReplayStage(models.Model):
     th09_p2_cpu = models.BooleanField(blank=True, null=True)
     """Whether player 2 in the stage split is a CPU or not in TH09"""
 
-    th09_p2_shot = models.ForeignKey('Shot', on_delete=models.PROTECT, blank=True, null=True)
+    th09_p2_shot = models.ForeignKey(
+        "Shot", on_delete=models.PROTECT, blank=True, null=True
+    )
     """The shot type stored for player 2 in the stage split in TH09"""
 
     th09_p2_score = models.IntegerField(blank=True, null=True)
@@ -485,9 +493,9 @@ class ReplayStage(models.Model):
         """
 
         if self.stage != s.stage:
-            raise ValueError('Stage does not match (old {}, new {})'.format(
-                self.stage, s.stage
-            ))
+            raise ValueError(
+                "Stage does not match (old {}, new {})".format(self.stage, s.stage)
+            )
 
         self.stage = s.stage
         self.score = s.score
@@ -514,12 +522,16 @@ class ReplayFile(models.Model):
     """Represents a replay file for a given score."""
 
     class Meta:
-        constraints = [models.UniqueConstraint(fields=['replay_hash'], name='unique_hash')]
+        constraints = [
+            models.UniqueConstraint(fields=["replay_hash"], name="unique_hash")
+        ]
 
-    replay = models.OneToOneField('Replay', on_delete=models.CASCADE)
+    replay = models.OneToOneField("Replay", on_delete=models.CASCADE)
     """The submission to which this replay corresponds."""
 
-    replay_file = models.BinaryField(max_length=limits.MAX_REPLAY_SIZE, blank=True, null=True)
+    replay_file = models.BinaryField(
+        max_length=limits.MAX_REPLAY_SIZE, blank=True, null=True
+    )
     """The replay file itself."""
 
     replay_hash = models.BinaryField(max_length=32)

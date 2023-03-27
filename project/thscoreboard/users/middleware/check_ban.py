@@ -38,11 +38,14 @@ class CheckBanMiddleware:
         if not request.user.CheckIfBanned():
             return False
 
-    def process_view(self, request: request_lib.HttpRequest, callback, callback_args, callback_kwargs):
+    def process_view(
+        self, request: request_lib.HttpRequest, callback, callback_args, callback_kwargs
+    ):
         if (
-                getattr(callback, 'ban_ok', False)
-                or not request.user.is_authenticated
-                or not request.user.CheckIfBanned()):
+            getattr(callback, "ban_ok", False)
+            or not request.user.is_authenticated
+            or not request.user.CheckIfBanned()
+        ):
             return None
 
-        return redirect('users:banned')
+        return redirect("users:banned")

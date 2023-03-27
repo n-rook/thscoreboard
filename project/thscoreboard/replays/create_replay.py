@@ -15,18 +15,19 @@ from replays import replay_parsing
 
 @transaction.atomic
 def PublishNewReplay(
-        user,
-        difficulty: int,
-        score: int,
-        category: str,
-        comment: str,
-        video_link: str,
-        is_good: bool,
-        is_clear: bool,
-        no_bomb: Optional[bool],
-        miss_count: Optional[int],
-        temp_replay_instance: models.TemporaryReplayFile,
-        replay_info: replay_parsing.ReplayInfo):
+    user,
+    difficulty: int,
+    score: int,
+    category: str,
+    comment: str,
+    video_link: str,
+    is_good: bool,
+    is_clear: bool,
+    no_bomb: Optional[bool],
+    miss_count: Optional[int],
+    temp_replay_instance: models.TemporaryReplayFile,
+    replay_info: replay_parsing.ReplayInfo,
+):
     """Publish a new replay file.
 
     This creates a new Replay row, as well as rows in related tables like
@@ -69,7 +70,7 @@ def PublishNewReplay(
     replay_instance.SetForeignKeysFromConstantModels(constants)
     if game_ids.HasBombs(replay_info.game, replay_info.replay_type):
         if no_bomb is None:
-            raise ValueError('no_bomb is required if applicable')
+            raise ValueError("no_bomb is required if applicable")
         replay_instance.no_bomb = no_bomb
     if game_ids.HasLives(replay_info.game, replay_info.replay_type):
         replay_instance.miss_count = miss_count
@@ -77,7 +78,9 @@ def PublishNewReplay(
     replay_file_instance = models.ReplayFile(
         replay=replay_instance,
         replay_file=temp_replay_instance.replay,
-        replay_hash=constant_helpers.CalculateReplayFileHash(temp_replay_instance.replay)
+        replay_hash=constant_helpers.CalculateReplayFileHash(
+            temp_replay_instance.replay
+        ),
     )
 
     replay_instance.save()
@@ -88,12 +91,12 @@ def PublishNewReplay(
         #   th09 shot foreign key
         th09_shot_instance = None
         if replay_info.game == game_ids.GameIDs.TH09:
-            th09_shot_instance = models.Shot.objects.select_related('game').get(game=game_ids.GameIDs.TH09, shot_id=s.th09_p2_shot)
+            th09_shot_instance = models.Shot.objects.select_related("game").get(
+                game=game_ids.GameIDs.TH09, shot_id=s.th09_p2_shot
+            )
 
         replay_stage = models.ReplayStage(
-            replay=replay_instance,
-            stage=s.stage,
-            th09_p2_shot=th09_shot_instance
+            replay=replay_instance, stage=s.stage, th09_p2_shot=th09_shot_instance
         )
         replay_stage.SetFromReplayStageInfo(s)
         replay_stage.save()
@@ -102,18 +105,19 @@ def PublishNewReplay(
 
 
 def PublishReplayWithoutFile(
-        user,
-        difficulty: int,
-        shot: models.Shot,
-        score: int,
-        category: str,
-        comment: str,
-        video_link: str,
-        is_clear: bool,
-        replay_type: int,
-        route: Optional[models.Route],
-        no_bomb: Optional[bool],
-        miss_count: Optional[int],):
+    user,
+    difficulty: int,
+    shot: models.Shot,
+    score: int,
+    category: str,
+    comment: str,
+    video_link: str,
+    is_clear: bool,
+    replay_type: int,
+    route: Optional[models.Route],
+    no_bomb: Optional[bool],
+    miss_count: Optional[int],
+):
     """Create a new Replay for a game in which replay files don't exist.
 
     Args:
@@ -144,11 +148,11 @@ def PublishReplayWithoutFile(
         is_clear=is_clear,
         comment=comment,
         video_link=video_link,
-        replay_type=replay_type
+        replay_type=replay_type,
     )
     if game_ids.HasBombs(shot.game_id, replay_type):
         if no_bomb is None:
-            raise ValueError('no_bomb is required if applicable')
+            raise ValueError("no_bomb is required if applicable")
         replay_instance.no_bomb = no_bomb
     if game_ids.HasLives(shot.game_id, replay_type):
         replay_instance.miss_count = miss_count
