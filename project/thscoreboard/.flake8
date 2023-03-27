@@ -6,6 +6,9 @@ ignore =
     W503,
     # We have not decided on a max line length yet.
     E501,
+        # Needed for compatibility with black, see https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html#flake8
+    E203
+max-line-length = 88
 exclude =
 	replays/kaitai_parsers/*
 per-file-ignores =
