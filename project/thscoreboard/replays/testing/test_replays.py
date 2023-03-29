@@ -44,6 +44,7 @@ def CreateAsPublishedReplay(
     video_link="",
     no_bomb=False,
     miss_count=None,
+    imported_username: typing.Optional[str] = None,
 ):
     """Create a replay according to a file, with sensible defaults."""
 
@@ -71,4 +72,5 @@ def CreateAsPublishedReplay(
         replay_info=replay_info,
         no_bomb=no_bomb,
         miss_count=miss_count,
+        imported_username=imported_username,
     )

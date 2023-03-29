@@ -45,8 +45,16 @@ class ReplayTest(test_case.ReplayTestCase):
             .exists()
         )
 
-        self.assertFalse(should_be_visible.IsVisible())
-        self.assertFalse(
+    def testVisible_Imported_username(self):
+        should_be_visible = test_replays.CreateAsPublishedReplay(
+            filename="th6_extra",
+            user=None,
+            category=models.Category.REGULAR,
+            imported_username="あ",
+        )
+
+        self.assertTrue(should_be_visible.IsVisible())
+        self.assertTrue(
             models.Replay.objects.filter_visible()
             .filter(id=should_be_visible.id)
             .exists()

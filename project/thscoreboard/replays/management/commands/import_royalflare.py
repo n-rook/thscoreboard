@@ -12,11 +12,10 @@ from replays import models
 
 
 ROYALFLARE_JSON_DIRECTORY_PATH = Path(__file__).parent / "resources" / "royalflare"
-REPLAY_DIRECTORY_PATH = Path("C:/Users/Markus/Downloads")
 
 
 class Command(BaseCommand):
-    help = """Import royalflare replays. To use this, you must first download and 
+    help = """Import royalflare replays. To use this, you must first download and
     extract royalflare replays from https://maribelhearn.com/mirror/royalflare.zip.
     Then, run this command with an argument pointing to the /replays folder you just
     made. The script imports those replays, using additional data from jsons that

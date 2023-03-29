@@ -68,7 +68,7 @@ def PublishNewReplay(
         video_link=video_link,
         is_good=is_good,
         is_clear=is_clear,
-        created=created_timestamp,
+        created=created_timestamp or datetime.datetime.now(),
         imported_username=imported_username,
     )
     replay_instance.SetFromReplayInfo(replay_info)
