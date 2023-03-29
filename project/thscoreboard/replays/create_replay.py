@@ -4,6 +4,7 @@ This module works with the database and with parsed replay files, but
 not with web entities like views or forms.
 """
 
+import datetime
 from typing import Optional
 from django.db import transaction
 
@@ -27,6 +28,8 @@ def PublishNewReplay(
     miss_count: Optional[int],
     temp_replay_instance: models.TemporaryReplayFile,
     replay_info: replay_parsing.ReplayInfo,
+    created_timestamp: Optional[datetime.datetime] = None,
+    imported_username: Optional[str] = None,
 ):
     """Publish a new replay file.
 
@@ -65,6 +68,8 @@ def PublishNewReplay(
         video_link=video_link,
         is_good=is_good,
         is_clear=is_clear,
+        created=created_timestamp,
+        imported_username=imported_username,
     )
     replay_instance.SetFromReplayInfo(replay_info)
     replay_instance.SetForeignKeysFromConstantModels(constants)
