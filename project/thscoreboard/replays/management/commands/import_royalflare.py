@@ -1,3 +1,4 @@
+from typing import Optional
 from django.core.management.base import BaseCommand, CommandParser
 from datetime import datetime
 import json
@@ -31,13 +32,22 @@ class Command(BaseCommand):
             help="The directory containing the replays. Should end in /replays.",
         )
 
+        parser.add_argument(
+            "--json",
+            help="A path to royalflare json file containing info for replays to "
+            + "import.\nIf not set, all jsons will be used.",
+        )
+
     def handle(self, *args, **options):
-        print(ROYALFLARE_JSON_DIRECTORY_PATH)
-        main(options["replay_dir"])
+        main(options["replay_dir"], options["json"])
 
 
-def main(replay_dir: str) -> None:
-    json_files = ROYALFLARE_JSON_DIRECTORY_PATH.glob("**/*.json")
+def main(replay_dir: str, json_file_arg: Optional[str]) -> None:
+    if json_file_arg is not None:
+        json_files = [json_file_arg]
+    else:
+        json_files = ROYALFLARE_JSON_DIRECTORY_PATH.glob("**/*.json")
+
     for json_file in json_files:
         with open(json_file, encoding="utf-8") as f:
             all_replay_infos_from_json = json.load(f)
