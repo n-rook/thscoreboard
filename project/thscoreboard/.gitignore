@@ -16,6 +16,5 @@ tests/coverage_html/
 tests/.coverage
 build/
 tests/report/
-shared_content/static/style.css
 staticfiles
 launch.json
