@@ -204,6 +204,13 @@ class Replay(models.Model):
                     | models.Q(replay_type=ReplayType.PVP, spell_card_id__isnull=True)
                 ),
             ),
+            models.CheckConstraint(
+                name="user_xor_imported_username_isnull",
+                check=(
+                    models.Q(user__isnull=True, imported_username__isnull=False)
+                    | models.Q(user__isnull=False, imported_username__isnull=True)
+                ),
+            ),
         ]
 
     user = models.ForeignKey(

@@ -173,3 +173,45 @@ class TestConstraints(test_case.ReplayTestCase):
                 no_bomb=False,
                 miss_count=None,
             )
+
+    def testUserXorImportedUsernameIsNullConstraint(self):
+        replay_file_contents = test_replays.GetRaw("th8_spell_practice")
+
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user, replay=replay_file_contents
+        )
+        temp_replay.save()
+        replay_info = replay_parsing.Parse(replay_file_contents)
+
+        with self.assertRaises(django.db.utils.IntegrityError):
+            create_replay.PublishNewReplay(
+                user=self.user,
+                difficulty=replay_info.difficulty,
+                score=replay_info.score,
+                category=models.Category.REGULAR,
+                comment="",
+                video_link="",
+                is_good=True,
+                is_clear=True,
+                temp_replay_instance=temp_replay,
+                replay_info=replay_info,
+                no_bomb=False,
+                miss_count=None,
+                imported_username="user",
+            )
+
+        with self.assertRaises(django.db.utils.IntegrityError):
+            create_replay.PublishNewReplay(
+                user=None,
+                difficulty=replay_info.difficulty,
+                score=replay_info.score,
+                category=models.Category.REGULAR,
+                comment="",
+                video_link="",
+                is_good=True,
+                is_clear=True,
+                temp_replay_instance=temp_replay,
+                replay_info=replay_info,
+                no_bomb=False,
+                miss_count=None,
+            )
