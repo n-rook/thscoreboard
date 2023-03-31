@@ -2,20 +2,10 @@
 
 {% block content %}
 
-<p>If you have an account, <a href="/replays/upload">try uploading a replay!</a></p>
-
-<p>Currently supported games:
-    {% for game in all_games %}
-    <ul>
-        <li>
-            <a href="/replays/{{game.game_id}}">{{game.GetName}}</a>
-        </li>
-    </ul>
-    {% endfor %}
-</p>
-
-<p>Recent uploads:
-    {% include "replays/replay_table.html" with show_game=True %}
-</p>
+<p class="highlight">Welcome to Silent Selene !</p>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime tenetur cum voluptatum tempore atque optio consequuntur quos, quas, sint, recusandae eligendi odio. Animi consequatur placeat nemo doloremque quas illum id enim aspernatur aliquam soluta, maiores reiciendis! Sed excepturi odio consectetur?</p>
+<p class="highlight">Recent uploads</p>
+<br>
+{% include "replays/replay_table.html" with show_game=True %}
 
 {% endblock %}

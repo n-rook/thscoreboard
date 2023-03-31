@@ -1,63 +1,81 @@
 <!DOCTYPE html>
 {% load static %}
-{% load sass_tags %}
 {% load i18n %}
 <html lang="en">
 <head>
     <title>{% block title %}Silent Selene{% endblock %}</title>
-    <link rel="stylesheet" href="{% sass_src 'style.sass' %}">
     <link rel="stylesheet" href="{% static 'fonts/Lato.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/EBGaramond.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="/static/js/main.js" defer></script>
     {% block favicon %}<link rel="icon" type="image/png" href="{% static 'favicon.png' %}" sizes="48x48">{% endblock %}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="{% block embed_title %}Silent Selene{% endblock %}" />
     <meta property="og:site_name" content="Silent Selene" />
     <meta property="og:description" content="{% block embed_description %}Upload and view Touhou replays at Silent Selene, the modern replay hub.{% endblock %}" />
     <meta property="og:image" content="{% block embed_favicon %}{% static 'favicon.png' %}{% endblock %}" />
 </head>
 
-<body class="theme-light {% block body-class %}{% endblock %}">
-    <div id="topbar">
-        <div class="topbar-little-spacer">
+<div class="main-wrapper-outer">
+    <div class="main-wrapper-inner">
+        <div class="header-banner">
+            <a href="/" class="banner-home-link"><div></div></a>
+            <div class="banner-links">
+                <ul>
+                    <li><a href="/users/profile">Profile</a></li>
+                    <li><a href="/replays/user/">My replays</a></li>
+                    <li><a href="/replays/upload">Upload</a></li>
+                    {% if request.user.is_staff or request.user.is_superuser %}
+                    <li><a href="/staff">Staff tools</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
-        <a id="topbar-banner" href="/">
-            <img id="topbar-logo" src="{% static 'topbar_logo.png' %}" />
-            <h1>Silent Selene</h1>
-        </a>
-        {% if user.is_staff or user.is_superuser %}
-        <a href="/staff">⚔️</a>
-        {% endif %}
-        <div class="flex-1"></div>
-        <div class="topbar-link-button">
-            <a href="/docs">About</a>
-        </div>
-        {% if user.is_authenticated %}
-        <div class="topbar-link-button">
-            <a href="/replays/user/{{user.username}}">My Replays</a>
-        </div>
-        <div class="topbar-link-button">
-            <a href="/users/profile">Profile</a>
-        </div>
-        <div class="topbar-link-button">
-            <a href="/replays/upload">{% translate "Upload a Replay" %}</a>
-        </div>
-        <div class="topbar-link-button">
-            <a href="/users/logout">{% translate "Log out" %}</a>
-        </div>
-        {% else %}
-        <div class="topbar-link-button">
-            <a href="/users/login">Log in</a>
-        </div>
-        <div class="topbar-link-button">
-            <a href="/users/register">Sign up</a>
-        </div>
-        {% endif %}
-        <div class="theme-switcher">
-            <a href="#" onclick="toggleTheme()">🌙</a>
+        <div class="content-wrapper">
+            <div class="sidebar-navigation">
+                <div class="wrapper-sidebar">
+                    <p class="highlight">Main games</p>
+                    <ul id="main-games">
+                        <li><a href="/replays/th01">Highly Responsive to Prayers</a></li>
+                        <li><a href="/replays/th02">The Story of Eastern Wonderland</a></li>
+                        <li><a href="/replays/th03">Phantasmagoria of Dim. Dream</a></li>
+                        <li><a href="/replays/th04">Lotus Land Story</a></li>
+                        <li><a href="/replays/th05">Mystic Square</a></li>
+                        <li><a href="/replays/th06">The Embodiment of Scarlet Devil</a></li>
+                        <li><a href="/replays/th07">Perfect Cherry Blossom</a></li>
+                        <li><a href="/replays/th08">Imperishable Night</a></li>
+                        <li><a href="/replays/th09">Phantasmagoria of Flower View</a></li>
+                        <li><a href="/replays/th10">Mountain of Faith</a></li>
+                        <li><a href="/replays/th11">Subterrenean Animism</a></li>
+                        <li><a href="/replays/th12">Undefined Fantastic Object</a></li>
+                        <li><a href="/replays/th13">Ten Desires</a></li>
+                        <li><a href="/replays/th14">Double Dealing Character</a></li>
+                        <li><a href="/replays/th15">Legacy of Lunatic Kingdom</a></li>
+                        <li><a href="/replays/th16">Hidden Star in Four Seasons</a></li>
+                        <li><a href="/replays/th17">Wily Beast and Weakest Creature</a></li>
+                        <li><a href="/replays/th18">Unconnected Marketeers</a></li>
+                     </ul>
+                     
+                    <p class="highlight">Side games</p>
+                    <ul id="side-games"></ul>
+                    <p class="highlight">Website</p>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Website rules</a></li>
+                        <li><a href="#">Replay rules</a></li>
+                        <li><a href="#">Privacy policy</a></li>
+                        <li><a href="#">Licences</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                        <li><a href="#">Credits</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="main">
+                {% block content %}{% endblock %}
+            </div>
         </div>
     </div>
-    <div id="content" class="{% block content-class %} {% endblock %}">
-        {% block content %}{% endblock %}
     </div>
-</body>
-<script src="/static/js/main.js"></script>
+    </body>
 </html>
