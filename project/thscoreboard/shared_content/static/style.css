@@ -116,7 +116,7 @@ td {
 }
 
 
-tr:nth-child(2n + 1):not(.h) {
+.replay-table tr:nth-child(2n + 1):not(.h) {
     background-color: var(--magenta-0);
 }
 
@@ -163,4 +163,17 @@ tr:nth-child(2n + 1):not(.h) {
     position: relative;
     min-height: var(--header-height);
     min-width: 100%;
+}
+
+h1,
+h2, 
+h3 {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+table th,
+table td {
+    padding-left: 1em;
+    padding-right: 1em;
 }

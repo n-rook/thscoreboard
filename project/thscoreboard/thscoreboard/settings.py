@@ -90,7 +90,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "sass_processor",
     "django.contrib.humanize",
 ] + (DEV_ONLY_APPS if DEBUG else [])
 
