@@ -54,6 +54,9 @@ def PublishNewReplay(
             replay file. If the replay is published successfully, this is
             deleted.
         replay_info: The parsed replay info for the TemporaryReplayFile.
+        created_timestamp: When the replay was uploaded. Defaults to now.
+        imported_username: The user who uploaded the replay to an extrenal
+            site, such as royalflare.
 
     Returns:
         The new Replay model instance.
