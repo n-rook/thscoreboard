@@ -62,6 +62,10 @@ def import_royalflare(info_from_json: dict, replay_dir: Path) -> None:
     imported_username = info_from_json["player"]
 
     try:
+        if created_timestamp > pytz.utc.localize(datetime(2023, 1, 1)):
+            raise ValueError(
+                f"Replay creation date is past royalflare's closure: {created_timestamp}"
+            )
         if replay_path.stat().st_size > limits.MAX_REPLAY_SIZE:
             raise limits.FileTooBigError()
         replay_bytes = replay_path.read_bytes()
