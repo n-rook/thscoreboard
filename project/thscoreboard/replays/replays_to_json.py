@@ -11,7 +11,9 @@ def convert_replays_to_serializable_list(
             "User": {
                 "text": f"{replay.user.username}",
                 "url": f"/replays/user/{replay.user.username}",
-            },
+            }
+            if replay.user
+            else replay.imported_username or replay.name,
             "Game": replay.shot.game.GetShortName(),
             "Difficulty": replay.GetDifficultyName(),
             "Shot": replay.shot.GetName(),

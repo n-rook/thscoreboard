@@ -8,6 +8,8 @@ from typing import Optional
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import pgettext_lazy
+from django.db.models import Q
+
 
 from replays import game_ids
 from replays import limits
@@ -165,7 +167,7 @@ class ReplayQuerySet(models.QuerySet):
         not even returned.
         """
 
-        return self.filter(user__is_active=True)
+        return self.filter(Q(user__is_active=True) | Q(imported_username__isnull=False))
 
 
 @dataclasses.dataclass(frozen=True)
@@ -202,14 +204,26 @@ class Replay(models.Model):
                     | models.Q(replay_type=ReplayType.PVP, spell_card_id__isnull=True)
                 ),
             ),
+            models.CheckConstraint(
+                name="user_xor_imported_username_isnull",
+                check=(
+                    models.Q(user__isnull=True, imported_username__isnull=False)
+                    | models.Q(user__isnull=False, imported_username__isnull=True)
+                ),
+            ),
         ]
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True
+    )
     """The user who uploaded the replay."""
+
+    imported_username = models.TextField(max_length=12, blank=True, null=True)
+    """The user who uploaded the replay to an extrenal site, such as royalflare."""
 
     category = models.IntegerField(choices=Category.choices)
 
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(default=datetime.datetime.now)
     """When the replay was uploaded."""
 
     shot = models.ForeignKey("Shot", on_delete=models.PROTECT)
@@ -314,7 +328,7 @@ class Replay(models.Model):
 
     def IsVisible(self):
         """Returns whether this replay should be visible to this user."""
-        return self.user.is_active
+        return self.imported_username is not None or self.user.is_active
 
     def GetNiceFilename(self, id: Optional[int]):
         """Returns a nice filename for this replay.
@@ -560,7 +574,9 @@ class TemporaryReplayFile(models.Model):
         """
         return model_ttl.CleanUpOldRows(cls, now)
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True
+    )
     """The user who uploaded the temporary replay."""
 
     created = models.DateTimeField(default=timezone.now)
