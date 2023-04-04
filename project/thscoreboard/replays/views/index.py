@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.views.decorators import http as http_decorators
 
 from replays import models
-from replays.replays_to_json import convert_replays_to_serializable_list
+from replays.replays_to_json import ReplayToJsonConverter
 
 
 @http_decorators.require_safe
@@ -13,8 +13,9 @@ def index_json(request):
     recent_replays = models.Replay.objects.filter(
         category__in=[models.Category.REGULAR, models.Category.TAS]
     ).order_by("-created")[:10]
+    converter = ReplayToJsonConverter()
     return JsonResponse(
-        convert_replays_to_serializable_list(recent_replays), safe=False
+        converter.convert_replays_to_serializable_list(recent_replays), safe=False
     )
 
 

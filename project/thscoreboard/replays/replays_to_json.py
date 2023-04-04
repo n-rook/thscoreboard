@@ -1,12 +1,29 @@
 from typing import Iterable
-from replays import models
+from replays import models, game_ids
+from functools import lru_cache
 
 
-def convert_replays_to_serializable_list(
-    replays: Iterable[models.Replay],
-) -> list[dict[str, any]]:
-    replay_dicts = [
-        {
+class ReplayToJsonConverter:
+    @lru_cache(maxsize=None)
+    def _get_game(self, shot: models.Shot) -> models.Game:
+        return shot.game
+
+    @lru_cache(maxsize=None)
+    def _get_game_short_name(self, game: models.Game) -> str:
+        return game.GetShortName()
+
+    @lru_cache(maxsize=None)
+    def _get_difficulty_name(self, game: models.Game, replay: models.Replay) -> str:
+        return game_ids.GetDifficultyName(game.game_id, replay.difficulty)
+
+    @lru_cache(maxsize=None)
+    def _get_shot_name(self, shot: models.Shot) -> str:
+        return shot.GetName()
+
+    def _convert_replay_to_dict(self, replay: models.Replay) -> dict:
+        shot = replay.shot
+        game = self._get_game(shot)
+        return {
             "Id": replay.id,
             "User": {
                 "text": f"{replay.user.username}",
@@ -14,19 +31,22 @@ def convert_replays_to_serializable_list(
             }
             if replay.user
             else replay.imported_username or replay.name,
-            "Game": replay.shot.game.GetShortName(),
-            "Difficulty": replay.GetDifficultyName(),
-            "Shot": replay.shot.GetName(),
+            "Game": self._get_game_short_name(game),
+            "Difficulty": self._get_difficulty_name(game, replay),
+            "Shot": self._get_shot_name(shot),
             "Score": {
                 "text": f"{int(replay.score):,}",
-                "url": f"/replays/{replay.shot.game.game_id}/{replay.id}",
+                "url": f"/replays/{game.game_id}/{replay.id}",
             },
             "Upload Date": replay.created.strftime("%Y-%m-%d"),
             "Replay": {
                 "text": "Download",
-                "url": f"/replays/{replay.shot.game.game_id}/{replay.id}",
+                "url": f"/replays/{game.game_id}/{replay.id}",
             },
         }
-        for replay in replays
-    ]
-    return replay_dicts
+
+    def convert_replays_to_serializable_list(
+        self,
+        replays: Iterable[models.Replay],
+    ) -> list[dict[str, any]]:
+        return [self._convert_replay_to_dict(replay) for replay in replays]
