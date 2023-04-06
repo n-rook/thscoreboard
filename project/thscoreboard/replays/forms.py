@@ -61,6 +61,17 @@ def _create_comment_field():
     )
 
 
+def _get_replay_type_choices(game: models.Game) -> list[Tuple[str, str]]:
+    replay_types = [
+        ("1", _("Regular")),
+        ("2", _("Stage Practice")),
+    ]
+    games_with_pvp = [game_ids.GameIDs.TH03, game_ids.GameIDs.TH09]
+    if game.game_id in games_with_pvp:
+        replay_types.append(("4", _("PVP")))
+    return replay_types
+
+
 class ShotField(forms.ModelChoiceField):
     """A field defining shot type. You must call set_queryset before using."""
 
@@ -160,6 +171,7 @@ class PublishReplayWithoutFileForm(forms.Form):
             del self.fields["route"]
 
         self.fields["difficulty"].choices = _GetDifficultyChoices(game)
+        self.fields["replay_type"].choices = _get_replay_type_choices(game)
 
         if not game_ids.HasBombs(game.game_id):
             del self.fields["uses_bombs"]
