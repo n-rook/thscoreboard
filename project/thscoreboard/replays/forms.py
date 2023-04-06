@@ -55,6 +55,12 @@ def _GetDifficultyChoices(game: models.Game) -> Tuple[int, str]:
     ]
 
 
+def _create_comment_field():
+    return forms.CharField(
+        max_length=limits.MAX_COMMENT_LENGTH, required=False, widget=forms.Textarea
+    )
+
+
 class ShotField(forms.ModelChoiceField):
     """A field defining shot type. You must call set_queryset before using."""
 
@@ -122,9 +128,7 @@ class PublishReplayForm(forms.Form):
 
     score = forms.IntegerField(min_value=0)
     category = forms.ChoiceField(choices=category_names)
-    comment = forms.CharField(
-        max_length=limits.MAX_COMMENT_LENGTH, required=False, widget=forms.Textarea
-    )
+    comment = _create_comment_field()
     is_good = forms.BooleanField(initial=True, required=False)
     is_clear = forms.BooleanField(initial=True, required=False)
     video_link = VideoReplayLinkField(required=False)
@@ -169,9 +173,7 @@ class PublishReplayWithoutFileForm(forms.Form):
     category = forms.ChoiceField(choices=category_names)
     replay_type = forms.ChoiceField(choices=replay_types)
     is_clear = forms.BooleanField(initial=True, required=False)
-    comment = forms.CharField(
-        max_length=limits.MAX_COMMENT_LENGTH, required=False, widget=forms.Textarea
-    )
+    comment = _create_comment_field()
     video_link = VideoReplayLinkField(required=True)
 
     uses_bombs = forms.BooleanField(initial=True, required=False)
@@ -179,6 +181,4 @@ class PublishReplayWithoutFileForm(forms.Form):
 
 
 class EditReplayForm(forms.Form):
-    comment = forms.CharField(
-        max_length=limits.MAX_COMMENT_LENGTH, widget=forms.Textarea
-    )
+    comment = _create_comment_field()
