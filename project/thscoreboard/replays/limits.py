@@ -11,3 +11,4 @@ class FileTooBigError(ValidationError):
 
 
 MAX_COMMENT_LENGTH = 50000
+MAX_SHORTENED_COMMENT_LENGTH = 250

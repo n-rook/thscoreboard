@@ -22,6 +22,7 @@ def convert_replays_to_serializable_list(
                 "url": f"/replays/{replay.shot.game.game_id}/{replay.id}",
             },
             "Upload Date": replay.created.strftime("%Y-%m-%d"),
+            "Comment": replay.GetShortenedComment(),
             "Replay": {
                 "text": "Download",
                 "url": f"/replays/{replay.shot.game.game_id}/{replay.id}",

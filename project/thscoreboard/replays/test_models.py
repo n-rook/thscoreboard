@@ -1,6 +1,7 @@
 import datetime
 
 from replays import game_ids
+from replays import limits
 from replays import models
 from replays import constant_helpers
 from replays import create_replay
@@ -91,6 +92,22 @@ class ReplayTest(test_case.ReplayTestCase):
         self.assertEqual(to_be_modified.shot.game.game_id, "th08")
         self.assertEqual(to_be_modified.shot.shot_id, "Marisa & Alice")
         self.assertIsNone(to_be_modified.route)
+
+    def testGetShortenedComment_ShortComment(self) -> None:
+        short_comment = "a" * limits.MAX_SHORTENED_COMMENT_LENGTH
+        replay = test_replays.CreateAsPublishedReplay(
+            filename="th6_extra", user=self.author, comment=short_comment
+        )
+        expected_shortened_comment = short_comment
+        self.assertEqual(replay.GetShortenedComment(), expected_shortened_comment)
+
+    def testGetShortenedComment_LongComment(self) -> None:
+        long_comment = "a" * (limits.MAX_SHORTENED_COMMENT_LENGTH + 1)
+        replay = test_replays.CreateAsPublishedReplay(
+            filename="th6_extra", user=self.author, comment=long_comment
+        )
+        expected_shortened_comment = "a" * limits.MAX_SHORTENED_COMMENT_LENGTH + "..."
+        self.assertEqual(replay.GetShortenedComment(), expected_shortened_comment)
 
 
 class TemporaryReplayFileTest(test_case.ReplayTestCase):

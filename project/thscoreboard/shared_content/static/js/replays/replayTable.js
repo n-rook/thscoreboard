@@ -102,6 +102,9 @@ function createTableCell(columnName, value) {
     const text = document.createTextNode(value);
     cell.appendChild(text);
   }
+  if (columnName === "Shot") {
+    cell.style.whiteSpace = "nowrap";
+  }
   return cell;
 }
 
