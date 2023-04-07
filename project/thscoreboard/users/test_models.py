@@ -1,5 +1,6 @@
 import datetime
 import logging
+from freezegun import freeze_time
 
 from django import test
 from django.db import utils
@@ -145,13 +146,13 @@ class VisitsTestCase(test_case.UserTestCase):
         models.Visits.objects.filter(user=u, ip="1.2.3.4").get()
         # No error.
 
+    @freeze_time("2020-01-01")
     def testRecordVisit_RecordsTimestamp(self):
         u = self.createUser("somebody")
         models.Visits.RecordVisit(u, "1.2.3.4")
 
         v = models.Visits.objects.filter(user=u, ip="1.2.3.4").get()
-        self.assertLess(v.created, timezone.now())
-        self.assertGreater(v.created, timezone.now() - datetime.timedelta(seconds=15))
+        self.assertEqual(v.created, timezone.now())
 
     def testRecordAnonymousVisit(self):
         models.Visits.RecordVisit(None, "1.2.3.4")

@@ -1,4 +1,3 @@
-import logging
 from django.core import management
 from django import test
 
