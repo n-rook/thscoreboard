@@ -7,6 +7,7 @@ not with web entities like views or forms.
 import datetime
 from typing import Optional
 from django.db import transaction
+import pytz
 
 from replays import constant_helpers
 from replays import game_ids
@@ -71,7 +72,7 @@ def PublishNewReplay(
         video_link=video_link,
         is_good=is_good,
         is_clear=is_clear,
-        created=created_timestamp or datetime.datetime.now(),
+        created=created_timestamp or datetime.datetime.now(tz=pytz.UTC),
         imported_username=imported_username,
     )
     replay_instance.SetFromReplayInfo(replay_info)
@@ -157,6 +158,7 @@ def PublishReplayWithoutFile(
         comment=comment,
         video_link=video_link,
         replay_type=replay_type,
+        created=datetime.datetime.now(tz=pytz.UTC),
     )
     if game_ids.HasBombs(shot.game_id, replay_type):
         if no_bomb is None:
