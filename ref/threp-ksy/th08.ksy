@@ -63,7 +63,7 @@ types:
         terminator: 0x0
       - id: name
         type: str
-        encoding: ASCII
+        encoding: SJIS
         terminator: 0x0
         size: 10
       - id: spell_card_id
