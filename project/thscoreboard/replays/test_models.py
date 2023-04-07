@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 from replays import game_ids
 from replays import models
@@ -100,7 +101,8 @@ class TemporaryReplayFileTest(test_case.ReplayTestCase):
 
     def testCleanUpDoesNothingWithNoReplays(self):
         now = datetime.datetime.now(tz=datetime.timezone.utc)
-        models.TemporaryReplayFile.CleanUp(now)
+        with self.assertLogs(logging.getLogger(), level="INFO"):
+            models.TemporaryReplayFile.CleanUp(now)
 
     def testCleanUpDeletesOldReplaysButNotNewOnes(self):
         now = datetime.datetime(2020, 1, 1, tzinfo=datetime.timezone.utc)
@@ -115,7 +117,8 @@ class TemporaryReplayFileTest(test_case.ReplayTestCase):
         )
         dont_delete_me.save()
 
-        models.TemporaryReplayFile.CleanUp(now)
+        with self.assertLogs(logging.getLogger(), level="INFO"):
+            models.TemporaryReplayFile.CleanUp(now)
 
         with self.assertRaises(models.TemporaryReplayFile.DoesNotExist):
             models.TemporaryReplayFile.objects.get(id=delete_me.id)
