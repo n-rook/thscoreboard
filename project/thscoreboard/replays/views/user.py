@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators import http as http_decorators
 
 from replays import models
-from replays.replays_to_json import convert_replays_to_serializable_list
+from replays.replays_to_json import ReplayToJsonConverter
 
 
 @http_decorators.require_safe
@@ -16,7 +16,10 @@ def user_page_json(request, username: str):
     user_replays = models.Replay.objects.filter(user=user).order_by(
         "shot__game_id", "shot_id", "created"
     )
-    return JsonResponse(convert_replays_to_serializable_list(user_replays), safe=False)
+    converter = ReplayToJsonConverter()
+    return JsonResponse(
+        converter.convert_replays_to_serializable_list(user_replays), safe=False
+    )
 
 
 @http_decorators.require_safe
