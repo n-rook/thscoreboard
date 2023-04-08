@@ -955,8 +955,9 @@ def _Parse18(rep_raw) -> ReplayInfo:
 def _DetermineTH13orTH14(replay):
     # thank you ZUN
     header = th_modern.ThModern.from_bytes(replay)
-    if header.userdata.user_desc[4] == 0x90:
+    if header.userdata.user_desc[4] == 0x90 or header.userdata.user_desc[4] == 0xc9:
         # the shift-jis character is 廟
+        # 0xc9 is for royalflare corrupted replays
         return _Parse13(replay)
     elif header.userdata.user_desc[4] == 0x8b:
         # the shift-jis character is 城
