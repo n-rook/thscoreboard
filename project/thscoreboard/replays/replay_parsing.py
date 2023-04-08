@@ -112,13 +112,6 @@ def convert_stored_PIV_to_displayed(game_id: str, piv: int) -> int:
     return piv
 
 
-# piv is stored with extra precision, we trunctate the value to what is shown ingame
-def convert_stored_PIV_to_displayed(game_id: str, piv: int) -> int:
-    if game_id in ["th12", "th13", "th14", "th15", "th16", "th17", "th18"]:
-        return (math.trunc(piv / 1000)) * 10
-    return piv
-
-
 def _Parse06(rep_raw):
     cryptdata = bytearray(rep_raw[15:])
     td.decrypt06(cryptdata, rep_raw[14])
