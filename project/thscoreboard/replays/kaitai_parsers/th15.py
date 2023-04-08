@@ -29,7 +29,7 @@ class Th15(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.name = (KaitaiStream.bytes_terminate(self._io.read_bytes(12), 0, False)).decode(u"ASCII")
+            self.name = (KaitaiStream.bytes_terminate(self._io.read_bytes(12), 0, False)).decode(u"SJIS")
             self.timestamp = self._io.read_u8le()
             self.score = self._io.read_u4le()
             self.unknown_1 = self._io.read_bytes(108)
