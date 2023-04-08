@@ -385,8 +385,7 @@ class ReplayStage(models.Model):
     """
 
     score = models.BigIntegerField(blank=True, null=True)
-    """ The current score stored at this stage
-    """
+    """ The current score stored at this stage"""
 
     piv = models.IntegerField(blank=True, null=True)
     """ The current PIV stored at this stage
@@ -395,12 +394,10 @@ class ReplayStage(models.Model):
     """
 
     graze = models.IntegerField(blank=True, null=True)
-    """ The current graze stored at this stage
-    """
+    """ The current graze stored at this stage"""
 
     point_items = models.IntegerField(blank=True, null=True)
-    """ The number of point items acquired at this stage
-    """
+    """ The number of point items acquired at this stage"""
 
     power = models.IntegerField(blank=True, null=True)
     """ The player's power at this stage
@@ -408,20 +405,16 @@ class ReplayStage(models.Model):
     """
 
     lives = models.IntegerField(blank=True, null=True)
-    """ The number of extra lives at this stage
-    """
+    """ The number of extra lives at this stage"""
 
     life_pieces = models.IntegerField(blank=True, null=True)
-    """ The number of life pieces at this stage
-    """
+    """ The number of life pieces at this stage"""
 
     bombs = models.IntegerField(blank=True, null=True)
-    """ The number of bombs at this stage
-    """
+    """ The number of bombs at this stage"""
 
     bomb_pieces = models.IntegerField(blank=True, null=True)
-    """ The number of bomb pieces at this stage
-    """
+    """ The number of bomb pieces at this stage"""
 
     th06_rank = models.IntegerField(blank=True, null=True)
     """The internal 'rank' value for TH06"""
