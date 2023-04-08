@@ -589,3 +589,10 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
             stage.extends = ""
 
     return new_stages
+
+
+_games_with_pvp = ["th03", "th09"]
+
+
+def game_has_pvp(game_id: str) -> bool:
+    return game_id in _games_with_pvp

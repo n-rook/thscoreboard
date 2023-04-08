@@ -8,6 +8,7 @@ from django.core import exceptions
 from django.utils.translation import gettext as _
 
 from replays import game_ids
+from replays import game_fields
 from replays import models
 from replays import limits
 
@@ -66,8 +67,7 @@ def _get_replay_type_choices(game: models.Game) -> list[Tuple[str, str]]:
         ("1", _("Regular")),
         ("2", _("Stage Practice")),
     ]
-    games_with_pvp = [game_ids.GameIDs.TH03, game_ids.GameIDs.TH09]
-    if game.game_id in games_with_pvp:
+    if game_fields.game_has_pvp(game.game_id):
         replay_types.append(("4", _("PVP")))
     return replay_types
 
