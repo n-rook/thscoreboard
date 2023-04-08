@@ -8,21 +8,20 @@ from thscoreboard import settings
 from . import models
 
 
-_ACCOUNTS_EMAIL = 'Silent Selene Accounts <accounts@silentselene.net>'
+_ACCOUNTS_EMAIL = "Silent Selene Accounts <accounts@silentselene.net>"
 
 
 def SendVerificationEmail(request, u: models.UnverifiedUser):
-    full_link = settings.SITE_BASE + urls.reverse('users:verify_email', kwargs={'token': u.token})
+    full_link = settings.SITE_BASE + urls.reverse(
+        "users:verify_email", kwargs={"token": u.token}
+    )
 
     text_message = loader.render_to_string(
-        'registration/email/verification.txt',
-        context={
-            'site_name': 'Silent Selene',
-            'link': full_link
-        }
+        "registration/email/verification.txt",
+        context={"site_name": "Silent Selene", "link": full_link},
     )
     email = mail.EmailMessage(
-        subject='Register your account at Silent Selene',
+        subject="Register your account at Silent Selene",
         body=text_message,
         from_email=_ACCOUNTS_EMAIL,
         to=[u.email],
@@ -31,17 +30,16 @@ def SendVerificationEmail(request, u: models.UnverifiedUser):
 
 
 def SendInviteEmail(u: models.InvitedUser):
-    full_link = settings.SITE_BASE + urls.reverse('users:accept_invite', kwargs={'token': u.token})
+    full_link = settings.SITE_BASE + urls.reverse(
+        "users:accept_invite", kwargs={"token": u.token}
+    )
 
     text_message = loader.render_to_string(
-        'registration/email/invite.txt',
-        context={
-            'site_name': 'Silent Selene',
-            'link': full_link
-        }
+        "registration/email/invite.txt",
+        context={"site_name": "Silent Selene", "link": full_link},
     )
     email = mail.EmailMessage(
-        subject='You have been invited to Silent Selene',
+        subject="You have been invited to Silent Selene",
         body=text_message,
         from_email=_ACCOUNTS_EMAIL,
         to=[u.email],

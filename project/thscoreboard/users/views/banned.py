@@ -19,49 +19,43 @@ def banned_notification(request):
     with transaction.atomic():
         if not request.user.CheckIfBanned():
             # The user is not banned, just send them to the homepage.
-            return redirect('/')
+            return redirect("/")
 
-        latest_ban = models.Ban.objects.filter(target=request.user).order_by('-expiration')[0]
+        latest_ban = models.Ban.objects.filter(target=request.user).order_by(
+            "-expiration"
+        )[0]
 
     return render(
         request,
-        'users/banned.html',
+        "users/banned.html",
         {
-            'reason': latest_ban.reason,
-            'expiration': latest_ban.expiration,
-        }
+            "reason": latest_ban.reason,
+            "expiration": latest_ban.expiration,
+        },
     )
 
 
 @auth_decorators.login_required
-@auth_decorators.permission_required('staff', raise_exception=True)
+@auth_decorators.permission_required("staff", raise_exception=True)
 def staff_ban(request):
     """A page where staff can temporarily ban other users."""
-    if request.method == 'POST':
+    if request.method == "POST":
         form = forms.BanForm(request.POST)
         if form.is_valid():
-            form.cleaned_data['target'].BanUser(
+            form.cleaned_data["target"].BanUser(
                 author=request.user,
-                reason=form.cleaned_data['reason'],
-                duration=form.GetDuration()
+                reason=form.cleaned_data["reason"],
+                duration=form.GetDuration(),
             )
 
             return render(
                 request,
-                'users/ban_success.html',
-                {
-                    'target': form.cleaned_data['target']
-                }
+                "users/ban_success.html",
+                {"target": form.cleaned_data["target"]},
             )
 
         # If the form is not valid, fall through to the GET page, and render it that way.
     else:
         form = forms.BanForm()
 
-    return render(
-        request,
-        'users/ban_form.html',
-        {
-            'form': form
-        }
-    )
+    return render(request, "users/ban_form.html", {"form": form})

@@ -15,19 +15,21 @@ from users import forms
 @http_decorators.require_safe
 def profile(request):
     """View the user's profile page."""
-    
+
     # The user profile is currently read-only, so we do not do anything for
     # POST requests yet.
     form = forms.UserProfileForm(
         initial={
-            'username': request.user.username,
-            'email': request.user.email,
-            'password': 'xxxxxxxxxx'
+            "username": request.user.username,
+            "email": request.user.email,
+            "password": "xxxxxxxxxx",
         }
     )
 
     return render(
-        request, 'users/profile.html',
+        request,
+        "users/profile.html",
         {
-            'form': form,
-        })
+            "form": form,
+        },
+    )

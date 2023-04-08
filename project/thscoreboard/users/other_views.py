@@ -13,32 +13,40 @@ from . import models
 
 
 @auth_decorators.login_required
-@auth_decorators.permission_required('staff', raise_exception=True)
-@http_decorators.require_http_methods(['GET', 'HEAD'])
+@auth_decorators.permission_required("staff", raise_exception=True)
+@http_decorators.require_http_methods(["GET", "HEAD"])
 def view_ip_bans(request):
-    return render(request, 'users/ip_bans.html', {
-        'ip_bans': models.IPBan.objects.all(),
-        'add_ip_ban_form': forms.AddIPBanForm()
-    })
+    return render(
+        request,
+        "users/ip_bans.html",
+        {
+            "ip_bans": models.IPBan.objects.all(),
+            "add_ip_ban_form": forms.AddIPBanForm(),
+        },
+    )
 
 
 @auth_decorators.login_required
-@auth_decorators.permission_required('staff', raise_exception=True)
-@http_decorators.require_http_methods(['GET', 'HEAD'])
+@auth_decorators.permission_required("staff", raise_exception=True)
+@http_decorators.require_http_methods(["GET", "HEAD"])
 def delete_ip_ban(request, ban_id: int):
     models.IPBan.objects.get(id=ban_id).delete()
-    return redirect('/users/ip_bans')
+    return redirect("/users/ip_bans")
 
 
 @auth_decorators.login_required
-@auth_decorators.permission_required('staff', raise_exception=True)
+@auth_decorators.permission_required("staff", raise_exception=True)
 @http_decorators.require_POST
 def add_ip_ban(request):
     form = forms.AddIPBanForm(request.POST)
     if form.is_valid():
         try:
-            models.validate_ip(form.cleaned_data['ip'])
+            models.validate_ip(form.cleaned_data["ip"])
         except ValidationError as e:
             return HttpResponseBadRequest(content=e)
-        models.IPBan(ip=form.cleaned_data['ip'], comment=form.cleaned_data['comment'], author=request.user).save()
-    return redirect('/users/ip_bans')
+        models.IPBan(
+            ip=form.cleaned_data["ip"],
+            comment=form.cleaned_data["comment"],
+            author=request.user,
+        ).save()
+    return redirect("/users/ip_bans")

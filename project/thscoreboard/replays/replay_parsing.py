@@ -52,10 +52,10 @@ class ReplayStage:
     graze: int = None
     point_items: int = None
     power: int = None
-    lives: int = None
-    life_pieces: int = None
-    bombs: int = None
-    bomb_pieces: int = None
+    lives: Optional[int] = None
+    life_pieces: Optional[int] = None
+    bombs: Optional[int] = None
+    bomb_pieces: Optional[int] = None
     th06_rank: int = None
     th07_cherry: int = None
     th07_cherrymax: int = None
@@ -102,7 +102,14 @@ class ReplayInfo:
             # datetimes without explicit timezone info tend to be converted
             # in weird ways by builtin methods, so it's way too easy to
             # accidentally apply a timezone correction twice.
-            raise ValueError('timestamp datetime must be aware')
+            raise ValueError("timestamp datetime must be aware")
+
+
+# piv is stored with extra precision, we trunctate the value to what is shown ingame
+def convert_stored_PIV_to_displayed(game_id: str, piv: int) -> int:
+    if game_id in ["th12", "th13", "th14", "th15", "th16", "th17", "th18"]:
+        return (math.trunc(piv / 1000)) * 10
+    return piv
 
 
 # piv is stored with extra precision, we trunctate the value to what is shown ingame
@@ -130,10 +137,7 @@ def _Parse06(rep_raw):
     for (i, current_stage), (j, next_stage) in zip(
         enumerated_non_dummy_stages, enumerated_non_dummy_stages[1:] + [(None, None)]
     ):
-        s = ReplayStage(
-            stage=i + 1,
-            score=current_stage.score
-        )
+        s = ReplayStage(stage=i + 1, score=current_stage.score)
         if next_stage is not None:
             s.power = next_stage.power
             s.lives = next_stage.lives
@@ -155,7 +159,7 @@ def _Parse06(rep_raw):
         name=replay.file_header.name.replace("\x00", ""),
         slowdown=replay.file_header.slowdown,
         replay_type=r_type,
-        stages=rep_stages
+        stages=rep_stages,
     )
 
     return r
@@ -167,8 +171,12 @@ def _Parse07(rep_raw):
     #   please don't ask what is going on here
     #   0x54 - 16 = 68
 
-    comp_size = int.from_bytes(comp_data[4:8], byteorder='little')
-    replay = th07.Th07.from_bytes(bytearray(rep_raw[0:16]) + comp_data[0:68] + td.unlzss(comp_data[68:68 + comp_size]))
+    comp_size = int.from_bytes(comp_data[4:8], byteorder="little")
+    replay = th07.Th07.from_bytes(
+        bytearray(rep_raw[0:16])
+        + comp_data[0:68]
+        + td.unlzss(comp_data[68 : 68 + comp_size])
+    )
 
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"]
 
@@ -189,7 +197,7 @@ def _Parse07(rep_raw):
     ):
         s = ReplayStage(
             stage=i + 2 if is_phantasm(replay.header.difficulty) else i + 1,
-            score=current_stage.score * 10
+            score=current_stage.score * 10,
         )
         if next_stage is not None:
             s.power = next_stage.power
@@ -216,14 +224,14 @@ def _Parse07(rep_raw):
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
-        stages=rep_stages
+        stages=rep_stages,
     )
 
     return r
 
 
 def _Parse08(rep_raw):
-    comp_data_size = int.from_bytes(rep_raw[12:16], byteorder='little') - 24
+    comp_data_size = int.from_bytes(rep_raw[12:16], byteorder="little") - 24
     comp_data = bytearray(rep_raw[24:comp_data_size])
 
     #   read the userdata section to use the date for later
@@ -233,7 +241,9 @@ def _Parse08(rep_raw):
     td.decrypt06(comp_data, rep_raw[21])
     #   basically copied from _Parse07()
     #   0x68 (104) - 24 = 80
-    replay = th08.Th08.from_bytes(bytearray(rep_raw[0:24]) + comp_data[0:80] + td.unlzss(comp_data[80:]))
+    replay = th08.Th08.from_bytes(
+        bytearray(rep_raw[0:24]) + comp_data[0:80] + td.unlzss(comp_data[80:])
+    )
 
     shots = [
         "Reimu & Yukari",
@@ -247,12 +257,12 @@ def _Parse08(rep_raw):
         "Sakuya",
         "Remilia",
         "Youmu",
-        "Yuyuko"
+        "Yuyuko",
     ]
 
     rep_stages = []
 
-    if replay.header.spell_card_id != 65535:    # FF FF
+    if replay.header.spell_card_id != 65535:  # FF FF
         #   spell practice, so stage info isn't necessary
         return ReplayInfo(
             game=game_ids.GameIDs.TH08,
@@ -263,7 +273,7 @@ def _Parse08(rep_raw):
             name=replay.header.name.replace("\x00", ""),
             slowdown=replay.header.slowdown,
             replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
-            spell_card_id=replay.header.spell_card_id
+            spell_card_id=replay.header.spell_card_id,
         )
 
     #   else regular run
@@ -289,11 +299,11 @@ def _Parse08(rep_raw):
             s.bombs = next_stage.bombs
             s.graze = next_stage.graze
             s.point_items = next_stage.point_items
-            
+
         if i == 6:
-            route = 'Final A'
+            route = "Final A"
         elif i == 7:
-            route = 'Final B'
+            route = "Final B"
 
         rep_stages.append(s)
 
@@ -311,18 +321,20 @@ def _Parse08(rep_raw):
         slowdown=replay.header.slowdown,
         replay_type=r_type,
         route=route,
-        stages=rep_stages
+        stages=rep_stages,
     )
 
     return r
 
 
 def _Parse09(rep_raw):
-    comp_data_size = int.from_bytes(rep_raw[12:16], byteorder='little') - 24
+    comp_data_size = int.from_bytes(rep_raw[12:16], byteorder="little") - 24
     comp_data = bytearray(rep_raw[24:comp_data_size])
     td.decrypt06(comp_data, rep_raw[21])
     #   0xc0 (192) - 24 = 168
-    replay = th09.Th09.from_bytes(bytearray(rep_raw[0:24]) + comp_data[0:168] + td.unlzss(comp_data[168:]))
+    replay = th09.Th09.from_bytes(
+        bytearray(rep_raw[0:24]) + comp_data[0:168] + td.unlzss(comp_data[168:])
+    )
     shots = [
         "Reimu",
         "Marisa",
@@ -339,7 +351,7 @@ def _Parse09(rep_raw):
         "Komachi",
         "Eiki",
         "Merlin",
-        "Lunasa"
+        "Lunasa",
     ]
 
     rep_stages = []
@@ -409,7 +421,9 @@ def _Parse09(rep_raw):
         if s.th09_p1_cpu is False and s.th09_p2_cpu is False:
             r_type = game_ids.ReplayTypes.PVP  # mark pvp replays as such
         else:
-            r_type = game_ids.ReplayTypes.STAGE_PRACTICE  # treat any "pvp" replay with an ai in it as stage practice
+            r_type = (
+                game_ids.ReplayTypes.STAGE_PRACTICE
+            )  # treat any "pvp" replay with an ai in it as stage practice
 
         rep_stages.append(s)
 
@@ -421,7 +435,7 @@ def _Parse09(rep_raw):
         timestamp=time.strptime(replay.header.date, "%y/%m/%d"),
         name=replay.header.name.replace("\x00", ""),
         replay_type=r_type,
-        stages=rep_stages
+        stages=rep_stages,
     )
 
     return r
@@ -431,8 +445,8 @@ def _Parse10(rep_raw):
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
 
-    td.decrypt(comp_data, 0x400, 0xaa, 0xe1)
-    td.decrypt(comp_data, 0x80, 0x3d, 0x7a)
+    td.decrypt(comp_data, 0x400, 0xAA, 0xE1)
+    td.decrypt(comp_data, 0x80, 0x3D, 0x7A)
     replay = th10.Th10.from_bytes(td.unlzss(comp_data))
 
     shots = ["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"]
@@ -461,14 +475,16 @@ def _Parse10(rep_raw):
 
     r = ReplayInfo(
         game=game_ids.GameIDs.TH10,
-        shot=shots[replay.header.shot],
+        shot=shots[replay.header.shot * 3 + replay.header.subshot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+        timestamp=datetime.datetime.fromtimestamp(
+            replay.header.timestamp, tz=datetime.timezone.utc
+        ),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
-        stages=rep_stages
+        stages=rep_stages,
     )
 
     return r
@@ -478,8 +494,8 @@ def _Parse11(rep_raw):
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
 
-    td.decrypt(comp_data, 0x800, 0xaa, 0xe1)
-    td.decrypt(comp_data, 0x40, 0x3d, 0x7a)
+    td.decrypt(comp_data, 0x800, 0xAA, 0xE1)
+    td.decrypt(comp_data, 0x40, 0x3D, 0x7A)
     replay = th11.Th11.from_bytes(td.unlzss(comp_data))
 
     shots = ["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"]
@@ -513,11 +529,13 @@ def _Parse11(rep_raw):
         shot=shots[replay.header.shot * 3 + replay.header.subshot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+        timestamp=datetime.datetime.fromtimestamp(
+            replay.header.timestamp, tz=datetime.timezone.utc
+        ),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
-        stages=rep_stages
+        stages=rep_stages,
     )
 
     return r
@@ -527,8 +545,8 @@ def _Parse12(rep_raw):
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
 
-    td.decrypt(comp_data, 0x800, 0x5e, 0xe1)
-    td.decrypt(comp_data, 0x40, 0x7d, 0x3a)
+    td.decrypt(comp_data, 0x800, 0x5E, 0xE1)
+    td.decrypt(comp_data, 0x40, 0x7D, 0x3A)
     replay = th12.Th12.from_bytes(td.unlzss(comp_data))
 
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SanaeA", "SanaeB"]
@@ -567,11 +585,13 @@ def _Parse12(rep_raw):
         shot=shots[replay.header.shot * 2 + replay.header.subshot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+        timestamp=datetime.datetime.fromtimestamp(
+            replay.header.timestamp, tz=datetime.timezone.utc
+        ),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
-        stages=rep_stages
+        stages=rep_stages,
     )
 
     return r
@@ -581,8 +601,8 @@ def _Parse13(rep_raw):
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
 
-    td.decrypt(comp_data, 0x400, 0x5c, 0xe1)
-    td.decrypt(comp_data, 0x100, 0x7d, 0x3a)
+    td.decrypt(comp_data, 0x400, 0x5C, 0xE1)
+    td.decrypt(comp_data, 0x100, 0x7D, 0x3A)
     replay = th13.Th13.from_bytes(td.unlzss(comp_data))
 
     shots = ["Reimu", "Marisa", "Sanae", "Youmu"]
@@ -595,11 +615,13 @@ def _Parse13(rep_raw):
             shot=shots[replay.header.shot],
             difficulty=replay.header.difficulty,
             score=replay.header.score * 10,
-            timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+            timestamp=datetime.datetime.fromtimestamp(
+                replay.header.timestamp, tz=datetime.timezone.utc
+            ),
             name=replay.header.name.replace("\x00", ""),
             slowdown=replay.header.slowdown,
             replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
-            spell_card_id=replay.header.spell_practice_id
+            spell_card_id=replay.header.spell_practice_id,
         )
 
     # TH13 stores stage data values from the start of the stage but score from the end
@@ -626,7 +648,7 @@ def _Parse13(rep_raw):
             # no next stage means this is the last stage, so use the final run score
             s.score = replay.header.score * 10
         rep_stages.append(s)
-        
+
     r_type = game_ids.ReplayTypes.REGULAR
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
@@ -636,11 +658,13 @@ def _Parse13(rep_raw):
         shot=shots[replay.header.shot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+        timestamp=datetime.datetime.fromtimestamp(
+            replay.header.timestamp, tz=datetime.timezone.utc
+        ),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
-        stages=rep_stages
+        stages=rep_stages,
     )
 
     return r
@@ -650,8 +674,8 @@ def _Parse14(rep_raw):
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
 
-    td.decrypt(comp_data, 0x400, 0x5c, 0xe1)
-    td.decrypt(comp_data, 0x100, 0x7d, 0x3a)
+    td.decrypt(comp_data, 0x400, 0x5C, 0xE1)
+    td.decrypt(comp_data, 0x100, 0x7D, 0x3A)
     replay = th14.Th14.from_bytes(td.unlzss(comp_data))
 
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"]
@@ -663,11 +687,13 @@ def _Parse14(rep_raw):
             shot=shots[replay.header.shot * 2 + replay.header.subshot],
             difficulty=replay.header.difficulty,
             score=replay.header.score * 10,
-            timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+            timestamp=datetime.datetime.fromtimestamp(
+                replay.header.timestamp, tz=datetime.timezone.utc
+            ),
             name=replay.header.name.replace("\x00", ""),
             slowdown=replay.header.slowdown,
             replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
-            spell_card_id=replay.header.spell_practice_id
+            spell_card_id=replay.header.spell_practice_id,
         )
 
     for current_stage_start_data, next_stage_start_data in zip(
@@ -699,11 +725,13 @@ def _Parse14(rep_raw):
         shot=shots[replay.header.shot * 2 + replay.header.subshot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+        timestamp=datetime.datetime.fromtimestamp(
+            replay.header.timestamp, tz=datetime.timezone.utc
+        ),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
-        stages=rep_stages
+        stages=rep_stages,
     )
 
     return r
@@ -713,8 +741,8 @@ def _Parse15(rep_raw) -> ReplayInfo:
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
 
-    td.decrypt(comp_data, 0x400, 0x5c, 0xe1)
-    td.decrypt(comp_data, 0x100, 0x7d, 0x3a)
+    td.decrypt(comp_data, 0x400, 0x5C, 0xE1)
+    td.decrypt(comp_data, 0x100, 0x7D, 0x3A)
     replay = th15.Th15.from_bytes(td.unlzss(comp_data))
 
     shots = ["Reimu", "Marisa", "Sanae", "Reisen"]
@@ -749,11 +777,13 @@ def _Parse15(rep_raw) -> ReplayInfo:
         shot=shots[replay.header.shot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+        timestamp=datetime.datetime.fromtimestamp(
+            replay.header.timestamp, tz=datetime.timezone.utc
+        ),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
-        stages=rep_stages
+        stages=rep_stages,
     )
 
     return r
@@ -763,10 +793,10 @@ def _Parse16(rep_raw) -> ReplayInfo:
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
 
-    td.decrypt(comp_data, 0x400, 0x5c, 0xe1)
-    td.decrypt(comp_data, 0x100, 0x7d, 0x3a)
+    td.decrypt(comp_data, 0x400, 0x5C, 0xE1)
+    td.decrypt(comp_data, 0x100, 0x7D, 0x3A)
     replay = th16.Th16.from_bytes(td.unlzss(comp_data))
-    
+
     def get_shot(shot_id: int, season_id: int) -> str:
         shots = ["Reimu", "Cirno", "Aya", "Marisa"]
         seasons = ["Spring", "Summer", "Autumn", "Winter", ""]
@@ -778,7 +808,9 @@ def _Parse16(rep_raw) -> ReplayInfo:
             shot=get_shot(replay.header.shot, replay.header.season),
             difficulty=replay.header.difficulty,
             score=replay.header.score * 10,
-            timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+            timestamp=datetime.datetime.fromtimestamp(
+                replay.header.timestamp, tz=datetime.timezone.utc
+            ),
             name=replay.header.name.replace("\x00", ""),
             slowdown=replay.header.slowdown,
             replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
@@ -817,11 +849,13 @@ def _Parse16(rep_raw) -> ReplayInfo:
         shot=get_shot(replay.header.shot, replay.header.season),
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+        timestamp=datetime.datetime.fromtimestamp(
+            replay.header.timestamp, tz=datetime.timezone.utc
+        ),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
-        stages=rep_stages
+        stages=rep_stages,
     )
 
     return r
@@ -831,15 +865,15 @@ def _Parse17(rep_raw) -> ReplayInfo:
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
 
-    td.decrypt(comp_data, 0x400, 0x5c, 0xe1)
-    td.decrypt(comp_data, 0x100, 0x7d, 0x3a)
+    td.decrypt(comp_data, 0x400, 0x5C, 0xE1)
+    td.decrypt(comp_data, 0x100, 0x7D, 0x3A)
     replay = th17.Th17.from_bytes(td.unlzss(comp_data))
 
     def get_shot(shot_id: int, subshot_id: int) -> str:
         shots = ["Reimu", "Marisa", "Youmu"]
         seasons = ["Wolf", "Otter", "Eagle"]
         return shots[shot_id] + seasons[subshot_id]
-    
+
     if _is_spell_practice_modern(replay.header):
         return ReplayInfo(
             game=game_ids.GameIDs.TH17,
@@ -886,11 +920,13 @@ def _Parse17(rep_raw) -> ReplayInfo:
         shot=get_shot(replay.header.shot, replay.header.subshot),
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+        timestamp=datetime.datetime.fromtimestamp(
+            replay.header.timestamp, tz=datetime.timezone.utc
+        ),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
-        stages=rep_stages
+        stages=rep_stages,
     )
 
     return r
@@ -900,12 +936,12 @@ def _Parse18(rep_raw) -> ReplayInfo:
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
 
-    td.decrypt(comp_data, 0x400, 0x5c, 0xe1)
-    td.decrypt(comp_data, 0x100, 0x7d, 0x3a)
+    td.decrypt(comp_data, 0x400, 0x5C, 0xE1)
+    td.decrypt(comp_data, 0x100, 0x7D, 0x3A)
     replay = th18.Th18.from_bytes(td.unlzss(comp_data))
 
     shots = ["Reimu", "Marisa", "Sakuya", "Sanae"]
-    
+
     if _is_spell_practice_modern(replay.header):
         return ReplayInfo(
             game=game_ids.GameIDs.TH18,
@@ -922,10 +958,8 @@ def _Parse18(rep_raw) -> ReplayInfo:
         )
 
     rep_stages = []
-    
-    for current_stage, next_stage in zip(
-        replay.stages, replay.stages[1:] + [None]
-    ):
+
+    for current_stage, next_stage in zip(replay.stages, replay.stages[1:] + [None]):
         current_stage_end_data = current_stage.stage_data_end
         s = ReplayStage(
             stage=current_stage.stage_num,
@@ -955,11 +989,13 @@ def _Parse18(rep_raw) -> ReplayInfo:
         shot=shots[replay.header.shot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=datetime.datetime.fromtimestamp(replay.header.timestamp, tz=datetime.timezone.utc),
+        timestamp=datetime.datetime.fromtimestamp(
+            replay.header.timestamp, tz=datetime.timezone.utc
+        ),
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
-        stages=rep_stages
+        stages=rep_stages,
     )
 
     return r
@@ -969,17 +1005,17 @@ def _DetermineTH13orTH14(replay):
     # thank you ZUN
     # yes, one of the only indications of which game a replay is from here is from a USERDATA string
     header = th_modern.ThModern.from_bytes(replay)
-    if header.userdata.user_desc[4] == '廟':
+    if header.userdata.user_desc[4] == "廟":
         # the raw byte is 0x90 or 144
         # you'll get that if you encode to 'shift_jis' and test the byte then
         return _Parse13(replay)
-    elif header.userdata.user_desc[4] == '城':
+    elif header.userdata.user_desc[4] == "城":
         # the raw byte is 0x8b or 139
         return _Parse14(replay)
     # if its not either of the two above, then I don't know
     raise ValueError()
 
-    
+
 def _is_spell_practice_modern(replay_header) -> bool:
     return replay_header.spell_practice_id != 0xFFFFFFFF
 
@@ -994,35 +1030,35 @@ def Parse(replay) -> ReplayInfo:
     gamecode = replay[:4]
 
     try:
-        if gamecode == b'T6RP':
+        if gamecode == b"T6RP":
             return _Parse06(replay)
-        elif gamecode == b'T7RP':
+        elif gamecode == b"T7RP":
             return _Parse07(replay)
-        elif gamecode == b'T8RP':
+        elif gamecode == b"T8RP":
             return _Parse08(replay)
-        elif gamecode == b'T9RP':
+        elif gamecode == b"T9RP":
             return _Parse09(replay)
-        elif gamecode == b't10r':
+        elif gamecode == b"t10r":
             return _Parse10(replay)
-        elif gamecode == b't11r':
+        elif gamecode == b"t11r":
             return _Parse11(replay)
-        elif gamecode == b't12r':
+        elif gamecode == b"t12r":
             return _Parse12(replay)
-        elif gamecode == b't13r':
+        elif gamecode == b"t13r":
             # ZUN was drunk and did not change the gamecode for TH14, so this is now used for two games
             # and thus we have to do fuckery to find which one it is
             # fun fact: the games themselves don't test this so if you rename the file you can crash them
             return _DetermineTH13orTH14(replay)
-        elif gamecode == b't15r':
+        elif gamecode == b"t15r":
             return _Parse15(replay)
-        elif gamecode == b't16r':
+        elif gamecode == b"t16r":
             return _Parse16(replay)
-        elif gamecode == b't17r':
+        elif gamecode == b"t17r":
             return _Parse17(replay)
-        elif gamecode == b't18r':
+        elif gamecode == b"t18r":
             return _Parse18(replay)
         else:
-            logging.warning('Failed to comprehend gamecode %s', str(gamecode))
-            raise UnsupportedGameError('This game is unsupported.')
+            logging.warning("Failed to comprehend gamecode %s", str(gamecode))
+            raise UnsupportedGameError("This game is unsupported.")
     except (ValueError, IndexError, EOFError, KaitaiStructError):
-        raise BadReplayError('This replay is corrupted or otherwise malformed')
+        raise BadReplayError("This replay is corrupted or otherwise malformed")

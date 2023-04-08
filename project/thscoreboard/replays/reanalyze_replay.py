@@ -44,7 +44,9 @@ class _Recorder(abc.ABC):
     """Internal class that records a difference that happened during reanalysis."""
 
     @abc.abstractmethod
-    def Change(self, name: str, old_model: django_models.Model, new_model: django_models.Model):
+    def Change(
+        self, name: str, old_model: django_models.Model, new_model: django_models.Model
+    ):
         """Record a change to a row."""
 
     @abc.abstractmethod
@@ -66,10 +68,12 @@ class _Differ(_Recorder):
     def _PrefaceWithName(self, name, diff_str):
         if not diff_str:
             # Don't preface the empty string.
-            return ''
-        return f'{name}:\n{diff_str}'
+            return ""
+        return f"{name}:\n{diff_str}"
 
-    def Change(self, name: str, old_model: django_models.Model, new_model: django_models.Model):
+    def Change(
+        self, name: str, old_model: django_models.Model, new_model: django_models.Model
+    ):
         diff = _Diff(old_model, new_model)
         if diff:
             self._output.append(self._PrefaceWithName(name, diff))
@@ -85,13 +89,15 @@ class _Differ(_Recorder):
             self._output.append(self._PrefaceWithName(name, diff))
 
     def GetOutput(self):
-        return '\n\n'.join([d for d in self._output if d])
+        return "\n\n".join([d for d in self._output if d])
 
 
 class _Updater(_Recorder):
     """A Differ that actually makes changes to an update."""
 
-    def Change(self, name: str, old_model: django_models.Model, new_model: django_models.Model):
+    def Change(
+        self, name: str, old_model: django_models.Model, new_model: django_models.Model
+    ):
         new_model.save()
 
     def New(self, name: str, new_model: django_models.Model):
@@ -112,18 +118,22 @@ def _Reanalyze(replay_id: int, recorder: _Recorder) -> str:
 
     replay_to_update.SetFromReplayInfo(replay_info)
     replay_to_update.SetForeignKeysFromConstantModels(constants)
-    recorder.Change('Replay', replay, replay_to_update)
+    recorder.Change("Replay", replay, replay_to_update)
 
-    replay_stages = models.ReplayStage.objects.filter(replay=replay_id).order_by('stage')
+    replay_stages = models.ReplayStage.objects.filter(replay=replay_id).order_by(
+        "stage"
+    )
     seen_stages = set()
     for replay_file_stage_info in replay_info.stages:
-        matching_stages = [r for r in replay_stages
-                           if r.stage == replay_file_stage_info.stage]
-        stage_name = f'Stage {replay_file_stage_info.stage}'
+        matching_stages = [
+            r for r in replay_stages if r.stage == replay_file_stage_info.stage
+        ]
+        stage_name = f"Stage {replay_file_stage_info.stage}"
 
         if len(matching_stages) > 1:
             raise AssertionError(
-                f'{len(matching_stages)} matching stages; this is impossible')
+                f"{len(matching_stages)} matching stages; this is impossible"
+            )
         elif len(matching_stages) == 1:
             seen_stages.add(replay_file_stage_info.stage)
             matching_stage = matching_stages[0]
@@ -133,57 +143,63 @@ def _Reanalyze(replay_id: int, recorder: _Recorder) -> str:
         else:
             # TODO: Deduplicate this with the real logic in create_replay.py somehow.
             new_stage = models.ReplayStage(
-                replay=replay,
-                stage=replay_file_stage_info.stage
+                replay=replay, stage=replay_file_stage_info.stage
             )
             if replay_info.game == game_ids.GameIDs.TH09:
-                new_stage.th09_p2_shot = models.Shot.objects.select_related('game').get(game=game_ids.GameIDs.TH09, shot_id=replay_file_stage_info.th09_p2_shot)
+                new_stage.th09_p2_shot = models.Shot.objects.select_related("game").get(
+                    game=game_ids.GameIDs.TH09,
+                    shot_id=replay_file_stage_info.th09_p2_shot,
+                )
             new_stage.SetFromReplayStageInfo(replay_file_stage_info)
             recorder.New(stage_name, new_stage)
 
     for replay_stage in replay_stages:
         if replay_stage.stage not in seen_stages:
-            recorder.Deleted(f'Stage {replay_stage.stage}', replay_stage)
+            recorder.Deleted(f"Stage {replay_stage.stage}", replay_stage)
 
 
 def _GetComparableFields(m: django_models.Model):
-    return [
-        f for f in m._meta.get_fields() if IsComparable(f)
-    ]
+    return [f for f in m._meta.get_fields() if IsComparable(f)]
 
 
 def IsComparable(f: django_models.Field) -> bool:
-    return (
-        (not f.is_relation)  # All non-relations are comparable
-        or isinstance(f, django_models.ForeignKey))
+    return (not f.is_relation) or isinstance(  # All non-relations are comparable
+        f, django_models.ForeignKey
+    )
 
 
-def _Diff(old_model: Optional[django_models.Model], new_model: Optional[django_models.Model]) -> str:
+def _Diff(
+    old_model: Optional[django_models.Model], new_model: Optional[django_models.Model]
+) -> str:
     diff = []
 
     if old_model is None and new_model is None:
         pass  # Do nothing; just return empty string
     elif old_model is None:
         for f in _GetComparableFields(new_model):
-            diff.append('[{field}] (No model!) -> {new}'.format(
-                field=f.name, new=_GetStringForField(f, new_model)
-            ))
+            diff.append(
+                "[{field}] (No model!) -> {new}".format(
+                    field=f.name, new=_GetStringForField(f, new_model)
+                )
+            )
     elif new_model is None:
         for f in _GetComparableFields(old_model):
-            diff.append('[{field}] {old} -> (No model!)'.format(
-                field=f.name, old=_GetStringForField(f, old_model)
-            ))
+            diff.append(
+                "[{field}] {old} -> (No model!)".format(
+                    field=f.name, old=_GetStringForField(f, old_model)
+                )
+            )
     else:
         for f in _GetComparableFields(old_model):
             old_value = _GetStringForField(f, old_model)
             new_value = _GetStringForField(f, new_model)
             if old_value != new_value:
-                diff.append('[{field}] {old} -> {new}'.format(
-                    field=f.name,
-                    old=old_value,
-                    new=new_value
-                ))
-    return '\n'.join(diff)
+                diff.append(
+                    "[{field}] {old} -> {new}".format(
+                        field=f.name, old=old_value, new=new_value
+                    )
+                )
+    return "\n".join(diff)
 
 
 def _GetStringForField(f: django_models.Field, m: django_models.Model) -> str:
@@ -193,7 +209,7 @@ def _GetStringForField(f: django_models.Field, m: django_models.Model) -> str:
 
     val = f.value_from_object(m)
     if val is None:
-        return 'None'
+        return "None"
 
     # This is not terribly efficient, but it has not caused issues yet.
     # In the future, consider using a cache for these.

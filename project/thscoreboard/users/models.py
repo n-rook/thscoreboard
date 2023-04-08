@@ -35,14 +35,12 @@ class User(auth_models.AbstractUser):
 
     class Meta(auth_models.AbstractUser.Meta):
         constraints = [
-            models.UniqueConstraint('email', name='unique_email'),
+            models.UniqueConstraint("email", name="unique_email"),
             models.CheckConstraint(
-                check=(
-                    models.Q(deleted_on__isnull=False) & models.Q(is_active=False)
-                ) | (
-                    models.Q(deleted_on__isnull=True) & models.Q(is_active=True)
-                ),
-                name='deleted_on_set_iff_not_active'),
+                check=(models.Q(deleted_on__isnull=False) & models.Q(is_active=False))
+                | (models.Q(deleted_on__isnull=True) & models.Q(is_active=True)),
+                name="deleted_on_set_iff_not_active",
+            ),
         ]
 
     deleted_on = models.DateTimeField(null=True, blank=True)
@@ -67,18 +65,19 @@ class User(auth_models.AbstractUser):
         """Remove long-deleted accounts and other data."""
 
         earliest_surviving_time = now - User._DELETED_ACCOUNT_TTL
-        logging.info('Deleting accounts marked for deletion before %s', earliest_surviving_time)
+        logging.info(
+            "Deleting accounts marked for deletion before %s", earliest_surviving_time
+        )
 
         count = 0
         for user in User.objects.filter(
-            is_active=False,
-            deleted_on__lte=earliest_surviving_time
+            is_active=False, deleted_on__lte=earliest_surviving_time
         ):
             with transaction.atomic():
                 Ban.PropagateAccountDeletion(user)
                 user.delete()
             count += 1
-        logging.info('Cleaned up %d accounts marked for deletion.', count)
+        logging.info("Cleaned up %d accounts marked for deletion.", count)
 
     def CheckIfBanned(self) -> bool:
         """Check whether this user is banned or not.
@@ -103,7 +102,13 @@ class User(auth_models.AbstractUser):
         self.save()
         return False
 
-    def BanUser(self, author: 'User', reason: str, duration: datetime.timedelta, expiration: Optional[datetime.datetime] = None) -> 'Ban':
+    def BanUser(
+        self,
+        author: "User",
+        reason: str,
+        duration: datetime.timedelta,
+        expiration: Optional[datetime.datetime] = None,
+    ) -> "Ban":
         """Ban this user for a specified period of time.
 
         Note that this method calls save() on this instance.
@@ -128,7 +133,7 @@ class User(auth_models.AbstractUser):
             target=self,
             reason=reason,
             duration=duration,
-            expiration=expiration
+            expiration=expiration,
         )
         self.might_be_banned = True
         self.save()
@@ -164,7 +169,9 @@ class InvitedUser(models.Model):
 
     created = models.DateTimeField(default=timezone.now)
 
-    invited_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
+    invited_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL
+    )
     """The user who invited this person."""
 
     TTL = datetime.timedelta(days=60)
@@ -194,22 +201,20 @@ class InvitedUser(models.Model):
             inviter: The person inviting the new user.
         """
 
-        if (inviter is None):
-            raise ValueError('inviter cannot be None')
+        if inviter is None:
+            raise ValueError("inviter cannot be None")
 
         normalized_email = User.normalize_email(email)
         token = secrets.token_urlsafe()
 
         invite = cls(
-            username=username,
-            email=normalized_email,
-            invited_by=inviter,
-            token=token)
+            username=username, email=normalized_email, invited_by=inviter, token=token
+        )
         invite.save()
         return invite
 
     @transaction.atomic
-    def AcceptInvite(self, password) -> 'User':
+    def AcceptInvite(self, password) -> "User":
         """Convert an invite into a real, verified user.
 
         This method also deletes all of the "losers": any UnverifiedUser
@@ -221,7 +226,8 @@ class InvitedUser(models.Model):
         """
         u = User(
             username=User.normalize_username(self.username),
-            email=User.normalize_email(self.email))
+            email=User.normalize_email(self.email),
+        )
         u.set_password(password)
         u.save()
 
@@ -297,15 +303,13 @@ class UnverifiedUser(models.Model):
         token = secrets.token_urlsafe()
 
         unverified_user = cls(
-            username=username,
-            password=password,
-            email=normalized_email,
-            token=token)
+            username=username, password=password, email=normalized_email, token=token
+        )
         unverified_user.save()
         return unverified_user
 
     @transaction.atomic
-    def VerifyUser(self) -> 'User':
+    def VerifyUser(self) -> "User":
         """Convert an UnverifiedUser into a real, verified user.
 
         This method also deletes all of the "losers": any UnverifiedUser
@@ -321,24 +325,26 @@ class UnverifiedUser(models.Model):
                 is the case?--- but it is not impossible.
         """
         if Ban.IsUsernameBanned(self.username):
-            raise BannedError(f'The username {self.username} is currently suspended.')
+            raise BannedError(f"The username {self.username} is currently suspended.")
         if Ban.IsEmailBanned(self.email):
-            raise BannedError(f'The address {self.email} is currently suspended.')
+            raise BannedError(f"The address {self.email} is currently suspended.")
 
         u = User(
             username=User.normalize_username(self.username),
             email=User.normalize_email(self.email),
-            password=self.password)
+            password=self.password,
+        )
         u.save()
         # Delete all unverified users matching the new user's username or email.
         # After all, those tokens will no longer work.
         # Of course, that deletes this instance itself, too!
-        type(self).objects.filter(models.Q(username=u.username) | models.Q(email=u.email)).delete()
+        type(self).objects.filter(
+            models.Q(username=u.username) | models.Q(email=u.email)
+        ).delete()
         return u
 
 
 class EarlyAccessPasscode(models.Model):
-
     passcode = models.TextField()
     """A passcode the user can supply to create an account."""
 
@@ -346,9 +352,13 @@ class EarlyAccessPasscode(models.Model):
 class UserPasscodeTie(models.Model):
     """Ties a user or an unverified user to a passcode."""
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
-    unverified_user = models.ForeignKey(UnverifiedUser, null=True, on_delete=models.CASCADE)
-    passcode = models.ForeignKey('users.EarlyAccessPasscode', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE
+    )
+    unverified_user = models.ForeignKey(
+        UnverifiedUser, null=True, on_delete=models.CASCADE
+    )
+    passcode = models.ForeignKey("users.EarlyAccessPasscode", on_delete=models.CASCADE)
 
 
 class Visits(models.Model):
@@ -358,7 +368,8 @@ class Visits(models.Model):
     """
 
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+        settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE
+    )
     """The user who visited the website. If null, no one was logged in.
 
     on_delete is CASCADE, but the on_delete mode has no effect anyway: the time between a user marking
@@ -374,7 +385,12 @@ class Visits(models.Model):
     TTL = datetime.timedelta(days=41)
 
     @classmethod
-    def _WasThereARecentVisit(cls, user: Optional[settings.AUTH_USER_MODEL], ip: str, threshold: datetime.datetime):
+    def _WasThereARecentVisit(
+        cls,
+        user: Optional[settings.AUTH_USER_MODEL],
+        ip: str,
+        threshold: datetime.datetime,
+    ):
         return cls.objects.filter(user=user, ip=ip, created__gt=threshold)
 
     @classmethod
@@ -423,7 +439,9 @@ class IPBan(models.Model):
     comment = models.TextField(null=True)
     """Optional reason for the ban"""
 
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL
+    )
     """Who issued the ban"""
 
 
@@ -438,25 +456,28 @@ class Ban(models.Model):
         constraints = [
             models.CheckConstraint(
                 check=(
-                    models.Q(target__isnull=True) & models.Q(deleted_account_username__isnull=False) & models.Q(deleted_account_email__isnull=False)
-                ) | (
-                    models.Q(target__isnull=False) & models.Q(deleted_account_username__isnull=True) & models.Q(deleted_account_email__isnull=True)
+                    models.Q(target__isnull=True)
+                    & models.Q(deleted_account_username__isnull=False)
+                    & models.Q(deleted_account_email__isnull=False)
+                )
+                | (
+                    models.Q(target__isnull=False)
+                    & models.Q(deleted_account_username__isnull=True)
+                    & models.Q(deleted_account_email__isnull=True)
                 ),
-                name='target_null_iff_deleted_account_fields_are_set'
+                name="target_null_iff_deleted_account_fields_are_set",
             )
         ]
 
     indexes = [
+        models.Index(["target", "expiration"], name="BanLookupByTargetAndExpiration"),
         models.Index(
-            ['target', 'expiration'],
-            name='BanLookupByTargetAndExpiration'),
-        models.Index(
-            ['deleted_account_username', 'expiration'],
-            name='BanLookupByDeletedAccountUsernameAndExpiration'
+            ["deleted_account_username", "expiration"],
+            name="BanLookupByDeletedAccountUsernameAndExpiration",
         ),
         models.Index(
-            ['deleted_account_email', 'expiration'],
-            name='BanLookupByDeletedAccountEmailAndExpiration'
+            ["deleted_account_email", "expiration"],
+            name="BanLookupByDeletedAccountEmailAndExpiration",
         ),
     ]
 
@@ -467,7 +488,9 @@ class Ban(models.Model):
     historical context on why they were banned in the first place.
     """
 
-    target = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True)
+    target = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True
+    )
     """The user who was banned.
 
     This field is defined with a PROTECT on_delete policy. If you need to delete a user,
@@ -480,7 +503,8 @@ class Ban(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='created_ban')
+        related_name="created_ban",
+    )
     """Who issued the ban."""
 
     reason = models.TextField(blank=True)
@@ -510,7 +534,7 @@ class Ban(models.Model):
 
     @classmethod
     @transaction.atomic
-    def PropagateAccountDeletion(cls, user_being_deleted: 'User'):
+    def PropagateAccountDeletion(cls, user_being_deleted: "User"):
         """If a User row is about to be deleted, update their bans accordingly.
 
         This method makes the following changes:
@@ -525,14 +549,18 @@ class Ban(models.Model):
             b.save()
 
     @classmethod
-    def IsUsernameBanned(cls, username: str, now: Optional[datetime.datetime] = None) -> bool:
+    def IsUsernameBanned(
+        cls, username: str, now: Optional[datetime.datetime] = None
+    ) -> bool:
         """Returns whether a username is banned (as a deleted account).
 
         Note that this will return False if a user has an active, banned account with this username.
         """
         if not now:
             now = datetime.datetime.now(datetime.timezone.utc)
-        return cls.objects.filter(deleted_account_username=username, expiration__gte=now).exists()
+        return cls.objects.filter(
+            deleted_account_username=username, expiration__gte=now
+        ).exists()
 
     @classmethod
     def IsEmailBanned(cls, email: str, now: Optional[datetime.datetime] = None) -> bool:
@@ -542,7 +570,9 @@ class Ban(models.Model):
         """
         if not now:
             now = datetime.datetime.now(datetime.timezone.utc)
-        return cls.objects.filter(deleted_account_email=email, expiration__gte=now).exists()
+        return cls.objects.filter(
+            deleted_account_email=email, expiration__gte=now
+        ).exists()
 
     @classmethod
     def CleanUp(cls, now: datetime.datetime) -> None:
@@ -555,16 +585,17 @@ class Ban(models.Model):
             The number of deleted bans.
         """
         earliest_surviving_time = now - cls._DELETED_ACCOUNT_TTL
-        logging.info('Deleting bans of deleted accounts which expired before %s',
-                     earliest_surviving_time)
+        logging.info(
+            "Deleting bans of deleted accounts which expired before %s",
+            earliest_surviving_time,
+        )
 
         count = 0
         for b in cls.objects.filter(
-            target__isnull=True,
-            expiration__lte=earliest_surviving_time
+            target__isnull=True, expiration__lte=earliest_surviving_time
         ):
             with transaction.atomic():
                 b.delete()
             count += 1
 
-        logging.info('Cleaned up %d bans.', count)
+        logging.info("Cleaned up %d bans.", count)

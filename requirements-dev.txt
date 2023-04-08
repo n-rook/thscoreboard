@@ -3,3 +3,4 @@
 django-rosetta==0.9.8
 flake8==6.0.0
 python-dotenv==0.21.1
+black==23.1.0
