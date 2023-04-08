@@ -9,14 +9,6 @@ class ReplayToJsonConverter:
         return shot.game
 
     @lru_cache(maxsize=None)
-    def _get_game_short_name(self, game: models.Game) -> str:
-        return game.GetShortName()
-
-    @lru_cache(maxsize=None)
-    def _get_difficulty_name(self, game: models.Game, replay: models.Replay) -> str:
-        return game_ids.GetDifficultyName(game.game_id, replay.difficulty)
-
-    @lru_cache(maxsize=None)
     def _get_shot_name(self, shot: models.Shot) -> str:
         return shot.GetName()
 
@@ -31,8 +23,8 @@ class ReplayToJsonConverter:
             }
             if replay.user
             else replay.imported_username or replay.name,
-            "Game": self._get_game_short_name(game),
-            "Difficulty": self._get_difficulty_name(game, replay),
+            "Game": game.GetShortName(),
+            "Difficulty": game_ids.GetDifficultyName(game.game_id, replay.difficulty),
             "Shot": self._get_shot_name(shot),
             "Score": {
                 "text": f"{int(replay.score):,}",
