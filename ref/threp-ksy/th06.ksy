@@ -30,7 +30,7 @@ types:
       - id: name
         type: str
         size: 9
-        encoding: ASCII
+        encoding: SJIS
         terminator: 0x0
       - id: unknown_3
         type: u2

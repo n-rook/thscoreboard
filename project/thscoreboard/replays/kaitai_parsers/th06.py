@@ -39,7 +39,7 @@ class Th06(KaitaiStruct):
         def _read(self):
             self.unknown_2 = self._io.read_u1()
             self.date = (KaitaiStream.bytes_terminate(self._io.read_bytes(9), 0, False)).decode(u"ASCII")
-            self.name = (KaitaiStream.bytes_terminate(self._io.read_bytes(9), 0, False)).decode(u"ASCII")
+            self.name = (KaitaiStream.bytes_terminate(self._io.read_bytes(9), 0, False)).decode(u"SJIS")
             self.unknown_3 = self._io.read_u2le()
             self.score = self._io.read_u4le()
             self.unknown_4 = self._io.read_u4le()

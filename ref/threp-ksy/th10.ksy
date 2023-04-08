@@ -15,7 +15,7 @@ types:
       - id: name
         type: str
         size: 12
-        encoding: ASCII
+        encoding: SJIS
       - id: timestamp
         type: u4
       - id: score

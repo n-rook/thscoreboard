@@ -70,7 +70,7 @@ class Th07(KaitaiStruct):
             self.shot = self._io.read_u1()
             self.difficulty = self._io.read_u1()
             self.date = (KaitaiStream.bytes_terminate(self._io.read_bytes(6), 0, False)).decode(u"ASCII")
-            self.name = (KaitaiStream.bytes_terminate(self._io.read_bytes(9), 0, False)).decode(u"ASCII")
+            self.name = (KaitaiStream.bytes_terminate(self._io.read_bytes(9), 0, False)).decode(u"SJIS")
             self.unknown_2 = self._io.read_bytes(5)
             self.score = self._io.read_u4le()
             self.unknown_3 = []
