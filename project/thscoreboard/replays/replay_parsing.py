@@ -955,12 +955,11 @@ def _Parse18(rep_raw) -> ReplayInfo:
 def _DetermineTH13orTH14(replay):
     # thank you ZUN
     header = th_modern.ThModern.from_bytes(replay)
-    if header.userdata.user_desc[4] == "廟":
-        # the raw byte is 0x90 or 144
-        # you'll get that if you encode to 'shift_jis' and test the byte then
+    if header.userdata.user_desc[4] == 0x90:
+        # the shift-jis character is 廟
         return _Parse13(replay)
-    elif header.userdata.user_desc[4] == "城":
-        # the raw byte is 0x8b or 139
+    elif header.userdata.user_desc[4] == 0x8b:
+        # the shift-jis character is 城
         return _Parse14(replay)
     # if its not either of the two above, then I don't know
     raise ValueError()

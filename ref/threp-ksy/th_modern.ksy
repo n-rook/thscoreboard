@@ -35,9 +35,9 @@ types:
       - id: unknown
         size: 4
       - id: user_desc
-        type: str
-        terminator: 0xd
-        encoding: SJIS
+        type: u1
+        repeat: until
+        repeat-until: _ == 0xd
       - id: user_desc_term
         type: str
         terminator: 0xa
