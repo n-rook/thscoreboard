@@ -208,12 +208,17 @@ def _Parse07(rep_raw):
     if len(rep_stages) == 1 and replay.header.difficulty not in [4, 5]:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
+    # Touhou 7 does not store the year of the replay, but datetimes requires one.
+    # Therefore we set one. It must be a leap year in order for Feb 29 to be valid.
+    arbitrary_leap_year = 1904
+    timestamp = time.strptime(f"{replay.header.date}/{arbitrary_leap_year}", "%m/%d/%Y")
+
     r = ReplayInfo(
         game=game_ids.GameIDs.TH07,
         shot=shots[replay.header.shot],
         difficulty=replay.header.difficulty,
         score=replay.header.score * 10,
-        timestamp=time.strptime(replay.header.date, "%m/%d"),
+        timestamp=timestamp,
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
