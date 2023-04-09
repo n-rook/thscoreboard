@@ -1,5 +1,5 @@
 from replays.testing import test_case
-from replays.replays_to_json import convert_replays_to_serializable_list
+from replays.replays_to_json import ReplayToJsonConverter
 from replays.test_replay_parsing import ParseTestReplay
 from replays.create_replay import PublishNewReplay
 from replays import models
@@ -57,7 +57,8 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
         replays = [replay_1, replay_2]
 
-        json_data = convert_replays_to_serializable_list(replays)
+        converter = ReplayToJsonConverter()
+        json_data = converter.convert_replays_to_serializable_list(replays)
 
         assert len(json_data) == len(replays)
 

@@ -104,6 +104,9 @@ class Th07ReplayTestCase(unittest.TestCase):
         self.assertEqual(stage_ph.stage, 8)
         self.assertEqual(game_fields.GetFormatStage(r.game, stage_ph.stage), "Phantasm")
 
+    def testFeb29(self):
+        ParseTestReplay("th7_feb_29")
+
 
 class Th08ReplayTestCase(unittest.TestCase):
     def testNormal(self):
@@ -233,7 +236,7 @@ class Th10ReplayTestCase(unittest.TestCase):
     def testStagePractice(self):
         r = ParseTestReplay("th10_stage_practice")
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.STAGE_PRACTICE)
-    
+
     def testMarisa(self):
         r = ParseTestReplay("th10_marisa")
         self.assertEqual(r.shot, "MarisaC")

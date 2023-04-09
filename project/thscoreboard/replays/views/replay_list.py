@@ -6,13 +6,16 @@ from django.shortcuts import get_object_or_404, render
 
 from replays import models
 from replays.models import Game, Shot
-from replays.replays_to_json import convert_replays_to_serializable_list
+from replays.replays_to_json import ReplayToJsonConverter
 
 
 @http_decorators.require_safe
 def game_scoreboard_json(request, game_id: str):
+    converter = ReplayToJsonConverter()
     return JsonResponse(
-        convert_replays_to_serializable_list(_get_all_replay_for_game(game_id)),
+        converter.convert_replays_to_serializable_list(
+            _get_all_replay_for_game(game_id)
+        ),
         safe=False,
     )
 
