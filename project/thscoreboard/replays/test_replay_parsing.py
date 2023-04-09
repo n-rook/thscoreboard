@@ -338,7 +338,7 @@ class Th13ReplayTestCase(unittest.TestCase):
         self.assertIsNone(s6.power)
         self.assertIsNone(s6.th13_trance)
 
-    def testRoyalflare(self):
+    def testRoyalflareCorrupted(self):
         r = ParseTestReplay("th13_royalflare")
         self.assertEqual(r.game, "th13")
 
@@ -376,7 +376,7 @@ class Th14ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
         self.assertEqual(r.difficulty, 4)
     
-    def testRoyalflare(self):
+    def testRoyalflareCorrupted(self):
         r = ParseTestReplay("th14_royalflare")
         self.assertEqual(r.game, "th14")
 
