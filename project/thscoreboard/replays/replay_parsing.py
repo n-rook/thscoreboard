@@ -1003,11 +1003,12 @@ def _DetermineTH13orTH14(replay):
     # thank you ZUN
     # yes, one of the only indications of which game a replay is from here is from a USERDATA string
     header = th_modern.ThModern.from_bytes(replay)
-    if header.userdata.user_desc[4] == 0x90 or header.userdata.user_desc[4] == 0xc9:
+    # royalflare corrupts some of the userdata, and since the userdata is the only way to determine between TH13 and TH14
+    # we have to just keep finding new replays with fucked strings and adding them to these checks
+    if header.userdata.user_desc[4] in [0x90, 0xc9]:
         # the shift-jis character is 廟
-        # 0xc9 is for royalflare corrupted replays
         return _Parse13(replay)
-    elif header.userdata.user_desc[4] == 0x8b:
+    elif header.userdata.user_desc[4] in [0x8b, 0xbb]:
         # the shift-jis character is 城
         return _Parse14(replay)
     # if its not either of the two above, then I don't know
