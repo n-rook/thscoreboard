@@ -379,6 +379,8 @@ class Th14ReplayTestCase(unittest.TestCase):
     def testRoyalflareCorrupted(self):
         r = ParseTestReplay("th14_royalflare")
         self.assertEqual(r.game, "th14")
+        r = ParseTestReplay("th14_royalflare2")
+        self.assertEqual(r.game, "th14")
 
 
 class Th15ReplayTestCase(unittest.TestCase):
