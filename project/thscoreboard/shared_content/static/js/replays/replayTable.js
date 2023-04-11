@@ -103,7 +103,7 @@ function createTableCell(columnName, value) {
     cell.appendChild(text);
   }
   if (columnName === "Shot") {
-    cell.style.whiteSpace = "nowrap";
+    cell.className = "nowrap";
   }
   return cell;
 }
