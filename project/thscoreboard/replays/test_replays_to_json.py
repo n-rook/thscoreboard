@@ -1,3 +1,4 @@
+import datetime
 from replays.testing import test_case
 from replays.replays_to_json import convert_replays_to_serializable_list
 from replays.test_replay_parsing import ParseTestReplay
@@ -31,6 +32,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             no_bomb=False,
             miss_count=None,
             replay_info=replay_info_1,
+            created_timestamp=datetime.datetime(2000, 1, 1),
         )
 
         replay_info_2 = ParseTestReplay("th16_extra")
@@ -87,7 +89,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         assert json_data[0]["Difficulty"] == "Easy"
         assert json_data[0]["Shot"] == "Reimu A"
         assert json_data[0]["Score"]["text"] == "1,000,000"
-        assert json_data[0]["Upload Date"] == "2023-04-06"
+        assert json_data[0]["Upload Date"] == "2000-01-01"
         assert json_data[0]["Comment"] == "鼻毛"
         assert json_data[0]["Replay"]["text"] == "Download"
 
