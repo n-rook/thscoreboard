@@ -49,7 +49,14 @@ class ThModern(KaitaiStruct):
                 raise kaitaistruct.ValidationNotEqualError(b"\x55\x53\x45\x52", self.magic_user, self._io, u"/types/userdata/seq/0")
             self.user_length = self._io.read_u4le()
             self.unknown = self._io.read_bytes(4)
-            self.user_desc = (self._io.read_bytes_term(13, False, True, True)).decode(u"SJIS")
+            self.user_desc = []
+            i = 0
+            while True:
+                _ = self._io.read_u1()
+                self.user_desc.append(_)
+                if _ == 13:
+                    break
+                i += 1
             self.user_desc_term = (self._io.read_bytes_term(10, False, True, True)).decode(u"ASCII")
             self.user_ver = ThModern.Crlfstring(self._io, self, self._root)
             self.name = ThModern.UserdataField(self._io, self, self._root)
