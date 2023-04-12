@@ -177,3 +177,15 @@ table td {
     padding-left: 1em;
     padding-right: 1em;
 }
+
+.checkbox-list {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 50px;
+    margin-bottom: 20px;
+    line-height: 1.15;
+}
+
+.checkbox-list label {
+    display: block;
+}
