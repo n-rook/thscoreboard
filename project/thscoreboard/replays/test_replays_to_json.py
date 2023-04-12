@@ -1,3 +1,4 @@
+import datetime
 from replays.testing import test_case
 from replays.replays_to_json import ReplayToJsonConverter
 from replays.test_replay_parsing import ParseTestReplay
@@ -23,7 +24,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             difficulty=0,
             score=1_000_000,
             category=0,
-            comment="Comment",
+            comment="鼻毛",
             video_link="",
             temp_replay_instance=temp_replay_1,
             is_good=True,
@@ -31,6 +32,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             no_bomb=False,
             miss_count=None,
             replay_info=replay_info_1,
+            created_timestamp=datetime.datetime(2000, 1, 1),
         )
 
         replay_info_2 = ParseTestReplay("th16_extra")
@@ -62,9 +64,6 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
         assert len(json_data) == len(replays)
 
-        assert json_data[0]["User"]["text"] == self.user.username
-        assert json_data[1]["User"] == "あ"
-
         for replay, json_replay_data in zip(replays, json_data):
             assert json_replay_data
             assert set(json_replay_data.keys()) == {
@@ -75,12 +74,24 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
                 "Shot",
                 "Score",
                 "Upload Date",
+                "Comment",
                 "Replay",
             }
-            assert json_replay_data["Game"] == replay.shot.game.GetShortName()
 
             assert type(json_replay_data["Score"]) == dict
             assert set(json_replay_data["Score"].keys()) == {"text", "url"}
 
             assert type(json_replay_data["Replay"]) == dict
             assert set(json_replay_data["Replay"].keys()) == {"text", "url"}
+
+        assert json_data[0]["User"]["text"] == self.user.username
+        assert json_data[0]["User"]["url"] == f"/replays/user/{self.user.username}"
+        assert json_data[0]["Game"] == "th06"
+        assert json_data[0]["Difficulty"] == "Easy"
+        assert json_data[0]["Shot"] == "Reimu A"
+        assert json_data[0]["Score"]["text"] == "1,000,000"
+        assert json_data[0]["Upload Date"] == "2000-01-01"
+        assert json_data[0]["Comment"] == "鼻毛"
+        assert json_data[0]["Replay"]["text"] == "Download"
+
+        assert json_data[1]["User"] == "あ"

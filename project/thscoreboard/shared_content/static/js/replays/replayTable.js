@@ -125,6 +125,9 @@ function populateTable(replays, startIndex, endIndex) {
     const text = document.createTextNode(value);
     cell.appendChild(text);
   }
+  if (columnName === "Shot") {
+    cell.className = "nowrap";
+  }
   return cell;
 }
 
