@@ -1,5 +1,8 @@
 const replayTableBatchSize = 50;
 const replayTableBodyHtml = document.getElementById('replay-table-body');
+const displayedColumns = [
+  "User", "Game", "Difficulty", "Shot", "Score", "Upload Date", "Comment", "Replay"
+];
 
 // Initialize global variables if they were not provided by html
 // Needed for jest environment
@@ -114,7 +117,10 @@ function populateTable(replays, startIndex, endIndex) {
 
  function createTableCell(columnName, value) {
   const cell = document.createElement('td');
-  if ((columnName === "Game" && !showGameColumn) || columnName === "Id") {
+  if (!displayedColumns.includes(columnName)) {
+    return null;
+  }
+  if (columnName === "Game" && !showGameColumn) {
     return null;
   }
 
