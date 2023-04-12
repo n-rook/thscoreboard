@@ -5,6 +5,7 @@ from django.views.decorators import http as http_decorators
 from django.shortcuts import get_object_or_404, render
 
 from replays import models
+from replays import game_ids
 from replays.models import Game, Shot
 from replays.replays_to_json import ReplayToJsonConverter
 
@@ -23,14 +24,42 @@ def game_scoreboard_json(request, game_id: str):
 @http_decorators.require_safe
 def game_scoreboard(request, game_id: str):
     game: Game = get_object_or_404(Game, game_id=game_id)
-    all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game_id)]
-    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
+    filter_options = _get_filter_options(game)
 
     return render(
         request,
         "replays/game_scoreboard.html",
-        {"game": game, "shots": all_shots, "difficulties": all_difficulties},
+        {"game": game, "filters": filter_options},
     )
+
+
+def _get_filter_options(game: Game) -> dict[str, list[str]]:
+    if game.game_id == game_ids.GameIDs.TH16:
+        return _get_filter_options_th16(game)
+    else:
+        return _get_filter_options_default(game)
+
+
+def _get_filter_options_default(game: Game) -> dict[str, list[str]]:
+    all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game.game_id)]
+    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
+    return {"Difficulty": all_difficulties, "Shot": all_shots}
+
+
+def _get_filter_options_th16(game: Game) -> dict[str, list[str]]:
+    all_characters = list(
+        set(shot.GetCharacterame() for shot in Shot.objects.filter(game=game.game_id))
+    )
+    all_seasons = list(
+        set(shot.GetSubshotName() for shot in Shot.objects.filter(game=game.game_id))
+    )
+    all_seasons.remove(None)
+    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
+    return {
+        "Difficulty": all_difficulties,
+        "Character": all_characters,
+        "Season": all_seasons,
+    }
 
 
 def _get_all_replay_for_game(game_id: str) -> dict:
