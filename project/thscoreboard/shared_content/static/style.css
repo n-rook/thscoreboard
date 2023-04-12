@@ -158,6 +158,10 @@ td {
     display: inline;
 }
 
+.banner-links li::before {
+    content: "";
+}
+
 .banner-home-link {
     display: inline-block;
     position: relative;

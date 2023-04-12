@@ -25,13 +25,17 @@
                 <ul>
                     {% if user.is_authenticated %}
                     <li><a href="/users/profile">Profile</a></li>
+                    <li>•</li>
                     <li><a href="/replays/user/">My replays</a></li>
+                    <li>•</li>
                     <li><a href="/replays/upload">Upload</a></li>
                     {% if request.user.is_staff or request.user.is_superuser %}
+                    <li>•</li>
                     <li><a href="/staff">Staff tools</a></li>
                     {% endif %}
                     {% else %}
                     <li><a href="/users/login">Log in</a></li>
+                    <li>•</li>
                     <li><a href="/users/register">Register</a></li>
                     {% endif %}
                 </ul>
