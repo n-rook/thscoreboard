@@ -1,4 +1,5 @@
 import datetime
+from django.test import override_settings
 from replays.testing import test_case
 from replays.replays_to_json import ReplayToJsonConverter
 from replays.test_replay_parsing import ParseTestReplay
@@ -60,7 +61,8 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         replays = [replay_1, replay_2]
 
         converter = ReplayToJsonConverter()
-        json_data = converter.convert_replays_to_serializable_list(replays)
+        with override_settings(LANGUAGE_CODE="pt-br"):
+            json_data = converter.convert_replays_to_serializable_list(replays)
 
         assert len(json_data) == len(replays)
 
@@ -92,6 +94,6 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         assert json_data[0]["Score"]["text"] == "1,000,000"
         assert json_data[0]["Upload Date"] == "2000-01-01"
         assert json_data[0]["Comment"] == "鼻毛"
-        assert json_data[0]["Replay"]["text"] == "Download"
+        assert json_data[0]["Replay"]["text"] == "⬇"
 
         assert json_data[1]["User"] == "あ"
