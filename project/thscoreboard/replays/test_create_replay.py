@@ -200,6 +200,35 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             replay_info=replay_info,
         )
 
+    def testPublishReplayImportedUserName(self):
+        replay_file_contents = test_replays.GetRaw("th10_normal")
+
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user, replay=replay_file_contents
+        )
+        temp_replay.save()
+
+        replay_info = replay_parsing.Parse(replay_file_contents)
+
+        new_replay = create_replay.PublishNewReplay(
+            user=None,
+            difficulty=3,
+            score=294127890,
+            category=models.Category.REGULAR,
+            comment="Hello",
+            video_link="",
+            is_good=True,
+            is_clear=False,
+            temp_replay_instance=temp_replay,
+            replay_info=replay_info,
+            no_bomb=False,
+            miss_count=3,
+            imported_username="あ",
+        )
+
+        self.assertEqual(new_replay.user, None)
+        self.assertEqual(new_replay.imported_username, "あ")
+
     def testReplayDuplicates(self):
         replay_file_contents = test_replays.GetRaw("th10_normal")
 

@@ -71,7 +71,7 @@ class Th08(KaitaiStruct):
             self.shot = self._io.read_u1()
             self.difficulty = self._io.read_u1()
             self.date = (KaitaiStream.bytes_terminate(self._io.read_bytes(6), 0, False)).decode(u"ASCII")
-            self.name = (KaitaiStream.bytes_terminate(self._io.read_bytes(10), 0, False)).decode(u"ASCII")
+            self.name = (KaitaiStream.bytes_terminate(self._io.read_bytes(10), 0, False)).decode(u"SJIS")
             self.spell_card_id = self._io.read_u2le()
             self.spell_card_name = (KaitaiStream.bytes_terminate(self._io.read_bytes(50), 0, False)).decode(u"SJIS")
             self.score = self._io.read_u4le()

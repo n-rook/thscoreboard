@@ -8,6 +8,8 @@ from typing import Optional
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import pgettext_lazy
+from django.db.models import Q
+
 
 from replays import game_ids
 from replays import limits
@@ -165,7 +167,7 @@ class ReplayQuerySet(models.QuerySet):
         not even returned.
         """
 
-        return self.filter(user__is_active=True)
+        return self.filter(Q(user__is_active=True) | Q(imported_username__isnull=False))
 
 
 @dataclasses.dataclass(frozen=True)
@@ -202,14 +204,26 @@ class Replay(models.Model):
                     | models.Q(replay_type=ReplayType.PVP, spell_card_id__isnull=True)
                 ),
             ),
+            models.CheckConstraint(
+                name="user_xor_imported_username_isnull",
+                check=(
+                    models.Q(user__isnull=True, imported_username__isnull=False)
+                    | models.Q(user__isnull=False, imported_username__isnull=True)
+                ),
+            ),
         ]
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True
+    )
     """The user who uploaded the replay."""
+
+    imported_username = models.TextField(max_length=12, blank=True, null=True)
+    """The user who uploaded the replay to an extrenal site, such as royalflare."""
 
     category = models.IntegerField(choices=Category.choices)
 
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(default=datetime.datetime.now)
     """When the replay was uploaded."""
 
     shot = models.ForeignKey("Shot", on_delete=models.PROTECT)
@@ -314,7 +328,7 @@ class Replay(models.Model):
 
     def IsVisible(self):
         """Returns whether this replay should be visible to this user."""
-        return self.user.is_active
+        return self.imported_username is not None or self.user.is_active
 
     def GetNiceFilename(self, id: Optional[int]):
         """Returns a nice filename for this replay.
@@ -348,11 +362,9 @@ class Replay(models.Model):
 
 
 class ReplayStage(models.Model):
-    """Represents the end-of-stage data for a stage split for a given replay
-    The data may not directly correspond to how it is stored in-game, since some games store it differently
-    Most games store the values from the start of the stage
-    TH07 stores the values from the end of the stage
-    TH08 is weird in that the score is stored from end of stage, but everything else is from the start
+    """ Represents the end-of-stage data for a stage split for a given replay
+        The data may not directly correspond to how it is stored in-game, since some games store it differently
+        Many games only store the data from the start of a replay, so many of the fields for the final stage will be null
     """
 
     class Meta:
@@ -369,71 +381,40 @@ class ReplayStage(models.Model):
 
     stage = models.IntegerField()
     """ The stage this split corresponds to in the replay
-        This is 0-indexed, regular stages are numbered in order, typically 0-5, extra is the stage after, usually 6
-        Exceptions:
-            TH08 - the A and B stages bloat the stage numbers, pushing extra back
-            TH09 - there are 9 stages in main game stored as stages 0 - 8
-                    the game stores the stage movement data for the AI, stored as stages 10 - 18
-                    PVP is stored as a separate stage, stage 9 and 19, for player 1 and 2 respectively
-                    all in all there are 40 offsets saved for potential stage data, most unused
+        This is 1-indexed, regular stages are numbered in order, typically 1-6, extra is the stage after, usually 7
     """
 
     score = models.BigIntegerField(blank=True, null=True)
-    """ The current score stored at this stage
-        This should be set for all stages that we have data for, but some games do not store end-of-stage data"""
+    """ The current score stored at this stage"""
 
     piv = models.IntegerField(blank=True, null=True)
     """ The current PIV stored at this stage
-        This may be named as a different mechanic in some games, but it functions and is stored the same.
-        Games that use this field (and the alternate names if applicable):
-            TH07 - cherry
-            TH10 - faith
+        This may be named as a different mechanic in some games, but it functions and is stored the same
+        The actual value stored in some games might have extra precision, we are only storing the functional amount visible to the player
     """
 
     graze = models.IntegerField(blank=True, null=True)
-    """ The current graze stored at this stage
-        Games that use this field:
-            TH07
-    """
+    """ The current graze stored at this stage"""
 
     point_items = models.IntegerField(blank=True, null=True)
-    """ The number of point items acquired at this stage
-        Games that use this field:
-            TH07
-    """
+    """ The number of point items acquired at this stage"""
 
     power = models.IntegerField(blank=True, null=True)
     """ The player's power at this stage
         In the modern windows games (TH10 onwards), the displayed power is in a different format to the stored/internal power
-        The formula is (power * 0.05) and is displayed with 2 decimal places. It starts at 1.00 in some games and at 0 in others.
-        Games that use this field:
-            TH06
-            TH07
-            TH10
     """
 
     lives = models.IntegerField(blank=True, null=True)
-    """ The number of extra lives at this stage
-        Currently, all games use this field.
-        (Photo games and other side games we choose to support won't)
-    """
+    """ The number of extra lives at this stage"""
 
     life_pieces = models.IntegerField(blank=True, null=True)
-    """ The number of life pieces at this stage
-        Games that use this field:
-    """
+    """ The number of life pieces at this stage"""
 
     bombs = models.IntegerField(blank=True, null=True)
-    """ The number of bombs at this stage
-        Games that use this field:
-            TH06
-            TH07
-    """
+    """ The number of bombs at this stage"""
 
     bomb_pieces = models.IntegerField(blank=True, null=True)
-    """ The number of bomb pieces at this stage
-        Games that use this field:
-    """
+    """ The number of bomb pieces at this stage"""
 
     th06_rank = models.IntegerField(blank=True, null=True)
     """The internal 'rank' value for TH06"""
@@ -467,10 +448,9 @@ class ReplayStage(models.Model):
     """Number of extends (1ups) this run has gotten so far
     More testing needs to be done to find the exact nature of this value,
     whether 1up items affect it or if its just score/life piece extends
-    But it's in the data so I will include it
 
-    This value first appears in TH13, but it is present in many modern games so I've
-    opted not to specify a game for its name
+    This value first appears in TH13 and is used to determine the number of life pieces needed for a 1up
+    It is present in many modern games so I've opted not to specify a game for its name
     """
 
     th16_season_power = models.IntegerField(blank=True, null=True)
@@ -550,17 +530,12 @@ class TemporaryReplayFile(models.Model):
 
     @classmethod
     def CleanUp(cls, now: datetime.datetime) -> None:
-        """Delete old temporary replay files.
-
-        Args:
-            now: The current time.
-
-        Returns:
-            The number of deleted files.
-        """
+        """Delete old temporary replay files"""
         return model_ttl.CleanUpOldRows(cls, now)
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True
+    )
     """The user who uploaded the temporary replay."""
 
     created = models.DateTimeField(default=timezone.now)

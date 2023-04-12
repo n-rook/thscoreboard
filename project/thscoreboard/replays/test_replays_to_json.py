@@ -1,5 +1,5 @@
 from replays.testing import test_case
-from replays.replays_to_json import convert_replays_to_serializable_list
+from replays.replays_to_json import ReplayToJsonConverter
 from replays.test_replay_parsing import ParseTestReplay
 from replays.create_replay import PublishNewReplay
 from replays import models
@@ -36,11 +36,11 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         replay_info_2 = ParseTestReplay("th16_extra")
         replay_file_contents_2 = test_replays.GetRaw("th16_extra")
         temp_replay_2 = models.TemporaryReplayFile(
-            user=self.user, replay=replay_file_contents_2
+            user=None, replay=replay_file_contents_2
         )
         temp_replay_2.save()
         replay_2 = PublishNewReplay(
-            user=self.user,
+            user=None,
             difficulty=0,
             score=2_000_000,
             category=0,
@@ -52,13 +52,18 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             no_bomb=False,
             miss_count=None,
             replay_info=replay_info_2,
+            imported_username="あ",
         )
 
         replays = [replay_1, replay_2]
 
-        json_data = convert_replays_to_serializable_list(replays)
+        converter = ReplayToJsonConverter()
+        json_data = converter.convert_replays_to_serializable_list(replays)
 
         assert len(json_data) == len(replays)
+
+        assert json_data[0]["User"]["text"] == self.user.username
+        assert json_data[1]["User"] == "あ"
 
         for replay, json_replay_data in zip(replays, json_data):
             assert json_replay_data
@@ -72,7 +77,6 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
                 "Upload Date",
                 "Replay",
             }
-            assert json_replay_data["User"]["text"] == self.user.username
             assert json_replay_data["Game"] == replay.shot.game.GetShortName()
 
             assert type(json_replay_data["Score"]) == dict

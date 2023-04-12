@@ -401,6 +401,8 @@ def GetFormatPower(
 
 # used in GetFormatLives for string formatting the life/life piece counts
 # if this is None, lives will be displayed standalone instead of including the life piece counts
+# Technically the maximum life pieces for TH12 is 5, but the first piece you collect gives you 2, so functionally there are only 4
+#   The parser for the game accounts for this discrepancy
 _life_pieces = immutabledict(
     {
         "th01": None,
