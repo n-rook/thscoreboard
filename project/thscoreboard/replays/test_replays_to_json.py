@@ -66,18 +66,6 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
         for replay, json_replay_data in zip(replays, json_data):
             assert json_replay_data
-            assert set(json_replay_data.keys()) == {
-                "Id",
-                "User",
-                "Game",
-                "Difficulty",
-                "Shot",
-                "Score",
-                "Upload Date",
-                "Comment",
-                "Replay",
-            }
-
             assert type(json_replay_data["Score"]) == dict
             assert set(json_replay_data["Score"].keys()) == {"text", "url"}
 
@@ -93,5 +81,11 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         assert json_data[0]["Upload Date"] == "2000-01-01"
         assert json_data[0]["Comment"] == "鼻毛"
         assert json_data[0]["Replay"]["text"] == "Download"
+        assert "Character" not in json_data[0]["Replay"]["text"]
+        assert "Season" not in json_data[0]["Replay"]["text"]
 
         assert json_data[1]["User"] == "あ"
+        print(json_data[1]["Character"])
+        print(json_data[1]["Season"])
+        assert json_data[1]["Character"] == "Marisa"
+        assert json_data[1]["Season"] == None

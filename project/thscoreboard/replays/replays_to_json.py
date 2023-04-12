@@ -15,7 +15,7 @@ class ReplayToJsonConverter:
     def _convert_replay_to_dict(self, replay: models.Replay) -> dict:
         shot = replay.shot
         game = self._get_game(shot)
-        return {
+        json_dict = {
             "Id": replay.id,
             "User": {
                 "text": f"{replay.user.username}",
@@ -36,6 +36,17 @@ class ReplayToJsonConverter:
                 "text": "Download",
                 "url": f"/replays/{game.game_id}/{replay.id}",
             },
+        }
+
+        if game.game_id == game_ids.GameIDs.TH16:
+            json_dict |= self._get_th16_additional_fields(shot)
+
+        return json_dict
+
+    def _get_th16_additional_fields(self, shot: models.Shot) -> dict:
+        return {
+            "Character": shot.GetCharacterame(),
+            "Season": shot.GetSubshotName(),
         }
 
     def convert_replays_to_serializable_list(
