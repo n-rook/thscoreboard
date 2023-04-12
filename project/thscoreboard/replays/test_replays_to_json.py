@@ -32,7 +32,9 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             no_bomb=False,
             miss_count=None,
             replay_info=replay_info_1,
-            created_timestamp=datetime.datetime(2000, 1, 1),
+            created_timestamp=datetime.datetime(
+                2000, 1, 1, tzinfo=datetime.timezone.utc
+            ),
         )
 
         replay_info_2 = ParseTestReplay("th16_extra")
@@ -85,7 +87,5 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         assert "Season" not in json_data[0]["Replay"]["text"]
 
         assert json_data[1]["User"] == "あ"
-        print(json_data[1]["Character"])
-        print(json_data[1]["Season"])
         assert json_data[1]["Character"] == "Marisa"
         assert json_data[1]["Season"] == None
