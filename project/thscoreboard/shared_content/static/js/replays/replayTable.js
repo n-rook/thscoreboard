@@ -1,3 +1,6 @@
+const replayTableBatchSize = 50;
+const replayTableBodyHtml = document.getElementById('replay-table-body');
+
 // Initialize global variables if they were not provided by html
 // Needed for jest environment
 
@@ -15,8 +18,8 @@ try {
   xhr.responseType = 'json';
   xhr.onload = function() {
     if (xhr.status === 200) {
-      populateTable(xhr.response);
       allReplays = xhr.response;
+      constructAndRenderReplayTable(xhr.response);
     } else {
       document.getElementById('replay-table').innerHTML = '<p style="color: red;">Failed to load replays</p>';
     }
@@ -32,7 +35,7 @@ function onClick(elm) {
   
   activeFilters = updateFilters(activeFilters, filterType, value);
   const filteredReplays = filterReplays(activeFilters, allReplays);
-  populateTable(filteredReplays);
+  constructAndRenderReplayTable(filteredReplays);
 }
 
 function updateFilters(filters, filterType, value) {
@@ -62,14 +65,42 @@ function filterReplays(filters, replays) {
   return filteredReplays;
 }
 
-function populateTable(replays) {
-  const replayTableHtml = document.getElementById('replay-table');
-  const tbody = replayTableHtml.getElementsByTagName('tbody')[0];
+function constructAndRenderReplayTable(replays) {
+  clearTableHtml();
   
-  // Clear the existing rows from the table body
-  tbody.innerHTML = '';
+  let startIndex = 0;
+  let endIndex = Math.min(replayTableBatchSize, replays.length);
+  while (startIndex < replays.length) {
+    isFirstBatch = startIndex === 0;
+    constructAndRenderTableBatch(
+      replays, startIndex, endIndex, isFirstBatch
+    );
+    startIndex += replayTableBatchSize;
+    endIndex += replayTableBatchSize;
+    endIndex = Math.min(endIndex, replays.length);
+  }
+}
 
-  for (const replay of replays) {
+function constructAndRenderTableBatch(replays, startIndex, endIndex, isFirstBatch) {
+  if (isFirstBatch) {
+    populateTable(replays, startIndex, endIndex);
+  } else {
+    delayedPopulateTable(replays, startIndex, endIndex);
+  }
+}
+
+function delayedPopulateTable(replays, startIndex, endIndex) {
+  // Delays the execution of the populateTable function to prevent blocking the
+  // main thread and improve performance. This allows other code to run, such
+  // as UI updates, while the table is being populated.
+  setTimeout(() => {
+    populateTable(replays, startIndex, endIndex)
+  }, 1);
+}
+
+function populateTable(replays, startIndex, endIndex) {
+  for (let i = startIndex; i < endIndex; i++) {
+    const replay = replays[i];
     const row = document.createElement('tr');
     for (const [columnName, value] of Object.entries(replay)) {
       const cell = createTableCell(columnName, value)
@@ -77,19 +108,11 @@ function populateTable(replays) {
         row.appendChild(cell);
       }
     }
-    tbody.appendChild(row);
+    replayTableBodyHtml.appendChild(row);
   }
 }
 
-function createLink(url, text) {
-  const link = document.createElement('a'); // 'a' as in the <a> HTML tag
-  link.href = url;
-  const linkText = document.createTextNode(text);
-  link.appendChild(linkText)
-  return link;
-}
-
-function createTableCell(columnName, value) {
+ function createTableCell(columnName, value) {
   const cell = document.createElement('td');
   if ((columnName === "Game" && !showGameColumn) || columnName === "Id") {
     return null;
@@ -102,7 +125,22 @@ function createTableCell(columnName, value) {
     const text = document.createTextNode(value);
     cell.appendChild(text);
   }
+  if (columnName === "Shot") {
+    cell.className = "nowrap";
+  }
   return cell;
+}
+
+function createLink(url, text) {
+  const link = document.createElement('a'); // 'a' as in the <a> HTML tag
+  link.href = url;
+  const linkText = document.createTextNode(text);
+  link.appendChild(linkText)
+  return link;
+}
+
+function clearTableHtml() {
+  replayTableBodyHtml.innerHTML = '';
 }
 
 try {

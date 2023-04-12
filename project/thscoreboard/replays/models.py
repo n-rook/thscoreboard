@@ -360,6 +360,13 @@ class Replay(models.Model):
         self.shot = c.shot
         self.route = c.route
 
+    def GetShortenedComment(self) -> str:
+        """Gets a short version of the replay comment, suitable to be displayed
+        in a table row."""
+        if len(self.comment) <= limits.MAX_SHORTENED_COMMENT_LENGTH:
+            return self.comment
+        return self.comment[:limits.MAX_SHORTENED_COMMENT_LENGTH] + "..."
+
 
 class ReplayStage(models.Model):
     """ Represents the end-of-stage data for a stage split for a given replay

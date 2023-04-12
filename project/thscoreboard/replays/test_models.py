@@ -1,6 +1,8 @@
 import datetime
+import logging
 
 from replays import game_ids
+from replays import limits
 from replays import models
 from replays import constant_helpers
 from replays import create_replay
@@ -92,6 +94,22 @@ class ReplayTest(test_case.ReplayTestCase):
         self.assertEqual(to_be_modified.shot.shot_id, "Marisa & Alice")
         self.assertIsNone(to_be_modified.route)
 
+    def testGetShortenedComment_ShortComment(self) -> None:
+        short_comment = "a" * limits.MAX_SHORTENED_COMMENT_LENGTH
+        replay = test_replays.CreateAsPublishedReplay(
+            filename="th6_extra", user=self.author, comment=short_comment
+        )
+        expected_shortened_comment = short_comment
+        self.assertEqual(replay.GetShortenedComment(), expected_shortened_comment)
+
+    def testGetShortenedComment_LongComment(self) -> None:
+        long_comment = "a" * (limits.MAX_SHORTENED_COMMENT_LENGTH + 1)
+        replay = test_replays.CreateAsPublishedReplay(
+            filename="th6_extra", user=self.author, comment=long_comment
+        )
+        expected_shortened_comment = "a" * limits.MAX_SHORTENED_COMMENT_LENGTH + "..."
+        self.assertEqual(replay.GetShortenedComment(), expected_shortened_comment)
+
 
 class TemporaryReplayFileTest(test_case.ReplayTestCase):
     def setUp(self):
@@ -100,7 +118,8 @@ class TemporaryReplayFileTest(test_case.ReplayTestCase):
 
     def testCleanUpDoesNothingWithNoReplays(self):
         now = datetime.datetime.now(tz=datetime.timezone.utc)
-        models.TemporaryReplayFile.CleanUp(now)
+        with self.assertLogs(logging.getLogger(), level="INFO"):
+            models.TemporaryReplayFile.CleanUp(now)
 
     def testCleanUpDeletesOldReplaysButNotNewOnes(self):
         now = datetime.datetime(2020, 1, 1, tzinfo=datetime.timezone.utc)
@@ -115,7 +134,8 @@ class TemporaryReplayFileTest(test_case.ReplayTestCase):
         )
         dont_delete_me.save()
 
-        models.TemporaryReplayFile.CleanUp(now)
+        with self.assertLogs(logging.getLogger(), level="INFO"):
+            models.TemporaryReplayFile.CleanUp(now)
 
         with self.assertRaises(models.TemporaryReplayFile.DoesNotExist):
             models.TemporaryReplayFile.objects.get(id=delete_me.id)

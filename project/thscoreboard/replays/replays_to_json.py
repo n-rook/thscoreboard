@@ -31,6 +31,7 @@ class ReplayToJsonConverter:
                 "url": f"/replays/{game.game_id}/{replay.id}",
             },
             "Upload Date": replay.created.strftime("%Y-%m-%d"),
+            "Comment": replay.GetShortenedComment(),
             "Replay": {
                 "text": "Download",
                 "url": f"/replays/{game.game_id}/{replay.id}",

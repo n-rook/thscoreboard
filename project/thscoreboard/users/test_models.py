@@ -1,4 +1,6 @@
 import datetime
+import logging
+from freezegun import freeze_time
 
 from django import test
 from django.db import utils
@@ -126,7 +128,8 @@ class RegistrationTestCase(test_case.UserTestCase):
         dont_delete_me.created = now - datetime.timedelta(days=28)
         dont_delete_me.save()
 
-        models.UnverifiedUser.CleanUp(now)
+        with self.assertLogs(logging.getLogger(), level="INFO"):
+            models.UnverifiedUser.CleanUp(now)
 
         with self.assertRaises(models.UnverifiedUser.DoesNotExist):
             models.UnverifiedUser.objects.get(id=delete_me.id)
@@ -143,13 +146,13 @@ class VisitsTestCase(test_case.UserTestCase):
         models.Visits.objects.filter(user=u, ip="1.2.3.4").get()
         # No error.
 
+    @freeze_time("2020-01-01")
     def testRecordVisit_RecordsTimestamp(self):
         u = self.createUser("somebody")
         models.Visits.RecordVisit(u, "1.2.3.4")
 
         v = models.Visits.objects.filter(user=u, ip="1.2.3.4").get()
-        self.assertLess(v.created, timezone.now())
-        self.assertGreater(v.created, timezone.now() - datetime.timedelta(seconds=15))
+        self.assertEqual(v.created, timezone.now())
 
     def testRecordAnonymousVisit(self):
         models.Visits.RecordVisit(None, "1.2.3.4")
@@ -245,7 +248,8 @@ class BanTestCase(test_case.UserTestCase):
         self.target.deleted_on -= datetime.timedelta(days=180)
         self.target.save()
 
-        models.User.CleanUp(self.now)
+        with self.assertLogs(logging.getLogger(), level="INFO"):
+            models.User.CleanUp(self.now)
 
         b = models.Ban.objects.get(id=b.id)
         self.assertIsNone(b.target)
@@ -269,7 +273,8 @@ class BanTestCase(test_case.UserTestCase):
         self.target.deleted_on -= datetime.timedelta(days=180)
         self.target.save()
 
-        models.User.CleanUp(self.now)
+        with self.assertLogs(logging.getLogger(), level="INFO"):
+            models.User.CleanUp(self.now)
 
         self.assertTrue(models.Ban.IsUsernameBanned("target"))
         self.assertTrue(models.Ban.IsEmailBanned(target_email))
@@ -286,7 +291,8 @@ class BanTestCase(test_case.UserTestCase):
         self.target.MarkForDeletion()
         self.target.deleted_on -= datetime.timedelta(days=180)
         self.target.save()
-        models.User.CleanUp(self.now)
+        with self.assertLogs(logging.getLogger(), level="INFO"):
+            models.User.CleanUp(self.now)
 
         self.assertTrue(models.Ban.IsUsernameBanned("target"))
         self.assertTrue(models.Ban.IsEmailBanned(target_email))
@@ -310,7 +316,8 @@ class BanTestCase(test_case.UserTestCase):
             expiration=self.now - datetime.timedelta(days=90),
         )
 
-        models.Ban.CleanUp(self.now)
+        with self.assertLogs(logging.getLogger(), level="INFO"):
+            models.Ban.CleanUp(self.now)
         self.assertTrue(models.Ban.objects.filter(id=b.id).exists())
 
     def testCleanUpBan_NotExpired(self):
@@ -323,9 +330,11 @@ class BanTestCase(test_case.UserTestCase):
         self.target.MarkForDeletion()
         self.target.deleted_on -= datetime.timedelta(days=180)
         self.target.save()
-        models.User.CleanUp(self.now)
 
-        models.Ban.CleanUp(self.now)
+        with self.assertLogs(logging.getLogger(), level="INFO"):
+            models.User.CleanUp(self.now)
+            models.Ban.CleanUp(self.now)
+
         self.assertTrue(models.Ban.objects.filter(id=b.id).exists())
 
     def testCleanUpBan_RecentlyExpired(self):
@@ -338,9 +347,11 @@ class BanTestCase(test_case.UserTestCase):
         self.target.MarkForDeletion()
         self.target.deleted_on -= datetime.timedelta(days=180)
         self.target.save()
-        models.User.CleanUp(self.now)
 
-        models.Ban.CleanUp(self.now)
+        with self.assertLogs(logging.getLogger(), level="INFO"):
+            models.User.CleanUp(self.now)
+            models.Ban.CleanUp(self.now)
+
         self.assertTrue(models.Ban.objects.filter(id=b.id).exists())
 
     def testCleanUpBan_LongExpired(self):
@@ -353,9 +364,11 @@ class BanTestCase(test_case.UserTestCase):
         self.target.MarkForDeletion()
         self.target.deleted_on -= datetime.timedelta(days=180)
         self.target.save()
-        models.User.CleanUp(self.now)
 
-        models.Ban.CleanUp(self.now)
+        with self.assertLogs(logging.getLogger(), level="INFO"):
+            models.User.CleanUp(self.now)
+            models.Ban.CleanUp(self.now)
+
         self.assertFalse(models.Ban.objects.filter(id=b.id).exists())
 
 
@@ -402,7 +415,8 @@ class DeletedUserTest(test_case.UserTestCase):
 
         _ = self.createUser("active-user")
 
-        models.User.CleanUp(self.now)
+        with self.assertLogs(logging.getLogger(), level="INFO"):
+            models.User.CleanUp(self.now)
 
         usernames = {u.username for u in models.User.objects.all()}
         self.assertEqual(usernames, {"recently-deleted-user", "active-user"})
@@ -421,7 +435,8 @@ class DeleteAnAccountWithReplaysTestCase(test_case.ReplayTestCase):
         u.deleted_on -= datetime.timedelta(days=90)
         u.save()
 
-        models.User.CleanUp(now)
+        with self.assertLogs(logging.getLogger(), level="INFO"):
+            models.User.CleanUp(now)
 
         self.assertFalse(models.User.objects.filter(id=u.id).exists())
         self.assertFalse(replay_models.Replay.objects.filter(id=r.id).exists())
