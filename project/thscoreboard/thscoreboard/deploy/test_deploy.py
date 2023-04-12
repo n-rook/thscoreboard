@@ -4,8 +4,8 @@ from django import test
 
 class MigrateFromCallCommandTestCase(test.TestCase):
     def _CheckDownUp(self, app):
-        management.call_command("migrate", app, "zero", interactive=False)
-        management.call_command("migrate", app, interactive=False)
+        management.call_command("migrate", app, "zero", interactive=False, verbosity=0)
+        management.call_command("migrate", app, interactive=False, verbosity=0)
 
     def testMigrateDownUp_Users(self):
         self._CheckDownUp("users")
@@ -18,5 +18,10 @@ class ModelsMatchMigrationsTestCase(test.TestCase):
     def testModelsMatchMigrations(self):
         # Raise an error if migration files need to be created.
         management.call_command(
-            "makemigrations", "--check", "--noinput", "--dry-run", "--traceback"
+            "makemigrations",
+            "--check",
+            "--noinput",
+            "--dry-run",
+            "--traceback",
+            verbosity=0,
         )
