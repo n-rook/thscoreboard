@@ -8,6 +8,7 @@ from django.core import exceptions
 from django.utils.translation import gettext as _
 
 from replays import game_ids
+from replays import game_fields
 from replays import models
 from replays import limits
 
@@ -59,6 +60,16 @@ def _create_comment_field():
     return forms.CharField(
         max_length=limits.MAX_COMMENT_LENGTH, required=False, widget=forms.Textarea
     )
+
+
+def _get_replay_type_choices(game: models.Game) -> list[Tuple[str, str]]:
+    replay_types = [
+        ("1", _("Regular")),
+        ("2", _("Stage Practice")),
+    ]
+    if game_fields.game_has_pvp(game.game_id):
+        replay_types.append(("4", _("PVP")))
+    return replay_types
 
 
 class ShotField(forms.ModelChoiceField):
@@ -160,6 +171,7 @@ class PublishReplayWithoutFileForm(forms.Form):
             del self.fields["route"]
 
         self.fields["difficulty"].choices = _GetDifficultyChoices(game)
+        self.fields["replay_type"].choices = _get_replay_type_choices(game)
 
         if not game_ids.HasBombs(game.game_id):
             del self.fields["uses_bombs"]
