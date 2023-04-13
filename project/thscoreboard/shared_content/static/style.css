@@ -93,7 +93,6 @@ p {
 }
 
 li {
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -106,12 +105,12 @@ li::before {
     content: "• ";
 }
 
-thead {
+.replay-table thead {
     background-color: var(--magenta-4);
     color: var(--background-color);
 }
 
-td {
+.replay-table td {
     padding: 6px;
 }
 
@@ -176,8 +175,8 @@ h3 {
     margin-bottom: 0.5em;
 }
 
-table th,
-table td {
+.replay-table table th,
+.replay-table table td {
     padding-left: 1em;
     padding-right: 1em;
 }
@@ -192,4 +191,18 @@ table td {
 
 .checkbox-list label {
     display: block;
+}
+
+.sidebar td {
+    vertical-align: top;
+    padding-right: 5px;
+}
+
+.sidebar img {
+    height: 16px;
+}
+
+.sidebar {
+    border-collapse: separate;
+    border-spacing: 0 4px;
 }
