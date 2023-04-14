@@ -48,7 +48,7 @@ def _get_filter_options_default(game: Game) -> dict[str, list[str]]:
 
 def _get_filter_options_th16(game: Game) -> dict[str, list[str]]:
     all_characters = list(
-        set(shot.GetCharacterame() for shot in Shot.objects.filter(game=game.game_id))
+        set(shot.GetCharacterName() for shot in Shot.objects.filter(game=game.game_id))
     )
     all_seasons = list(
         set(shot.GetSubshotName() for shot in Shot.objects.filter(game=game.game_id))

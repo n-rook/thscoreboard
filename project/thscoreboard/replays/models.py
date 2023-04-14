@@ -87,7 +87,7 @@ class Shot(models.Model):
         """Get a pretty name for this shot type. Note: Populates game."""
         return game_ids.GetShotName(self.game.game_id, self.shot_id)
 
-    def GetCharacterame(self) -> str:
+    def GetCharacterName(self) -> str:
         """Get a pretty name for this Character. Note: Populates game."""
         return game_ids.GetCharacterName(self.game.game_id, self.shot_id)
 

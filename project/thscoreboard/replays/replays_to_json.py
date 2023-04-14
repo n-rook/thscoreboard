@@ -45,7 +45,7 @@ class ReplayToJsonConverter:
 
     def _get_th16_additional_fields(self, shot: models.Shot) -> dict:
         return {
-            "Character": shot.GetCharacterame(),
+            "Character": shot.GetCharacterName(),
             "Season": shot.GetSubshotName(),
         }
 
