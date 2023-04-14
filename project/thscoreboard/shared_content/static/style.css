@@ -23,6 +23,10 @@
     --header-height: 96px;
 }
 
+th,td {
+    padding:2px 5px 2px
+}
+
 body {
     position: relative;
     font-family: 'Open sans', sans-serif, Arial, Helvetica;
@@ -109,11 +113,6 @@ li::before {
     background-color: var(--magenta-4);
     color: var(--background-color);
 }
-
-.replay-table td {
-    padding: 6px;
-}
-
 
 .replay-table tr:nth-child(2n + 1):not(.h) {
     background-color: var(--magenta-0);
@@ -205,4 +204,75 @@ h3 {
 .sidebar {
     border-collapse: separate;
     border-spacing: 0 4px;
+}
+
+#simple-centered-box {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    max-width:600px;
+    margin-top:50px;
+    margin-left:auto;
+    margin-right:auto
+}
+
+#simple-centered-box #simple-centered-title {
+    box-sizing:border-box;
+    font:400 20px "Lato", "Arial", sans-serif;
+    height:32px;
+    width:100%;
+    padding:0px;
+    background-color:var(--simple-centered-title-color)
+}
+
+#simple-centered-box #simple-centered-title p {
+    margin:0;
+    padding:4px
+}
+
+#simple-centered-box #simple-centered-content {
+    box-sizing:border-box;
+    width:100%;
+    padding:10px 8px;
+    background-color:var(--simple-centered-content-color)
+}
+
+#simple-centered-content form {
+    text-align:left
+}
+
+form.inline-form {
+    box-sizing:border-box;
+    border:medium solid black;
+    margin:2px;
+    padding:8px
+}
+
+form.inline-form .field-wrapper {
+    margin:4px 2px;
+    display:flex;
+    flex-direction:column
+}
+
+form.inline-form .field-wrapper label {
+    margin:4px 0px
+}
+
+form.inline-form .field-wrapper input {
+    margin:4px 4px
+}
+
+form.inline-form input[type=submit ]{
+    height:2em;
+    width:100%
+}
+
+form.upload-form {
+    width:350px
+}
+
+.form-table tbody {
+    vertical-align:top
 }
