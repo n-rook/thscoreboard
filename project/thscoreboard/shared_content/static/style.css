@@ -233,7 +233,7 @@ h3 {
     height:32px;
     width:100%;
     padding:0px;
-    background-color:var(--simple-centered-title-color)
+    background-color:var(--magenta-1)
 }
 
 #simple-centered-box #simple-centered-title p {
@@ -245,7 +245,7 @@ h3 {
     box-sizing:border-box;
     width:100%;
     padding:10px 8px;
-    background-color:var(--simple-centered-content-color)
+    background-color:var(--magenta-0)
 }
 
 #simple-centered-content form {
