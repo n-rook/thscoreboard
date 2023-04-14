@@ -180,6 +180,14 @@ h3 {
     padding-right: 1em;
 }
 
+.replay-table th, td:not(.replay-comment, .sidebar) {
+    white-space: nowrap;
+}
+
+.replay-comment {
+    overflow-wrap: anywhere;
+}
+
 .checkbox-list {
     display: inline-block;
     vertical-align: top;
@@ -195,6 +203,7 @@ h3 {
 .sidebar td {
     vertical-align: top;
     padding-right: 5px;
+    white-space: normal;
 }
 
 .sidebar img {
