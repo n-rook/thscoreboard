@@ -94,7 +94,8 @@ def _get_filter_options_th17(game: Game) -> dict[str, list[str]]:
 
 def _get_all_replay_for_game(game_id: str) -> dict:
     return (
-        models.Replay.objects.select_related("shot")
+        models.Replay.objects.prefetch_related("shot")
+        .prefetch_related("route")
         .filter(category=models.Category.REGULAR)
         .filter(shot__game=game_id)
         .filter(replay_type=1)
