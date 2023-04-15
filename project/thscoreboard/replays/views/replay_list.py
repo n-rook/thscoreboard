@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, render
 
 from replays import models
 from replays import game_ids
-from replays.models import Game, Shot
+from replays.models import Game, Shot, Route
 from replays.replays_to_json import ReplayToJsonConverter
 
 
@@ -34,7 +34,9 @@ def game_scoreboard(request, game_id: str):
 
 
 def _get_filter_options(game: Game) -> dict[str, list[str]]:
-    if game.game_id == game_ids.GameIDs.TH16:
+    if game.game_id == game_ids.GameIDs.TH08:
+        return _get_filter_options_th08(game)
+    elif game.game_id == game_ids.GameIDs.TH16:
         return _get_filter_options_th16(game)
     elif game.game_id == game_ids.GameIDs.TH17:
         return _get_filter_options_th17(game)
@@ -77,6 +79,12 @@ def _get_filter_options_th17(game: Game) -> dict[str, list[str]]:
         "Character": all_characters,
         "Goast": all_goasts,
     }
+
+def _get_filter_options_th08(game: Game) -> dict[str, list[str]]:
+    all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game.game_id)]
+    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
+    all_routes = [route.GetName() for route in Route.objects.filter(game=game.game_id)]
+    return {"Difficulty": all_difficulties, "Shot": all_shots, "Route": all_routes}
 
 
 def _get_all_replay_for_game(game_id: str) -> dict:

@@ -38,6 +38,9 @@ class ReplayToJsonConverter:
             },
         }
 
+        if game.game_id == game_ids.GameIDs.TH08:
+            json_dict |= self._get_th08_additional_fields(replay)
+
         if game.game_id == game_ids.GameIDs.TH16:
             json_dict |= self._get_th16_additional_fields(shot)
         elif game.game_id == game_ids.GameIDs.TH17:
@@ -56,6 +59,12 @@ class ReplayToJsonConverter:
             "Character": shot.GetCharacterName(),
             "Goast": shot.GetSubshotName(),
         }
+    
+    def _get_th08_additional_fields(self, replay: models.Replay) -> dict:
+        route = replay.route
+        if route is None:
+            return {}
+        return {"Route": replay.route.GetName()}
 
     def convert_replays_to_serializable_list(
         self,
