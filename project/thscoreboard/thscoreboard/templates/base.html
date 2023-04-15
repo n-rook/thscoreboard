@@ -1,144 +1,80 @@
 <!DOCTYPE html>
 {% load static %}
+{% load sass_tags %}
 {% load i18n %}
+{% load get_games %}
+{% get_all_games as all_games %}
 <html lang="en">
 <head>
     <title>{% block title %}Silent Selene{% endblock %}</title>
+    <link rel="stylesheet" href="{% sass_src 'style.sass' %}">
     <link rel="stylesheet" href="{% static 'fonts/Lato.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/EBGaramond.css' %}">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
     <script src="/static/js/main.js" defer></script>
     {% block favicon %}<link rel="icon" type="image/png" href="{% static 'favicon.png' %}" sizes="48x48">{% endblock %}
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="{% block embed_title %}Silent Selene{% endblock %}" />
     <meta property="og:site_name" content="Silent Selene" />
     <meta property="og:description" content="{% block embed_description %}Upload and view Touhou replays at Silent Selene, the modern replay hub.{% endblock %}" />
     <meta property="og:image" content="{% block embed_favicon %}{% static 'favicon.png' %}{% endblock %}" />
 </head>
 
-<div class="main-wrapper-outer">
-    <div class="main-wrapper-inner">
-        <div class="header-banner">
-            <a href="/" class="banner-home-link"><div></div></a>
+<body>
+    <div class="whole-page">
+        <div class="banner">
+            <a href="/" class="banner-home-link"></a>
             <div class="banner-links">
-                <ul>
-                    {% if user.is_authenticated %}
-                    <li><a href="/users/profile">Profile</a></li>
-                    <li>•</li>
-                    <li><a href="/replays/user/">My replays</a></li>
-                    <li>•</li>
-                    <li><a href="/replays/upload">Upload</a></li>
-                    {% if request.user.is_staff or request.user.is_superuser %}
-                    <li>•</li>
-                    <li><a href="/staff">Staff tools</a></li>
-                    {% endif %}
-                    {% else %}
-                    <li><a href="/users/login">Log in</a></li>
-                    <li>•</li>
-                    <li><a href="/users/register">Register</a></li>
-                    {% endif %}
-                </ul>
+                {% if user.is_authenticated %}
+                <div class="banner-link">
+                    <a href="/replays/upload">Upload</a>
+                </div>
+                <div class="banner-link">
+                    <a href="/replays/user/">My replays</a>
+                </div>
+                <div class="banner-link">
+                    <a href="/users/profile">Profile</a>
+                </div>
+                {% if user.is_staff or user.is_superuser %}
+                <a href="/staff">Staff tools</a>
+                {% endif %}
+                {% else %}
+                <a href="/users/login">Log in</a>
+                <a href="/users/register">Sign Up</a>
+                {% endif %}
             </div>
         </div>
-        <div class="content-wrapper">
-            <div class="sidebar-navigation">
-                <div class="wrapper-sidebar">
-                    <p class="highlight">Main games</p>
-                    <table class="sidebar">
-                        <tr>
-                            <td><img src="/static/icons/th01.png"></img></td>
-                            <td><a href="/replays/th01">Highly Responsive to Prayers</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th02.png"></img></td>
-                            <td><a href="/replays/th02">The Story of Eastern Wonderland</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th03.png"></img></td>
-                            <td><a href="/replays/th03">Phantasmagoria of Dim. Dream</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th04.png"></img></td>
-                            <td><a href="/replays/th04">Lotus Land Story</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th05.png"></img></td>
-                            <td><a href="/replays/th05">Mystic Square</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th06.png"></img></td>
-                            <td><a href="/replays/th06">The Embodiment of Scarlet Devil</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th07.png"></img></td>
-                            <td><a href="/replays/th07">Perfect Cherry Blossom</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th08.png"></img></td>
-                            <td><a href="/replays/th08">Imperishable Night</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th09.png"></img></td>
-                            <td><a href="/replays/th09">Phantasmagoria of Flower View</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th10.png"></img></td>
-                            <td><a href="/replays/th10">Mountain of Faith</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th11.png"></img></td>
-                            <td><a href="/replays/th11">Subterrenean Animism</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th12.png"></img></td>
-                            <td><a href="/replays/th12">Undefined Fantastic Object</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th13.png"></img></td>
-                            <td><a href="/replays/th13">Ten Desires</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th14.png"></img></td>
-                            <td><a href="/replays/th14">Double Dealing Character</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th15.png"></img></td>
-                            <td><a href="/replays/th15">Legacy of Lunatic Kingdom</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th16.png"></img></td>
-                            <td><a href="/replays/th16">Hidden Star in Four Seasons</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th17.png"></img></td>
-                            <td><a href="/replays/th17">Wily Beast and Weakest Creature</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="/static/icons/th18.png"></img></td>
-                            <td><a href="/replays/th18">Unconnected Marketeers</a></td>
-                        </tr>
-                    </table>
-                     
-                    <p class="highlight">Side games</p>
-                    <ul id="side-games"></ul>
-                    <p class="highlight">Website</p>
-                    <ul>
-                        <li><a href="/docs">About</a></li>
-                        <li><a href="/docs/rules">Website rules</a></li>
-                        <li><a href="/docs/replayrules">Replay rules</a></li>
-                        <li><a href="/docs/privacy">Privacy policy</a></li>
-                        <li><a href="/docs/licenses">Licences</a></li>
-                        <li><a href="/docs/terms">Terms of Use</a></li>
-                        <li><a href="/docs/credits">Credits</a></li>
-                    </ul>
-                </div>
-            </div>
+        <div class="content-and-sidebar">
+            <nav class="sidebar">
+                <h1 class="highlight">
+                    Games
+                </h1>
+                <ul class="game-list">
+                    {% for game in all_games %}
+                    <li>
+                        <div class="sidebar-game-icon">
+                            <img src="{{game.GetIconPath}}"/>
+                        </div>
+                        <div class="sidebar-game-link">
+                            <a href="/replays/{{game.game_id}}">{{game.GetName}}</a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <h1 class="highlight">
+                    About the site
+                </h1>
+                <ul>
+                <li><a href="/docs">About</a></li>
+                <li><a href="/docs/rules">Website rules</a></li>
+                <li><a href="/docs/replayrules">Replay rules</a></li>
+                <li><a href="/docs/privacy">Privacy policy</a></li>
+                <li><a href="/docs/licenses">Licences</a></li>
+                <li><a href="/docs/terms">Terms of Use</a></li>
+                <li><a href="/docs/credits">Credits</a></li>
+                </ul>
+            </nav>
             <div class="main">
                 {% block content %}{% endblock %}
             </div>
         </div>
     </div>
-    </div>
-    </body>
 </html>

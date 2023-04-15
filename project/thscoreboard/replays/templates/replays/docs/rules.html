@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "replays/docs/docs_template.html" %}
 {% load i18n %}
 
-{% block content %}
+{% block main_text %}
     {% url 'Docs/Privacy' as replay_rules_url %}
     <h1>{% translate "Rules" %}</h1>
     {% blocktranslate %}
