@@ -477,6 +477,36 @@ def GetShotName(game_id: str, shot_id: str) -> str:
     return "Bug shot"
 
 
+def GetCharacterName(game_id: str, shot_id: str) -> str:
+    if game_id == GameIDs.TH16:
+        if shot_id.startswith("Reimu"):
+            return pgettext("th16", "Reimu")
+        elif shot_id.startswith("Cirno"):
+            return pgettext("th16", "Cirno")
+        elif shot_id.startswith("Aya"):
+            return pgettext("th16", "Aya")
+        elif shot_id.startswith("Marisa"):
+            return pgettext("th16", "Marisa")
+
+    return "Character name not implemented"
+
+
+def GetSubshotName(game_id: str, shot_id: str) -> Optional[str]:
+    if game_id == GameIDs.TH16:
+        if shot_id.endswith("Spring"):
+            return pgettext("th16", "Spring")
+        elif shot_id.endswith("Summer"):
+            return pgettext("th16", "Summer")
+        elif shot_id.endswith("Autumn"):
+            return pgettext("th16", "Autumn")
+        elif shot_id.endswith("Winter"):
+            return pgettext("th16", "Winter")
+        else:
+            return None
+
+    return "Subshot not implemented"
+
+
 def GetRouteName(game_id: str, route_id: str):
     if game_id == GameIDs.TH01:
         if route_id == "Jigoku":

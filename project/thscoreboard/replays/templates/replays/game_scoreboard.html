@@ -3,26 +3,18 @@
 {% block content %}
     <h2><a href="/replays/{{game.game_id}}">{{ game.GetName }}</a></h2>
 
-    <div class="checkbox-list">
-        {% for difficulty_name in difficulties %}
-            <label><input
-                type="checkbox"
-                filterType="Difficulty"
-                value="{{difficulty_name}}"
-                onclick="onClick(this)"
-            >{{ difficulty_name }}</label>
-        {% endfor %}
-	</div>
-	<div class="checkbox-list">
-        {% for shot in shots %}
-        <label><input
-            type="checkbox"
-            filterType="Shot"
-            value="{{shot}}"
-            onclick="onClick(this)"
-        >{{ shot }}</label>
-        {% endfor %}
-	</div>
+    {% for filter_name, filter_values in filters.items %}
+        <div class="checkbox-list">
+            {% for filter_value in filter_values %}
+                <label><input
+                    type="checkbox"
+                    filterType="{{filter_name}}"
+                    value="{{filter_value}}"
+                    onclick="onClick(this)"
+                >{{ filter_value }}</label>
+            {% endfor %}
+        </div>
+    {% endfor %}
 
     <br />
 

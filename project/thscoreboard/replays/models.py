@@ -87,6 +87,14 @@ class Shot(models.Model):
         """Get a pretty name for this shot type. Note: Populates game."""
         return game_ids.GetShotName(self.game.game_id, self.shot_id)
 
+    def GetCharacterName(self) -> str:
+        """Get a pretty name for this Character. Note: Populates game."""
+        return game_ids.GetCharacterName(self.game.game_id, self.shot_id)
+
+    def GetSubshotName(self) -> str:
+        """Get a pretty name for this subshot. Note: Populates game."""
+        return game_ids.GetSubshotName(self.game.game_id, self.shot_id)
+
 
 class Category(models.IntegerChoices):
     """The category under which a replay is uploaded."""
@@ -365,13 +373,13 @@ class Replay(models.Model):
         in a table row."""
         if len(self.comment) <= limits.MAX_SHORTENED_COMMENT_LENGTH:
             return self.comment
-        return self.comment[:limits.MAX_SHORTENED_COMMENT_LENGTH] + "..."
+        return self.comment[: limits.MAX_SHORTENED_COMMENT_LENGTH] + "..."
 
 
 class ReplayStage(models.Model):
-    """ Represents the end-of-stage data for a stage split for a given replay
-        The data may not directly correspond to how it is stored in-game, since some games store it differently
-        Many games only store the data from the start of a replay, so many of the fields for the final stage will be null
+    """Represents the end-of-stage data for a stage split for a given replay
+    The data may not directly correspond to how it is stored in-game, since some games store it differently
+    Many games only store the data from the start of a replay, so many of the fields for the final stage will be null
     """
 
     class Meta:
