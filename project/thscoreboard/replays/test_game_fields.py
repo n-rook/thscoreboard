@@ -9,6 +9,7 @@ from replays.game_fields import (
     GetFormatLives,
     GetFormatPower,
     GetFormatStage,
+    game_has_pvp,
 )
 
 
@@ -131,3 +132,15 @@ class FormatBombsTestCase(unittest.TestCase):
 
         format_bombs = GetFormatBombs(GameIDs.TH12, bombs=4, bomb_pieces=2)
         self.assertEqual(format_bombs, "4 (2/3)")
+
+
+class GameHasPvpTestCase(unittest.TestCase):
+    def testTh03(self) -> None:
+        self.assertTrue(game_has_pvp(GameIDs.TH03))
+
+    def testTh09(self) -> None:
+        self.assertTrue(game_has_pvp(GameIDs.TH09))
+
+    def testNoPvp(self) -> None:
+        for game_id in [GameIDs.TH01, GameIDs.TH06, GameIDs.TH18]:
+            self.assertFalse(game_has_pvp(game_id))

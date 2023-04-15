@@ -269,6 +269,9 @@ class Th11ReplayTestCase(unittest.TestCase):
     def testSmallFile(self):
         ParseTestReplay("th11_small_file")
 
+    def testRoyalflare(self):
+        ParseTestReplay("th11_royalflare")
+
 
 class Th12ReplayTestCase(unittest.TestCase):
     def testNormal(self):
@@ -335,6 +338,10 @@ class Th13ReplayTestCase(unittest.TestCase):
         self.assertIsNone(s6.power)
         self.assertIsNone(s6.th13_trance)
 
+    def testRoyalflareCorrupted(self):
+        r = ParseTestReplay("th13_royalflare")
+        self.assertEqual(r.game, "th13")
+
     def testOverdrive(self):
         r = ParseTestReplay("th13_overdrive")
         self.assertEqual(r.game, "th13")
@@ -368,6 +375,12 @@ class Th14ReplayTestCase(unittest.TestCase):
         r = ParseTestReplay("th14_extra")
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
         self.assertEqual(r.difficulty, 4)
+    
+    def testRoyalflareCorrupted(self):
+        r = ParseTestReplay("th14_royalflare")
+        self.assertEqual(r.game, "th14")
+        r = ParseTestReplay("th14_royalflare2")
+        self.assertEqual(r.game, "th14")
 
 
 class Th15ReplayTestCase(unittest.TestCase):

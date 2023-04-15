@@ -33,7 +33,9 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             no_bomb=False,
             miss_count=None,
             replay_info=replay_info_1,
-            created_timestamp=datetime.datetime(2000, 1, 1),
+            created_timestamp=datetime.datetime(
+                2000, 1, 1, tzinfo=datetime.timezone.utc
+            ),
         )
 
         replay_info_2 = ParseTestReplay("th16_extra")
@@ -68,18 +70,6 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
         for replay, json_replay_data in zip(replays, json_data):
             assert json_replay_data
-            assert set(json_replay_data.keys()) == {
-                "Id",
-                "User",
-                "Game",
-                "Difficulty",
-                "Shot",
-                "Score",
-                "Upload Date",
-                "Comment",
-                "Replay",
-            }
-
             assert type(json_replay_data["Score"]) == dict
             assert set(json_replay_data["Score"].keys()) == {"text", "url"}
 
@@ -95,5 +85,9 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         assert json_data[0]["Upload Date"] == "2000-01-01"
         assert json_data[0]["Comment"] == "鼻毛"
         assert json_data[0]["Replay"]["text"] == "⬇"
+        assert "Character" not in json_data[0]["Replay"]["text"]
+        assert "Season" not in json_data[0]["Replay"]["text"]
 
         assert json_data[1]["User"] == "あ"
+        assert json_data[1]["Character"] == "Marisa"
+        assert json_data[1]["Season"] is None
