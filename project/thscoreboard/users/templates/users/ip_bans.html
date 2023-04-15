@@ -3,7 +3,7 @@
 {% block content %}
 <h2>IP Bans</h2>
 <table class="replay-table">
-<thead><tr class="h">
+<thead><tr>
     <th>IP</th>
     <th>Comment</th>
     <th>Author</th>
@@ -23,7 +23,7 @@
 
 <h2>Add IP Ban</h2>
 <form method="post" action="{{ request.path }}add">
-    {% csrf_token %} 
+    {% csrf_token %}
     {{ add_ip_ban_form.non_field_errors }}
     <table class="form-table">
         <th style="width: 50%;"></th>

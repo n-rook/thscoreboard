@@ -1,5 +1,3 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
 from django.urls import path
 
 from replays.views import create_replay
@@ -16,7 +14,6 @@ urlpatterns = [
     path("upload", create_replay.upload_file, name="upload_file"),
     path("publish/<int:temp_replay_id>", create_replay.publish_replay),
     path("publish/<str:game_id>", create_replay.publish_replay_no_file),
-    path("user/", login_required(lambda req: redirect(f"/replays/user/{req.user}"))),
     path("user/<str:username>", user.user_page),
     path("user/<str:username>/json", user.user_page_json),
     path("reanalyze_all", reanalyze_all_replays.reanalyze_all),

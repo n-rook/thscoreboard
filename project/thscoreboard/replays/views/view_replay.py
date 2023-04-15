@@ -5,7 +5,6 @@ from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
     HttpResponseForbidden,
-    HttpResponseRedirect,
     Http404,
 )
 from django.contrib.auth import decorators as auth_decorators
@@ -112,18 +111,12 @@ def view_replay_reanalysis(request, game_id: str, replay_id: int):
 
 @http_decorators.require_safe
 def download_replay(request, game_id: str, replay_id: int):
-    def redirect_video(replay):
-        if replay.video_link:
-            return HttpResponseRedirect(replay.video_link)
-        else:
-            return HttpResponseBadRequest()
-
     replay_instance = GetReplayOr404(request.user, replay_id)
 
     if replay_instance.shot.game.game_id != game_id:
         raise Http404()
-    if not replay_instance.shot.game.has_replays or not replay_instance.is_good:
-        return redirect_video(replay_instance)
+    if not replay_instance.shot.game.has_replays:
+        raise HttpResponseBadRequest()
 
     try:
         replay_file_instance = models.ReplayFile.objects.get(replay=replay_instance)

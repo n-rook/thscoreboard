@@ -28,7 +28,7 @@
                     <a href="/replays/upload">Upload</a>
                 </div>
                 <div class="banner-link">
-                    <a href="/replays/user/">My replays</a>
+                    <a href="/replays/user/{{user.username}}">My replays</a>
                 </div>
                 <div class="banner-link">
                     <a href="/users/profile">Profile</a>
@@ -40,6 +40,7 @@
                 <a href="/users/login">Log in</a>
                 <a href="/users/register">Sign Up</a>
                 {% endif %}
+                <a href="#" onclick="toggleTheme()">🌙</a>
             </div>
         </div>
         <div class="content-and-sidebar">
