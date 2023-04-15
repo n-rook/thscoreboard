@@ -133,8 +133,8 @@ function populateTable(replays, startIndex, endIndex) {
   }
   if (columnName === "Shot") {
     cell.className = "nowrap";
-  } else if(columnName === "Comment") {
-    cell.className = "replay-comment"
+  } else if (columnName === "Comment") {
+    cell.className = "comment-cell"
   }
   return cell;
 }
