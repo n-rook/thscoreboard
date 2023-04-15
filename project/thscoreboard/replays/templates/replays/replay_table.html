@@ -16,6 +16,11 @@
             <th>
                 Shot
             </th>
+            {% if show_route %}
+            <th>
+                Route
+            </th>
+            {% endif %}
             <th>
                 Score
             </th>
@@ -36,6 +41,7 @@
 <!-- This script is a hack to get variables from python into a js file  -->
 <script>
     const showGameColumn = "{{show_game}}";
+    const showRouteColumn = "{{show_route}}";
 </script>
 
 <script src="/static/js/replays/replayTable.js"></script>

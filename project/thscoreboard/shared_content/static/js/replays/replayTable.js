@@ -1,7 +1,7 @@
 const replayTableBatchSize = 50;
 const replayTableBodyHtml = document.getElementById('replay-table-body');
 const displayedColumns = [
-  "User", "Game", "Difficulty", "Shot", "Score", "Upload Date", "Comment", "Replay"
+  "User", "Game", "Difficulty", "Shot", "Route", "Score", "Upload Date", "Comment", "Replay"
 ];
 
 // Initialize global variables if they were not provided by html
@@ -123,6 +123,9 @@ function populateTable(replays, startIndex, endIndex) {
   if (columnName === "Game" && !showGameColumn) {
     return null;
   }
+  if (columnName === "Route" && !showRouteColumn) {
+    return null;
+  }
 
   // Value is primitive or has type {"text": ..., "url": ...}
   if (typeof value === "object") {
@@ -131,7 +134,7 @@ function populateTable(replays, startIndex, endIndex) {
     const text = document.createTextNode(value);
     cell.appendChild(text);
   }
-  if (columnName === "Shot") {
+  if (columnName === "Shot" || columnName === "Route") {
     cell.className = "nowrap";
   } else if (columnName === "Comment") {
     cell.className = "comment-cell"
