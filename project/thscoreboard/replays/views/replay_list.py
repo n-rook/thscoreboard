@@ -36,6 +36,8 @@ def game_scoreboard(request, game_id: str):
 def _get_filter_options(game: Game) -> dict[str, list[str]]:
     if game.game_id == game_ids.GameIDs.TH16:
         return _get_filter_options_th16(game)
+    elif game.game_id == game_ids.GameIDs.TH17:
+        return _get_filter_options_th17(game)
     else:
         return _get_filter_options_default(game)
 
@@ -47,11 +49,11 @@ def _get_filter_options_default(game: Game) -> dict[str, list[str]]:
 
 
 def _get_filter_options_th16(game: Game) -> dict[str, list[str]]:
-    all_characters = list(
-        set(shot.GetCharacterName() for shot in Shot.objects.filter(game=game.game_id))
+    all_characters = _deduplicate_list_preserving_order(
+        shot.GetCharacterName() for shot in Shot.objects.filter(game=game.game_id)
     )
-    all_seasons = list(
-        set(shot.GetSubshotName() for shot in Shot.objects.filter(game=game.game_id))
+    all_seasons = _deduplicate_list_preserving_order(
+        shot.GetSubshotName() for shot in Shot.objects.filter(game=game.game_id)
     )
     all_seasons.remove(None)
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
@@ -59,6 +61,21 @@ def _get_filter_options_th16(game: Game) -> dict[str, list[str]]:
         "Difficulty": all_difficulties,
         "Character": all_characters,
         "Season": all_seasons,
+    }
+
+
+def _get_filter_options_th17(game: Game) -> dict[str, list[str]]:
+    all_characters = _deduplicate_list_preserving_order(
+        shot.GetCharacterName() for shot in Shot.objects.filter(game=game.game_id)
+    )
+    all_goasts = _deduplicate_list_preserving_order(
+        shot.GetSubshotName() for shot in Shot.objects.filter(game=game.game_id)
+    )
+    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
+    return {
+        "Difficulty": all_difficulties,
+        "Character": all_characters,
+        "Goast": all_goasts,
     }
 
 
@@ -70,3 +87,13 @@ def _get_all_replay_for_game(game_id: str) -> dict:
         .filter(replay_type=1)
         .order_by("-score")
     )
+
+
+def _deduplicate_list_preserving_order(list_: list) -> list:
+    deduplicated_list = []
+    seen = set()
+    for item in list_:
+        if item not in seen:
+            deduplicated_list.append(item)
+            seen.add(item)
+    return deduplicated_list

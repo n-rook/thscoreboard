@@ -40,6 +40,8 @@ class ReplayToJsonConverter:
 
         if game.game_id == game_ids.GameIDs.TH16:
             json_dict |= self._get_th16_additional_fields(shot)
+        elif game.game_id == game_ids.GameIDs.TH17:
+            json_dict |= self._get_th17_additional_fields(shot)
 
         return json_dict
 
@@ -47,6 +49,12 @@ class ReplayToJsonConverter:
         return {
             "Character": shot.GetCharacterName(),
             "Season": shot.GetSubshotName(),
+        }
+
+    def _get_th17_additional_fields(self, shot: models.Shot) -> dict:
+        return {
+            "Character": shot.GetCharacterName(),
+            "Goast": shot.GetSubshotName(),
         }
 
     def convert_replays_to_serializable_list(
