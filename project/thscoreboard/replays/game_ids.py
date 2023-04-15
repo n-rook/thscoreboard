@@ -487,6 +487,13 @@ def GetCharacterName(game_id: str, shot_id: str) -> str:
             return pgettext("th16", "Aya")
         elif shot_id.startswith("Marisa"):
             return pgettext("th16", "Marisa")
+    if game_id == GameIDs.TH17:
+        if shot_id.startswith("Reimu"):
+            return pgettext("th17", "Reimu")
+        elif shot_id.startswith("Marisa"):
+            return pgettext("th17", "Marisa")
+        elif shot_id.startswith("Youmu"):
+            return pgettext("th17", "Youmu")
 
     return "Character name not implemented"
 
@@ -503,6 +510,13 @@ def GetSubshotName(game_id: str, shot_id: str) -> Optional[str]:
             return pgettext("th16", "Winter")
         else:
             return None
+    if game_id == GameIDs.TH17:
+        if shot_id.endswith("Wolf"):
+            return pgettext("th16", "Wolf")
+        elif shot_id.endswith("Otter"):
+            return pgettext("th16", "Otter")
+        elif shot_id.endswith("Eagle"):
+            return pgettext("th16", "Eagle")
 
     return "Subshot not implemented"
 
