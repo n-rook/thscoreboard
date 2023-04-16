@@ -560,7 +560,9 @@ def _Parse12(rep_raw):
         if next_stage_start_data is not None:
             s.score = next_stage_start_data.score * 10
             s.power = next_stage_start_data.power
-            s.piv = convert_stored_PIV_to_displayed(game_ids.GameIDs.TH12, next_stage_start_data.piv)
+            s.piv = convert_stored_PIV_to_displayed(
+                game_ids.GameIDs.TH12, next_stage_start_data.piv
+            )
             s.lives = next_stage_start_data.lives
             s.life_pieces = next_stage_start_data.life_pieces
             #   fix zun fuckery
@@ -623,18 +625,15 @@ def _Parse13(rep_raw):
         )
 
     # TH13 stores stage data values from the start of the stage but score from the end
-    for current_stage, next_stage in zip(
-        replay.stages, replay.stages[1:] + [None]
-    ):
-        s = ReplayStage(
-            stage=current_stage.stage_num,
-            score=replay.header.score * 10
-        )
+    for current_stage, next_stage in zip(replay.stages, replay.stages[1:] + [None]):
+        s = ReplayStage(stage=current_stage.stage_num, score=replay.header.score * 10)
         if next_stage is not None:
             s.score = next_stage.score * 10
             s.power = next_stage.power
             # piv is stored with extra precision, we trunctate the value to what is shown ingame
-            s.piv = convert_stored_PIV_to_displayed(game_ids.GameIDs.TH13, next_stage.piv)
+            s.piv = convert_stored_PIV_to_displayed(
+                game_ids.GameIDs.TH13, next_stage.piv
+            )
             s.lives = next_stage.lives
             s.life_pieces = next_stage.life_pieces
             s.bombs = next_stage.bombs
@@ -703,7 +702,9 @@ def _Parse14(rep_raw):
         if next_stage_start_data is not None:
             s.score = next_stage_start_data.score * 10
             s.power = next_stage_start_data.power
-            s.piv = convert_stored_PIV_to_displayed(game_ids.GameIDs.TH14, next_stage_start_data.piv)
+            s.piv = convert_stored_PIV_to_displayed(
+                game_ids.GameIDs.TH14, next_stage_start_data.piv
+            )
             s.lives = next_stage_start_data.lives
             s.life_pieces = next_stage_start_data.life_pieces
             s.bombs = next_stage_start_data.bombs
@@ -745,7 +746,7 @@ def _Parse15(rep_raw) -> ReplayInfo:
 
     shots = ["Reimu", "Marisa", "Sanae", "Reisen"]
     rep_stages = []
-    
+
     for current_stage_start_data, next_stage_start_data in zip(
         replay.stages, replay.stages[1:] + [None]
     ):
@@ -755,7 +756,9 @@ def _Parse15(rep_raw) -> ReplayInfo:
         if next_stage_start_data is not None:
             s.score = next_stage_start_data.score * 10
             s.power = next_stage_start_data.power
-            s.piv = convert_stored_PIV_to_displayed(game_ids.GameIDs.TH15, next_stage_start_data.piv)
+            s.piv = convert_stored_PIV_to_displayed(
+                game_ids.GameIDs.TH15, next_stage_start_data.piv
+            )
             s.lives = next_stage_start_data.lives
             s.life_pieces = next_stage_start_data.life_pieces
             s.bombs = next_stage_start_data.bombs
@@ -816,7 +819,7 @@ def _Parse16(rep_raw) -> ReplayInfo:
         )
 
     rep_stages = []
-    
+
     for current_stage_start_data, next_stage_start_data in zip(
         replay.stages, replay.stages[1:] + [None]
     ):
@@ -826,7 +829,9 @@ def _Parse16(rep_raw) -> ReplayInfo:
         if next_stage_start_data is not None:
             s.score = next_stage_start_data.score * 10
             s.power = next_stage_start_data.power
-            s.piv = convert_stored_PIV_to_displayed(game_ids.GameIDs.TH16, next_stage_start_data.piv)
+            s.piv = convert_stored_PIV_to_displayed(
+                game_ids.GameIDs.TH16, next_stage_start_data.piv
+            )
             s.lives = next_stage_start_data.lives
             s.life_pieces = next_stage_start_data.life_pieces
             s.bombs = next_stage_start_data.bombs
@@ -888,7 +893,7 @@ def _Parse17(rep_raw) -> ReplayInfo:
         )
 
     rep_stages = []
-    
+
     for current_stage_start_data, next_stage_start_data in zip(
         replay.stages, replay.stages[1:] + [None]
     ):
@@ -898,7 +903,9 @@ def _Parse17(rep_raw) -> ReplayInfo:
         if next_stage_start_data is not None:
             s.score = next_stage_start_data.score * 10
             s.power = next_stage_start_data.power
-            s.piv = convert_stored_PIV_to_displayed(game_ids.GameIDs.TH17, next_stage_start_data.piv)
+            s.piv = convert_stored_PIV_to_displayed(
+                game_ids.GameIDs.TH17, next_stage_start_data.piv
+            )
             s.lives = next_stage_start_data.lives
             s.life_pieces = next_stage_start_data.life_pieces
             s.bombs = next_stage_start_data.bombs
@@ -962,7 +969,9 @@ def _Parse18(rep_raw) -> ReplayInfo:
         s = ReplayStage(
             stage=current_stage.stage_num,
             power=current_stage_end_data.power,
-            piv=convert_stored_PIV_to_displayed(game_ids.GameIDs.TH18, current_stage_end_data.piv),
+            piv=convert_stored_PIV_to_displayed(
+                game_ids.GameIDs.TH18, current_stage_end_data.piv
+            ),
             lives=current_stage_end_data.lives,
             life_pieces=current_stage_end_data.life_pieces,
             bombs=current_stage_end_data.bombs,
@@ -1005,10 +1014,10 @@ def _DetermineTH13orTH14(replay):
     header = th_modern.ThModern.from_bytes(replay)
     # royalflare corrupts some of the userdata, and since the userdata is the only way to determine between TH13 and TH14
     # we have to just keep finding new replays with fucked strings and adding them to these checks
-    if header.userdata.user_desc[4] in [0x90, 0xc9]:
+    if header.userdata.user_desc[4] in [0x90, 0xC9]:
         # the shift-jis character is 廟
         return _Parse13(replay)
-    elif header.userdata.user_desc[4] in [0x8b, 0xbb]:
+    elif header.userdata.user_desc[4] in [0x8B, 0xBB]:
         # the shift-jis character is 城
         return _Parse14(replay)
     # if its not either of the two above, then I don't know
