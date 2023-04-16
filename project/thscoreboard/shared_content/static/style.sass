@@ -265,13 +265,14 @@ textarea
     background-color: var(--background-color)
     color: var(--text-color)
 
-input[type=text], [type=number], input[type=url]
-    background-color: var(--background-color)
-    color: var(--text-color)
+input
+    &[type=text], &[type=number], &[type=url], &[type=password], &[type=email]
+        background-color: var(--background-color)
+        color: var(--text-color)
 
-    &:read-only
-        background-color: var(--disabled-input-background-color)
-        color: var(--disabled-input-text-color)
+        &:read-only
+            background-color: var(--disabled-input-background-color)
+            color: var(--disabled-input-text-color)
 
 .theme-switcher
     font-size: 14px
