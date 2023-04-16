@@ -124,8 +124,11 @@ body
 .main
     flex: 350
     margin: #{$top-level-margin}
-    padding: 12px
+    padding: 16px 20px
     background-color: var(--background-color)
+
+    h1:first-child:not(.highlight), h2:first-child:not(.highlight), h3:first-child:not(.highlight)
+        margin-top: 4px
 
 .light-background
     background-color: var(--backdrop-color)
@@ -148,17 +151,12 @@ h2
 h3
     font: 400 26px  "EB Garamond", "Times New Roman", serif
 
-#content
-    padding: 8px 12px 8px
-    flex: 1
-
 // Docs pages
 
 .docs-content
     flex-basis: 20em
     flex-grow: 1
     max-width: 50em
-
 
 #simple-centered-box
 
