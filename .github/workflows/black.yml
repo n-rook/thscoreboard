@@ -10,4 +10,4 @@ jobs:
       - uses: psf/black@stable
         with:
           src: "./project"
-          exclude: "./project/thscoreboard/replays/kaitai_parsers|./project/thscoreboard/replays/migrations|./project/thscoreboard/users/migrations"
+          options: "--check --diff --exclude=\"./project/thscoreboard/replays/kaitai_parsers|./project/thscoreboard/replays/migrations|./project/thscoreboard/users/migrations\""
