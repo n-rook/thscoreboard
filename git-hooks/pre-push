@@ -6,6 +6,14 @@ set -Eeuo pipefail
 pushd ./project/thscoreboard > /dev/null
 
 linter_outcome=0
+black . --check || linter_outcome=$?
+if [ $linter_outcome -ne 0 ]; then
+  echo "black failed; aborting push."
+  echo "run black on ./project/thscoreboard."
+  echo "You can always skip this with --no-verify."
+fi
+
+
 flake8 || linter_outcome=$?
 if [ $linter_outcome -ne 0 ]; then
   echo "flake8 failed; aborting push."
