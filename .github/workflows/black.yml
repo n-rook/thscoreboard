@@ -10,4 +10,3 @@ jobs:
       - uses: psf/black@stable
         with:
           src: "./project"
-          options: "--check --diff --exclude=\"/migrations/|/kaitai_parsers/\""
