@@ -8,14 +8,11 @@ $top-level-margin: 8px
 .flex-1
     flex: 1
 
-body::before
+body.theme-light::before
     content: ''
     position: absolute
     inset: 0
     z-index: -1
-    background-color: var(--backdrop-color)
-
-body.theme-light::before
     background-image: url(favicon.png)
     background-size: cover
     background-blend-mode: multiply
@@ -26,7 +23,7 @@ body
     padding: 0
     @include font-body-text
 
-    background-color: var(--background-color)
+    background-color: var(--backdrop-color)
     color: var(--text-color)
 
     display: flex
