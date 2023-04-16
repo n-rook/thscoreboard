@@ -8,6 +8,16 @@ $top-level-margin: 8px
 .flex-1
     flex: 1
 
+body.theme-light::before
+    content: ''
+    position: absolute
+    inset: 0
+    z-index: -1
+    background-image: url(favicon.png)
+    background-size: cover
+    background-blend-mode: multiply
+    filter: blur(128px)
+
 body
     margin: 0
     padding: 0
