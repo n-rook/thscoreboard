@@ -12,11 +12,14 @@ body::before
     content: ''
     position: absolute
     inset: 0
+    z-index: -1
+    background-color: var(--backdrop-color)
+
+body.theme-light::before
     background-image: url(favicon.png)
     background-size: cover
     background-blend-mode: multiply
     filter: blur(128px)
-    z-index: -1
 
 body
     margin: 0
@@ -276,8 +279,8 @@ input[type=text], [type=number], input[type=url]
         color: var(--disabled-input-text-color)
 
 .theme-switcher
+    font-size: 14px
     text-decoration: none
-    margin: 10px 5px
 
 .theme-switcher :is(a, a:visited, a:hover, a:active)
     text-decoration: none
