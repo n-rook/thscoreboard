@@ -1,6 +1,6 @@
 #!/bin/bash
 # Run flake8 before pushing.
-
+g
 set -Eeuo pipefail
 
 pushd ./project/thscoreboard > /dev/null
