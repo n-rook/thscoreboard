@@ -3,6 +3,10 @@ An open-source scoreboard for Touhou games.
 
 ## Setting up a development environment
 
+### Black
+
+We use Black, the Python formatting tool, to format our code automatically. As such, we strongly recommend setting up your IDE or code editor to run Black automatically when saving a file. The beauty of Black is that it can just format things for you, so take advantage of that by doing this, and it'll never bother you or stop you from pushing code.
+
 ### Generating the replay parsers
 
 Start by installing `kaitai-struct-compiler`. Then, navigate to `project/thscoreboard/replays/kaitai_parsers` and run `kaitai-struct-compiler -t python ../../../../ref/threp-ksy/*.ksy` (note that you don't need to change the slashes to backslashes to run this on Windows).

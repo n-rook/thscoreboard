@@ -8,6 +8,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: psf/black@stable
-    with:
-      src: "./project"
-      exclude: "./project/thscoreboard/replays/kaitai_parsers|./project/thscoreboard/replays/migrations|./project/thscoreboard/users/migrations"
+        with:
+          src: "./project/thscoreboard"

@@ -13,4 +13,4 @@ def OverrideTranslations():
     running translations in CI, and there's probably a better way to do this.
     See https://github.com/n-rook/thscoreboard/issues/58
     """
-    return test.override_settings(LANGUAGE_CODE='pt-br')
+    return test.override_settings(LANGUAGE_CODE="pt-br")

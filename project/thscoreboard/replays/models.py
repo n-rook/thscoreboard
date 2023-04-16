@@ -57,7 +57,7 @@ class Game(models.Model):
 
     def GetIconPath(self) -> str:
         """Get the HTTP path to get a small icon for this game."""
-        return f'/static/icons/{self.game_id}.png'
+        return f"/static/icons/{self.game_id}.png"
 
 
 class Shot(models.Model):
