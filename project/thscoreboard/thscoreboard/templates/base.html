@@ -2,12 +2,15 @@
 {% load static %}
 {% load sass_tags %}
 {% load i18n %}
+{% load get_games %}
+{% get_all_games as all_games %}
 <html lang="en">
 <head>
     <title>{% block title %}Silent Selene{% endblock %}</title>
     <link rel="stylesheet" href="{% sass_src 'style.sass' %}">
     <link rel="stylesheet" href="{% static 'fonts/Lato.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/EBGaramond.css' %}">
+    <script src="/static/js/main.js" defer></script>
     {% block favicon %}<link rel="icon" type="image/png" href="{% static 'favicon.png' %}" sizes="48x48">{% endblock %}
     <meta property="og:title" content="{% block embed_title %}Silent Selene{% endblock %}" />
     <meta property="og:site_name" content="Silent Selene" />
@@ -15,49 +18,64 @@
     <meta property="og:image" content="{% block embed_favicon %}{% static 'favicon.png' %}{% endblock %}" />
 </head>
 
-<body class="theme-light {% block body-class %}{% endblock %}">
-    <div id="topbar">
-        <div class="topbar-little-spacer">
+<body>
+    <div class="whole-page">
+        <div class="banner">
+            <a href="/" class="banner-home-link"></a>
+            <div class="banner-links">
+                {% if user.is_authenticated %}
+                <div class="banner-link">
+                    <a href="/replays/upload">Upload</a>
+                </div>
+                <div class="banner-link">
+                    <a href="/replays/user/{{user.username}}">My replays</a>
+                </div>
+                <div class="banner-link">
+                    <a href="/users/profile">Profile</a>
+                </div>
+                {% if user.is_staff or user.is_superuser %}
+                <a href="/staff">Staff tools</a>
+                {% endif %}
+                {% else %}
+                <a href="/users/login">Log in</a>
+                <a href="/users/register">Sign Up</a>
+                {% endif %}
+                <a class="theme-switcher" href="#" onclick="toggleTheme()">🌙</a>
+            </div>
         </div>
-        <a id="topbar-banner" href="/">
-            <img id="topbar-logo" src="{% static 'topbar_logo.png' %}" />
-            <h1>Silent Selene</h1>
-        </a>
-        {% if user.is_staff or user.is_superuser %}
-        <a href="/staff">⚔️</a>
-        {% endif %}
-        <div class="flex-1"></div>
-        <div class="topbar-link-button">
-            <a href="/docs">About</a>
-        </div>
-        {% if user.is_authenticated %}
-        <div class="topbar-link-button">
-            <a href="/replays/user/{{user.username}}">My Replays</a>
-        </div>
-        <div class="topbar-link-button">
-            <a href="/users/profile">Profile</a>
-        </div>
-        <div class="topbar-link-button">
-            <a href="/replays/upload">{% translate "Upload a Replay" %}</a>
-        </div>
-        <div class="topbar-link-button">
-            <a href="/users/logout">{% translate "Log out" %}</a>
-        </div>
-        {% else %}
-        <div class="topbar-link-button">
-            <a href="/users/login">Log in</a>
-        </div>
-        <div class="topbar-link-button">
-            <a href="/users/register">Sign up</a>
-        </div>
-        {% endif %}
-        <div class="theme-switcher">
-            <a href="#" onclick="toggleTheme()">🌙</a>
+        <div class="content-and-sidebar">
+            <nav class="sidebar">
+                <h1 class="highlight">
+                    Games
+                </h1>
+                <ul class="game-list">
+                    {% for game in all_games %}
+                    <li>
+                        <div class="sidebar-game-icon">
+                            <img src="{{game.GetIconPath}}"/>
+                        </div>
+                        <div class="sidebar-game-link">
+                            <a href="/replays/{{game.game_id}}">{{game.GetName}}</a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <h1 class="highlight">
+                    About the site
+                </h1>
+                <ul>
+                <li><a href="/docs">About</a></li>
+                <li><a href="/docs/rules">Website rules</a></li>
+                <li><a href="/docs/replayrules">Replay rules</a></li>
+                <li><a href="/docs/privacy">Privacy policy</a></li>
+                <li><a href="/docs/licenses">Licences</a></li>
+                <li><a href="/docs/terms">Terms of Use</a></li>
+                <li><a href="/docs/credits">Credits</a></li>
+                </ul>
+            </nav>
+            <div class="main">
+                {% block content %}{% endblock %}
+            </div>
         </div>
     </div>
-    <div id="content" class="{% block content-class %} {% endblock %}">
-        {% block content %}{% endblock %}
-    </div>
-</body>
-<script src="/static/js/main.js"></script>
 </html>

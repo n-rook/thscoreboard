@@ -5,6 +5,7 @@ from replays.test_replay_parsing import ParseTestReplay
 from replays.create_replay import PublishNewReplay
 from replays import models
 from replays.testing import test_replays
+from replays.testing import test_utilities
 
 
 class ReplaysToJsonTestCase(test_case.ReplayTestCase):
@@ -61,8 +62,9 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
         replays = [replay_1, replay_2]
 
-        converter = ReplayToJsonConverter()
-        json_data = converter.convert_replays_to_serializable_list(replays)
+        with test_utilities.OverrideTranslations():
+            converter = ReplayToJsonConverter()
+            json_data = converter.convert_replays_to_serializable_list(replays)
 
         assert len(json_data) == len(replays)
 
@@ -82,7 +84,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         assert json_data[0]["Score"]["text"] == "1,000,000"
         assert json_data[0]["Upload Date"] == "2000-01-01"
         assert json_data[0]["Comment"] == "鼻毛"
-        assert json_data[0]["Replay"]["text"] == "Download"
+        assert json_data[0]["Replay"]["text"] == "⬇"
         assert "Character" not in json_data[0]["Replay"]["text"]
         assert "Season" not in json_data[0]["Replay"]["text"]
 

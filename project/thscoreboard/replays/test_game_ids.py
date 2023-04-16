@@ -3,6 +3,7 @@ from django import test
 from replays import game_ids
 from replays import models
 from replays.testing import test_case
+from replays.testing import test_utilities
 
 
 class GameIDsTestCase(test.SimpleTestCase):
@@ -14,7 +15,7 @@ class GameIDsTestCase(test.SimpleTestCase):
         # https://github.com/n-rook/thscoreboard/issues/58
         # gettext doesn't work right on the GitHub bot, so we intentionally
         # override it with a language for which we don't have translations.
-        with test.override_settings(LANGUAGE_CODE="pt-br"):
+        with test_utilities.OverrideTranslations():
             eosd_name = game_ids.GetGameName(game_id=game_ids.GameIDs.TH06, short=True)
         self.assertEqual("th06", eosd_name)
 

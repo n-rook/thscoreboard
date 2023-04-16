@@ -55,6 +55,10 @@ class Game(models.Model):
         """Gets the name of a difficulty in this game."""
         return game_ids.GetDifficultyName(self.game_id, difficulty)
 
+    def GetIconPath(self) -> str:
+        """Get the HTTP path to get a small icon for this game."""
+        return f'/static/icons/{self.game_id}.png'
+
 
 class Shot(models.Model):
     """The character selected by the player.

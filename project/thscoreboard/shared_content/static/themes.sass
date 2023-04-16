@@ -1,14 +1,26 @@
 // This SASS module defines colors for light and dark themes.
 
 .theme-light
-    // The standard background color used for most pages.
-    --background-color: white
+    // The standard background color used for the main and sidebar panes.
+    --background-color: #f5f5f5
+
+    // The color used for the margins between the banner, sidebar and
+    // main content.
+    --page-margin-color: #ffccff
+
     // The standard text color used for most pages.
     --text-color: black
-    // The color used for the background on the top page.
-    --topbar-color: #420080
-    // The color used for the background of the site logo.
-    --topbar-logo-background-color: #573576
+
+    // A light color used as a backdrop (that is, as a background element
+    // without any content on it) for pages like simple_centered, and for the
+    // background to the side of the main page (if there is not special handling
+    // for it with a specific theme).
+    --backdrop-color: #fff3ff
+
+    // The color used for the left side of highlight bars.
+    --highlight-pop-color: #cd00cd
+    // The color used for the background of highlight bars.
+    --highlight-background-color: #ffccff
 
     // The color used for hyperlink text.
     --link-color: #562de8
@@ -21,10 +33,6 @@
     --disabled-input-background-color: #f0f0f0
     --disabled-input-text-color: #333333
 
-    // A light color used as a backdrop (that is, as a background element
-    // without any content on it) for pages like simple_centered.
-    --backdrop-color: #fff3ff
-
     --simple-centered-title-color: #ffe6ff
     --simple-centered-content-color: white
 
@@ -36,9 +44,12 @@
 
 .theme-dark
     --background-color: #101010
+    --backdrop-color: #0a000a
+    --page-margin-color: black
     --text-color: white
-    --topbar-color: #272727
-    --topbar-logo-background-color: #383838
+
+    --highlight-pop-color: #370037
+    --highlight-background-color: #690069
 
     --link-color: #d9ceff
     --visited-link-color: #dda3ff
@@ -46,8 +57,6 @@
 
     --disabled-input-background-color: #202020
     --disabled-input-text-color: #d0d0d0
-
-    --backdrop-color: #0a000a
 
     --simple-centered-title-color: #1a1a1a
     --simple-centered-content-color: #222222

@@ -2,20 +2,11 @@
 
 {% block content %}
 
-<p>If you have an account, <a href="/replays/upload">try uploading a replay!</a></p>
-
-<p>Currently supported games:
-    {% for game in all_games %}
-    <ul>
-        <li>
-            <a href="/replays/{{game.game_id}}">{{game.GetName}}</a>
-        </li>
-    </ul>
-    {% endfor %}
+<h1 class="highlight">Welcome to Silent Selene!</h1>
+<p>
+    Welcome to Silent Selene, the home of Touhou replays on the Internet.
 </p>
-
-<p>Recent uploads:
-    {% include "replays/replay_table.html" with show_game=True %}
-</p>
+<h1 class="highlight">Recent uploads</h1>
+{% include "replays/replay_table.html" with show_game=True %}
 
 {% endblock %}

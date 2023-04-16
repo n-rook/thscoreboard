@@ -35,7 +35,7 @@ try {
 function onClick(elm) {
   const filterType = elm.getAttribute('filterType');
   const value = elm.getAttribute('value');
-  
+
   activeFilters = updateFilters(activeFilters, filterType, value);
   const filteredReplays = filterReplays(activeFilters, allReplays);
   constructAndRenderReplayTable(filteredReplays);
@@ -70,7 +70,7 @@ function filterReplays(filters, replays) {
 
 function constructAndRenderReplayTable(replays) {
   clearTableHtml();
-  
+
   let startIndex = 0;
   let endIndex = Math.min(replayTableBatchSize, replays.length);
   while (startIndex < replays.length) {
@@ -127,12 +127,14 @@ function populateTable(replays, startIndex, endIndex) {
   // Value is primitive or has type {"text": ..., "url": ...}
   if (typeof value === "object") {
     cell.appendChild(createLink(value.url, value.text));
-  } else { 
+  } else {
     const text = document.createTextNode(value);
     cell.appendChild(text);
   }
   if (columnName === "Shot") {
     cell.className = "nowrap";
+  } else if (columnName === "Comment") {
+    cell.className = "comment-cell"
   }
   return cell;
 }
