@@ -15,9 +15,6 @@ class ReplayToJsonConverter:
     def _convert_replay_to_dict(self, replay: models.Replay) -> dict:
         shot = replay.shot
         game = self._get_game(shot)
-        include_route = game.game_id == game_ids.GameIDs.TH08
-        if include_route:
-            route = replay.route
 
         json_dict = {}
         json_dict["Id"] = replay.id
@@ -33,7 +30,8 @@ class ReplayToJsonConverter:
             game.game_id, replay.difficulty
         )
         json_dict["Shot"] = self._get_shot_name(shot)
-        if include_route:
+        if game.game_id in [game_ids.GameIDs.TH01, game_ids.GameIDs.TH08]:
+            route = replay.route
             json_dict["Route"] = route.GetName() if route is not None else ""
         json_dict["Score"] = {
             "text": f"{int(replay.score):,}",
@@ -42,8 +40,8 @@ class ReplayToJsonConverter:
         json_dict["Upload Date"] = replay.created.strftime("%Y-%m-%d")
         json_dict["Comment"] = replay.GetShortenedComment()
         json_dict["Replay"] = {
-            "text": "Download",
-            "url": f"/replays/{game.game_id}/{replay.id}",
+            "text": "⬇",
+            "url": f"/replays/{game.game_id}/{replay.id}/download",
         }
 
         if game.game_id == game_ids.GameIDs.TH16:
