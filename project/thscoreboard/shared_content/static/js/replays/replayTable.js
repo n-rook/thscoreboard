@@ -16,7 +16,7 @@ try {
   if(window.location.pathname === '/') {
     xhr.open('GET', window.location.origin + '/replays/index/json', true);
   } else {
-    xhr.open('GET', window.location.origin + window.location.path + "/json", true);
+    xhr.open('GET', window.location.origin + window.location.pathname + "/json", true);
   }
   xhr.responseType = 'json';
   xhr.onload = function() {
