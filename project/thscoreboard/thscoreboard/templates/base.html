@@ -3,7 +3,7 @@
 {% load sass_tags %}
 {% load i18n %}
 {% load get_games %}
-{% get_all_games as all_games %}
+{% get_all_games_by_category as all_games_by_category %}
 <html lang="en">
 <head>
     <title>{% block title %}Silent Selene{% endblock %}</title>
@@ -45,11 +45,12 @@
         </div>
         <div class="content-and-sidebar">
             <nav class="sidebar">
+                {% for game_category, games in all_games_by_category.items %}
                 <h1 class="highlight">
-                    Games
+                    {{game_category}}
                 </h1>
                 <ul class="game-list">
-                    {% for game in all_games %}
+                    {% for game in games %}
                     <li>
                         <div class="sidebar-game-icon">
                             <img src="{{game.GetIconPath}}"/>
@@ -60,6 +61,7 @@
                     </li>
                     {% endfor %}
                 </ul>
+                {% endfor %}
                 <h1 class="highlight">
                     About the site
                 </h1>
