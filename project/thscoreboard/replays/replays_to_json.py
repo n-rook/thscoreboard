@@ -1,16 +1,12 @@
-from collections import defaultdict
 from typing import Iterable
-from replays import models, game_ids
+from django.db.models import Window, F, Manager
+from django.db.models.functions import RowNumber
 from functools import lru_cache
+
+from replays import models, game_ids
 
 
 class ReplayToJsonConverter:
-    def __init__(self, include_medals=False) -> None:
-        self.include_medals = include_medals
-        self.replay_count_by_category: dict[tuple[int, models.Shot], int] = defaultdict(
-            int
-        )
-
     @lru_cache(maxsize=None)
     def _get_game(self, shot: models.Shot) -> models.Game:
         return shot.game
@@ -22,13 +18,7 @@ class ReplayToJsonConverter:
     def _convert_replay_to_dict(self, replay: models.Replay) -> dict:
         shot = replay.shot
         game = self._get_game(shot)
-        difficulty = replay.difficulty
-
-        score_prefix = ""
-        if self.include_medals:
-            self._update_replay_count_by_category(difficulty, shot)
-            rank = self.replay_count_by_category[(difficulty, shot)]
-            score_prefix = _get_medal_emoji(rank)
+        score_prefix = _get_medal_emoji(replay.rank)
 
         json_dict = {}
         json_dict["Id"] = replay.id
@@ -77,14 +67,23 @@ class ReplayToJsonConverter:
             "Goast": shot.GetSubshotName(),
         }
 
-    def _update_replay_count_by_category(self, difficulty: int, shot: models.Shot):
-        self.replay_count_by_category[(difficulty, shot)] += 1
-
     def convert_replays_to_serializable_list(
         self,
-        replays: Iterable[models.Replay],
+        ranked_replays: Iterable[models.Replay],
     ) -> list[dict[str, any]]:
-        return [self._convert_replay_to_dict(replay) for replay in replays]
+        return [self._convert_replay_to_dict(replay) for replay in ranked_replays]
+
+
+def add_rank_annotation_to_replays(
+    replays: Manager[models.Replay],
+) -> Manager[models.Replay]:
+    return replays.annotate(
+        rank=Window(
+            expression=RowNumber(),
+            order_by=F("score").desc(),
+            partition_by=[F("shot_id"), F("difficulty"), F("shot__game_id")],
+        )
+    )
 
 
 def _get_medal_emoji(rank: int) -> str:

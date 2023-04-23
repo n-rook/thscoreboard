@@ -4,19 +4,23 @@ from django.http import JsonResponse
 from django.views.decorators import http as http_decorators
 from django.shortcuts import get_object_or_404, render
 
+
 from replays import models
 from replays import game_ids
 from replays.models import Game, Shot, Route
-from replays.replays_to_json import ReplayToJsonConverter
+from replays.replays_to_json import (
+    ReplayToJsonConverter,
+    add_rank_annotation_to_replays,
+)
 
 
 @http_decorators.require_safe
 def game_scoreboard_json(request, game_id: str):
-    converter = ReplayToJsonConverter(include_medals=True)
+    converter = ReplayToJsonConverter()
+    replays = _get_all_replay_for_game(game_id)
+    ranked_replays = add_rank_annotation_to_replays(replays)
     return JsonResponse(
-        converter.convert_replays_to_serializable_list(
-            _get_all_replay_for_game(game_id)
-        ),
+        converter.convert_replays_to_serializable_list(ranked_replays),
         safe=False,
     )
 
