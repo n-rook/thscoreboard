@@ -12,7 +12,7 @@ from replays.replays_to_json import ReplayToJsonConverter
 
 @http_decorators.require_safe
 def game_scoreboard_json(request, game_id: str):
-    converter = ReplayToJsonConverter()
+    converter = ReplayToJsonConverter(include_medals=True)
     return JsonResponse(
         converter.convert_replays_to_serializable_list(
             _get_all_replay_for_game(game_id)

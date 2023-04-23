@@ -1,9 +1,16 @@
+from collections import defaultdict
 from typing import Iterable
 from replays import models, game_ids
 from functools import lru_cache
 
 
 class ReplayToJsonConverter:
+    def __init__(self, include_medals=False) -> None:
+        self.include_medals = include_medals
+        self.replay_count_by_category: dict[tuple[int, models.Shot], int] = defaultdict(
+            int
+        )
+
     @lru_cache(maxsize=None)
     def _get_game(self, shot: models.Shot) -> models.Game:
         return shot.game
@@ -15,6 +22,13 @@ class ReplayToJsonConverter:
     def _convert_replay_to_dict(self, replay: models.Replay) -> dict:
         shot = replay.shot
         game = self._get_game(shot)
+        difficulty = replay.difficulty
+
+        score_prefix = ""
+        if self.include_medals:
+            self._update_replay_count_by_category(difficulty, shot)
+            rank = self.replay_count_by_category[(difficulty, shot)]
+            score_prefix = _get_medal_emoji(rank)
 
         json_dict = {}
         json_dict["Id"] = replay.id
@@ -34,7 +48,7 @@ class ReplayToJsonConverter:
             route = replay.route
             json_dict["Route"] = route.GetName() if route is not None else ""
         json_dict["Score"] = {
-            "text": f"{int(replay.score):,}",
+            "text": f"{score_prefix}{int(replay.score):,}",
             "url": f"/replays/{game.game_id}/{replay.id}",
         }
         json_dict["Upload Date"] = replay.created.strftime("%Y-%m-%d")
@@ -63,8 +77,21 @@ class ReplayToJsonConverter:
             "Goast": shot.GetSubshotName(),
         }
 
+    def _update_replay_count_by_category(self, difficulty: int, shot: models.Shot):
+        self.replay_count_by_category[(difficulty, shot)] += 1
+
     def convert_replays_to_serializable_list(
         self,
         replays: Iterable[models.Replay],
     ) -> list[dict[str, any]]:
         return [self._convert_replay_to_dict(replay) for replay in replays]
+
+
+def _get_medal_emoji(rank: int) -> str:
+    if rank == 1:
+        return "🥇"
+    elif rank == 2:
+        return "🥈"
+    elif rank == 3:
+        return "🥉"
+    return ""

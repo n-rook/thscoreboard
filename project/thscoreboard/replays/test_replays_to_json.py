@@ -91,3 +91,58 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         assert json_data[1]["User"] == "あ"
         assert json_data[1]["Character"] == "Marisa"
         assert json_data[1]["Season"] is None
+
+    def testMedalEmojisSingleShot(self):
+        # The contents of these replays are irrelevant as they will be overwritten
+        replay_filenames = [
+            "th10_normal",
+            "th11_normal",
+            "th12_normal",
+            "th13_normal",
+            "th14_normal",
+        ]
+        replays = []
+        for i, filename in enumerate(replay_filenames):
+            replay = test_replays.CreateAsPublishedReplay(
+                filename,
+                user=self.user,
+                score=1_000_000_000 - 100_000_000 * i,
+                difficulty=0,
+            )
+            replay.shot = models.Shot.objects.first()
+            replays.append(replay)
+
+        with test_utilities.OverrideTranslations():
+            converter = ReplayToJsonConverter(include_medals=True)
+            json_data = converter.convert_replays_to_serializable_list(replays)
+
+        self.assertEquals(json_data[0]["Score"]["text"], "🥇1,000,000,000")
+        self.assertEquals(json_data[1]["Score"]["text"], "🥈900,000,000")
+        self.assertEquals(json_data[2]["Score"]["text"], "🥉800,000,000")
+        self.assertEquals(json_data[3]["Score"]["text"], "700,000,000")
+        self.assertEquals(json_data[4]["Score"]["text"], "600,000,000")
+
+    def testMedalEmojisMultipleShots(self):
+        # The contents of these replays are irrelevant as they will be overwritten
+        replay_filenames = [
+            "th10_normal",
+            "th11_normal",
+        ]
+        shots = (models.Shot.objects.first(), models.Shot.objects.last())
+        replays = []
+        for i, (shot, filename) in enumerate(zip(shots, replay_filenames)):
+            replay = test_replays.CreateAsPublishedReplay(
+                filename,
+                user=self.user,
+                score=1_000_000_000 - 100_000_000 * i,
+                difficulty=0,
+            )
+            replay.shot = shot
+            replays.append(replay)
+
+        with test_utilities.OverrideTranslations():
+            converter = ReplayToJsonConverter(include_medals=True)
+            json_data = converter.convert_replays_to_serializable_list(replays)
+
+        self.assertEquals(json_data[0]["Score"]["text"], "🥇1,000,000,000")
+        self.assertEquals(json_data[1]["Score"]["text"], "🥇900,000,000")
