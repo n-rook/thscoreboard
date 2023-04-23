@@ -25,7 +25,10 @@ class ReplayToJsonConverter:
             }
         else:
             json_dict["User"] = replay.imported_username or replay.name
-        json_dict["Game"] = game.GetShortName()
+        json_dict["Game"] = {
+            "text": game.GetShortName(),
+            "url": f"/replays/{game.game_id}",
+        }
         json_dict["Difficulty"] = game_ids.GetDifficultyName(
             game.game_id, replay.difficulty
         )
