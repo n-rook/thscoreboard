@@ -134,7 +134,7 @@ function populateTable(replays, startIndex, endIndex) {
     const text = document.createTextNode(value);
     cell.appendChild(text);
   }
-  if (columnName === "Shot" || columnName === "Route") {
+  if (columnName === "Shot" || columnName === "Route" || columnName === "Score") {
     cell.className = "nowrap";
   } else if (columnName === "Comment") {
     cell.className = "comment-cell"
