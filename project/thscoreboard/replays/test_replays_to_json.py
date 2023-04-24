@@ -1,12 +1,8 @@
 import datetime
 from unittest.mock import patch
 
-
 from replays.testing import test_case
-from replays.replays_to_json import (
-    ReplayToJsonConverter,
-    add_rank_annotation_to_replays,
-)
+from replays.replays_to_json import ReplayToJsonConverter
 from replays.test_replay_parsing import ParseTestReplay
 from replays.create_replay import PublishNewReplay
 from replays import models
@@ -30,7 +26,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             user=self.user,
             difficulty=0,
             score=1_000_000,
-            category=0,
+            category=models.Category.REGULAR,
             comment="鼻毛",
             video_link="",
             temp_replay_instance=temp_replay_1,
@@ -54,7 +50,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             user=None,
             difficulty=0,
             score=0,
-            category=0,
+            category=models.Category.REGULAR,
             comment="Comment",
             video_link="",
             temp_replay_instance=temp_replay_2,
@@ -66,12 +62,11 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             imported_username="あ",
         )
 
-        replays = models.Replay.objects.order_by("-score")
-        ranked_replays = add_rank_annotation_to_replays(replays)
+        replays = models.Replay.objects.order_by("-score").annotate_with_rank()
 
         with test_utilities.OverrideTranslations():
             converter = ReplayToJsonConverter()
-            json_data = converter.convert_replays_to_serializable_list(ranked_replays)
+            json_data = converter.convert_replays_to_serializable_list(replays)
 
         assert len(json_data) == 2
 
@@ -112,11 +107,10 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
                     difficulty=0,
                 )
 
-        replays = models.Replay.objects.order_by("-score")
-        ranked_replays = add_rank_annotation_to_replays(replays)
+        replays = models.Replay.objects.order_by("-score").annotate_with_rank()
         with test_utilities.OverrideTranslations():
             converter = ReplayToJsonConverter()
-            json_data = converter.convert_replays_to_serializable_list(ranked_replays)
+            json_data = converter.convert_replays_to_serializable_list(replays)
 
         self.assertEquals(json_data[0]["Score"]["text"], "🥇1,000,000,000")
         self.assertEquals(json_data[1]["Score"]["text"], "🥈900,000,000")
@@ -137,12 +131,11 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
                 difficulty=0,
             )
 
-        replays = models.Replay.objects.order_by("-score")
-        ranked_replays = add_rank_annotation_to_replays(replays)
+        replays = models.Replay.objects.order_by("-score").annotate_with_rank()
 
         with test_utilities.OverrideTranslations():
             converter = ReplayToJsonConverter()
-            json_data = converter.convert_replays_to_serializable_list(ranked_replays)
+            json_data = converter.convert_replays_to_serializable_list(replays)
 
         self.assertEquals(json_data[0]["Score"]["text"], "🥇1,000,000,000")
         self.assertEquals(json_data[1]["Score"]["text"], "🥇900,000,000")

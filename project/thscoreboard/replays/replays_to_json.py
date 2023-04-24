@@ -1,6 +1,4 @@
 from typing import Iterable
-from django.db.models import Window, F, Manager
-from django.db.models.functions import RowNumber
 from functools import lru_cache
 
 from replays import models, game_ids
@@ -72,18 +70,6 @@ class ReplayToJsonConverter:
         ranked_replays: Iterable[models.Replay],
     ) -> list[dict[str, any]]:
         return [self._convert_replay_to_dict(replay) for replay in ranked_replays]
-
-
-def add_rank_annotation_to_replays(
-    replays: Manager[models.Replay],
-) -> Manager[models.Replay]:
-    return replays.annotate(
-        rank=Window(
-            expression=RowNumber(),
-            order_by=F("score").desc(),
-            partition_by=[F("shot_id"), F("difficulty"), F("shot__game_id")],
-        )
-    )
 
 
 def _get_medal_emoji(rank: int) -> str:

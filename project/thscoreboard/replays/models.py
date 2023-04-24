@@ -8,8 +8,8 @@ from typing import Optional
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import pgettext_lazy
-from django.db.models import Q
-
+from django.db.models import Q, F, Window, QuerySet, When, Case, Value
+from django.db.models.functions import RowNumber
 
 from replays import game_ids
 from replays import limits
@@ -170,7 +170,14 @@ class Route(models.Model):
         return game_ids.GetRouteName(self.game.game_id, self.route_id)
 
 
-class ReplayQuerySet(models.QuerySet):
+@dataclasses.dataclass(frozen=True)
+class ReplayConstantModels:
+    game: Game
+    shot: Shot
+    route: Optional[Route]
+
+
+class ReplayQuerySet(QuerySet):
     def filter_visible(self) -> "ReplayQuerySet":
         """Filter out replays that should not be visible.
 
@@ -181,18 +188,36 @@ class ReplayQuerySet(models.QuerySet):
 
         return self.filter(Q(user__is_active=True) | Q(imported_username__isnull=False))
 
+    def annotate_with_rank(self) -> "ReplayQuerySet":
+        """Annotate each regular replay with a rank, starting from 1 descending, with
+        separate ranks for each difficulty and shot. Set rank to -1 for non-regular
+        replays.
+        """
 
-@dataclasses.dataclass(frozen=True)
-class ReplayConstantModels:
-    game: Game
-    shot: Shot
-    route: Optional[Route]
+        return self.annotate(
+            rank=Case(
+                When(
+                    category=Category.REGULAR,
+                    then=Window(
+                        expression=RowNumber(),
+                        order_by=F("score").desc(),
+                        partition_by=[
+                            F("shot_id"),
+                            F("difficulty"),
+                            F("shot__game_id"),
+                        ],
+                    ),
+                ),
+                default=Value(-1),
+                output_field=models.IntegerField(),
+            )
+        )
 
 
 class Replay(models.Model):
     """Represents a score recorded on the scoreboard."""
 
-    objects = ReplayQuerySet.as_manager()
+    objects = ReplayQuerySet().as_manager()
 
     class Meta:
         ordering = ["shot", "difficulty", "-score"]

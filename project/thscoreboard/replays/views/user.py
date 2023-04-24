@@ -7,23 +7,20 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators import http as http_decorators
 
 from replays import models
-from replays.replays_to_json import (
-    ReplayToJsonConverter,
-    add_rank_annotation_to_replays,
-)
+from replays.replays_to_json import ReplayToJsonConverter
 
 
 @http_decorators.require_safe
 def user_page_json(request, username: str):
     user = get_object_or_404(auth.get_user_model(), username=username, is_active=True)
-    all_replays = models.Replay.objects
-    ranked_all_replays = add_rank_annotation_to_replays(all_replays)
-    ranked_user_replays = ranked_all_replays.filter(user=user).order_by(
-        "shot__game_id", "shot_id", "created"
+    user_replays = (
+        models.Replay.objects.annotate_with_rank()
+        .filter(user=user)
+        .order_by("shot__game_id", "shot_id", "created")
     )
     converter = ReplayToJsonConverter()
     return JsonResponse(
-        converter.convert_replays_to_serializable_list(ranked_user_replays), safe=False
+        converter.convert_replays_to_serializable_list(user_replays), safe=False
     )
 
 
