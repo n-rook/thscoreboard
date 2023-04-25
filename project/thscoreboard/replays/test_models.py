@@ -1,5 +1,6 @@
 import datetime
 import logging
+from unittest.mock import patch
 
 from replays import game_ids
 from replays import limits
@@ -109,6 +110,45 @@ class ReplayTest(test_case.ReplayTestCase):
         )
         expected_shortened_comment = "a" * limits.MAX_SHORTENED_COMMENT_LENGTH + "..."
         self.assertEqual(replay.GetShortenedComment(), expected_shortened_comment)
+
+    def testRanks(self):
+        with patch("replays.constant_helpers.CalculateReplayFileHash") as mocked_hash:
+            mocked_hash.return_value = bytes(0)
+            test_replays.CreateAsPublishedReplay(
+                filename="th6_extra",
+                user=self.author,
+                score=1_000_000_000,
+            )
+            mocked_hash.return_value = bytes(1)
+            test_replays.CreateAsPublishedReplay(
+                filename="th6_extra",
+                user=self.author,
+                score=900_000_000,
+            )
+            mocked_hash.return_value = bytes(2)
+            test_replays.CreateAsPublishedReplay(
+                filename="th7_extra",
+                user=self.author,
+                score=800_000_000,
+            )
+
+        replays = models.Replay.objects.order_by("-score").annotate_with_rank().all()
+
+        self.assertEquals(replays[0].rank, 1)
+        self.assertEquals(replays[1].rank, 2)
+        self.assertEquals(replays[2].rank, 1)
+
+    def testRanksTasReplay(self):
+        test_replays.CreateAsPublishedReplay(
+            filename="th6_extra",
+            user=self.author,
+            score=1_000_000_000,
+            category=models.Category.TAS,
+        )
+
+        replay = models.Replay.objects.order_by("-score").annotate_with_rank().first()
+
+        self.assertEquals(replay.rank, -1)
 
 
 class TemporaryReplayFileTest(test_case.ReplayTestCase):

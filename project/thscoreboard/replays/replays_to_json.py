@@ -1,6 +1,7 @@
 from typing import Iterable
-from replays import models, game_ids
 from functools import lru_cache
+
+from replays import models, game_ids
 
 
 class ReplayToJsonConverter:
@@ -15,6 +16,7 @@ class ReplayToJsonConverter:
     def _convert_replay_to_dict(self, replay: models.Replay) -> dict:
         shot = replay.shot
         game = self._get_game(shot)
+        score_prefix = _get_medal_emoji(replay.rank)
 
         json_dict = {}
         json_dict["Id"] = replay.id
@@ -37,7 +39,7 @@ class ReplayToJsonConverter:
             route = replay.route
             json_dict["Route"] = route.GetName() if route is not None else ""
         json_dict["Score"] = {
-            "text": f"{int(replay.score):,}",
+            "text": f"{score_prefix}{int(replay.score):,}",
             "url": f"/replays/{game.game_id}/{replay.id}",
         }
         json_dict["Upload Date"] = replay.created.strftime("%Y-%m-%d")
@@ -68,6 +70,16 @@ class ReplayToJsonConverter:
 
     def convert_replays_to_serializable_list(
         self,
-        replays: Iterable[models.Replay],
+        ranked_replays: Iterable[models.Replay],
     ) -> list[dict[str, any]]:
-        return [self._convert_replay_to_dict(replay) for replay in replays]
+        return [self._convert_replay_to_dict(replay) for replay in ranked_replays]
+
+
+def _get_medal_emoji(rank: int) -> str:
+    if rank == 1:
+        return "🥇"
+    elif rank == 2:
+        return "🥈"
+    elif rank == 3:
+        return "🥉"
+    return ""

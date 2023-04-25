@@ -10,9 +10,13 @@ from replays.replays_to_json import ReplayToJsonConverter
 
 @http_decorators.require_safe
 def index_json(request):
-    recent_replays = models.Replay.objects.filter(
-        category__in=[models.Category.REGULAR, models.Category.TAS]
-    ).order_by("-created")[:10]
+    recent_replays = (
+        models.Replay.objects.filter(
+            category__in=[models.Category.REGULAR, models.Category.TAS]
+        )
+        .annotate_with_rank()
+        .order_by("-created")[:10]
+    )
     converter = ReplayToJsonConverter()
     return JsonResponse(
         converter.convert_replays_to_serializable_list(recent_replays), safe=False

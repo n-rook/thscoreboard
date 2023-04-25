@@ -1,4 +1,6 @@
 import datetime
+from unittest.mock import patch
+
 from replays.testing import test_case
 from replays.replays_to_json import ReplayToJsonConverter
 from replays.test_replay_parsing import ParseTestReplay
@@ -20,11 +22,11 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             user=self.user, replay=replay_file_contents_1
         )
         temp_replay_1.save()
-        replay_1 = PublishNewReplay(
+        PublishNewReplay(
             user=self.user,
             difficulty=0,
             score=1_000_000,
-            category=0,
+            category=models.Category.REGULAR,
             comment="鼻毛",
             video_link="",
             temp_replay_instance=temp_replay_1,
@@ -44,11 +46,11 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             user=None, replay=replay_file_contents_2
         )
         temp_replay_2.save()
-        replay_2 = PublishNewReplay(
+        PublishNewReplay(
             user=None,
             difficulty=0,
-            score=2_000_000,
-            category=0,
+            score=0,
+            category=models.Category.REGULAR,
             comment="Comment",
             video_link="",
             temp_replay_instance=temp_replay_2,
@@ -60,15 +62,15 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             imported_username="あ",
         )
 
-        replays = [replay_1, replay_2]
+        replays = models.Replay.objects.order_by("-score").annotate_with_rank()
 
         with test_utilities.OverrideTranslations():
             converter = ReplayToJsonConverter()
             json_data = converter.convert_replays_to_serializable_list(replays)
 
-        assert len(json_data) == len(replays)
+        assert len(json_data) == 2
 
-        for replay, json_replay_data in zip(replays, json_data):
+        for json_replay_data in json_data:
             assert json_replay_data
             assert type(json_replay_data["Score"]) == dict
             assert set(json_replay_data["Score"].keys()) == {"text", "url"}
@@ -82,7 +84,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         assert json_data[0]["Game"]["url"] == "/replays/th06"
         assert json_data[0]["Difficulty"] == "Easy"
         assert json_data[0]["Shot"] == "Reimu A"
-        assert json_data[0]["Score"]["text"] == "1,000,000"
+        assert json_data[0]["Score"]["text"] == "🥇1,000,000"
         assert json_data[0]["Upload Date"] == "2000-01-01"
         assert json_data[0]["Comment"] == "鼻毛"
         assert json_data[0]["Replay"]["text"] == "⬇"
@@ -92,3 +94,49 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         assert json_data[1]["User"] == "あ"
         assert json_data[1]["Character"] == "Marisa"
         assert json_data[1]["Season"] is None
+
+    def testMedalEmojisSingleShot(self):
+        for i in range(5):
+            with patch(
+                "replays.constant_helpers.CalculateReplayFileHash"
+            ) as mocked_hash:
+                mocked_hash.return_value = bytes(i)
+                test_replays.CreateAsPublishedReplay(
+                    "th10_normal",
+                    user=self.user,
+                    score=1_000_000_000 - 100_000_000 * i,
+                    difficulty=0,
+                )
+
+        replays = models.Replay.objects.order_by("-score").annotate_with_rank()
+        with test_utilities.OverrideTranslations():
+            converter = ReplayToJsonConverter()
+            json_data = converter.convert_replays_to_serializable_list(replays)
+
+        self.assertEquals(json_data[0]["Score"]["text"], "🥇1,000,000,000")
+        self.assertEquals(json_data[1]["Score"]["text"], "🥈900,000,000")
+        self.assertEquals(json_data[2]["Score"]["text"], "🥉800,000,000")
+        self.assertEquals(json_data[3]["Score"]["text"], "700,000,000")
+        self.assertEquals(json_data[4]["Score"]["text"], "600,000,000")
+
+    def testMedalEmojisMultipleShots(self):
+        replay_filenames = [
+            "th10_normal",
+            "th11_normal",
+        ]
+        for i, filename in enumerate(replay_filenames):
+            test_replays.CreateAsPublishedReplay(
+                filename,
+                user=self.user,
+                score=1_000_000_000 - 100_000_000 * i,
+                difficulty=0,
+            )
+
+        replays = models.Replay.objects.order_by("-score").annotate_with_rank()
+
+        with test_utilities.OverrideTranslations():
+            converter = ReplayToJsonConverter()
+            json_data = converter.convert_replays_to_serializable_list(replays)
+
+        self.assertEquals(json_data[0]["Score"]["text"], "🥇1,000,000,000")
+        self.assertEquals(json_data[1]["Score"]["text"], "🥇900,000,000")
