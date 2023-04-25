@@ -7,6 +7,7 @@ from django.contrib import auth
 from django.core import exceptions
 from django.utils.translation import gettext_lazy as _
 
+from replays.models import Replay
 from . import models
 
 
@@ -147,3 +148,19 @@ class BanForm(forms.Form):
         return datetime.timedelta(
             days=self.cleaned_data["days"] or 0, hours=self.cleaned_data["hours"] or 0
         )
+
+
+class ClaimUsernameForm(forms.Form):
+    silentselene_username = forms.CharField(
+        label=_("royalflare_username"), required=True
+    )
+    royalflare_username = forms.CharField(label=_("royalflare_username"), required=True)
+
+
+class ClaimReplaysForm(forms.Form):
+    def __init__(self, replays, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.confirm_replay_inputs = [
+            forms.CheckboxInput().render(name=replay.id, value=True)
+            for replay in replays
+        ]

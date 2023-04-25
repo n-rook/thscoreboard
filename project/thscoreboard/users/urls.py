@@ -3,12 +3,15 @@ from django.urls import path, reverse_lazy
 
 from users.middleware import check_ban
 from users import other_views
-from users.views import accept_invite
-from users.views import batch_invite_csv
-from users.views import banned
-from users.views import delete_account
-from users.views import profile
-from users.views import register
+from users.views import (
+    accept_invite,
+    batch_invite_csv,
+    banned,
+    delete_account,
+    profile,
+    register,
+    claim,
+)
 
 from thscoreboard import settings
 
@@ -77,4 +80,5 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(),
         name="forgot_password_complete",
     ),
+    path("claim", claim.claim),
 ]
