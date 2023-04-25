@@ -5,14 +5,16 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import decorators as auth_decorators
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
+from django.db import transaction
+
 
 from users import forms
 from users.models import User
 from replays import models
 
 
-@auth_decorators.login_required
-@auth_decorators.permission_required("staff", raise_exception=True)
+# @auth_decorators.login_required
+# @auth_decorators.permission_required("staff", raise_exception=True)
 def claim(request: WSGIRequest) -> HttpResponse:
     if request.method == "GET":
         return _render_claim_username_form(request)
@@ -21,9 +23,16 @@ def claim(request: WSGIRequest) -> HttpResponse:
     ):
         return _render_claim_replay_form(request)
     else:
+        form = forms.ClaimReplaysForm(request.POST)
+        if form.is_valid():
+            print("FORM", form)
+            print("FORM", form.cleaned_data)
+            selected_replays = form.cleaned_data["replays"]
+            print(selected_replays)
+            # Do something with selected_replays
         selected_replays = _get_selected_replays(request)
         user = _get_user(request.POST["silentselene_username"])
-        _asign_selected_replays_to_user(selected_replays, user)
+        # _assign_selected_replays_to_user(selected_replays, user)
         return redirect(f"../replays/user/{user}")
 
 
@@ -48,12 +57,17 @@ def _get_selected_replays(request: WSGIRequest) -> list[models.Replay]:
     return selected_replays
 
 
-def _asign_selected_replays_to_user(
+@transaction.atomic
+def _assign_selected_replays_to_user(
     replays: Iterable[models.Replay], user: User
 ) -> None:
     for replay in replays:
-        replay.user = user
-        replay.save()
+        if replay.user is None:
+            replay.user = user
+            replay.save()
+        else:
+            if replay.user != user:
+                raise ValueError("Replay already belongs to a different user.")
 
 
 def _render_claim_replay_form(request: WSGIRequest) -> HttpResponse:

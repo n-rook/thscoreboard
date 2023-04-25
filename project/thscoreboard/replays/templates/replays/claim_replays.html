@@ -11,56 +11,28 @@
     <table class="replay-table">
         <thead>
             <tr>
-                <th>
-                    Claim
-                </th>
-                <th>
-                    Game
-                </th>
-                <th>
-                    Difficulty
-                </th>
-                <th>
-                    Shot
-                </th>
-                <th>
-                    Score
-                </th>
-                <th>
-                    Upload Date
-                </th>
-                <th>
-                    Comment
-                </th>
+              <th>Select</th>
+              <th>Game</th>
+              <th>Difficulty</th>
+              <th>Shot</th>
+              <th>Score</th>
+              <th>Date</th>
+              <th>Comment</th>
             </tr>
         </thead>
         {% for replay, input in replays_with_inputs %}
-        <tr>
-            <td>
-                {{input}}
-            </td>
-            <td>
-                {{replay.shot.game.GetShortName}}
-            </td>
-            <td>
-                {{replay.GetDifficultyName}}
-            </td>
-            <td>
-                {{replay.shot.GetName}}
-            </td>
-            <td>
-                {{replay.score}}
-            </td>
-            <td>
-                {{replay.created | date:"Y-m-d"}}
-            </td>
-            <td>
-                {{replay.comment}}
-            </td>
-        </tr>
-    {% endfor %}
+            <tr>
+                <td>{{ input }}</td>
+                <td>{{ replay.shot.game.GetShortName }}</td>
+                <td>{{ replay.GetDifficultyName }}</td>
+                <td>{{ replay.shot.GetName }}</td>
+                <td>{{ replay.score }}</td>
+                <td>{{ replay.created | date:"Y-m-d" }}</td>
+                <td>{{ replay.comment }}</td>
+            </tr>
+        {% endfor %}
     </table>
-    <input type="submit" value="Confirm" style="margin-top: 8px;">
+    <input type="submit" value="Confirm" class="replay-table">
 </form>
 
 {% endblock %}

@@ -158,7 +158,7 @@ class ClaimUsernameForm(forms.Form):
 
 
 class ClaimReplaysForm(forms.Form):
-    def __init__(self, replays, *args, **kwargs):
+    def __init__(self, *args, replays=[], **kwargs):
         super().__init__(*args, **kwargs)
         self.confirm_replay_inputs = [
             forms.CheckboxInput().render(name=replay.id, value=True)
