@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-24 20:59+0100\n"
+"POT-Creation-Date: 2023-04-26 00:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,855 +18,900 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: .\replays\forms.py:29 .\replays\game_ids.py:36
+#: replays/forms.py:27 replays/forms.py:67 replays/game_ids.py:38
 msgid "Regular"
 msgstr ""
 
-#: .\replays\forms.py:30 .\replays\game_ids.py:38
+#: replays/forms.py:28 replays/forms.py:68 replays/game_ids.py:40
 msgid "Stage Practice"
 msgstr ""
 
-#: .\replays\forms.py:32 .\replays\game_ids.py:42
+#: replays/forms.py:30 replays/forms.py:71 replays/game_ids.py:44
 msgid "PVP"
 msgstr ""
 
-#: .\replays\game_ids.py:40
+#: replays/game_ids.py:42
 msgid "Spell Practice"
 msgstr ""
 
-#: .\replays\game_ids.py:52
+#: replays/game_ids.py:54
 msgid "th01"
 msgstr ""
 
-#: .\replays\game_ids.py:54
+#: replays/game_ids.py:56
 msgid "東方靈異伝 - The Highly Responsive to Prayers"
 msgstr ""
 
-#: .\replays\game_ids.py:57
+#: replays/game_ids.py:59
 msgid "th02"
 msgstr ""
 
-#: .\replays\game_ids.py:59
+#: replays/game_ids.py:61
 msgid "東方封魔録 - Story of Eastern Wonderland"
 msgstr ""
 
-#: .\replays\game_ids.py:62
+#: replays/game_ids.py:64
 msgid "th03"
 msgstr ""
 
-#: .\replays\game_ids.py:64
+#: replays/game_ids.py:66
 msgid "東方夢時空 - The Phantasmagoria of Dim. Dream"
 msgstr ""
 
-#: .\replays\game_ids.py:67
+#: replays/game_ids.py:69
 msgid "th04"
 msgstr ""
 
-#: .\replays\game_ids.py:69
+#: replays/game_ids.py:71
 msgid "東方幻想郷 - Lotus Land Story"
 msgstr ""
 
-#: .\replays\game_ids.py:72
+#: replays/game_ids.py:74
 msgid "th05"
 msgstr ""
 
-#: .\replays\game_ids.py:74
+#: replays/game_ids.py:76
 msgid "東方怪綺談 - Mystic Square"
 msgstr ""
 
-#: .\replays\game_ids.py:77
+#: replays/game_ids.py:79
 msgid "th06"
 msgstr ""
 
-#: .\replays\game_ids.py:79
+#: replays/game_ids.py:81
 msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
 msgstr ""
 
-#: .\replays\game_ids.py:82
+#: replays/game_ids.py:84
 msgid "th07"
 msgstr ""
 
-#: .\replays\game_ids.py:84
+#: replays/game_ids.py:86
 msgid "東方妖々夢 - Perfect Cherry Blossom"
 msgstr ""
 
-#: .\replays\game_ids.py:87
+#: replays/game_ids.py:89
 msgid "th08"
 msgstr ""
 
-#: .\replays\game_ids.py:89
+#: replays/game_ids.py:91
 msgid "東方永夜抄 - Imperishable Night"
 msgstr ""
 
-#: .\replays\game_ids.py:92
+#: replays/game_ids.py:94
 msgid "th09"
 msgstr ""
 
-#: .\replays\game_ids.py:94
+#: replays/game_ids.py:96
 msgid "東方花映塚 - Phantasmagoria of Flower View"
 msgstr ""
 
-#: .\replays\game_ids.py:97
+#: replays/game_ids.py:99
 msgid "th10"
 msgstr ""
 
-#: .\replays\game_ids.py:99
+#: replays/game_ids.py:101
 msgid "東方風神録 - Mountain of Faith"
 msgstr ""
 
-#: .\replays\game_ids.py:102
+#: replays/game_ids.py:104
 msgid "th11"
 msgstr ""
 
-#: .\replays\game_ids.py:104
+#: replays/game_ids.py:106
 msgid "東方地霊殿 - Subterranean Animism"
 msgstr ""
 
-#: .\replays\game_ids.py:107
+#: replays/game_ids.py:109
 msgid "th12"
 msgstr ""
 
-#: .\replays\game_ids.py:109
+#: replays/game_ids.py:111
 msgid "東方星蓮船 - Undefined Fantastic Object"
 msgstr ""
 
-#: .\replays\game_ids.py:112
+#: replays/game_ids.py:114
 msgid "th13"
 msgstr ""
 
-#: .\replays\game_ids.py:114
+#: replays/game_ids.py:116
 msgid "東方神霊廟 - Ten Desires"
 msgstr ""
 
-#: .\replays\game_ids.py:117
+#: replays/game_ids.py:119
 msgid "th14"
 msgstr ""
 
-#: .\replays\game_ids.py:119
+#: replays/game_ids.py:121
 msgid "東方輝針城 - Double Dealing Character"
 msgstr ""
 
-#: .\replays\game_ids.py:122
+#: replays/game_ids.py:124
 msgid "th15"
 msgstr ""
 
-#: .\replays\game_ids.py:124
+#: replays/game_ids.py:126
 msgid "東方紺珠伝 - Legacy of Lunatic Kingdom"
 msgstr ""
 
-#: .\replays\game_ids.py:127
+#: replays/game_ids.py:129
 msgid "th16"
 msgstr ""
 
-#: .\replays\game_ids.py:129
+#: replays/game_ids.py:131
 msgid "東方天空璋 - Hidden Star in Four Seasons"
 msgstr ""
 
-#: .\replays\game_ids.py:132
+#: replays/game_ids.py:134
 msgid "th17"
 msgstr ""
 
-#: .\replays\game_ids.py:134
+#: replays/game_ids.py:136
 msgid "東方鬼形獣 - Wily Beast and Weakest Creature"
 msgstr ""
 
-#: .\replays\game_ids.py:137
+#: replays/game_ids.py:139
 msgid "th18"
 msgstr ""
 
-#: .\replays\game_ids.py:139
+#: replays/game_ids.py:141
 msgid "東方虹龍洞 - Unconnected Marketeers"
 msgstr ""
 
-#: .\replays\game_ids.py:140
+#: replays/game_ids.py:142
 msgid "Unknown game (bug!)"
 msgstr ""
 
-#: .\replays\game_ids.py:147
+#: replays/game_ids.py:148
 msgctxt "th01"
 msgid "Reimu"
 msgstr ""
 
-#: .\replays\game_ids.py:150
+#: replays/game_ids.py:151
 msgctxt "th02"
 msgid "Mobility"
 msgstr ""
 
-#: .\replays\game_ids.py:152
+#: replays/game_ids.py:153
 msgctxt "th02"
 msgid "Defensive"
 msgstr ""
 
-#: .\replays\game_ids.py:154
+#: replays/game_ids.py:155
 msgctxt "th02"
 msgid "Offensive"
 msgstr ""
 
-#: .\replays\game_ids.py:158
+#: replays/game_ids.py:159
 msgctxt "th03"
 msgid "Reimu"
 msgstr ""
 
-#: .\replays\game_ids.py:160
+#: replays/game_ids.py:161
 msgctxt "th03"
 msgid "Mima"
 msgstr ""
 
-#: .\replays\game_ids.py:162
+#: replays/game_ids.py:163
 msgctxt "th03"
 msgid "Marisa"
 msgstr ""
 
-#: .\replays\game_ids.py:164
+#: replays/game_ids.py:165
 msgctxt "th03"
 msgid "Ellen"
 msgstr ""
 
-#: .\replays\game_ids.py:166
+#: replays/game_ids.py:167
 msgctxt "th03"
 msgid "Kotohime"
 msgstr ""
 
-#: .\replays\game_ids.py:168
+#: replays/game_ids.py:169
 msgctxt "th03"
 msgid "Kana"
 msgstr ""
 
-#: .\replays\game_ids.py:170
+#: replays/game_ids.py:171
 msgctxt "th03"
 msgid "Rikako"
 msgstr ""
 
-#: .\replays\game_ids.py:172
+#: replays/game_ids.py:173
 msgctxt "th03"
 msgid "Chiyuri"
 msgstr ""
 
-#: .\replays\game_ids.py:174
+#: replays/game_ids.py:175
 msgctxt "th03"
 msgid "Yumemi"
 msgstr ""
 
-#: .\replays\game_ids.py:178
+#: replays/game_ids.py:179
 msgctxt "th04"
 msgid "Reimu A"
 msgstr ""
 
-#: .\replays\game_ids.py:180
+#: replays/game_ids.py:181
 msgctxt "th04"
 msgid "Reimu B"
 msgstr ""
 
-#: .\replays\game_ids.py:182
+#: replays/game_ids.py:183
 msgctxt "th04"
 msgid "Marisa A"
 msgstr ""
 
-#: .\replays\game_ids.py:184
+#: replays/game_ids.py:185
 msgctxt "th04"
 msgid "Marisa B"
 msgstr ""
 
-#: .\replays\game_ids.py:188
+#: replays/game_ids.py:189
 msgctxt "th05"
 msgid "Reimu"
 msgstr ""
 
-#: .\replays\game_ids.py:190
+#: replays/game_ids.py:191
 msgctxt "th05"
 msgid "Marisa"
 msgstr ""
 
-#: .\replays\game_ids.py:192
+#: replays/game_ids.py:193
 msgctxt "th05"
 msgid "Mima"
 msgstr ""
 
-#: .\replays\game_ids.py:194
+#: replays/game_ids.py:195
 msgctxt "th05"
 msgid "Yuuka"
 msgstr ""
 
-#: .\replays\game_ids.py:198
+#: replays/game_ids.py:199
 msgctxt "th06"
 msgid "Reimu A"
 msgstr ""
 
-#: .\replays\game_ids.py:200
+#: replays/game_ids.py:201
 msgctxt "th06"
 msgid "Reimu B"
 msgstr ""
 
-#: .\replays\game_ids.py:202
+#: replays/game_ids.py:203
 msgctxt "th06"
 msgid "Marisa A"
 msgstr ""
 
-#: .\replays\game_ids.py:204
+#: replays/game_ids.py:205
 msgctxt "th06"
 msgid "Marisa B"
 msgstr ""
 
-#: .\replays\game_ids.py:208
+#: replays/game_ids.py:209
 msgctxt "th07"
 msgid "Reimu A"
 msgstr ""
 
-#: .\replays\game_ids.py:210
+#: replays/game_ids.py:211
 msgctxt "th07"
 msgid "Reimu B"
 msgstr ""
 
-#: .\replays\game_ids.py:212
+#: replays/game_ids.py:213
 msgctxt "th07"
 msgid "Marisa A"
 msgstr ""
 
-#: .\replays\game_ids.py:214
+#: replays/game_ids.py:215
 msgctxt "th07"
 msgid "Marisa B"
 msgstr ""
 
-#: .\replays\game_ids.py:216
+#: replays/game_ids.py:217
 msgctxt "th07"
 msgid "Sakuya A"
 msgstr ""
 
-#: .\replays\game_ids.py:218
+#: replays/game_ids.py:219
 msgctxt "th07"
 msgid "Sakuya B"
 msgstr ""
 
-#: .\replays\game_ids.py:223
+#: replays/game_ids.py:224
 msgctxt "th08"
 msgid "Reimu & Yukari"
 msgstr ""
 
-#: .\replays\game_ids.py:225
+#: replays/game_ids.py:226
 msgctxt "th08"
 msgid "Marisa & Alice"
 msgstr ""
 
-#: .\replays\game_ids.py:227
+#: replays/game_ids.py:228
 msgctxt "th08"
 msgid "Sakuya & Remilia"
 msgstr ""
 
-#: .\replays\game_ids.py:229
+#: replays/game_ids.py:230
 msgctxt "th08"
 msgid "Youmu & Yuyuko"
 msgstr ""
 
-#: .\replays\game_ids.py:231
+#: replays/game_ids.py:232
 msgctxt "th08"
 msgid "Reimu"
 msgstr ""
 
-#: .\replays\game_ids.py:233
+#: replays/game_ids.py:234
 msgctxt "th08"
 msgid "Yukari"
 msgstr ""
 
-#: .\replays\game_ids.py:235
+#: replays/game_ids.py:236
 msgctxt "th08"
 msgid "Marisa"
 msgstr ""
 
-#: .\replays\game_ids.py:237
+#: replays/game_ids.py:238
 msgctxt "th08"
 msgid "Alice"
 msgstr ""
 
-#: .\replays\game_ids.py:239
+#: replays/game_ids.py:240
 msgctxt "th08"
 msgid "Sakuya"
 msgstr ""
 
-#: .\replays\game_ids.py:241
+#: replays/game_ids.py:242
 msgctxt "th08"
 msgid "Remilia"
 msgstr ""
 
-#: .\replays\game_ids.py:243
+#: replays/game_ids.py:244
 msgctxt "th08"
 msgid "Youmu"
 msgstr ""
 
-#: .\replays\game_ids.py:245
+#: replays/game_ids.py:246
 msgctxt "th08"
 msgid "Yuyuko"
 msgstr ""
 
-#: .\replays\game_ids.py:250
+#: replays/game_ids.py:253
 msgctxt "th09"
 msgid "Reimu"
 msgstr ""
 
-#: .\replays\game_ids.py:252
+#: replays/game_ids.py:258
 msgctxt "th09"
 msgid "Marisa"
 msgstr ""
 
-#: .\replays\game_ids.py:254
+#: replays/game_ids.py:263
 msgctxt "th09"
 msgid "Sakuya"
 msgstr ""
 
-#: .\replays\game_ids.py:256
+#: replays/game_ids.py:268
 msgctxt "th09"
 msgid "Youmu"
 msgstr ""
 
-#: .\replays\game_ids.py:258
+#: replays/game_ids.py:273
 msgctxt "th09"
 msgid "Reisen"
 msgstr ""
 
-#: .\replays\game_ids.py:260
+#: replays/game_ids.py:278
 msgctxt "th09"
 msgid "Cirno"
 msgstr ""
 
-#: .\replays\game_ids.py:262
+#: replays/game_ids.py:283
 msgctxt "th09"
 msgid "Lyrica"
 msgstr ""
 
-#: .\replays\game_ids.py:264
+#: replays/game_ids.py:288
 msgctxt "th09"
 msgid "Mystia"
 msgstr ""
 
-#: .\replays\game_ids.py:266
+#: replays/game_ids.py:293
 msgctxt "th09"
 msgid "Tewi"
 msgstr ""
 
-#: .\replays\game_ids.py:268
+#: replays/game_ids.py:298
 msgctxt "th09"
 msgid "Yuuka"
 msgstr ""
 
-#: .\replays\game_ids.py:270
+#: replays/game_ids.py:303
 msgctxt "th09"
 msgid "Aya"
 msgstr ""
 
-#: .\replays\game_ids.py:272
+#: replays/game_ids.py:308
 msgctxt "th09"
 msgid "Medicine"
 msgstr ""
 
-#: .\replays\game_ids.py:274
+#: replays/game_ids.py:313
 msgctxt "th09"
 msgid "Komachi"
 msgstr ""
 
-#: .\replays\game_ids.py:276
+#: replays/game_ids.py:318
 msgctxt "th09"
 msgid "Eiki"
 msgstr ""
 
-#: .\replays\game_ids.py:278
+#: replays/game_ids.py:323
 msgctxt "th09"
 msgid "Merlin"
 msgstr ""
 
-#: .\replays\game_ids.py:280
+#: replays/game_ids.py:326
 msgctxt "th09"
 msgid "Lunasa"
 msgstr ""
 
-#: .\replays\game_ids.py:285
+#: replays/game_ids.py:331
 msgctxt "th10"
 msgid "Reimu A"
 msgstr ""
 
-#: .\replays\game_ids.py:287
+#: replays/game_ids.py:333
 msgctxt "th10"
 msgid "Reimu B"
 msgstr ""
 
-#: .\replays\game_ids.py:289
+#: replays/game_ids.py:335
 msgctxt "th10"
 msgid "Reimu C"
 msgstr ""
 
-#: .\replays\game_ids.py:291
+#: replays/game_ids.py:337
 msgctxt "th10"
 msgid "Marisa A"
 msgstr ""
 
-#: .\replays\game_ids.py:293
+#: replays/game_ids.py:339
 msgctxt "th10"
 msgid "Marisa B"
 msgstr ""
 
-#: .\replays\game_ids.py:295
+#: replays/game_ids.py:341
 msgctxt "th10"
 msgid "Marisa C"
 msgstr ""
 
-#: .\replays\game_ids.py:299
+#: replays/game_ids.py:345
 msgctxt "th11"
 msgid "Reimu A"
 msgstr ""
 
-#: .\replays\game_ids.py:301
+#: replays/game_ids.py:347
 msgctxt "th11"
 msgid "Reimu B"
 msgstr ""
 
-#: .\replays\game_ids.py:303
+#: replays/game_ids.py:349
 msgctxt "th11"
 msgid "Reimu C"
 msgstr ""
 
-#: .\replays\game_ids.py:305
+#: replays/game_ids.py:351
 msgctxt "th11"
 msgid "Marisa A"
 msgstr ""
 
-#: .\replays\game_ids.py:307
+#: replays/game_ids.py:353
 msgctxt "th11"
 msgid "Marisa B"
 msgstr ""
 
-#: .\replays\game_ids.py:309
+#: replays/game_ids.py:355
 msgctxt "th11"
 msgid "Marisa C"
 msgstr ""
 
-#: .\replays\game_ids.py:313
+#: replays/game_ids.py:359
 msgctxt "th12"
 msgid "Reimu A"
 msgstr ""
 
-#: .\replays\game_ids.py:315
+#: replays/game_ids.py:361
 msgctxt "th12"
 msgid "Reimu B"
 msgstr ""
 
-#: .\replays\game_ids.py:317
+#: replays/game_ids.py:363
 msgctxt "th12"
 msgid "Marisa A"
 msgstr ""
 
-#: .\replays\game_ids.py:319
+#: replays/game_ids.py:365
 msgctxt "th12"
 msgid "Marisa B"
 msgstr ""
 
-#: .\replays\game_ids.py:321
+#: replays/game_ids.py:367
 msgctxt "th12"
 msgid "Sanae A"
 msgstr ""
 
-#: .\replays\game_ids.py:323
+#: replays/game_ids.py:369
 msgctxt "th12"
 msgid "Sanae B"
 msgstr ""
 
-#: .\replays\game_ids.py:327
+#: replays/game_ids.py:373
 msgctxt "th13"
 msgid "Reimu"
 msgstr ""
 
-#: .\replays\game_ids.py:329
+#: replays/game_ids.py:375
 msgctxt "th13"
 msgid "Marisa"
 msgstr ""
 
-#: .\replays\game_ids.py:331
+#: replays/game_ids.py:377
 msgctxt "th13"
 msgid "Sanae"
 msgstr ""
 
-#: .\replays\game_ids.py:333
+#: replays/game_ids.py:379
 msgctxt "th13"
 msgid "Youmu"
 msgstr ""
 
-#: .\replays\game_ids.py:337
+#: replays/game_ids.py:383
 msgctxt "th14"
 msgid "Reimu A"
 msgstr ""
 
-#: .\replays\game_ids.py:339
+#: replays/game_ids.py:385
 msgctxt "th14"
 msgid "Reimu B"
 msgstr ""
 
-#: .\replays\game_ids.py:341
+#: replays/game_ids.py:387
 msgctxt "th14"
 msgid "Marisa A"
 msgstr ""
 
-#: .\replays\game_ids.py:343
+#: replays/game_ids.py:389
 msgctxt "th14"
 msgid "Marisa B"
 msgstr ""
 
-#: .\replays\game_ids.py:345
+#: replays/game_ids.py:391
 msgctxt "th14"
 msgid "Sakuya A"
 msgstr ""
 
-#: .\replays\game_ids.py:347
+#: replays/game_ids.py:393
 msgctxt "th14"
 msgid "Sakuya B"
 msgstr ""
 
-#: .\replays\game_ids.py:351
+#: replays/game_ids.py:397
 msgctxt "th15"
 msgid "Reimu"
 msgstr ""
 
-#: .\replays\game_ids.py:353
+#: replays/game_ids.py:399
 msgctxt "th15"
 msgid "Marisa"
 msgstr ""
 
-#: .\replays\game_ids.py:355
+#: replays/game_ids.py:401
 msgctxt "th15"
 msgid "Sanae"
 msgstr ""
 
-#: .\replays\game_ids.py:357
+#: replays/game_ids.py:403
 msgctxt "th15"
 msgid "Reisen"
 msgstr ""
 
-#: .\replays\game_ids.py:361
+#: replays/game_ids.py:407 replays/game_ids.py:483
 msgctxt "th16"
 msgid "Reimu"
 msgstr ""
 
-#: .\replays\game_ids.py:363
+#: replays/game_ids.py:409
 msgctxt "th16"
 msgid "Reimu Spring"
 msgstr ""
 
-#: .\replays\game_ids.py:365
+#: replays/game_ids.py:411
 msgctxt "th16"
 msgid "Reimu Summer"
 msgstr ""
 
-#: .\replays\game_ids.py:367
+#: replays/game_ids.py:413
 msgctxt "th16"
 msgid "Reimu Autumn"
 msgstr ""
 
-#: .\replays\game_ids.py:369
+#: replays/game_ids.py:415
 msgctxt "th16"
 msgid "Reimu Winter"
 msgstr ""
 
-#: .\replays\game_ids.py:371
+#: replays/game_ids.py:417 replays/game_ids.py:485
 msgctxt "th16"
 msgid "Cirno"
 msgstr ""
 
-#: .\replays\game_ids.py:373
+#: replays/game_ids.py:419
 msgctxt "th16"
 msgid "Cirno Spring"
 msgstr ""
 
-#: .\replays\game_ids.py:375
+#: replays/game_ids.py:421
 msgctxt "th16"
 msgid "Cirno Summer"
 msgstr ""
 
-#: .\replays\game_ids.py:377
+#: replays/game_ids.py:423
 msgctxt "th16"
 msgid "Cirno Autumn"
 msgstr ""
 
-#: .\replays\game_ids.py:379
+#: replays/game_ids.py:425
 msgctxt "th16"
 msgid "Cirno Winter"
 msgstr ""
 
-#: .\replays\game_ids.py:381
+#: replays/game_ids.py:427 replays/game_ids.py:487
 msgctxt "th16"
 msgid "Aya"
 msgstr ""
 
-#: .\replays\game_ids.py:383
+#: replays/game_ids.py:429
 msgctxt "th16"
 msgid "Aya Spring"
 msgstr ""
 
-#: .\replays\game_ids.py:385
+#: replays/game_ids.py:431
 msgctxt "th16"
 msgid "Aya Summer"
 msgstr ""
 
-#: .\replays\game_ids.py:387
+#: replays/game_ids.py:433
 msgctxt "th16"
 msgid "Aya Autumn"
 msgstr ""
 
-#: .\replays\game_ids.py:389
+#: replays/game_ids.py:435
 msgctxt "th16"
 msgid "Aya Winter"
 msgstr ""
 
-#: .\replays\game_ids.py:391
+#: replays/game_ids.py:437 replays/game_ids.py:489
 msgctxt "th16"
 msgid "Marisa"
 msgstr ""
 
-#: .\replays\game_ids.py:393
+#: replays/game_ids.py:439
 msgctxt "th16"
 msgid "Marisa Spring"
 msgstr ""
 
-#: .\replays\game_ids.py:395
+#: replays/game_ids.py:441
 msgctxt "th16"
 msgid "Marisa Summer"
 msgstr ""
 
-#: .\replays\game_ids.py:397
+#: replays/game_ids.py:443
 msgctxt "th16"
 msgid "Marisa Autumn"
 msgstr ""
 
-#: .\replays\game_ids.py:399
+#: replays/game_ids.py:445
 msgctxt "th16"
 msgid "Marisa Winter"
 msgstr ""
 
-#: .\replays\game_ids.py:403
+#: replays/game_ids.py:449
 msgctxt "th17"
 msgid "Reimu Wolf"
 msgstr ""
 
-#: .\replays\game_ids.py:405
+#: replays/game_ids.py:451
 msgctxt "th17"
 msgid "Reimu Otter"
 msgstr ""
 
-#: .\replays\game_ids.py:407
+#: replays/game_ids.py:453
 msgctxt "th17"
 msgid "Reimu Eagle"
 msgstr ""
 
-#: .\replays\game_ids.py:409
+#: replays/game_ids.py:455
 msgctxt "th17"
 msgid "Marisa Wolf"
 msgstr ""
 
-#: .\replays\game_ids.py:411
+#: replays/game_ids.py:457
 msgctxt "th17"
 msgid "Marisa Otter"
 msgstr ""
 
-#: .\replays\game_ids.py:413
+#: replays/game_ids.py:459
 msgctxt "th17"
 msgid "Marisa Eagle"
 msgstr ""
 
-#: .\replays\game_ids.py:415
+#: replays/game_ids.py:461
 msgctxt "th17"
 msgid "Youmu Wolf"
 msgstr ""
 
-#: .\replays\game_ids.py:417
+#: replays/game_ids.py:463
 msgctxt "th17"
 msgid "Youmu Otter"
 msgstr ""
 
-#: .\replays\game_ids.py:419
+#: replays/game_ids.py:465
 msgctxt "th17"
 msgid "Youmu Eagle"
 msgstr ""
 
-#: .\replays\game_ids.py:423
+#: replays/game_ids.py:469
 msgctxt "th18"
 msgid "Reimu"
 msgstr ""
 
-#: .\replays\game_ids.py:425
+#: replays/game_ids.py:471
 msgctxt "th18"
 msgid "Marisa"
 msgstr ""
 
-#: .\replays\game_ids.py:427
+#: replays/game_ids.py:473
 msgctxt "th18"
 msgid "Sakuya"
 msgstr ""
 
-#: .\replays\game_ids.py:429
+#: replays/game_ids.py:475
 msgctxt "th18"
 msgid "Sanae"
 msgstr ""
 
-#: .\replays\game_ids.py:437
+#: replays/game_ids.py:492
+msgctxt "th17"
+msgid "Reimu"
+msgstr ""
+
+#: replays/game_ids.py:494
+msgctxt "th17"
+msgid "Marisa"
+msgstr ""
+
+#: replays/game_ids.py:496
+msgctxt "th17"
+msgid "Youmu"
+msgstr ""
+
+#: replays/game_ids.py:504
+msgctxt "th16"
+msgid "Spring"
+msgstr ""
+
+#: replays/game_ids.py:506
+msgctxt "th16"
+msgid "Summer"
+msgstr ""
+
+#: replays/game_ids.py:508
+msgctxt "th16"
+msgid "Autumn"
+msgstr ""
+
+#: replays/game_ids.py:510
+msgctxt "th16"
+msgid "Winter"
+msgstr ""
+
+#: replays/game_ids.py:515
+msgctxt "th16"
+msgid "Wolf"
+msgstr ""
+
+#: replays/game_ids.py:517
+msgctxt "th16"
+msgid "Otter"
+msgstr ""
+
+#: replays/game_ids.py:519
+msgctxt "th16"
+msgid "Eagle"
+msgstr ""
+
+#: replays/game_ids.py:527
 msgctxt "th01"
 msgid "Jigoku"
 msgstr ""
 
-#: .\replays\game_ids.py:439
+#: replays/game_ids.py:529
 msgctxt "th01"
 msgid "Makai"
 msgstr ""
 
-#: .\replays\game_ids.py:442
+#: replays/game_ids.py:532
 msgctxt "th08"
 msgid "Final A"
 msgstr ""
 
-#: .\replays\game_ids.py:444
+#: replays/game_ids.py:534
 msgctxt "th08"
 msgid "Final B"
 msgstr ""
 
-#: .\replays\models.py:90
+#: replays/models.py:106
 msgctxt "Category"
 msgid "Regular"
 msgstr ""
 
-#: .\replays\models.py:93
+#: replays/models.py:109
 msgctxt "Category"
 msgid "Tool-Assisted"
 msgstr ""
 
-#: .\replays\models.py:96
+#: replays/models.py:112
 msgctxt "Category"
 msgid "Unusual"
 msgstr ""
 
-#: .\replays\models.py:103
-msgctxt "Category"
-msgid "Private"
-msgstr ""
-
-#: .\replays\models.py:114
+#: replays/models.py:123
 msgctxt "Replay Type"
 msgid "Regular"
 msgstr ""
 
-#: .\replays\models.py:117
+#: replays/models.py:126
 msgctxt "Replay Type"
 msgid "Stage Practice"
 msgstr ""
 
-#: .\replays\models.py:120
+#: replays/models.py:129
 msgctxt "Replay Type"
 msgid "Spell Practice"
 msgstr ""
 
-#: .\replays\models.py:124
+#: replays/models.py:133
 msgctxt "Replay Type"
 msgid "PVP"
 msgstr ""
 
-#: .\replays\templates\replays\docs\about.html:5
+#: replays/templates/replays/docs/about.html:5
 msgid "About Silent Selene"
 msgstr ""
 
-#: .\replays\templates\replays\docs\about.html:6
+#: replays/templates/replays/docs/about.html:6
 #, python-format
 msgid ""
 "\n"
@@ -887,21 +932,20 @@ msgid ""
 "    </p>\n"
 "    <p>\n"
 "        You can buy most of the official Touhou games on <a href=\"https://"
-"store.steampowered.com/search/?developer=%%e4%%b8%%8a"
-"%%e6%%b5%%b7%%e3%%82%%a2%%e3%%83%%aa%%e3%%82%%b9%%e5%%b9%%bb"
-"%%e6%%a8%%82%%e5%%9b%%a3\">Steam</a>, <a href=\"https://www.dlsite.com/"
-"maniax/circle/profile/=/maker_id/RG46179.html\">DLSite</a> or many other "
-"online stores. A few are not sold as online downloads, but can be purchased "
-"as CDs.\n"
+"store.steampowered.com/search/?"
+"developer=%%e4%%b8%%8a%%e6%%b5%%b7%%e3%%82%%a2%%e3%%83%%aa%%e3%%82%%b9%%e5%%b9%%bb%%e6%%a8%%82%%e5%%9b%%a3\">Steam</"
+"a>, <a href=\"https://www.dlsite.com/maniax/circle/profile/=/maker_id/"
+"RG46179.html\">DLSite</a> or many other online stores. A few are not sold as "
+"online downloads, but can be purchased as CDs.\n"
 "    </p>\n"
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\docs\credits.html:5
+#: replays/templates/replays/docs/credits.html:5
 msgid "Credits"
 msgstr ""
 
-#: .\replays\templates\replays\docs\credits.html:6
+#: replays/templates/replays/docs/credits.html:6
 msgid ""
 "\n"
 "    <h2>Website development</h2>\n"
@@ -909,7 +953,17 @@ msgid ""
 "        <li><a href=\"https://github.com/n-rook\">nrook</a></li>\n"
 "        <li><a href=\"https://github.com/raviddog\">raviddog</a></li>\n"
 "        <li><a href=\"https://github.com/32th-System\">32th System</a></li>\n"
+"        <li><a href=\"https://github.com/jgdhs27\">morth</a></li>\n"
 "    </ul>\n"
+"    <h2>Art</h2>\n"
+"    <ul>\n"
+"        <li><a href=\"https://twitter.com/Addamelech\">Addamelech</a></li>\n"
+"    </ul>\n"
+"    <h2>Initial site design</h2>\n"
+"    <ul>\n"
+"        <li><a href=\"https://nylilsa.github.io\">Nylilsa</a></li>\n"
+"    </ul>\n"
+"    </h2>\n"
 "    <h2>Fonts</h2>\n"
 "    <ul>\n"
 "        <li><a href=\"https://www.latofonts.com\">Lato</a> by Łukasz "
@@ -921,35 +975,35 @@ msgid ""
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\docs\licenses.html:5
+#: replays/templates/replays/docs/licenses.html:5
 msgid "Licenses"
 msgstr ""
 
-#: .\replays\templates\replays\docs\licenses.html:6
+#: replays/templates/replays/docs/licenses.html:6
 msgid ""
 "\n"
 "    <h2>This Site</h2>\n"
 "    <p>\n"
-"        Silent Selene is licensed under the Apache License 2.0. The <a href="
-"\"https://github.com/n-rook/thscoreboard\">source code</a> is available on "
-"GitHub.\n"
+"        Silent Selene is licensed under the Apache License 2.0. The <a "
+"href=\"https://github.com/n-rook/thscoreboard\">source code</a> is available "
+"on GitHub.\n"
 "    </p>\n"
 "    <h2>Other Components</h2>\n"
 "    <p>\n"
 "        We use the fonts <a href=\"https://www.latofonts.com/\">Lato</a> and "
 "<a href=\"https://github.com/octaviopardo/EBGaramond12\">EB Garamond 12</a>, "
-"both of which are licensed under the <a href=\"http://scripts.sil.org/OFL"
-"\">SIL Open Font License 1.1</a>.\n"
+"both of which are licensed under the <a href=\"http://scripts.sil.org/"
+"OFL\">SIL Open Font License 1.1</a>.\n"
 "    </p>\n"
 "\n"
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\docs\privacy_policy.html:5
+#: replays/templates/replays/docs/privacy_policy.html:5
 msgid "Privacy Policy"
 msgstr ""
 
-#: .\replays\templates\replays\docs\privacy_policy.html:6
+#: replays/templates/replays/docs/privacy_policy.html:6
 msgid ""
 "\n"
 "    <h2>Overview</h2>\n"
@@ -1223,11 +1277,11 @@ msgid ""
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\docs\replay_rules.html:5
+#: replays/templates/replays/docs/replay_rules.html:5
 msgid "Replay Rules"
 msgstr ""
 
-#: .\replays\templates\replays\docs\replay_rules.html:6
+#: replays/templates/replays/docs/replay_rules.html:6
 msgid ""
 "\n"
 "    <h2>Disclaimer</h2>\n"
@@ -1293,8 +1347,9 @@ msgid ""
 "        <li>\n"
 "            Emulators, or other tools that run a binary on an operating "
 "system or computer for which it was not designed, are allowed. This includes "
-"PC-98 emulators such as \"Neko Project II\", as well as programs like \"Wine"
-"\" that allow players to run Windows games on other operating systems.\n"
+"PC-98 emulators such as \"Neko Project II\", as well as programs like "
+"\"Wine\" that allow players to run Windows games on other operating "
+"systems.\n"
 "        </li>\n"
 "        <li>\n"
 "            Patches which translate the game's text are allowed.\n"
@@ -1313,8 +1368,8 @@ msgid ""
 "            Any patch that modifies the game's behavior is not allowed.\n"
 "        </li>\n"
 "        <li>\n"
-"            Loading save states is not allowed. This includes any \"runahead"
-"\" emulator functionality that relies on save states.\n"
+"            Loading save states is not allowed. This includes any "
+"\"runahead\" emulator functionality that relies on save states.\n"
 "        </li>\n"
 "        <li>\n"
 "            Pause buffering, the technique of repeatedly pausing in quick "
@@ -1352,11 +1407,11 @@ msgid ""
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\docs\rules.html:6
+#: replays/templates/replays/docs/rules.html:6
 msgid "Rules"
 msgstr ""
 
-#: .\replays\templates\replays\docs\rules.html:7
+#: replays/templates/replays/docs/rules.html:7
 #, python-format
 msgid ""
 "\n"
@@ -1392,11 +1447,11 @@ msgid ""
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\docs\terms_of_use.html:6
+#: replays/templates/replays/docs/terms_of_use.html:6
 msgid "Terms of Service"
 msgstr ""
 
-#: .\replays\templates\replays\docs\terms_of_use.html:7
+#: replays/templates/replays/docs/terms_of_use.html:7
 #, python-format
 msgid ""
 "\n"
@@ -1414,8 +1469,8 @@ msgid ""
 "        <i>Last Updated November 5, 2022</i>\n"
 "    </p>\n"
 "    <p>\n"
-"        These Terms govern your access to <a href=\"https://silentselene.net"
-"\">silentselene.net</a> and any other sites we may operate in the future "
+"        These Terms govern your access to <a href=\"https://silentselene."
+"net\">silentselene.net</a> and any other sites we may operate in the future "
 "(hereafter referred to as \"Services\"). By accessing or using any part of "
 "our Services, you agree to be bound by all of the Terms and other procedures "
 "that we may publish via the Services from time to time (the \"Agreement\").\n"
@@ -1627,100 +1682,100 @@ msgid ""
 "    </p>\n"
 "\n"
 "    <h2>Privacy Policy</h2>\n"
-"    <p>For more details on how we handle your personal data, see our <a href="
-"\"%(privacy_url)s\">Privacy Policy</a>.</p>\n"
+"    <p>For more details on how we handle your personal data, see our <a "
+"href=\"%(privacy_url)s\">Privacy Policy</a>.</p>\n"
 "\n"
 "    <h2>License and Attribution</h3>\n"
 "    <p>\n"
 "        These terms of use are licensed under <a href=\"https://"
 "creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>, so if you like "
-"them, you can use them on your own site. They were based on <a href="
-"\"https://wordpress.com/tos/\">the WordPress Terms of Service</a>.\n"
+"them, you can use them on your own site. They were based on <a "
+"href=\"https://wordpress.com/tos/\">the WordPress Terms of Service</a>.\n"
 "    </p>\n"
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:7
+#: replays/templates/replays/replay_stages.html:7
 msgid "Stage"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:10
+#: replays/templates/replays/replay_stages.html:10
 msgid "Score"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:13
+#: replays/templates/replays/replay_stages.html:13
 msgid "PIV"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:16
+#: replays/templates/replays/replay_stages.html:16
 msgid "Graze"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:19
+#: replays/templates/replays/replay_stages.html:19
 msgid "Point Items"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:22
+#: replays/templates/replays/replay_stages.html:22
 msgid "Power"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:25
+#: replays/templates/replays/replay_stages.html:25
 msgid "Lives"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:28
+#: replays/templates/replays/replay_stages.html:28
 msgid "Bombs"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:31
+#: replays/templates/replays/replay_stages.html:31
 msgid "Rank"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:34
+#: replays/templates/replays/replay_stages.html:34
 msgid "Cherry"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:37
+#: replays/templates/replays/replay_stages.html:37
 msgid "CherryMax"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:40
+#: replays/templates/replays/replay_stages.html:40
 msgid "P1 CPU?"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:43
+#: replays/templates/replays/replay_stages.html:43
 msgid "P2 CPU?"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:46
+#: replays/templates/replays/replay_stages.html:46
 msgid "P2 Shot"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:49
+#: replays/templates/replays/replay_stages.html:49
 msgid "P2 Score"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:52
+#: replays/templates/replays/replay_stages.html:52
 msgid "Trance Gauge"
 msgstr ""
 
-#: .\replays\templates\replays\replay_stages.html:55
+#: replays/templates/replays/replay_stages.html:55
 msgid "Season Power"
 msgstr ""
 
-#: .\replays\templates\replays\upload.html:5
+#: replays/templates/replays/upload.html:5
 msgid "Publish a replay"
 msgstr ""
 
-#: .\replays\templates\replays\upload.html:6
+#: replays/templates/replays/upload.html:6
 msgid "Upload a replay file"
 msgstr ""
 
-#: .\replays\templates\replays\upload.html:8
+#: replays/templates/replays/upload.html:8
 msgid "Upload a new replay from one of the following games:"
 msgstr ""
 
-#: .\replays\templates\replays\upload.html:14
+#: replays/templates/replays/upload.html:14
 msgid ""
 "\n"
 "        This site is still under construction; we hope to support all "
@@ -1729,83 +1784,81 @@ msgid ""
 "    "
 msgstr ""
 
-#: .\replays\templates\replays\upload.html:25
+#: replays/templates/replays/upload.html:25
 msgid "Choose replay:"
 msgstr ""
 
-#: .\replays\templates\replays\upload.html:37
+#: replays/templates/replays/upload.html:37
 msgid "Publish a replay for a game without replay files"
 msgstr ""
 
-#: .\thscoreboard\settings.py:209
+#: thscoreboard/settings.py:213
 msgid "English"
 msgstr ""
 
-#: .\thscoreboard\settings.py:210
+#: thscoreboard/settings.py:214
 msgid "Japanese"
 msgstr ""
 
-#: .\thscoreboard\templates\base.html:41
-msgid "Upload a Replay"
-msgstr ""
-
-#: .\thscoreboard\templates\base.html:44
-msgid "Log out"
-msgstr ""
-
-#: .\users\forms.py:29
+#: users/forms.py:31
 msgid "An account has already been registered with this username."
 msgstr ""
 
-#: .\users\forms.py:47
+#: users/forms.py:53
 msgid "An account has already been registered with this email address."
 msgstr ""
 
-#: .\users\forms.py:82 .\users\forms.py:104 .\users\forms.py:115
+#: users/forms.py:92 users/forms.py:117 users/forms.py:130
 msgid "Username"
 msgstr ""
 
-#: .\users\forms.py:84 .\users\templates\users\delete_account.html:29
+#: users/forms.py:94 users/templates/users/delete_account.html:29
 msgid "Password"
 msgstr ""
 
-#: .\users\forms.py:92
+#: users/forms.py:103
 msgid "Email address"
 msgstr ""
 
-#: .\users\forms.py:100
+#: users/forms.py:112
 msgid "Invite File Contents"
 msgstr ""
 
-#: .\users\forms.py:116
+#: users/forms.py:131
 msgid "Reason"
 msgstr ""
 
-#: .\users\forms.py:117
+#: users/forms.py:132
 msgid "Days"
 msgstr ""
 
-#: .\users\forms.py:118
+#: users/forms.py:133
 msgid "Hours"
 msgstr ""
 
-#: .\users\forms.py:126
+#: users/forms.py:141
 #, python-format
 msgid "User %(username)s does not exist."
 msgstr ""
 
-#: .\users\templates\users\ban_success.html:7
+#: users/templates/registration/password_change_form.html:4
+#: users/templates/registration/password_change_form.html:42
+#: users/templates/users/profile.html:42
+msgid "Change Password"
+msgstr ""
+
+#: users/templates/users/ban_success.html:7
 #, python-format
 msgid ""
 "\n"
 "    The user %(target_username)s has been temporarily banned.\n"
 msgstr ""
 
-#: .\users\templates\users\banned.html:9
+#: users/templates/users/banned.html:9
 msgid "Your account has been suspended."
 msgstr ""
 
-#: .\users\templates\users\banned.html:14
+#: users/templates/users/banned.html:14
 #, python-format
 msgid ""
 "\n"
@@ -1816,7 +1869,7 @@ msgid ""
 "    "
 msgstr ""
 
-#: .\users\templates\users\banned.html:20
+#: users/templates/users/banned.html:20
 #, python-format
 msgid ""
 "\n"
@@ -1826,11 +1879,11 @@ msgid ""
 "    "
 msgstr ""
 
-#: .\users\templates\users\batch_invite_upload.html:17
+#: users/templates/users/batch_invite_upload.html:17
 msgid "Upload invite file:"
 msgstr ""
 
-#: .\users\templates\users\delete_account.html:9
+#: users/templates/users/delete_account.html:9
 msgid ""
 "\n"
 "    Are you sure you want to delete your account? This action cannot be "
@@ -1839,14 +1892,14 @@ msgid ""
 "    "
 msgstr ""
 
-#: .\users\templates\users\delete_account.html:16
+#: users/templates/users/delete_account.html:16
 msgid ""
 "\n"
 "    If you're completely sure, confirm your password below.\n"
 "    "
 msgstr ""
 
-#: .\users\templates\users\delete_account_successful.html:6
+#: users/templates/users/delete_account_successful.html:6
 msgid ""
 "\n"
 "<p>\n"
@@ -1859,6 +1912,10 @@ msgid ""
 "</p>\n"
 msgstr ""
 
-#: .\users\templates\users\profile.html:5
+#: users/templates/users/profile.html:5
 msgid "My Profile"
+msgstr ""
+
+#: users/templates/users/profile.html:41
+msgid "Log out"
 msgstr ""
