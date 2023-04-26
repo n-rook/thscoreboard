@@ -1,6 +1,9 @@
 """Various human-readable game IDs, used in low-level libraries like game_ids.py."""
 
+import enum
 from typing import Optional
+
+from immutabledict import immutabledict
 
 from django.utils.translation import gettext as _, pgettext
 
@@ -45,100 +48,117 @@ def GetReplayType(r_type: int):
     return "Bug type"
 
 
-def GetGameName(game_id: str, short=False):
-    # Believe it or not, this really is the best way I found to do this.
-    # Having the translation strings on different lines makes it so that they
-    # are all automatically detected by "makemessages".
-    if game_id == GameIDs.TH01:
-        if short:
-            return _("th01")
-        else:
-            return _("東方靈異伝 - The Highly Responsive to Prayers")
-    if game_id == GameIDs.TH02:
-        if short:
-            return _("th02")
-        else:
-            return _("東方封魔録 - Story of Eastern Wonderland")
-    if game_id == GameIDs.TH03:
-        if short:
-            return _("th03")
-        else:
-            return _("東方夢時空 - The Phantasmagoria of Dim. Dream")
-    if game_id == GameIDs.TH04:
-        if short:
-            return _("th04")
-        else:
-            return _("東方幻想郷 - Lotus Land Story")
-    if game_id == GameIDs.TH05:
-        if short:
-            return _("th05")
-        else:
-            return _("東方怪綺談 - Mystic Square")
-    if game_id == GameIDs.TH06:
-        if short:
-            return _("th06")
-        else:
-            return _("東方紅魔郷 - Embodiment of Scarlet Devil")
-    if game_id == GameIDs.TH07:
-        if short:
-            return _("th07")
-        else:
-            return _("東方妖々夢 - Perfect Cherry Blossom")
-    if game_id == GameIDs.TH08:
-        if short:
-            return _("th08")
-        else:
-            return _("東方永夜抄 - Imperishable Night")
-    if game_id == GameIDs.TH09:
-        if short:
-            return _("th09")
-        else:
-            return _("東方花映塚 - Phantasmagoria of Flower View")
-    if game_id == GameIDs.TH10:
-        if short:
-            return _("th10")
-        else:
-            return _("東方風神録 - Mountain of Faith")
-    if game_id == GameIDs.TH11:
-        if short:
-            return _("th11")
-        else:
-            return _("東方地霊殿 - Subterranean Animism")
-    if game_id == GameIDs.TH12:
-        if short:
-            return _("th12")
-        else:
-            return _("東方星蓮船 - Undefined Fantastic Object")
-    if game_id == GameIDs.TH13:
-        if short:
-            return _("th13")
-        else:
-            return _("東方神霊廟 - Ten Desires")
-    if game_id == GameIDs.TH14:
-        if short:
-            return _("th14")
-        else:
-            return _("東方輝針城 - Double Dealing Character")
-    if game_id == GameIDs.TH15:
-        if short:
-            return _("th15")
-        else:
-            return _("東方紺珠伝 - Legacy of Lunatic Kingdom")
-    if game_id == GameIDs.TH16:
-        if short:
-            return _("th16")
-        else:
-            return _("東方天空璋 - Hidden Star in Four Seasons")
-    if game_id == GameIDs.TH17:
-        if short:
-            return _("th17")
-        else:
-            return _("東方鬼形獣 - Wily Beast and Weakest Creature")
-    if game_id == GameIDs.TH18:
-        if short:
-            return _("th18")
-        else:
-            return _("東方虹龍洞 - Unconnected Marketeers")
+class NameLength(enum.Enum):
+    SHORT = 0
+    """A short name for a game, like "EoSD"."""
+    STANDARD = 1
+    """A moderate-length name, like "Embodiment of Scarlet Devil"."""
+    FULL = 2
+    """The full-length name, like "東方紅魔郷 - Embodiment of Scarlet Devil"."""
+
+
+# Believe it or not, this really is the best way I found to do this.
+# Having the translation strings on different lines makes it so that they
+# are all automatically detected by "makemessages".
+_GAME_NAMES = immutabledict(
+    {
+        GameIDs.TH01: (
+            pgettext("short game name", "th01"),
+            pgettext("standard game name", "The Highly Responsive to Prayers"),
+            pgettext("full game name", "東方靈異伝 - The Highly Responsive to Prayers"),
+        ),
+        GameIDs.TH02: (
+            pgettext("short game name", "th02"),
+            pgettext("standard game name", "Story of Eastern Wonderland"),
+            pgettext("full game name", "東方封魔録 - Story of Eastern Wonderland"),
+        ),
+        GameIDs.TH03: (
+            pgettext("short game name", "th03"),
+            pgettext("standard game name", "The Phantasmagoria of Dim. Dream"),
+            pgettext("full game name", "東方夢時空 - The Phantasmagoria of Dim. Dream"),
+        ),
+        GameIDs.TH04: (
+            pgettext("short game name", "th04"),
+            pgettext("standard game name", "Lotus Land Story"),
+            pgettext("full game name", "東方幻想郷 - Lotus Land Story"),
+        ),
+        GameIDs.TH05: (
+            pgettext("short game name", "th05"),
+            pgettext("standard game name", "Mystic Square"),
+            pgettext("full game name", "東方怪綺談 - Mystic Square"),
+        ),
+        GameIDs.TH06: (
+            pgettext("short game name", "th06"),
+            pgettext("standard game name", "Embodiment of Scarlet Devil"),
+            pgettext("full game name", "東方紅魔郷 - Embodiment of Scarlet Devil"),
+        ),
+        GameIDs.TH07: (
+            pgettext("short game name", "th07"),
+            pgettext("standard game name", "Perfect Cherry Blossom"),
+            pgettext("full game name", "東方妖々夢 - Perfect Cherry Blossom"),
+        ),
+        GameIDs.TH08: (
+            pgettext("short game name", "th08"),
+            pgettext("standard game name", "Imperishable Night"),
+            pgettext("full game name", "東方永夜抄 - Imperishable Night"),
+        ),
+        GameIDs.TH09: (
+            pgettext("short game name", "th09"),
+            pgettext("standard game name", "Phantasmagoria of Flower View"),
+            pgettext("full game name", "東方花映塚 - Phantasmagoria of Flower View"),
+        ),
+        GameIDs.TH10: (
+            pgettext("short game name", "th10"),
+            pgettext("standard game name", "Mountain of Faith"),
+            pgettext("full game name", "東方風神録 - Mountain of Faith"),
+        ),
+        GameIDs.TH11: (
+            pgettext("short game name", "th11"),
+            pgettext("standard game name", "Subterranean Animism"),
+            pgettext("full game name", "東方地霊殿 - Subterranean Animism"),
+        ),
+        GameIDs.TH12: (
+            pgettext("short game name", "th12"),
+            pgettext("standard game name", "Undefined Fantastic Object"),
+            pgettext("full game name", "東方星蓮船 - Undefined Fantastic Object"),
+        ),
+        GameIDs.TH13: (
+            pgettext("short game name", "th13"),
+            pgettext("standard game name", "Ten Desires"),
+            pgettext("full game name", "東方神霊廟 - Ten Desires"),
+        ),
+        GameIDs.TH14: (
+            pgettext("short game name", "th14"),
+            pgettext("standard game name", "Double Dealing Character"),
+            pgettext("full game name", "東方輝針城 - Double Dealing Character"),
+        ),
+        GameIDs.TH15: (
+            pgettext("short game name", "th15"),
+            pgettext("standard game name", "Legacy of Lunatic Kingdom"),
+            pgettext("full game name", "東方紺珠伝 - Legacy of Lunatic Kingdom"),
+        ),
+        GameIDs.TH16: (
+            pgettext("short game name", "th16"),
+            pgettext("standard game name", "Hidden Star in Four Seasons"),
+            pgettext("full game name", "東方天空璋 - Hidden Star in Four Seasons"),
+        ),
+        GameIDs.TH17: (
+            pgettext("short game name", "th17"),
+            pgettext("standard game name", "Wily Beast and Weakest Creature"),
+            pgettext("full game name", "東方鬼形獣 - Wily Beast and Weakest Creature"),
+        ),
+        GameIDs.TH18: (
+            pgettext("short game name", "th18"),
+            pgettext("standard game name", "Unconnected Marketeers"),
+            pgettext("full game name", "東方虹龍洞 - Unconnected Marketeers"),
+        ),
+    }
+)
+
+
+def GetGameName(game_id: str, name_length: NameLength):
+    if game_id in _GAME_NAMES:
+        return _GAME_NAMES[game_id][name_length.value]
     return _("Unknown game (bug!)")
 
 
