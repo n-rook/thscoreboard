@@ -20,9 +20,9 @@
               <th>Comment</th>
             </tr>
         </thead>
-        {% for replay, input in replays_with_inputs %}
+        {% for replay in replays %}
             <tr>
-                <td>{{ input }}</td>
+                <td><input type="checkbox" value="{{replay.id}}" name="choices"></td>
                 <td>{{ replay.shot.game.GetShortName }}</td>
                 <td>{{ replay.GetDifficultyName }}</td>
                 <td>{{ replay.shot.GetName }}</td>
@@ -32,7 +32,7 @@
             </tr>
         {% endfor %}
     </table>
-    <input type="submit" value="Confirm" class="replay-table">
+    <input type="submit" value="Confirm" class="spaced-input">
 </form>
 
 {% endblock %}

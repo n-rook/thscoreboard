@@ -158,9 +158,11 @@ class ClaimUsernameForm(forms.Form):
 
 
 class ClaimReplaysForm(forms.Form):
-    def __init__(self, *args, replays=[], **kwargs):
+    choices = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+    def __init__(self, *args, **kwargs):
+        replays = kwargs.pop("replays")
         super().__init__(*args, **kwargs)
-        self.confirm_replay_inputs = [
-            forms.CheckboxInput().render(name=replay.id, value=True)
-            for replay in replays
-        ]
+        self.fields["choices"].choices = replays.values_list("id", "id")

@@ -23,16 +23,12 @@ def claim(request: WSGIRequest) -> HttpResponse:
     ):
         return _render_claim_replay_form(request)
     else:
-        form = forms.ClaimReplaysForm(request.POST)
+        form = forms.ClaimReplaysForm(request.POST, replays=models.Replay.objects.all())
         if form.is_valid():
-            print("FORM", form)
-            print("FORM", form.cleaned_data)
-            selected_replays = form.cleaned_data["replays"]
-            print(selected_replays)
-            # Do something with selected_replays
-        selected_replays = _get_selected_replays(request)
-        user = _get_user(request.POST["silentselene_username"])
-        # _assign_selected_replays_to_user(selected_replays, user)
+            user = _get_user(request.POST["silentselene_username"])
+            selected_replay_ids = form.cleaned_data["choices"]
+            selected_replays = models.Replay.objects.filter(id__in=selected_replay_ids)
+            _assign_selected_replays_to_user(selected_replays, user)
         return redirect(f"../replays/user/{user}")
 
 
@@ -45,16 +41,6 @@ def _render_claim_username_form(request: WSGIRequest) -> HttpResponse:
             "form": form,
         },
     )
-
-
-def _get_selected_replays(request: WSGIRequest) -> list[models.Replay]:
-    selected_replays = []
-    for replay_id, checkbox_value in request.POST.items():
-        replay_was_selected = checkbox_value == "on"
-        if replay_was_selected:
-            replay = models.Replay.objects.get(id=replay_id)
-            selected_replays.append(replay)
-    return selected_replays
 
 
 @transaction.atomic
@@ -76,12 +62,12 @@ def _render_claim_replay_form(request: WSGIRequest) -> HttpResponse:
     royalflare_username = request.POST.get("royalflare_username")
     replays = _get_unclaimed_replays_from_username(royalflare_username)
     form = forms.ClaimReplaysForm(replays=replays)
-    replays_with_inputs = zip(replays, form.confirm_replay_inputs)
     return render(
         request,
         "replays/claim_replays.html",
         {
-            "replays_with_inputs": replays_with_inputs,
+            "form": form,
+            "replays": replays,
             "silentselene_username": silentselene_username,
         },
     )
