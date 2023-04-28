@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-28 21:57+0000\n"
-"PO-Revision-Date: 2023-04-28 22:02+0000\n"
+"PO-Revision-Date: 2023-04-28 22:05+0000\n"
 "Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -254,7 +254,7 @@ msgstr "TD"
 #: replays/game_ids.py:127
 msgctxt "standard game name"
 msgid "Ten Desires"
-msgstr ""
+msgstr "Ten Desires"
 
 #: replays/game_ids.py:128
 #| msgid "東方神霊廟 - Ten Desires"
