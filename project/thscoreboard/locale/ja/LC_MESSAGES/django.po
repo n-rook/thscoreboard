@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-26 00:57+0000\n"
+"POT-Creation-Date: 2023-04-28 21:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,7 @@ msgstr ""
 
 #: replays/game_ids.py:68
 msgctxt "full game name"
-msgid "The Highly Responsive to Prayers"
+msgid "東方靈異伝 - The Highly Responsive to Prayers"
 msgstr ""
 
 #: replays/game_ids.py:71
@@ -998,37 +998,37 @@ msgctxt "th08"
 msgid "Final B"
 msgstr ""
 
-#: replays/models.py:106
+#: replays/models.py:110
 msgctxt "Category"
 msgid "Regular"
 msgstr ""
 
-#: replays/models.py:109
+#: replays/models.py:113
 msgctxt "Category"
 msgid "Tool-Assisted"
 msgstr ""
 
-#: replays/models.py:112
+#: replays/models.py:116
 msgctxt "Category"
 msgid "Unusual"
 msgstr ""
 
-#: replays/models.py:123
+#: replays/models.py:127
 msgctxt "Replay Type"
 msgid "Regular"
 msgstr ""
 
-#: replays/models.py:126
+#: replays/models.py:130
 msgctxt "Replay Type"
 msgid "Stage Practice"
 msgstr ""
 
-#: replays/models.py:129
+#: replays/models.py:133
 msgctxt "Replay Type"
 msgid "Spell Practice"
 msgstr ""
 
-#: replays/models.py:133
+#: replays/models.py:137
 msgctxt "Replay Type"
 msgid "PVP"
 msgstr ""
