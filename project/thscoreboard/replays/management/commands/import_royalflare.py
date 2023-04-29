@@ -1,10 +1,9 @@
 from typing import Optional
 from django.core.management.base import BaseCommand, CommandParser
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 from pathlib import Path
 
-import pytz
 from replays import constant_helpers
 from replays import replay_parsing
 from replays import create_replay
@@ -62,7 +61,7 @@ def import_royalflare(info_from_json: dict, replay_dir: Path) -> None:
     imported_username = info_from_json["player"]
 
     try:
-        if created_timestamp > pytz.utc.localize(datetime(2023, 1, 1)):
+        if created_timestamp > datetime(2023, 1, 1, tzinfo=timezone.utc):
             raise ValueError(
                 f"Replay creation date is past royalflare's closure: {created_timestamp}"
             )
@@ -110,5 +109,5 @@ def parse_timestamp_from_json(timestamp: str) -> datetime:
         unaware_datetime = datetime.strptime(timestamp, "%Y/%m/%d %H:%M")
     else:
         unaware_datetime = datetime.strptime(timestamp, "%Y/%m/%d")
-    aware_datetime = pytz.utc.localize(unaware_datetime)
+    aware_datetime = unaware_datetime.replace(tzinfo=timezone.utc)
     return aware_datetime
