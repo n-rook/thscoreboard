@@ -27,7 +27,7 @@ class GameIDs:
 
 
 class ReplayTypes:
-    REGULAR = 1
+    FULL_GAME = 1
     STAGE_PRACTICE = 2
     SPELL_PRACTICE = 3
     PVP = 4
@@ -35,7 +35,7 @@ class ReplayTypes:
 
 def GetReplayType(r_type: int):
     if r_type == 1:
-        return _("Regular")
+        return _("Full Game")
     elif r_type == 2:
         return _("Stage Practice")
     elif r_type == 3:

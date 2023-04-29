@@ -12,7 +12,7 @@ from replays.replays_to_json import ReplayToJsonConverter
 def index_json(request):
     recent_replays = (
         models.Replay.objects.filter(
-            category__in=[models.Category.REGULAR, models.Category.TAS]
+            category__in=[models.Category.STANDARD, models.Category.TAS]
         )
         .annotate_with_rank()
         .order_by("-created")[:10]

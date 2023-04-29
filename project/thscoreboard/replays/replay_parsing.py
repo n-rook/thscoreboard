@@ -139,7 +139,7 @@ def _Parse06(rep_raw):
 
         rep_stages.append(s)
 
-    r_type = game_ids.ReplayTypes.REGULAR
+    r_type = game_ids.ReplayTypes.FULL_GAME
     if len(rep_stages) == 1 and rep_raw[7] != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
@@ -204,7 +204,7 @@ def _Parse07(rep_raw):
 
         rep_stages.append(s)
 
-    r_type = game_ids.ReplayTypes.REGULAR
+    r_type = game_ids.ReplayTypes.FULL_GAME
     if len(rep_stages) == 1 and replay.header.difficulty not in [4, 5]:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
@@ -305,7 +305,7 @@ def _Parse08(rep_raw):
 
         rep_stages.append(s)
 
-    r_type = game_ids.ReplayTypes.REGULAR
+    r_type = game_ids.ReplayTypes.FULL_GAME
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
@@ -355,7 +355,7 @@ def _Parse09(rep_raw):
     rep_stages = []
     r_score = 0
     r_shot = "Bug shot"
-    r_type = game_ids.ReplayTypes.REGULAR
+    r_type = game_ids.ReplayTypes.FULL_GAME
 
     highest_stage = 0
     if replay.file_header.stage_offsets[9] == 0:
@@ -467,7 +467,7 @@ def _Parse10(rep_raw):
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
-    r_type = game_ids.ReplayTypes.REGULAR
+    r_type = game_ids.ReplayTypes.FULL_GAME
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
@@ -518,7 +518,7 @@ def _Parse11(rep_raw):
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
-    r_type = game_ids.ReplayTypes.REGULAR
+    r_type = game_ids.ReplayTypes.FULL_GAME
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
@@ -576,7 +576,7 @@ def _Parse12(rep_raw):
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
-    r_type = game_ids.ReplayTypes.REGULAR
+    r_type = game_ids.ReplayTypes.FULL_GAME
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
@@ -646,7 +646,7 @@ def _Parse13(rep_raw):
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
-    r_type = game_ids.ReplayTypes.REGULAR
+    r_type = game_ids.ReplayTypes.FULL_GAME
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
@@ -715,7 +715,7 @@ def _Parse14(rep_raw):
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
-    r_type = game_ids.ReplayTypes.REGULAR
+    r_type = game_ids.ReplayTypes.FULL_GAME
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
@@ -769,7 +769,7 @@ def _Parse15(rep_raw) -> ReplayInfo:
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
-    r_type = game_ids.ReplayTypes.REGULAR
+    r_type = game_ids.ReplayTypes.FULL_GAME
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
@@ -843,7 +843,7 @@ def _Parse16(rep_raw) -> ReplayInfo:
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
-    r_type = game_ids.ReplayTypes.REGULAR
+    r_type = game_ids.ReplayTypes.FULL_GAME
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
@@ -916,7 +916,7 @@ def _Parse17(rep_raw) -> ReplayInfo:
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
-    r_type = game_ids.ReplayTypes.REGULAR
+    r_type = game_ids.ReplayTypes.FULL_GAME
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
@@ -987,7 +987,7 @@ def _Parse18(rep_raw) -> ReplayInfo:
             s.score = replay.header.score * 10
         rep_stages.append(s)
 
-    r_type = game_ids.ReplayTypes.REGULAR
+    r_type = game_ids.ReplayTypes.FULL_GAME
     if len(rep_stages) == 1 and replay.header.difficulty != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 

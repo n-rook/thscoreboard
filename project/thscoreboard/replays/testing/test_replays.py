@@ -37,7 +37,7 @@ def CreateAsPublishedReplay(
     user,
     difficulty=None,
     score=None,
-    category=models.Category.REGULAR,
+    category=models.Category.STANDARD,
     comment="",
     is_good=True,
     is_clear=True,

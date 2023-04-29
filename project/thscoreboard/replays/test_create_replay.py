@@ -23,12 +23,12 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             difficulty=1,
             shot=shot,
             score=10000,
-            category=models.Category.REGULAR,
+            category=models.Category.STANDARD,
             comment="Hello",
             is_clear=True,
             video_link="https://www.youtube.com/example",
             route=None,
-            replay_type=game_ids.ReplayTypes.REGULAR,
+            replay_type=game_ids.ReplayTypes.FULL_GAME,
             no_bomb=False,
             miss_count=3,
         )
@@ -60,7 +60,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             user=self.user,
             difficulty=3,
             score=294127890,
-            category=models.Category.REGULAR,
+            category=models.Category.STANDARD,
             comment="Hello",
             video_link="",
             is_good=True,
@@ -79,7 +79,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertEqual(new_replay.score, 294127890)
         self.assertEqual(new_replay.rep_score, 294127890)
         self.assertFalse(new_replay.is_clear)
-        self.assertEqual(new_replay.category, models.Category.REGULAR)
+        self.assertEqual(new_replay.category, models.Category.STANDARD)
         self.assertEqual(new_replay.comment, "Hello")
         self.assertEqual(new_replay.replay_type, 1)
         self.assertFalse(new_replay.no_bomb)
@@ -106,7 +106,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             user=self.user,
             difficulty=replay_info.difficulty,
             score=replay_info.score,
-            category=models.Category.REGULAR,
+            category=models.Category.STANDARD,
             comment="Hello",
             video_link="",
             is_good=True,
@@ -134,7 +134,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             user=self.user,
             difficulty=3,
             score=49348230,
-            category=models.Category.REGULAR,
+            category=models.Category.STANDARD,
             comment="",
             video_link="",
             is_good=True,
@@ -161,7 +161,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             user=self.user,
             difficulty=3,
             score=294127890,
-            category=models.Category.REGULAR,
+            category=models.Category.STANDARD,
             comment="",
             video_link="",
             is_good=True,
@@ -189,7 +189,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             user=self.user,
             difficulty=replay_info.difficulty,
             score=replay_info.score,
-            category=models.Category.REGULAR,
+            category=models.Category.STANDARD,
             comment="",
             video_link="",
             is_good=True,
@@ -214,7 +214,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             user=None,
             difficulty=3,
             score=294127890,
-            category=models.Category.REGULAR,
+            category=models.Category.STANDARD,
             comment="Hello",
             video_link="",
             is_good=True,
@@ -243,7 +243,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             user=self.user,
             difficulty=3,
             score=294127890,
-            category=models.Category.REGULAR,
+            category=models.Category.STANDARD,
             comment="",
             video_link="",
             is_good=True,
@@ -266,7 +266,7 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
                 user=self.user,
                 difficulty=3,
                 score=294127890,
-                category=models.Category.REGULAR,
+                category=models.Category.STANDARD,
                 comment="",
                 video_link="",
                 is_good=True,

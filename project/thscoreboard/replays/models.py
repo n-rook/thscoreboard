@@ -103,7 +103,7 @@ class Shot(models.Model):
 class Category(models.IntegerChoices):
     """The category under which a replay is uploaded."""
 
-    REGULAR = 1, pgettext_lazy("Category", "Regular")
+    STANDARD = 1, pgettext_lazy("Category", "Standard")
     """A normal upload; a legitimate replay played by a real player."""
 
     TAS = 2, pgettext_lazy("Category", "Tool-Assisted")
@@ -120,8 +120,8 @@ class Category(models.IntegerChoices):
 class ReplayType(models.IntegerChoices):
     """Type of replay (regular, spell practice, etc)"""
 
-    REGULAR = 1, pgettext_lazy("Replay Type", "Regular")
-    """A regular 1cc/scoring run"""
+    FULL_GAME = 1, pgettext_lazy("Replay Type", "Full Game")
+    """A run of the whole game."""
 
     STAGE_PRACTICE = 2, pgettext_lazy("Replay Type", "Stage Practice")
     """Stage practice replay. Note: a regular replay that gameovers at stage 1 will be detected as a stage practice replay"""
@@ -197,7 +197,7 @@ class ReplayQuerySet(QuerySet):
         return self.annotate(
             rank=Case(
                 When(
-                    category=Category.REGULAR,
+                    category=Category.STANDARD,
                     then=Window(
                         expression=RowNumber(),
                         order_by=F("score").desc(),
@@ -229,7 +229,9 @@ class Replay(models.Model):
             models.CheckConstraint(
                 name="replay_type_spell_card_id_isnull",
                 check=(
-                    models.Q(replay_type=ReplayType.REGULAR, spell_card_id__isnull=True)
+                    models.Q(
+                        replay_type=ReplayType.FULL_GAME, spell_card_id__isnull=True
+                    )
                     | models.Q(
                         replay_type=ReplayType.STAGE_PRACTICE,
                         spell_card_id__isnull=True,
