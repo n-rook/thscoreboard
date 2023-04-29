@@ -56,7 +56,8 @@ else:
 DEBUG = not IS_PROD
 
 # Whether or not to require a passcode to sign up for the site.
-REQUIRE_PASSCODE = GetBooleanFromEnvironment("REQUIRE_PASSCODE", True)
+# TODO: After 2023-10-01, remove require-passcode logic from the site.
+REQUIRE_PASSCODE = GetBooleanFromEnvironment("REQUIRE_PASSCODE", False)
 
 
 def _GetAllowedHosts():
