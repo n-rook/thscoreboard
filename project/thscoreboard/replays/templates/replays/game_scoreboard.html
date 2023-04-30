@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2><a href="/replays/{{game.game_id}}">{{ game.GetName }}</a></h2>
+    <h2><a href="/replays/{{game.game_id}}">{{ game.GetFullName }}</a></h2>
 
     {% for filter_name, filter_values in filters.items %}
         <div class="checkbox-list">

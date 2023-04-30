@@ -7,17 +7,21 @@ from replays.testing import test_utilities
 
 
 class GameIDsTestCase(test.SimpleTestCase):
-    def testGetLongName(self):
-        eosd_name = game_ids.GetGameName(game_id=game_ids.GameIDs.TH06, short=False)
-        self.assertIn("Embodiment of Scarlet Devil", eosd_name)
-
-    def testGetShortName(self):
-        # https://github.com/n-rook/thscoreboard/issues/58
-        # gettext doesn't work right on the GitHub bot, so we intentionally
-        # override it with a language for which we don't have translations.
+    def testGetGameName(self):
         with test_utilities.OverrideTranslations():
-            eosd_name = game_ids.GetGameName(game_id=game_ids.GameIDs.TH06, short=True)
-        self.assertEqual("th06", eosd_name)
+            short = game_ids.GetGameName(
+                game_id=game_ids.GameIDs.TH06, name_length=game_ids.NameLength.SHORT
+            )
+            standard = game_ids.GetGameName(
+                game_id=game_ids.GameIDs.TH06, name_length=game_ids.NameLength.STANDARD
+            )
+            full = game_ids.GetGameName(
+                game_id=game_ids.GameIDs.TH06, name_length=game_ids.NameLength.FULL
+            )
+
+        self.assertEqual("th06", short)
+        self.assertEqual("Embodiment of Scarlet Devil", standard)
+        self.assertEqual("東方紅魔郷 - Embodiment of Scarlet Devil", full)
 
     def testGetShotName(self):
         shot_name = game_ids.GetShotName(
@@ -97,14 +101,26 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
     def testNoBugNamesForGames(self):
         games = models.Game.objects.all()
         for game in games:
-            game_name = game_ids.GetGameName(game.game_id)
-            self.AssertNoBug(game_name)
+            for name_length in game_ids.NameLength:
+                game_name = game_ids.GetGameName(game.game_id, name_length=name_length)
+                self.AssertNoBug(game_name)
 
-    def testNoBugShortNamesForGames(self):
+    def testGameNamesAreLongerWithLongerSpecifiers(self):
         games = models.Game.objects.all()
         for game in games:
-            game_name = game_ids.GetGameName(game.game_id, short=True)
-            self.AssertNoBug(game_name)
+            with self.subTest(game.game_id):
+                short = game_ids.GetGameName(
+                    game.game_id, name_length=game_ids.NameLength.SHORT
+                )
+                standard = game_ids.GetGameName(
+                    game.game_id, name_length=game_ids.NameLength.STANDARD
+                )
+                full = game_ids.GetGameName(
+                    game.game_id, name_length=game_ids.NameLength.FULL
+                )
+
+                self.assertLess(len(short), len(standard))
+                self.assertLess(len(standard), len(full))
 
     def testNoBugDifficultyNamesForGames(self):
         games = models.Game.objects.all()
