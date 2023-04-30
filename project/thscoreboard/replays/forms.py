@@ -54,7 +54,7 @@ def _create_comment_field():
 
 
 def _get_replay_type_choices(game: models.Game) -> list[Tuple[str, str]]:
-    replay_types = [models.ReplayType.REGULAR, models.ReplayType.STAGE_PRACTICE]
+    replay_types = [models.ReplayType.FULL_GAME, models.ReplayType.STAGE_PRACTICE]
     if game_fields.game_has_pvp(game.game_id):
         replay_types.append(models.ReplayType.PVP)
     return _enum_to_form_choices(replay_types)
