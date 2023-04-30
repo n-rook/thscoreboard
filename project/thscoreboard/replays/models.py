@@ -44,12 +44,16 @@ class Game(models.Model):
     """
 
     def GetName(self):
-        """Get a long name for the game."""
-        return game_ids.GetGameName(self.game_id)
+        """Get a standard name for the game."""
+        return game_ids.GetGameName(self.game_id, game_ids.NameLength.STANDARD)
 
     def GetShortName(self):
         """Get a short name for this game, suitable for a column in a table."""
-        return game_ids.GetGameName(self.game_id, short=True)
+        return game_ids.GetGameName(self.game_id, game_ids.NameLength.SHORT)
+
+    def GetFullName(self):
+        """Get the full name for this game."""
+        return game_ids.GetGameName(self.game_id, game_ids.NameLength.FULL)
 
     def GetDifficultyName(self, difficulty: int) -> str:
         """Gets the name of a difficulty in this game."""
