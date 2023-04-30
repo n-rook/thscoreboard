@@ -1,11 +1,11 @@
 """Various forms useful for the replays site."""
 
-from typing import Tuple
+from typing import Any, List, Sequence, Tuple
 from urllib import parse
 
 from django import forms
 from django.core import exceptions
-from django.utils.translation import gettext as _
+from django.db.models import enums
 
 from replays import game_ids
 from replays import game_fields
@@ -19,15 +19,6 @@ difficulty_names = (
     ("3", "Lunatic"),
     ("4", "Extra"),
     ("5", "Phantasm"),
-)
-
-category_names = [(category, name) for (category, name) in models.Category.choices]
-
-replay_types = (
-    ("1", _("Regular")),
-    ("2", _("Stage Practice")),
-    # ('3', _('Spell Practice)) # cannot support spell practice in games without replays that include the spellcard id
-    ("4", _("PVP")),
 )
 
 
@@ -63,13 +54,17 @@ def _create_comment_field():
 
 
 def _get_replay_type_choices(game: models.Game) -> list[Tuple[str, str]]:
-    replay_types = [
-        ("1", _("Regular")),
-        ("2", _("Stage Practice")),
-    ]
+    replay_types = [models.ReplayType.REGULAR, models.ReplayType.STAGE_PRACTICE]
     if game_fields.game_has_pvp(game.game_id):
-        replay_types.append(("4", _("PVP")))
-    return replay_types
+        replay_types.append(models.ReplayType.PVP)
+    return _enum_to_form_choices(replay_types)
+
+
+def _enum_to_form_choices(
+    enum_choices: Sequence[enums.Choices],
+) -> List[Tuple[Any, str]]:
+    """Convert Django model enum list to a form choice list."""
+    return [(v, v.label) for v in enum_choices]
 
 
 class ShotField(forms.ModelChoiceField):
@@ -138,7 +133,7 @@ class PublishReplayForm(forms.Form):
             del self.fields["misses"]
 
     score = forms.IntegerField(min_value=0)
-    category = forms.ChoiceField(choices=category_names)
+    category = forms.ChoiceField(choices=models.Category.choices)
     comment = _create_comment_field()
     is_good = forms.BooleanField(initial=True, required=False)
     is_clear = forms.BooleanField(initial=True, required=False)
@@ -182,8 +177,8 @@ class PublishReplayWithoutFileForm(forms.Form):
     shot = ShotField()
     route = RouteField()
     score = forms.IntegerField(min_value=0)
-    category = forms.ChoiceField(choices=category_names)
-    replay_type = forms.ChoiceField(choices=replay_types)
+    category = forms.ChoiceField(choices=models.Category.choices)
+    replay_type = forms.ChoiceField(choices=models.ReplayType.choices)  # overridden
     is_clear = forms.BooleanField(initial=True, required=False)
     comment = _create_comment_field()
     video_link = VideoReplayLinkField(required=True)
