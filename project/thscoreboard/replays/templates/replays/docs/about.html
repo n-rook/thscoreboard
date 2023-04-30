@@ -16,11 +16,13 @@
         You can buy most of the official Touhou games on <a href="https://store.steampowered.com/search/?developer=%e4%b8%8a%e6%b5%b7%e3%82%a2%e3%83%aa%e3%82%b9%e5%b9%bb%e6%a8%82%e5%9b%a3">Steam</a>, <a href="https://www.dlsite.com/maniax/circle/profile/=/maker_id/RG46179.html">DLSite</a> or many other online stores. A few are not sold as online downloads, but can be purchased as CDs.
     </p>
     {% endblocktranslate %}
+    {% with discord_link="https://discord.gg/qwBYqp2yyZ" webmaster_email="webmaster@silentselene.net" %}
     {% blocktranslate %}
     <h1>Contact Us</h1>
     <p>
-        The best way to contact the Silent Selene team or discuss it is to join us on Discord; you can find our Discord server by joining "The Gap", the public Discord server that serves as a directory for the Touhou community, and searching it for "Silent Selene". You can also send feedback by sending an email to <a href="mailto:webmaster@silentselene.net">webmaster@silentselene.net</a>.
+        The best way to contact the Silent Selene team or discuss it is to <a href="{{ discord_link }}">join us on Discord</a>. You can also send feedback by sending an email to <a href="mailto:{{  webmaster_email }}">{{ webmaster_email }}</a>.
     </p>
     {% endblocktranslate %}
+    {% endwith %}
 
 {% endblock %}
