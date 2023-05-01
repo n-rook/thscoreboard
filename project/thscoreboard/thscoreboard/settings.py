@@ -265,3 +265,10 @@ else:
 
 DISCORD_WEBHOOK_ID = os.environ.get("DISCORD_WEBHOOK_ID", None)
 DISCORD_WEBHOOK_TOKEN = os.environ.get("DISCORD_WEBHOOK_TOKEN", None)
+
+MIDDLEWARE = [
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.gzip.GZipMiddleware",
+]

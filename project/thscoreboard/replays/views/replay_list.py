@@ -1,6 +1,8 @@
 """Contains views which list various replays."""
 
-from django.http import JsonResponse
+import gzip
+import json
+from django.http import HttpResponse
 from django.views.decorators import http as http_decorators
 from django.shortcuts import get_object_or_404, render
 
@@ -13,12 +15,13 @@ from replays.replays_to_json import ReplayToJsonConverter
 
 @http_decorators.require_safe
 def game_scoreboard_json(request, game_id: str):
-    converter = ReplayToJsonConverter()
     replays = _get_all_replay_for_game(game_id)
-    return JsonResponse(
-        converter.convert_replays_to_serializable_list(replays),
-        safe=False,
-    )
+    converter = ReplayToJsonConverter()
+    replays_json = json.dumps(converter.convert_replays_to_serializable_list(replays))
+    replays_json_compressed = gzip.compress(replays_json.encode("utf-8"), 5)
+    response = HttpResponse(replays_json_compressed)
+    response["Content-Encoding"] = "gzip"
+    return response
 
 
 @http_decorators.require_safe
