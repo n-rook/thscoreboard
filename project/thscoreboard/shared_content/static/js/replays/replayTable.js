@@ -10,11 +10,7 @@ const displayedColumns = [
 var activeFilters = {};
 var allReplays = [];
 
-try {
-  requestAndInitializeReplays();
-} catch(error) {
-  // Catch ReferenceError for test suite but do nothing
-}
+requestAndInitializeReplays();
 
 function requestAndInitializeReplays() {
   const requestUri = window.location.pathname === '/'
@@ -38,7 +34,7 @@ function requestAndInitializeReplays() {
     allReplays = replayJson
     const filteredReplays = filterReplays(activeFilters, allReplays);
     constructAndRenderReplayTable(filteredReplays);
-  });
+  }).catch(function() {});
 }
 
 function onClick(elm) {
