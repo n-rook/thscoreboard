@@ -24,7 +24,8 @@ function requestAndInitializeReplays() {
   fetch(requestUri, {
     headers: {
       'Accept-Encoding': 'gzip'
-    }
+    },
+    priority: 'high'
   })
   .then(response => {
     if (!response.ok) {
