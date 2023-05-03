@@ -342,7 +342,7 @@ class Replay(models.Model):
     """In the case of a spell practice replay, the spell card ID attempted"""
 
     replay_type = models.IntegerField(choices=ReplayType.choices)
-    """Type of replay (regular run, stage practice, etc)"""
+    """Type of replay (full run run, stage practice, etc)"""
 
     no_bomb = models.BooleanField(blank=True, null=True)
     """Whether the replay uses no bombs (a popular challenge condition).
