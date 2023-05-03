@@ -8,8 +8,10 @@
         {% csrf_token %}
         <p>Please enter a silentselene username.</p>
         {{ form.silentselene_username }}
+        {{ form.silentselene_username.errors }}
         <p>Please enter a royalflare username.</p>
         {{ form.royalflare_username }}
+        {{ form.royalflare_username.errors }}
         <div />
         <input type="submit" value="Next" class="spaced-input">
     </form>

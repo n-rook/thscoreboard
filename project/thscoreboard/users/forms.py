@@ -156,6 +156,34 @@ class ClaimUsernameForm(forms.Form):
     )
     royalflare_username = forms.CharField(label=_("royalflare_username"), required=True)
 
+    def clean(self):
+        cleaned_data = super().clean()
+        errors = {}
+        silentselene_username = cleaned_data["silentselene_username"]
+        silentselene_is_valid = models.User.objects.filter(
+            username=silentselene_username
+        ).exists()
+        if not silentselene_is_valid:
+            errors[
+                "silentselene_username"
+            ] = f"Silentselene user {silentselene_username} does not exist."
+
+        royalflare_username = cleaned_data["royalflare_username"]
+        royalflare_replays = Replay.objects.filter(
+            imported_username__iexact=royalflare_username
+        )
+        if not royalflare_replays.exists():
+            errors[
+                "royalflare_username"
+            ] = f"No Royalflare replays found for username {royalflare_username}."
+        elif not royalflare_replays.filter(user__isnull=True).exists():
+            errors[
+                "royalflare_username"
+            ] = f"All replays for {royalflare_username} have already been assigned."
+
+        if len(errors) > 0:
+            raise forms.ValidationError(errors)
+
 
 class ClaimReplaysForm(forms.Form):
     choices = forms.MultipleChoiceField(
