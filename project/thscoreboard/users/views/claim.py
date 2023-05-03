@@ -21,15 +21,18 @@ def claim(request: WSGIRequest) -> HttpResponse:
     elif (
         request.method == "POST" and request.POST.get("royalflare_username") is not None
     ):
-        return _render_claim_replay_form(request)
+        form = forms.ClaimUsernameForm(request.POST)
+        if form.is_valid():
+            return _render_claim_replay_form(form, request)
     else:
         form = forms.ClaimReplaysForm(request.POST, replays=models.Replay.objects.all())
         if form.is_valid():
-            user = _get_user(request.POST["silentselene_username"])
+            silentselene_username = form.cleaned_data["silentselene_username"]
+            user = _get_user(silentselene_username)
             selected_replay_ids = form.cleaned_data["choices"]
             selected_replays = models.Replay.objects.filter(id__in=selected_replay_ids)
             _assign_selected_replays_to_user(selected_replays, user)
-        return redirect(f"../replays/user/{user}")
+            return redirect(f"../replays/user/{user}")
 
 
 def _render_claim_username_form(request: WSGIRequest) -> HttpResponse:
@@ -56,17 +59,24 @@ def _assign_selected_replays_to_user(
                 raise ValueError("Replay already belongs to a different user.")
 
 
-def _render_claim_replay_form(request: WSGIRequest) -> HttpResponse:
-    silentselene_username = request.POST.get("silentselene_username")
-    _assert_username_is_valid(request.POST.get("silentselene_username"))
-    royalflare_username = request.POST.get("royalflare_username")
+def _render_claim_replay_form(
+    claim_username_form: forms.ClaimUsernameForm, request: WSGIRequest
+) -> HttpResponse:
+    silentselene_username = claim_username_form.cleaned_data["silentselene_username"]
+    royalflare_username = claim_username_form.cleaned_data["royalflare_username"]
+    if not are_usernames_valid(
+        royalflare_username=royalflare_username,
+        silentselene_username=silentselene_username,
+    ):
+        pass
+        # TODO handle errors
     replays = _get_unclaimed_replays_from_username(royalflare_username)
-    form = forms.ClaimReplaysForm(replays=replays)
+    claim_replays_form = forms.ClaimReplaysForm(replays=replays)
     return render(
         request,
         "replays/claim_replays.html",
         {
-            "form": form,
+            "form": claim_replays_form,
             "replays": replays,
             "silentselene_username": silentselene_username,
         },
@@ -85,5 +95,6 @@ def _get_user(username: str) -> User:
     return User.objects.get(username=username)
 
 
-def _assert_username_is_valid(username: str) -> User:
-    _get_user(username)
+def are_usernames_valid(royalflare_username: str, silentselene_username: str) -> User:
+    pass
+    # TODO

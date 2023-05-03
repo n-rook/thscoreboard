@@ -152,7 +152,7 @@ class BanForm(forms.Form):
 
 class ClaimUsernameForm(forms.Form):
     silentselene_username = forms.CharField(
-        label=_("royalflare_username"), required=True
+        label=_("silentselene_username"), required=True
     )
     royalflare_username = forms.CharField(label=_("royalflare_username"), required=True)
 
@@ -161,6 +161,7 @@ class ClaimReplaysForm(forms.Form):
     choices = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
     )
+    silentselene_username = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def __init__(self, *args, **kwargs):
         replays = kwargs.pop("replays")
