@@ -8,11 +8,11 @@ from replays import models
 
 class PublishReplayFormTest(unittest.TestCase):
     def testUsesBombs_Included(self):
-        f = forms.PublishReplayForm(game_ids.GameIDs.TH06, models.ReplayType.REGULAR)
+        f = forms.PublishReplayForm(game_ids.GameIDs.TH06, models.ReplayType.FULL_GAME)
         self.assertIn("uses_bombs", f.fields)
 
     def testUsesBombs_NotIncludedForTH09(self):
-        f = forms.PublishReplayForm(game_ids.GameIDs.TH09, models.ReplayType.REGULAR)
+        f = forms.PublishReplayForm(game_ids.GameIDs.TH09, models.ReplayType.FULL_GAME)
         self.assertNotIn("uses_bombs", f.fields)
 
     def testUsesBombs_NotIncludedForSpellPractice(self):
@@ -22,7 +22,7 @@ class PublishReplayFormTest(unittest.TestCase):
         self.assertNotIn("uses_bombs", f.fields)
 
     def testMisses_Included(self):
-        f = forms.PublishReplayForm(game_ids.GameIDs.TH06, models.ReplayType.REGULAR)
+        f = forms.PublishReplayForm(game_ids.GameIDs.TH06, models.ReplayType.FULL_GAME)
         self.assertIn("misses", f.fields)
 
     def testMisses_NotIncludedForSpellPractice(self):

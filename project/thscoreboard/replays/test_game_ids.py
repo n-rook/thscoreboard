@@ -47,7 +47,7 @@ class GameIDsTestCase(test.SimpleTestCase):
             ["TH06", game_ids.GameIDs.TH06, None, True],
             ["TH09", game_ids.GameIDs.TH09, None, False],
             ["TH13", game_ids.GameIDs.TH13, None, True],
-            ["TH13_Full", game_ids.GameIDs.TH13, game_ids.ReplayTypes.REGULAR, True],
+            ["TH13_Full", game_ids.GameIDs.TH13, game_ids.ReplayTypes.FULL_GAME, True],
             [
                 "TH13_SpellPractice",
                 game_ids.GameIDs.TH13,
@@ -69,7 +69,7 @@ class GameIDsTestCase(test.SimpleTestCase):
             ["TH06", game_ids.GameIDs.TH06, None, True],
             ["TH09", game_ids.GameIDs.TH09, None, True],
             ["TH13", game_ids.GameIDs.TH13, None, True],
-            ["TH13_Full", game_ids.GameIDs.TH13, game_ids.ReplayTypes.REGULAR, True],
+            ["TH13_Full", game_ids.GameIDs.TH13, game_ids.ReplayTypes.FULL_GAME, True],
             [
                 "TH13_SpellPractice",
                 game_ids.GameIDs.TH13,

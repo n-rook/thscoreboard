@@ -21,7 +21,7 @@ class Th06ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, "ReimuA")
         self.assertEqual(r.score, 92245410)
         self.assertEqual(r.name, "nrook   ")
-        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
         self.assertAlmostEqual(r.slowdown, 0.0246, 4)
 
         stage_1 = r.stages[0]
@@ -49,7 +49,7 @@ class Th06ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, "MarisaA")
         self.assertEqual(r.score, 181144360)
         self.assertEqual(r.name, "AAAAAAAA")
-        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
 
         stage_extra = r.stages[0]
         self.assertEqual(stage_extra.stage, 7)
@@ -181,7 +181,7 @@ class Th09ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.shot, "Reimu")
         self.assertEqual(r.score, 49348230)
         self.assertEqual(r.name, "AAAAAAAA")
-        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
 
         stage_9 = r.stages[8]
         self.assertEqual(stage_9.stage, 9)
@@ -250,7 +250,7 @@ class Th11ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.score, 210042730)
         self.assertEqual(r.shot, "ReimuB")
         self.assertEqual(r.name, "AAAAAAAA")
-        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
         self.assertEqual(r.slowdown, 0.0)
 
         stage5 = r.stages[4]
@@ -281,7 +281,7 @@ class Th12ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.score, 168919360)
         self.assertEqual(r.shot, "ReimuB")
         self.assertEqual(r.name, "AAAAAAAA")
-        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
         self.assertEqual(r.slowdown, 0.0)
 
         stage4end = r.stages[3]
@@ -319,7 +319,7 @@ class Th13ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.score, 204149140)
         self.assertEqual(r.shot, "Marisa")
         self.assertEqual(r.name, "AAAAAAAA")
-        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
         self.assertEqual(r.slowdown, 0.0)
 
         s1end = r.stages[0]
@@ -373,7 +373,7 @@ class Th14ReplayTestCase(unittest.TestCase):
 
     def testExtra(self):
         r = ParseTestReplay("th14_extra")
-        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
         self.assertEqual(r.difficulty, 4)
 
     def testRoyalflareCorrupted(self):
@@ -393,7 +393,7 @@ class Th15ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.timestamp.date(), datetime.date(2022, 12, 16))
         self.assertEqual(r.name.rstrip(), "Ruby")
         self.assertEqual(r.slowdown, 0.0)
-        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
 
         s1end = r.stages[0]
         self.assertEqual(s1end.stage, 1)
@@ -426,7 +426,7 @@ class Th16ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.timestamp.date(), datetime.date(2020, 10, 29))
         self.assertEqual(r.name.rstrip(), "MTR")
         self.assertEqual(r.slowdown, 0.00881195068359375)
-        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
 
         s1end = r.stages[0]
         self.assertEqual(s1end.stage, 1)
@@ -468,7 +468,7 @@ class Th17ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.timestamp.date(), datetime.date(2022, 12, 29))
         self.assertEqual(r.name.rstrip(), "myon")
         self.assertEqual(r.slowdown, 0.02701568603515625)
-        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
 
         s1end = r.stages[0]
         self.assertEqual(s1end.stage, 1)
@@ -509,7 +509,7 @@ class Th18ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.timestamp.date(), datetime.date(2022, 5, 4))
         self.assertEqual(r.name.rstrip(), "Aeteas")
         self.assertEqual(r.slowdown, 0.0)
-        self.assertEqual(r.replay_type, game_ids.ReplayTypes.REGULAR)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
 
         s1end = r.stages[0]
         self.assertEqual(s1end.stage, 1)

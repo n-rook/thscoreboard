@@ -105,7 +105,7 @@ def _get_all_replay_for_game(game_id: str) -> dict:
     return (
         models.Replay.objects.prefetch_related("shot")
         .prefetch_related("route")
-        .filter(category=models.Category.REGULAR)
+        .filter(category=models.Category.STANDARD)
         .filter(shot__game=game_id)
         .filter(replay_type=1)
         .order_by("-score")

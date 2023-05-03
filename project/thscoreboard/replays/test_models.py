@@ -25,7 +25,7 @@ class ReplayTest(test_case.ReplayTestCase):
 
     def testVisible(self):
         should_be_visible = test_replays.CreateAsPublishedReplay(
-            filename="th6_extra", user=self.author, category=models.Category.REGULAR
+            filename="th6_extra", user=self.author, category=models.Category.STANDARD
         )
 
         self.assertTrue(should_be_visible.IsVisible())
@@ -37,7 +37,7 @@ class ReplayTest(test_case.ReplayTestCase):
 
     def testVisible_AuthorDeletedAccount(self):
         should_be_visible = test_replays.CreateAsPublishedReplay(
-            filename="th6_extra", user=self.author, category=models.Category.REGULAR
+            filename="th6_extra", user=self.author, category=models.Category.STANDARD
         )
         self.author.MarkForDeletion()
 
@@ -52,7 +52,7 @@ class ReplayTest(test_case.ReplayTestCase):
         should_be_visible = test_replays.CreateAsPublishedReplay(
             filename="th6_extra",
             user=None,
-            category=models.Category.REGULAR,
+            category=models.Category.STANDARD,
             imported_username="あ",
         )
 
@@ -198,7 +198,7 @@ class TestConstraints(test_case.ReplayTestCase):
                 difficulty=1,
                 shot=shot,
                 score=10000,
-                category=models.Category.REGULAR,
+                category=models.Category.STANDARD,
                 comment="Hello",
                 is_clear=True,
                 video_link="https://www.youtube.com/example",
@@ -216,14 +216,14 @@ class TestConstraints(test_case.ReplayTestCase):
         )
         temp_replay.save()
         replay_info = replay_parsing.Parse(replay_file_contents)
-        replay_info.replay_type = game_ids.ReplayTypes.REGULAR
+        replay_info.replay_type = game_ids.ReplayTypes.FULL_GAME
 
         with self.assertRaises(django.db.utils.IntegrityError):
             create_replay.PublishNewReplay(
                 user=self.user,
                 difficulty=replay_info.difficulty,
                 score=replay_info.score,
-                category=models.Category.REGULAR,
+                category=models.Category.STANDARD,
                 comment="",
                 video_link="",
                 is_good=True,
@@ -248,7 +248,7 @@ class TestConstraints(test_case.ReplayTestCase):
                 user=self.user,
                 difficulty=replay_info.difficulty,
                 score=replay_info.score,
-                category=models.Category.REGULAR,
+                category=models.Category.STANDARD,
                 comment="",
                 video_link="",
                 is_good=True,
@@ -265,7 +265,7 @@ class TestConstraints(test_case.ReplayTestCase):
                 user=None,
                 difficulty=replay_info.difficulty,
                 score=replay_info.score,
-                category=models.Category.REGULAR,
+                category=models.Category.STANDARD,
                 comment="",
                 video_link="",
                 is_good=True,
