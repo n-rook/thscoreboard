@@ -16,7 +16,7 @@ class ReplayToJsonConverter:
     def _convert_replay_to_dict(self, replay: models.Replay) -> dict:
         shot = replay.shot
         game = self._get_game(shot)
-        score_prefix = _get_medal_emoji(replay.rank)
+        score_prefix = _get_medal_emoji(replay.rank) if hasattr(replay, "rank") else ""
 
         json_dict = {}
         json_dict["Id"] = replay.id
