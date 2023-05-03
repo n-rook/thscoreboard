@@ -274,7 +274,7 @@ def _Parse08(rep_raw):
             spell_card_id=replay.header.spell_card_id,
         )
 
-    #   else regular run
+    #   else full run
 
     # TH08 stores stage data values from the start of the stage but score from the end
     route = None

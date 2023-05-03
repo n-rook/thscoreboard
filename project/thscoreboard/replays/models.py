@@ -122,13 +122,16 @@ class Category(models.IntegerChoices):
 
 
 class ReplayType(models.IntegerChoices):
-    """Type of replay (regular, spell practice, etc)"""
+    """Type of replay (full game, spell practice, etc)"""
 
     FULL_GAME = 1, pgettext_lazy("Replay Type", "Full Game")
     """A run of the whole game."""
 
     STAGE_PRACTICE = 2, pgettext_lazy("Replay Type", "Stage Practice")
-    """Stage practice replay. Note: a regular replay that gameovers at stage 1 will be detected as a stage practice replay"""
+    """A replay of stage practice.
+
+    Known bug: A full game replay that ends in Stage 1 may be detected as stage practice.
+    """
 
     SPELL_PRACTICE = 3, pgettext_lazy("Replay Type", "Spell Practice")
     """A spell practice replay. Note: stage practice replays that start at a spell using THPRAC will be detected as stage practice
@@ -193,9 +196,8 @@ class ReplayQuerySet(QuerySet):
         return self.filter(Q(user__is_active=True) | Q(imported_username__isnull=False))
 
     def annotate_with_rank(self) -> "ReplayQuerySet":
-        """Annotate each regular replay with a rank, starting from 1 descending, with
-        separate ranks for each difficulty and shot. Set rank to -1 for non-regular
-        replays.
+        """Annotate each standard replay with a rank, starting from 1 descending, with
+        separate ranks for each difficulty and shot. Set rank to -1 for other replays.
         """
 
         return self.annotate(
