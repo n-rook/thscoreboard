@@ -12,29 +12,27 @@ var allReplays = [];
 
 requestAndInitializeReplays();
 
-function requestAndInitializeReplays() {
+async function requestAndInitializeReplays() {
   const requestUri = window.location.pathname === '/'
     ? window.location.origin + '/replays/index/json'
     : window.location.origin + window.location.pathname + "/json";
 
-  fetch(requestUri, {
-    headers: {
-      'Accept-Encoding': 'gzip'
-    },
-    priority: 'high'
-  })
-  .then(response => {
+  try {
+    const response = await fetch(requestUri, {
+      priority: 'high'
+    });
+
     if (!response.ok) {
       replayTableBodyHtml.innerHTML =
         '<p style="color: red;">Failed to load replays</p>';
+      return;
     }
-    return response.json();
-  })
-  .then(replayJson => {
-    allReplays = replayJson
+
+    const replayJson = await response.json();
+    allReplays = replayJson;
     const filteredReplays = filterReplays(activeFilters, allReplays);
     constructAndRenderReplayTable(filteredReplays);
-  }).catch(function() {});
+  } catch (error) {}
 }
 
 function onClick(elm) {
