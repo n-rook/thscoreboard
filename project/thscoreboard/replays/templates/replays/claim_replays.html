@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h1 class="highlight">Select replays</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="silentselene_username" value="{{ silentselene_username }}">
+    <table class="replay-table">
+        <thead>
+            <tr>
+              <th>Select</th>
+              <th>Game</th>
+              <th>Difficulty</th>
+              <th>Shot</th>
+              <th>Score</th>
+              <th>Date</th>
+              <th>Comment</th>
+            </tr>
+        </thead>
+        {% for replay in replays %}
+            <tr>
+                <td><input type="checkbox" value="{{replay.id}}" name="choices"></td>
+                <td>{{ replay.shot.game.GetShortName }}</td>
+                <td>{{ replay.GetDifficultyName }}</td>
+                <td>{{ replay.shot.GetName }}</td>
+                <td>{{ replay.score }}</td>
+                <td>{{ replay.created | date:"Y-m-d" }}</td>
+                <td>{{ replay.comment }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <input type="submit" value="Confirm" class="spaced-input">
+</form>
+
+{% endblock %}

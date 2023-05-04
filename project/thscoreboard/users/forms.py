@@ -7,6 +7,7 @@ from django.contrib import auth
 from django.core import exceptions
 from django.utils.translation import gettext_lazy as _
 
+from replays.models import Replay
 from . import models
 
 
@@ -147,3 +148,50 @@ class BanForm(forms.Form):
         return datetime.timedelta(
             days=self.cleaned_data["days"] or 0, hours=self.cleaned_data["hours"] or 0
         )
+
+
+class ClaimUsernameForm(forms.Form):
+    silentselene_username = forms.CharField(
+        label=_("silentselene_username"), required=True
+    )
+    royalflare_username = forms.CharField(label=_("royalflare_username"), required=True)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        errors = {}
+        silentselene_username = cleaned_data["silentselene_username"]
+        silentselene_is_valid = models.User.objects.filter(
+            username=silentselene_username
+        ).exists()
+        if not silentselene_is_valid:
+            errors[
+                "silentselene_username"
+            ] = f"Silentselene user {silentselene_username} does not exist."
+
+        royalflare_username = cleaned_data["royalflare_username"]
+        royalflare_replays = Replay.objects.filter(
+            imported_username__iexact=royalflare_username
+        )
+        if not royalflare_replays.exists():
+            errors[
+                "royalflare_username"
+            ] = f"No Royalflare replays found for username {royalflare_username}."
+        elif not royalflare_replays.filter(user__isnull=True).exists():
+            errors[
+                "royalflare_username"
+            ] = f"All replays for {royalflare_username} have already been assigned."
+
+        if len(errors) > 0:
+            raise forms.ValidationError(errors)
+
+
+class ClaimReplaysForm(forms.Form):
+    choices = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+    )
+    silentselene_username = forms.CharField(widget=forms.HiddenInput(), required=False)
+
+    def __init__(self, *args, **kwargs):
+        replays = kwargs.pop("replays")
+        super().__init__(*args, **kwargs)
+        self.fields["choices"].choices = replays.values_list("id", "id")
