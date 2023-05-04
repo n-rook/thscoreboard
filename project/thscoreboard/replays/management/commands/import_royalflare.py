@@ -57,14 +57,15 @@ def main(replay_dir: str, json_file_arg: Optional[str]) -> None:
 def import_royalflare(info_from_json: dict, replay_dir: Path) -> None:
     comment = info_from_json["comment"]
     replay_path = parse_replay_path_from_json(replay_dir, info_from_json["replay"])
-    created_timestamp = parse_timestamp_from_json(info_from_json["date"])
+    if "uploaded" in info_from_json:
+        created_timestamp = parse_timestamp_from_json(info_from_json["uploaded"])
+    else:
+        # The first 3 replays ever uploaded on rf do not have an 'uploaded' timestamp.
+        # They can be found at the bottom of th08.json
+        created_timestamp = parse_timestamp_from_json(info_from_json["date"])
     imported_username = info_from_json["player"]
 
     try:
-        if created_timestamp > datetime(2023, 1, 1, tzinfo=timezone.utc):
-            raise ValueError(
-                f"Replay creation date is past royalflare's closure: {created_timestamp}"
-            )
         if replay_path.stat().st_size > limits.MAX_REPLAY_SIZE:
             raise limits.FileTooBigError()
         replay_bytes = replay_path.read_bytes()
@@ -103,10 +104,8 @@ def parse_replay_path_from_json(replay_directory: Path, replay_location: str) ->
 
 
 def parse_timestamp_from_json(timestamp: str) -> datetime:
-    if timestamp.count(":") == 2:
+    if ":" in timestamp:
         unaware_datetime = datetime.strptime(timestamp, "%Y/%m/%d %H:%M:%S")
-    elif ":" in timestamp:
-        unaware_datetime = datetime.strptime(timestamp, "%Y/%m/%d %H:%M")
     else:
         unaware_datetime = datetime.strptime(timestamp, "%Y/%m/%d")
     aware_datetime = unaware_datetime.replace(tzinfo=timezone.utc)
