@@ -1841,7 +1841,7 @@ msgstr ""
 
 #: users/templates/users/profile.html:41
 msgid "Log out"
-msgstr ""
+msgstr "ログアウト"
 
 #~ msgctxt "Category"
 #~ msgid "Private"
