@@ -294,7 +294,7 @@ msgstr "紺"
 #| msgid "東方紺珠伝 - Legacy of Lunatic Kingdom"
 msgctxt "standard game name"
 msgid "Legacy of Lunatic Kingdom"
-msgstr ""
+msgstr "東方紺珠伝"
 
 #: replays/game_ids.py:138
 #| msgid "東方紺珠伝 - Legacy of Lunatic Kingdom"
@@ -312,7 +312,7 @@ msgstr "天"
 #| msgid "東方天空璋 - Hidden Star in Four Seasons"
 msgctxt "standard game name"
 msgid "Hidden Star in Four Seasons"
-msgstr ""
+msgstr "東方天空璋"
 
 #: replays/game_ids.py:143
 #| msgid "東方天空璋 - Hidden Star in Four Seasons"
