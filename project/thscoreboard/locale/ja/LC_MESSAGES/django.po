@@ -768,17 +768,17 @@ msgstr "妖夢"
 #: replays/game_ids.py:403
 msgctxt "th14"
 msgid "Reimu A"
-msgstr ""
+msgstr "霊夢A"
 
 #: replays/game_ids.py:405
 msgctxt "th14"
 msgid "Reimu B"
-msgstr ""
+msgstr "霊夢B"
 
 #: replays/game_ids.py:407
 msgctxt "th14"
 msgid "Marisa A"
-msgstr ""
+msgstr "魔理沙A"
 
 #: replays/game_ids.py:409
 msgctxt "th14"
