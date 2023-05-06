@@ -528,7 +528,7 @@ msgstr ""
 #: replays/game_ids.py:248
 msgctxt "th08"
 msgid "Sakuya & Remilia"
-msgstr ""
+msgstr "紅魔組"
 
 #: replays/game_ids.py:250
 msgctxt "th08"
