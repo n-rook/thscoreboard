@@ -468,22 +468,22 @@ msgstr "幽香"
 #: replays/game_ids.py:219
 msgctxt "th06"
 msgid "Reimu A"
-msgstr ""
+msgstr "霊符"
 
 #: replays/game_ids.py:221
 msgctxt "th06"
 msgid "Reimu B"
-msgstr ""
+msgstr "夢符"
 
 #: replays/game_ids.py:223
 msgctxt "th06"
 msgid "Marisa A"
-msgstr ""
+msgstr "魔符"
 
 #: replays/game_ids.py:225
 msgctxt "th06"
 msgid "Marisa B"
-msgstr ""
+msgstr "恋符"
 
 #: replays/game_ids.py:229
 msgctxt "th07"
