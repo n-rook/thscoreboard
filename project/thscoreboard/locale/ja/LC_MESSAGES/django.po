@@ -27,11 +27,11 @@ msgstr ""
 
 #: replays/forms.py:28 replays/forms.py:68 replays/game_ids.py:43
 msgid "Stage Practice"
-msgstr ""
+msgstr "ステージプラクティス"
 
 #: replays/forms.py:30 replays/forms.py:71 replays/game_ids.py:47
 msgid "PVP"
-msgstr ""
+msgstr "二人対戦"
 
 #: replays/game_ids.py:45
 msgid "Spell Practice"
