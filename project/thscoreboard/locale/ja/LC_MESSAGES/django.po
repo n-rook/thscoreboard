@@ -1649,7 +1649,7 @@ msgstr ""
 
 #: replays/templates/replays/replay_stages.html:25
 msgid "Lives"
-msgstr ""
+msgstr "残機"
 
 #: replays/templates/replays/replay_stages.html:28
 msgid "Bombs"
