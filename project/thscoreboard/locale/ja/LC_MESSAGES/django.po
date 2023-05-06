@@ -1645,7 +1645,7 @@ msgstr ""
 
 #: replays/templates/replays/replay_stages.html:22
 msgid "Power"
-msgstr ""
+msgstr "パワー"
 
 #: replays/templates/replays/replay_stages.html:25
 msgid "Lives"
