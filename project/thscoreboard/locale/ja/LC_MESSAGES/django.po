@@ -1657,7 +1657,7 @@ msgstr "ボム"
 
 #: replays/templates/replays/replay_stages.html:31
 msgid "Rank"
-msgstr ""
+msgstr "ランク"
 
 #: replays/templates/replays/replay_stages.html:34
 msgid "Cherry"
