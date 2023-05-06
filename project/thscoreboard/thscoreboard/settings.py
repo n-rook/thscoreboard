@@ -95,6 +95,7 @@ INSTALLED_APPS = [
 ] + (DEV_ONLY_APPS if DEBUG else [])
 
 MIDDLEWARE = [
+    "django.middleware.gzip.GZipMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -106,7 +107,6 @@ MIDDLEWARE = [
     "users.middleware.check_ban.CheckBanMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.middleware.gzip.GZipMiddleware",
 ]
 
 ROOT_URLCONF = "thscoreboard.urls"
