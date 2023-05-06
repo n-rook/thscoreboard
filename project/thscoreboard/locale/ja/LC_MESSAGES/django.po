@@ -1665,7 +1665,7 @@ msgstr "桜"
 
 #: replays/templates/replays/replay_stages.html:37
 msgid "CherryMax"
-msgstr "桜MAX"
+msgstr ""
 
 #: replays/templates/replays/replay_stages.html:40
 msgid "P1 CPU?"
