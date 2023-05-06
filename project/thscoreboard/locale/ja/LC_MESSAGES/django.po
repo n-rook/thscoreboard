@@ -518,7 +518,7 @@ msgstr ""
 #: replays/game_ids.py:244
 msgctxt "th08"
 msgid "Reimu & Yukari"
-msgstr ""
+msgstr "結界組"
 
 #: replays/game_ids.py:246
 msgctxt "th08"
