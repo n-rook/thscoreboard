@@ -1,0 +1,9 @@
+git:
+  filters:
+    - filter_type: file
+      file_format: PO
+      source_file: project/thscoreboard/locale/en_US/LC_MESSAGES/django.po
+      source_language: en
+      translation_files_expression: project/thscoreboard/locale/<lang>/LC_MESSAGES/django.po
+  settings:
+    pr_branch_name: transifex/tr_<br_unique_id>

@@ -1028,7 +1028,7 @@ msgstr "Winter"
 #: replays/game_ids.py:535
 msgctxt "th16"
 msgid "Wolf"
-msgstr ""
+msgstr "Wolf"
 
 #: replays/game_ids.py:537
 #| msgctxt "th17"
