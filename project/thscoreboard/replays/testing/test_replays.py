@@ -1,11 +1,14 @@
 """Makes some replays available for tests."""
 
-from os import path
+from pathlib import Path
 import typing
 
 from replays import create_replay
 from replays import models
 from replays import replay_parsing
+
+
+TEST_REPLAY_LOCATION = Path("replays/replays_for_tests")
 
 _filename_type = typing.Literal[
     "th6_extra", "th6_hard_1cc", "th7_lunatic", "th10_normal"
@@ -28,7 +31,7 @@ def GetRaw(filename: _filename_type) -> bytes:
     """
     true_filename = f"{filename}.rpy"
 
-    with open(path.join("replays/replays_for_tests", true_filename), "rb") as f:
+    with open(TEST_REPLAY_LOCATION / true_filename, "rb") as f:
         return f.read()
 
 
