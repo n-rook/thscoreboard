@@ -330,7 +330,7 @@ msgstr "鬼"
 #| msgid "東方鬼形獣 - Wily Beast and Weakest Creature"
 msgctxt "standard game name"
 msgid "Wily Beast and Weakest Creature"
-msgstr ""
+msgstr "東方鬼形獣"
 
 #: replays/game_ids.py:148
 #| msgid "東方鬼形獣 - Wily Beast and Weakest Creature"
