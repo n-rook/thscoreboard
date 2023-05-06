@@ -793,7 +793,7 @@ msgstr "咲夜A"
 #: replays/game_ids.py:413
 msgctxt "th14"
 msgid "Sakuya B"
-msgstr ""
+msgstr "咲夜B"
 
 #: replays/game_ids.py:417
 msgctxt "th15"
