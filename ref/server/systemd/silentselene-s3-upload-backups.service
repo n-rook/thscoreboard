@@ -1,0 +1,14 @@
+[Unit]
+Description=Upload database backups to s3 for remote storage
+Wants=silentselene-backup.timer
+
+[Service]
+Type=oneshot
+User=silentselene
+WorkingDirectory=/home/silentselene/backups/
+
+# This uses the credentials saved by "aws configure" in "~/.aws".
+ExecStart=aws s3 sync /home/silentselene/backups s3://silentselene-backup
+
+[Install]
+WantedBy=silentselene.service
