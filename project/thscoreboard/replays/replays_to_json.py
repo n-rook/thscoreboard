@@ -1,4 +1,5 @@
-from typing import Iterable
+import json
+from typing import Iterable, Iterator
 from functools import lru_cache
 
 from replays import models, game_ids
@@ -71,8 +72,10 @@ class ReplayToJsonConverter:
     def convert_replays_to_serializable_list(
         self,
         ranked_replays: Iterable[models.Replay],
-    ) -> list[dict[str, any]]:
-        return [self._convert_replay_to_dict(replay) for replay in ranked_replays]
+    ) -> Iterator[dict[str, any]]:
+        for replay in ranked_replays:
+            json_string = json.dumps(self._convert_replay_to_dict(replay))
+            yield f"{json_string}\n".encode("utf-8")
 
 
 def _get_medal_emoji(rank: int) -> str:

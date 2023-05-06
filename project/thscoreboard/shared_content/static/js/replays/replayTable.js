@@ -28,10 +28,34 @@ async function requestAndInitializeReplays() {
       return;
     }
 
-    const replayJson = await response.json();
-    allReplays = replayJson;
-    const filteredReplays = filterReplays(activeFilters, allReplays);
-    constructAndRenderReplayTable(filteredReplays);
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder('utf-8');
+    let buffer = '';
+  
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) {
+        console.log("Finished consuming the response");
+        return;
+      }
+
+      buffer += decoder.decode(value, { stream: true });
+      const jsonStrings = buffer.split('\n');
+      console.log("Got new buffer section containing:", jsonStrings.length);
+  
+      // process complete JSON objects
+      while (jsonStrings.length > 1) {
+        const jsonString = jsonStrings.shift();
+        const jsonObj = JSON.parse(jsonString);
+        allReplays.push(jsonObj);
+      }
+  
+      buffer = jsonStrings[0] || ''; // keep incomplete JSON string for next iteration
+      const filteredReplays = filterReplays(activeFilters, allReplays);
+      constructAndRenderReplayTable(filteredReplays);
+      console.log("All replays", allReplays.length);
+    }
+
   } catch (error) {}
 }
 
