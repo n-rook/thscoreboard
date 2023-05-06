@@ -1625,7 +1625,7 @@ msgstr ""
 
 #: replays/templates/replays/replay_stages.html:7
 msgid "Stage"
-msgstr ""
+msgstr "面"
 
 #: replays/templates/replays/replay_stages.html:10
 msgid "Score"
