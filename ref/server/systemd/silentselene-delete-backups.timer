@@ -3,7 +3,7 @@ Description=silentselene: Clear out database backups older than a week
 Requires=silentselene-delete-backups.service
 
 [Timer]
-OnCalendar=monthly
+OnCalendar=hourly
 
 [Install]
 WantedBy=timers.target
