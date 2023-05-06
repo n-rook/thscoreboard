@@ -348,7 +348,7 @@ msgstr "虹"
 #| msgid "東方虹龍洞 - Unconnected Marketeers"
 msgctxt "standard game name"
 msgid "Unconnected Marketeers"
-msgstr ""
+msgstr "東方虹龍洞"
 
 #: replays/game_ids.py:153
 #| msgid "東方虹龍洞 - Unconnected Marketeers"
