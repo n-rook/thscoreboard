@@ -1641,7 +1641,7 @@ msgstr "グレイズ"
 
 #: replays/templates/replays/replay_stages.html:19
 msgid "Point Items"
-msgstr ""
+msgstr "得点アイテム"
 
 #: replays/templates/replays/replay_stages.html:22
 msgid "Power"
