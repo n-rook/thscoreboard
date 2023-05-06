@@ -523,7 +523,7 @@ msgstr "結界組"
 #: replays/game_ids.py:246
 msgctxt "th08"
 msgid "Marisa & Alice"
-msgstr ""
+msgstr "詠唱組"
 
 #: replays/game_ids.py:248
 msgctxt "th08"
@@ -533,7 +533,7 @@ msgstr "紅魔組"
 #: replays/game_ids.py:250
 msgctxt "th08"
 msgid "Youmu & Yuyuko"
-msgstr ""
+msgstr "幽冥組"
 
 #: replays/game_ids.py:252
 msgctxt "th08"
