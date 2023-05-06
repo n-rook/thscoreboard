@@ -1685,7 +1685,7 @@ msgstr ""
 
 #: replays/templates/replays/replay_stages.html:52
 msgid "Trance Gauge"
-msgstr ""
+msgstr "トランスゲージ"
 
 #: replays/templates/replays/replay_stages.html:55
 msgid "Season Power"
