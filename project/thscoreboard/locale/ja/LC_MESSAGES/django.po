@@ -449,7 +449,7 @@ msgstr "魔理沙B"
 #: replays/game_ids.py:209
 msgctxt "th05"
 msgid "Reimu"
-msgstr "霊夢"
+msgstr "靈夢"
 
 #: replays/game_ids.py:211
 msgctxt "th05"
