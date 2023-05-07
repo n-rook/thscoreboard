@@ -429,7 +429,7 @@ msgstr "夢美"
 #: replays/game_ids.py:199
 msgctxt "th04"
 msgid "Reimu A"
-msgstr "霊夢A"
+msgstr "靈夢A"
 
 #: replays/game_ids.py:201
 msgctxt "th04"
