@@ -743,7 +743,7 @@ msgstr "蛇符"
 #: replays/game_ids.py:389
 msgctxt "th12"
 msgid "Sanae B"
-msgstr ""
+msgstr "蛙符"
 
 #: replays/game_ids.py:393
 msgctxt "th13"
