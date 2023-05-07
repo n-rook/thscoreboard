@@ -728,7 +728,7 @@ msgstr "霊符"
 #: replays/game_ids.py:383
 msgctxt "th12"
 msgid "Marisa A"
-msgstr ""
+msgstr "恋符"
 
 #: replays/game_ids.py:385
 msgctxt "th12"
