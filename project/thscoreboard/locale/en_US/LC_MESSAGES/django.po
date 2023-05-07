@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-28 21:57+0000\n"
-"PO-Revision-Date: 2023-04-28 22:05+0000\n"
+"POT-Creation-Date: 2023-05-07 18:36+0000\n"
+"PO-Revision-Date: 2023-05-07 18:39+0000\n"
 "Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -17,21 +17,21 @@ msgstr ""
 "X-Generator: Poedit 3.1.1\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
-#: replays/forms.py:27 replays/forms.py:67 replays/game_ids.py:41
-msgid "Regular"
-msgstr "Regular"
+#: replays/game_ids.py:41
+msgid "Full Game"
+msgstr "Full Game"
 
-#: replays/forms.py:28 replays/forms.py:68 replays/game_ids.py:43
+#: replays/game_ids.py:43
 msgid "Stage Practice"
 msgstr "Stage Practice"
-
-#: replays/forms.py:30 replays/forms.py:71 replays/game_ids.py:47
-msgid "PVP"
-msgstr "PVP"
 
 #: replays/game_ids.py:45
 msgid "Spell Practice"
 msgstr "Spell Practice"
+
+#: replays/game_ids.py:47
+msgid "PVP"
+msgstr "PVP"
 
 #: replays/game_ids.py:66
 msgctxt "short game name"
@@ -44,8 +44,6 @@ msgid "The Highly Responsive to Prayers"
 msgstr "The Highly Responsive to Prayers"
 
 #: replays/game_ids.py:68
-#| msgctxt "full game name"
-#| msgid "The Highly Responsive to Prayers"
 msgctxt "full game name"
 msgid "東方靈異伝 - The Highly Responsive to Prayers"
 msgstr "東方靈異伝 - The Highly Responsive to Prayers"
@@ -71,182 +69,151 @@ msgid "th03"
 msgstr "PoDD"
 
 #: replays/game_ids.py:77
-#| msgid "東方夢時空 - The Phantasmagoria of Dim. Dream"
 msgctxt "standard game name"
 msgid "The Phantasmagoria of Dim. Dream"
 msgstr "The Phantasmagoria of Dim. Dream"
 
 #: replays/game_ids.py:78
-#| msgid "東方夢時空 - The Phantasmagoria of Dim. Dream"
 msgctxt "full game name"
 msgid "東方夢時空 - The Phantasmagoria of Dim. Dream"
 msgstr "東方夢時空 - The Phantasmagoria of Dim. Dream"
 
 #: replays/game_ids.py:81
-#| msgid "th04"
 msgctxt "short game name"
 msgid "th04"
 msgstr "LLS"
 
 #: replays/game_ids.py:82
-#| msgid "東方幻想郷 - Lotus Land Story"
 msgctxt "standard game name"
 msgid "Lotus Land Story"
 msgstr "Lotus Land Story"
 
 #: replays/game_ids.py:83
-#| msgid "東方幻想郷 - Lotus Land Story"
 msgctxt "full game name"
 msgid "東方幻想郷 - Lotus Land Story"
 msgstr "東方幻想郷 - Lotus Land Story"
 
 #: replays/game_ids.py:86
-#| msgid "th05"
 msgctxt "short game name"
 msgid "th05"
 msgstr "MS"
 
 #: replays/game_ids.py:87
-#| msgctxt "th09"
-#| msgid "Mystia"
 msgctxt "standard game name"
 msgid "Mystic Square"
 msgstr "Mystic Square"
 
 #: replays/game_ids.py:88
-#| msgid "東方怪綺談 - Mystic Square"
 msgctxt "full game name"
 msgid "東方怪綺談 - Mystic Square"
 msgstr "東方怪綺談 - Mystic Square"
 
 #: replays/game_ids.py:91
-#| msgid "th06"
 msgctxt "short game name"
 msgid "th06"
 msgstr "EoSD"
 
 #: replays/game_ids.py:92
-#| msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
 msgctxt "standard game name"
 msgid "Embodiment of Scarlet Devil"
 msgstr "Embodiment of Scarlet Devil"
 
 #: replays/game_ids.py:93
-#| msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
 msgctxt "full game name"
 msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
 msgstr "東方紅魔郷 - Embodiment of Scarlet Devil"
 
 #: replays/game_ids.py:96
-#| msgid "th07"
 msgctxt "short game name"
 msgid "th07"
 msgstr "PCB"
 
 #: replays/game_ids.py:97
-#| msgid "東方妖々夢 - Perfect Cherry Blossom"
 msgctxt "standard game name"
 msgid "Perfect Cherry Blossom"
 msgstr "Perfect Cherry Blossom"
 
 #: replays/game_ids.py:98
-#| msgid "東方妖々夢 - Perfect Cherry Blossom"
 msgctxt "full game name"
 msgid "東方妖々夢 - Perfect Cherry Blossom"
 msgstr "東方妖々夢 - Perfect Cherry Blossom"
 
 #: replays/game_ids.py:101
-#| msgid "th08"
 msgctxt "short game name"
 msgid "th08"
 msgstr "IN"
 
 #: replays/game_ids.py:102
-#| msgid "東方永夜抄 - Imperishable Night"
 msgctxt "standard game name"
 msgid "Imperishable Night"
 msgstr "Imperishable Night"
 
 #: replays/game_ids.py:103
-#| msgid "東方永夜抄 - Imperishable Night"
 msgctxt "full game name"
 msgid "東方永夜抄 - Imperishable Night"
 msgstr "東方永夜抄 - Imperishable Night"
 
 #: replays/game_ids.py:106
-#| msgid "th09"
 msgctxt "short game name"
 msgid "th09"
 msgstr "PoFV"
 
 #: replays/game_ids.py:107
-#| msgid "東方花映塚 - Phantasmagoria of Flower View"
 msgctxt "standard game name"
 msgid "Phantasmagoria of Flower View"
 msgstr "Phantasmagoria of Flower View"
 
 #: replays/game_ids.py:108
-#| msgid "東方花映塚 - Phantasmagoria of Flower View"
 msgctxt "full game name"
 msgid "東方花映塚 - Phantasmagoria of Flower View"
 msgstr "東方花映塚 - Phantasmagoria of Flower View"
 
 #: replays/game_ids.py:111
-#| msgid "th10"
 msgctxt "short game name"
 msgid "th10"
 msgstr "MoF"
 
 #: replays/game_ids.py:112
-#| msgid "東方風神録 - Mountain of Faith"
 msgctxt "standard game name"
 msgid "Mountain of Faith"
 msgstr "Mountain of Faith"
 
 #: replays/game_ids.py:113
-#| msgid "東方風神録 - Mountain of Faith"
 msgctxt "full game name"
 msgid "東方風神録 - Mountain of Faith"
 msgstr "東方風神録 - Mountain of Faith"
 
 #: replays/game_ids.py:116
-#| msgid "th11"
 msgctxt "short game name"
 msgid "th11"
 msgstr "SA"
 
 #: replays/game_ids.py:117
-#| msgid "東方地霊殿 - Subterranean Animism"
 msgctxt "standard game name"
 msgid "Subterranean Animism"
 msgstr "Subterranean Animism"
 
 #: replays/game_ids.py:118
-#| msgid "東方地霊殿 - Subterranean Animism"
 msgctxt "full game name"
 msgid "東方地霊殿 - Subterranean Animism"
 msgstr "東方地霊殿 - Subterranean Animism"
 
 #: replays/game_ids.py:121
-#| msgid "th12"
 msgctxt "short game name"
 msgid "th12"
 msgstr "UFO"
 
 #: replays/game_ids.py:122
-#| msgid "東方星蓮船 - Undefined Fantastic Object"
 msgctxt "standard game name"
 msgid "Undefined Fantastic Object"
 msgstr "Undefined Fantastic Object"
 
 #: replays/game_ids.py:123
-#| msgid "東方星蓮船 - Undefined Fantastic Object"
 msgctxt "full game name"
 msgid "東方星蓮船 - Undefined Fantastic Object"
 msgstr "東方星蓮船 - Undefined Fantastic Object"
 
 #: replays/game_ids.py:126
-#| msgid "th13"
 msgctxt "short game name"
 msgid "th13"
 msgstr "TD"
@@ -257,97 +224,81 @@ msgid "Ten Desires"
 msgstr "Ten Desires"
 
 #: replays/game_ids.py:128
-#| msgid "東方神霊廟 - Ten Desires"
 msgctxt "full game name"
 msgid "東方神霊廟 - Ten Desires"
 msgstr "東方神霊廟 - Ten Desires"
 
 #: replays/game_ids.py:131
-#| msgid "th14"
 msgctxt "short game name"
 msgid "th14"
 msgstr "DDC"
 
 #: replays/game_ids.py:132
-#| msgid "東方輝針城 - Double Dealing Character"
 msgctxt "standard game name"
 msgid "Double Dealing Character"
 msgstr "Double Dealing Character"
 
 #: replays/game_ids.py:133
-#| msgid "東方輝針城 - Double Dealing Character"
 msgctxt "full game name"
 msgid "東方輝針城 - Double Dealing Character"
 msgstr "東方輝針城 - Double Dealing Character"
 
 #: replays/game_ids.py:136
-#| msgid "th15"
 msgctxt "short game name"
 msgid "th15"
 msgstr "LoLK"
 
 #: replays/game_ids.py:137
-#| msgid "東方紺珠伝 - Legacy of Lunatic Kingdom"
 msgctxt "standard game name"
 msgid "Legacy of Lunatic Kingdom"
 msgstr "Legacy of Lunatic Kingdom"
 
 #: replays/game_ids.py:138
-#| msgid "東方紺珠伝 - Legacy of Lunatic Kingdom"
 msgctxt "full game name"
 msgid "東方紺珠伝 - Legacy of Lunatic Kingdom"
 msgstr "東方紺珠伝 - Legacy of Lunatic Kingdom"
 
 #: replays/game_ids.py:141
-#| msgid "th16"
 msgctxt "short game name"
 msgid "th16"
 msgstr "HSiFS"
 
 #: replays/game_ids.py:142
-#| msgid "東方天空璋 - Hidden Star in Four Seasons"
 msgctxt "standard game name"
 msgid "Hidden Star in Four Seasons"
 msgstr "Hidden Star in Four Seasons"
 
 #: replays/game_ids.py:143
-#| msgid "東方天空璋 - Hidden Star in Four Seasons"
 msgctxt "full game name"
 msgid "東方天空璋 - Hidden Star in Four Seasons"
 msgstr "東方天空璋 - Hidden Star in Four Seasons"
 
 #: replays/game_ids.py:146
-#| msgid "th17"
 msgctxt "short game name"
 msgid "th17"
 msgstr "WBaWC"
 
 #: replays/game_ids.py:147
-#| msgid "東方鬼形獣 - Wily Beast and Weakest Creature"
 msgctxt "standard game name"
 msgid "Wily Beast and Weakest Creature"
 msgstr "Wily Beast and Weakest Creature"
 
 #: replays/game_ids.py:148
-#| msgid "東方鬼形獣 - Wily Beast and Weakest Creature"
 msgctxt "full game name"
 msgid "東方鬼形獣 - Wily Beast and Weakest Creature"
 msgstr "東方鬼形獣 - Wily Beast and Weakest Creature"
 
 #: replays/game_ids.py:151
-#| msgid "th18"
 msgctxt "short game name"
 msgid "th18"
 msgstr "UM"
 
 #: replays/game_ids.py:152
-#| msgid "東方虹龍洞 - Unconnected Marketeers"
 msgctxt "standard game name"
 msgid "Unconnected Marketeers"
 msgstr "Unconnected Marketeers"
 
 #: replays/game_ids.py:153
-#| msgid "東方虹龍洞 - Unconnected Marketeers"
 msgctxt "full game name"
 msgid "東方虹龍洞 - Unconnected Marketeers"
 msgstr "東方虹龍洞 - Unconnected Marketeers"
@@ -977,50 +928,36 @@ msgid "Sanae"
 msgstr "Sanae A"
 
 #: replays/game_ids.py:512
-#| msgctxt "th01"
-#| msgid "Reimu"
 msgctxt "th17"
 msgid "Reimu"
 msgstr "Reimu"
 
 #: replays/game_ids.py:514
-#| msgctxt "th03"
-#| msgid "Marisa"
 msgctxt "th17"
 msgid "Marisa"
 msgstr "Marisa"
 
 #: replays/game_ids.py:516
-#| msgctxt "th08"
-#| msgid "Youmu"
 msgctxt "th17"
 msgid "Youmu"
 msgstr "Youmu"
 
 #: replays/game_ids.py:524
-#| msgctxt "th16"
-#| msgid "Aya Spring"
 msgctxt "th16"
 msgid "Spring"
 msgstr "Spring"
 
 #: replays/game_ids.py:526
-#| msgctxt "th16"
-#| msgid "Aya Summer"
 msgctxt "th16"
 msgid "Summer"
 msgstr "Summer"
 
 #: replays/game_ids.py:528
-#| msgctxt "th16"
-#| msgid "Aya Autumn"
 msgctxt "th16"
 msgid "Autumn"
 msgstr "Autumn"
 
 #: replays/game_ids.py:530
-#| msgctxt "th16"
-#| msgid "Aya Winter"
 msgctxt "th16"
 msgid "Winter"
 msgstr "Winter"
@@ -1031,15 +968,11 @@ msgid "Wolf"
 msgstr "Wolf"
 
 #: replays/game_ids.py:537
-#| msgctxt "th17"
-#| msgid "Reimu Otter"
 msgctxt "th16"
 msgid "Otter"
 msgstr "Otter"
 
 #: replays/game_ids.py:539
-#| msgctxt "th17"
-#| msgid "Reimu Eagle"
 msgctxt "th16"
 msgid "Eagle"
 msgstr "Eagle"
@@ -1066,8 +999,8 @@ msgstr "Final B"
 
 #: replays/models.py:110
 msgctxt "Category"
-msgid "Regular"
-msgstr "Regular"
+msgid "Standard"
+msgstr "Standard"
 
 #: replays/models.py:113
 msgctxt "Category"
@@ -1081,20 +1014,20 @@ msgstr "Unusual"
 
 #: replays/models.py:127
 msgctxt "Replay Type"
-msgid "Regular"
-msgstr "Regular"
+msgid "Full Game"
+msgstr "Full Game"
 
 #: replays/models.py:130
 msgctxt "Replay Type"
 msgid "Stage Practice"
 msgstr "Stage Practice"
 
-#: replays/models.py:133
+#: replays/models.py:136
 msgctxt "Replay Type"
 msgid "Spell Practice"
 msgstr "Spell Practice"
 
-#: replays/models.py:137
+#: replays/models.py:140
 msgctxt "Replay Type"
 msgid "PVP"
 msgstr "PVP"
@@ -1131,6 +1064,22 @@ msgstr ""
 "</p>\n"
 "<p>\n"
 "You can buy most of the official Touhou games on <a href=\"https://store.steampowered.com/search/?developer=%%e4%%b8%%8a%%e6%%b5%%b7%%e3%%82%%a2%%e3%%83%%aa%%e3%%82%%b9%%e5%%b9%%bb%%e6%%a8%%82%%e5%%9b%%a3\">Steam</a>, <a href=\"https://www.dlsite.com/maniax/circle/profile/=/maker_id/RG46179.html\">DLSite</a> or many other online stores. A few are not sold as online downloads, but can be purchased as CDs.\n"
+"</p>"
+
+#: replays/templates/replays/docs/about.html:20
+#, python-format
+msgid ""
+"\n"
+"    <h1>Contact Us</h1>\n"
+"    <p>\n"
+"        The best way to contact the Silent Selene team or discuss it is to <a href=\"%(discord_link)s\">join us on Discord</a>. You can also send feedback by sending an email to <a href=\"mailto:%(webmaster_email)s\">%(webmaster_email)s</a>.\n"
+"    </p>\n"
+"    "
+msgstr ""
+"\n"
+"<h1>Contact Us</h1>\n"
+"<p>\n"
+"The best way to contact the Silent Selene team or discuss it is to <a href=\"%(discord_link)s\">join us on Discord</a>. You can also send feedback by sending an email to <a href=\"mailto:%(webmaster_email)s\">%(webmaster_email)s</a>.\n"
 "</p>"
 
 #: replays/templates/replays/docs/credits.html:5
@@ -1577,19 +1526,110 @@ msgid "Replay Rules"
 msgstr "Replay Rules"
 
 #: replays/templates/replays/docs/replay_rules.html:6
+#| msgid ""
+#| "\n"
+#| "    <h2>Disclaimer</h2>\n"
+#| "    <p>These rules are preliminary; we will adjust them based on feedback from the community. If we do, we might have to recategorize some replays.</p>\n"
+#| "    <h2>Overview</h2>\n"
+#| "    <p>\n"
+#| "        There are three types of replays on Silent Selene: regular, TAS, and unlisted. Most replays are <b>regular</b>; that describes runs that are played normally, without any unusual tools to assist the player. (Tools that do not change the character of the run are still allowed in regular replays.) <b>TAS</b> replays are tool-assisted; any helper tools are allowed, even ones that are obviously \"cheating\" like save states. But the replay still has to be a replay of the actual game. And <b>unlisted</b> runs are everything else; this category mostly applies to replays that changed the game's patterns somehow or made other crazy changes.\n"
+#| "    </p>\n"
+#| "    <h2>tl;dr</h2>\n"
+#| "    <p>\n"
+#| "        For regular runs, most tools like vpatch are allowed. Translation patches are allowed. Pause buffering is not allowed.\n"
+#| "    </p>\n"
+#| "    <h2>Is My Replay Regular?</h2>\n"
+#| "    <h3>General Rules</h3>\n"
+#| "    <h4>Expert replays</h4>\n"
+#| "    <p>\n"
+#| "        A few things are not allowed in <b>expert replays</b>, but are allowed for everyone else. Some things shouldn't be allowed at high levels of competition, but we don't want to restrict novice and intermediate players too much, especially if they're excited to upload replays of their successful runs. An expert replay is any replay which meets any of these criteria:\n"
+#| "    </p>\n"
+#| "    <ul>\n"
+#| "        <li>\n"
+#| "            Lunatic\n"
+#| "        </li>\n"
+#| "        <li>\n"
+#| "            Uses no bombs\n"
+#| "        </li>\n"
+#| "        <li>\n"
+#| "            Does not miss; that is, does not lose a life\n"
+#| "        </li>\n"
+#| "        <li>\n"
+#| "            Has a good score: a score noticeably higher than that of an average 1cc that does not engage with the scoring mechanics\n"
+#| "        </li>\n"
+#| "    </ul>\n"
+#| "    <h4>What's Allowed</h4>\n"
+#| "    <p>\n"
+#| "        These tools (and classes of tools) are OK to use in regular replays.\n"
+#| "    </p>\n"
+#| "    <ul>\n"
+#| "        <li>\n"
+#| "            The low-latency tool \"vpatch\" is allowed.\n"
+#| "        </li>\n"
+#| "        <li>\n"
+#| "            Special DLLs to translate DirectX to other graphics APIs are allowed. For example, \"ENB Converter\" and \"dgVoodoo\" are allowed.\n"
+#| "        </li>\n"
+#| "        <li>\n"
+#| "            Emulators, or other tools that run a binary on an operating system or computer for which it was not designed, are allowed. This includes PC-98 emulators such as \"Neko Project II\", as well as programs like \"Wine\" that allow players to run Windows games on other operating systems.\n"
+#| "        </li>\n"
+#| "        <li>\n"
+#| "            Patches which translate the game's text are allowed.\n"
+#| "        </li>\n"
+#| "        <li>\n"
+#| "            Patches which modify the way the game's score is displayed so as to avoid a \"counterstop\" are allowed.\n"
+#| "        </li>\n"
+#| "    </ul>\n"
+#| "    <h4>What's Banned</h4>\n"
+#| "    <p>\n"
+#| "        The following things are explicitly not allowed in regular replays.\n"
+#| "    </p>\n"
+#| "    <ul>\n"
+#| "        <li>\n"
+#| "            Any patch that modifies the game's behavior is not allowed.\n"
+#| "        </li>\n"
+#| "        <li>\n"
+#| "            Loading save states is not allowed. This includes any \"runahead\" emulator functionality that relies on save states.\n"
+#| "        </li>\n"
+#| "        <li>\n"
+#| "            Pause buffering, the technique of repeatedly pausing in quick succession to gain an advantage, is not allowed.\n"
+#| "        </li>\n"
+#| "        <li>\n"
+#| "            Pausing to gain an advantage, such as pausing when bullets are onscreen in order to read them, is not allowed. We may exempt specific replays from this rule if we deem the advantage unintentional.\n"
+#| "        </li>\n"
+#| "        <li>\n"
+#| "            Editing a replay file after it has been saved is not allowed (except for renaming it).\n"
+#| "        </li>\n"
+#| "    </ul>\n"
+#| "    <h4>My tool isn't mentioned!</h4>\n"
+#| "    <p>\n"
+#| "        If a type of tool isn't listed above, feel free to ask the Silent Selene staff to clarify the situation; we will judge these tools on a case-by-case basis and update the rules accordingly.\n"
+#| "    </p>\n"
+#| "    <h3>Game-specific rules</h3>\n"
+#| "    <ul>\n"
+#| "        <li>\n"
+#| "            <b>TH06</b>: Texture patches that affect the appearance of the game, such as the \"hitbox patch\", are not allowed in expert replays.\n"
+#| "        </li>\n"
+#| "        <li>\n"
+#| "            <b>TH10</b>: \"Hint files\" are allowed.\n"
+#| "        </li>\n"
+#| "        <li>\n"
+#| "            <b>TH11</b>: \"Hint files\" are not allowed.\n"
+#| "        </li>\n"
+#| "    </ul>\n"
+#| "    "
 msgid ""
 "\n"
 "    <h2>Disclaimer</h2>\n"
 "    <p>These rules are preliminary; we will adjust them based on feedback from the community. If we do, we might have to recategorize some replays.</p>\n"
 "    <h2>Overview</h2>\n"
 "    <p>\n"
-"        There are three types of replays on Silent Selene: regular, TAS, and unlisted. Most replays are <b>regular</b>; that describes runs that are played normally, without any unusual tools to assist the player. (Tools that do not change the character of the run are still allowed in regular replays.) <b>TAS</b> replays are tool-assisted; any helper tools are allowed, even ones that are obviously \"cheating\" like save states. But the replay still has to be a replay of the actual game. And <b>unlisted</b> runs are everything else; this category mostly applies to replays that changed the game's patterns somehow or made other crazy changes.\n"
+"        There are three types of replays on Silent Selene: standard, tool-assisted, and unusual. Most replays are <b>standard</b>; that describes runs that are played normally, without any unusual tools to assist the player. (Tools that do not change the character of the run are still allowed in standard replays.) <b>Tool-assisted</b> replays are runs played with help from external software; any helper tools are allowed, even ones that are obviously \"cheating\" like save states. But the replay still has to be a replay of the actual game. And <b>unusual</b> runs are everything else; this category mostly applies to replays that changed the game's patterns somehow or made other crazy changes.\n"
 "    </p>\n"
 "    <h2>tl;dr</h2>\n"
 "    <p>\n"
-"        For regular runs, most tools like vpatch are allowed. Translation patches are allowed. Pause buffering is not allowed.\n"
+"        For standard runs, most tools like vpatch are allowed. Translation patches are allowed. Pause buffering is not allowed.\n"
 "    </p>\n"
-"    <h2>Is My Replay Regular?</h2>\n"
+"    <h2>Is My Replay Standard?</h2>\n"
 "    <h3>General Rules</h3>\n"
 "    <h4>Expert replays</h4>\n"
 "    <p>\n"
@@ -1611,7 +1651,7 @@ msgid ""
 "    </ul>\n"
 "    <h4>What's Allowed</h4>\n"
 "    <p>\n"
-"        These tools (and classes of tools) are OK to use in regular replays.\n"
+"        These tools (and classes of tools) are OK to use in standard replays.\n"
 "    </p>\n"
 "    <ul>\n"
 "        <li>\n"
@@ -1632,7 +1672,7 @@ msgid ""
 "    </ul>\n"
 "    <h4>What's Banned</h4>\n"
 "    <p>\n"
-"        The following things are explicitly not allowed in regular replays.\n"
+"        The following things are explicitly not allowed in standard replays.\n"
 "    </p>\n"
 "    <ul>\n"
 "        <li>\n"
@@ -1674,13 +1714,13 @@ msgstr ""
 "<p>These rules are preliminary; we will adjust them based on feedback from the community. If we do, we might have to recategorize some replays.</p>\n"
 "<h2>Overview</h2>\n"
 "<p>\n"
-"There are three types of replays on Silent Selene: regular, TAS, and unlisted. Most replays are <b>regular</b>; that describes runs that are played normally, without any unusual tools to assist the player. (Tools that do not change the character of the run are still allowed in regular replays.) <b>TAS</b> replays are tool-assisted; any helper tools are allowed, even ones that are obviously \"cheating\" like save states. But the replay still has to be a replay of the actual game. And <b>unlisted</b> runs are everything else; this category mostly applies to replays that changed the game's patterns somehow or made other crazy changes.\n"
+"There are three types of replays on Silent Selene: standard, tool-assisted, and unusual. Most replays are <b>standard</b>; that describes runs that are played normally, without any unusual tools to assist the player. (Tools that do not change the character of the run are still allowed in standard replays.) <b>Tool-assisted</b> replays are runs played with help from external software; any helper tools are allowed, even ones that are obviously \"cheating\" like save states. But the replay still has to be a replay of the actual game. And <b>unusual</b> runs are everything else; this category mostly applies to replays that changed the game's patterns somehow or made other crazy changes.\n"
 "</p>\n"
 "<h2>tl;dr</h2>\n"
 "<p>\n"
-"For regular runs, most tools like vpatch are allowed. Translation patches are allowed. Pause buffering is not allowed.\n"
+"For standard runs, most tools like vpatch are allowed. Translation patches are allowed. Pause buffering is not allowed.\n"
 "</p>\n"
-"<h2>Is My Replay Regular?</h2>\n"
+"<h2>Is My Replay Standard?</h2>\n"
 "<h3>General Rules</h3>\n"
 "<h4>Expert replays</h4>\n"
 "<p>\n"
@@ -1702,7 +1742,7 @@ msgstr ""
 "</ul>\n"
 "<h4>What's Allowed</h4>\n"
 "<p>\n"
-"These tools (and classes of tools) are OK to use in regular replays.\n"
+"These tools (and classes of tools) are OK to use in standard replays.\n"
 "</p>\n"
 "<ul>\n"
 "<li>\n"
@@ -1723,7 +1763,7 @@ msgstr ""
 "</ul>\n"
 "<h4>What's Banned</h4>\n"
 "<p>\n"
-"The following things are explicitly not allowed in regular replays.\n"
+"The following things are explicitly not allowed in standard replays.\n"
 "</p>\n"
 "<ul>\n"
 "<li>\n"
@@ -1765,6 +1805,29 @@ msgstr "Rules"
 
 #: replays/templates/replays/docs/rules.html:7
 #, python-format
+#| msgid ""
+#| "\n"
+#| "    <h2>General Rules</h2>\n"
+#| "    <ul>\n"
+#| "        <li>Do not use the site if you are under 13 (or 16 in Europe).</li>\n"
+#| "        <li>Do not impersonate other members of the Touhou community, or upload replays that are not yours.</li>\n"
+#| "        <li>Do not create multiple accounts.</li>\n"
+#| "        <li>Do not try to pass off tool-assisted replays as having been played without the use of restricted tools. (For more information on which tools are allowed, see the <a href=\"%(replay_rules_url)s\">Replay Rules</a>.)</li>\n"
+#| "        <li>Do not encourage illegal activity or provide information about piracy. (Note that using an emulator is not illegal.)</li>\n"
+#| "    </ul>\n"
+#| "    <p>\n"
+#| "        The rules above are not exhaustive; we may enforce bans or other punishment at our own discretion for any behavior we judge harmful to the Touhou community.\n"
+#| "    </p>\n"
+#| "    <h2>Replay Rules</h2>\n"
+#| "    <p>\n"
+#| "        For detailed rules on what is allowed for regular replays, see the <a href=\"%(replay_rules_url)s\">Replay Rules</a>.\n"
+#| "    </p>\n"
+#| "    <ul>\n"
+#| "        <li>Be sure the replay information you specify is correct.</li>\n"
+#| "        <li>If your replay links to a video, the video must be publicly accessible, and must show your run of the game.</li>\n"
+#| "    </ul>\n"
+#| "\n"
+#| "    "
 msgid ""
 "\n"
 "    <h2>General Rules</h2>\n"
@@ -1780,7 +1843,7 @@ msgid ""
 "    </p>\n"
 "    <h2>Replay Rules</h2>\n"
 "    <p>\n"
-"        For detailed rules on what is allowed for regular replays, see the <a href=\"%(replay_rules_url)s\">Replay Rules</a>.\n"
+"        For detailed rules on what is allowed for standard replays, see the <a href=\"%(replay_rules_url)s\">Replay Rules</a>.\n"
 "    </p>\n"
 "    <ul>\n"
 "        <li>Be sure the replay information you specify is correct.</li>\n"
@@ -1803,7 +1866,7 @@ msgstr ""
 "</p>\n"
 "<h2>Replay Rules</h2>\n"
 "<p>\n"
-"For detailed rules on what is allowed for regular replays, see the <a href=\"%(replay_rules_url)s\">Replay Rules</a>.\n"
+"For detailed rules on what is allowed for standard replays, see the <a href=\"%(replay_rules_url)s\">Replay Rules</a>.\n"
 "</p>\n"
 "<ul>\n"
 "<li>Be sure the replay information you specify is correct.</li>\n"
@@ -2168,59 +2231,67 @@ msgstr "Choose replay:"
 msgid "Publish a replay for a game without replay files"
 msgstr "Publish a replay for a game without replay files"
 
-#: thscoreboard/settings.py:213
+#: thscoreboard/settings.py:214
 msgid "English"
 msgstr "English"
 
-#: thscoreboard/settings.py:214
+#: thscoreboard/settings.py:215
 msgid "Japanese"
 msgstr "Japanese"
 
-#: users/forms.py:31
+#: users/forms.py:32
 msgid "An account has already been registered with this username."
 msgstr "An account has already been registered with this username."
 
-#: users/forms.py:53
+#: users/forms.py:54
 msgid "An account has already been registered with this email address."
 msgstr "An account has already been registered with this email address."
 
-#: users/forms.py:92 users/forms.py:117 users/forms.py:130
+#: users/forms.py:93 users/forms.py:118 users/forms.py:131
 msgid "Username"
 msgstr "Username"
 
-#: users/forms.py:94 users/templates/users/delete_account.html:29
+#: users/forms.py:95 users/templates/users/delete_account.html:29
 msgid "Password"
 msgstr "Password"
 
-#: users/forms.py:103
+#: users/forms.py:104
 msgid "Email address"
 msgstr "Email address"
 
-#: users/forms.py:112
+#: users/forms.py:113
 msgid "Invite File Contents"
 msgstr "Invite File Contents"
 
-#: users/forms.py:131
+#: users/forms.py:132
 msgid "Reason"
 msgstr "Reason"
 
-#: users/forms.py:132
+#: users/forms.py:133
 msgid "Days"
 msgstr "Days"
 
-#: users/forms.py:133
+#: users/forms.py:134
 msgid "Hours"
 msgstr "Hours"
 
-#: users/forms.py:141
+#: users/forms.py:142
 #, python-format
 msgid "User %(username)s does not exist."
 msgstr "User %(username)s does not exist."
 
+#: users/forms.py:155
+#| msgid "About Silent Selene"
+msgid "Silent Selene username"
+msgstr "Silent Selene username"
+
+#: users/forms.py:157
+msgid "Royalflare username"
+msgstr "Royalflare username"
+
 #: users/templates/registration/password_change_form.html:4
 #: users/templates/registration/password_change_form.html:42
 #: users/templates/users/profile.html:42
-#| msgid "Password"
 msgid "Change Password"
 msgstr "Change Password"
 
@@ -2312,6 +2383,17 @@ msgstr "My Profile"
 #: users/templates/users/profile.html:41
 msgid "Log out"
 msgstr "Log out"
+
+#~ msgid "Regular"
+#~ msgstr "Regular"
+
+#~ msgctxt "Category"
+#~ msgid "Regular"
+#~ msgstr "Regular"
+
+#~ msgctxt "Replay Type"
+#~ msgid "Regular"
+#~ msgstr "Regular"
 
 #~ msgctxt "Category"
 #~ msgid "Private"
