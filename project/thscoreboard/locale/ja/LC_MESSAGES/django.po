@@ -1854,16 +1854,16 @@ msgstr "ログアウト"
 #~ msgstr "霊夢"
 
 #~ msgid "th07 Reimu A"
-#~ msgstr ""
+#~ msgstr "霊符"
 
 #~ msgid "th07 Reimu B"
-#~ msgstr ""
+#~ msgstr "夢符"
 
 #~ msgid "th07 Marisa A"
-#~ msgstr ""
+#~ msgstr "魔符"
 
 #~ msgid "th07 Marisa B"
-#~ msgstr ""
+#~ msgstr "恋符"
 
 #~ msgid "th10 Reimu A"
 #~ msgstr ""
