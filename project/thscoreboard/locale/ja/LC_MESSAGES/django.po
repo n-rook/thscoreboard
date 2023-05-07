@@ -683,7 +683,7 @@ msgstr "魔理沙B"
 #: replays/game_ids.py:361
 msgctxt "th10"
 msgid "Marisa C"
-msgstr ""
+msgstr "魔理沙C"
 
 #: replays/game_ids.py:365
 msgctxt "th11"
