@@ -663,12 +663,12 @@ msgstr "霊夢A"
 #: replays/game_ids.py:353
 msgctxt "th10"
 msgid "Reimu B"
-msgstr ""
+msgstr "霊夢B"
 
 #: replays/game_ids.py:355
 msgctxt "th10"
 msgid "Reimu C"
-msgstr ""
+msgstr "霊夢C"
 
 #: replays/game_ids.py:357
 msgctxt "th10"
