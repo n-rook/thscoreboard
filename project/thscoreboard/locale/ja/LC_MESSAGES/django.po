@@ -948,7 +948,7 @@ msgstr "魔理沙E"
 #: replays/game_ids.py:481
 msgctxt "th17"
 msgid "Youmu Wolf"
-msgstr ""
+msgstr "妖夢W"
 
 #: replays/game_ids.py:483
 msgctxt "th17"
@@ -978,7 +978,7 @@ msgstr "咲夜"
 #: replays/game_ids.py:495
 msgctxt "th18"
 msgid "Sanae"
-msgstr ""
+msgstr "早苗"
 
 #: replays/game_ids.py:512
 #| msgctxt "th01"
