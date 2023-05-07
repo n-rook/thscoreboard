@@ -434,7 +434,7 @@ msgstr "靈夢A"
 #: replays/game_ids.py:201
 msgctxt "th04"
 msgid "Reimu B"
-msgstr "霊夢B"
+msgstr "靈夢B"
 
 #: replays/game_ids.py:203
 msgctxt "th04"
