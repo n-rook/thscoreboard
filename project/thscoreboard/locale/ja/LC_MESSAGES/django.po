@@ -703,7 +703,7 @@ msgstr "霊夢C"
 #: replays/game_ids.py:371
 msgctxt "th11"
 msgid "Marisa A"
-msgstr ""
+msgstr "魔理沙A"
 
 #: replays/game_ids.py:373
 msgctxt "th11"
