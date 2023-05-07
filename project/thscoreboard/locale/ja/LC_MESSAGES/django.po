@@ -1158,7 +1158,7 @@ msgstr ""
 
 #: replays/templates/replays/docs/licenses.html:5
 msgid "Licenses"
-msgstr ""
+msgstr "ライセンス"
 
 #: replays/templates/replays/docs/licenses.html:6
 msgid ""
