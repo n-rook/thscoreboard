@@ -953,7 +953,7 @@ msgstr ""
 #: replays/game_ids.py:483
 msgctxt "th17"
 msgid "Youmu Otter"
-msgstr ""
+msgstr "妖夢O"
 
 #: replays/game_ids.py:485
 msgctxt "th17"
