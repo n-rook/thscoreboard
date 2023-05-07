@@ -1633,7 +1633,7 @@ msgstr " スコア"
 
 #: replays/templates/replays/replay_stages.html:13
 msgid "PIV"
-msgstr ""
+msgstr "素点"
 
 #: replays/templates/replays/replay_stages.html:16
 msgid "Graze"
