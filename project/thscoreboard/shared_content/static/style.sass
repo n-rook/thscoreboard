@@ -3,6 +3,7 @@
 @mixin font-body-text
     font: 16px "Lato", "Arial", sans-serif
 
+
 $top-level-margin: 8px
 
 .flex-1
@@ -63,14 +64,30 @@ body
 
     display: flex
 
-    a
-        display: block
-        padding: 2px 8px
+    font: 14px "Lato", "Arial", sans-serif
+
+    .banner-link
         border: solid 1px
         border-color: var(--background-color)
 
-    a:hover
-        border-color: #999999
+        &:hover
+            border-color: #999999
+
+    a
+        display: block
+        padding: 2px 8px
+
+    .language-switcher
+        display: inline
+
+        & > button
+            display: block
+            background: none
+            border: none
+            padding: 2px 8px
+            color: var(--link-color)
+            cursor: pointer
+            font: 14px "Lato", "Arial", sans-serif
 
 .content-and-sidebar
     display: flex
@@ -275,7 +292,7 @@ input
         &:read-only
             background-color: var(--disabled-input-background-color)
             color: var(--disabled-input-text-color)
-   
+
 .spaced-input
     margin-top: 8px
 

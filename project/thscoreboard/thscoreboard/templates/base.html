@@ -34,13 +34,29 @@
                     <a href="/users/profile">Profile</a>
                 </div>
                 {% if user.is_staff or user.is_superuser %}
-                <a href="/staff">Staff tools</a>
+                <div class="banner-link">
+                    <a href="/staff">Staff tools</a>
+                </div>
                 {% endif %}
                 {% else %}
-                <a href="/users/login">Log in</a>
-                <a href="/users/register">Sign Up</a>
+                <div class="banner-link">
+                    <a href="/users/login">Log in</a>
+                </div>
+                <div class="banner-link">
+                    <a href="/users/register">Sign Up</a>
+                </div>
                 {% endif %}
+                <div class="banner-link">
+                    <form method="post" action="/users/set_language" class="language-switcher">
+                        {% csrf_token %}
+                        {% get_current_language as language_code %}
+                        <input type="hidden" name="language" value="{% if language_code == 'ja' %}en_US{% else %}ja{% endif %}" />
+                        <button type="submit">{% if language_code == 'ja' %}🇯🇵 {% translate "Japanese" context "language" %}{% else %}🇺🇸 {% translate "English" context "language" %}{% endif %}</button>
+                    </form>
+                </div>
+                <div class="banner-link">
                 <a class="theme-switcher" href="#" onclick="toggleTheme()">🌙</a>
+                </div>
             </div>
         </div>
         <div class="content-and-sidebar">
