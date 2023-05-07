@@ -733,12 +733,12 @@ msgstr "恋符"
 #: replays/game_ids.py:385
 msgctxt "th12"
 msgid "Marisa B"
-msgstr ""
+msgstr "魔符"
 
 #: replays/game_ids.py:387
 msgctxt "th12"
 msgid "Sanae A"
-msgstr ""
+msgstr "蛇符"
 
 #: replays/game_ids.py:389
 msgctxt "th12"
