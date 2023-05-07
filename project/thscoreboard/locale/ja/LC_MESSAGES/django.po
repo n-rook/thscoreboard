@@ -23,7 +23,7 @@ msgstr ""
 
 #: replays/forms.py:27 replays/forms.py:67 replays/game_ids.py:41
 msgid "Regular"
-msgstr "魔理沙W"
+msgstr ""
 
 #: replays/forms.py:28 replays/forms.py:68 replays/game_ids.py:43
 msgid "Stage Practice"
