@@ -1681,7 +1681,7 @@ msgstr "P2ショット"
 
 #: replays/templates/replays/replay_stages.html:49
 msgid "P2 Score"
-msgstr " P2スコア"
+msgstr "P2スコア"
 
 #: replays/templates/replays/replay_stages.html:52
 msgid "Trance Gauge"
