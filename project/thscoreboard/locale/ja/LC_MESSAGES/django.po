@@ -658,7 +658,7 @@ msgstr "ルナサ"
 #: replays/game_ids.py:351
 msgctxt "th10"
 msgid "Reimu A"
-msgstr ""
+msgstr "霊夢A"
 
 #: replays/game_ids.py:353
 msgctxt "th10"
