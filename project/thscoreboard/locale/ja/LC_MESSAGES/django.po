@@ -4,6 +4,7 @@
 # 
 # Translators:
 # Maribel Hearn, 2023
+# Anomalo Caris, 2023
 # 
 msgid ""
 msgstr ""
@@ -11,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-28 21:57+0000\n"
 "PO-Revision-Date: 2023-05-06 19:43+0000\n"
-"Last-Translator: Maribel Hearn, 2023\n"
+"Last-Translator: Anomalo Caris, 2023\n"
 "Language-Team: Japanese (https://app.transifex.com/silent-selene/teams/168285/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -363,7 +364,7 @@ msgstr ""
 #: replays/game_ids.py:168
 msgctxt "th01"
 msgid "Reimu"
-msgstr "霊夢"
+msgstr "靈夢"
 
 #: replays/game_ids.py:171
 msgctxt "th02"
