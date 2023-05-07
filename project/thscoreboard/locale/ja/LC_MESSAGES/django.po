@@ -1665,7 +1665,7 @@ msgstr "桜"
 
 #: replays/templates/replays/replay_stages.html:37
 msgid "CherryMax"
-msgstr ""
+msgstr "桜MAX"
 
 #: replays/templates/replays/replay_stages.html:40
 msgid "P1 CPU?"
@@ -1689,7 +1689,7 @@ msgstr "トランスゲージ"
 
 #: replays/templates/replays/replay_stages.html:55
 msgid "Season Power"
-msgstr ""
+msgstr "季節ゲージ"
 
 #: replays/templates/replays/upload.html:5
 msgid "Publish a replay"
