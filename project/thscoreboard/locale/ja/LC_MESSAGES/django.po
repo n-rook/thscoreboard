@@ -708,12 +708,12 @@ msgstr "魔理沙A"
 #: replays/game_ids.py:373
 msgctxt "th11"
 msgid "Marisa B"
-msgstr ""
+msgstr "魔理沙B"
 
 #: replays/game_ids.py:375
 msgctxt "th11"
 msgid "Marisa C"
-msgstr ""
+msgstr "魔理沙C"
 
 #: replays/game_ids.py:379
 msgctxt "th12"
