@@ -1032,14 +1032,14 @@ msgstr "冬"
 #: replays/game_ids.py:535
 msgctxt "th16"
 msgid "Wolf"
-msgstr ""
+msgstr "オオカミ"
 
 #: replays/game_ids.py:537
 #| msgctxt "th17"
 #| msgid "Reimu Otter"
 msgctxt "th16"
 msgid "Otter"
-msgstr ""
+msgstr "カワウソ"
 
 #: replays/game_ids.py:539
 #| msgctxt "th17"
