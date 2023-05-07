@@ -688,12 +688,12 @@ msgstr "魔理沙C"
 #: replays/game_ids.py:365
 msgctxt "th11"
 msgid "Reimu A"
-msgstr ""
+msgstr "霊夢A"
 
 #: replays/game_ids.py:367
 msgctxt "th11"
 msgid "Reimu B"
-msgstr ""
+msgstr "霊夢B"
 
 #: replays/game_ids.py:369
 msgctxt "th11"
