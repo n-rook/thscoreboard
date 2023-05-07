@@ -1046,7 +1046,7 @@ msgstr "カワウソ"
 #| msgid "Reimu Eagle"
 msgctxt "th16"
 msgid "Eagle"
-msgstr ""
+msgstr "オオワシ"
 
 #: replays/game_ids.py:547
 msgctxt "th01"
