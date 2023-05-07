@@ -488,32 +488,32 @@ msgstr "恋符"
 #: replays/game_ids.py:229
 msgctxt "th07"
 msgid "Reimu A"
-msgstr ""
+msgstr "霊符"
 
 #: replays/game_ids.py:231
 msgctxt "th07"
 msgid "Reimu B"
-msgstr ""
+msgstr "夢符"
 
 #: replays/game_ids.py:233
 msgctxt "th07"
 msgid "Marisa A"
-msgstr ""
+msgstr "魔符"
 
 #: replays/game_ids.py:235
 msgctxt "th07"
 msgid "Marisa B"
-msgstr ""
+msgstr "恋符"
 
 #: replays/game_ids.py:237
 msgctxt "th07"
 msgid "Sakuya A"
-msgstr ""
+msgstr "幻符"
 
 #: replays/game_ids.py:239
 msgctxt "th07"
 msgid "Sakuya B"
-msgstr ""
+msgstr "時符"
 
 #: replays/game_ids.py:244
 msgctxt "th08"
