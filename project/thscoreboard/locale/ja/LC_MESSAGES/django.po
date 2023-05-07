@@ -1177,7 +1177,7 @@ msgstr ""
 
 #: replays/templates/replays/docs/privacy_policy.html:5
 msgid "Privacy Policy"
-msgstr ""
+msgstr "プライバシーポリシー"
 
 #: replays/templates/replays/docs/privacy_policy.html:6
 msgid ""
