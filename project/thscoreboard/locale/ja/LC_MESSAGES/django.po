@@ -918,17 +918,17 @@ msgstr "魔理沙冬"
 #: replays/game_ids.py:469
 msgctxt "th17"
 msgid "Reimu Wolf"
-msgstr ""
+msgstr "霊夢W"
 
 #: replays/game_ids.py:471
 msgctxt "th17"
 msgid "Reimu Otter"
-msgstr ""
+msgstr "霊夢O"
 
 #: replays/game_ids.py:473
 msgctxt "th17"
 msgid "Reimu Eagle"
-msgstr ""
+msgstr "霊夢E"
 
 #: replays/game_ids.py:475
 msgctxt "th17"
@@ -958,7 +958,7 @@ msgstr ""
 #: replays/game_ids.py:485
 msgctxt "th17"
 msgid "Youmu Eagle"
-msgstr ""
+msgstr "妖夢E"
 
 #: replays/game_ids.py:489
 msgctxt "th18"
