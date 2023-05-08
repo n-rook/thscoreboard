@@ -12,7 +12,6 @@ from replays import models
 
 
 @auth_decorators.login_required
-@auth_decorators.permission_required("staff", raise_exception=True)
 def claim(request: WSGIRequest) -> HttpResponse:
     if request.method == "GET":
         return _render_claim_username_form(request)
@@ -40,12 +39,12 @@ def _render_claim_username_form(
 ) -> HttpResponse:
     if form is None:
         form = forms.ClaimUsernameForm()
+    if not request.user.is_staff:
+        form.fields["silentselene_username"].initial = request.user.get_username()
     return render(
         request,
         "replays/claim_username.html",
-        {
-            "form": form,
-        },
+        {"form": form, "silentselene_username": request.user.get_username()},
     )
 
 

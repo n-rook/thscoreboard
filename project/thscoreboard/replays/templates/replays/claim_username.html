@@ -6,9 +6,15 @@
 {% block centered-content %}
     <form method="post">
         {% csrf_token %}
-        <p>Please enter a silentselene username.</p>
-        {{ form.silentselene_username }}
-        {{ form.silentselene_username.errors }}
+        {% if user.is_superuser %}
+            <p>Please enter a silentselene username.</p>
+            {{ form.silentselene_username }}
+            {{ form.silentselene_username.errors }}
+        {% else %}
+            <input type="hidden"
+                   name="silentselene_username"
+                   value="{{ silentselene_username }}">
+        {% endif %}
         <p>Please enter a royalflare username.</p>
         {{ form.royalflare_username }}
         {{ form.royalflare_username.errors }}

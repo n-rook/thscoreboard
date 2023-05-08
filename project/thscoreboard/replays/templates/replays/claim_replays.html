@@ -22,7 +22,7 @@
         </thead>
         {% for replay in replays %}
             <tr>
-                <td><input type="checkbox" value="{{replay.id}}" name="choices"></td>
+                <td><input type="checkbox" value="{{replay.id}}" name="choices" checked></td>
                 <td>{{ replay.shot.game.GetShortName }}</td>
                 <td>{{ replay.GetDifficultyName }}</td>
                 <td>{{ replay.shot.GetName }}</td>
