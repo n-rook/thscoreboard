@@ -30,7 +30,7 @@ def claim(request: WSGIRequest) -> HttpResponse:
             user = User.objects.get(username=silentselene_username)
             selected_replay_ids = form.cleaned_data["choices"]
             selected_replays = models.Replay.objects.filter(id__in=selected_replay_ids)
-            _assign_selected_replays_to_user(selected_replays, user)
+            # _assign_selected_replays_to_user(selected_replays, user)
             return redirect(f"../replays/user/{user}")
 
 

@@ -7,7 +7,23 @@
 
 <form method="post">
     {% csrf_token %}
-    <input type="hidden" name="silentselene_username" value="{{ silentselene_username }}">
+    <input type="hidden"
+           name="silentselene_username"
+           value="{{ silentselene_username }}"
+           class="spaced-input">
+    {% if not user.is_staff %}
+    <h2>
+        Contact info
+    </h2>
+    <p>
+        How should we contact you? Please enter a social media account that belongs to you.
+        For example, link your twitter, discord, or bilibili account.
+    </p>
+    {{ form.contact_info }}
+    {% endif %}
+    <h2>
+        Select replays
+    </h2>
     <table class="replay-table">
         <thead>
             <tr>

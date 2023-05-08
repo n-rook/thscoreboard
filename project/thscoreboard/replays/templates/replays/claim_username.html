@@ -6,7 +6,7 @@
 {% block centered-content %}
     <form method="post">
         {% csrf_token %}
-        {% if user.is_superuser %}
+        {% if user.is_staff %}
             <p>Please enter a silentselene username.</p>
             {{ form.silentselene_username }}
             {{ form.silentselene_username.errors }}
