@@ -16,6 +16,7 @@ from ipaddress import ip_network
 
 from shared_content import model_ttl
 from thscoreboard import settings
+from replays.models import Replay
 
 
 class BannedError(Exception):
@@ -599,3 +600,37 @@ class Ban(models.Model):
             count += 1
 
         logging.info("Cleaned up %d bans.", count)
+
+
+class RequestStatus(models.IntegerChoices):
+    SUBMITTED = 1
+
+
+class ClaimReplayRequestManager(models.Manager):
+    def get_active_requests_for_user(self, user):
+        return self.filter(user=user, request_status=RequestStatus.SUBMITTED)
+
+    def create(self, *args, **kwargs):
+        print("CALLING THE MANAGER")
+        user = kwargs.get("user", None)
+        if user and self.get_active_requests_for_user(user).count() >= 5:
+            raise ValidationError("Each user may only have 5 active requests at once.")
+        return super().create(*args, **kwargs)
+
+
+class ClaimReplayRequest(models.Model):
+    """Records a user's request to have some imported replays assigned to them."""
+
+    objects = ClaimReplayRequestManager()
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    """Who issued the request, and also who the replays should be assigned to."""
+
+    replays = models.ManyToManyField(Replay)
+    """The replays that the user wants assigned to them."""
+
+    contact_info = models.TextField()
+    """The contact info provided by the user."""
+
+    request_status = models.IntegerField(choices=RequestStatus.choices)
+    """The status of this request."""
