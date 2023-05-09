@@ -1,25 +1,22 @@
 """Contains views which list various replays."""
 
-from django.http import StreamingHttpResponse
 from django.views.decorators import http as http_decorators
 from django.shortcuts import get_object_or_404, render
 
 from replays import models
 from replays import game_ids
 from replays.models import Game, Shot, Route
-from replays.replays_to_json import ReplayToJsonConverter
+from replays.replays_to_json import (
+    convert_replays_to_json_strings,
+    stream_json_strings_to_http_reponse,
+)
 
 
 @http_decorators.require_safe
 def game_scoreboard_json(request, game_id: str):
     replays = _get_all_replay_for_game(game_id)
-    converter = ReplayToJsonConverter()
-    response = StreamingHttpResponse(
-        converter.convert_replays_to_serializable_list(replays),
-        content_type="application/json",
-    )
-    response["Content-Disposition"] = 'attachment; filename="output.json"'
-    return response
+    replay_jsons = convert_replays_to_json_strings(replays)
+    return stream_json_strings_to_http_reponse(replay_jsons)
 
 
 @http_decorators.require_safe
