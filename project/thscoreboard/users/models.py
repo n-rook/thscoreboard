@@ -611,7 +611,6 @@ class ClaimReplayRequestManager(models.Manager):
         return self.filter(user=user, request_status=RequestStatus.SUBMITTED)
 
     def create(self, *args, **kwargs):
-        print("CALLING THE MANAGER")
         user = kwargs.get("user", None)
         if user and self.get_active_requests_for_user(user).count() >= 5:
             raise ValidationError("Each user may only have 5 active requests at once.")

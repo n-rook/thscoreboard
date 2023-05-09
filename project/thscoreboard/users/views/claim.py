@@ -1,5 +1,5 @@
 from typing import Iterable, Optional, Tuple
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.contrib.auth import decorators as auth_decorators
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
