@@ -96,6 +96,7 @@ INSTALLED_APPS = [
 ] + (DEV_ONLY_APPS if DEBUG else [])
 
 MIDDLEWARE = [
+    "django.middleware.gzip.GZipMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",

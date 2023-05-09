@@ -10,26 +10,29 @@ const displayedColumns = [
 var activeFilters = {};
 var allReplays = [];
 
-try {
-  // initialize table content
-  const xhr = new XMLHttpRequest();
-  if(window.location.pathname === '/') {
-    xhr.open('GET', window.location.origin + '/replays/index/json', true);
-  } else {
-    xhr.open('GET', window.location.origin + window.location.pathname + "/json", true);
-  }
-  xhr.responseType = 'json';
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      allReplays = xhr.response;
-      constructAndRenderReplayTable(xhr.response);
-    } else {
-      document.getElementById('replay-table').innerHTML = '<p style="color: red;">Failed to load replays</p>';
+requestAndInitializeReplays();
+
+async function requestAndInitializeReplays() {
+  const requestUri = window.location.pathname === '/'
+    ? window.location.origin + '/replays/index/json'
+    : window.location.origin + window.location.pathname + "/json";
+
+  try {
+    const response = await fetch(requestUri, {
+      priority: 'high'
+    });
+
+    if (!response.ok) {
+      replayTableBodyHtml.innerHTML =
+        '<p style="color: red;">Failed to load replays</p>';
+      return;
     }
-  };
-  xhr.send();
-} catch(error) {
-  // Catch ReferenceError for test suite but do nothing
+
+    const replayJson = await response.json();
+    allReplays = replayJson;
+    const filteredReplays = filterReplays(activeFilters, allReplays);
+    constructAndRenderReplayTable(filteredReplays);
+  } catch (error) {}
 }
 
 function onClick(elm) {
