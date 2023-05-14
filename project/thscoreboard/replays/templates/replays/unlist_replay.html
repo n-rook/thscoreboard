@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block content %}
+    <h2>Success!</h2>
+    {% if is_listed %}
+    <p>This replay is now listed. It will be shown on the leaderboards.</p>
+    {% else %}
+    <p>This replay is now unlisted. It will not be shown on the leaderboards.</p>
+    {% endif %}
+{% endblock %}

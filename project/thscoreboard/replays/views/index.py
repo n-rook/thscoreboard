@@ -14,7 +14,7 @@ def index_json(request):
         models.Replay.objects.filter(
             category__in=[models.Category.STANDARD, models.Category.TAS]
         )
-        .filter(listed=True)
+        .filter(is_listed=True)
         .annotate_with_rank()
         .order_by("-created")[:10]
     )

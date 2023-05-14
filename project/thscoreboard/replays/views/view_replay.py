@@ -66,6 +66,7 @@ def replay_details(request, game_id: str, replay_id: int):
         "replay": replay_instance,
         "can_edit": request.user == replay_instance.user,
         "can_delete": request.user == replay_instance.user or request.user.is_staff,
+        "is_listed": replay_instance.is_listed,
         "replay_file_is_good": replay_instance.is_good,
         "has_stages": len(replay_stages) != 0,
         "replay_stages": formatStages,
@@ -167,9 +168,6 @@ def delete_replay(request, game_id: str, replay_id: int):
 @auth_decorators.login_required
 def unclaim_replay(request, game_id: str, replay_id: int):
     replay_instance = GetReplayOr404(request.user, replay_id)
-
-    if replay_instance.shot.game.game_id != game_id:
-        raise Http404()
     if not _is_replay_claimed(replay_instance):
         return HttpResponseBadRequest()
     if not replay_instance.user == request.user and not request.user.is_staff:
@@ -192,7 +190,37 @@ def unclaim_replay(request, game_id: str, replay_id: int):
     )
 
 
-def GetReplayOr404(user, replay_id: int) -> models.Replay:
+@http_decorators.require_http_methods(["GET", "HEAD", "POST"])
+@auth_decorators.login_required
+def list_replay(request, game_id: str, replay_id: int):
+    return _set_listed(request, game_id, replay_id, True)
+
+
+@http_decorators.require_http_methods(["GET", "HEAD", "POST"])
+@auth_decorators.login_required
+def unlist_replay(request, game_id: str, replay_id: int):
+    return _set_listed(request, game_id, replay_id, False)
+
+
+def _set_listed(request, game_id: str, replay_id: int, listed):
+    replay_instance = GetReplayOr404(request.user, replay_id)
+
+    if replay_instance.shot.game.game_id != game_id:
+        raise Http404()
+    if not replay_instance.user == request.user and not request.user.is_staff:
+        raise HttpResponseForbidden()
+
+    replay_instance.is_listed = listed
+    replay_instance.save()
+
+    return render(
+        request,
+        "replays/unlist_replay.html",
+        {"is_listed": replay_instance.is_listed},
+    )
+
+
+def GetReplayOr404(user, replay_id):
     try:
         replay_instance = (
             models.Replay.objects.select_related("shot")
