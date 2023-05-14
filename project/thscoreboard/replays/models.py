@@ -211,6 +211,7 @@ class ReplayQuerySet(QuerySet):
                             F("shot_id"),
                             F("difficulty"),
                             F("shot__game_id"),
+                            F("route"),
                         ],
                     ),
                 ),
