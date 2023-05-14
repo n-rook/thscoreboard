@@ -6,17 +6,15 @@ from django.shortcuts import get_object_or_404, render
 from replays import models
 from replays import game_ids
 from replays.models import Game, Shot, Route
-from replays.replays_to_json import (
-    convert_replays_to_json_strings,
-    stream_json_strings_to_http_reponse,
-)
+from replays.replays_to_json import convert_replays_to_json_bytes
+from replays.views.replay_table_helpers import stream_json_bytes_to_http_reponse
 
 
 @http_decorators.require_safe
 def game_scoreboard_json(request, game_id: str):
     replays = _get_all_replay_for_game(game_id)
-    replay_jsons = convert_replays_to_json_strings(replays)
-    return stream_json_strings_to_http_reponse(replay_jsons)
+    replay_jsons = convert_replays_to_json_bytes(replays)
+    return stream_json_bytes_to_http_reponse(replay_jsons)
 
 
 @http_decorators.require_safe

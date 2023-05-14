@@ -2,8 +2,6 @@ import json
 from typing import Iterable
 from functools import lru_cache
 
-from django.http import StreamingHttpResponse
-
 from replays import models, game_ids
 
 
@@ -16,7 +14,7 @@ class ReplayToJsonConverter:
     def _get_shot_name(self, shot: models.Shot) -> str:
         return shot.GetName()
 
-    def _convert_replay_to_dict(self, replay: models.Replay) -> dict:
+    def convert_replay_to_dict(self, replay: models.Replay) -> dict:
         shot = replay.shot
         game = self._get_game(shot)
         score_prefix = _get_medal_emoji(replay.rank) if hasattr(replay, "rank") else ""
@@ -71,29 +69,16 @@ class ReplayToJsonConverter:
             "Goast": shot.GetSubshotName(),
         }
 
-    def convert_replay_to_json_string(self, replay: models.Replay) -> str:
-        replay_dict = self._convert_replay_to_dict(replay)
+    def convert_replay_to_json_bytes(self, replay: models.Replay) -> bytes:
+        replay_dict = self.convert_replay_to_dict(replay)
         return f"{json.dumps(replay_dict)}\n".encode("utf-8")
 
 
-def convert_replays_to_json_strings(
+def convert_replays_to_json_bytes(
     ranked_replays: Iterable[models.Replay],
-) -> Iterable[str]:
+) -> Iterable[bytes]:
     converter = ReplayToJsonConverter()
-    return (
-        converter.convert_replay_to_json_string(replay) for replay in ranked_replays
-    )
-
-
-def stream_json_strings_to_http_reponse(
-    replay_strings: Iterable[str],
-) -> StreamingHttpResponse:
-    response = StreamingHttpResponse(
-        iter(replay_strings),
-        content_type="application/json",
-    )
-    response["Content-Disposition"] = 'attachment; filename="output.json"'
-    return response
+    return (converter.convert_replay_to_json_bytes(replay) for replay in ranked_replays)
 
 
 def _get_medal_emoji(rank: int) -> str:
