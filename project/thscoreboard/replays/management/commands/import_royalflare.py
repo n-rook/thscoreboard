@@ -69,7 +69,8 @@ def import_royalflare(info_from_json: dict, replay_dir: Path) -> None:
         if replay_path.stat().st_size > limits.MAX_REPLAY_SIZE:
             raise limits.FileTooBigError()
         replay_bytes = replay_path.read_bytes()
-        if constant_helpers.CheckReplayFileDuplicate(replay_bytes):
+        duplicate = constant_helpers.GetReplayFileWithSameHash(replay_bytes)
+        if duplicate is not None:
             raise Exception("This replay already exists")
         replay_info = replay_parsing.Parse(replay_bytes)
         temp_replay = models.TemporaryReplayFile(user=None, replay=replay_bytes)

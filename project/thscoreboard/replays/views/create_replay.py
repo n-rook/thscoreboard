@@ -34,8 +34,11 @@ def _HandleReplay(request, replay_bytes):
     """
 
     # test if replay already exists, and return an error if so
-    if constant_helpers.CheckReplayFileDuplicate(replay_bytes):
-        raise ValidationError("This replay already exists")
+    duplicate = constant_helpers.GetReplayFileWithSameHash(replay_bytes)
+    if duplicate is not None:
+        raise ValidationError(
+            f"This replay already exists. /replays/{duplicate.replay.shot.game.game_id}/{duplicate.replay.id}"
+        )
 
     try:
         return replay_parsing.Parse(replay_bytes)
@@ -104,7 +107,8 @@ def publish_replay(request, temp_replay_id):
         )
 
         # test if replay already exists, and return an error if so
-        if constant_helpers.CheckReplayFileDuplicate(temp_replay.replay):
+        duplicate = constant_helpers.GetReplayFileWithSameHash(temp_replay.replay)
+        if duplicate is not None:
             # if the temp replay doesn't exist anymore, the user can't even get to this page so this code doesn't really help
             # when submitting twice
             # but I'll keep it in here for potential situations I haven't thought of
