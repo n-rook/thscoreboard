@@ -1,5 +1,7 @@
 import datetime
 import logging
+
+from django.forms import ValidationError
 from freezegun import freeze_time
 
 from django import test
@@ -441,3 +443,49 @@ class DeleteAnAccountWithReplaysTestCase(test_case.ReplayTestCase):
         self.assertFalse(models.User.objects.filter(id=u.id).exists())
         self.assertFalse(replay_models.Replay.objects.filter(id=r.id).exists())
         self.assertFalse(models.Visits.objects.filter(ip="127.0.0.1").exists())
+
+
+class ClaimReplayRequestTest(test_case.ReplayTestCase):
+    def testCreateRequest(self):
+        user = self.createUser("user")
+        contact_info = "https://example.com/users/me"
+
+        claim_replay_request = models.ClaimReplayRequest.objects.create(
+            user=user,
+            contact_info=contact_info,
+            request_status=models.RequestStatus.SUBMITTED,
+        )
+        claim_replay_request.save()
+
+        request_in_db = models.ClaimReplayRequest.objects.all()[0]
+        self.assertEqual(request_in_db.user, user)
+        self.assertEqual(request_in_db.contact_info, contact_info)
+        self.assertEqual(request_in_db.request_status, models.RequestStatus.SUBMITTED)
+        self.assertFalse(request_in_db.replays.exists())
+
+        replay = test_replays.CreateAsPublishedReplay(
+            filename="th6_extra", user=None, imported_username="u"
+        )
+        request_in_db.replays.set([replay])
+        self.assertTrue(request_in_db.replays.exists())
+        self.assertEqual(request_in_db.replays.all()[0], replay)
+
+    def testAtMostFiveActiveRequestsPerUser(self):
+        user = self.createUser("user")
+        contact_info = "https://example.com/users/me"
+
+        for _ in range(5):
+            claim_replay_request = models.ClaimReplayRequest.objects.create(
+                user=user,
+                contact_info=contact_info,
+                request_status=models.RequestStatus.SUBMITTED,
+            )
+            claim_replay_request.save()
+
+        with self.assertRaises(ValidationError):
+            claim_replay_request = models.ClaimReplayRequest.objects.create(
+                user=user,
+                contact_info=contact_info,
+                request_status=models.RequestStatus.SUBMITTED,
+            )
+            claim_replay_request.save()
