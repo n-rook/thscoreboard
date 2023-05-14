@@ -1,0 +1,9 @@
+[Unit]
+Description=Upload new backups to s3 daily
+Requires=silentselene-backup.service
+
+[Timer]
+OnCalendar=daily
+
+[Install]
+WantedBy=silentselene.service
