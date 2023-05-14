@@ -114,6 +114,7 @@ def _get_all_replay_for_game(game_id: str) -> dict:
         .filter(category=models.Category.STANDARD)
         .filter(shot__game=game_id)
         .filter(replay_type=1)
+        .filter(listed=True)
         .order_by("-score")
         .annotate_with_rank()
     )

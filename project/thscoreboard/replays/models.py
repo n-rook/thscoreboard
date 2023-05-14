@@ -364,6 +364,11 @@ class Replay(models.Model):
     This field is optional; if it is null, the player probably just didn't set it.
     """
 
+    listed = models.BooleanField(default=True)
+    """Whether the replay is listed on the leaderboards. Unlisted replays are still
+    shown on a user's profile.
+    """
+
     @property
     def lesanae(self):
         """An easter egg."""
