@@ -1106,7 +1106,7 @@ msgstr "二人対戦"
 
 #: replays/templates/replays/docs/about.html:5
 msgid "About Silent Selene"
-msgstr ""
+msgstr "Silent Seleneについて"
 
 #: replays/templates/replays/docs/about.html:6
 #, python-format
@@ -1774,7 +1774,7 @@ msgstr ""
 #: users/templates/users/profile.html:42
 #| msgid "Password"
 msgid "Change Password"
-msgstr ""
+msgstr "パスワードを変更する"
 
 #: users/templates/users/ban_success.html:7
 #, python-format
@@ -1838,7 +1838,7 @@ msgstr ""
 
 #: users/templates/users/profile.html:5
 msgid "My Profile"
-msgstr ""
+msgstr "プロフィール"
 
 #: users/templates/users/profile.html:41
 msgid "Log out"
