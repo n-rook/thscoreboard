@@ -1,7 +1,4 @@
-# Contains English translations for Silent Selene.
-# Most terms will remain untranslated, as they are English to begin with.
-# But this is still useful in a few places.
-# 
+# Silent Selene translation file (in gettext .po format).
 # Translators:
 # Maribel Hearn, 2023
 # Anomalo Caris, 2023
@@ -10,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-28 21:57+0000\n"
+"POT-Creation-Date: 2023-05-07 18:42+0000\n"
 "PO-Revision-Date: 2023-05-06 19:43+0000\n"
 "Last-Translator: Anomalo Caris, 2023\n"
 "Language-Team: Japanese (https://app.transifex.com/silent-selene/teams/168285/ja/)\n"
@@ -22,21 +19,21 @@ msgstr ""
 "X-Generator: Poedit 3.1.1\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
-#: replays/forms.py:27 replays/forms.py:67 replays/game_ids.py:41
-msgid "Regular"
+#: replays/game_ids.py:41
+msgid "Full Game"
 msgstr ""
 
-#: replays/forms.py:28 replays/forms.py:68 replays/game_ids.py:43
+#: replays/game_ids.py:43
 msgid "Stage Practice"
 msgstr "ステージプラクティス"
-
-#: replays/forms.py:30 replays/forms.py:71 replays/game_ids.py:47
-msgid "PVP"
-msgstr "二人対戦"
 
 #: replays/game_ids.py:45
 msgid "Spell Practice"
 msgstr "スペルプラクティス"
+
+#: replays/game_ids.py:47
+msgid "PVP"
+msgstr "二人対戦"
 
 #: replays/game_ids.py:66
 msgctxt "short game name"
@@ -49,8 +46,6 @@ msgid "The Highly Responsive to Prayers"
 msgstr "東方靈異伝"
 
 #: replays/game_ids.py:68
-#| msgctxt "full game name"
-#| msgid "The Highly Responsive to Prayers"
 msgctxt "full game name"
 msgid "東方靈異伝 - The Highly Responsive to Prayers"
 msgstr "東方靈異伝　～ The Highly Responsive to Prayers"
@@ -76,182 +71,151 @@ msgid "th03"
 msgstr "夢"
 
 #: replays/game_ids.py:77
-#| msgid "東方夢時空 - The Phantasmagoria of Dim. Dream"
 msgctxt "standard game name"
 msgid "The Phantasmagoria of Dim. Dream"
 msgstr "東方夢時空"
 
 #: replays/game_ids.py:78
-#| msgid "東方夢時空 - The Phantasmagoria of Dim. Dream"
 msgctxt "full game name"
 msgid "東方夢時空 - The Phantasmagoria of Dim. Dream"
 msgstr "東方夢時空　～ Phantasmagoria of Dim.Dream"
 
 #: replays/game_ids.py:81
-#| msgid "th04"
 msgctxt "short game name"
 msgid "th04"
 msgstr "幻"
 
 #: replays/game_ids.py:82
-#| msgid "東方幻想郷 - Lotus Land Story"
 msgctxt "standard game name"
 msgid "Lotus Land Story"
 msgstr "東方幻想郷"
 
 #: replays/game_ids.py:83
-#| msgid "東方幻想郷 - Lotus Land Story"
 msgctxt "full game name"
 msgid "東方幻想郷 - Lotus Land Story"
 msgstr "東方幻想郷　～ Lotus Land Story"
 
 #: replays/game_ids.py:86
-#| msgid "th05"
 msgctxt "short game name"
 msgid "th05"
 msgstr "怪"
 
 #: replays/game_ids.py:87
-#| msgctxt "th09"
-#| msgid "Mystia"
 msgctxt "standard game name"
 msgid "Mystic Square"
 msgstr "東方怪綺談"
 
 #: replays/game_ids.py:88
-#| msgid "東方怪綺談 - Mystic Square"
 msgctxt "full game name"
 msgid "東方怪綺談 - Mystic Square"
 msgstr "東方怪綺談　～ Mystic Square"
 
 #: replays/game_ids.py:91
-#| msgid "th06"
 msgctxt "short game name"
 msgid "th06"
 msgstr "紅"
 
 #: replays/game_ids.py:92
-#| msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
 msgctxt "standard game name"
 msgid "Embodiment of Scarlet Devil"
 msgstr "東方紅魔郷"
 
 #: replays/game_ids.py:93
-#| msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
 msgctxt "full game name"
 msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
 msgstr "東方紅魔郷　～ the Embodiment of Scarlet Devil"
 
 #: replays/game_ids.py:96
-#| msgid "th07"
 msgctxt "short game name"
 msgid "th07"
 msgstr "妖"
 
 #: replays/game_ids.py:97
-#| msgid "東方妖々夢 - Perfect Cherry Blossom"
 msgctxt "standard game name"
 msgid "Perfect Cherry Blossom"
 msgstr "東方妖々夢"
 
 #: replays/game_ids.py:98
-#| msgid "東方妖々夢 - Perfect Cherry Blossom"
 msgctxt "full game name"
 msgid "東方妖々夢 - Perfect Cherry Blossom"
 msgstr "東方妖々夢　～ Perfect Cherry Blossom"
 
 #: replays/game_ids.py:101
-#| msgid "th08"
 msgctxt "short game name"
 msgid "th08"
 msgstr "永"
 
 #: replays/game_ids.py:102
-#| msgid "東方永夜抄 - Imperishable Night"
 msgctxt "standard game name"
 msgid "Imperishable Night"
 msgstr "東方永夜抄"
 
 #: replays/game_ids.py:103
-#| msgid "東方永夜抄 - Imperishable Night"
 msgctxt "full game name"
 msgid "東方永夜抄 - Imperishable Night"
 msgstr "東方永夜抄　～ Imperishable Night"
 
 #: replays/game_ids.py:106
-#| msgid "th09"
 msgctxt "short game name"
 msgid "th09"
 msgstr "花"
 
 #: replays/game_ids.py:107
-#| msgid "東方花映塚 - Phantasmagoria of Flower View"
 msgctxt "standard game name"
 msgid "Phantasmagoria of Flower View"
 msgstr "東方花映塚"
 
 #: replays/game_ids.py:108
-#| msgid "東方花映塚 - Phantasmagoria of Flower View"
 msgctxt "full game name"
 msgid "東方花映塚 - Phantasmagoria of Flower View"
 msgstr "東方花映塚　～ Phantasmagoria of Flower View"
 
 #: replays/game_ids.py:111
-#| msgid "th10"
 msgctxt "short game name"
 msgid "th10"
 msgstr "風"
 
 #: replays/game_ids.py:112
-#| msgid "東方風神録 - Mountain of Faith"
 msgctxt "standard game name"
 msgid "Mountain of Faith"
 msgstr "東方風神録"
 
 #: replays/game_ids.py:113
-#| msgid "東方風神録 - Mountain of Faith"
 msgctxt "full game name"
 msgid "東方風神録 - Mountain of Faith"
 msgstr "東方風神録　～ Mountain of Faith"
 
 #: replays/game_ids.py:116
-#| msgid "th11"
 msgctxt "short game name"
 msgid "th11"
 msgstr "地"
 
 #: replays/game_ids.py:117
-#| msgid "東方地霊殿 - Subterranean Animism"
 msgctxt "standard game name"
 msgid "Subterranean Animism"
 msgstr "東方地霊殿"
 
 #: replays/game_ids.py:118
-#| msgid "東方地霊殿 - Subterranean Animism"
 msgctxt "full game name"
 msgid "東方地霊殿 - Subterranean Animism"
 msgstr "東方地霊殿　～ Subterranean Animism"
 
 #: replays/game_ids.py:121
-#| msgid "th12"
 msgctxt "short game name"
 msgid "th12"
 msgstr "星"
 
 #: replays/game_ids.py:122
-#| msgid "東方星蓮船 - Undefined Fantastic Object"
 msgctxt "standard game name"
 msgid "Undefined Fantastic Object"
 msgstr "東方星蓮船"
 
 #: replays/game_ids.py:123
-#| msgid "東方星蓮船 - Undefined Fantastic Object"
 msgctxt "full game name"
 msgid "東方星蓮船 - Undefined Fantastic Object"
 msgstr "東方星蓮船　～ Undefined Fantastic Object"
 
 #: replays/game_ids.py:126
-#| msgid "th13"
 msgctxt "short game name"
 msgid "th13"
 msgstr "神"
@@ -262,97 +226,81 @@ msgid "Ten Desires"
 msgstr "東方神霊廟"
 
 #: replays/game_ids.py:128
-#| msgid "東方神霊廟 - Ten Desires"
 msgctxt "full game name"
 msgid "東方神霊廟 - Ten Desires"
 msgstr "東方神霊廟　～ Ten Desires"
 
 #: replays/game_ids.py:131
-#| msgid "th14"
 msgctxt "short game name"
 msgid "th14"
 msgstr "輝"
 
 #: replays/game_ids.py:132
-#| msgid "東方輝針城 - Double Dealing Character"
 msgctxt "standard game name"
 msgid "Double Dealing Character"
 msgstr "東方輝針城"
 
 #: replays/game_ids.py:133
-#| msgid "東方輝針城 - Double Dealing Character"
 msgctxt "full game name"
 msgid "東方輝針城 - Double Dealing Character"
 msgstr "東方輝針城　～ Double Dealing Character"
 
 #: replays/game_ids.py:136
-#| msgid "th15"
 msgctxt "short game name"
 msgid "th15"
 msgstr "紺"
 
 #: replays/game_ids.py:137
-#| msgid "東方紺珠伝 - Legacy of Lunatic Kingdom"
 msgctxt "standard game name"
 msgid "Legacy of Lunatic Kingdom"
 msgstr "東方紺珠伝"
 
 #: replays/game_ids.py:138
-#| msgid "東方紺珠伝 - Legacy of Lunatic Kingdom"
 msgctxt "full game name"
 msgid "東方紺珠伝 - Legacy of Lunatic Kingdom"
 msgstr "東方紺珠伝　～ Legacy of Lunatic Kingdom"
 
 #: replays/game_ids.py:141
-#| msgid "th16"
 msgctxt "short game name"
 msgid "th16"
 msgstr "天"
 
 #: replays/game_ids.py:142
-#| msgid "東方天空璋 - Hidden Star in Four Seasons"
 msgctxt "standard game name"
 msgid "Hidden Star in Four Seasons"
 msgstr "東方天空璋"
 
 #: replays/game_ids.py:143
-#| msgid "東方天空璋 - Hidden Star in Four Seasons"
 msgctxt "full game name"
 msgid "東方天空璋 - Hidden Star in Four Seasons"
 msgstr "東方天空璋　～ Hidden Star in Four Seasons"
 
 #: replays/game_ids.py:146
-#| msgid "th17"
 msgctxt "short game name"
 msgid "th17"
 msgstr "鬼"
 
 #: replays/game_ids.py:147
-#| msgid "東方鬼形獣 - Wily Beast and Weakest Creature"
 msgctxt "standard game name"
 msgid "Wily Beast and Weakest Creature"
 msgstr "東方鬼形獣"
 
 #: replays/game_ids.py:148
-#| msgid "東方鬼形獣 - Wily Beast and Weakest Creature"
 msgctxt "full game name"
 msgid "東方鬼形獣 - Wily Beast and Weakest Creature"
 msgstr "東方鬼形獣　～ Wily Beast and Weakest Creature"
 
 #: replays/game_ids.py:151
-#| msgid "th18"
 msgctxt "short game name"
 msgid "th18"
 msgstr "虹"
 
 #: replays/game_ids.py:152
-#| msgid "東方虹龍洞 - Unconnected Marketeers"
 msgctxt "standard game name"
 msgid "Unconnected Marketeers"
 msgstr "東方虹龍洞"
 
 #: replays/game_ids.py:153
-#| msgid "東方虹龍洞 - Unconnected Marketeers"
 msgctxt "full game name"
 msgid "東方虹龍洞 - Unconnected Marketeers"
 msgstr "東方虹龍洞　～ Unconnected Marketeers"
@@ -982,50 +930,36 @@ msgid "Sanae"
 msgstr "早苗"
 
 #: replays/game_ids.py:512
-#| msgctxt "th01"
-#| msgid "Reimu"
 msgctxt "th17"
 msgid "Reimu"
 msgstr "霊夢"
 
 #: replays/game_ids.py:514
-#| msgctxt "th03"
-#| msgid "Marisa"
 msgctxt "th17"
 msgid "Marisa"
 msgstr "魔理沙"
 
 #: replays/game_ids.py:516
-#| msgctxt "th08"
-#| msgid "Youmu"
 msgctxt "th17"
 msgid "Youmu"
 msgstr "妖夢"
 
 #: replays/game_ids.py:524
-#| msgctxt "th16"
-#| msgid "Aya Spring"
 msgctxt "th16"
 msgid "Spring"
 msgstr "春"
 
 #: replays/game_ids.py:526
-#| msgctxt "th16"
-#| msgid "Aya Summer"
 msgctxt "th16"
 msgid "Summer"
 msgstr "夏"
 
 #: replays/game_ids.py:528
-#| msgctxt "th16"
-#| msgid "Aya Autumn"
 msgctxt "th16"
 msgid "Autumn"
 msgstr "秋"
 
 #: replays/game_ids.py:530
-#| msgctxt "th16"
-#| msgid "Aya Winter"
 msgctxt "th16"
 msgid "Winter"
 msgstr "冬"
@@ -1036,15 +970,11 @@ msgid "Wolf"
 msgstr "オオカミ"
 
 #: replays/game_ids.py:537
-#| msgctxt "th17"
-#| msgid "Reimu Otter"
 msgctxt "th16"
 msgid "Otter"
 msgstr "カワウソ"
 
 #: replays/game_ids.py:539
-#| msgctxt "th17"
-#| msgid "Reimu Eagle"
 msgctxt "th16"
 msgid "Eagle"
 msgstr "オオワシ"
@@ -1071,7 +1001,7 @@ msgstr "Bルート"
 
 #: replays/models.py:110
 msgctxt "Category"
-msgid "Regular"
+msgid "Standard"
 msgstr ""
 
 #: replays/models.py:113
@@ -1086,7 +1016,7 @@ msgstr ""
 
 #: replays/models.py:127
 msgctxt "Replay Type"
-msgid "Regular"
+msgid "Full Game"
 msgstr ""
 
 #: replays/models.py:130
@@ -1094,12 +1024,12 @@ msgctxt "Replay Type"
 msgid "Stage Practice"
 msgstr "ステージプラクティス"
 
-#: replays/models.py:133
+#: replays/models.py:136
 msgctxt "Replay Type"
 msgid "Spell Practice"
 msgstr "スペルプラクティス"
 
-#: replays/models.py:137
+#: replays/models.py:140
 msgctxt "Replay Type"
 msgid "PVP"
 msgstr "二人対戦"
@@ -1122,6 +1052,17 @@ msgid ""
 "    </p>\n"
 "    <p>\n"
 "        You can buy most of the official Touhou games on <a href=\"https://store.steampowered.com/search/?developer=%%e4%%b8%%8a%%e6%%b5%%b7%%e3%%82%%a2%%e3%%83%%aa%%e3%%82%%b9%%e5%%b9%%bb%%e6%%a8%%82%%e5%%9b%%a3\">Steam</a>, <a href=\"https://www.dlsite.com/maniax/circle/profile/=/maker_id/RG46179.html\">DLSite</a> or many other online stores. A few are not sold as online downloads, but can be purchased as CDs.\n"
+"    </p>\n"
+"    "
+msgstr ""
+
+#: replays/templates/replays/docs/about.html:20
+#, python-format
+msgid ""
+"\n"
+"    <h1>Contact Us</h1>\n"
+"    <p>\n"
+"        The best way to contact the Silent Selene team or discuss it is to <a href=\"%(discord_link)s\">join us on Discord</a>. You can also send feedback by sending an email to <a href=\"mailto:%(webmaster_email)s\">%(webmaster_email)s</a>.\n"
 "    </p>\n"
 "    "
 msgstr ""
@@ -1392,13 +1333,13 @@ msgid ""
 "    <p>These rules are preliminary; we will adjust them based on feedback from the community. If we do, we might have to recategorize some replays.</p>\n"
 "    <h2>Overview</h2>\n"
 "    <p>\n"
-"        There are three types of replays on Silent Selene: regular, TAS, and unlisted. Most replays are <b>regular</b>; that describes runs that are played normally, without any unusual tools to assist the player. (Tools that do not change the character of the run are still allowed in regular replays.) <b>TAS</b> replays are tool-assisted; any helper tools are allowed, even ones that are obviously \"cheating\" like save states. But the replay still has to be a replay of the actual game. And <b>unlisted</b> runs are everything else; this category mostly applies to replays that changed the game's patterns somehow or made other crazy changes.\n"
+"        There are three types of replays on Silent Selene: standard, tool-assisted, and unusual. Most replays are <b>standard</b>; that describes runs that are played normally, without any unusual tools to assist the player. (Tools that do not change the character of the run are still allowed in standard replays.) <b>Tool-assisted</b> replays are runs played with help from external software; any helper tools are allowed, even ones that are obviously \"cheating\" like save states. But the replay still has to be a replay of the actual game. And <b>unusual</b> runs are everything else; this category mostly applies to replays that changed the game's patterns somehow or made other crazy changes.\n"
 "    </p>\n"
 "    <h2>tl;dr</h2>\n"
 "    <p>\n"
-"        For regular runs, most tools like vpatch are allowed. Translation patches are allowed. Pause buffering is not allowed.\n"
+"        For standard runs, most tools like vpatch are allowed. Translation patches are allowed. Pause buffering is not allowed.\n"
 "    </p>\n"
-"    <h2>Is My Replay Regular?</h2>\n"
+"    <h2>Is My Replay Standard?</h2>\n"
 "    <h3>General Rules</h3>\n"
 "    <h4>Expert replays</h4>\n"
 "    <p>\n"
@@ -1420,7 +1361,7 @@ msgid ""
 "    </ul>\n"
 "    <h4>What's Allowed</h4>\n"
 "    <p>\n"
-"        These tools (and classes of tools) are OK to use in regular replays.\n"
+"        These tools (and classes of tools) are OK to use in standard replays.\n"
 "    </p>\n"
 "    <ul>\n"
 "        <li>\n"
@@ -1441,7 +1382,7 @@ msgid ""
 "    </ul>\n"
 "    <h4>What's Banned</h4>\n"
 "    <p>\n"
-"        The following things are explicitly not allowed in regular replays.\n"
+"        The following things are explicitly not allowed in standard replays.\n"
 "    </p>\n"
 "    <ul>\n"
 "        <li>\n"
@@ -1500,7 +1441,7 @@ msgid ""
 "    </p>\n"
 "    <h2>Replay Rules</h2>\n"
 "    <p>\n"
-"        For detailed rules on what is allowed for regular replays, see the <a href=\"%(replay_rules_url)s\">Replay Rules</a>.\n"
+"        For detailed rules on what is allowed for standard replays, see the <a href=\"%(replay_rules_url)s\">Replay Rules</a>.\n"
 "    </p>\n"
 "    <ul>\n"
 "        <li>Be sure the replay information you specify is correct.</li>\n"
@@ -1741,59 +1682,66 @@ msgstr ""
 msgid "Publish a replay for a game without replay files"
 msgstr ""
 
-#: thscoreboard/settings.py:213
+#: thscoreboard/settings.py:214
 msgid "English"
 msgstr "English"
 
-#: thscoreboard/settings.py:214
+#: thscoreboard/settings.py:215
 msgid "Japanese"
 msgstr "日本語"
 
-#: users/forms.py:31
+#: users/forms.py:32
 msgid "An account has already been registered with this username."
 msgstr ""
 
-#: users/forms.py:53
+#: users/forms.py:54
 msgid "An account has already been registered with this email address."
 msgstr ""
 
-#: users/forms.py:92 users/forms.py:117 users/forms.py:130
+#: users/forms.py:93 users/forms.py:118 users/forms.py:131
 msgid "Username"
 msgstr "ユーザー名"
 
-#: users/forms.py:94 users/templates/users/delete_account.html:29
+#: users/forms.py:95 users/templates/users/delete_account.html:29
 msgid "Password"
 msgstr "パスワード"
 
-#: users/forms.py:103
+#: users/forms.py:104
 msgid "Email address"
 msgstr "メールアドレス"
 
-#: users/forms.py:112
+#: users/forms.py:113
 msgid "Invite File Contents"
 msgstr ""
 
-#: users/forms.py:131
+#: users/forms.py:132
 msgid "Reason"
 msgstr ""
 
-#: users/forms.py:132
+#: users/forms.py:133
 msgid "Days"
 msgstr "日"
 
-#: users/forms.py:133
+#: users/forms.py:134
 msgid "Hours"
 msgstr "時間"
 
-#: users/forms.py:141
+#: users/forms.py:142
 #, python-format
 msgid "User %(username)s does not exist."
+msgstr ""
+
+#: users/forms.py:155
+msgid "Silent Selene username"
+msgstr ""
+
+#: users/forms.py:157
+msgid "Royalflare username"
 msgstr ""
 
 #: users/templates/registration/password_change_form.html:4
 #: users/templates/registration/password_change_form.html:42
 #: users/templates/users/profile.html:42
-#| msgid "Password"
 msgid "Change Password"
 msgstr "パスワードを変更する"
 
@@ -1864,58 +1812,3 @@ msgstr "プロフィール"
 #: users/templates/users/profile.html:41
 msgid "Log out"
 msgstr "ログアウト"
-
-#~ msgctxt "Category"
-#~ msgid "Private"
-#~ msgstr ""
-
-#~ msgid "Upload a Replay"
-#~ msgstr ""
-
-#~ msgid "th05 Reimu"
-#~ msgstr "霊夢"
-
-#~ msgid "th07 Reimu A"
-#~ msgstr "霊符"
-
-#~ msgid "th07 Reimu B"
-#~ msgstr "夢符"
-
-#~ msgid "th07 Marisa A"
-#~ msgstr "魔符"
-
-#~ msgid "th07 Marisa B"
-#~ msgstr "恋符"
-
-#~ msgid "th10 Reimu A"
-#~ msgstr ""
-
-#~ msgid "th10 Reimu B"
-#~ msgstr ""
-
-#~ msgid "th10 Marisa A"
-#~ msgstr ""
-
-#~ msgid "th10 Marisa B"
-#~ msgstr ""
-
-#~ msgid "th11 Reimu A"
-#~ msgstr ""
-
-#~ msgid "th11 Reimu B"
-#~ msgstr ""
-
-#~ msgid "th11 Reimu C"
-#~ msgstr ""
-
-#~ msgid "th11 Marisa A"
-#~ msgstr ""
-
-#~ msgid "th11 Marisa B"
-#~ msgstr ""
-
-#~ msgid "th11 Marisa C"
-#~ msgstr ""
-
-#~ msgid "th10 Reimu A (Homing Type)"
-#~ msgstr ""
