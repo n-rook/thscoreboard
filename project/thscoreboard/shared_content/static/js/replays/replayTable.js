@@ -16,7 +16,6 @@ async function requestAndInitializeReplays() {
     : window.location.origin + window.location.pathname + "/json";
 
   try {
-    console.log('', Date.now()/1000, "Sending request");
     const response = await fetch(requestUri, {priority: 'high'});
 
     if (!response.ok) {
@@ -32,13 +31,11 @@ async function requestAndInitializeReplays() {
     while (true) {
       const { done, value } = await reader.read();
       if (done) {
-        console.log('', Date.now()/1000, "Got all replays");
         return;
       }
 
       buffer += decoder.decode(value, { stream: true });
       const jsonStrings = buffer.split('\n');
-      console.log('', Date.now()/1000, "Got new buffer section containing:", jsonStrings.length, "replays");
 
       const newReplays = [];
       while (jsonStrings.length > 1) {
