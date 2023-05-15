@@ -193,6 +193,7 @@ class ClaimReplaysForm(forms.Form):
         label=_("contact_info"), required=True, max_length=200
     )
     silentselene_username = forms.CharField(widget=forms.HiddenInput(), required=False)
+    submit = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def __init__(self, *args, **kwargs):
         replays = kwargs.pop("replays")

@@ -604,6 +604,9 @@ class Ban(models.Model):
 
 class RequestStatus(models.IntegerChoices):
     SUBMITTED = 1
+    APPROVED = 2
+    USER_DELETED = 3
+    STAFF_DELETED = 4
 
 
 class ClaimReplayRequestManager(models.Manager):

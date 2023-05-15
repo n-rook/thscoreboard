@@ -4,6 +4,7 @@ from django.contrib.auth import decorators as auth_decorators
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 from django.db import transaction
+from django.core.exceptions import PermissionDenied
 
 
 from users import forms
@@ -36,6 +37,52 @@ def claim(request: WSGIRequest) -> HttpResponse:
                 contact_info=form.cleaned_data["contact_info"],
             )
             return render(request, "replays/success.html")
+
+
+@auth_decorators.login_required
+def review(request: WSGIRequest, claim_replay_request_id: int) -> HttpResponse:
+    claim: user_models.ClaimReplayRequest = (
+        user_models.ClaimReplayRequest.objects.filter(
+            id=claim_replay_request_id
+        ).first()
+    )
+    _assert_user_can_see_claim(request.user, claim)
+
+    if request.method == "POST":
+        form = forms.ClaimReplaysForm(
+            request.POST, replays=replay_models.Replay.objects.all()
+        )
+        if form.is_valid():
+            replays, user = _get_replays_and_user_from_form(form)
+            if user.is_staff and form.cleaned_data["submit"] == "Confirm":
+                _assign_selected_replays_to_user(replays, user, claim)
+                return render(request, "replays/success.html")
+            elif form.cleaned_data["submit"] == "Delete claim":
+                _delete_claim_replay_request(claim, request.user.is_staff)
+                return render(request, "replays/success.html")
+            else:
+                raise ValueError(f"Unknown submit value: {form.cleaned_data['submit']}")
+    else:
+        return _render_review_form(request, claim)
+
+
+def _render_review_form(
+    request: WSGIRequest, claim: user_models.ClaimReplayRequest
+) -> HttpResponse:
+    replays = claim.replays.all()
+    form = forms.ClaimReplaysForm(replays=replays)
+    form.fields["contact_info"].initial = claim.contact_info
+    form.fields["contact_info"].widget.attrs["readonly"] = "readonly"
+    return render(
+        request,
+        "replays/claim_replays.html",
+        {
+            "form": form,
+            "replays": replays,
+            "silentselene_username": claim.user.username,
+            "is_review": True,
+        },
+    )
 
 
 def _render_claim_username_form(
@@ -80,7 +127,9 @@ def _create_new_claim_replay_request(
 
 @transaction.atomic
 def _assign_selected_replays_to_user(
-    replays: Iterable[replay_models.Replay], user: user_models.User
+    replays: Iterable[replay_models.Replay],
+    user: user_models.User,
+    claim: Optional[user_models.ClaimReplayRequest] = None,
 ) -> None:
     for replay in replays:
         if replay.user is None:
@@ -89,6 +138,19 @@ def _assign_selected_replays_to_user(
         else:
             if replay.user != user:
                 raise ValueError("Replay already belongs to a different user.")
+    if claim is not None:
+        claim.request_status = user_models.RequestStatus.APPROVED
+        claim.save()
+
+
+def _delete_claim_replay_request(
+    claim: user_models.ClaimReplayRequest, is_staff: bool
+) -> None:
+    if is_staff:
+        claim.request_status = user_models.RequestStatus.STAFF_DELETED
+    else:
+        claim.request_status = user_models.RequestStatus.USER_DELETED
+    claim.save()
 
 
 def _render_claim_replay_form(
@@ -107,6 +169,7 @@ def _render_claim_replay_form(
             "form": form,
             "replays": replays,
             "silentselene_username": silentselene_username,
+            "is_review": False,
         },
     )
 
@@ -131,3 +194,16 @@ def _get_unclaimed_replays_from_username(
         .filter(user__isnull=True)
         .all()
     )
+
+
+def _assert_user_can_see_claim(
+    user: user_models.User, claim: user_models.ClaimReplayRequest
+) -> None:
+    if user.is_staff:
+        return
+    if (
+        user == claim.user
+        and claim.request_status == user_models.RequestStatus.SUBMITTED
+    ):
+        return
+    raise PermissionDenied

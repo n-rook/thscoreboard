@@ -11,7 +11,7 @@
            name="silentselene_username"
            value="{{ silentselene_username }}"
            class="spaced-input">
-    {% if not user.is_staff %}
+    {% if not user.is_staff or is_review %}
     <h2>
         Contact info
     </h2>
@@ -38,7 +38,15 @@
         </thead>
         {% for replay in replays %}
             <tr>
-                <td><input type="checkbox" value="{{replay.id}}" name="choices" checked></td>
+                <td>
+                    <input
+                        type="checkbox"
+                        value="{{replay.id}}"
+                        name="choices"
+                        checked
+                        {% if is_review and not user.is_staff %}hidden{% endif %}
+                    >
+                </td>
                 <td>{{ replay.shot.game.GetShortName }}</td>
                 <td>{{ replay.GetDifficultyName }}</td>
                 <td>{{ replay.shot.GetName }}</td>
@@ -48,7 +56,16 @@
             </tr>
         {% endfor %}
     </table>
-    <input type="submit" value="Confirm" class="spaced-input">
+    {% if user.is_staff %}
+        <input type="submit" name="submit" value="Confirm" class="spaced-input">
+        <input type="submit" name="submit" value="Delete claim" class="spaced-input">
+    {% else %}
+        {% if is_review %}
+            <input type="submit" name="submit" value="Delete claim" class="spaced-input">
+        {% else %}
+            <input type="submit" name="submit" value="Confirm" class="spaced-input">
+        {% endif %}
+    {% endif %}
 </form>
 
 {% endblock %}
