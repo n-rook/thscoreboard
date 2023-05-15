@@ -4,11 +4,9 @@ const displayedColumns = [
   "User", "Game", "Difficulty", "Shot", "Route", "Score", "Upload Date", "Comment", "Replay"
 ];
 
-// Initialize global variables if they were not provided by html
-// Needed for jest environment
-
 var activeFilters = {};
 var allReplays = [];
+var tableResetCounter = 0;
 
 requestAndInitializeReplays();
 
@@ -18,9 +16,8 @@ async function requestAndInitializeReplays() {
     : window.location.origin + window.location.pathname + "/json";
 
   try {
-    const response = await fetch(requestUri, {
-      priority: 'high'
-    });
+    console.log('', Date.now()/1000, "Sending request");
+    const response = await fetch(requestUri, {priority: 'high'});
 
     if (!response.ok) {
       replayTableBodyHtml.innerHTML =
@@ -28,10 +25,34 @@ async function requestAndInitializeReplays() {
       return;
     }
 
-    const replayJson = await response.json();
-    allReplays = replayJson;
-    const filteredReplays = filterReplays(activeFilters, allReplays);
-    constructAndRenderReplayTable(filteredReplays);
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder('utf-8');
+    let buffer = '';
+  
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) {
+        console.log('', Date.now()/1000, "Got all replays");
+        return;
+      }
+
+      buffer += decoder.decode(value, { stream: true });
+      const jsonStrings = buffer.split('\n');
+      console.log('', Date.now()/1000, "Got new buffer section containing:", jsonStrings.length, "replays");
+
+      const newReplays = [];
+      while (jsonStrings.length > 1) {
+        const jsonString = jsonStrings.shift();
+        const replay = JSON.parse(jsonString);
+        newReplays.push(replay);
+      }
+      // The final string might be incomplete, so instead of parsing it we store it in the buffer
+      buffer = jsonStrings[0] || '';
+
+      addReplaysToTable(filterReplays(activeFilters, newReplays));
+      allReplays.push(...newReplays);
+    }
+
   } catch (error) {}
 }
 
@@ -41,7 +62,8 @@ function onClick(elm) {
 
   activeFilters = updateFilters(activeFilters, filterType, value);
   const filteredReplays = filterReplays(activeFilters, allReplays);
-  constructAndRenderReplayTable(filteredReplays);
+  clearTableHtml();
+  addReplaysToTable(filteredReplays);
 }
 
 function updateFilters(filters, filterType, value) {
@@ -71,15 +93,12 @@ function filterReplays(filters, replays) {
   return filteredReplays;
 }
 
-function constructAndRenderReplayTable(replays) {
-  clearTableHtml();
-
+function addReplaysToTable(replays){
   let startIndex = 0;
   let endIndex = Math.min(replayTableBatchSize, replays.length);
   while (startIndex < replays.length) {
-    isFirstBatch = startIndex === 0;
     constructAndRenderTableBatch(
-      replays, startIndex, endIndex, isFirstBatch
+      replays, startIndex, endIndex
     );
     startIndex += replayTableBatchSize;
     endIndex += replayTableBatchSize;
@@ -87,19 +106,18 @@ function constructAndRenderReplayTable(replays) {
   }
 }
 
-function constructAndRenderTableBatch(replays, startIndex, endIndex, isFirstBatch) {
-  if (isFirstBatch) {
-    populateTable(replays, startIndex, endIndex);
-  } else {
-    delayedPopulateTable(replays, startIndex, endIndex);
-  }
-}
-
-function delayedPopulateTable(replays, startIndex, endIndex) {
+function constructAndRenderTableBatch(replays, startIndex, endIndex) {
+  const tableResetsAtSchedulingTime = tableResetCounter;
   // Delays the execution of the populateTable function to prevent blocking the
   // main thread and improve performance. This allows other code to run, such
   // as UI updates, while the table is being populated.
   setTimeout(() => {
+    const tableResetsAtCallTime = tableResetCounter;
+    if (tableResetsAtCallTime != tableResetsAtSchedulingTime) {
+      // table was reset, call is invalid
+      return;
+    }
+
     populateTable(replays, startIndex, endIndex)
   }, 1);
 }
@@ -155,6 +173,7 @@ function createLink(url, text) {
 
 function clearTableHtml() {
   replayTableBodyHtml.innerHTML = '';
+  tableResetCounter++;
 }
 
 try {

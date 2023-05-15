@@ -66,9 +66,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
         with test_utilities.OverrideTranslations():
             converter = ReplayToJsonConverter()
-            json_data = converter.convert_replays_to_serializable_list(replays)
-
-        assert len(json_data) == 2
+            json_data = [converter.convert_replay_to_dict(replay) for replay in replays]
 
         for json_replay_data in json_data:
             assert json_replay_data
@@ -111,7 +109,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         replays = models.Replay.objects.order_by("-score").annotate_with_rank()
         with test_utilities.OverrideTranslations():
             converter = ReplayToJsonConverter()
-            json_data = converter.convert_replays_to_serializable_list(replays)
+            json_data = [converter.convert_replay_to_dict(replay) for replay in replays]
 
         self.assertEquals(json_data[0]["Score"]["text"], "🥇1,000,000,000")
         self.assertEquals(json_data[1]["Score"]["text"], "🥈900,000,000")
@@ -136,7 +134,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
         with test_utilities.OverrideTranslations():
             converter = ReplayToJsonConverter()
-            json_data = converter.convert_replays_to_serializable_list(replays)
+            json_data = [converter.convert_replay_to_dict(replay) for replay in replays]
 
         self.assertEquals(json_data[0]["Score"]["text"], "🥇1,000,000,000")
         self.assertEquals(json_data[1]["Score"]["text"], "🥇900,000,000")
