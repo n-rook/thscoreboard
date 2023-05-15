@@ -41,6 +41,8 @@ def _get_filter_options(game: Game) -> dict[str, list[str]]:
         return _get_filter_options_th01(game)
     elif game.game_id == game_ids.GameIDs.TH08:
         return _get_filter_options_th08(game)
+    elif game.game_id == game_ids.GameIDs.TH13:
+        return _get_filter_options_th13(game)
     elif game.game_id == game_ids.GameIDs.TH16:
         return _get_filter_options_th16(game)
     elif game.game_id == game_ids.GameIDs.TH17:
@@ -66,6 +68,14 @@ def _get_filter_options_th08(game: Game) -> dict[str, list[str]]:
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
     all_routes = [route.GetName() for route in Route.objects.filter(game=game.game_id)]
     return {"Difficulty": all_difficulties, "Shot": all_shots, "Route": all_routes}
+
+
+def _get_filter_options_th13(game: Game) -> dict[str, list[str]]:
+    filter_options = _get_filter_options_default(game)
+    # The Overdrive difficulty only exists for spell practice, but we do not show any
+    # spell practice replays.
+    filter_options["Difficulty"].remove("Overdrive")
+    return filter_options
 
 
 def _get_filter_options_th16(game: Game) -> dict[str, list[str]]:
