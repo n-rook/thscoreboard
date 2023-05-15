@@ -152,9 +152,9 @@ class BanForm(forms.Form):
 
 class ClaimUsernameForm(forms.Form):
     silentselene_username = forms.CharField(
-        label=_("silentselene_username"), required=True
+        label=_("Silent Selene username"), required=True
     )
-    royalflare_username = forms.CharField(label=_("royalflare_username"), required=True)
+    royalflare_username = forms.CharField(label=_("Royalflare username"), required=True)
 
     def clean(self):
         cleaned_data = super().clean()
