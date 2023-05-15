@@ -83,4 +83,5 @@ urlpatterns = [
     ),
     path("claim", claim.claim),
     path("set_language", set_language.set_language),
+    path("claim/<int:claim_replay_request_id>", claim.review),
 ]
