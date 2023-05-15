@@ -81,4 +81,5 @@ urlpatterns = [
         name="forgot_password_complete",
     ),
     path("claim", claim.claim),
+    path("claim/<int:claim_replay_request_id>", claim.review),
 ]
