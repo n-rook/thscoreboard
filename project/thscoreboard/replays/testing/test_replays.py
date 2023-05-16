@@ -37,7 +37,7 @@ def GetRaw(filename: _filename_type) -> bytes:
 
 def CreateAsPublishedReplay(
     filename: _filename_type,
-    user,
+    user=None,
     difficulty=None,
     score=None,
     category=models.Category.STANDARD,
