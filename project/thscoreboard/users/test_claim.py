@@ -26,9 +26,7 @@ class ClaimReplaysTest(ReplayTestCase):
     def setUp(self):
         super().setUp()
         self.user = self.createUser("user")
-        self.staff_user = self.createUser("staff_user")
-        self.staff_user.is_staff = True
-        self.staff_user.save()
+        self.staff_user = self.createUser("staff_user", is_staff=True)
         self.replay = test_replays.CreateAsPublishedReplay(
             "th6_hard_1cc", imported_username="imported"
         )
@@ -118,9 +116,7 @@ class ReviewClaimReplaysTest(ReplayTestCase):
     def setUp(self):
         super().setUp()
         self.user = self.createUser("user")
-        self.staff_user = self.createUser("staff_user")
-        self.staff_user.is_staff = True
-        self.staff_user.save()
+        self.staff_user = self.createUser("staff_user", is_staff=True)
         self.other_user = self.createUser("user2")
 
     @classmethod
