@@ -55,10 +55,10 @@ def review(request: WSGIRequest, claim_replay_request_id: int) -> HttpResponse:
         )
         if form.is_valid():
             replays, user = _get_replays_and_user_from_form(form)
-            if user.is_staff and form.cleaned_data["submit"] == "Confirm":
+            if form.cleaned_data["submit"] == "Approve":
                 _assign_selected_replays_to_user(replays, user, claim)
                 return render(request, "replays/success.html")
-            elif form.cleaned_data["submit"] == "Delete claim":
+            elif form.cleaned_data["submit"] == "Delete request":
                 _delete_claim_replay_request(claim, request.user.is_staff)
                 return render(request, "replays/success.html")
             else:
