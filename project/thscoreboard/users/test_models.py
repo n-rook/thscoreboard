@@ -431,7 +431,7 @@ class DeleteAnAccountWithReplaysTestCase(test_case.ReplayTestCase):
 
         r = test_replays.CreateAsPublishedReplay(filename="th6_extra", user=u)
 
-        models.Visits.RecordVisit(user=u, ip="127.0.0.1")
+        models.Visits.RecordVisit(user=u, ip="test.ip.address")
 
         u.MarkForDeletion()
         u.deleted_on -= datetime.timedelta(days=90)
@@ -442,7 +442,7 @@ class DeleteAnAccountWithReplaysTestCase(test_case.ReplayTestCase):
 
         self.assertFalse(models.User.objects.filter(id=u.id).exists())
         self.assertFalse(replay_models.Replay.objects.filter(id=r.id).exists())
-        self.assertFalse(models.Visits.objects.filter(ip="127.0.0.1").exists())
+        self.assertFalse(models.Visits.objects.filter(ip="test.ip.address").exists())
 
 
 class ClaimReplayRequestTest(test_case.ReplayTestCase):
