@@ -251,11 +251,9 @@ class Replay(models.Model):
                 ),
             ),
             models.CheckConstraint(
-                name="user_xor_imported_username_isnull",
-                check=(
-                    models.Q(user__isnull=True, imported_username__isnull=False)
-                    | models.Q(user__isnull=False, imported_username__isnull=True)
-                ),
+                name="user_or_imported_username_is_nonnull",
+                check=models.Q(user__isnull=False)
+                | models.Q(imported_username__isnull=False),
             ),
         ]
 

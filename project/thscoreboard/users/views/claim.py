@@ -162,6 +162,7 @@ def _render_claim_replay_form(
     form = forms.ClaimReplaysForm(replays=replays)
     if request.user.is_staff:
         form.fields["contact_info"].initial = "Not applicable"
+        form.fields["contact_info"].widget.attrs["readonly"] = "readonly"
     return render(
         request,
         "replays/claim_replays.html",
