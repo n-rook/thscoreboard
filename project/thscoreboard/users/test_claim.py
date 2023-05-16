@@ -87,6 +87,8 @@ class ClaimReplaysTest(ReplayTestCase):
             },
         )
 
+        print(response.content)
+
         self.assertNotContains(response, DELETE_BUTTON_HTML)
         self.assertContains(response, READONLY_CONTACT_INFO_WITH_PLACEHOLDER_HTML)
         self.assertNotContains(response, CONFIRM_BUTTON_HTML)
@@ -163,6 +165,8 @@ class ReviewClaimReplaysTest(ReplayTestCase):
         claim_replay_request = self._create_claim_replay_request(self.user)
 
         response = self.client.get(f"/users/claim/{claim_replay_request.id}")
+
+        print(response.content)
 
         self.assertContains(response, DELETE_BUTTON_HTML)
         self.assertContains(response, READONLY_CONTACT_INFO_HTML)
