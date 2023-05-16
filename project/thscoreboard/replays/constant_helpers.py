@@ -44,9 +44,9 @@ def GetModelInstancesForReplay(
     return ReplayConstantModels(game=shot.game, shot=shot, route=route)
 
 
-def CheckReplayFileDuplicate(file):
+def GetReplayFileWithSameHash(file) -> Optional[models.ReplayFile]:
     hash = CalculateReplayFileHash(file)
-    return models.ReplayFile.objects.filter(replay_hash=hash).exists()
+    return models.ReplayFile.objects.filter(replay_hash=hash).first()
 
 
 def CalculateReplayFileHash(file):

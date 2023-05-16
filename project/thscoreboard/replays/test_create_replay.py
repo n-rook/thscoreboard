@@ -232,14 +232,14 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
     def testReplayDuplicates(self):
         replay_file_contents = test_replays.GetRaw("th10_normal")
 
-        temp_replay = models.TemporaryReplayFile(
+        temp_replay_1 = models.TemporaryReplayFile(
             user=self.user, replay=replay_file_contents
         )
-        temp_replay.save()
+        temp_replay_1.save()
 
         replay_info = replay_parsing.Parse(replay_file_contents)
 
-        create_replay.PublishNewReplay(
+        replay_1 = create_replay.PublishNewReplay(
             user=self.user,
             difficulty=3,
             score=294127890,
@@ -250,14 +250,14 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
             is_clear=True,
             no_bomb=False,
             miss_count=None,
-            temp_replay_instance=temp_replay,
+            temp_replay_instance=temp_replay_1,
             replay_info=replay_info,
         )
 
-        temp_replay = models.TemporaryReplayFile(
+        temp_replay_2 = models.TemporaryReplayFile(
             user=self.user, replay=replay_file_contents
         )
-        temp_replay.save()
+        temp_replay_2.save()
 
         replay_info = replay_parsing.Parse(replay_file_contents)
 
@@ -273,10 +273,11 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
                 is_clear=True,
                 no_bomb=False,
                 miss_count=None,
-                temp_replay_instance=temp_replay,
+                temp_replay_instance=temp_replay_2,
                 replay_info=replay_info,
             )
 
         self.assertEqual(
-            constant_helpers.CheckReplayFileDuplicate(replay_file_contents), True
+            constant_helpers.GetReplayFileWithSameHash(replay_file_contents).replay,
+            replay_1,
         )
