@@ -11,7 +11,6 @@
            name="silentselene_username"
            value="{{ silentselene_username }}"
            class="spaced-input">
-    {% if not user.is_staff or is_review %}
     <h2>
         Contact info
     </h2>
@@ -20,7 +19,6 @@
         For example, link your twitter, discord, or bilibili account.
     </p>
     {{ form.contact_info }}
-    {% endif %}
     <h2>
         Select replays
     </h2>
@@ -58,7 +56,9 @@
     </table>
     {% if user.is_staff %}
         <input type="submit" name="submit" value="Approve" class="spaced-input">
-        <input type="submit" name="submit" value="Delete request" class="spaced-input">
+        {% if is_review %}
+            <input type="submit" name="submit" value="Delete request" class="spaced-input">
+        {% endif %}
     {% else %}
         {% if is_review %}
             <input type="submit" name="submit" value="Delete request" class="spaced-input">
