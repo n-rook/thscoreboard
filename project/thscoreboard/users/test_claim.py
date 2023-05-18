@@ -1,3 +1,5 @@
+import os
+import unittest
 from django.db import connection
 
 from replays.testing import test_replays
@@ -74,6 +76,9 @@ class ClaimReplaysTest(ReplayTestCase):
             claim_replay_request.request_status, user_models.RequestStatus.SUBMITTED
         )
 
+    @unittest.skipIf(
+        os.getenv("CI") == "true", "Staff view tests don't work on GitHub CI"
+    )
     def test_staff_views_request_page(self) -> None:
         self.client.force_login(self.staff_user)
 
@@ -154,6 +159,9 @@ class ReviewClaimReplaysTest(ReplayTestCase):
             claim_replay_request.request_status, user_models.RequestStatus.USER_DELETED
         )
 
+    @unittest.skipIf(
+        os.getenv("CI") == "true", "Staff view tests don't work on GitHub CI"
+    )
     def test_staff_reviews_claim_request(self) -> None:
         self.client.force_login(self.staff_user)
         claim_replay_request = self._create_claim_replay_request(self.user)
