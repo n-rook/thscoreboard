@@ -95,7 +95,7 @@ def view_replay_reanalysis(request, game_id: str, replay_id: int):
     if replay_instance.shot.game.game_id != game_id:
         raise Http404()
     if not replay_instance.shot.game.has_replays:
-        raise HttpResponseBadRequest()
+        return HttpResponseBadRequest()
 
     if request.method == "POST":
         reanalyze_replay.UpdateReplay(replay_id)
@@ -121,7 +121,7 @@ def download_replay(request, game_id: str, replay_id: int):
     if replay_instance.shot.game.game_id != game_id:
         raise Http404()
     if not replay_instance.shot.game.has_replays:
-        raise HttpResponseBadRequest()
+        return HttpResponseBadRequest()
 
     try:
         replay_file_instance = models.ReplayFile.objects.get(replay=replay_instance)
@@ -145,7 +145,7 @@ def delete_replay(request, game_id: str, replay_id: int):
     if replay_instance.shot.game.game_id != game_id:
         raise Http404()
     if not replay_instance.user == request.user and not request.user.is_staff:
-        raise HttpResponseForbidden()
+        return HttpResponseForbidden()
 
     if request.method == "POST":
         replay_instance.delete()
