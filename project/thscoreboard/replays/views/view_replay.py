@@ -193,16 +193,18 @@ def unclaim_replay(request, game_id: str, replay_id: int):
 @http_decorators.require_http_methods(["GET", "HEAD", "POST"])
 @auth_decorators.login_required
 def list_replay(request, game_id: str, replay_id: int):
-    return _set_listed(request, game_id, replay_id, True)
+    _set_listed(request, game_id, replay_id, True)
+    return replay_details(request, game_id, replay_id)
 
 
 @http_decorators.require_http_methods(["GET", "HEAD", "POST"])
 @auth_decorators.login_required
 def unlist_replay(request, game_id: str, replay_id: int):
-    return _set_listed(request, game_id, replay_id, False)
+    _set_listed(request, game_id, replay_id, False)
+    return replay_details(request, game_id, replay_id)
 
 
-def _set_listed(request, game_id: str, replay_id: int, listed):
+def _set_listed(request, game_id: str, replay_id: int, listed) -> None:
     replay_instance = GetReplayOr404(request.user, replay_id)
 
     if replay_instance.shot.game.game_id != game_id:
@@ -212,12 +214,6 @@ def _set_listed(request, game_id: str, replay_id: int, listed):
 
     replay_instance.is_listed = listed
     replay_instance.save()
-
-    return render(
-        request,
-        "replays/unlist_replay.html",
-        {"is_listed": replay_instance.is_listed},
-    )
 
 
 def GetReplayOr404(user, replay_id):
