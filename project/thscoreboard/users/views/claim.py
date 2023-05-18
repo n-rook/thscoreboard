@@ -10,6 +10,8 @@ from django.core.exceptions import PermissionDenied
 from users import forms
 import users.models as user_models
 import replays.models as replay_models
+from thscoreboard import settings
+from thscoreboard.deploy import discord_announce
 
 
 @auth_decorators.login_required
@@ -124,6 +126,10 @@ def _create_new_claim_replay_request(
     )
     claim_replay_request.save()
     claim_replay_request.replays.set(replays)
+    discord_announce.announce(
+        f"User {user.get_username()} has requested ownership of some replays. "
+        f"You can review this request at {settings.SITE_BASE}/users/claim/{claim_replay_request.id}"
+    )
 
 
 @transaction.atomic
