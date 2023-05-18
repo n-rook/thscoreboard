@@ -5,7 +5,7 @@ DISCORD_BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 DISCORD_BOT_CHANNEL_ID = os.getenv("DISCORD_BOT_CHANNEL_ID")
 
 
-def send_message(message: str) -> None:
+def send_discord_message(message: str) -> None:
     client = Client(intents=Intents.default())
 
     @client.event

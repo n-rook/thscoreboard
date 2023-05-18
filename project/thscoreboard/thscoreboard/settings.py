@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
+import sys
 
 IS_HEROKU = "DYNO" in os.environ
 IS_PROD = IS_HEROKU
@@ -267,3 +268,5 @@ else:
 
 DISCORD_WEBHOOK_ID = os.environ.get("DISCORD_WEBHOOK_ID", None)
 DISCORD_WEBHOOK_TOKEN = os.environ.get("DISCORD_WEBHOOK_TOKEN", None)
+
+TESTING = len(sys.argv) > 1 and sys.argv[1] == "test"

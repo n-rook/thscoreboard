@@ -6,10 +6,11 @@ from django.http import HttpResponse
 from django.db import transaction
 from django.core.exceptions import PermissionDenied
 
-
 from users import forms
 import users.models as user_models
 import replays.models as replay_models
+from discord.send_message import send_discord_message
+from thscoreboard import settings
 
 
 @auth_decorators.login_required
@@ -123,6 +124,11 @@ def _create_new_claim_replay_request(
     )
     claim_replay_request.save()
     claim_replay_request.replays.set(replays)
+    if not settings.TESTING:
+        send_discord_message(
+            f"User {user.get_username()} has requested ownership of some replays. "
+            f"You can review this request at {settings.SITE_BASE}/users/claim/{claim_replay_request.id}"
+        )
 
 
 @transaction.atomic
