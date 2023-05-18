@@ -11,6 +11,7 @@ from users.views import (
     profile,
     register,
     claim,
+    set_language,
 )
 
 from thscoreboard import settings
@@ -81,4 +82,5 @@ urlpatterns = [
         name="forgot_password_complete",
     ),
     path("claim", claim.claim),
+    path("set_language", set_language.set_language),
 ]
