@@ -29,9 +29,12 @@ urlpatterns = [
     path("<str:game_id>/<int:replay_id>/edit", view_replay.edit_replay),
     path("<str:game_id>/<int:replay_id>/download", view_replay.download_replay),
     path("<str:game_id>/<int:replay_id>/delete", view_replay.delete_replay),
+    path("<str:game_id>/<int:replay_id>/list", view_replay.list_replay),
+    path("<str:game_id>/<int:replay_id>/unlist", view_replay.unlist_replay),
     path(
         "<str:game_id>/<int:replay_id>/reanalyze",
         view_replay.view_replay_reanalysis,
         name="Replays/Reanalysis",
     ),
+    path("<str:game_id>/<int:replay_id>/unclaim_replay", view_replay.unclaim_replay),
 ]

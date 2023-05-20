@@ -120,6 +120,22 @@
         <a href="{{replay.video_link}}">Watch replay on external site</a>
     </div>
     {% endif %}
+    {% if can_remove_claim %}
+    <div>
+        <a href="/replays/{{ game_id }}/{{ replay.id }}/unclaim_replay">Unclaim this replay</a>
+    </div>
+    {% endif %}
+    {% if can_edit %}
+        {% if is_listed %}
+        <div>
+            <a href="/replays/{{ game_id }}/{{ replay.id }}/unlist">Hide replay on the leaderboards</a>
+        </div>
+        {% else %}
+        <div>
+            <a href="/replays/{{ game_id }}/{{ replay.id }}/list">Show replay on the leaderboards</a>
+        </div>
+        {% endif %}
+    {% endif %}
     {% if can_delete %}
     <div>
         <a href="/replays/{{ game_id }}/{{ replay.id }}/delete">Permanently delete this replay</a>
