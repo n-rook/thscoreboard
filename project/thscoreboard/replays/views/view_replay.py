@@ -53,6 +53,10 @@ def replay_details(request, game_id: str, replay_id: int):
 
     edit_form = forms.EditReplayForm(initial={"comment": replay_instance.comment})
 
+    can_remove_claim = _is_replay_claimed(replay_instance) and (
+        request.user == replay_instance.user or request.user.is_staff
+    )
+
     context = {
         "game_name": replay_instance.shot.game.GetName(),
         "shot_name": replay_instance.shot.GetName(),
@@ -69,6 +73,7 @@ def replay_details(request, game_id: str, replay_id: int):
         "edit_form": edit_form,
         "replay_type": game_ids.GetReplayType(replay_instance.replay_type),
         "site_base": settings.SITE_BASE,
+        "can_remove_claim": can_remove_claim,
     }
 
     if hasattr(replay_instance, "replayfile"):
@@ -90,7 +95,7 @@ def view_replay_reanalysis(request, game_id: str, replay_id: int):
     if replay_instance.shot.game.game_id != game_id:
         raise Http404()
     if not replay_instance.shot.game.has_replays:
-        raise HttpResponseBadRequest()
+        return HttpResponseBadRequest()
 
     if request.method == "POST":
         reanalyze_replay.UpdateReplay(replay_id)
@@ -116,7 +121,7 @@ def download_replay(request, game_id: str, replay_id: int):
     if replay_instance.shot.game.game_id != game_id:
         raise Http404()
     if not replay_instance.shot.game.has_replays:
-        raise HttpResponseBadRequest()
+        return HttpResponseBadRequest()
 
     try:
         replay_file_instance = models.ReplayFile.objects.get(replay=replay_instance)
@@ -140,7 +145,7 @@ def delete_replay(request, game_id: str, replay_id: int):
     if replay_instance.shot.game.game_id != game_id:
         raise Http404()
     if not replay_instance.user == request.user and not request.user.is_staff:
-        raise HttpResponseForbidden()
+        return HttpResponseForbidden()
 
     if request.method == "POST":
         replay_instance.delete()
@@ -158,7 +163,36 @@ def delete_replay(request, game_id: str, replay_id: int):
     )
 
 
-def GetReplayOr404(user, replay_id):
+@http_decorators.require_http_methods(["GET", "HEAD", "POST"])
+@auth_decorators.login_required
+def unclaim_replay(request, game_id: str, replay_id: int):
+    replay_instance = GetReplayOr404(request.user, replay_id)
+
+    if replay_instance.shot.game.game_id != game_id:
+        raise Http404()
+    if not _is_replay_claimed(replay_instance):
+        return HttpResponseBadRequest()
+    if not replay_instance.user == request.user and not request.user.is_staff:
+        return HttpResponseForbidden()
+
+    if request.method == "POST":
+        replay_instance.user = None
+        replay_instance.save()
+        return redirect(f"/replays/{game_id}/{replay_id}")
+
+    return render(
+        request,
+        "replays/unclaim_replay.html",
+        {
+            "game_name": replay_instance.shot.game.GetName(),
+            "shot_name": replay_instance.shot.GetName(),
+            "difficulty_name": replay_instance.GetDifficultyName(),
+            "replay": replay_instance,
+        },
+    )
+
+
+def GetReplayOr404(user, replay_id: int) -> models.Replay:
     try:
         replay_instance = (
             models.Replay.objects.select_related("shot")
@@ -184,3 +218,7 @@ def GetReplayWithStagesOr404(
         raise Http404()
     replay_stages = models.ReplayStage.objects.filter(replay=replay_id)
     return replay_instance, replay_stages
+
+
+def _is_replay_claimed(replay: models.Replay) -> bool:
+    return replay.imported_username is not None and replay.user is not None

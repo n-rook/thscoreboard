@@ -34,4 +34,5 @@ urlpatterns = [
         view_replay.view_replay_reanalysis,
         name="Replays/Reanalysis",
     ),
+    path("<str:game_id>/<int:replay_id>/unclaim_replay", view_replay.unclaim_replay),
 ]

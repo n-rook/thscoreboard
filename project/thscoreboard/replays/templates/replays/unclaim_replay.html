@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block content %}
+    <h2>{{ game_name }}</h2>
+    <h3>{{ difficulty_name }} -- {{ shot_name }}</h3>
+    <div class="replay-box">
+        Original username: <span>{{ replay.imported_username }}</span>
+    </div>
+    <div class="replay-box">
+        Total score: <span class="replay-score">{{ replay.score|intcomma }}</span>
+    </div>
+    <p>Are you sure that this replay does not belong to you?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button name="unclaim">Yes!</button>
+    </form>
+{% endblock %}
