@@ -641,7 +641,6 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
         else:
             stage.th128_perfect_freeze = f"{stage.th128_perfect_freeze//100}%"
 
-
         if stage.stage is None:
             stage.stage = ""
         if stage.score is None:

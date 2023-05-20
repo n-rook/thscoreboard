@@ -21,7 +21,11 @@ def game_scoreboard_json(request, game_id: str):
 def game_scoreboard(request, game_id: str):
     game: Game = get_object_or_404(Game, game_id=game_id)
     filter_options = _get_filter_options(game)
-    show_route = game_id in [game_ids.GameIDs.TH01, game_ids.GameIDs.TH08, game_ids.GameIDs.TH128]
+    show_route = game_id in [
+        game_ids.GameIDs.TH01,
+        game_ids.GameIDs.TH08,
+        game_ids.GameIDs.TH128,
+    ]
 
     return render(
         request,

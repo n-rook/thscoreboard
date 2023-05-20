@@ -515,7 +515,6 @@ class ReplayStage(models.Model):
     th128_perfect_freeze = models.IntegerField(blank=True, null=True)
     """Perfect Freeze percentage, where every 100% can be used for a bomb"""
 
-
     def SetFromReplayStageInfo(self, s: replay_parsing.ReplayStage):
         """Set derived fields on this row from a replay stage.
 

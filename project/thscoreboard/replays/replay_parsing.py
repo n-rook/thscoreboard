@@ -1044,17 +1044,17 @@ def _Parse128(rep_raw):
         else:
             s.score = replay.header.score * 10
         rep_stages.append(s)
-    
+
     return ReplayInfo(
         game=game_ids.GameIDs.TH128,
-        route=routes[replay.header.route] if replay.header.route is not 6 else None,
+        route=routes[replay.header.route] if replay.header.route != 6 else None,
         shot="Cirno",
         replay_type=game_ids.ReplayTypes.FULL_GAME,
         name=replay.header.name.replace("\x00", ""),
         timestamp=datetime.datetime.fromtimestamp(
             replay.header.timestamp, tz=datetime.timezone.utc
         ),
-        score=replay.header.score  * 10,
+        score=replay.header.score * 10,
         slowdown=replay.header.slowdown,
         difficulty=replay.header.difficulty,
         stages=rep_stages,
