@@ -28,11 +28,11 @@ _table_fields_th06 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
-        "th128_motivation": False,
-        "th128_perfect_freeze": False,
     }
 )
 
@@ -53,11 +53,11 @@ _table_fields_th07 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
-        "th128_motivation": False,
-        "th128_perfect_freeze": False,
     }
 )
 
@@ -78,11 +78,11 @@ _table_fields_th08 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
-        "th128_motivation": False,
-        "th128_perfect_freeze": False,
     }
 )
 
@@ -103,11 +103,11 @@ _table_fields_th09 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": True,
         "th09_p2_score": True,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
-        "th128_motivation": False,
-        "th128_perfect_freeze": False,
     }
 )
 
@@ -128,11 +128,11 @@ _table_fields_th09_PVP = immutabledict(
         "th09_p2_cpu": True,
         "th09_p2_shot": True,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
-        "th128_motivation": False,
-        "th128_perfect_freeze": False,
     }
 )
 
@@ -153,11 +153,11 @@ _table_fields_th10 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
-        "th128_motivation": False,
-        "th128_perfect_freeze": False,
     }
 )
 
@@ -178,11 +178,11 @@ _table_fields_th11 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
-        "th128_motivation": False,
-        "th128_perfect_freeze": False,
     }
 )
 
@@ -203,11 +203,11 @@ _table_fields_th12 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
-        "th128_motivation": False,
-        "th128_perfect_freeze": False,
     }
 )
 
@@ -228,11 +228,11 @@ _table_fields_th13 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": True,
         "th16_season_power": False,
         "extends": True,
-        "th128_motivation": False,
-        "th128_perfect_freeze": False,
     }
 )
 
@@ -253,11 +253,11 @@ _table_fields_th14 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
-        "th128_motivation": False,
-        "th128_perfect_freeze": False,
     }
 )
 
@@ -278,11 +278,11 @@ _table_fields_th15 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
-        "th128_motivation": False,
-        "th128_perfect_freeze": False,
     }
 )
 
@@ -303,11 +303,11 @@ _table_fields_th16 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": True,
         "extends": False,
-        "th128_motivation": False,
-        "th128_perfect_freeze": False,
     }
 )
 
@@ -328,11 +328,11 @@ _table_fields_th17 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
-        "th128_motivation": False,
-        "th128_perfect_freeze": False,
     }
 )
 
@@ -353,11 +353,11 @@ _table_fields_th18 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
-        "th128_motivation": False,
-        "th128_perfect_freeze": False,
     }
 )
 
@@ -378,11 +378,11 @@ _table_fields_th128 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": True,
+        "th128_perfect_freeze": True,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
-        "th128_motivation": True,
-        "th128_perfect_freeze": True,
     }
 )
 
@@ -397,13 +397,13 @@ _game_fields = immutabledict(
         "th10": _table_fields_th10,
         "th11": _table_fields_th11,
         "th12": _table_fields_th12,
+        "th128": _table_fields_th128,
         "th13": _table_fields_th13,
         "th14": _table_fields_th14,
         "th15": _table_fields_th15,
         "th16": _table_fields_th16,
         "th17": _table_fields_th17,
         "th18": _table_fields_th18,
-        "th128": _table_fields_th128,
     }
 )
 
@@ -418,6 +418,7 @@ _game_fields_PVP = immutabledict(
         "th10": None,
         "th11": None,
         "th12": None,
+        "th128": None,
         "th13": None,
         "th14": None,
         "th15": None,
@@ -471,13 +472,13 @@ _life_pieces = immutabledict(
         "th10": None,
         "th11": 5,
         "th12": 4,
+        "th128": None,
         "th13": None,  # this game has variable life pieces, so hardcoding it doesn't work
         "th14": 3,
         "th15": 3,
         "th16": None,
         "th17": 3,
         "th18": 3,
-        "th128": None,
     }
 )
 
@@ -497,13 +498,13 @@ _bomb_pieces = immutabledict(
         "th10": None,
         "th11": None,
         "th12": 3,
+        "th128": None,
         "th13": 8,
         "th14": 8,
         "th15": 5,
         "th16": 5,
         "th17": 3,
         "th18": 3,
-        "th128": None,
     }
 )
 
@@ -587,6 +588,13 @@ def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
             9: FORMAT_EXTRA,
         }
         return stages[stage]
+    if game_id == "th09":
+        if stage == 10:
+            return FORMAT_EXTRA
+    elif game_id == "th07" and stage == 8:
+        return FORMAT_PHANTASM
+    elif stage == 7:
+        return FORMAT_EXTRA
     if game_id == "th128":
         stages = {
             1: "A1-1",
@@ -607,13 +615,6 @@ def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
             16: "Extra",
         }
         return stages[stage]
-    if game_id == "th09":
-        if stage == 10:
-            return FORMAT_EXTRA
-    elif game_id == "th07" and stage == 8:
-        return FORMAT_PHANTASM
-    elif stage == 7:
-        return FORMAT_EXTRA
     return str(stage)
 
 

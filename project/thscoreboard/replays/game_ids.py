@@ -21,13 +21,13 @@ class GameIDs:
     TH10 = "th10"
     TH11 = "th11"
     TH12 = "th12"
+    TH128 = "th128"
     TH13 = "th13"
     TH14 = "th14"
     TH15 = "th15"
     TH16 = "th16"
     TH17 = "th17"
     TH18 = "th18"
-    TH128 = "th128"
 
 
 class ReplayTypes:
@@ -123,6 +123,11 @@ _GAME_NAMES = immutabledict(
             pgettext("standard game name", "Undefined Fantastic Object"),
             pgettext("full game name", "東方星蓮船 - Undefined Fantastic Object"),
         ),
+        GameIDs.TH128: (
+            pgettext("short game name", "th128"),
+            pgettext("standard game name", "Great Fairy Wars"),
+            pgettext("full game name", "Great Fairy Wars - 東方三月精"),
+        ),
         GameIDs.TH13: (
             pgettext("short game name", "th13"),
             pgettext("standard game name", "Ten Desires"),
@@ -152,11 +157,6 @@ _GAME_NAMES = immutabledict(
             pgettext("short game name", "th18"),
             pgettext("standard game name", "Unconnected Marketeers"),
             pgettext("full game name", "東方虹龍洞 - Unconnected Marketeers"),
-        ),
-        GameIDs.TH128: (
-            pgettext("short game name", "th128"),
-            pgettext("standard game name", "Great Fairy Wars"),
-            pgettext("full game name", "Great Fairy Wars - 東方三月精"),
         ),
     }
 )
@@ -394,6 +394,10 @@ def GetShotName(game_id: str, shot_id: str) -> str:
         elif shot_id == "SanaeB":
             return pgettext("th12", "Sanae B")
 
+    if game_id == GameIDs.TH128:
+        if shot_id == "Cirno":
+            return pgettext("th128", "Cirno")
+
     if game_id == GameIDs.TH13:
         if shot_id == "Reimu":
             return pgettext("th13", "Reimu")
@@ -500,10 +504,6 @@ def GetShotName(game_id: str, shot_id: str) -> str:
         elif shot_id == "Sanae":
             return pgettext("th18", "Sanae")
 
-    if game_id == GameIDs.TH128:
-        if shot_id == "Cirno":
-            return pgettext("th128", "Cirno")
-
     return "Bug shot"
 
 
@@ -594,13 +594,13 @@ def GetDifficultyName(game_id: str, difficulty: int):
         GameIDs.TH10,
         GameIDs.TH11,
         GameIDs.TH12,
+        GameIDs.TH128,
         GameIDs.TH13,
         GameIDs.TH14,
         GameIDs.TH15,
         GameIDs.TH16,
         GameIDs.TH17,
         GameIDs.TH18,
-        GameIDs.TH128,
     }:
         if difficulty == 0:
             return "Easy"

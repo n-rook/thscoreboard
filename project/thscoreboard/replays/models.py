@@ -497,6 +497,12 @@ class ReplayStage(models.Model):
     This value ranges from 0 to 600, with 1 ingame trance level equalling 200 points
     """
 
+    th128_motivation = models.IntegerField(blank=True, null=True)
+    """Motivation percentage, which acts like lives but is different"""
+
+    th128_perfect_freeze = models.IntegerField(blank=True, null=True)
+    """Perfect Freeze percentage, where every 100% can be used for a bomb"""
+
     extends = models.IntegerField(blank=True, null=True)
     """Number of extends (1ups) this run has gotten so far
     More testing needs to be done to find the exact nature of this value,
@@ -508,12 +514,6 @@ class ReplayStage(models.Model):
 
     th16_season_power = models.IntegerField(blank=True, null=True)
     """Value of the season gauge in TH16"""
-
-    th128_motivation = models.IntegerField(blank=True, null=True)
-    """Motivation percentage, which acts like lives but is different"""
-
-    th128_perfect_freeze = models.IntegerField(blank=True, null=True)
-    """Perfect Freeze percentage, where every 100% can be used for a bomb"""
 
     def SetFromReplayStageInfo(self, s: replay_parsing.ReplayStage):
         """Set derived fields on this row from a replay stage.
@@ -553,10 +553,10 @@ class ReplayStage(models.Model):
         self.th09_p2_cpu = s.th09_p2_cpu
         self.th09_p2_score = s.th09_p2_score
         self.extends = s.extends
-        self.th13_trance = s.th13_trance
-        self.th16_season_power = s.th16_season_power
         self.th128_motivation = s.th128_motivation
         self.th128_perfect_freeze = s.th128_perfect_freeze
+        self.th13_trance = s.th13_trance
+        self.th16_season_power = s.th16_season_power
 
 
 class ReplayFile(models.Model):
