@@ -20,6 +20,7 @@ def SetUpConstantTables():
     separate function, so that tests can call it easily.
     """
 
+    _CreateIfNotLoaded("th128", _Create128)
     _CreateIfNotLoaded("th18", _Create18)
     _CreateIfNotLoaded("th17", _Create17)
     _CreateIfNotLoaded("th16", _Create16)
@@ -46,6 +47,28 @@ def _CreateIfNotLoaded(game_id, constant_creation_function):
     else:
         constant_creation_function()
         logging.info("Created %s", game_id)
+
+
+@transaction.atomic
+def _Create128():
+    th128 = models.Game(game_id="th128", has_replays=True, num_difficulties=5)
+    th128.save()
+
+    shot = models.Shot(game=th128, shot_id="Cirno")
+    shot.save()
+
+    routes = [
+        "A-1",
+        "A-2",
+        "B-1",
+        "B-2",
+        "C-1",
+        "C-2",
+    ]
+
+    for i, route_id in enumerate(routes):
+        route = models.Route(game=th128, route_id=route_id, order_number=i)
+        route.save()
 
 
 @transaction.atomic

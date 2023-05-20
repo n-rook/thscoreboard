@@ -27,6 +27,7 @@ class GameIDs:
     TH16 = "th16"
     TH17 = "th17"
     TH18 = "th18"
+    TH128 = "th128"
 
 
 class ReplayTypes:
@@ -151,6 +152,11 @@ _GAME_NAMES = immutabledict(
             pgettext("short game name", "th18"),
             pgettext("standard game name", "Unconnected Marketeers"),
             pgettext("full game name", "東方虹龍洞 - Unconnected Marketeers"),
+        ),
+        GameIDs.TH128: (
+            pgettext("short game name", "th128"),
+            pgettext("standard game name", "Great Fairy Wars"),
+            pgettext("full game name", "妖精大戦争 - 東方三月精"),
         ),
     }
 )
@@ -494,6 +500,10 @@ def GetShotName(game_id: str, shot_id: str) -> str:
         elif shot_id == "Sanae":
             return pgettext("th18", "Sanae")
 
+    if game_id == GameIDs.TH128:
+        if shot_id == "Cirno":
+            return pgettext("th128", "Cirno")
+
     return "Bug shot"
 
 
@@ -552,6 +562,21 @@ def GetRouteName(game_id: str, route_id: str):
             return pgettext("th08", "Final A")
         elif route_id == "Final B":
             return pgettext("th08", "Final B")
+    if game_id == GameIDs.TH128:
+        if route_id == "A-1":
+            return pgettext("th128", "A-1")
+        elif route_id == "A-2":
+            return pgettext("th128", "A-2")
+        elif route_id == "B-1":
+            return pgettext("th128", "B-1")
+        elif route_id == "B-2":
+            return pgettext("th128", "B-2")
+        elif route_id == "C-1":
+            return pgettext("th128", "C-1")
+        elif route_id == "C-2":
+            return pgettext("th128", "C-2")
+        elif route_id == "Extra":
+            return pgettext("th128", "Extra")
     return "Bug route"
 
 
@@ -575,6 +600,7 @@ def GetDifficultyName(game_id: str, difficulty: int):
         GameIDs.TH16,
         GameIDs.TH17,
         GameIDs.TH18,
+        GameIDs.TH128,
     }:
         if difficulty == 0:
             return "Easy"

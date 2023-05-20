@@ -509,6 +509,13 @@ class ReplayStage(models.Model):
     th16_season_power = models.IntegerField(blank=True, null=True)
     """Value of the season gauge in TH16"""
 
+    th128_motivation = models.IntegerField(blank=True, null=True)
+    """Motivation percentage, which acts like lives but is different"""
+
+    th128_perfect_freeze = models.IntegerField(blank=True, null=True)
+    """Perfect Freeze percentage, where every 100% can be used for a bomb"""
+
+
     def SetFromReplayStageInfo(self, s: replay_parsing.ReplayStage):
         """Set derived fields on this row from a replay stage.
 
@@ -549,6 +556,8 @@ class ReplayStage(models.Model):
         self.extends = s.extends
         self.th13_trance = s.th13_trance
         self.th16_season_power = s.th16_season_power
+        self.th128_motivation = s.th128_motivation
+        self.th128_perfect_freeze = s.th128_perfect_freeze
 
 
 class ReplayFile(models.Model):

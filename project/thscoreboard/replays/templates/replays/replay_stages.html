@@ -27,6 +27,12 @@
             {% if table_fields.bombs %}
             <th>{% translate "Bombs" %}</th>
             {% endif %}
+            {% if table_fields.th128_motivation %}
+            <th>{% translate "Motivation" %}</th>
+            {% endif %}
+            {% if table_fields.th128_perfect_freeze %}
+            <th>{% translate "Perfect Freeze" %}</th>
+            {% endif %}
             {% if table_fields.th06_rank %}
             <th>{% translate "Rank" %}</th>
             {% endif %}
@@ -82,6 +88,12 @@
             {% endif %}
             {% if table_fields.bombs %}
             <td>{{stage.bombs}}</td>
+            {% endif %}
+            {% if table_fields.th128_motivation %}
+            <th>{{stage.th128_motivation}}</th>
+            {% endif %}
+            {% if table_fields.th128_perfect_freeze %}
+            <th>{{stage.th128_perfect_freeze}}</th>
             {% endif %}
             {% if table_fields.th06_rank %}
             <td>{{stage.th06_rank}}</td>
