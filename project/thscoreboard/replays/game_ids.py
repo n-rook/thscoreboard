@@ -156,7 +156,7 @@ _GAME_NAMES = immutabledict(
         GameIDs.TH128: (
             pgettext("short game name", "th128"),
             pgettext("standard game name", "Great Fairy Wars"),
-            pgettext("full game name", "妖精大戦争 - 東方三月精"),
+            pgettext("full game name", "Great Fairy Wars - 東方三月精"),
         ),
     }
 )
