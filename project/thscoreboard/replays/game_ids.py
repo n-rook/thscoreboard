@@ -124,7 +124,7 @@ _GAME_NAMES = immutabledict(
             pgettext("full game name", "東方星蓮船 - Undefined Fantastic Object"),
         ),
         GameIDs.TH128: (
-            pgettext("short game name", "th128"),
+            pgettext("short game name", "th12.8"),
             pgettext("standard game name", "Great Fairy Wars"),
             pgettext("full game name", "Great Fairy Wars - 東方三月精"),
         ),
