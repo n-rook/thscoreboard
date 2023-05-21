@@ -36,9 +36,15 @@ class ReplayToJsonConverter:
             game.game_id, replay.difficulty
         )
         json_dict["Shot"] = self._get_shot_name(shot)
-        if game.game_id in [game_ids.GameIDs.TH01, game_ids.GameIDs.TH08]:
+        if game.game_id in [
+            game_ids.GameIDs.TH01,
+            game_ids.GameIDs.TH08,
+            game_ids.GameIDs.TH128,
+        ]:
             route = replay.route
             json_dict["Route"] = route.GetName() if route is not None else ""
+        if game.game_id == game_ids.GameIDs.TH128 and replay.difficulty == 4:
+            json_dict["Route"] = "Extra"
         json_dict["Score"] = {
             "text": f"{score_prefix}{int(replay.score):,}",
             "url": f"/replays/{game.game_id}/{replay.id}",

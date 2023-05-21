@@ -21,6 +21,7 @@ class GameIDs:
     TH10 = "th10"
     TH11 = "th11"
     TH12 = "th12"
+    TH128 = "th128"
     TH13 = "th13"
     TH14 = "th14"
     TH15 = "th15"
@@ -121,6 +122,11 @@ _GAME_NAMES = immutabledict(
             pgettext("short game name", "th12"),
             pgettext("standard game name", "Undefined Fantastic Object"),
             pgettext("full game name", "東方星蓮船 - Undefined Fantastic Object"),
+        ),
+        GameIDs.TH128: (
+            pgettext("short game name", "th12.8"),
+            pgettext("standard game name", "Great Fairy Wars"),
+            pgettext("full game name", "Great Fairy Wars - 東方三月精"),
         ),
         GameIDs.TH13: (
             pgettext("short game name", "th13"),
@@ -388,6 +394,10 @@ def GetShotName(game_id: str, shot_id: str) -> str:
         elif shot_id == "SanaeB":
             return pgettext("th12", "Sanae B")
 
+    if game_id == GameIDs.TH128:
+        if shot_id == "Cirno":
+            return pgettext("th128", "Cirno")
+
     if game_id == GameIDs.TH13:
         if shot_id == "Reimu":
             return pgettext("th13", "Reimu")
@@ -552,6 +562,21 @@ def GetRouteName(game_id: str, route_id: str):
             return pgettext("th08", "Final A")
         elif route_id == "Final B":
             return pgettext("th08", "Final B")
+    if game_id == GameIDs.TH128:
+        if route_id == "A-1":
+            return pgettext("th128", "A-1")
+        elif route_id == "A-2":
+            return pgettext("th128", "A-2")
+        elif route_id == "B-1":
+            return pgettext("th128", "B-1")
+        elif route_id == "B-2":
+            return pgettext("th128", "B-2")
+        elif route_id == "C-1":
+            return pgettext("th128", "C-1")
+        elif route_id == "C-2":
+            return pgettext("th128", "C-2")
+        elif route_id == "Extra":
+            return pgettext("th128", "Extra")
     return "Bug route"
 
 
@@ -569,6 +594,7 @@ def GetDifficultyName(game_id: str, difficulty: int):
         GameIDs.TH10,
         GameIDs.TH11,
         GameIDs.TH12,
+        GameIDs.TH128,
         GameIDs.TH13,
         GameIDs.TH14,
         GameIDs.TH15,

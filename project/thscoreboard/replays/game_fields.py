@@ -28,6 +28,8 @@ _table_fields_th06 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -51,6 +53,8 @@ _table_fields_th07 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -74,6 +78,8 @@ _table_fields_th08 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -97,6 +103,8 @@ _table_fields_th09 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": True,
         "th09_p2_score": True,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -120,6 +128,8 @@ _table_fields_th09_PVP = immutabledict(
         "th09_p2_cpu": True,
         "th09_p2_shot": True,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -143,6 +153,8 @@ _table_fields_th10 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -166,6 +178,8 @@ _table_fields_th11 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -189,6 +203,8 @@ _table_fields_th12 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -212,6 +228,8 @@ _table_fields_th13 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": True,
         "th16_season_power": False,
         "extends": True,
@@ -235,6 +253,8 @@ _table_fields_th14 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -258,6 +278,8 @@ _table_fields_th15 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -281,6 +303,8 @@ _table_fields_th16 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": True,
         "extends": False,
@@ -304,6 +328,8 @@ _table_fields_th17 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -327,6 +353,33 @@ _table_fields_th18 = immutabledict(
         "th09_p2_cpu": False,
         "th09_p2_shot": False,
         "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+    }
+)
+
+_table_fields_th128 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": False,
+        "graze": True,
+        "point_items": False,
+        "power": False,
+        "lives": False,
+        "bombs": False,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th128_motivation": True,
+        "th128_perfect_freeze": True,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -344,6 +397,7 @@ _game_fields = immutabledict(
         "th10": _table_fields_th10,
         "th11": _table_fields_th11,
         "th12": _table_fields_th12,
+        "th128": _table_fields_th128,
         "th13": _table_fields_th13,
         "th14": _table_fields_th14,
         "th15": _table_fields_th15,
@@ -364,6 +418,7 @@ _game_fields_PVP = immutabledict(
         "th10": None,
         "th11": None,
         "th12": None,
+        "th128": None,
         "th13": None,
         "th14": None,
         "th15": None,
@@ -417,6 +472,7 @@ _life_pieces = immutabledict(
         "th10": None,
         "th11": 5,
         "th12": 4,
+        "th128": None,
         "th13": None,  # this game has variable life pieces, so hardcoding it doesn't work
         "th14": 3,
         "th15": 3,
@@ -442,6 +498,7 @@ _bomb_pieces = immutabledict(
         "th10": None,
         "th11": None,
         "th12": 3,
+        "th128": None,
         "th13": 8,
         "th14": 8,
         "th15": 5,
@@ -538,6 +595,26 @@ def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
         return FORMAT_PHANTASM
     elif stage == 7:
         return FORMAT_EXTRA
+    if game_id == "th128":
+        stages = {
+            1: "A1-1",
+            2: "A1-2",
+            3: "A1-3",
+            4: "A2-2",
+            5: "A2-3",
+            6: "B1-1",
+            7: "B1-2",
+            8: "B1-3",
+            9: "B2-2",
+            10: "B2-3",
+            11: "C1-1",
+            12: "C1-2",
+            13: "C1-3",
+            14: "C2-2",
+            15: "C2-3",
+            16: "Extra",
+        }
+        return stages[stage]
     return str(stage)
 
 
@@ -554,6 +631,16 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
         stage.bombs = GetFormatBombs(game_id, stage.bombs, stage.bomb_pieces)
         if game_id == game_ids.GameIDs.TH09:
             stage.th09_p2_shotFormat = stage.th09_p2_shot.GetName()
+
+        if stage.th128_motivation is None:
+            stage.th128_motivation = ""
+        else:
+            stage.th128_motivation = f"{stage.th128_motivation//100}%"
+
+        if stage.th128_perfect_freeze is None:
+            stage.th128_perfect_freeze = ""
+        else:
+            stage.th128_perfect_freeze = f"{stage.th128_perfect_freeze//100}%"
 
         if stage.stage is None:
             stage.stage = ""

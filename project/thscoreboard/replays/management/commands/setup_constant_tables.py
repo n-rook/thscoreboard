@@ -26,6 +26,7 @@ def SetUpConstantTables():
     _CreateIfNotLoaded("th15", _Create15)
     _CreateIfNotLoaded("th14", _Create14)
     _CreateIfNotLoaded("th13", _Create13)
+    _CreateIfNotLoaded("th128", _Create128)
     _CreateIfNotLoaded("th12", _Create12)
     _CreateIfNotLoaded("th11", _Create11)
     _CreateIfNotLoaded("th10", _Create10)
@@ -143,6 +144,28 @@ def _Create13():
     for shot in shots:
         shot_row = models.Shot(game=th13, shot_id=shot)
         shot_row.save()
+
+
+@transaction.atomic
+def _Create128():
+    th128 = models.Game(game_id="th128", has_replays=True, num_difficulties=5)
+    th128.save()
+
+    shot = models.Shot(game=th128, shot_id="Cirno")
+    shot.save()
+
+    routes = [
+        "A-1",
+        "A-2",
+        "B-1",
+        "B-2",
+        "C-1",
+        "C-2",
+    ]
+
+    for i, route_id in enumerate(routes):
+        route = models.Route(game=th128, route_id=route_id, order_number=i)
+        route.save()
 
 
 @transaction.atomic

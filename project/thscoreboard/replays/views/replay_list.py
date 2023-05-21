@@ -21,7 +21,11 @@ def game_scoreboard_json(request, game_id: str):
 def game_scoreboard(request, game_id: str):
     game: Game = get_object_or_404(Game, game_id=game_id)
     filter_options = _get_filter_options(game)
-    show_route = game_id in [game_ids.GameIDs.TH01, game_ids.GameIDs.TH08]
+    show_route = game_id in [
+        game_ids.GameIDs.TH01,
+        game_ids.GameIDs.TH08,
+        game_ids.GameIDs.TH128,
+    ]
 
     return render(
         request,
@@ -35,8 +39,8 @@ def game_scoreboard(request, game_id: str):
 
 
 def _get_filter_options(game: Game) -> dict[str, list[str]]:
-    if game.game_id == game_ids.GameIDs.TH01:
-        return _get_filter_options_th01(game)
+    if game.game_id == game_ids.GameIDs.TH01 or game.game_id == game_ids.GameIDs.TH128:
+        return _get_filter_options_th01_th128(game)
     elif game.game_id == game_ids.GameIDs.TH08:
         return _get_filter_options_th08(game)
     elif game.game_id == game_ids.GameIDs.TH13:
@@ -55,7 +59,7 @@ def _get_filter_options_default(game: Game) -> dict[str, list[str]]:
     return {"Difficulty": all_difficulties, "Shot": all_shots}
 
 
-def _get_filter_options_th01(game: Game) -> dict[str, list[str]]:
+def _get_filter_options_th01_th128(game: Game) -> dict[str, list[str]]:
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
     all_routes = [route.GetName() for route in Route.objects.filter(game=game.game_id)]
     return {"Difficulty": all_difficulties, "Route": all_routes}

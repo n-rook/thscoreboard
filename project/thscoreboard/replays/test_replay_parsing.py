@@ -311,6 +311,32 @@ class Th12ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.STAGE_PRACTICE)
 
 
+class Th128ReplayTestCase(unittest.TestCase):
+    def testC1(self):
+        r = ParseTestReplay("th128_c1")
+        self.assertEqual(r.name, "Maribel ")
+        self.assertEqual(r.score, 65383670)
+        self.assertEqual(r.route, "C-1")
+        self.assertEqual(r.difficulty, 3)
+
+        s = r.stages[1]
+        self.assertEqual(s.stage, 12)
+        self.assertEqual(s.graze, 4160)
+        self.assertEqual(s.th128_motivation, 86626)
+        self.assertEqual(s.th128_perfect_freeze, 30000)
+
+    def testExtra(self):
+        r = ParseTestReplay("th128_extra")
+        self.assertEqual(r.name, "KC TAS  ")
+        self.assertEqual(r.score, 45749530)
+        self.assertEqual(r.difficulty, 4)
+        self.assertEqual(r.route, None)
+
+        s = r.stages[0]
+        self.assertEqual(s.score, 45749530)
+        self.assertEqual(s.stage, 16)
+
+
 class Th13ReplayTestCase(unittest.TestCase):
     def testNormal(self):
         r = ParseTestReplay("th13_normal")

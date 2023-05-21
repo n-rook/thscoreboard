@@ -12,6 +12,7 @@ from .kaitai_parsers import th09
 from .kaitai_parsers import th10
 from .kaitai_parsers import th11
 from .kaitai_parsers import th12
+from .kaitai_parsers import th128
 from .kaitai_parsers import th13
 from .kaitai_parsers import th14
 from .kaitai_parsers import th15
@@ -63,6 +64,8 @@ class ReplayStage:
     th09_p2_cpu: bool = None
     th09_p2_shot: str = None
     th09_p2_score: int = None
+    th128_motivation: int = None
+    th128_perfect_freeze: int = None
     th13_trance: int = None
     extends: int = None
     th16_season_power: int = None
@@ -107,7 +110,7 @@ class ReplayInfo:
 
 # piv is stored with extra precision, we trunctate the value to what is shown ingame
 def convert_stored_PIV_to_displayed(game_id: str, piv: int) -> int:
-    if game_id in ["th12", "th13", "th14", "th15", "th16", "th17", "th18"]:
+    if game_id in ["th12", "th128", "th13", "th14", "th15", "th16", "th17", "th18"]:
         return (math.trunc(piv / 1000)) * 10
     return piv
 
@@ -597,6 +600,56 @@ def _Parse12(rep_raw):
     return r
 
 
+def _Parse128(rep_raw):
+    header = th_modern.ThModern.from_bytes(rep_raw)
+    comp_data = bytearray(header.main.comp_data)
+
+    td.decrypt(comp_data, 0x800, 0x5E, 0xE7)
+    td.decrypt(comp_data, 0x80, 0x7D, 0x36)
+    replay = th128.Th128.from_bytes(td.unlzss(comp_data))
+
+    routes = [
+        "A-1",
+        "A-2",
+        "B-1",
+        "B-2",
+        "C-1",
+        "C-2",
+    ]
+
+    rep_stages = []
+
+    for current_stage_start_data, next_stage_start_data in zip(
+        replay.stages, replay.stages[1:] + [None]
+    ):
+        s = ReplayStage(
+            stage=current_stage_start_data.stage,
+        )
+        if next_stage_start_data is not None:
+            s.score = next_stage_start_data.score * 10
+            s.graze = next_stage_start_data.graze
+            s.th128_motivation = next_stage_start_data.motivation
+            s.th128_perfect_freeze = next_stage_start_data.perfect_freeze
+        else:
+            s.score = replay.header.score * 10
+        rep_stages.append(s)
+
+    return ReplayInfo(
+        game=game_ids.GameIDs.TH128,
+        route=routes[replay.header.route] if replay.header.route != 6 else None,
+        shot="Cirno",
+        replay_type=game_ids.ReplayTypes.FULL_GAME,
+        name=replay.header.name.replace("\x00", ""),
+        timestamp=datetime.datetime.fromtimestamp(
+            replay.header.timestamp, tz=datetime.timezone.utc
+        ),
+        score=replay.header.score * 10,
+        slowdown=replay.header.slowdown,
+        difficulty=replay.header.difficulty,
+        stages=rep_stages,
+    )
+
+
 def _Parse13(rep_raw):
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
@@ -1065,6 +1118,8 @@ def Parse(replay) -> ReplayInfo:
             return _Parse17(replay)
         elif gamecode == b"t18r":
             return _Parse18(replay)
+        elif gamecode == b"128r":
+            return _Parse128(replay)
         else:
             logging.warning("Failed to comprehend gamecode %s", str(gamecode))
             raise UnsupportedGameError("This game is unsupported.")
