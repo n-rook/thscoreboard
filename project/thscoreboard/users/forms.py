@@ -189,7 +189,9 @@ class ClaimReplaysForm(forms.Form):
     choices = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
     )
-    contact_info = forms.CharField(required=True, max_length=200)
+    contact_info = forms.CharField(
+        label=_("contact_info"), required=True, max_length=200
+    )
     silentselene_username = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def __init__(self, *args, **kwargs):
