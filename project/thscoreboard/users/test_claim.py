@@ -9,13 +9,11 @@ import replays.models as replay_models
 
 
 CONFIRM_BUTTON_HTML = (
-    '<input type="submit" name="submit" value="Confirm" class="spaced-input">'
+    '<input type="submit" name="submit_action" value="Confirm" class="spaced-input">'
 )
-DELETE_BUTTON_HTML = (
-    '<input type="submit" name="submit" value="Delete request" class="spaced-input">'
-)
+DELETE_BUTTON_HTML = '<input type="submit" name="submit_action" value="Delete request" class="spaced-input">'
 APPROVE_BUTTON_HTML = (
-    '<input type="submit" name="submit" value="Approve" class="spaced-input">'
+    '<input type="submit" name="submit_action" value="Approve" class="spaced-input">'
 )
 CHECKBOX_HTML = "checkbox"
 HIDDEN_CHECKBOX_HTML = "hidden\n"
@@ -64,7 +62,7 @@ class ClaimReplaysTest(ReplayTestCase):
                 "silentselene_username": [self.user.get_username()],
                 "contact_info": ["contact info"],
                 "choices": [self.replay.id],
-                "submit": ["Confirm"],
+                "submit_action": ["Confirm"],
             },
         )
 
@@ -105,7 +103,7 @@ class ClaimReplaysTest(ReplayTestCase):
                 "silentselene_username": [self.user.get_username()],
                 "contact_info": ["contact info"],
                 "choices": [self.replay.id],
-                "submit": ["Confirm"],
+                "submit_action": ["Confirm"],
             },
         )
 
@@ -149,7 +147,7 @@ class ReviewClaimReplaysTest(ReplayTestCase):
                 "silentselene_username": [self.user.get_username()],
                 "contact_info": ["contact info"],
                 "choices": [claim_replay_request.replays.get().id],
-                "submit": ["Delete request"],
+                "submit_action": ["Delete request"],
             },
         )
 
@@ -184,7 +182,7 @@ class ReviewClaimReplaysTest(ReplayTestCase):
                 "silentselene_username": [self.user.get_username()],
                 "contact_info": ["contact info"],
                 "choices": [claim_replay_request.replays.get().id],
-                "submit": ["Delete request"],
+                "submit_action": ["Delete request"],
             },
         )
 
@@ -204,7 +202,7 @@ class ReviewClaimReplaysTest(ReplayTestCase):
                 "silentselene_username": [self.user.get_username()],
                 "contact_info": ["contact info"],
                 "choices": [claim_replay_request.replays.get().id],
-                "submit": ["Approve"],
+                "submit_action": ["Approve"],
             },
         )
 

@@ -54,15 +54,16 @@ def review(request: WSGIRequest, claim_replay_request_id: int) -> HttpResponse:
             request.POST, replays=replay_models.Replay.objects.all()
         )
         if form.is_valid():
+            submit_action = form.cleaned_data["submit_action"]
             replays, user = _get_replays_and_user_from_form(form)
-            if form.cleaned_data["submit"] == "Approve":
+            if submit_action == forms.ClaimReplaysForm.SUBMIT_ACTIONS.APPROVE:
                 _assign_selected_replays_to_user(replays, user, claim)
                 return render(request, "replays/success.html")
-            elif form.cleaned_data["submit"] == "Delete request":
+            elif submit_action == forms.ClaimReplaysForm.SUBMIT_ACTIONS.DELETE:
                 _delete_claim_replay_request(claim, request.user.is_staff)
                 return render(request, "replays/success.html")
             else:
-                raise ValueError(f"Unknown submit value: {form.cleaned_data['submit']}")
+                raise ValueError(f"Unknown submit value: {submit_action}")
     else:
         return _render_review_form(request, claim)
 
