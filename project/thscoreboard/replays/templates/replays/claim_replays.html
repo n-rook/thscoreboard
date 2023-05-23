@@ -7,6 +7,7 @@
 
 <form method="post">
     {% csrf_token %}
+    {{ form.errors }}
     <input type="hidden"
            name="silentselene_username"
            value="{{ silentselene_username }}"

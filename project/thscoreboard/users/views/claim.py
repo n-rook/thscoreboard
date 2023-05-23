@@ -2,7 +2,7 @@ from typing import Iterable, Optional, Tuple
 from django.shortcuts import render
 from django.contrib.auth import decorators as auth_decorators
 from django.core.handlers.wsgi import WSGIRequest
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.db import transaction
 from django.core.exceptions import PermissionDenied
 
@@ -46,6 +46,8 @@ def review(request: WSGIRequest, claim_replay_request_id: int) -> HttpResponse:
             id=claim_replay_request_id
         ).first()
     )
+    if claim is None:
+        raise Http404
     if not _check_user_can_see_claim(request.user, claim):
         raise PermissionDenied
 
@@ -64,15 +66,20 @@ def review(request: WSGIRequest, claim_replay_request_id: int) -> HttpResponse:
                 return render(request, "replays/success.html")
             else:
                 raise ValueError(f"Unknown submit value: {submit_action}")
+        else:
+            return _render_review_form(request, claim, form)
     else:
         return _render_review_form(request, claim)
 
 
 def _render_review_form(
-    request: WSGIRequest, claim: user_models.ClaimReplayRequest
+    request: WSGIRequest,
+    claim: user_models.ClaimReplayRequest,
+    form: forms.ClaimReplaysForm = None,
 ) -> HttpResponse:
     replays = claim.replays.all()
-    form = forms.ClaimReplaysForm(replays=replays)
+    if form is None:
+        form = forms.ClaimReplaysForm(replays=replays)
     form.fields["contact_info"].initial = claim.contact_info
     form.fields["contact_info"].widget.attrs["readonly"] = "readonly"
     return render(
