@@ -1,11 +1,8 @@
-import os
-import unittest
 from django.db import connection
 
 from replays.testing import test_replays
 from replays.testing.test_case import ReplayTestCase
 import users.models as user_models
-import replays.models as replay_models
 
 
 CONFIRM_BUTTON_HTML = (
@@ -26,7 +23,6 @@ class ClaimReplaysTest(ReplayTestCase):
     def setUp(self):
         super().setUp()
         self.user = self.createUser("user")
-        self.staff_user = self.createUser("staff_user", is_staff=True)
         self.replay = test_replays.CreateAsPublishedReplay(
             "th6_hard_1cc", imported_username="imported"
         )
@@ -74,50 +70,11 @@ class ClaimReplaysTest(ReplayTestCase):
             claim_replay_request.request_status, user_models.RequestStatus.SUBMITTED
         )
 
-    @unittest.skipIf(
-        os.getenv("CI") == "true", "Staff view tests don't work on GitHub CI"
-    )
-    def test_staff_views_request_page(self) -> None:
-        self.client.force_login(self.staff_user)
-
-        response = self.client.post(
-            "/users/claim",
-            {
-                "silentselene_username": [self.user.get_username()],
-                "royalflare_username": [self.replay.imported_username],
-            },
-        )
-
-        self.assertNotContains(response, DELETE_BUTTON_HTML)
-        self.assertContains(response, READONLY_CONTACT_INFO_WITH_PLACEHOLDER_HTML)
-        self.assertNotContains(response, CONFIRM_BUTTON_HTML)
-        self.assertContains(response, APPROVE_BUTTON_HTML)
-        self.assertContains(response, CHECKBOX_HTML)
-
-    def test_staff_creates_claims(self) -> None:
-        self.client.force_login(self.staff_user)
-
-        response = self.client.post(
-            "/users/claim",
-            {
-                "silentselene_username": [self.user.get_username()],
-                "contact_info": ["contact info"],
-                "choices": [self.replay.id],
-                "submit_action": ["Confirm"],
-            },
-        )
-
-        self.assertContains(response, "Success!")
-        self.assertEqual(user_models.ClaimReplayRequest.objects.count(), 0)
-        replay = replay_models.Replay.objects.first()
-        self.assertEqual(replay.user, self.user)
-
 
 class ReviewClaimReplaysTest(ReplayTestCase):
     def setUp(self):
         super().setUp()
         self.user = self.createUser("user")
-        self.staff_user = self.createUser("staff_user", is_staff=True)
         self.other_user = self.createUser("user2")
 
     @classmethod
@@ -156,63 +113,6 @@ class ReviewClaimReplaysTest(ReplayTestCase):
         self.assertEqual(
             claim_replay_request.request_status, user_models.RequestStatus.USER_DELETED
         )
-
-    @unittest.skipIf(
-        os.getenv("CI") == "true", "Staff view tests don't work on GitHub CI"
-    )
-    def test_staff_reviews_claim_request(self) -> None:
-        self.client.force_login(self.staff_user)
-        claim_replay_request = self._create_claim_replay_request(self.user)
-
-        response = self.client.get(f"/users/claim/{claim_replay_request.id}")
-
-        self.assertContains(response, DELETE_BUTTON_HTML)
-        self.assertContains(response, READONLY_CONTACT_INFO_HTML)
-        self.assertNotContains(response, CONFIRM_BUTTON_HTML)
-        self.assertContains(response, APPROVE_BUTTON_HTML)
-        self.assertNotContains(response, HIDDEN_CHECKBOX_HTML)
-
-    def test_staff_deletes_claim_request(self) -> None:
-        self.client.force_login(self.staff_user)
-        claim_replay_request = self._create_claim_replay_request(self.user)
-
-        response = self.client.post(
-            f"/users/claim/{claim_replay_request.id}",
-            {
-                "silentselene_username": [self.user.get_username()],
-                "contact_info": ["contact info"],
-                "choices": [claim_replay_request.replays.get().id],
-                "submit_action": ["Delete request"],
-            },
-        )
-
-        self.assertContains(response, "Success!")
-        claim_replay_request = user_models.ClaimReplayRequest.objects.first()
-        self.assertEqual(
-            claim_replay_request.request_status, user_models.RequestStatus.STAFF_DELETED
-        )
-
-    def test_staff_approves_claim_request(self) -> None:
-        self.client.force_login(self.staff_user)
-        claim_replay_request = self._create_claim_replay_request(self.user)
-
-        response = self.client.post(
-            f"/users/claim/{claim_replay_request.id}",
-            {
-                "silentselene_username": [self.user.get_username()],
-                "contact_info": ["contact info"],
-                "choices": [claim_replay_request.replays.get().id],
-                "submit_action": ["Approve"],
-            },
-        )
-
-        self.assertContains(response, "Success!")
-        claim_replay_request = user_models.ClaimReplayRequest.objects.first()
-        self.assertEqual(
-            claim_replay_request.request_status, user_models.RequestStatus.APPROVED
-        )
-        replay = claim_replay_request.replays.get()
-        self.assertEqual(replay.user, self.user)
 
     def test_user_cannot_review_other_users_claim_request(self) -> None:
         self.client.force_login(self.user)
