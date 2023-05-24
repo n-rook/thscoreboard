@@ -1,9 +1,10 @@
 {% extends "simple_centered.html" %}
 {% load i18n %}
 
-{% block centered-title %}<p>Claim a username</p>{% endblock %}
+{% block centered-title %}<p>Claim replays</p>{% endblock %}
 
 {% block centered-content %}
+    <a href="my_claims">My claims</a>
     <form method="post">
         {% csrf_token %}
         {% if user.is_staff %}

@@ -62,7 +62,10 @@ class ClaimReplaysTest(ReplayTestCase):
             },
         )
 
-        self.assertContains(response, "Success!")
+        self.assertRedirects(
+            response, "/users/my_claims", fetch_redirect_response=False
+        )
+
         claim_replay_request = user_models.ClaimReplayRequest.objects.first()
         self.assertEqual(claim_replay_request.user, self.user)
         self.assertEqual(claim_replay_request.contact_info, "contact info")

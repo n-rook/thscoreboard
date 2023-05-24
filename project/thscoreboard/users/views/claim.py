@@ -1,5 +1,5 @@
 from typing import Iterable, Optional, Tuple
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth import decorators as auth_decorators
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import Http404, HttpResponse
@@ -36,7 +36,9 @@ def claim(request: WSGIRequest) -> HttpResponse:
                 is_request_from_staff=request.user.is_staff,
                 contact_info=form.cleaned_data["contact_info"],
             )
-            return render(request, "replays/success.html")
+            if request.user.is_staff:
+                return render(request, "replays/success.html")
+            return redirect("/users/my_claims")
 
 
 @auth_decorators.login_required
