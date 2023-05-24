@@ -636,3 +636,22 @@ class ClaimReplayRequest(models.Model):
 
     request_status = models.IntegerField(choices=RequestStatus.choices)
     """The status of this request."""
+
+    def is_visible_to(self, user: User) -> bool:
+        if user.is_staff:
+            return True
+        if user == self.user and self.request_status == RequestStatus.SUBMITTED:
+            return True
+        return False
+
+    def get_request_status_name(self) -> str:
+        if self.request_status == RequestStatus.SUBMITTED:
+            return "Submitted"
+        elif self.request_status == RequestStatus.APPROVED:
+            return "Approved"
+        elif self.request_status == RequestStatus.USER_DELETED:
+            return "Deleted by user"
+        elif self.request_status == RequestStatus.STAFF_DELETED:
+            return "Deleted by staff"
+        else:
+            return "Error"
