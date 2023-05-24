@@ -186,6 +186,11 @@ class ClaimUsernameForm(forms.Form):
 
 
 class ClaimReplaysForm(forms.Form):
+    class SUBMIT_ACTIONS:
+        APPROVE = "Approve"
+        DELETE = "Delete request"
+        CONFIRM = "Confirm"
+
     choices = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
     )
@@ -193,6 +198,19 @@ class ClaimReplaysForm(forms.Form):
         label=_("contact_info"), required=True, max_length=200
     )
     silentselene_username = forms.CharField(widget=forms.HiddenInput(), required=False)
+
+    submit_action = forms.ChoiceField(
+        choices=[
+            (a, a)
+            for a in (
+                SUBMIT_ACTIONS.APPROVE,
+                SUBMIT_ACTIONS.DELETE,
+                SUBMIT_ACTIONS.CONFIRM,
+            )
+        ],
+        widget=forms.HiddenInput(),
+        required=False,
+    )
 
     def __init__(self, *args, **kwargs):
         replays = kwargs.pop("replays")

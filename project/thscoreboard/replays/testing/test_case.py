@@ -15,13 +15,14 @@ class UserTestCase(test.TestCase):
     testing users.
     """
 
-    def createUser(self, username):
+    def createUser(self, username, is_staff=False):
         """Creates a user for tests."""
         User = auth.get_user_model()
         u = User(
             username=User.normalize_username(username),
             email=User.normalize_email(f"{username}@example.com"),
             password="password",
+            is_staff=is_staff,
         )
         u.save()
         return u

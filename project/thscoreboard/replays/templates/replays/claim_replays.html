@@ -7,11 +7,11 @@
 
 <form method="post">
     {% csrf_token %}
+    {{ form.errors }}
     <input type="hidden"
            name="silentselene_username"
            value="{{ silentselene_username }}"
            class="spaced-input">
-    {% if not user.is_staff %}
     <h2>
         Contact info
     </h2>
@@ -20,7 +20,6 @@
         For example, link your twitter, discord, or bilibili account.
     </p>
     {{ form.contact_info }}
-    {% endif %}
     <h2>
         Select replays
     </h2>
@@ -38,7 +37,15 @@
         </thead>
         {% for replay in replays %}
             <tr>
-                <td><input type="checkbox" value="{{replay.id}}" name="choices" checked></td>
+                <td>
+                    <input
+                        type="checkbox"
+                        value="{{replay.id}}"
+                        name="choices"
+                        checked
+                        {% if is_review and not user.is_staff %}hidden{% endif %}
+                    >
+                </td>
                 <td>{{ replay.shot.game.GetShortName }}</td>
                 <td>{{ replay.GetDifficultyName }}</td>
                 <td>{{ replay.shot.GetName }}</td>
@@ -48,7 +55,18 @@
             </tr>
         {% endfor %}
     </table>
-    <input type="submit" value="Confirm" class="spaced-input">
+    {% if user.is_staff %}
+        <input type="submit" name="submit_action" value="Approve" class="spaced-input">
+        {% if is_review %}
+            <input type="submit" name="submit_action" value="Delete request" class="spaced-input">
+        {% endif %}
+    {% else %}
+        {% if is_review %}
+            <input type="submit" name="submit_action" value="Delete request" class="spaced-input">
+        {% else %}
+            <input type="submit" name="submit_action" value="Confirm" class="spaced-input">
+        {% endif %}
+    {% endif %}
 </form>
 
 {% endblock %}
