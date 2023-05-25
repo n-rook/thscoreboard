@@ -324,6 +324,7 @@ class Th128ReplayTestCase(unittest.TestCase):
         self.assertEqual(s.graze, 4160)
         self.assertEqual(s.th128_motivation, 86626)
         self.assertEqual(s.th128_perfect_freeze, 30000)
+        self.assertEqual(int(s.th128_frozen_area), 1717)
 
     def testExtra(self):
         r = ParseTestReplay("th128_extra")

@@ -506,6 +506,9 @@ class ReplayStage(models.Model):
     th128_perfect_freeze = models.IntegerField(blank=True, null=True)
     """Perfect Freeze percentage, where every 100% can be used for a bomb"""
 
+    th128_frozen_area = models.IntegerField(blank=True, null=True)
+    """Sum of all freeze area percentages so far"""
+
     extends = models.IntegerField(blank=True, null=True)
     """Number of extends (1ups) this run has gotten so far
     More testing needs to be done to find the exact nature of this value,
@@ -558,6 +561,7 @@ class ReplayStage(models.Model):
         self.extends = s.extends
         self.th128_motivation = s.th128_motivation
         self.th128_perfect_freeze = s.th128_perfect_freeze
+        self.th128_frozen_area = s.th128_frozen_area
         self.th13_trance = s.th13_trance
         self.th16_season_power = s.th16_season_power
 
