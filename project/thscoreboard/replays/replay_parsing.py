@@ -66,7 +66,7 @@ class ReplayStage:
     th09_p2_score: int = None
     th128_motivation: int = None
     th128_perfect_freeze: int = None
-    th128_frozen_area: int = None
+    th128_frozen_area: float = None
     th13_trance: int = None
     extends: int = None
     th16_season_power: int = None
