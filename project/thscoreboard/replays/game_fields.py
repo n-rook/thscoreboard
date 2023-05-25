@@ -593,9 +593,7 @@ def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
             return FORMAT_EXTRA
     elif game_id == "th07" and stage == 8:
         return FORMAT_PHANTASM
-    elif stage == 7:
-        return FORMAT_EXTRA
-    if game_id == "th128":
+    elif game_id == "th128":
         stages = {
             1: "A1-1",
             2: "A1-2",
@@ -615,6 +613,8 @@ def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
             16: "Extra",
         }
         return stages[stage]
+    elif stage == 7:
+        return FORMAT_EXTRA
     return str(stage)
 
 
