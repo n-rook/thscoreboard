@@ -31,7 +31,6 @@ _table_fields_th06 = immutabledict(
         "th128_motivation": False,
         "th128_perfect_freeze": False,
         "th128_frozen_area": False,
-        "th128_frozen_area": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
