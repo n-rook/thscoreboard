@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+{% if user.is_staff %}
+<h2>
+    All claims
+</h2>
+{% else %}
+<h2>
+    My claims
+</h2>
+{% endif %}
+<table class="replay-table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>User</th>
+            <th>Status</th>
+            <th>Link</th>
+        </tr>
+    </thead>
+    {% for claim_request in claim_requests %}
+        <tr>
+            <td>{{ claim_request.id }}</td>
+            <td>{{ claim_request.user.get_username }}</td>
+            <td>{{ claim_request.get_request_status_name }}</td>
+            <td><a href="claim/{{ claim_request.id }}">View</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

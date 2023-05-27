@@ -12,6 +12,7 @@ from users.views import (
     register,
     claim,
     set_language,
+    my_claims,
 )
 
 from thscoreboard import settings
@@ -84,4 +85,5 @@ urlpatterns = [
     path("claim", claim.claim),
     path("set_language", set_language.set_language),
     path("claim/<int:claim_replay_request_id>", claim.review),
+    path("my_claims", my_claims.my_claims),
 ]
