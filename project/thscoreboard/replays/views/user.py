@@ -23,9 +23,10 @@ def user_page_json(request, username: str):
 @http_decorators.require_safe
 def user_page(request, username: str):
     user = get_object_or_404(auth.get_user_model(), username=username, is_active=True)
+    is_own_page = user == request.user
 
     return render(
         request,
         "replays/user_page.html",
-        {"viewed_user": user},
+        {"viewed_user": user, "is_own_page": is_own_page},
     )

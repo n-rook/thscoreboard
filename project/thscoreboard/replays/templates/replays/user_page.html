@@ -3,5 +3,7 @@
 {% block content %}
     <h2>{{viewed_user.username}}</h2>
     {% include "replays/replay_table.html" with show_game=True %}
-    <p><a href="/users/claim">Claim replays from royalflare</a></p>
+    {% if is_own_page %}
+        <p><a href="/users/claim">Claim replays from royalflare</a></p>
+    {% endif %}
 {% endblock %}
