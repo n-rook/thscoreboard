@@ -6,6 +6,7 @@ import datetime
 from typing import Optional
 
 from django.db import models
+from django.utils import formats
 from django.utils import timezone
 from django.utils.translation import pgettext_lazy
 from django.db.models import Q, F, Window, QuerySet, When, Case, Value
@@ -415,6 +416,19 @@ class Replay(models.Model):
         if len(self.comment) <= limits.MAX_SHORTENED_COMMENT_LENGTH:
             return self.comment
         return self.comment[: limits.MAX_SHORTENED_COMMENT_LENGTH] + "..."
+    
+    def GetFormattedTimestampDate(self) -> Optional[str]:
+        """Returns the date on which the replay was played."""
+
+        if not self.timestamp:
+            return None
+        
+        if self.shot.game_id == game_ids.GameIDs.TH07:
+            fmt = 'd F'
+        else:
+            fmt = 'd F Y'
+
+        return formats.date_format(self.timestamp, format=fmt)
 
 
 class ReplayStage(models.Model):

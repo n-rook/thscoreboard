@@ -61,6 +61,7 @@ def replay_details(request, game_id: str, replay_id: int):
         "game_name": replay_instance.shot.game.GetName(),
         "shot_name": replay_instance.shot.GetName(),
         "difficulty_name": replay_instance.GetDifficultyName(),
+        "category": replay_instance.get_category_display(),
         "game_id": game_id,
         "spell_name": spell_names.get(game_id, replay_instance.spell_card_id),
         "replay": replay_instance,
@@ -81,6 +82,12 @@ def replay_details(request, game_id: str, replay_id: int):
         context["has_replay_file"] = True
     else:
         context["has_replay_file"] = False
+    if replay_instance.user:
+        context["player_name"] = replay_instance.user.username
+        context["owned"] = True
+    else:
+        context["player_name"] = replay_instance.imported_username
+        context["owned"] = False
 
     if replay_instance.route:
         context["route_name"] = replay_instance.route.GetName()

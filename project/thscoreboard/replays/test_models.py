@@ -149,7 +149,46 @@ class ReplayTest(test_case.ReplayTestCase):
         replay = models.Replay.objects.order_by("-score").annotate_with_rank().first()
 
         self.assertEquals(replay.rank, -1)
+    
+    def testGetFormattedTimestampDate_NoDate(self):
+        th05_mima = models.Shot.objects.get(game_id=game_ids.GameIDs.TH05, shot_id="Mima")
 
+        r = create_replay.PublishReplayWithoutFile(
+            user=self.author,
+            difficulty=1,
+            shot=th05_mima,
+            score=10000,
+            category=models.Category.STANDARD,
+            comment="Hello",
+            is_clear=True,
+            video_link="https://www.youtube.com/example",
+            route=None,
+            replay_type=game_ids.ReplayTypes.FULL_GAME,
+            no_bomb=False,
+            miss_count=None,
+        )
+
+        self.assertIsNone(r.GetFormattedTimestampDate())
+
+    def testGetFormattedTimestampDate_TH07(self):
+        r = test_replays.CreateAsPublishedReplay(
+            filename="th7_lunatic",
+            user=self.author,
+        )
+        self.assertEqual(
+            r.GetFormattedTimestampDate(),
+            '22 October'
+        )
+
+    def testGetFormattedTimestampDate_Regular(self):
+        r = test_replays.CreateAsPublishedReplay(
+            filename="th8_normal",
+            user=self.author,
+        )
+        self.assertEqual(
+            r.GetFormattedTimestampDate(),
+            '25 May 2018'
+        )
 
 class TemporaryReplayFileTest(test_case.ReplayTestCase):
     def setUp(self):
