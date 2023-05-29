@@ -66,6 +66,7 @@ class ReplayStage:
     th09_p2_score: int = None
     th128_motivation: int = None
     th128_perfect_freeze: int = None
+    th128_frozen_area: float = None
     th13_trance: int = None
     extends: int = None
     th16_season_power: int = None
@@ -630,6 +631,7 @@ def _Parse128(rep_raw):
             s.graze = next_stage_start_data.graze
             s.th128_motivation = next_stage_start_data.motivation
             s.th128_perfect_freeze = next_stage_start_data.perfect_freeze
+            s.th128_frozen_area = next_stage_start_data.frozen_area
         else:
             s.score = replay.header.score * 10
         rep_stages.append(s)

@@ -30,6 +30,7 @@ _table_fields_th06 = immutabledict(
         "th09_p2_score": False,
         "th128_motivation": False,
         "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -55,6 +56,7 @@ _table_fields_th07 = immutabledict(
         "th09_p2_score": False,
         "th128_motivation": False,
         "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -80,6 +82,7 @@ _table_fields_th08 = immutabledict(
         "th09_p2_score": False,
         "th128_motivation": False,
         "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -105,6 +108,7 @@ _table_fields_th09 = immutabledict(
         "th09_p2_score": True,
         "th128_motivation": False,
         "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -130,6 +134,7 @@ _table_fields_th09_PVP = immutabledict(
         "th09_p2_score": False,
         "th128_motivation": False,
         "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -155,6 +160,7 @@ _table_fields_th10 = immutabledict(
         "th09_p2_score": False,
         "th128_motivation": False,
         "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -180,6 +186,7 @@ _table_fields_th11 = immutabledict(
         "th09_p2_score": False,
         "th128_motivation": False,
         "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -205,6 +212,7 @@ _table_fields_th12 = immutabledict(
         "th09_p2_score": False,
         "th128_motivation": False,
         "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -230,6 +238,7 @@ _table_fields_th13 = immutabledict(
         "th09_p2_score": False,
         "th128_motivation": False,
         "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
         "th13_trance": True,
         "th16_season_power": False,
         "extends": True,
@@ -255,6 +264,7 @@ _table_fields_th14 = immutabledict(
         "th09_p2_score": False,
         "th128_motivation": False,
         "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -280,6 +290,7 @@ _table_fields_th15 = immutabledict(
         "th09_p2_score": False,
         "th128_motivation": False,
         "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -305,6 +316,7 @@ _table_fields_th16 = immutabledict(
         "th09_p2_score": False,
         "th128_motivation": False,
         "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
         "th13_trance": False,
         "th16_season_power": True,
         "extends": False,
@@ -330,6 +342,7 @@ _table_fields_th17 = immutabledict(
         "th09_p2_score": False,
         "th128_motivation": False,
         "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -355,6 +368,7 @@ _table_fields_th18 = immutabledict(
         "th09_p2_score": False,
         "th128_motivation": False,
         "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -380,6 +394,7 @@ _table_fields_th128 = immutabledict(
         "th09_p2_score": False,
         "th128_motivation": True,
         "th128_perfect_freeze": True,
+        "th128_frozen_area": True,
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
@@ -641,6 +656,11 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
             stage.th128_perfect_freeze = ""
         else:
             stage.th128_perfect_freeze = f"{stage.th128_perfect_freeze//100}%"
+
+        if stage.th128_frozen_area is None:
+            stage.th128_frozen_area = ""
+        else:
+            stage.th128_frozen_area = f"{int(stage.th128_frozen_area)}%"
 
         if stage.stage is None:
             stage.stage = ""

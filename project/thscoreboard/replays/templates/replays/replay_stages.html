@@ -33,6 +33,9 @@
             {% if table_fields.th128_perfect_freeze %}
             <th>{% translate "Perfect Freeze" %}</th>
             {% endif %}
+            {% if table_fields.th128_frozen_area %}
+            <th>{% translate "Frozen Area" %}</th>
+            {% endif %}
             {% if table_fields.th06_rank %}
             <th>{% translate "Rank" %}</th>
             {% endif %}
@@ -94,6 +97,9 @@
             {% endif %}
             {% if table_fields.th128_perfect_freeze %}
             <th>{{stage.th128_perfect_freeze}}</th>
+            {% endif %}
+            {% if table_fields.th128_frozen_area %}
+            <th>{{stage.th128_frozen_area}}</th>
             {% endif %}
             {% if table_fields.th06_rank %}
             <td>{{stage.th06_rank}}</td>

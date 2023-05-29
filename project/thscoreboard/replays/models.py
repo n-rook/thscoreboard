@@ -501,10 +501,16 @@ class ReplayStage(models.Model):
     """
 
     th128_motivation = models.IntegerField(blank=True, null=True)
-    """Motivation percentage, which acts like lives but is different"""
+    """Motivation percentage, which acts like lives but is different. Stored as a fixed point integer where 10000 is 100%
+    The last 2 digits are cut off in the game"""
 
     th128_perfect_freeze = models.IntegerField(blank=True, null=True)
-    """Perfect Freeze percentage, where every 100% can be used for a bomb"""
+    """Perfect Freeze percentage. Stored as a fixed point integer where 10000 is 100%
+    The last 2 digits are cut off in the game"""
+
+    th128_frozen_area = models.FloatField(blank=True, null=True)
+    """Sum of all frozen area percentages so far. Note that 100% is stored as 100, not 1
+    Anything beyond the decimal point is cut off in the game"""
 
     extends = models.IntegerField(blank=True, null=True)
     """Number of extends (1ups) this run has gotten so far
@@ -558,6 +564,7 @@ class ReplayStage(models.Model):
         self.extends = s.extends
         self.th128_motivation = s.th128_motivation
         self.th128_perfect_freeze = s.th128_perfect_freeze
+        self.th128_frozen_area = s.th128_frozen_area
         self.th13_trance = s.th13_trance
         self.th16_season_power = s.th16_season_power
 
