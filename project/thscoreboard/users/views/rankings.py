@@ -41,23 +41,23 @@ def rankings(request: WSGIRequest) -> HttpResponse:
             )
     games = _get_all_games_from_selection(selection)
 
-    rankings = get_all_rankings_for_game(games)
-    rankings_array = _rankings_to_dicts(rankings)
+    rankings = _get_all_player_rankings_for_games(games)
+    rankings_dicts = _rankings_to_dicts(rankings)
     game_selection_form = forms.RankingGameSelectionForm()
     return render(
         request,
         "users/rankings.html",
         {
-            "rankings": rankings_array,
+            "rankings": rankings_dicts,
             "form": game_selection_form,
             "selection": selection,
         },
     )
 
 
-def get_all_rankings_for_game(
+def _get_all_player_rankings_for_games(
     games: Iterable[replay_models.Game],
-) -> list[tuple[Union[str, user_models.User], RankCount]]:
+) -> dict[str | user_models.User, RankCount]:
     rankings = defaultdict(lambda: RankCount(0, 0, 0))
     for game in games:
         all_replays = get_all_replay_for_game(game)
@@ -67,9 +67,7 @@ def get_all_rankings_for_game(
                 shot=shot, difficulty=difficulty, route=route
             )[:3]
             rankings = _update_rankings(rankings, top_3_replays)
-
-    sorted_rank_items = sorted(rankings.items(), key=lambda item: item[1], reverse=True)
-    return sorted_rank_items
+    return rankings
 
 
 def _update_rankings(
@@ -108,9 +106,10 @@ def _rankings_to_dicts(
     rankings: list[tuple[Union[str, user_models.User], RankCount]]
 ) -> list[dict]:
     rows = []
-    for i, ranking in enumerate(rankings):
-        user = ranking[0]
-        rank_count: RankCount = ranking[1]
+    sorted_ranking_items = sorted(
+        rankings.items(), key=lambda item: item[1], reverse=True
+    )
+    for i, (user, rank_count) in enumerate(sorted_ranking_items):
         row = {
             "player_rank": i + 1,  # Make displayed numbers be 1-indexed
             "first_place_count": rank_count.first_place_count,
