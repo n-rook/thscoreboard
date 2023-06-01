@@ -5,7 +5,10 @@ from typing import Iterable, Union
 from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
+from django.views.decorators import http as http_decorators
 
+from replays import forms
+from replays.get_all_games import get_all_games_by_category
 from replays.views.replay_list import get_all_replay_for_game
 import users.models as user_models
 import replays.models as replay_models
@@ -25,10 +28,25 @@ class RankCount:
         ) < (other.first_place_count, other.second_place_count, other.third_place_count)
 
 
+@http_decorators.require_http_methods(["GET", "HEAD", "POST"])
 def rankings(request: WSGIRequest) -> HttpResponse:
-    rankings = get_all_rankings_for_game(replay_models.Game.objects.get(game_id="th14"))
+    game = replay_models.Game.objects.get(game_id="th06")
+    if request.method == "POST":
+        form = forms.RankingGameSelectionForm(request.POST)
+        if form.is_valid():
+            game = replay_models.Game.objects.get(
+                game_id=form.cleaned_data["game_selection"]
+            )
+
+    rankings = get_all_rankings_for_game(game)
     rankings_array = _rankings_to_dicts(rankings)
-    return render(request, "users/rankings.html", {"rankings": rankings_array})
+    all_games_by_category = get_all_games_by_category()
+    game_selection_form = forms.RankingGameSelectionForm()
+    return render(
+        request,
+        "users/rankings.html",
+        {"rankings": rankings_array, "game_selection_form": game_selection_form},
+    )
 
 
 def get_all_rankings_for_game(

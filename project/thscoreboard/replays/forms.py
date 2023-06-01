@@ -189,3 +189,10 @@ class PublishReplayWithoutFileForm(forms.Form):
 
 class EditReplayForm(forms.Form):
     comment = _create_comment_field()
+
+
+class RankingGameSelectionForm(forms.Form):
+    all_games = models.Game.objects.all()
+    game_selection = forms.ChoiceField(
+        choices=[(game.game_id, game.GetShortName()) for game in all_games]
+    )

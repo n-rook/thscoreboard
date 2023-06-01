@@ -2,16 +2,22 @@
 
 {% block content %}
 <h1>Player Rankings</h1>
-<div>
-    <button class="button">All</button>
-    <button class="button">All Windows</button>
-    <button class="button">All PC-98</button>
-</div>
-<div>
-    <button class="button">th01</button>
-    <button class="button">th02</button>
-    <button class="button">...</button>
-</div>
+
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <button>All</button>
+        <button>All Windows</button>
+        <button>All PC-98</button>
+    </div>
+    <div>
+        {% for choice in game_selection_form.game_selection %}
+            <button type="submit" name="{{ game_selection_form.game_selection.name }}" value="{{ choice.choice_label }}">
+                {{ choice.choice_label }}
+            </button>
+        {% endfor %}
+    </div>
+</form>
 
 <table class="replay-table">
     <thead>
