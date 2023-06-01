@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Player Rankings</h1>
+<div>
+    <button class="button">All</button>
+    <button class="button">All Windows</button>
+    <button class="button">All PC-98</button>
+</div>
+<div>
+    <button class="button">th01</button>
+    <button class="button">th02</button>
+    <button class="button">...</button>
+</div>
+
+<table class="replay-table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Username</th>
+            <th>🥇</th>
+            <th>🥈</th>
+            <th>🥉</th>
+        </tr>
+    </thead>
+    {% for row in rankings %}
+        <tr>
+            <td>{{ row.0 }}</td>
+            <td>{{ row.1 }}</td>
+            <td>{{ row.2 }}</td>
+            <td>{{ row.3 }}</td>
+            <td>{{ row.4 }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

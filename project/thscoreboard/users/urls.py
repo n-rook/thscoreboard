@@ -9,6 +9,7 @@ from users.views import (
     banned,
     delete_account,
     profile,
+    rankings,
     register,
     claim,
     set_language,
@@ -86,4 +87,5 @@ urlpatterns = [
     path("set_language", set_language.set_language),
     path("claim/<int:claim_replay_request_id>", claim.review),
     path("my_claims", my_claims.my_claims),
+    path("rankings", rankings.rankings),
 ]

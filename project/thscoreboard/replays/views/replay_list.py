@@ -1,7 +1,9 @@
 """Contains views which list various replays."""
 
+from typing import Iterable
 from django.views.decorators import http as http_decorators
 from django.shortcuts import get_object_or_404, render
+from django.db.models import Manager
 
 from replays import models
 from replays import game_ids
@@ -12,7 +14,7 @@ from replays.views.replay_table_helpers import stream_json_bytes_to_http_reponse
 
 @http_decorators.require_safe
 def game_scoreboard_json(request, game_id: str):
-    replays = _get_all_replay_for_game(game_id)
+    replays = get_all_replay_for_game(game_id)
     replay_jsons = convert_replays_to_json_bytes(replays)
     return stream_json_bytes_to_http_reponse(replay_jsons)
 
@@ -111,7 +113,7 @@ def _get_filter_options_th17(game: Game) -> dict[str, list[str]]:
     }
 
 
-def _get_all_replay_for_game(game_id: str) -> dict:
+def get_all_replay_for_game(game_id: str) -> Manager[models.Replay]:
     return (
         models.Replay.objects.prefetch_related("shot")
         .prefetch_related("route")
