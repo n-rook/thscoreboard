@@ -203,11 +203,11 @@ class RankingGameSelectionForm(forms.Form):
         choices=[(g, g) for g in GROUPED_SELECTIONS], required=False
     )
     pc98_game_selection = forms.ChoiceField(
-        choices=[(c.GetShortName(), c.GetShortName()) for c in get_pc98_games()],
+        choices=[(c.game_id, c.GetShortName()) for c in get_pc98_games()],
         required=False,
     )
     windows_game_selection = forms.ChoiceField(
-        choices=[(c.GetShortName(), c.GetShortName()) for c in get_windows_games()],
+        choices=[(c.game_id, c.GetShortName()) for c in get_windows_games()],
         required=False,
     )
 

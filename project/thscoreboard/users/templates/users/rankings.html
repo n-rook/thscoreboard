@@ -6,50 +6,50 @@
 <form method="post">
     {% csrf_token %}
     <div class="button-container">
-        {% for choice in game_selection_form.grouped_game_selection %}
+        {% for choice in game_selection_form.grouped_game_selection.field.choices %}
             <button
-            {% if selection == choice.choice_label %}
+            {% if selection == choice.0 %}
                 class="button pressed"
             {% else %}
                 class="button"
             {% endif %}
                 type="submit"
                 name="{{ game_selection_form.grouped_game_selection.name }}"
-                value="{{ choice.choice_label }}"
+                value="{{ choice.0 }}"
             >
-                {{ choice.choice_label }}
+                {{ choice.1 }}
             </button>
         {% endfor %}
     </div>
     <div class="button-container">
-        {% for choice in game_selection_form.pc98_game_selection %}
+        {% for choice in game_selection_form.pc98_game_selection.field.choices %}
             <button
-            {% if selection == choice.choice_label %}
+            {% if selection == choice.0 %}
                 class="button pressed"
             {% else %}
                 class="button"
             {% endif %}
                 type="submit"
                 name="{{ game_selection_form.pc98_game_selection.name }}"
-                value="{{ choice.choice_label }}"
+                value="{{ choice.0 }}"
             >
-                {{ choice.choice_label }}
+                {{ choice.1 }}
             </button>
         {% endfor %}
     </div>
     <div class="button-container">
-        {% for choice in game_selection_form.windows_game_selection %}
+        {% for choice in game_selection_form.windows_game_selection.field.choices %}
             <button
-            {% if selection == choice.choice_label %}
+            {% if selection == choice.0 %}
                 class="button pressed"
             {% else %}
                 class="button"
             {% endif %}
                 type="submit"
                 name="{{ game_selection_form.windows_game_selection.name }}"
-                value="{{ choice.choice_label }}"
+                value="{{ choice.0 }}"
             >
-                {{ choice.choice_label }}
+                {{ choice.1 }}
             </button>
         {% endfor %}
     </div>
