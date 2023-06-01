@@ -1,13 +1,10 @@
 from collections import defaultdict
-from dataclasses import asdict, dataclass
-from functools import total_ordering
+from dataclasses import dataclass
 import itertools
-from typing import Iterable
+from typing import Iterable, Union
 from django.shortcuts import render
-from django.contrib.auth import decorators as auth_decorators
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
-from django.db.models import Q
 
 from replays.views.replay_list import get_all_replay_for_game
 import users.models as user_models
@@ -30,13 +27,13 @@ class RankCount:
 
 def rankings(request: WSGIRequest) -> HttpResponse:
     rankings = get_all_rankings_for_game(replay_models.Game.objects.get(game_id="th14"))
-    rankings_array = _rankings_to_array(rankings)
+    rankings_array = _rankings_to_dicts(rankings)
     return render(request, "users/rankings.html", {"rankings": rankings_array})
 
 
 def get_all_rankings_for_game(
     game: replay_models.Game,
-) -> list[tuple[str, RankCount]]:
+) -> list[tuple[Union[str, user_models.User], RankCount]]:
     rankings = defaultdict(lambda: RankCount(0, 0, 0))
     all_replays = get_all_replay_for_game(game)
     all_ranked_categories = _get_all_ranked_categories_for_game(game)
@@ -51,13 +48,12 @@ def get_all_rankings_for_game(
 
 
 def _update_rankings(
-    rankings: dict[str, RankCount], top_3_replays: Iterable[replay_models.Replay]
-) -> dict[str, RankCount]:
+    rankings: dict[Union[str, user_models.User], RankCount],
+    top_3_replays: Iterable[replay_models.Replay],
+) -> dict[Union[str, user_models.User], RankCount]:
     for replay_rank, replay in enumerate(top_3_replays):
         player_name = (
-            replay.user.username
-            if replay.user is not None
-            else replay.imported_username
+            replay.user if replay.user is not None else replay.imported_username
         )
         if replay_rank == 0:
             rankings[player_name].first_place_count += 1
@@ -83,17 +79,22 @@ def _get_all_ranked_categories_for_game(
     return itertools.product(all_shots, all_difficulties, all_routes)
 
 
-def _rankings_to_array(rankings: list[tuple[str, RankCount]]) -> list[list[str]]:
+def _rankings_to_dicts(
+    rankings: list[tuple[Union[str, user_models.User], RankCount]]
+) -> list[dict]:
     rows = []
     for i, ranking in enumerate(rankings):
-        username: str = ranking[0]
+        user = ranking[0]
         rank_count: RankCount = ranking[1]
-        row = [
-            str(i + 1),  # Make displayed numbers be 1-indexed
-            username,
-            str(rank_count.first_place_count),
-            str(rank_count.second_place_count),
-            str(rank_count.third_place_count),
-        ]
+        row = {
+            "player_rank": i + 1,  # Make displayed numbers be 1-indexed
+            "first_place_count": rank_count.first_place_count,
+            "second_place_count": rank_count.second_place_count,
+            "third_place_count": rank_count.third_place_count,
+        }
+        if isinstance(user, str):
+            row["username"] = user
+        else:
+            row["user"] = user
         rows.append(row)
     return rows
