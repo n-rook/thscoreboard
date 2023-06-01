@@ -1,6 +1,5 @@
 """Contains views which list various replays."""
 
-from typing import Iterable
 from django.views.decorators import http as http_decorators
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Manager

@@ -211,12 +211,8 @@ class RankingGameSelectionForm(forms.Form):
         required=False,
     )
 
-    def get_selection(self) -> str:
-        print(self.cleaned_data)
-        print(self.cleaned_data["windows_game_selection"])
-        if "grouped_game_selection" in self.cleaned_data:
-            return self.cleaned_data["grouped_game_selection"]
-        if "pc98_game_selection" in self.cleaned_data:
-            return self.cleaned_data["pc98_game_selection"]
-        if "windows_game_selection" in self.cleaned_data:
-            return self.cleaned_data["windows_game_selection"]
+    all_choice_fields = [
+        ("grouped_game_selection", grouped_game_selection),
+        ("pc98_game_selection", pc98_game_selection),
+        ("windows_game_selection", windows_game_selection),
+    ]

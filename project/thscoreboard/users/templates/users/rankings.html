@@ -5,54 +5,24 @@
 
 <form method="post">
     {% csrf_token %}
-    <div class="button-container">
-        {% for choice in game_selection_form.grouped_game_selection.field.choices %}
-            <button
-            {% if selection == choice.0 %}
-                class="button pressed"
-            {% else %}
-                class="button"
-            {% endif %}
-                type="submit"
-                name="{{ game_selection_form.grouped_game_selection.name }}"
-                value="{{ choice.0 }}"
-            >
-                {{ choice.1 }}
-            </button>
-        {% endfor %}
-    </div>
-    <div class="button-container">
-        {% for choice in game_selection_form.pc98_game_selection.field.choices %}
-            <button
-            {% if selection == choice.0 %}
-                class="button pressed"
-            {% else %}
-                class="button"
-            {% endif %}
-                type="submit"
-                name="{{ game_selection_form.pc98_game_selection.name }}"
-                value="{{ choice.0 }}"
-            >
-                {{ choice.1 }}
-            </button>
-        {% endfor %}
-    </div>
-    <div class="button-container">
-        {% for choice in game_selection_form.windows_game_selection.field.choices %}
-            <button
-            {% if selection == choice.0 %}
-                class="button pressed"
-            {% else %}
-                class="button"
-            {% endif %}
-                type="submit"
-                name="{{ game_selection_form.windows_game_selection.name }}"
-                value="{{ choice.0 }}"
-            >
-                {{ choice.1 }}
-            </button>
-        {% endfor %}
-    </div>
+    {% for field_name, choice_field in form.all_choice_fields %}
+        <div class="button-container">
+            {% for choice_value, choice_label in choice_field.choices %}
+                <button
+                {% if choice_value == selection %}
+                    class="button pressed"
+                {% else %}
+                    class="button"
+                {% endif %}
+                    type="submit"
+                    name="{{ field_name }}"
+                    value="{{ choice_value }}"
+                >
+                    {{ choice_label }}
+                </button>
+            {% endfor %}
+        </div>
+    {% endfor %}
 </form>
 
 <table class="replay-table">

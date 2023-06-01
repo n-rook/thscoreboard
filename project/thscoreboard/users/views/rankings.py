@@ -49,7 +49,7 @@ def rankings(request: WSGIRequest) -> HttpResponse:
         "users/rankings.html",
         {
             "rankings": rankings_array,
-            "game_selection_form": game_selection_form,
+            "form": game_selection_form,
             "selection": selection,
         },
     )
