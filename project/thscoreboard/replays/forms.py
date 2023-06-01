@@ -7,7 +7,7 @@ from django import forms
 from django.core import exceptions
 from django.db.models import enums
 
-from replays.get_all_games import get_all_games_by_category
+from replays.get_all_games import get_pc98_games, get_windows_games
 from replays import game_ids
 from replays import game_fields
 from replays import models
@@ -193,8 +193,30 @@ class EditReplayForm(forms.Form):
 
 
 class RankingGameSelectionForm(forms.Form):
-    all_games = models.Game.objects.all()
-    all_game_names = [game.GetShortName() for game in all_games]
-    all_choices = all_game_names + ["All games", "Windows", "PC-98"]
-    print(all_choices)
-    game_selection = forms.ChoiceField(choices=[(c, c) for c in all_choices])
+    SELECT_ALL = "All games"
+    SELECT_PC98 = "PC-98"
+    SELECT_WINDOWS = "Windows"
+    GROUPED_SELECTIONS = [SELECT_ALL, SELECT_PC98, SELECT_WINDOWS]
+    DEFAULT_SELECTION = SELECT_WINDOWS
+
+    grouped_game_selection = forms.ChoiceField(
+        choices=[(g, g) for g in GROUPED_SELECTIONS], required=False
+    )
+    pc98_game_selection = forms.ChoiceField(
+        choices=[(c.GetShortName(), c.GetShortName()) for c in get_pc98_games()],
+        required=False,
+    )
+    windows_game_selection = forms.ChoiceField(
+        choices=[(c.GetShortName(), c.GetShortName()) for c in get_windows_games()],
+        required=False,
+    )
+
+    def get_selection(self) -> str:
+        print(self.cleaned_data)
+        print(self.cleaned_data["windows_game_selection"])
+        if "grouped_game_selection" in self.cleaned_data:
+            return self.cleaned_data["grouped_game_selection"]
+        if "pc98_game_selection" in self.cleaned_data:
+            return self.cleaned_data["pc98_game_selection"]
+        if "windows_game_selection" in self.cleaned_data:
+            return self.cleaned_data["windows_game_selection"]

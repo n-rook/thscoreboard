@@ -6,15 +6,47 @@
 <form method="post">
     {% csrf_token %}
     <div class="button-container">
-        {% for choice in game_selection_form.game_selection %}
+        {% for choice in game_selection_form.grouped_game_selection %}
             <button
-            {% if selection.game_id == choice.choice_label %}
+            {% if selection == choice.choice_label %}
                 class="button pressed"
             {% else %}
                 class="button"
             {% endif %}
                 type="submit"
-                name="{{ game_selection_form.game_selection.name }}"
+                name="{{ game_selection_form.grouped_game_selection.name }}"
+                value="{{ choice.choice_label }}"
+            >
+                {{ choice.choice_label }}
+            </button>
+        {% endfor %}
+    </div>
+    <div class="button-container">
+        {% for choice in game_selection_form.pc98_game_selection %}
+            <button
+            {% if selection == choice.choice_label %}
+                class="button pressed"
+            {% else %}
+                class="button"
+            {% endif %}
+                type="submit"
+                name="{{ game_selection_form.pc98_game_selection.name }}"
+                value="{{ choice.choice_label }}"
+            >
+                {{ choice.choice_label }}
+            </button>
+        {% endfor %}
+    </div>
+    <div class="button-container">
+        {% for choice in game_selection_form.windows_game_selection %}
+            <button
+            {% if selection == choice.choice_label %}
+                class="button pressed"
+            {% else %}
+                class="button"
+            {% endif %}
+                type="submit"
+                name="{{ game_selection_form.windows_game_selection.name }}"
                 value="{{ choice.choice_label }}"
             >
                 {{ choice.choice_label }}

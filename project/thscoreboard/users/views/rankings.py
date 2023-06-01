@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.views.decorators import http as http_decorators
 
 from replays import forms
-from replays.get_all_games import get_all_games_by_category
+from replays.get_all_games import get_pc98_games, get_windows_games
 from replays.views.replay_list import get_all_replay_for_game
 import users.models as user_models
 import replays.models as replay_models
@@ -30,17 +30,19 @@ class RankCount:
 
 @http_decorators.require_http_methods(["GET", "HEAD", "POST"])
 def rankings(request: WSGIRequest) -> HttpResponse:
-    game = replay_models.Game.objects.get(game_id="th06")
+    selection = forms.RankingGameSelectionForm.DEFAULT_SELECTION
     if request.method == "POST":
         form = forms.RankingGameSelectionForm(request.POST)
         if form.is_valid():
-            game = replay_models.Game.objects.get(
-                game_id=form.cleaned_data["game_selection"]
+            selection = (
+                form.cleaned_data["grouped_game_selection"]
+                or form.cleaned_data["pc98_game_selection"]
+                or form.cleaned_data["windows_game_selection"]
             )
+    games = _get_all_games_from_selection(selection)
 
-    rankings = get_all_rankings_for_game(game)
+    rankings = get_all_rankings_for_game(games)
     rankings_array = _rankings_to_dicts(rankings)
-    all_games_by_category = get_all_games_by_category()
     game_selection_form = forms.RankingGameSelectionForm()
     return render(
         request,
@@ -48,22 +50,23 @@ def rankings(request: WSGIRequest) -> HttpResponse:
         {
             "rankings": rankings_array,
             "game_selection_form": game_selection_form,
-            "selection": game,
+            "selection": selection,
         },
     )
 
 
 def get_all_rankings_for_game(
-    game: replay_models.Game,
+    games: Iterable[replay_models.Game],
 ) -> list[tuple[Union[str, user_models.User], RankCount]]:
     rankings = defaultdict(lambda: RankCount(0, 0, 0))
-    all_replays = get_all_replay_for_game(game)
-    all_ranked_categories = _get_all_ranked_categories_for_game(game)
-    for shot, difficulty, route in all_ranked_categories:
-        top_3_replays = all_replays.filter(
-            shot=shot, difficulty=difficulty, route=route
-        )[:3]
-        rankings = _update_rankings(rankings, top_3_replays)
+    for game in games:
+        all_replays = get_all_replay_for_game(game)
+        all_ranked_categories = _get_all_ranked_categories_for_game(game)
+        for shot, difficulty, route in all_ranked_categories:
+            top_3_replays = all_replays.filter(
+                shot=shot, difficulty=difficulty, route=route
+            )[:3]
+            rankings = _update_rankings(rankings, top_3_replays)
 
     sorted_rank_items = sorted(rankings.items(), key=lambda item: item[1], reverse=True)
     return sorted_rank_items
@@ -120,3 +123,16 @@ def _rankings_to_dicts(
             row["user"] = user
         rows.append(row)
     return rows
+
+
+def _get_all_games_from_selection(selection: str) -> Iterable[replay_models.Game]:
+    games = replay_models.Game.objects.filter(game_id=selection)
+    if len(games) == 1:
+        return games
+
+    if selection == forms.RankingGameSelectionForm.SELECT_ALL:
+        return replay_models.Game.objects.all()
+    if selection == forms.RankingGameSelectionForm.SELECT_PC98:
+        return get_pc98_games()
+    if selection == forms.RankingGameSelectionForm.SELECT_WINDOWS:
+        return get_windows_games()
