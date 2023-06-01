@@ -5,14 +5,18 @@
 
 <form method="post">
     {% csrf_token %}
-    <div>
-        <button>All</button>
-        <button>All Windows</button>
-        <button>All PC-98</button>
-    </div>
-    <div>
+    <div class="button-container">
         {% for choice in game_selection_form.game_selection %}
-            <button type="submit" name="{{ game_selection_form.game_selection.name }}" value="{{ choice.choice_label }}">
+            <button
+            {% if selection.game_id == choice.choice_label %}
+                class="button pressed"
+            {% else %}
+                class="button"
+            {% endif %}
+                type="submit"
+                name="{{ game_selection_form.game_selection.name }}"
+                value="{{ choice.choice_label }}"
+            >
                 {{ choice.choice_label }}
             </button>
         {% endfor %}

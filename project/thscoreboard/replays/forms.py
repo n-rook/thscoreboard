@@ -7,6 +7,7 @@ from django import forms
 from django.core import exceptions
 from django.db.models import enums
 
+from replays.get_all_games import get_all_games_by_category
 from replays import game_ids
 from replays import game_fields
 from replays import models
@@ -193,6 +194,7 @@ class EditReplayForm(forms.Form):
 
 class RankingGameSelectionForm(forms.Form):
     all_games = models.Game.objects.all()
-    game_selection = forms.ChoiceField(
-        choices=[(game.game_id, game.GetShortName()) for game in all_games]
-    )
+    all_game_names = [game.GetShortName() for game in all_games]
+    all_choices = all_game_names + ["All games", "Windows", "PC-98"]
+    print(all_choices)
+    game_selection = forms.ChoiceField(choices=[(c, c) for c in all_choices])
