@@ -58,56 +58,25 @@ def _get_all_player_rankings_for_games(
     games: Iterable[replay_models.Game],
 ) -> dict[str | user_models.User, RankCount]:
     rankings = defaultdict(lambda: RankCount(0, 0, 0))
-    for game in games:
-        all_replays = (
-            replay_models.Replay.objects.prefetch_related("shot")
-            .prefetch_related("route")
-            .filter(category=replay_models.Category.STANDARD)
-            .filter(shot__game=game.game_id)
-            .filter(replay_type=1)
-            .filter(is_listed=True)
-            .order_by("-score")
-            .annotate_with_rank()
-        )
-        all_ranked_categories = _get_all_ranked_categories_for_game(game)
-        for shot, difficulty, route in all_ranked_categories:
-            top_3_replays = all_replays.filter(
-                shot=shot, difficulty=difficulty, route=route
-            )[:3]
-            rankings = _update_rankings(rankings, top_3_replays)
-    return rankings
+    game_ids = [game.game_id for game in games]
+    top_3_replays = (
+        replay_models.Replay.objects.filter(category=replay_models.Category.STANDARD)
+        .filter(shot__game__in=game_ids)
+        .filter(replay_type=1)
+        .filter(is_listed=True)
+        .annotate_with_rank()
+        .filter(rank__lte=3)
+    )
 
-
-def _update_rankings(
-    rankings: dict[Union[str, user_models.User], RankCount],
-    top_3_replays: Iterable[replay_models.Replay],
-) -> dict[Union[str, user_models.User], RankCount]:
-    for replay_rank, replay in enumerate(top_3_replays):
-        player_name = (
-            replay.user if replay.user is not None else replay.imported_username
-        )
-        if replay_rank == 0:
-            rankings[player_name].first_place_count += 1
-        elif replay_rank == 1:
-            rankings[player_name].second_place_count += 1
+    for replay in top_3_replays:
+        player = replay.user if replay.user is not None else replay.imported_username
+        if replay.rank == 1:
+            rankings[player].first_place_count += 1
+        elif replay.rank == 2:
+            rankings[player].second_place_count += 1
         else:
-            rankings[player_name].third_place_count += 1
+            rankings[player].third_place_count += 1
     return rankings
-
-
-def _get_all_ranked_categories_for_game(
-    game: replay_models.Game,
-) -> Iterable[tuple[replay_models.Shot, int, replay_models.Route]]:
-    # Excludes unranked categories, such as replays that have no route due to early game-overs.
-
-    all_shots = replay_models.Shot.objects.filter(game=game)
-    all_difficulties = list(range(game.num_difficulties))
-    all_routes = replay_models.Route.objects.filter(game=game)
-    if len(all_routes) == 0:
-        all_routes = [None]
-    if len(all_shots) == 0:
-        all_shots = [None]
-    return itertools.product(all_shots, all_difficulties, all_routes)
 
 
 def _rankings_to_dicts(
