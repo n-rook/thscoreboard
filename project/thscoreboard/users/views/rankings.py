@@ -9,7 +9,6 @@ from django.views.decorators import http as http_decorators
 
 from replays import forms
 from replays.get_all_games import get_pc98_games, get_windows_games
-from replays.views.replay_list import get_all_replay_for_game
 import users.models as user_models
 import replays.models as replay_models
 
@@ -60,7 +59,16 @@ def _get_all_player_rankings_for_games(
 ) -> dict[str | user_models.User, RankCount]:
     rankings = defaultdict(lambda: RankCount(0, 0, 0))
     for game in games:
-        all_replays = get_all_replay_for_game(game)
+        all_replays = (
+            replay_models.Replay.objects.prefetch_related("shot")
+            .prefetch_related("route")
+            .filter(category=replay_models.Category.STANDARD)
+            .filter(shot__game=game.game_id)
+            .filter(replay_type=1)
+            .filter(is_listed=True)
+            .order_by("-score")
+            .annotate_with_rank()
+        )
         all_ranked_categories = _get_all_ranked_categories_for_game(game)
         for shot, difficulty, route in all_ranked_categories:
             top_3_replays = all_replays.filter(
