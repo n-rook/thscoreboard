@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Player Rankings</h1>
 
-<form method="post">
+<form method="get">
     {% csrf_token %}
     {% for field_name, choice_field in form.all_choice_fields %}
         <div class="button-container">

@@ -27,17 +27,16 @@ class RankCount:
         ) < (other.first_place_count, other.second_place_count, other.third_place_count)
 
 
-@http_decorators.require_http_methods(["GET", "HEAD", "POST"])
 def rankings(request: WSGIRequest) -> HttpResponse:
     selection = forms.RankingGameSelectionForm.DEFAULT_SELECTION
-    if request.method == "POST":
-        form = forms.RankingGameSelectionForm(request.POST)
-        if form.is_valid():
-            selection = (
-                form.cleaned_data["grouped_game_selection"]
-                or form.cleaned_data["pc98_game_selection"]
-                or form.cleaned_data["windows_game_selection"]
-            )
+    form = forms.RankingGameSelectionForm(request.GET)
+    if form.is_valid():
+        selection = (
+            form.cleaned_data["grouped_game_selection"]
+            or form.cleaned_data["pc98_game_selection"]
+            or form.cleaned_data["windows_game_selection"]
+            or forms.RankingGameSelectionForm.DEFAULT_SELECTION
+        )
     games = _get_all_games_from_selection(selection)
 
     rankings = _get_all_player_rankings_for_games(games)
