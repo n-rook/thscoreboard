@@ -1,11 +1,9 @@
 from collections import defaultdict
 from dataclasses import dataclass
-import itertools
 from typing import Iterable, Union
 from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
-from django.views.decorators import http as http_decorators
 
 from replays import forms
 from replays.get_all_games import get_pc98_games, get_windows_games
@@ -31,12 +29,7 @@ def rankings(request: WSGIRequest) -> HttpResponse:
     selection = forms.RankingGameSelectionForm.DEFAULT_SELECTION
     form = forms.RankingGameSelectionForm(request.GET)
     if form.is_valid():
-        selection = (
-            form.cleaned_data["grouped_game_selection"]
-            or form.cleaned_data["pc98_game_selection"]
-            or form.cleaned_data["windows_game_selection"]
-            or forms.RankingGameSelectionForm.DEFAULT_SELECTION
-        )
+        selection = form.get_selection()
     games = _get_all_games_from_selection(selection)
 
     rankings = _get_all_player_rankings_for_games(games)
