@@ -192,7 +192,7 @@ class ClaimReplaysForm(forms.Form):
         CONFIRM = "Confirm"
 
     choices = forms.MultipleChoiceField(
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.CheckboxSelectMultiple, required=False
     )
     contact_info = forms.CharField(
         label=_("contact_info"), required=True, max_length=200
