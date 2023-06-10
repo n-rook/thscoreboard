@@ -202,14 +202,8 @@ class RankingGameSelectionForm(forms.Form):
     grouped_game_selection = forms.ChoiceField(
         choices=[(g, g) for g in GROUPED_SELECTIONS], required=False
     )
-    pc98_game_selection = forms.ChoiceField(
-        choices=[(c.game_id, c.GetShortName()) for c in get_pc98_games()],
-        required=False,
-    )
-    windows_game_selection = forms.ChoiceField(
-        choices=[(c.game_id, c.GetShortName()) for c in get_windows_games()],
-        required=False,
-    )
+    pc98_game_selection = forms.ChoiceField(required=False)
+    windows_game_selection = forms.ChoiceField(required=False)
 
     def get_selection(self) -> str:
         return (
@@ -219,8 +213,17 @@ class RankingGameSelectionForm(forms.Form):
             or self.DEFAULT_SELECTION
         )
 
-    all_choice_fields = [
-        ("grouped_game_selection", grouped_game_selection),
-        ("pc98_game_selection", pc98_game_selection),
-        ("windows_game_selection", windows_game_selection),
-    ]
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["pc98_game_selection"].choices = [
+            (c.game_id, c.GetShortName()) for c in get_pc98_games()
+        ]
+        self.fields["windows_game_selection"].choices = [
+            (c.game_id, c.GetShortName()) for c in get_windows_games()
+        ]
+
+        self.all_choice_fields = [
+            ("grouped_game_selection", self.fields["grouped_game_selection"]),
+            ("pc98_game_selection", self.fields["pc98_game_selection"]),
+            ("windows_game_selection", self.fields["windows_game_selection"]),
+        ]
