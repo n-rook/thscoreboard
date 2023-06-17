@@ -1,6 +1,9 @@
 import json
-from typing import Iterable
+from typing import Any, Iterable
 from functools import lru_cache
+
+from django.core.serializers import json as django_json
+from django.utils.functional import Promise
 
 from replays import models, game_ids
 
@@ -77,7 +80,8 @@ class ReplayToJsonConverter:
 
     def convert_replay_to_json_bytes(self, replay: models.Replay) -> bytes:
         replay_dict = self.convert_replay_to_dict(replay)
-        return f"{json.dumps(replay_dict)}\n".encode("utf-8")
+        json_str = json.dumps(replay_dict, cls=_LazyDjangoJSONEncoder)
+        return f"{json_str}\n".encode("utf-8")
 
 
 def convert_replays_to_json_bytes(
@@ -95,3 +99,15 @@ def _get_medal_emoji(rank: int) -> str:
     elif rank == 3:
         return "🥉"
     return ""
+
+
+class _LazyDjangoJSONEncoder(django_json.DjangoJSONEncoder):
+    """A JSON encoder that can handle gettext_lazy strings."""
+
+    def default(self, o: Any) -> Any:
+        # the _lazy string translation functions return Promises, so force
+        # them back to strings.
+        if isinstance(o, Promise):
+            return str(o)
+
+        return super().default(o)
