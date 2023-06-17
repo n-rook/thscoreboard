@@ -178,3 +178,11 @@ try {
 } catch(error) {
   // Shut up error in console but do nothing
 }
+
+window.addEventListener("load", event => {
+  activeFilters = {};
+  for(elm of document.querySelectorAll(".checkbox-list input[type=checkbox]:checked")) {
+    onClick(elm);
+    console.log(elm);
+  }
+});
