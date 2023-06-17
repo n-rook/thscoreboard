@@ -5,7 +5,7 @@ from typing import Optional
 
 from immutabledict import immutabledict
 
-from django.utils.translation import gettext as _, pgettext
+from django.utils.translation import gettext as _, pgettext, pgettext_lazy
 
 
 class GameIDs:
@@ -64,99 +64,99 @@ class NameLength(enum.Enum):
 _GAME_NAMES = immutabledict(
     {
         GameIDs.TH01: (
-            pgettext("short game name", "th01"),
-            pgettext("standard game name", "The Highly Responsive to Prayers"),
-            pgettext("full game name", "東方靈異伝 - The Highly Responsive to Prayers"),
+            pgettext_lazy("short game name", "th01"),
+            pgettext_lazy("standard game name", "The Highly Responsive to Prayers"),
+            pgettext_lazy("full game name", "東方靈異伝 - The Highly Responsive to Prayers"),
         ),
         GameIDs.TH02: (
-            pgettext("short game name", "th02"),
-            pgettext("standard game name", "Story of Eastern Wonderland"),
-            pgettext("full game name", "東方封魔録 - Story of Eastern Wonderland"),
+            pgettext_lazy("short game name", "th02"),
+            pgettext_lazy("standard game name", "Story of Eastern Wonderland"),
+            pgettext_lazy("full game name", "東方封魔録 - Story of Eastern Wonderland"),
         ),
         GameIDs.TH03: (
-            pgettext("short game name", "th03"),
-            pgettext("standard game name", "The Phantasmagoria of Dim. Dream"),
-            pgettext("full game name", "東方夢時空 - The Phantasmagoria of Dim. Dream"),
+            pgettext_lazy("short game name", "th03"),
+            pgettext_lazy("standard game name", "The Phantasmagoria of Dim. Dream"),
+            pgettext_lazy("full game name", "東方夢時空 - The Phantasmagoria of Dim. Dream"),
         ),
         GameIDs.TH04: (
-            pgettext("short game name", "th04"),
-            pgettext("standard game name", "Lotus Land Story"),
-            pgettext("full game name", "東方幻想郷 - Lotus Land Story"),
+            pgettext_lazy("short game name", "th04"),
+            pgettext_lazy("standard game name", "Lotus Land Story"),
+            pgettext_lazy("full game name", "東方幻想郷 - Lotus Land Story"),
         ),
         GameIDs.TH05: (
-            pgettext("short game name", "th05"),
-            pgettext("standard game name", "Mystic Square"),
-            pgettext("full game name", "東方怪綺談 - Mystic Square"),
+            pgettext_lazy("short game name", "th05"),
+            pgettext_lazy("standard game name", "Mystic Square"),
+            pgettext_lazy("full game name", "東方怪綺談 - Mystic Square"),
         ),
         GameIDs.TH06: (
-            pgettext("short game name", "th06"),
-            pgettext("standard game name", "Embodiment of Scarlet Devil"),
-            pgettext("full game name", "東方紅魔郷 - Embodiment of Scarlet Devil"),
+            pgettext_lazy("short game name", "th06"),
+            pgettext_lazy("standard game name", "Embodiment of Scarlet Devil"),
+            pgettext_lazy("full game name", "東方紅魔郷 - Embodiment of Scarlet Devil"),
         ),
         GameIDs.TH07: (
-            pgettext("short game name", "th07"),
-            pgettext("standard game name", "Perfect Cherry Blossom"),
-            pgettext("full game name", "東方妖々夢 - Perfect Cherry Blossom"),
+            pgettext_lazy("short game name", "th07"),
+            pgettext_lazy("standard game name", "Perfect Cherry Blossom"),
+            pgettext_lazy("full game name", "東方妖々夢 - Perfect Cherry Blossom"),
         ),
         GameIDs.TH08: (
-            pgettext("short game name", "th08"),
-            pgettext("standard game name", "Imperishable Night"),
-            pgettext("full game name", "東方永夜抄 - Imperishable Night"),
+            pgettext_lazy("short game name", "th08"),
+            pgettext_lazy("standard game name", "Imperishable Night"),
+            pgettext_lazy("full game name", "東方永夜抄 - Imperishable Night"),
         ),
         GameIDs.TH09: (
-            pgettext("short game name", "th09"),
-            pgettext("standard game name", "Phantasmagoria of Flower View"),
-            pgettext("full game name", "東方花映塚 - Phantasmagoria of Flower View"),
+            pgettext_lazy("short game name", "th09"),
+            pgettext_lazy("standard game name", "Phantasmagoria of Flower View"),
+            pgettext_lazy("full game name", "東方花映塚 - Phantasmagoria of Flower View"),
         ),
         GameIDs.TH10: (
-            pgettext("short game name", "th10"),
-            pgettext("standard game name", "Mountain of Faith"),
-            pgettext("full game name", "東方風神録 - Mountain of Faith"),
+            pgettext_lazy("short game name", "th10"),
+            pgettext_lazy("standard game name", "Mountain of Faith"),
+            pgettext_lazy("full game name", "東方風神録 - Mountain of Faith"),
         ),
         GameIDs.TH11: (
-            pgettext("short game name", "th11"),
-            pgettext("standard game name", "Subterranean Animism"),
-            pgettext("full game name", "東方地霊殿 - Subterranean Animism"),
+            pgettext_lazy("short game name", "th11"),
+            pgettext_lazy("standard game name", "Subterranean Animism"),
+            pgettext_lazy("full game name", "東方地霊殿 - Subterranean Animism"),
         ),
         GameIDs.TH12: (
-            pgettext("short game name", "th12"),
-            pgettext("standard game name", "Undefined Fantastic Object"),
-            pgettext("full game name", "東方星蓮船 - Undefined Fantastic Object"),
+            pgettext_lazy("short game name", "th12"),
+            pgettext_lazy("standard game name", "Undefined Fantastic Object"),
+            pgettext_lazy("full game name", "東方星蓮船 - Undefined Fantastic Object"),
         ),
         GameIDs.TH128: (
-            pgettext("short game name", "th12.8"),
-            pgettext("standard game name", "Great Fairy Wars"),
-            pgettext("full game name", "Great Fairy Wars - 東方三月精"),
+            pgettext_lazy("short game name", "th12.8"),
+            pgettext_lazy("standard game name", "Great Fairy Wars"),
+            pgettext_lazy("full game name", "Great Fairy Wars - 東方三月精"),
         ),
         GameIDs.TH13: (
-            pgettext("short game name", "th13"),
-            pgettext("standard game name", "Ten Desires"),
-            pgettext("full game name", "東方神霊廟 - Ten Desires"),
+            pgettext_lazy("short game name", "th13"),
+            pgettext_lazy("standard game name", "Ten Desires"),
+            pgettext_lazy("full game name", "東方神霊廟 - Ten Desires"),
         ),
         GameIDs.TH14: (
-            pgettext("short game name", "th14"),
-            pgettext("standard game name", "Double Dealing Character"),
-            pgettext("full game name", "東方輝針城 - Double Dealing Character"),
+            pgettext_lazy("short game name", "th14"),
+            pgettext_lazy("standard game name", "Double Dealing Character"),
+            pgettext_lazy("full game name", "東方輝針城 - Double Dealing Character"),
         ),
         GameIDs.TH15: (
-            pgettext("short game name", "th15"),
-            pgettext("standard game name", "Legacy of Lunatic Kingdom"),
-            pgettext("full game name", "東方紺珠伝 - Legacy of Lunatic Kingdom"),
+            pgettext_lazy("short game name", "th15"),
+            pgettext_lazy("standard game name", "Legacy of Lunatic Kingdom"),
+            pgettext_lazy("full game name", "東方紺珠伝 - Legacy of Lunatic Kingdom"),
         ),
         GameIDs.TH16: (
-            pgettext("short game name", "th16"),
-            pgettext("standard game name", "Hidden Star in Four Seasons"),
-            pgettext("full game name", "東方天空璋 - Hidden Star in Four Seasons"),
+            pgettext_lazy("short game name", "th16"),
+            pgettext_lazy("standard game name", "Hidden Star in Four Seasons"),
+            pgettext_lazy("full game name", "東方天空璋 - Hidden Star in Four Seasons"),
         ),
         GameIDs.TH17: (
-            pgettext("short game name", "th17"),
-            pgettext("standard game name", "Wily Beast and Weakest Creature"),
-            pgettext("full game name", "東方鬼形獣 - Wily Beast and Weakest Creature"),
+            pgettext_lazy("short game name", "th17"),
+            pgettext_lazy("standard game name", "Wily Beast and Weakest Creature"),
+            pgettext_lazy("full game name", "東方鬼形獣 - Wily Beast and Weakest Creature"),
         ),
         GameIDs.TH18: (
-            pgettext("short game name", "th18"),
-            pgettext("standard game name", "Unconnected Marketeers"),
-            pgettext("full game name", "東方虹龍洞 - Unconnected Marketeers"),
+            pgettext_lazy("short game name", "th18"),
+            pgettext_lazy("standard game name", "Unconnected Marketeers"),
+            pgettext_lazy("full game name", "東方虹龍洞 - Unconnected Marketeers"),
         ),
     }
 )
