@@ -416,17 +416,17 @@ class Replay(models.Model):
         if len(self.comment) <= limits.MAX_SHORTENED_COMMENT_LENGTH:
             return self.comment
         return self.comment[: limits.MAX_SHORTENED_COMMENT_LENGTH] + "..."
-    
+
     def GetFormattedTimestampDate(self) -> Optional[str]:
         """Returns the date on which the replay was played."""
 
         if not self.timestamp:
             return None
-        
+
         if self.shot.game_id == game_ids.GameIDs.TH07:
-            fmt = 'd F'
+            fmt = "d F"
         else:
-            fmt = 'd F Y'
+            fmt = "d F Y"
 
         return formats.date_format(self.timestamp, format=fmt)
 

@@ -14,7 +14,7 @@ urlpatterns = [
     path("upload", create_replay.upload_file, name="upload_file"),
     path("publish/<int:temp_replay_id>", create_replay.publish_replay),
     path("publish/<str:game_id>", create_replay.publish_replay_no_file),
-    path("user/<str:username>", user.user_page, name='user_page'),
+    path("user/<str:username>", user.user_page, name="user_page"),
     path("user/<str:username>/json", user.user_page_json),
     path("reanalyze_all", reanalyze_all_replays.reanalyze_all),
     path("<str:game_id>", replay_list.game_scoreboard),
