@@ -603,23 +603,23 @@ def GetDifficultyName(game_id: str, difficulty: int):
         GameIDs.TH18,
     }:
         if difficulty == 0:
-            return "Easy"
+            return _("Easy")
         elif difficulty == 1:
-            return "Normal"
+            return _("Normal")
         elif difficulty == 2:
-            return "Hard"
+            return _("Hard")
         elif difficulty == 3:
-            return "Lunatic"
+            return _("Lunatic")
         elif difficulty == 4:
-            return "Extra"
+            return _("Extra")
     if game_id in {GameIDs.TH07}:
         if difficulty == 5:
-            return "Phantasm"
+            return _("Phantasm")
     if game_id in {GameIDs.TH13}:
         if difficulty == 5:
-            return "Overdrive"
+            return _("Overdrive")
 
-    return "Bug difficulty"
+    return _("Bug difficulty")
 
 
 def GetRpyGameCode(game_id: str) -> str:
