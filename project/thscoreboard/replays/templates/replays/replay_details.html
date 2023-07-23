@@ -33,6 +33,7 @@
     </div>
 
     <div class="replay-box">
+        <h3>Score</h3>
         <p class="replay-score">
             {{ replay.score|intcomma }}
         </p>
@@ -84,6 +85,7 @@
     </div>
 
     <div class="replay-box replay-spiffy-table-parent">
+        <h3>Badges and Stage Splits</h3>
         <div class="replay-badges">
             {% if replay.is_clear %}
             <div class="replay-badge">
@@ -205,7 +207,7 @@
     </div>
     {% endif %}
     <div class="replay-box">
-        <h3>Edit replay</h3>
+        <h3>Manage replay</h3>
         {% if can_remove_claim %}
         <div>
             <a href="/replays/{{ game_id }}/{{ replay.id }}/unclaim_replay">Unclaim this replay</a>
