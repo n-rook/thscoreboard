@@ -150,6 +150,42 @@ class ReplayTest(test_case.ReplayTestCase):
 
         self.assertEquals(replay.rank, -1)
 
+    def testRanksBreakTiesUsingUploadDate(self):
+        with patch("replays.constant_helpers.CalculateReplayFileHash") as mocked_hash:
+            mocked_hash.return_value = bytes(0)
+            test_replays.CreateAsPublishedReplay(
+                filename="th17_lunatic",
+                user=self.author,
+                score=9_999_999_990,
+                created_timestamp=datetime.datetime(
+                    2001, 1, 1, tzinfo=datetime.timezone.utc
+                ),
+            )
+            mocked_hash.return_value = bytes(1)
+            test_replays.CreateAsPublishedReplay(
+                filename="th17_lunatic",
+                user=self.author,
+                score=9_999_999_990,
+                created_timestamp=datetime.datetime(
+                    2003, 3, 3, tzinfo=datetime.timezone.utc
+                ),
+            )
+            mocked_hash.return_value = bytes(2)
+            test_replays.CreateAsPublishedReplay(
+                filename="th17_lunatic",
+                user=self.author,
+                score=9_999_999_990,
+                created_timestamp=datetime.datetime(
+                    2002, 2, 2, tzinfo=datetime.timezone.utc
+                ),
+            )
+
+        replays = models.Replay.objects.order_by("created").annotate_with_rank().all()
+
+        self.assertEquals(replays[0].rank, 1)
+        self.assertEquals(replays[1].rank, 2)
+        self.assertEquals(replays[2].rank, 3)
+
 
 class TemporaryReplayFileTest(test_case.ReplayTestCase):
     def setUp(self):
