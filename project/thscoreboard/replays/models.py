@@ -209,6 +209,7 @@ class ReplayQuerySet(QuerySet):
                         order_by=[
                             F("score").desc(),
                             F("created"),
+                            F("id"),
                         ],
                         partition_by=[
                             F("shot_id"),
