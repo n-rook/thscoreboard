@@ -48,7 +48,7 @@ def rankings(request: WSGIRequest) -> HttpResponse:
 
 def _get_all_player_rankings_for_games(
     games: Iterable[replay_models.Game],
-) -> dict[str | user_models.User, RankCount]:
+) -> dict[Union[str, user_models.User], RankCount]:
     rankings = defaultdict(lambda: RankCount(0, 0, 0))
     game_ids = [game.game_id for game in games]
     top_3_replays = (
