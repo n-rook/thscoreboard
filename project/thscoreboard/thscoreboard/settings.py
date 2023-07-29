@@ -140,8 +140,8 @@ LOGGING = {
     },
     "loggers": {
         # This logger will log all SQL queries. It is useful when debugging.
-        # 'django.db.backends': {
-        #     'level': 'DEBUG',
+        # "django.db.backends": {
+        #     "level": "DEBUG",
         # },
     },
     "root": {
