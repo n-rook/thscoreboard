@@ -7,6 +7,7 @@ from django import forms
 from django.core import exceptions
 from django.db.models import enums
 
+from replays.get_all_games import get_pc98_games, get_windows_games
 from replays import game_ids
 from replays import game_fields
 from replays import models
@@ -189,3 +190,40 @@ class PublishReplayWithoutFileForm(forms.Form):
 
 class EditReplayForm(forms.Form):
     comment = _create_comment_field()
+
+
+class RankingGameSelectionForm(forms.Form):
+    SELECT_ALL = "All games"
+    SELECT_PC98 = "PC-98"
+    SELECT_WINDOWS = "Windows"
+    GROUPED_SELECTIONS = [SELECT_ALL, SELECT_PC98, SELECT_WINDOWS]
+    DEFAULT_SELECTION = SELECT_WINDOWS
+
+    grouped_game_selection = forms.ChoiceField(
+        choices=[(g, g) for g in GROUPED_SELECTIONS], required=False
+    )
+    pc98_game_selection = forms.ChoiceField(required=False)
+    windows_game_selection = forms.ChoiceField(required=False)
+
+    def get_selection(self) -> str:
+        return (
+            self.cleaned_data["grouped_game_selection"]
+            or self.cleaned_data["pc98_game_selection"]
+            or self.cleaned_data["windows_game_selection"]
+            or self.DEFAULT_SELECTION
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["pc98_game_selection"].choices = [
+            (c.game_id, c.GetShortName()) for c in get_pc98_games()
+        ]
+        self.fields["windows_game_selection"].choices = [
+            (c.game_id, c.GetShortName()) for c in get_windows_games()
+        ]
+
+        self.all_choice_fields = [
+            ("grouped_game_selection", self.fields["grouped_game_selection"]),
+            ("pc98_game_selection", self.fields["pc98_game_selection"]),
+            ("windows_game_selection", self.fields["windows_game_selection"]),
+        ]

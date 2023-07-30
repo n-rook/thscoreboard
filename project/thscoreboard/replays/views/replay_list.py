@@ -2,6 +2,7 @@
 
 from django.views.decorators import http as http_decorators
 from django.shortcuts import get_object_or_404, render
+from django.db.models import Manager
 
 from replays import models
 from replays import game_ids
@@ -111,7 +112,7 @@ def _get_filter_options_th17(game: Game) -> dict[str, list[str]]:
     }
 
 
-def _get_all_replay_for_game(game_id: str) -> dict:
+def _get_all_replay_for_game(game_id: str) -> Manager[models.Replay]:
     return (
         models.Replay.objects.prefetch_related("shot")
         .prefetch_related("route")

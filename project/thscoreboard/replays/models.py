@@ -207,7 +207,11 @@ class ReplayQuerySet(QuerySet):
                     category=Category.STANDARD,
                     then=Window(
                         expression=RowNumber(),
-                        order_by=F("score").desc(),
+                        order_by=[
+                            F("score").desc(),
+                            F("created"),
+                            F("id"),
+                        ],
                         partition_by=[
                             F("shot_id"),
                             F("difficulty"),

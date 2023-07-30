@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Player Rankings</h1>
+
+<form method="get">
+    {% csrf_token %}
+    {% for field_name, choice_field in form.all_choice_fields %}
+        <div class="button-container">
+            {% for choice_value, choice_label in choice_field.choices %}
+                <button
+                {% if choice_value == selection %}
+                    class="button pressed"
+                {% else %}
+                    class="button"
+                {% endif %}
+                    type="submit"
+                    name="{{ field_name }}"
+                    value="{{ choice_value }}"
+                >
+                    {{ choice_label }}
+                </button>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</form>
+
+<table class="replay-table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Player</th>
+            <th>🥇</th>
+            <th>🥈</th>
+            <th>🥉</th>
+        </tr>
+    </thead>
+    {% for row in rankings %}
+        <tr>
+            <td>{{ row.player_rank }}</td>
+            <td>
+                {% if row.username %}
+                    {{ row.username }}
+                {% else %}
+                    <a href="/replays/user/{{ row.user }}">{{ row.user }}</a>
+                {% endif %}
+            </td>
+            <td>{{ row.first_place_count }}</td>
+            <td>{{ row.second_place_count }}</td>
+            <td>{{ row.third_place_count }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
