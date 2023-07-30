@@ -364,6 +364,12 @@ th, td
     display: flex
     flex-direction: row-reverse
 
+    p.no-badges
+        display: block
+        margin: auto
+        &:not(:first-child)
+            display: none
+
 .replay-badge
     border-style: solid
     border-width: 2px
