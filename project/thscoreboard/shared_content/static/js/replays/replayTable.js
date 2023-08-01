@@ -178,3 +178,14 @@ try {
 } catch(error) {
   // Shut up error in console but do nothing
 }
+
+function ensureTickboxSync() {
+  activeFilters = {};
+  for(elm of document.querySelectorAll(".checkbox-list input[type=checkbox]:checked")) {
+    onClick(elm);
+  }
+}
+
+window.addEventListener("pageshow", event => {
+  ensureTickboxSync();
+});
