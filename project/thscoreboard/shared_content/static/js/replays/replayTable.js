@@ -58,9 +58,24 @@ function onClick(elm) {
   const value = elm.getAttribute('value');
 
   activeFilters = updateFilters(activeFilters, filterType, value);
+  updateButtons(activeFilters);
   const filteredReplays = filterReplays(activeFilters, allReplays);
   clearTableHtml();
   addReplaysToTable(filteredReplays);
+}
+
+function updateButtons(activeFilters) {
+  const allButtons = document.querySelectorAll('button[filtertype]')
+  for (const button of allButtons) {
+    const filterType = button.getAttribute('filtertype');
+    const value = button.value;
+    if (activeFilters[filterType] === value) {
+      button.className = "button pressed"
+    }
+    else {
+      button.className = "button"
+    }
+  }
 }
 
 function updateFilters(filters, filterType, value) {
@@ -77,7 +92,7 @@ function filterReplays(filters, replays) {
   let filteredReplays = [...replays];
   for (const [filterType, allowedValues] of Object.entries(filters)) {
     filteredReplays = filteredReplays.filter((replay) => {
-      return allowedValues.includes(replay[filterType]);
+      return replay[filterType] === allowedValues;
     });
   };
   return filteredReplays;

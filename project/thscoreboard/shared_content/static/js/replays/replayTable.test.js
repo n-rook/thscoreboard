@@ -27,16 +27,27 @@ describe('updateFilters', () => {
 });
 
 describe('filterReplays', () => {
-    test('filters replays', () => {
+    test('filters replays with incorrect properties', () => {
         const filters = {"Difficulty": "Hard", "Shot": "Reimu"};
         const replays = [
             {"Score": 1000, "Difficulty": "Hard", "Shot": "Reimu", "Season": "Autumn"},
             {"Score": 2000, "Difficulty": "Hard", "Shot": "Reimu", "Season": "Autumn"},
             {"Score": 3000, "Difficulty": "Hard", "Shot": "Marisa", "Season": "Autumn"},
-            {"Score": 4000, "Difficulty": "Extra", "Shot": "Marisa", "Season": "Autumn"},
+            {"Score": 4000, "Difficulty": "Lunatic", "Shot": "Marisa", "Season": "Autumn"},
         ]
         const filteredReplays = filterReplays(filters, replays);
         const expectedFilteredReplays = [replays[0], replays[1]];
+        expect(filteredReplays).toEqual(expect.arrayContaining(expectedFilteredReplays));
+    });
+
+    test('filters replays with missing properties', () => {
+        const filters = {"Route": "Final A"};
+        const replays = [
+            {"Score": 1000, "Difficulty": "Hard", "Shot": "Reimu", "Route": "Final A"},
+            {"Score": 2000, "Difficulty": "Extra", "Shot": "Marisa", "Route": ""},
+        ]
+        const filteredReplays = filterReplays(filters, replays);
+        const expectedFilteredReplays = [replays[0]];
         expect(filteredReplays).toEqual(expect.arrayContaining(expectedFilteredReplays));
     });
 });
