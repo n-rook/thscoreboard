@@ -27,7 +27,7 @@ async function requestAndInitializeReplays() {
     const reader = response.body.getReader();
     const decoder = new TextDecoder('utf-8');
     let buffer = '';
-  
+
     while (true) {
       const { done, value } = await reader.read();
       if (done) {
@@ -64,18 +64,11 @@ function onClick(elm) {
 }
 
 function updateFilters(filters, filterType, value) {
-  if (filters[filterType] === undefined) {
-    filters[filterType] = [];
-  }
-  const indexOfValue = filters[filterType].indexOf(value);
-  if (indexOfValue === -1) {
-    filters[filterType].push(value);
+  if (filters[filterType] === value) {
+    delete filters[filterType];
   }
   else {
-    filters[filterType].splice(indexOfValue, 1);
-    if (filters[filterType].length === 0) {
-      delete filters[filterType];
-    }
+    filters[filterType] = value;
   }
   return filters;
 }
