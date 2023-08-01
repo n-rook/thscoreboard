@@ -4,7 +4,7 @@
     <h2><a href="/replays/{{game.game_id}}">{{ game.GetFullName }}</a></h2>
 
     {% for filter_name, filter_values in filters.items %}
-        <div class="{% if filter_values|length >= 8 %}checkbox-list-4rows{% else %}checkbox-list{% endif %}">
+        <div class=button-container>
             {% for filter_value in filter_values %}
                 <label><button
                     class="button"

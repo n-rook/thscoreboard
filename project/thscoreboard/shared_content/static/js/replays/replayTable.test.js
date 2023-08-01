@@ -45,6 +45,7 @@ describe('filterReplays', () => {
         const replays = [
             {"Score": 1000, "Difficulty": "Hard", "Shot": "Reimu", "Route": "Final A"},
             {"Score": 2000, "Difficulty": "Extra", "Shot": "Marisa", "Route": ""},
+            {"Score": 3000, "Difficulty": "Extra", "Shot": "Marisa"},
         ]
         const filteredReplays = filterReplays(filters, replays);
         const expectedFilteredReplays = [replays[0]];
