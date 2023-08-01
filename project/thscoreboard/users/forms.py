@@ -195,7 +195,7 @@ class ClaimReplaysForm(forms.Form):
         widget=forms.CheckboxSelectMultiple, required=False
     )
     contact_info = forms.CharField(
-        label=_("contact_info"), required=True, max_length=200
+        label=_("Contact Info"), required=True, max_length=200
     )
     silentselene_username = forms.CharField(widget=forms.HiddenInput(), required=False)
 

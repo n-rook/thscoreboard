@@ -8,7 +8,7 @@ User=silentselene
 WorkingDirectory=/home/silentselene/backups/
 
 # Requires the PGPASSWORD environment variable to be set to either the password of the 'postgres' superuser, or the password of any other user, as long as PGUSER is set to their username
-ExecStart=/bin/sh -c 'pg_dump thscoreboard -U postgres --format=c --file backup_$$(date -u +%%Y-%%m-%%e)'
+ExecStart=/bin/sh -c 'pg_dump thscoreboard -U postgres --format=c --file backup_$$(date -u +%%Y-%%m-%%d)'
 
 [Install]
 WantedBy=multi-user.target
