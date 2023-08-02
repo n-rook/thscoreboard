@@ -16,6 +16,19 @@ def user_page_json(request, username: str):
     user_replays = models.Replay.objects.filter(user=user).order_by(
         "shot__game_id", "shot_id", "created"
     )
+
+    top_3_replays = (
+        models.Replay.objects.filter(category=models.Category.STANDARD)
+        .filter(replay_type=1)
+        .filter(is_listed=True)
+        .annotate_with_rank()
+        .filter(rank__lte=3)
+        .all()
+    )
+    rank_dict = {replay.id: replay.rank for replay in top_3_replays}
+
+    for replay in user_replays:
+        replay.rank = rank_dict.get(replay.id, -1)
     replay_jsons = convert_replays_to_json_bytes(user_replays)
     return stream_json_bytes_to_http_reponse(replay_jsons)
 
