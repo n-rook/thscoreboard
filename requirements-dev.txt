@@ -1,6 +1,6 @@
 -r requirements.txt
 
 django-rosetta==0.9.9
-flake8==6.0.0
+flake8==6.1.0
 python-dotenv==1.0.0
-black==23.3.0
+black==23.7.0
