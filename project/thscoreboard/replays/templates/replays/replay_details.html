@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load i18n %}
 
 {% block favicon %}
 {% if replay.lesanae %}
@@ -11,121 +12,210 @@
 {% endblock %}
 
 {% block content %}
-    <script src="/static/js/replays/replay_details.js"></script>
+<script src="/static/js/replays/replay_details.js"></script>
 
-    <h2><a href="/replays/{{ game_id}}">{{ game_name }}</a></h2>
-    <div>Uploaded on: {{ replay.created|date:"d F Y, h:i A" }}</div>
-    {% if replay.timestamp %}
-        {% if game_id == "th06" or game_id == "th09" %}
-        <div>Replay Date: {{ replay.timestamp|date:"d F Y" }}</div>
-        {% elif game_id == "th07" %}
-        <div>Replay Date: {{ replay.timestamp|date:"d F" }}</div>
-        {% else %}
-        <div>Replay Date: {{ replay.timestamp|date:"d F Y, h:i A" }}</div>
-        {% endif %}
-    {% endif %}
-    <div class="replay-header"><h3>Replay Info</h3></div>
-    <table>
-        <tbody>
-            {% if replay.name %}
-            <tr>
-                <td>Name</td>
-                <td>{{ replay.name }}</td>
-            </tr>
-            {% endif %}
-            <tr>
-                <td>Difficulty</td>
-                <td>{{ difficulty_name }}</td>
-            </tr>
-            <tr>
-                <td>Shot</td>
-                <td>{{ shot_name }}</td>
-            </tr>
+<div class="replay-page">
+    <div class="replay-heading replay-box avoid-horizontal-join">
+        <h2><a href="/replays/{{ game_id}}">{{ game_name }}</a></h2>
+        <ul>
+            <li>{{ category }}</li>
+            <div class="replay-heading-separator"></div>
+            <li>{{ replay_type }}</li>
+            <div class="replay-heading-separator"></div>
+            <li>{{ difficulty_name }}</li>
+            <div class="replay-heading-separator"></div>
+            <li>{{ shot_name }}</li>
             {% if route_name %}
-            <tr>
-                <td>Route</td>
-                <td>{{ route_name }}</td>
-            </tr>
+            <div class="replay-heading-separator"></div>
+            <li>{{ route_name }}</li>
             {% endif %}
-            {% if replay.slowdown is not None %}
-            <tr>
-                <td>Slowdown</td>
-                <td>{{ replay.slowdown|floatformat:4 }}%</td>
-            </tr>
+        </ul>
+    </div>
+
+    <div class="replay-box">
+        <h3>Score</h3>
+        <p class="replay-score">
+            {{ replay.score|intcomma }}
+        </p>
+        <p>
+            {% if replay.timestamp %}
+              {% with replay_timestamp=replay.GetFormattedTimestampDate %}
+                {% if owned %}
+                  {% with username=replay.user.username %}
+                    {% url 'user_page' username as user_url %}
+                    {% blocktranslate %}
+                        Played by <a href="{{ user_url }}">{{ username }}</a> on {{ replay_timestamp }}
+                    {% endblocktranslate %}
+                  {% endwith %}
+                {% else %}
+                  {% blocktranslate with source="RoyalFlare" %}
+                    Played by {{ player_name }} ({{ source }}) on {{ replay_timestamp }}
+                  {% endblocktranslate %}
+                {% endif %}
+              {% endwith %}
+            {% else %}
+              {% if owned %}
+                {% with username=replay.user.username %}
+                    {% url 'user_page' username as user_url %}
+                    {% blocktranslate %}
+                        Played by <a href="{{ user_url }}">{{ username }}</a>
+                    {% endblocktranslate %}
+                {% endwith %}
+              {% else %}
+                {% blocktranslate with source="RoyalFlare" %}
+                    Played by {{ player_name }} ({{ source }})
+                {% endblocktranslate %}
+              {% endif %}
             {% endif %}
-            <tr>
-                <td>Score</td>
-                <td>{{ replay.score|intcomma }}</td>
-            </tr>
-            <tr>
-                <td>Clears?</td>
-                <td>{% if replay.is_clear %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <td>Replay Type</td>
-                <td>{{ replay_type }}</td>
-            </tr>
-            {% if replay.no_bomb is not None %}
-            <tr>
-                <td>Bombs?</td>
-                <td>{% if replay.no_bomb %}No bombs!{% else %}Yes{% endif %}</td>
-            </tr>
+        </p>
+        {% if has_replay_file %}
+        <p>
+            {% if replay_file_is_good %}
+            <a href="/replays/{{ game_id }}/{{ replay.id }}/download">Download replay</a>
+            {% else %}
+            <a href="/replays/{{ game_id }}/{{ replay.id }}/download">Download replay (desyncs)</a>
             {% endif %}
-            {% if replay.miss_count is not None %}
-            <tr>
-                <td>Misses</td>
-                <td>{{ replay.miss_count }}</td>
-            </tr>
-            {% endif %}
-            {% if spell_name %}
-            <tr>
-                <td>Spell Card</td>
-                <td>{{ spell_name }}</td>
-            </tr>
-            {% endif %}
-        </tbody>
-    </table>
-    <p class="replay-comment" id="replay-comment">
-        {{ replay.comment }}
-        {% if can_edit %}
-        <br><a href="#" onclick="editReplayComment();">(Edit)</a>
+        </p>
         {% endif %}
-    </p>
-    {% if can_edit %}
-    <form action="{{ request.path }}/edit" method="post" class="replay-comment" id="replay-comment-edit">
-        {% csrf_token %}
-        {{ edit_form.non_field_errors }}
-        {{ edit_form.comment.errors }}
-        {{ edit_form.comment }}
-        <br><input type="submit" value="Save">
-    </form>
+        {% if replay.video_link %}
+        <p>
+            <a href="{{replay.video_link}}">Watch replay</a>
+        </p>
+        {% endif %}
+    </div>
+
+    <div class="replay-box replay-spiffy-table-parent">
+        <h3>Badges and Stage Splits</h3>
+        <div class="replay-badges">
+            {% if replay.no_bomb %}
+            <div class="replay-badge">
+                <svg fill="currentColor">
+                    <title>This run did not use bombs</title>
+                    <use href="{% static 'icons/bootstrap/icons.svg' %}#slash" />
+                    <use href="{% static 'icons/bootstrap/icons.svg' %}#star" />
+                </svg>
+            </div>
+            {% endif %}
+            {% if replay.miss_count == 0 %}
+            <div class="replay-badge">
+                <svg fill="currentColor">
+                    <title>This run never missed</title>
+                    <use href="{% static 'icons/bootstrap/icons.svg' %}#slash" />
+                    <use href="{% static 'icons/bootstrap/icons.svg' %}#heart" />
+                </svg>
+            </div>
+            {% endif %}
+        </div>
+
+        {% if replay_stages %}
+        <table class="replay-spiffy-table">
+            {% for stage in replay_stages %}
+            <tr>
+                {% if table_fields.lives %}
+                <td class="replay-lives-column">
+                    {% if stage.lives %}
+                    {{ stage.lives }}
+                    <svg class="inline-icon">
+                        <use href="{% static 'icons/bootstrap/icons.svg' %}#heart" />
+                    </svg>
+                    {% endif %}
+                </td>
+                {% endif %}
+                {% if table_fields.bombs %}
+                <td class="replay-bombs-column">
+                    {% if stage.bombs %}
+                    {{ stage.bombs }}
+                    <svg class="inline-icon">
+                        <use href="{% static 'icons/bootstrap/icons.svg' %}#star" />
+                    </svg>
+                    {% endif %}
+                </td>
+                {% endif %}
+                <td class="replay-score-column"> {{ stage.score|intcomma }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <div class="replay-no-table-message">
+            {% blocktranslate %}
+            Stage split information is unavailable for this replay.
+            {% endblocktranslate %}
+        </div>
+        {% endif %}
+    </div>
+
+    {% if replay.comment or can_edit %}
+    <div class="replay-box avoid-horizontal-join">
+        <h3>Comment{% if can_edit %} <a href="#" onclick="editReplayComment();">(Edit)</a>{% endif %}</h3>
+        <div class="replay-comment">
+            <p id="replay-comment">{{ replay.comment }}</p>
+            {% if can_edit %}
+            <form action="{{ request.path }}/edit" method="post" id="replay-comment-edit">
+                {% csrf_token %}
+                {{ edit_form.non_field_errors }}
+                {{ edit_form.comment.errors }}
+                {{ edit_form.comment }}
+                <input type="submit" value="Save">
+            </form>
+            {% endif %}
+        </div>
+    </div>
     {% endif %}
-    <p>
-        {% if has_stages %}
+
+    <div class="replay-box">
+        <h3>Details</h3>
+        <table>
+            <tbody>
+                {% if replay.name %}
+                <tr>
+                    <td>In-game name</td>
+                    <td>{{ replay.name }}</td>
+                </tr>
+                {% endif %}
+                {% if replay.slowdown is not None %}
+                <tr>
+                    <td>Slowdown</td>
+                    <td>{{ replay.slowdown|floatformat:4 }}%</td>
+                </tr>
+                {% endif %}
+                {% if replay.miss_count is not None %}
+                <tr>
+                    <td>Misses</td>
+                    <td>{{ replay.miss_count }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td>Uploaded on</td>
+                    <td>{{ replay.created|date:"d F Y" }}</td>
+                </tr>
+                {% if spell_name %}
+                <tr>
+                    <td>Spell Card</td>
+                    <td>{{ spell_name }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td>Clears?</td>
+                    <td>{% if replay.is_clear %}Yes{% else %}No{% endif %}</td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    {% if has_stages %}
+    <div class="replay-box">
+        <h3>Stage details</h3>
         {% include "replays/replay_stages.html" %}
+    </div>
+    {% endif %}
+    <div class="replay-box">
+        <h3>Manage replay</h3>
+        {% if can_remove_claim %}
+        <div>
+            <a href="/replays/{{ game_id }}/{{ replay.id }}/unclaim_replay">Unclaim this replay</a>
+        </div>
         {% endif %}
-    </p>
-    <div>
-    {% if has_replay_file %}
-    {% if replay_file_is_good %}
-        <a href="/replays/{{ game_id }}/{{ replay.id }}/download">Download replay</a>
-    {% else %}
-        <div>Be aware, this replay desyncs!</div>
-        <a href="/replays/{{ game_id }}/{{ replay.id }}/download">Download replay anyway</a>
-    {% endif %}
-    {% endif %}
-    </div>
-    {% if replay.video_link %}
-    <div>
-        <a href="{{replay.video_link}}">Watch replay on external site</a>
-    </div>
-    {% endif %}
-    {% if can_remove_claim %}
-    <div>
-        <a href="/replays/{{ game_id }}/{{ replay.id }}/unclaim_replay">Unclaim this replay</a>
-    </div>
-    {% endif %}
-    {% if can_edit %}
+        {% if can_edit %}
         {% if is_listed %}
         <div>
             <a href="/replays/{{ game_id }}/{{ replay.id }}/unlist">Hide replay on the leaderboards</a>
@@ -135,18 +225,21 @@
             <a href="/replays/{{ game_id }}/{{ replay.id }}/list">Show replay on the leaderboards</a>
         </div>
         {% endif %}
-    {% endif %}
-    {% if can_delete %}
-    <div>
-        <a href="/replays/{{ game_id }}/{{ replay.id }}/delete">Permanently delete this replay</a>
+        {% endif %}
+        {% if can_delete %}
+        <div>
+            <a href="/replays/{{ game_id }}/{{ replay.id }}/delete">Permanently delete this replay</a>
+        </div>
+        {% endif %}
+        {% if user.is_staff %}
+        <div>
+            <a href="/replays/{{ game_id }}/{{ replay.id }}/reanalyze">Reanalyze this replay</a>
+        </div>
+        {% endif %}
+        <div>
+            <a
+                href="mailto:reports@silentselene.net?subject={{ site_base }}{{ request.path }}&body=[Please%20leave%20the%20subject%20line%20unchanged.%20Specify%20details%20here]">Report</a>
+        </div>
     </div>
-    {% endif %}
-    {% if user.is_staff %}
-    <div>
-        <a href="/replays/{{ game_id }}/{{ replay.id }}/reanalyze">Reanalyze this replay</a>
-    </div>
-    {% endif %}
-    <div>
-        <a href="mailto:reports@silentselene.net?subject={{ site_base }}{{ request.path }}&body=[Please%20leave%20the%20subject%20line%20unchanged.%20Specify%20details%20here]">Report</a>
-    </div>
+</div>
 {% endblock %}
