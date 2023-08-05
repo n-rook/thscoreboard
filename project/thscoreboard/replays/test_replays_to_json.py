@@ -70,10 +70,10 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
         for json_replay_data in json_data:
             assert json_replay_data
-            assert type(json_replay_data["Score"]) == dict
+            assert isinstance(json_replay_data["Score"], dict)
             assert set(json_replay_data["Score"].keys()) == {"text", "url"}
 
-            assert type(json_replay_data["Replay"]) == dict
+            assert isinstance(json_replay_data["Replay"], dict)
             assert set(json_replay_data["Replay"].keys()) == {"text", "url"}
 
         assert json_data[0]["User"]["text"] == self.user.username
