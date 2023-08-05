@@ -85,16 +85,8 @@
     </div>
 
     <div class="replay-box replay-spiffy-table-parent">
-        <h3>Badges{% if replay_stages %} and Stage Splits{% endif %}</h3>
+        <h3>Badges and Stage Splits</h3>
         <div class="replay-badges">
-            {% if replay.is_clear %}
-            <div class="replay-badge">
-                <svg fill="currentColor">
-                    <title>This run cleared the game</title>
-                    <use href="{% static 'icons/bootstrap/icons.svg' %}#circle" />
-                </svg>
-            </div>
-            {% endif %}
             {% if replay.no_bomb %}
             <div class="replay-badge">
                 <svg fill="currentColor">
@@ -113,9 +105,6 @@
                 </svg>
             </div>
             {% endif %}
-            <p class="no-badges">
-                {% translate "No badges here!" %}
-            </p>
         </div>
 
         {% if replay_stages %}
@@ -146,6 +135,13 @@
             </tr>
             {% endfor %}
         </table>
+        {% else %}
+        <div class="replay-no-table-message">
+            {% blocktranslate %}
+            Stage split information is unavailable for games which do not
+            record replay files.
+            {% endblocktranslate %}
+        </div>
         {% endif %}
     </div>
 
@@ -199,6 +195,10 @@
                     <td>{{ spell_name }}</td>
                 </tr>
                 {% endif %}
+                <tr>
+                    <td>Clears?</td>
+                    <td>{% if replay.is_clear %}Yes{% else %}No{% endif %}</td>    
+                </tr>
             </tbody>
         </table>
     </div>
