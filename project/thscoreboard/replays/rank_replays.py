@@ -2,7 +2,7 @@ from replays import models
 from replays.models import ReplayQuerySet
 
 
-def add_global_rank_annotations(replays: ReplayQuerySet) -> None:
+def add_global_rank_annotations(replays: ReplayQuerySet) -> ReplayQuerySet:
     """Ranks replays in the replay query set against all ranked replays"""
     top_3_replays = (
         models.Replay.objects.filter(category=models.Category.STANDARD)
