@@ -8,6 +8,7 @@ var activeFilters = {};
 var allReplays = [];
 var tableResetCounter = 0;
 
+initializeFilters();
 requestAndInitializeReplays();
 
 async function requestAndInitializeReplays() {
@@ -53,6 +54,14 @@ async function requestAndInitializeReplays() {
   } catch (error) {}
 }
 
+function initializeFilters() {
+  const allButtons = document.querySelectorAll('button[filtertype]')
+  for (const button of allButtons) {
+    const filterType = button.getAttribute('filtertype');
+    activeFilters[filterType] = 'All';
+  }
+}
+
 function onClick(elm) {
   const filterType = elm.getAttribute('filterType');
   const value = elm.getAttribute('value');
@@ -70,30 +79,27 @@ function updateButtons(activeFilters) {
     const filterType = button.getAttribute('filtertype');
     const value = button.value;
     if (activeFilters[filterType] === value) {
-      button.className = "button pressed"
+      button.className = "button pressed";
     }
     else {
-      button.className = "button"
+      button.className = "button";
     }
   }
 }
 
 function updateFilters(filters, filterType, value) {
-  if (filters[filterType] === value) {
-    delete filters[filterType];
-  }
-  else {
-    filters[filterType] = value;
-  }
+  filters[filterType] = value;
   return filters;
 }
 
 function filterReplays(filters, replays) {
   let filteredReplays = [...replays];
   for (const [filterType, allowedValues] of Object.entries(filters)) {
-    filteredReplays = filteredReplays.filter((replay) => {
-      return replay[filterType] === allowedValues;
-    });
+    if (allowedValues !== "All") {
+      filteredReplays = filteredReplays.filter((replay) => {
+        return replay[filterType] === allowedValues;
+      });
+    }
   };
   return filteredReplays;
 }

@@ -16,14 +16,6 @@ describe('updateFilters', () => {
         filters = updateFilters(filters, "Shot", "Reimu A");
         expect(filters).toEqual({"Difficulty": "Hard", "Shot": "Reimu A"});
     });
-
-    test('Removes filters', () => {
-        let filters = {"Difficulty": "Hard", "Shot": "Reimu A"};
-        filters = updateFilters(filters, "Difficulty", "Hard");
-        expect(filters).toEqual({"Shot": "Reimu A"});
-        filters = updateFilters(filters, "Shot", "Reimu A");
-        expect(filters).toEqual({});
-    });
 });
 
 describe('filterReplays', () => {
