@@ -11,6 +11,8 @@
 {% endif %}
 {% endblock %}
 
+{% block embed_title %}{{ game_name }}{% if route_name %}, {{ route_name }}{% endif %} – {{ difficulty_name }} ({{ shot_name }}) – {{ replay.score|intcomma }}{% endblock %}
+{% block embed_description %}{% if replay.timestamp %}{% with replay_timestamp=replay.GetFormattedTimestampDate %}{% blocktranslate %}Played by {{ player_name }} on {{ replay_timestamp }}{% endblocktranslate %}{% endwith %}{% else %}{% blocktranslate %}Played by {{ player_name }}{% endblocktranslate %}{% endif %}{% endblock %}
 {% block content %}
 <script src="/static/js/replays/replay_details.js"></script>
 
