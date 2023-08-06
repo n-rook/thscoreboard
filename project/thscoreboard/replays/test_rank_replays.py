@@ -12,10 +12,8 @@ class GlobalRankAnnotationsTestCase(test_case.ReplayTestCase):
         self.user = self.createUser("some-user")
 
     def _create_n_replays(self, n: int, is_tas: bool = False) -> None:
-        for i in range(n):
-            with patch(
-                "replays.constant_helpers.CalculateReplayFileHash"
-            ) as mocked_hash:
+        with patch("replays.constant_helpers.CalculateReplayFileHash") as mocked_hash:
+            for i in range(n):
                 mocked_hash.return_value = bytes(i)
                 test_replays.CreateAsPublishedReplay(
                     "th10_normal",
