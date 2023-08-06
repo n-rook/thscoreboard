@@ -1,10 +1,10 @@
 bcrypt==4.0.1
-django==4.2.1
+django==4.2.4
 django-sass-processor==1.2.2
 freezegun==1.2.2
-immutabledict==2.2.4
+immutabledict==3.0.0
 kaitaistruct==0.10
 libsass==0.22.0
 postgres==4.0
 tsadecode==0.6
-whitenoise==6.4.0
+whitenoise==6.5.0
