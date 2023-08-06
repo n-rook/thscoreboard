@@ -146,6 +146,14 @@
         {% endif %}
     </div>
 
+    {% if video_embed %}
+    <div class="replay-box avoid-horizontal-join">
+        <div class="video-wrapper">
+            <iframe src="{{video_embed}}" width="100%" height="100%" allowfullscreen frameborder="0"></iframe>
+        </div>
+    </div>
+    {% endif %}
+
     {% if replay.comment or can_edit %}
     <div class="replay-box avoid-horizontal-join">
         <h3>Comment{% if can_edit %} <a href="#" onclick="editReplayComment();">(Edit)</a>{% endif %}</h3>

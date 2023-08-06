@@ -1,4 +1,7 @@
+import unittest
+
 from replays import replay_parsing
+from replays.views.view_replay import get_video_embed_link
 from replays.testing import test_case
 from replays.testing import test_replays
 
@@ -47,3 +50,37 @@ class TestTableFields(test_case.ReplayTestCase):
                                 self.assertIsNone(
                                     s[key], msg=f"Unexpected field {key} found"
                                 )
+
+
+class VideoEmbedTestCase(unittest.TestCase):
+    def testYoutube(self):
+        self.assertEqual(
+            get_video_embed_link("https://www.youtube.com/watch?v=pFlhyEJ6XbM"),
+            "https://www.youtube.com/embed/pFlhyEJ6XbM",
+        )
+        self.assertEqual(
+            get_video_embed_link("https://youtu.be/_LSltayY-Aw"),
+            "https://www.youtube.com/embed/_LSltayY-Aw",
+        )
+        self.assertEqual(
+            get_video_embed_link("https://www.youtube.com/shorts/BRfmDSGbYTE"),
+            "https://www.youtube.com/embed/BRfmDSGbYTE",
+        )
+
+    def testTwitch(self):
+        self.assertEqual(
+            get_video_embed_link("https://www.twitch.tv/videos/1885384355"),
+            "https://player.twitch.tv/?video=v1885384355&parent=www.silentselene.net&autoplay=false",
+        )
+        self.assertEqual(
+            get_video_embed_link(
+                "https://www.twitch.tv/touhou_replay_showcase/clip/PatientCredulousGoshawkDoubleRainbow?filter=clips&range=all&sort=time"
+            ),
+            "https://clips.twitch.tv/embed?clip=PatientCredulousGoshawkDoubleRainbow&parent=www.silentselene.net&autoplay=false",
+        )
+
+    def testBilibili(self):
+        self.assertEqual(
+            get_video_embed_link("https://www.bilibili.com/video/BV1LW4y1H7JS/"),
+            "https://player.bilibili.com/player.html?bvid=BV1LW4y1H7JS&autoplay=false",
+        )

@@ -12,6 +12,9 @@ from django.views.decorators import http as http_decorators
 from django.shortcuts import redirect, render
 from django.db import transaction
 
+from functools import lru_cache
+from urllib.parse import urlparse, parse_qs, ParseResult
+
 from replays import models
 from replays.lib import http_util
 from replays import forms
@@ -21,6 +24,44 @@ from replays import spell_names
 
 from thscoreboard import settings
 from replays import game_ids
+
+
+# Entire separate function due to the differences between how ordinary videos and clips embed
+def _get_twitch_embed_link(split_url: ParseResult):
+    path = split_url.path[1:].split("/")
+    if path[0] == "videos":
+        video_id = path[1]
+        return f"https://player.twitch.tv/?video=v{video_id}&parent=www.silentselene.net&autoplay=false"
+    elif path[1] == "clip":
+        clip_id = path[2]
+        return f"https://clips.twitch.tv/embed?clip={clip_id}&parent=www.silentselene.net&autoplay=false"
+
+
+# YouTube Shorts exist and can have URLs that look different from standard YouTube video links
+def _get_yt_embed_link(split_url: ParseResult):
+    path = split_url.path[1:].split("/")
+    if path[0] == "watch":
+        video_id = parse_qs(split_url.query)["v"][0]
+        return f"https://www.youtube.com/embed/{video_id}"
+    elif path[0] == "shorts":
+        video_id = path[1]
+        return f"https://www.youtube.com/embed/{video_id}"
+
+
+@lru_cache(maxsize=None)
+def get_video_embed_link(url: str):
+    split_url = urlparse(url)
+    if split_url.hostname == "www.youtube.com":
+        return _get_yt_embed_link(split_url)
+    elif split_url.hostname == "youtu.be":
+        video_id = split_url.path[1:]
+        return f"https://www.youtube.com/embed/{video_id}"
+    elif split_url.hostname == "www.twitch.tv":
+        return _get_twitch_embed_link(split_url)
+    elif split_url.hostname == "www.bilibili.com":
+        path = split_url.path[1:].split("/")
+        video_id = path[1]
+        return f"https://player.bilibili.com/player.html?bvid={video_id}&autoplay=false"
 
 
 @http_decorators.require_POST
@@ -91,6 +132,9 @@ def replay_details(request, game_id: str, replay_id: int):
 
     if replay_instance.route:
         context["route_name"] = replay_instance.route.GetName()
+
+    if replay_instance.video_link:
+        context["video_embed"] = get_video_embed_link(replay_instance.video_link)
 
     return render(request, "replays/replay_details.html", context)
 
