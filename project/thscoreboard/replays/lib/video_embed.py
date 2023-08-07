@@ -35,7 +35,10 @@ def _get_bilibili_embed_link(split_url: ParseResult):
         video_id = path[1]
         return f"https://player.bilibili.com/player.html?bvid={video_id}&autoplay=false"
 
-
+"""
+Constructs an embed link from a video URL from any of the supported video websites.
+Returns None if no embed link can be generated
+"""
 def get_video_embed_link(url: str):
     try:
         split_url = urlparse(url)
