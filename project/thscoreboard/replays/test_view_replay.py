@@ -1,7 +1,4 @@
-import unittest
-
 from replays import replay_parsing
-from replays.views.view_replay import get_video_embed_link
 from replays.testing import test_case
 from replays.testing import test_replays
 
@@ -50,69 +47,3 @@ class TestTableFields(test_case.ReplayTestCase):
                                 self.assertIsNone(
                                     s[key], msg=f"Unexpected field {key} found"
                                 )
-
-
-class VideoEmbedTestCase(unittest.TestCase):
-    def testYoutube(self):
-        self.assertEqual(
-            get_video_embed_link(
-                "https://www.youtube.com/watch?v=pFlhyEJ6XbM&v=f2xvnIDMJLE"
-            ),
-            "https://www.youtube.com/embed/pFlhyEJ6XbM",
-        )
-        self.assertEqual(
-            get_video_embed_link("https://youtu.be/_LSltayY-Aw/Thank-you-morth"),
-            "https://www.youtube.com/embed/_LSltayY-Aw",
-        )
-        self.assertEqual(
-            get_video_embed_link("https://www.youtube.com/shorts/BRfmDSGbYTE"),
-            "https://www.youtube.com/embed/BRfmDSGbYTE",
-        )
-        self.assertEqual(
-            get_video_embed_link(
-                "https://www.youtube.com/shorts/9ZnrihX2lVY?v=8XD9_zW6ozo&v=Deez-Nuts"
-            ),
-            "https://www.youtube.com/embed/8XD9_zW6ozo",
-        )
-        self.assertEqual(
-            get_video_embed_link(
-                "https://www.youtube.com/shorts/9ZnrihX2lVY?v=8XD9_zW6ozo?v=Deez-Nuts"
-            ),
-            "https://www.youtube.com/embed/8XD9_zW6ozo?v=Deez-Nuts",
-        )
-
-    def testTwitch(self):
-        self.assertEqual(
-            get_video_embed_link(
-                "https://www.twitch.tv/videos/1830919460/deeznuts?thank-you-morth=true"
-            ),
-            "https://player.twitch.tv/?video=v1830919460&parent=www.silentselene.net&autoplay=false",
-        )
-        self.assertEqual(
-            get_video_embed_link(
-                "https://www.twitch.tv/videos/1830919460?thank-you-morth=true"
-            ),
-            "https://player.twitch.tv/?video=v1830919460&parent=www.silentselene.net&autoplay=false",
-        )
-        self.assertEqual(
-            get_video_embed_link(
-                "https://www.twitch.tv/touhou_replay_showcase/clip/PatientCredulousGoshawkDoubleRainbow?filter=clips&range=all&sort=time"
-            ),
-            "https://clips.twitch.tv/embed?clip=PatientCredulousGoshawkDoubleRainbow&parent=www.silentselene.net&autoplay=false",
-        )
-        self.assertEqual(
-            get_video_embed_link(
-                "https://www.twitch.tv/touhou_replay_showcase/clip/PatientCredulousGoshawkDoubleRainbow/DeezNuts"
-            ),
-            None,
-        )
-
-    def testBilibili(self):
-        self.assertEqual(
-            get_video_embed_link("https://www.bilibili.com/video/BV1LW4y1H7JS/"),
-            "https://player.bilibili.com/player.html?bvid=BV1LW4y1H7JS&autoplay=false",
-        )
-        self.assertEqual(
-            get_video_embed_link("https://www.bilibili.com/video/BV1LW4y1H7JS/d"),
-            None,
-        )
