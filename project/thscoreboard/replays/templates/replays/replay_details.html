@@ -79,11 +79,6 @@
             {% endif %}
         </p>
         {% endif %}
-        {% if replay.video_link %}
-        <p>
-            <a href="{{replay.video_link}}">Watch replay</a>
-        </p>
-        {% endif %}
     </div>
 
     <div class="replay-box replay-spiffy-table-parent">
@@ -150,6 +145,13 @@
     <div class="replay-box avoid-horizontal-join">
         <div class="video-wrapper">
             <iframe src="{{video_embed}}" width="100%" height="100%" allowfullscreen frameborder="0"></iframe>
+        </div>
+        <p><a href="{{replay.video_link}}">Watch externally</a></p>
+    </div>
+    {% elif replay.video_link %}
+    <div class="replay-box avoid-horizontal-join">
+        <div class="video-wrapper">
+            <span>Failed to embed video, <a href="{{replay.video_link}}">watch replay here</a></span>
         </div>
     </div>
     {% endif %}
