@@ -14,6 +14,7 @@ from django.db import transaction
 
 from replays import models
 from replays.lib import http_util
+from replays.lib.video_embed import get_video_embed_link
 from replays import forms
 from replays import game_fields
 from replays import reanalyze_replay
@@ -91,6 +92,9 @@ def replay_details(request, game_id: str, replay_id: int):
 
     if replay_instance.route:
         context["route_name"] = replay_instance.route.GetName()
+
+    if replay_instance.video_link:
+        context["video_embed"] = get_video_embed_link(replay_instance.video_link)
 
     return render(request, "replays/replay_details.html", context)
 
