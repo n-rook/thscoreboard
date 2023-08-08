@@ -38,6 +38,10 @@ def _AllowedVideoDomainsValidator(value: str):
             "If present, the replay link must be to one of the following sites: %(sites_comma_separated)s",
             params={"sites_comma_separated": ", ".join(_ALLOWED_REPLAY_HOSTS)},
         )
+    elif split_url.hostname == "www.youtube.com" and split_url.path.startswith(
+        "/embed/"
+    ):
+        raise exceptions.ValidationError("The replay link cannot be an embed link")
 
 
 def _GetDifficultyChoices(game: models.Game) -> Tuple[int, str]:
