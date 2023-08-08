@@ -46,9 +46,13 @@ def get_video_embed_link(url: str):
     try:
         split_url = urlparse(url)
         if split_url.hostname == "youtu.be":
-            # youtu.be/video_id/random_other_junk is perfectly valid
-            path = split_url.path.strip("/").split("/")
-            video_id = path[0]
+            query = parse_qs(split_url.query)
+            if "v" in query:
+                video_id = query["v"][0]
+            else:
+                # youtu.be/video_id/random_other_junk is perfectly valid
+                path = split_url.path.strip("/").split("/")
+                video_id = path[0]
             return f"https://www.youtube.com/embed/{video_id}"
         elif split_url.hostname == "www.youtube.com":
             return _get_yt_embed_link(split_url)

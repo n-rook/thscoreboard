@@ -11,16 +11,24 @@ class YouTubeEmbedTestCase(unittest.TestCase):
             "https://www.youtube.com/embed/pFlhyEJ6XbM",
         )
 
-    def testYouTubeShortLinkMultipath(self):
+    def testYouTubeShortLink(self):
         self.assertEqual(
             get_video_embed_link("https://youtu.be/_LSltayY-Aw/Thank-you-morth"),
             "https://www.youtube.com/embed/_LSltayY-Aw",
         )
 
-    def testYouTubeShortLink(self):
+    def testYouTubeShortLinkWithQuery(self):
         self.assertEqual(
-            get_video_embed_link("https://www.youtube.com/shorts/BRfmDSGbYTE"),
-            "https://www.youtube.com/embed/BRfmDSGbYTE",
+            get_video_embed_link("https://youtu.be/f2xvnIDMJLE?v=TaQ6JYS4fLM"),
+            "https://www.youtube.com/embed/TaQ6JYS4fLM",
+        )
+
+    def testYouTubeShortLinkMultipathWithQuery(self):
+        self.assertEqual(
+            get_video_embed_link(
+                "https://youtu.be/y8nBF2crayo/pawn-to-e10?v=TaQ6JYS4fLM"
+            ),
+            "https://www.youtube.com/embed/TaQ6JYS4fLM",
         )
 
     def testYouTubeShortsWithQueryV(self):
