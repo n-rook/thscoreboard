@@ -23,38 +23,38 @@ class ReplayToJsonConverter:
         score_prefix = _get_medal_emoji(replay.rank) if hasattr(replay, "rank") else ""
 
         json_dict = {}
-        json_dict["Id"] = replay.id
+        json_dict["id"] = replay.id
         if replay.user:
-            json_dict["User"] = {
+            json_dict["user"] = {
                 "text": f"{replay.user.username}",
                 "url": f"/replays/user/{replay.user.username}",
             }
         else:
-            json_dict["User"] = replay.imported_username or replay.name
-        json_dict["Game"] = {
+            json_dict["user"] = replay.imported_username or replay.name
+        json_dict["game"] = {
             "text": game.GetShortName(),
             "url": f"/replays/{game.game_id}",
         }
-        json_dict["Difficulty"] = game_ids.GetDifficultyName(
+        json_dict["difficulty"] = game_ids.GetDifficultyName(
             game.game_id, replay.difficulty
         )
-        json_dict["Shot"] = self._get_shot_name(shot)
+        json_dict["shot"] = self._get_shot_name(shot)
         if game.game_id in [
             game_ids.GameIDs.TH01,
             game_ids.GameIDs.TH08,
             game_ids.GameIDs.TH128,
         ]:
             route = replay.route
-            json_dict["Route"] = route.GetName() if route is not None else ""
+            json_dict["route"] = route.GetName() if route is not None else ""
         if game.game_id == game_ids.GameIDs.TH128 and replay.difficulty == 4:
-            json_dict["Route"] = "Extra"
-        json_dict["Score"] = {
+            json_dict["route"] = "Extra"
+        json_dict["score"] = {
             "text": f"{score_prefix}{int(replay.score):,}",
             "url": f"/replays/{game.game_id}/{replay.id}",
         }
-        json_dict["Upload Date"] = replay.created.strftime("%Y-%m-%d")
-        json_dict["Comment"] = replay.GetShortenedComment()
-        json_dict["Replay"] = {
+        json_dict["uploadDate"] = replay.created.strftime("%Y-%m-%d")
+        json_dict["comment"] = replay.GetShortenedComment()
+        json_dict["replay"] = {
             "text": "⬇",
             "url": f"/replays/{game.game_id}/{replay.id}/download",
         }
@@ -68,14 +68,14 @@ class ReplayToJsonConverter:
 
     def _get_th16_additional_fields(self, shot: models.Shot) -> dict:
         return {
-            "Character": shot.GetCharacterName(),
-            "Season": shot.GetSubshotName(),
+            "character": shot.GetCharacterName(),
+            "season": shot.GetSubshotName(),
         }
 
     def _get_th17_additional_fields(self, shot: models.Shot) -> dict:
         return {
-            "Character": shot.GetCharacterName(),
-            "Goast": shot.GetSubshotName(),
+            "character": shot.GetCharacterName(),
+            "goast": shot.GetSubshotName(),
         }
 
     def convert_replay_to_json_bytes(self, replay: models.Replay) -> bytes:
