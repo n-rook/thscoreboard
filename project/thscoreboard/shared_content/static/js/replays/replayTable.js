@@ -8,6 +8,7 @@ var activeFilters = {};
 var allReplays = [];
 var tableResetCounter = 0;
 
+initializeFilters();
 requestAndInitializeReplays();
 
 async function requestAndInitializeReplays() {
@@ -27,7 +28,7 @@ async function requestAndInitializeReplays() {
     const reader = response.body.getReader();
     const decoder = new TextDecoder('utf-8');
     let buffer = '';
-  
+
     while (true) {
       const { done, value } = await reader.read();
       if (done) {
@@ -53,39 +54,52 @@ async function requestAndInitializeReplays() {
   } catch (error) {}
 }
 
+function initializeFilters() {
+  const allButtons = document.querySelectorAll('button[filtertype]')
+  for (const button of allButtons) {
+    const filterType = button.getAttribute('filtertype');
+    activeFilters[filterType] = 'All';
+  }
+}
+
 function onClick(elm) {
   const filterType = elm.getAttribute('filterType');
   const value = elm.getAttribute('value');
 
   activeFilters = updateFilters(activeFilters, filterType, value);
+  updateButtons(activeFilters);
   const filteredReplays = filterReplays(activeFilters, allReplays);
   clearTableHtml();
   addReplaysToTable(filteredReplays);
 }
 
-function updateFilters(filters, filterType, value) {
-  if (filters[filterType] === undefined) {
-    filters[filterType] = [];
-  }
-  const indexOfValue = filters[filterType].indexOf(value);
-  if (indexOfValue === -1) {
-    filters[filterType].push(value);
-  }
-  else {
-    filters[filterType].splice(indexOfValue, 1);
-    if (filters[filterType].length === 0) {
-      delete filters[filterType];
+function updateButtons(activeFilters) {
+  const allButtons = document.querySelectorAll('button[filtertype]')
+  for (const button of allButtons) {
+    const filterType = button.getAttribute('filtertype');
+    const value = button.value;
+    if (activeFilters[filterType] === value) {
+      button.className = "button pressed";
+    }
+    else {
+      button.className = "button";
     }
   }
+}
+
+function updateFilters(filters, filterType, value) {
+  filters[filterType] = value;
   return filters;
 }
 
 function filterReplays(filters, replays) {
   let filteredReplays = [...replays];
   for (const [filterType, allowedValues] of Object.entries(filters)) {
-    filteredReplays = filteredReplays.filter((replay) => {
-      return allowedValues.includes(replay[filterType]);
-    });
+    if (allowedValues !== "All") {
+      filteredReplays = filteredReplays.filter((replay) => {
+        return replay[filterType] === allowedValues;
+      });
+    }
   };
   return filteredReplays;
 }

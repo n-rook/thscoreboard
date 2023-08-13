@@ -3,6 +3,7 @@
 from django.views.decorators import http as http_decorators
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Manager
+from django.core.handlers.wsgi import WSGIRequest
 
 from replays import models
 from replays import game_ids
@@ -12,14 +13,17 @@ from replays.views.replay_table_helpers import stream_json_bytes_to_http_reponse
 
 
 @http_decorators.require_safe
-def game_scoreboard_json(request, game_id: str):
+def game_scoreboard_json(request: WSGIRequest, game_id: str):
     replays = _get_all_replay_for_game(game_id)
     replay_jsons = convert_replays_to_json_bytes(replays)
     return stream_json_bytes_to_http_reponse(replay_jsons)
 
 
 @http_decorators.require_safe
-def game_scoreboard(request, game_id: str):
+def game_scoreboard(
+    request: WSGIRequest,
+    game_id: str,
+):
     game: Game = get_object_or_404(Game, game_id=game_id)
     filter_options = _get_filter_options(game)
     show_route = game_id in [
@@ -70,7 +74,11 @@ def _get_filter_options_th08(game: Game) -> dict[str, list[str]]:
     all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game.game_id)]
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
     all_routes = [route.GetName() for route in Route.objects.filter(game=game.game_id)]
-    return {"Difficulty": all_difficulties, "Shot": all_shots, "Route": all_routes}
+    return {
+        "Difficulty": all_difficulties,
+        "Shot": all_shots,
+        "Route": all_routes,
+    }
 
 
 def _get_filter_options_th13(game: Game) -> dict[str, list[str]]:
