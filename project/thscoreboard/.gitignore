@@ -19,3 +19,4 @@ tests/report/
 shared_content/static/style.css
 staticfiles
 launch.json
+package-lock.json

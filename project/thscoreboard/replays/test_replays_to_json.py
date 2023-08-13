@@ -70,28 +70,28 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
         for json_replay_data in json_data:
             assert json_replay_data
-            assert isinstance(json_replay_data["Score"], dict)
-            assert set(json_replay_data["Score"].keys()) == {"text", "url"}
+            assert isinstance(json_replay_data["score"], dict)
+            assert set(json_replay_data["score"].keys()) == {"text", "url"}
 
-            assert isinstance(json_replay_data["Replay"], dict)
-            assert set(json_replay_data["Replay"].keys()) == {"text", "url"}
+            assert isinstance(json_replay_data["replay"], dict)
+            assert set(json_replay_data["replay"].keys()) == {"text", "url"}
 
-        assert json_data[0]["User"]["text"] == self.user.username
-        assert json_data[0]["User"]["url"] == f"/replays/user/{self.user.username}"
-        assert json_data[0]["Game"]["text"] == "th06"
-        assert json_data[0]["Game"]["url"] == "/replays/th06"
-        assert json_data[0]["Difficulty"] == "Easy"
-        assert json_data[0]["Shot"] == "Reimu A"
-        assert json_data[0]["Score"]["text"] == "🥇1,000,000"
-        assert json_data[0]["Upload Date"] == "2000-01-01"
-        assert json_data[0]["Comment"] == "鼻毛"
-        assert json_data[0]["Replay"]["text"] == "⬇"
-        assert "Character" not in json_data[0]["Replay"]["text"]
-        assert "Season" not in json_data[0]["Replay"]["text"]
+        assert json_data[0]["user"]["text"] == self.user.username
+        assert json_data[0]["user"]["url"] == f"/replays/user/{self.user.username}"
+        assert json_data[0]["game"]["text"] == "th06"
+        assert json_data[0]["game"]["url"] == "/replays/th06"
+        assert json_data[0]["difficulty"] == "Easy"
+        assert json_data[0]["shot"] == "Reimu A"
+        assert json_data[0]["score"]["text"] == "🥇1,000,000"
+        assert json_data[0]["uploadDate"] == "2000-01-01"
+        assert json_data[0]["comment"] == "鼻毛"
+        assert json_data[0]["replay"]["text"] == "⬇"
+        assert "character" not in json_data[0]["replay"]["text"]
+        assert "season" not in json_data[0]["replay"]["text"]
 
-        assert json_data[1]["User"] == "あ"
-        assert json_data[1]["Character"] == "Marisa"
-        assert json_data[1]["Season"] is None
+        assert json_data[1]["user"] == "あ"
+        assert json_data[1]["character"] == "Marisa"
+        assert json_data[1]["season"] is None
 
     def testMedalEmojisSingleShot(self):
         for i in range(5):
@@ -111,11 +111,11 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             converter = ReplayToJsonConverter()
             json_data = [converter.convert_replay_to_dict(replay) for replay in replays]
 
-        self.assertEquals(json_data[0]["Score"]["text"], "🥇1,000,000,000")
-        self.assertEquals(json_data[1]["Score"]["text"], "🥈900,000,000")
-        self.assertEquals(json_data[2]["Score"]["text"], "🥉800,000,000")
-        self.assertEquals(json_data[3]["Score"]["text"], "700,000,000")
-        self.assertEquals(json_data[4]["Score"]["text"], "600,000,000")
+        self.assertEquals(json_data[0]["score"]["text"], "🥇1,000,000,000")
+        self.assertEquals(json_data[1]["score"]["text"], "🥈900,000,000")
+        self.assertEquals(json_data[2]["score"]["text"], "🥉800,000,000")
+        self.assertEquals(json_data[3]["score"]["text"], "700,000,000")
+        self.assertEquals(json_data[4]["score"]["text"], "600,000,000")
 
     def testMedalEmojisMultipleShots(self):
         replay_filenames = [
@@ -136,5 +136,5 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             converter = ReplayToJsonConverter()
             json_data = [converter.convert_replay_to_dict(replay) for replay in replays]
 
-        self.assertEquals(json_data[0]["Score"]["text"], "🥇1,000,000,000")
-        self.assertEquals(json_data[1]["Score"]["text"], "🥇900,000,000")
+        self.assertEquals(json_data[0]["score"]["text"], "🥇1,000,000,000")
+        self.assertEquals(json_data[1]["score"]["text"], "🥇900,000,000")
