@@ -16,7 +16,7 @@ def index_json(request):
         )
         .filter(is_listed=True)
         .annotate_with_rank()
-        .order_by("-created")[:10]
+        .order_by("-created")[:50]
     )
     replay_jsons = convert_replays_to_json_bytes(recent_replays)
     return stream_json_bytes_to_http_reponse(replay_jsons)
