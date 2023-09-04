@@ -204,7 +204,7 @@ class ReplayQuerySet(QuerySet):
         return self.annotate(
             rank=Case(
                 When(
-                    category=Category.STANDARD,
+                    Q(category=Category.STANDARD) & Q(replay_type=ReplayType.FULL_GAME),
                     then=Window(
                         expression=RowNumber(),
                         order_by=[

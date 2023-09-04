@@ -186,6 +186,16 @@ class ReplayTest(test_case.ReplayTestCase):
         self.assertEquals(replays[1].rank, 2)
         self.assertEquals(replays[2].rank, 3)
 
+    def testStagePracticeReplaysAreUnranked(self) -> None:
+        test_replays.CreateAsPublishedReplay(
+            filename="th6_extra",
+            user=self.author,
+            replay_type=models.ReplayType.STAGE_PRACTICE,
+        )
+
+        replay = models.Replay.objects.annotate_with_rank().first()
+        self.assertEquals(replay.rank, -1)
+
     def testGetFormattedTimestampDate_NoDate(self):
         th05_mima = models.Shot.objects.get(
             game_id=game_ids.GameIDs.TH05, shot_id="Mima"
