@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@types/jsdom": "^21.1.0",
+    "@types/node": "^20.4.10",
     "jest": "^29.5.0",
     "jsdom": "^21.1.1"
   },

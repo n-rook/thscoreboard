@@ -61,13 +61,13 @@ def _get_filter_options(game: Game) -> dict[str, list[str]]:
 def _get_filter_options_default(game: Game) -> dict[str, list[str]]:
     all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game.game_id)]
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    return {"Difficulty": all_difficulties, "Shot": all_shots}
+    return {"difficulty": all_difficulties, "shot": all_shots}
 
 
 def _get_filter_options_th01_th128(game: Game) -> dict[str, list[str]]:
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
     all_routes = [route.GetName() for route in Route.objects.filter(game=game.game_id)]
-    return {"Difficulty": all_difficulties, "Route": all_routes}
+    return {"difficulty": all_difficulties, "route": all_routes}
 
 
 def _get_filter_options_th08(game: Game) -> dict[str, list[str]]:
@@ -75,9 +75,9 @@ def _get_filter_options_th08(game: Game) -> dict[str, list[str]]:
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
     all_routes = [route.GetName() for route in Route.objects.filter(game=game.game_id)]
     return {
-        "Difficulty": all_difficulties,
-        "Shot": all_shots,
-        "Route": all_routes,
+        "difficulty": all_difficulties,
+        "shot": all_shots,
+        "route": all_routes,
     }
 
 
@@ -85,7 +85,7 @@ def _get_filter_options_th13(game: Game) -> dict[str, list[str]]:
     filter_options = _get_filter_options_default(game)
     # The Overdrive difficulty only exists for spell practice, but we do not show any
     # spell practice replays.
-    filter_options["Difficulty"].remove("Overdrive")
+    filter_options["difficulty"].remove("Overdrive")
     return filter_options
 
 
@@ -99,9 +99,9 @@ def _get_filter_options_th16(game: Game) -> dict[str, list[str]]:
     all_seasons.remove(None)
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
     return {
-        "Difficulty": all_difficulties,
-        "Character": all_characters,
-        "Season": all_seasons,
+        "difficulty": all_difficulties,
+        "character": all_characters,
+        "season": all_seasons,
     }
 
 
@@ -114,9 +114,9 @@ def _get_filter_options_th17(game: Game) -> dict[str, list[str]]:
     )
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
     return {
-        "Difficulty": all_difficulties,
-        "Character": all_characters,
-        "Goast": all_goasts,
+        "difficulty": all_difficulties,
+        "character": all_characters,
+        "goast": all_goasts,
     }
 
 
