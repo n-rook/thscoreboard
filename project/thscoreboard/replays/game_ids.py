@@ -542,11 +542,11 @@ def GetSubshotName(game_id: str, shot_id: str) -> Optional[str]:
             return None
     if game_id == GameIDs.TH17:
         if shot_id.endswith("Wolf"):
-            return pgettext("th16", "Wolf")
+            return pgettext("th17", "Wolf")
         elif shot_id.endswith("Otter"):
-            return pgettext("th16", "Otter")
+            return pgettext("th17", "Otter")
         elif shot_id.endswith("Eagle"):
-            return pgettext("th16", "Eagle")
+            return pgettext("th17", "Eagle")
 
     return "Subshot not implemented"
 
