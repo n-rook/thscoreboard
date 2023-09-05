@@ -50,6 +50,7 @@ def CreateAsPublishedReplay(
     miss_count=None,
     created_timestamp: typing.Optional[datetime.datetime] = None,
     imported_username: typing.Optional[str] = None,
+    replay_type: typing.Optional[models.ReplayType] = None,
 ):
     """Create a replay according to a file, with sensible defaults."""
 
@@ -58,6 +59,8 @@ def CreateAsPublishedReplay(
     temp_replay.save()
 
     replay_info = replay_parsing.Parse(replay_file_contents)
+    if replay_type is not None:
+        replay_info.replay_type = replay_type
 
     if difficulty is None:
         difficulty = replay_info.difficulty
