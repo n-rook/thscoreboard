@@ -8,7 +8,6 @@ var activeFilters = {};
 var allReplays = [];
 var tableResetCounter = 0;
 
-initializeFilters();
 requestAndInitializeReplays();
 
 async function requestAndInitializeReplays() {
@@ -194,8 +193,7 @@ try {
 }
 
 function ensureTickboxSync() {
-  activeFilters = {};
-  for(elm of document.querySelectorAll(".checkbox-list input[type=checkbox]:checked")) {
+  for(elm of document.querySelectorAll(".button.pressed ")) {
     onClick(elm);
   }
 }
