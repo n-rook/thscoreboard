@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Upload a new video replay</h1>
+<h1>{% translate "Upload a new video replay" %}</h1>
 <h2>{{ game.GetName }}</h2>
 
 <form method="post">
@@ -12,7 +12,7 @@
         <th style="width: 50%;"></th>
         <tr>
         <td>
-            <label for="{{form.difficulty.id_for_label}}">Difficulty</label>
+            <label for="{{form.difficulty.id_for_label}}">{% translate "Difficulty" %}</label>
             {{ form.difficulty.errors }}
         </td>
         <td>
@@ -21,7 +21,7 @@
         </tr>
         <tr>
         <td>
-            <label for="{{form.shot.id_for_label}}">Shot</label>
+            <label for="{{form.shot.id_for_label}}">{% translate "Shot" %}</label>
             {{ form.shot.errors }}
         </td>
         <td>
@@ -31,7 +31,7 @@
         {% if form.route %}
         <tr>
         <td>
-            <label for="{{form.score.id_for_label}}">Route</label>
+            <label for="{{form.score.id_for_label}}">{% translate "Route" %}</label>
             {{ form.route.errors }}
         </td>
         <td>
@@ -41,7 +41,7 @@
         {% endif %}
         <tr>
         <td>
-            <label for="{{form.score.id_for_label}}">Score</label>
+            <label for="{{form.score.id_for_label}}">{% translate "Score" %}</label>
             {{ form.score.errors }}
         </td>
         <td>
@@ -50,7 +50,7 @@
         </tr>
         <tr>
         <td>
-            <label for="{{form.category.id_for_label}}">Category</label>
+            <label for="{{form.category.id_for_label}}">{% translate "Category" %}</label>
             {{ form.category.errors }}
         </td>
         <td>
@@ -59,7 +59,7 @@
         </tr>
         <tr>
             <td>
-                <label for="{{form.replay_type.id_for_label}}">Replay Type</label>
+                <label for="{{form.replay_type.id_for_label}}">{% translate "Replay Type" %}</label>
                 {{ form.replay_type.errors }}
             </td>
             <td>
@@ -68,7 +68,7 @@
             </tr>
         <tr>
         <td>
-            <label for="{{form.video_link.id_for_label}}">Video link</label>
+            <label for="{{form.video_link.id_for_label}}">{% translate "Video link" %}</label>
             {{ form.video_link.errors }}
         </td>
         <td>
@@ -77,7 +77,7 @@
         </tr>
         <tr>
             <td>
-                <label for="{{form.is_clear.id_for_label}}">Did it clear?</label>
+                <label for="{{form.is_clear.id_for_label}}">{% translate "Did it clear?" %}</label>
             </td>
             <td>
                 {{ form.is_clear }}
@@ -86,7 +86,7 @@
     {% if has_replay_file %}
         <tr>
         <td>
-            <label for="{{form.is_good.id_for_label}}">No desyncs</label>
+            <label for="{{form.is_good.id_for_label}}">{% translate "No desyncs" %}</label>
             {{ form.is_good.errors }}
         </td>
         <td>
@@ -97,7 +97,7 @@
     {% if form.uses_bombs %}
         <tr>
             <td>
-                <label for="{{form.uses_bombs.id_for_label}}">Did you use bombs?</label>
+                <label for="{{form.uses_bombs.id_for_label}}">{% translate "Did you use bombs?" %}</label>
                 {{ form.uses_bombs.errors }}
             </td>
             <td>
@@ -108,7 +108,7 @@
     {% if form.misses %}
         <tr>
             <td>
-                <label for="{{form.misses.id_for_label}}">Miss count (optional)</label>
+                <label for="{{form.misses.id_for_label}}">{% translate "Miss count (optional)" %}</label>
                 {{ form.misses.errors }}
             </td>
             <td>
@@ -118,9 +118,9 @@
     {% endif %}
     </table>
     <div class="comment-input">
-        <label for="{{form.comment.id_for_label}}">Comment</label> {{ form.comment.errors }}<br>
+        <label for="{{form.comment.id_for_label}}">{% translate "Comment" %}</label> {{ form.comment.errors }}<br>
         {{ form.comment }}
     </div>
-    <input type="submit" value="Publish Replay">
+    <input type="submit" value={% translate "Publish Replay" %}>
 </form>
 {% endblock %}

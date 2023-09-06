@@ -35,7 +35,7 @@
     </div>
 
     <div class="replay-box">
-        <h3>Score</h3>
+        <h3>{% translate "Score" %}</h3>
         <p class="replay-score">
             {{ replay.score|intcomma }}
         </p>
@@ -73,21 +73,21 @@
         {% if has_replay_file %}
         <p>
             {% if replay_file_is_good %}
-            <a href="/replays/{{ game_id }}/{{ replay.id }}/download">Download replay</a>
+            <a href="/replays/{{ game_id }}/{{ replay.id }}/download">{% translate "Download replay" %}</a>
             {% else %}
-            <a href="/replays/{{ game_id }}/{{ replay.id }}/download">Download replay (desyncs)</a>
+            <a href="/replays/{{ game_id }}/{{ replay.id }}/download">{% translate "Download replay (desyncs)" %}</a>
             {% endif %}
         </p>
         {% endif %}
     </div>
 
     <div class="replay-box replay-spiffy-table-parent">
-        <h3>Badges and Stage Splits</h3>
+        <h3>{% translate "Badges and Stage Splits" %}</h3>
         <div class="replay-badges">
             {% if replay.no_bomb %}
             <div class="replay-badge">
                 <svg fill="currentColor">
-                    <title>This run did not use bombs</title>
+                    <title>{% translate "This run did not use bombs" %}</title>
                     <use href="{% static 'icons/bootstrap/icons.svg' %}#slash" />
                     <use href="{% static 'icons/bootstrap/icons.svg' %}#star" />
                 </svg>
@@ -96,7 +96,7 @@
             {% if replay.miss_count == 0 %}
             <div class="replay-badge">
                 <svg fill="currentColor">
-                    <title>This run never missed</title>
+                    <title>{% translate "This run never missed" %}</title>
                     <use href="{% static 'icons/bootstrap/icons.svg' %}#slash" />
                     <use href="{% static 'icons/bootstrap/icons.svg' %}#heart" />
                 </svg>
@@ -146,19 +146,23 @@
         <div class="video-wrapper">
             <iframe src="{{video_embed}}" width="100%" height="100%" allowfullscreen frameborder="0"></iframe>
         </div>
-        <p><a href="{{replay.video_link}}">Watch externally</a></p>
+        <p><a href="{{replay.video_link}}">{% translate "Watch externally" %}</a></p>
     </div>
     {% elif replay.video_link %}
     <div class="replay-box avoid-horizontal-join">
         <div class="video-wrapper">
-            <span>Failed to embed video, <a href="{{replay.video_link}}">watch replay here</a></span>
+            <span>
+                {% blocktranslate %}
+                    Failed to embed video, <a href="{{replay.video_link}}">watch replay here</a>
+                {% endblocktranslate %}
+            </span>
         </div>
     </div>
     {% endif %}
 
     {% if replay.comment or can_edit %}
     <div class="replay-box avoid-horizontal-join">
-        <h3>Comment{% if can_edit %} <a href="#" onclick="editReplayComment();">(Edit)</a>{% endif %}</h3>
+        <h3>{% translate "Comment" %}{% if can_edit %} <a href="#" onclick="editReplayComment();">(Edit)</a>{% endif %}</h3>
         <div class="replay-comment">
             <p id="replay-comment">{{ replay.comment }}</p>
             {% if can_edit %}
@@ -175,40 +179,46 @@
     {% endif %}
 
     <div class="replay-box">
-        <h3>Details</h3>
+        <h3>{% translate "Details" %}</h3>
         <table>
             <tbody>
                 {% if replay.name %}
                 <tr>
-                    <td>In-game name</td>
+                    <td>{% translate "In-game name" %}</td>
                     <td>{{ replay.name }}</td>
                 </tr>
                 {% endif %}
                 {% if replay.slowdown is not None %}
                 <tr>
-                    <td>Slowdown</td>
+                    <td>{% translate "Slowdown" %}</td>
                     <td>{{ replay.slowdown|floatformat:4 }}%</td>
                 </tr>
                 {% endif %}
                 {% if replay.miss_count is not None %}
                 <tr>
-                    <td>Misses</td>
+                    <td>{% translate "Misses" %}</td>
                     <td>{{ replay.miss_count }}</td>
                 </tr>
                 {% endif %}
                 <tr>
-                    <td>Uploaded on</td>
+                    <td>{% translate "Uploaded on" %}</td>
                     <td>{{ replay.created|date:"d F Y" }}</td>
                 </tr>
                 {% if spell_name %}
                 <tr>
-                    <td>Spell Card</td>
+                    <td>{% translate "Spell Card" %}</td>
                     <td>{{ spell_name }}</td>
                 </tr>
                 {% endif %}
                 <tr>
-                    <td>Clears?</td>
-                    <td>{% if replay.is_clear %}Yes{% else %}No{% endif %}</td>    
+                    <td>{% translate "Clears?" %}</td>
+                    <td>
+                        {% if replay.is_clear %}
+                            {% translate "Yes" %}
+                        {% else %}
+                            {% translate "No" %}
+                        {% endif %}
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -216,41 +226,41 @@
 
     {% if has_stages %}
     <div class="replay-box">
-        <h3>Stage details</h3>
+        <h3>{% translate "Stage details" %}</h3>
         {% include "replays/replay_stages.html" %}
     </div>
     {% endif %}
     <div class="replay-box">
-        <h3>Manage replay</h3>
+        <h3>{% translate "Manage replay" %}</h3>
         {% if can_remove_claim %}
         <div>
-            <a href="/replays/{{ game_id }}/{{ replay.id }}/unclaim_replay">Unclaim this replay</a>
+            <a href="/replays/{{ game_id }}/{{ replay.id }}/unclaim_replay">{% translate "Unclaim this replay" %}</a>
         </div>
         {% endif %}
         {% if can_edit %}
         {% if is_listed %}
         <div>
-            <a href="/replays/{{ game_id }}/{{ replay.id }}/unlist">Hide replay on the leaderboards</a>
+            <a href="/replays/{{ game_id }}/{{ replay.id }}/unlist">{% translate "Hide replay on the leaderboards" %}</a>
         </div>
         {% else %}
         <div>
-            <a href="/replays/{{ game_id }}/{{ replay.id }}/list">Show replay on the leaderboards</a>
+            <a href="/replays/{{ game_id }}/{{ replay.id }}/list">{% translate "Show replay on the leaderboards" %}</a>
         </div>
         {% endif %}
         {% endif %}
         {% if can_delete %}
         <div>
-            <a href="/replays/{{ game_id }}/{{ replay.id }}/delete">Permanently delete this replay</a>
+            <a href="/replays/{{ game_id }}/{{ replay.id }}/delete">{% translate "Permanently delete this replay" %}</a>
         </div>
         {% endif %}
         {% if user.is_staff %}
         <div>
-            <a href="/replays/{{ game_id }}/{{ replay.id }}/reanalyze">Reanalyze this replay</a>
+            <a href="/replays/{{ game_id }}/{{ replay.id }}/reanalyze">{% translate "Reanalyze this replay" %}</a>
         </div>
         {% endif %}
         <div>
             <a
-                href="mailto:reports@silentselene.net?subject={{ site_base }}{{ request.path }}&body=[Please%20leave%20the%20subject%20line%20unchanged.%20Specify%20details%20here]">Report</a>
+                href="mailto:reports@silentselene.net?subject={{ site_base }}{{ request.path }}&body=[Please%20leave%20the%20subject%20line%20unchanged.%20Specify%20details%20here]">{% translate "Report" %}</a>
         </div>
     </div>
 </div>
