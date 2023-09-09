@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h1 class="highlight">Select replays</h1>
+<h1 class="highlight">{% translate "Select replays" %}</h1>
 
 <form method="post">
     {% csrf_token %}
@@ -13,26 +13,28 @@
            value="{{ silentselene_username }}"
            class="spaced-input">
     <h2>
-        Contact info
+        {% translate "Contact info" %}
     </h2>
     <p>
-        How should we contact you? Please enter a social media account that belongs to you.
-        For example, link your twitter, discord, or bilibili account.
+        {% blocktranslate %}
+            How should we contact you? Please enter a social media account that belongs to you.
+            For example, link your twitter, discord, or bilibili account.
+        {% endblocktranslate %}
     </p>
     {{ form.contact_info }}
     <h2>
-        Select replays
+        {% translate "Select replays" %}
     </h2>
     <table class="replay-table">
         <thead>
             <tr>
-              <th>Select</th>
-              <th>Game</th>
-              <th>Difficulty</th>
-              <th>Shot</th>
-              <th>Score</th>
-              <th>Date</th>
-              <th>Comment</th>
+              <th>{% translate "Select" %}</th>
+              <th>{% translate "Game" %}</th>
+              <th>{% translate "Difficulty" %}</th>
+              <th>{% translate "Shot" %}</th>
+              <th>{% translate "Score" %}</th>
+              <th>{% translate "Date" %}</th>
+              <th>{% translate "Comment" %}</th>
             </tr>
         </thead>
         {% for replay in replays %}

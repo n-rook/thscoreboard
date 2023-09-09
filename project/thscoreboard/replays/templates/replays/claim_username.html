@@ -1,14 +1,14 @@
 {% extends "simple_centered.html" %}
 {% load i18n %}
 
-{% block centered-title %}<p>Claim replays</p>{% endblock %}
+{% block centered-title %}<p>{% translate "Claim replays" %}</p>{% endblock %}
 
 {% block centered-content %}
-    <a href="my_claims">My claims</a>
+    <a href="my_claims">{% translate "My claims" %}</a>
     <form method="post">
         {% csrf_token %}
         {% if user.is_staff %}
-            <p>Please enter a silentselene username.</p>
+            <p>{% translate "Please enter a silentselene username." %}</p>
             {{ form.silentselene_username }}
             {{ form.silentselene_username.errors }}
         {% else %}
@@ -16,10 +16,10 @@
                    name="silentselene_username"
                    value="{{ silentselene_username }}">
         {% endif %}
-        <p>Please enter a royalflare username.</p>
+        <p>{% translate "Please enter a royalflare username." %}</p>
         {{ form.royalflare_username }}
         {{ form.royalflare_username.errors }}
         <div />
-        <input type="submit" value="Next" class="spaced-input">
+        <input type="submit" value={% translate "Next" %} class="spaced-input">
     </form>
 {% endblock %}

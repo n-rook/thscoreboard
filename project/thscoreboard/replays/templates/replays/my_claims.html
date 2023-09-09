@@ -5,20 +5,20 @@
 
 {% if user.is_staff %}
 <h2>
-    All claims
+    {% translate "All claims" %}
 </h2>
 {% else %}
 <h2>
-    My claims
+    {% translate "My claims" %}
 </h2>
 {% endif %}
 <table class="replay-table">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>User</th>
-            <th>Status</th>
-            <th>Link</th>
+            <th>{% translate "Id" %}</th>
+            <th>{% translate "User" %}</th>
+            <th>{% translate "Status" %}</th>
+            <th>{% translate "Link" %}</th>
         </tr>
     </thead>
     {% for claim_request in claim_requests %}
@@ -26,7 +26,7 @@
             <td>{{ claim_request.id }}</td>
             <td>{{ claim_request.user.get_username }}</td>
             <td>{{ claim_request.get_request_status_name }}</td>
-            <td><a href="claim/{{ claim_request.id }}">View</a></td>
+            <td><a href="claim/{{ claim_request.id }}">{% translate "View" %}</a></td>
         </tr>
     {% endfor %}
 </table>
