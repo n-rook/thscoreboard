@@ -15,6 +15,7 @@ def index_json(request):
             category__in=[models.Category.STANDARD, models.Category.TAS]
         )
         .filter(is_listed=True)
+        .filter_visible()
         .annotate_with_rank()
         .order_by("-created")[:50]
     )
