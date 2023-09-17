@@ -381,7 +381,7 @@ class Replay(models.Model):
         )
 
     def IsVisible(self):
-        """Returns whether this replay should be visible to this user."""
+        """Returns whether this replay should be publicly visible."""
         return self.imported_username is not None or self.user.is_active
 
     def GetNiceFilename(self, id: Optional[int]):
