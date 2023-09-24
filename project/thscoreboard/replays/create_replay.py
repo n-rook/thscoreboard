@@ -5,13 +5,53 @@ not with web entities like views or forms.
 """
 
 import datetime
+import logging
 from typing import Optional
-from django.db import transaction
 
+from django.db import transaction
+from django.db import utils
+
+from shared_content import db_errors
 from replays import constant_helpers
 from replays import game_ids
 from replays import models
 from replays import replay_parsing
+
+
+def _SaveNewReplayWithFile(r: models.Replay, rf: models.ReplayFile):
+    r.save()
+    try:
+        # If there is an error in a transaction, that transaction is rolled
+        # back. As such, we execute rf.save() in a nested transaction— that
+        # way, only this tiny transaction is rolled back, and the outer transaction
+        # (if any) can continue as expected. (Of course, if the error can't be
+        # handled here, it will be reraised, so the outer transaction will be
+        # rolled back too.)
+        with transaction.atomic():
+            rf.save()
+    except utils.IntegrityError as e:
+        if (
+            not db_errors.IsUniqueError(e)
+            or not db_errors.GetUniqueConstraintCause(e) == "unique_hash"
+        ):
+            raise
+
+        at_least_one_ghost = False
+        for ghost in models.Replay.objects.ghosts_of(rf.replay_hash):
+            logging.info(
+                "Deleting ghost replay (with ID %d; owned by %s)",
+                ghost.id,
+                ghost.user.username,
+            )
+            ghost.delete()
+            at_least_one_ghost = True
+
+        if at_least_one_ghost:
+            rf.save()
+        else:
+            # As there were no ghosts, the save attempt was blocked by
+            # a real duplicate.
+            raise
 
 
 @transaction.atomic
@@ -91,8 +131,7 @@ def PublishNewReplay(
         ),
     )
 
-    replay_instance.save()
-    replay_file_instance.save()
+    _SaveNewReplayWithFile(replay_instance, replay_file_instance)
     temp_replay_instance.delete()
 
     for s in replay_info.stages:
