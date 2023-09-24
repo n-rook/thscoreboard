@@ -284,6 +284,32 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         with self.assertRaises(models.Replay.DoesNotExist):
             models.Replay.objects.get(score=67890)
 
+    def testReplayDuplicateFromRoyalFlare(self):
+        test_replays.CreateAsPublishedReplay("th6_extra", imported_username="someone")
+
+        replay_file_contents = test_replays.GetRaw("th6_extra")
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user, replay=replay_file_contents
+        )
+        temp_replay.save()
+        replay_info = replay_parsing.Parse(replay_file_contents)
+
+        with self.assertRaises(utils.IntegrityError):
+            create_replay.PublishNewReplay(
+                user=self.user,
+                difficulty=3,
+                score=1234567,
+                category=models.Category.STANDARD,
+                comment="",
+                video_link="",
+                is_good=True,
+                is_clear=True,
+                no_bomb=False,
+                miss_count=None,
+                temp_replay_instance=temp_replay,
+                replay_info=replay_info,
+            )
+
     def testReplayDuplicates_DeletesGhosts(self):
         inactive_user = self.createUser("inactive")
 

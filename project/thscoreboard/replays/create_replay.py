@@ -41,7 +41,7 @@ def _SaveNewReplayWithFile(r: models.Replay, rf: models.ReplayFile):
             logging.info(
                 "Deleting ghost replay (with ID %d; owned by %s)",
                 ghost.id,
-                ghost.user.username,
+                ghost.user,
             )
             ghost.delete()
             at_least_one_ghost = True
