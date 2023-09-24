@@ -44,10 +44,23 @@ def GetModelInstancesForReplay(
     return ReplayConstantModels(game=shot.game, shot=shot, route=route)
 
 
-def GetReplayFileWithSameHash(file) -> Optional[models.ReplayFile]:
+def GetReplayFileWithSameHash(file, include_ghosts = False) -> Optional[models.ReplayFile]:
+    """Return a replay file with the same hash is this one, if present.
+    
+    Args:
+        file: The file data (bytes or memoryview).
+        include_ghosts: If true, return "ghosts": replay files associated with
+            deleted accounts (that is, accounts with is_active set to False).
+            Ghosts are ignored for most purposes.
+    
+    Returns:
+        The matching replay file, or None.
+    """
     hash = CalculateReplayFileHash(file)
-    return models.ReplayFile.objects.filter(replay_hash=hash).first()
-
+    q = models.ReplayFile.objects.filter(replay_hash=hash)
+    if not include_ghosts:
+        q = q.filter(replay__user__is_active=True)
+    return q.first()
 
 def CalculateReplayFileHash(file):
     return hashlib.sha256(file).digest()
