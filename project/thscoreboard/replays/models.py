@@ -225,6 +225,20 @@ class ReplayQuerySet(QuerySet):
             )
         )
 
+    def ghosts_of(self, replay_hash: bytes) -> "ReplayQuerySet":
+        """Matches ghosts of a given replay file.
+
+        A "ghost" of a replay is an existing replay with an identical ReplayFile
+        assigned to an inactive user account. Such replays exist in the database so
+        they can be brought back to life if the user account is revived. However, to
+        users they do not exist, so it is inappropriate to prevent users from uploading
+        duplicates of ghosts.
+        """
+        return self.filter(
+            replayfile__replay_hash=replay_hash,
+            user__is_active=False,
+        )
+
 
 class Replay(models.Model):
     """Represents a score recorded on the scoreboard."""

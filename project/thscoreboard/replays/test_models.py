@@ -196,6 +196,47 @@ class ReplayTest(test_case.ReplayTestCase):
         replay = models.Replay.objects.annotate_with_rank().first()
         self.assertEquals(replay.rank, -1)
 
+    def testReplayQueryForGhosts(self):
+        inactive_user = self.createUser("inactive")
+
+        replay = test_replays.CreateAsPublishedReplay(
+            filename="th6_extra", user=inactive_user
+        )
+
+        inactive_user.MarkForDeletion()
+
+        replay_hash = constant_helpers.CalculateReplayFileHash(
+            test_replays.GetRaw("th6_extra")
+        )
+
+        ghost = models.Replay.objects.ghosts_of(replay_hash).first()
+        self.assertEqual(replay, ghost)
+
+    def testReplayQueryForGhosts_DoesNotReturnActiveReplay(self):
+        active_user = self.createUser("active")
+
+        test_replays.CreateAsPublishedReplay(filename="th6_extra", user=active_user)
+
+        replay_hash = constant_helpers.CalculateReplayFileHash(
+            test_replays.GetRaw("th6_extra")
+        )
+
+        ghost = models.Replay.objects.ghosts_of(replay_hash).first()
+        self.assertIsNone(ghost)
+
+    def testReplayQueryForGhosts_DoesNotReturnUnrelatedReplay(self):
+        inactive_user = self.createUser("inactive")
+
+        test_replays.CreateAsPublishedReplay(filename="th6_extra", user=inactive_user)
+
+        inactive_user.MarkForDeletion()
+
+        other_hash = constant_helpers.CalculateReplayFileHash(
+            test_replays.GetRaw("th6_hard_1cc")
+        )
+        ghost = models.Replay.objects.ghosts_of(other_hash).first()
+        self.assertIsNone(ghost)
+
     def testGetFormattedTimestampDate_NoDate(self):
         th05_mima = models.Shot.objects.get(
             game_id=game_ids.GameIDs.TH05, shot_id="Mima"
