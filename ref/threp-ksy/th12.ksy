@@ -39,7 +39,7 @@ types:
         type: u4
   stage:
     seq:
-      - id: stage
+      - id: stage_num
         type: u2
       - id: seed
         type: u2
