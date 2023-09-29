@@ -362,7 +362,7 @@ th, td
                 padding-left: 0
             &:last-child
                 padding-right: 0
-            
+
         .replay-heading-separator
             &::after
                 content: "•"
@@ -415,16 +415,16 @@ th, td
 
     tr
         border-block-end: 2px solid
-    
+
     .replay-score-column
         @include font-lato
         text-align: right
         font-weight: 500
-    
+
     .replay-lives-column
         svg
             color: var(--lives-icon-color)
-    
+
     .replay-bombs-column
         svg
             color: var(--bombs-icon-color)
@@ -442,7 +442,7 @@ th, td
         margin: 0
         overflow-wrap: anywhere
         white-space: pre-line
-    
+
     form
         textarea
             display: block
@@ -494,6 +494,10 @@ input
   font-size: 16px
   text-align: center
   margin-right: -5px
+  cursor: pointer
+
+.button:hover
+  background-color: var(--hover-button-color);
 
 .button.pressed
   background-color: var(--pressed-button-color)

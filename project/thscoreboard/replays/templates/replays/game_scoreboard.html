@@ -5,19 +5,19 @@
 
     {% for filter_name, filter_values in filters.items %}
         <div class=button-container>
-            <label><button
+            <button
                 class="button pressed"
                 filterType="{{filter_name}}"
                 value="All"
                 onclick="onClick(this)"
-            >All</label>
+            >All</button>
             {% for filter_value in filter_values %}
-                <label><button
+                <button
                     class="button"
                     filterType="{{filter_name}}"
                     value="{{filter_value}}"
                     onclick="onClick(this)"
-                >{{ filter_value }}</label>
+                >{{ filter_value }}</button>
             {% endfor %}
         </div>
     {% endfor %}
