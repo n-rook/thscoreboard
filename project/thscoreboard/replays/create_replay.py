@@ -17,8 +17,7 @@ from replays import models
 from replays import replay_parsing
 
 
-def _SaveNewReplayWithFile(r: models.Replay, rf: models.ReplayFile):
-    r.save()
+def _CreateNewReplayFile(rf: models.ReplayFile):
     try:
         # If there is an error in a transaction, that transaction is rolled
         # back. As such, we execute rf.save() in a nested transaction— that
@@ -127,7 +126,8 @@ def PublishNewReplay(
         ),
     )
 
-    _SaveNewReplayWithFile(replay_instance, replay_file_instance)
+    replay_instance.save()
+    _CreateNewReplayFile(replay_file_instance)
     temp_replay_instance.delete()
 
     for s in replay_info.stages:
