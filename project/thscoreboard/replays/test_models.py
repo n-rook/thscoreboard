@@ -280,7 +280,7 @@ class ReplayFileTest(test_case.ReplayTestCase):
         self.user = self.createUser("somebody")
 
     def testIsUniqueHashCollisionErrorWorks(self):
-        r = test_replays.CreateAsPublishedReplay(
+        test_replays.CreateAsPublishedReplay(
             filename="th7_lunatic",
             user=self.user,
         )
