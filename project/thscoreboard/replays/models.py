@@ -6,6 +6,7 @@ import datetime
 from typing import Optional
 
 from django.db import models
+from django.db import utils
 from django.utils import formats
 from django.utils import timezone
 from django.utils.translation import pgettext_lazy
@@ -15,6 +16,7 @@ from django.db.models.functions import RowNumber
 from replays import game_ids
 from replays import limits
 from replays import replay_parsing
+from shared_content import db_errors
 from shared_content import model_ttl
 from thscoreboard import settings
 
@@ -601,12 +603,25 @@ class ReplayStage(models.Model):
         self.th16_season_power = s.th16_season_power
 
 
+_REPLAY_FILE_UNIQUE_HASH_CONSTRAINT = "unique_hash"
+
+
 class ReplayFile(models.Model):
     """Represents a replay file for a given score."""
 
+    @classmethod
+    def IsUniqueHashCollisionError(cls, e: utils.IntegrityError):
+        return (
+            db_errors.IsUniqueError(e)
+            and db_errors.GetUniqueConstraintCause(e)
+            == _REPLAY_FILE_UNIQUE_HASH_CONSTRAINT
+        )
+
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=["replay_hash"], name="unique_hash")
+            models.UniqueConstraint(
+                fields=["replay_hash"], name=_REPLAY_FILE_UNIQUE_HASH_CONSTRAINT
+            )
         ]
 
     replay = models.OneToOneField("Replay", on_delete=models.CASCADE)

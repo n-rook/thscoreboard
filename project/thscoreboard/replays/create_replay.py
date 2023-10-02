@@ -11,7 +11,6 @@ from typing import Optional
 from django.db import transaction
 from django.db import utils
 
-from shared_content import db_errors
 from replays import constant_helpers
 from replays import game_ids
 from replays import models
@@ -30,10 +29,7 @@ def _SaveNewReplayWithFile(r: models.Replay, rf: models.ReplayFile):
         with transaction.atomic():
             rf.save()
     except utils.IntegrityError as e:
-        if (
-            not db_errors.IsUniqueError(e)
-            or not db_errors.GetUniqueConstraintCause(e) == "unique_hash"
-        ):
+        if not models.ReplayFile.IsUniqueHashCollisionError(e):
             raise
 
         at_least_one_ghost = False

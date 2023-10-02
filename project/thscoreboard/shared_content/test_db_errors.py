@@ -17,24 +17,19 @@ class DbErrorsTest(test_case.ReplayTestCase):
 
         dupe_shot = models.Shot(game=game, shot_id="foo")
 
-        try:
+        with self.assertRaises(utils.IntegrityError) as ctx:
             dupe_shot.save()
-        except utils.IntegrityError as e:
-            self.assertTrue(db_errors.IsUniqueError(e))
-            self.assertEqual(
-                db_errors.GetUniqueConstraintCause(e), "unique_shot_per_game"
-            )
-        else:
-            self.fail("Unexpected failure to raise an error")
+
+        e = ctx.exception
+        self.assertTrue(db_errors.IsUniqueError(e))
+        self.assertEqual(db_errors.GetUniqueConstraintCause(e), "unique_shot_per_game")
 
     def testDoesNotThinkOtherViolationIsUnique(self):
         user = self.createUser("user")
         replay = test_replays.CreateAsPublishedReplay("th6_extra", user=user)
         replay.difficulty = -5
 
-        try:
+        with self.assertRaises(utils.IntegrityError) as ctx:
             replay.save()
-        except utils.IntegrityError as e:
-            self.assertFalse(db_errors.IsUniqueError(e))
-        else:
-            self.fail("Unexpected failure to raise an error")
+
+        self.assertFalse(db_errors.IsUniqueError(ctx.exception))
