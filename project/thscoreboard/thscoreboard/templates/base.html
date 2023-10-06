@@ -61,10 +61,13 @@
         </div>
         <div class="content-and-sidebar">
             <nav class="sidebar">
-                {% for game_category, games in all_games_by_category.items %}
                 <h1 class="highlight">
-                    {{game_category}}
+                    {% translate "Scoreboards" %}
                 </h1>
+                {% for game_category, games in all_games_by_category.items %}
+                {% if not forloop.first %}
+                <hr>
+                {% endif %}
                 <ul class="game-list">
                     {% for game in games %}
                     <li>
