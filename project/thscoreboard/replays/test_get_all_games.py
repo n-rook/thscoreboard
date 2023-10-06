@@ -1,13 +1,8 @@
 import itertools
 
-from replays import game_ids
 from replays import models
 from replays import get_all_games
-from replays import create_replay
-from replays import replay_parsing
-from replays import constant_helpers
 from replays.testing import test_case
-from replays.testing import test_replays
 
 
 class ReplayTest(test_case.ReplayTestCase):
