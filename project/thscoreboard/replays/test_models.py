@@ -2,6 +2,8 @@ import datetime
 import logging
 from unittest.mock import patch
 
+from django.db import utils
+
 from replays import game_ids
 from replays import limits
 from replays import models
@@ -10,8 +12,6 @@ from replays import create_replay
 from replays import replay_parsing
 from replays.testing import test_case
 from replays.testing import test_replays
-
-import django.db.utils
 
 REPLAY_1 = test_replays.GetRaw("th6_extra")
 REPLAY_2 = test_replays.GetRaw("th10_normal")
@@ -196,6 +196,47 @@ class ReplayTest(test_case.ReplayTestCase):
         replay = models.Replay.objects.annotate_with_rank().first()
         self.assertEquals(replay.rank, -1)
 
+    def testReplayQueryForGhosts(self):
+        inactive_user = self.createUser("inactive")
+
+        replay = test_replays.CreateAsPublishedReplay(
+            filename="th6_extra", user=inactive_user
+        )
+
+        inactive_user.MarkForDeletion()
+
+        replay_hash = constant_helpers.CalculateReplayFileHash(
+            test_replays.GetRaw("th6_extra")
+        )
+
+        ghost = models.Replay.objects.ghosts_of(replay_hash).first()
+        self.assertEqual(replay, ghost)
+
+    def testReplayQueryForGhosts_DoesNotReturnActiveReplay(self):
+        active_user = self.createUser("active")
+
+        test_replays.CreateAsPublishedReplay(filename="th6_extra", user=active_user)
+
+        replay_hash = constant_helpers.CalculateReplayFileHash(
+            test_replays.GetRaw("th6_extra")
+        )
+
+        ghost = models.Replay.objects.ghosts_of(replay_hash).first()
+        self.assertIsNone(ghost)
+
+    def testReplayQueryForGhosts_DoesNotReturnUnrelatedReplay(self):
+        inactive_user = self.createUser("inactive")
+
+        test_replays.CreateAsPublishedReplay(filename="th6_extra", user=inactive_user)
+
+        inactive_user.MarkForDeletion()
+
+        other_hash = constant_helpers.CalculateReplayFileHash(
+            test_replays.GetRaw("th6_hard_1cc")
+        )
+        ghost = models.Replay.objects.ghosts_of(other_hash).first()
+        self.assertIsNone(ghost)
+
     def testGetFormattedTimestampDate_NoDate(self):
         th05_mima = models.Shot.objects.get(
             game_id=game_ids.GameIDs.TH05, shot_id="Mima"
@@ -231,6 +272,30 @@ class ReplayTest(test_case.ReplayTestCase):
             user=self.author,
         )
         self.assertEqual(r.GetFormattedTimestampDate(), "25 May 2018")
+
+
+class ReplayFileTest(test_case.ReplayTestCase):
+    def setUp(self):
+        super().setUp()
+        self.user = self.createUser("somebody")
+
+    def testIsUniqueHashCollisionErrorWorks(self):
+        test_replays.CreateAsPublishedReplay(
+            filename="th7_lunatic",
+            user=self.user,
+        )
+
+        with self.assertRaises(utils.IntegrityError) as ctx:
+            test_replays.CreateAsPublishedReplay(
+                filename="th7_lunatic",
+                user=self.user,
+            )
+        self.assertTrue(models.ReplayFile.IsUniqueHashCollisionError(ctx.exception))
+
+    def testSomeOtherRandomErrorIsNotUniqueHashCollision(self):
+        self.assertFalse(
+            models.ReplayFile.IsUniqueHashCollisionError(utils.IntegrityError("pizza"))
+        )
 
 
 class TemporaryReplayFileTest(test_case.ReplayTestCase):
@@ -274,7 +339,7 @@ class TestConstraints(test_case.ReplayTestCase):
     def testReplayTypeConstraint(self):
         shot = models.Shot.objects.get(game_id=game_ids.GameIDs.TH05, shot_id="Mima")
 
-        with self.assertRaises(django.db.utils.IntegrityError):
+        with self.assertRaises(utils.IntegrityError):
             create_replay.PublishReplayWithoutFile(
                 user=self.user,
                 difficulty=1,
@@ -300,7 +365,7 @@ class TestConstraints(test_case.ReplayTestCase):
         replay_info = replay_parsing.Parse(replay_file_contents)
         replay_info.replay_type = game_ids.ReplayTypes.FULL_GAME
 
-        with self.assertRaises(django.db.utils.IntegrityError):
+        with self.assertRaises(utils.IntegrityError):
             create_replay.PublishNewReplay(
                 user=self.user,
                 difficulty=replay_info.difficulty,
@@ -325,7 +390,7 @@ class TestConstraints(test_case.ReplayTestCase):
         temp_replay.save()
         replay_info = replay_parsing.Parse(replay_file_contents)
 
-        with self.assertRaises(django.db.utils.IntegrityError):
+        with self.assertRaises(utils.IntegrityError):
             create_replay.PublishNewReplay(
                 user=None,
                 difficulty=replay_info.difficulty,
