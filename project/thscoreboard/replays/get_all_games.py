@@ -1,4 +1,3 @@
-import collections
 from typing import Iterable
 
 from replays import game_ids
