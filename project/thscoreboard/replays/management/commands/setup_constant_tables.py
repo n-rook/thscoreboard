@@ -308,10 +308,10 @@ def create_or_update_games(all_game_constants: List[GameConstants]):
                 has_replays=game_constants.has_replays,
                 num_difficulties=game_constants.num_difficulties,
             )
-            game_row.save()
 
         create_or_update_shots(game_row, game_constants.shots)
         create_or_update_routes(game_row, game_constants.routes)
+        game_row.save()
 
 
 def create_or_update_shots(game=models.Game, shots=List[str]):
