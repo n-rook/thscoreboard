@@ -316,36 +316,32 @@ def create_or_update_games(all_game_constants: List[GameConstants]):
 
 def create_or_update_shots(game=models.Game, shots=List[str]):
     shot_rows = models.Shot.objects.filter(game=game).all()
-    for shot_row in shot_rows:
-        if shot_row.shot_id not in shots:
+    if shot_rows:
+        shot_ids_in_db = {shot.shot_id for shot in shot_rows}
+        if shot_ids_in_db != set(shots):
             raise Exception(
-                f"Found shot {shot_row.shot_id} for game {game.id} in database, "
-                "but this shot is not in the list of shots for that game."
+                "The shots in the constant tables did not match the shots in the db"
             )
 
     for shot in shots:
         shot_row = models.Shot.objects.filter(shot_id=shot, game=game).first()
-        if shot_row:
-            pass
-        else:
+        if shot_row is None:
             shot_row = models.Shot(game=game, shot_id=shot)
             shot_row.save()
 
 
 def create_or_update_routes(game=models.Game, routes=List[str]):
     route_rows = models.Route.objects.filter(game=game).all()
-    for route_row in route_rows:
-        if route_row.route_id not in routes:
+    if route_rows:
+        route_ids_in_db = {(route.order_number, route.route_id) for route in route_rows}
+        if route_ids_in_db != set(enumerate(routes)):
             raise Exception(
-                f"Found route {route_row.route_id} for game {game.id} in database, "
-                "but this route is not in the list of routes for that game."
+                "The routes in the constant tables did not match the routes in the db"
             )
 
     for i, route in enumerate(routes):
         route_row = models.Route.objects.filter(route_id=route, game=game).first()
-        if route_row:
-            pass
-        else:
+        if route_row is None:
             route_row = models.Route(
                 route_id=route, order_number=i, game_id=game.game_id
             )
