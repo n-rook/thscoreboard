@@ -51,7 +51,7 @@
                         {% csrf_token %}
                         {% get_current_language as language_code %}
                         <input type="hidden" name="language" value="{% if language_code == 'ja' %}en_US{% else %}ja{% endif %}" />
-                        <button type="submit">{% if language_code == 'ja' %}🇯🇵 {% translate "Japanese" context "language" %}{% else %}🇺🇸 {% translate "English" context "language" %}{% endif %}</button>
+                        <button type="submit">{% if language_code == 'ja' %}<img src="{% static 'icons/flags/jp.svg' %}" class="inline-flag" /> {% translate "Japanese" context "language" %}{% else %}<img src="{% static 'icons/flags/us.svg' %}" class="inline-flag" /> {% translate "English" context "language" %}{% endif %}</button>
                     </form>
                 </div>
                 <div class="banner-link">
