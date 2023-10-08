@@ -1,4 +1,6 @@
+from dataclasses import dataclass
 import logging
+from typing import List
 
 from django.core.management.base import BaseCommand
 from django.db import transaction
@@ -39,6 +41,78 @@ def SetUpConstantTables():
     _CreateIfNotLoaded("th03", _Create03)
     _CreateIfNotLoaded("th02", _Create02)
     _CreateIfNotLoaded("th01", _Create01)
+
+
+th18 = {"shots": ["Reimu", "Marisa", "Sakuya", "Sanae"]}
+
+
+@dataclass
+class GameConstants:
+    id: str
+    has_replays: bool
+    num_difficulties: int
+    shots: List[str]
+    routes: List[str]
+
+
+def create_or_update_game(all_game_constants: List[GameConstants]):
+    game_rows = models.Game.objects.all()
+    for game_row in game_rows:
+        if game_row.game_id not in (game_constants.id for game_constants in all_game_constants)
+            raise Exception(
+                f"Found game {game_row.game_id} in database, "
+                "but this game is not in the list of game constants."
+            )
+
+    for game_constants in all_game_constants:
+        game_row = models.Game.objects.filter(game_id=game_constants.id).first()
+        if game_row:
+            game_row.has_replays = game_constants.has_replays
+            game_row.num_difficulties = game_constants.num_difficulties
+        else:
+            game_row = models.Game(
+                game_id=game_constants.id,
+                has_replays=game_constants.has_replays,
+                num_difficulties=game_constants.num_difficulties,
+            )
+            game_row.save()
+
+        create_or_update_shots(game_row, game_constants.shots)
+
+
+def create_or_update_shots(game=models.Game, shots=List[str]):
+    shot_rows = models.Shot.objects.filter(game=game).all()
+    for shot_row in shot_rows:
+        if shot_row.shot_id not in shots:
+            raise Exception(
+                f"Found shot {shot_row.shot_id} for game {game.id} in database, "
+                "but this shot is not in the list of shots for that game."
+            )
+
+    for shot in shots:
+        shot_row = models.Shot.objects.filter(shot_id=shot, game=game).first()
+        if shot_row:
+            pass
+        else:
+            shot_row = models.Shot(game=game, shot_id=shot)
+            shot_row.save()
+
+def create_or_update_routes(game=models.Game, routes=List[str]):
+    route_rows = models.Routes.objects.filter(game=game).all()
+    for route_row in route_rows:
+        if route_row.route_id not in routes:
+            raise Exception(
+                f"Found route {route_row.route_id} for game {game.id} in database, "
+                "but this route is not in the list of routes for that game."
+            )
+
+    for route in routes:
+        route_row = models.Routes.objects.filter(route_id=route, game=game).first()
+        if route_row:
+            pass
+        else:
+            route_row = models.route_id=route
+            route_row.save()
 
 
 def _CreateIfNotLoaded(game_id, constant_creation_function):
