@@ -25,25 +25,25 @@
             <div class="banner-links">
                 {% if user.is_authenticated %}
                 <div class="banner-link">
-                    <a href="/replays/upload">Upload</a>
+                    <a href="/replays/upload">{% translate 'Upload' context 'Top bar' %}</a>
                 </div>
                 <div class="banner-link">
-                    <a href="/replays/user/{{user.username}}">My replays</a>
+                    <a href="/replays/user/{{user.username}}">{% translate 'My replays' context 'Top bar' %}</a>
                 </div>
                 <div class="banner-link">
-                    <a href="/users/profile">Profile</a>
+                    <a href="/users/profile">{% translate 'Profile' context 'Top bar' %}</a>
                 </div>
                 {% if user.is_staff or user.is_superuser %}
                 <div class="banner-link">
-                    <a href="/staff">Staff tools</a>
+                    <a href="/staff">{% translate 'Staff tools' context 'Top bar' %}</a>
                 </div>
                 {% endif %}
                 {% else %}
                 <div class="banner-link">
-                    <a href="/users/login">Log in</a>
+                    <a href="/users/login">{% translate 'Log in' context 'Top bar' %}</a>
                 </div>
                 <div class="banner-link">
-                    <a href="/users/register">Sign Up</a>
+                    <a href="/users/register">{% translate 'Sign Up' context 'Top bar' %]</a>
                 </div>
                 {% endif %}
                 <div class="banner-link">
@@ -62,7 +62,7 @@
         <div class="content-and-sidebar">
             <nav class="sidebar">
                 <h1 class="highlight">
-                    {% translate "Scoreboards" %}
+                    {% translate 'Scoreboards' context 'Sidebar header' %}
                 </h1>
                 {% for game_category, games in all_games_by_category.items %}
                 {% if not forloop.first %}
@@ -82,23 +82,23 @@
                 </ul>
                 {% endfor %}
                 <h1 class="highlight">
-                    More
+                    {% translate 'More' context 'Sidebar header' %}
                 </h1>
                 <ul>
-                    <li><a href="/users/rankings">Player Rankings</a></li>
+                    <li><a href="/users/rankings">{% translate 'Player Rankings' %}</a></li>
                 </ul>
                 <h1 class="highlight">
-                    About the site
+                    {% translate 'About the site' context 'Sidebar header' %}
                 </h1>
                 <ul>
-                <li><a href="/docs">About</a></li>
-                <li><a href="https://news.silentselene.net">Blog</a></li>
-                <li><a href="/docs/rules">Website rules</a></li>
-                <li><a href="/docs/replayrules">Replay rules</a></li>
-                <li><a href="/docs/privacy">Privacy policy</a></li>
-                <li><a href="/docs/licenses">Licences</a></li>
-                <li><a href="/docs/terms">Terms of Use</a></li>
-                <li><a href="/docs/credits">Credits</a></li>
+                <li><a href="/docs">{% translate 'About' context 'Sidebar link' %}</a></li>
+                <li><a href="https://news.silentselene.net">{% translate 'Blog' context 'Sidebar link' %}</a></li>
+                <li><a href="/docs/rules">{% translate 'Website rules' context 'Sidebar link' %}</a></li>
+                <li><a href="/docs/replayrules">{% translate 'Replay rules' context 'Sidebar link' %}</a></li>
+                <li><a href="/docs/privacy">{% translate 'Privacy policy' context 'Sidebar link' %}</a></li>
+                <li><a href="/docs/licenses">{% translate 'Licences' context 'Sidebar link' %}</a></li>
+                <li><a href="/docs/terms">{% translate 'Terms of Use' context 'Sidebar link' %}</a></li>
+                <li><a href="/docs/credits">{% translate 'Credits' context 'Sidebar link' %}</a></li>
                 </ul>
             </nav>
             <div class="main">
