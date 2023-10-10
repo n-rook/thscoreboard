@@ -10,7 +10,7 @@ Restart=always
 RestartSec=1
 User=silentselene
 WorkingDirectory=/home/silentselene/silentselene/project/thscoreboard/
-ExecStart=uwsgi /home/silentselene/silentselene/ref/server/uwsgi.ini
+ExecStart=uwsgi_python311 /home/silentselene/silentselene/ref/server/uwsgi.ini
 
 [Install]
 WantedBy=multi-user.target

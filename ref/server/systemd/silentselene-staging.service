@@ -1,0 +1,16 @@
+[Unit]
+Description=Silent Selene (staging)
+After=network.target
+After=postgresql.service
+
+[Service]
+Type=simple
+KillSignal=SIGINT
+Restart=always
+RestartSec=1
+User=silentselene
+WorkingDirectory=/home/silentselene/silentselene-staging/project/thscoreboard/
+ExecStart=uwsgi_python311 /home/silentselene/silentselene-staging/ref/server/uwsgi-staging.ini
+
+[Install]
+WantedBy=multi-user.target
