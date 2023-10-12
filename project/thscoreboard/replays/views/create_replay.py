@@ -163,6 +163,12 @@ def publish_replay(request, temp_replay_id):
 
     if replay_info.route:
         context["route_name"] = constants.route.GetName()
+    if replay_info.timestamp:
+        context["replay_timestamp"] = replay_info.timestamp
+    if replay_info.slowdown:
+        context["replay_slowdown"] = replay_info.slowdown
+    if replay_info.spell_card_id:
+        context["replay_spell_card_id"] = replay_info.spell_card_id_format
 
     return render(request, "replays/publish.html", context)
 

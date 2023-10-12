@@ -1,6 +1,7 @@
 from django.urls import path
 
 from replays.views import create_replay
+from replays.views import edit_replay
 from replays.views import index
 from replays.views import reanalyze_all_replays
 from replays.views import replay_list
@@ -30,7 +31,12 @@ urlpatterns = [
         view_replay.replay_details,
         name="Replays/Details",
     ),
-    path("<str:game_id>/<int:replay_id>/edit", view_replay.edit_replay),
+    path(
+        "<str:game_id>/<int:replay_id>/edit",
+        edit_replay.edit_replay,
+        name="edit_replay",
+    ),
+    path("<str:game_id>/<int:replay_id>/edit_comment", view_replay.edit_replay),
     path("<str:game_id>/<int:replay_id>/download", view_replay.download_replay),
     path("<str:game_id>/<int:replay_id>/delete", view_replay.delete_replay),
     path("<str:game_id>/<int:replay_id>/list", view_replay.list_replay),

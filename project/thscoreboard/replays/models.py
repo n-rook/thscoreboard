@@ -364,6 +364,10 @@ class Replay(models.Model):
     replay_type = models.IntegerField(choices=ReplayType.choices)
     """Type of replay (full run run, stage practice, etc)"""
 
+    def GetReplayTypeName(self) -> str:
+        """Returns a string description of this replay's type."""
+        return game_ids.GetReplayType(self.replay_type)
+
     no_bomb = models.BooleanField(blank=True, null=True)
     """Whether the replay uses no bombs (a popular challenge condition).
 
