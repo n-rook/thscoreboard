@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-08 18:06+0000\n"
+"POT-Creation-Date: 2023-10-09 16:15+0000\n"
 "PO-Revision-Date: 2023-05-06 19:43+0000\n"
 "Last-Translator: ゑふまいか, 2023\n"
 "Language-Team: Japanese (https://app.transifex.com/silent-selene/teams/168285/ja/)\n"
@@ -2176,6 +2176,31 @@ msgstr "English"
 msgid "Japanese"
 msgstr "日本語"
 
+#: thscoreboard/templates/base.html:28
+msgctxt "Top bar"
+msgid "Upload"
+msgstr ""
+
+#: thscoreboard/templates/base.html:31
+msgctxt "Top bar"
+msgid "My replays"
+msgstr ""
+
+#: thscoreboard/templates/base.html:34
+msgctxt "Top bar"
+msgid "Profile"
+msgstr ""
+
+#: thscoreboard/templates/base.html:38
+msgctxt "Top bar"
+msgid "Staff tools"
+msgstr ""
+
+#: thscoreboard/templates/base.html:43
+msgctxt "Top bar"
+msgid "Log in"
+msgstr ""
+
 #: thscoreboard/templates/base.html:54
 msgctxt "language"
 msgid "Japanese"
@@ -2187,8 +2212,62 @@ msgid "English"
 msgstr ""
 
 #: thscoreboard/templates/base.html:65
-#| msgid "Score"
+msgctxt "Sidebar header"
 msgid "Scoreboards"
+msgstr ""
+
+#: thscoreboard/templates/base.html:85
+msgctxt "Sidebar header"
+msgid "More"
+msgstr ""
+
+#: thscoreboard/templates/base.html:88
+msgid "Player Rankings"
+msgstr ""
+
+#: thscoreboard/templates/base.html:91
+msgctxt "Sidebar header"
+msgid "About the site"
+msgstr ""
+
+#: thscoreboard/templates/base.html:94
+msgctxt "Sidebar link"
+msgid "About"
+msgstr ""
+
+#: thscoreboard/templates/base.html:95
+msgctxt "Sidebar link"
+msgid "Blog"
+msgstr ""
+
+#: thscoreboard/templates/base.html:96
+msgctxt "Sidebar link"
+msgid "Website rules"
+msgstr ""
+
+#: thscoreboard/templates/base.html:97
+msgctxt "Sidebar link"
+msgid "Replay rules"
+msgstr ""
+
+#: thscoreboard/templates/base.html:98
+msgctxt "Sidebar link"
+msgid "Privacy policy"
+msgstr ""
+
+#: thscoreboard/templates/base.html:99
+msgctxt "Sidebar link"
+msgid "Licences"
+msgstr ""
+
+#: thscoreboard/templates/base.html:100
+msgctxt "Sidebar link"
+msgid "Terms of Use"
+msgstr ""
+
+#: thscoreboard/templates/base.html:101
+msgctxt "Sidebar link"
+msgid "Credits"
 msgstr ""
 
 #: users/forms.py:32
