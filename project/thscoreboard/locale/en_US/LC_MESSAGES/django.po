@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-08 18:06+0000\n"
-"PO-Revision-Date: 2023-10-08 18:07+0000\n"
+"POT-Creation-Date: 2023-10-09 16:15+0000\n"
+"PO-Revision-Date: 2023-10-09 16:18+0000\n"
 "Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -2590,6 +2590,31 @@ msgstr "English"
 msgid "Japanese"
 msgstr "Japanese"
 
+#: thscoreboard/templates/base.html:28
+msgctxt "Top bar"
+msgid "Upload"
+msgstr "Upload"
+
+#: thscoreboard/templates/base.html:31
+msgctxt "Top bar"
+msgid "My replays"
+msgstr "My replays"
+
+#: thscoreboard/templates/base.html:34
+msgctxt "Top bar"
+msgid "Profile"
+msgstr "Profile"
+
+#: thscoreboard/templates/base.html:38
+msgctxt "Top bar"
+msgid "Staff tools"
+msgstr "Staff tools"
+
+#: thscoreboard/templates/base.html:43
+msgctxt "Top bar"
+msgid "Log in"
+msgstr "Log in"
+
 #: thscoreboard/templates/base.html:54
 msgctxt "language"
 msgid "Japanese"
@@ -2601,9 +2626,63 @@ msgid "English"
 msgstr "English"
 
 #: thscoreboard/templates/base.html:65
-#| msgid "Score"
+msgctxt "Sidebar header"
 msgid "Scoreboards"
 msgstr "Scoreboards"
+
+#: thscoreboard/templates/base.html:85
+msgctxt "Sidebar header"
+msgid "More"
+msgstr "More"
+
+#: thscoreboard/templates/base.html:88
+msgid "Player Rankings"
+msgstr "Player Rankings"
+
+#: thscoreboard/templates/base.html:91
+msgctxt "Sidebar header"
+msgid "About the site"
+msgstr "About the site"
+
+#: thscoreboard/templates/base.html:94
+msgctxt "Sidebar link"
+msgid "About"
+msgstr "About"
+
+#: thscoreboard/templates/base.html:95
+msgctxt "Sidebar link"
+msgid "Blog"
+msgstr "Blog"
+
+#: thscoreboard/templates/base.html:96
+msgctxt "Sidebar link"
+msgid "Website rules"
+msgstr "Website rules"
+
+#: thscoreboard/templates/base.html:97
+msgctxt "Sidebar link"
+msgid "Replay rules"
+msgstr "Replay rules"
+
+#: thscoreboard/templates/base.html:98
+msgctxt "Sidebar link"
+msgid "Privacy policy"
+msgstr "Privacy policy"
+
+#: thscoreboard/templates/base.html:99
+msgctxt "Sidebar link"
+msgid "Licences"
+msgstr "Licences"
+
+#: thscoreboard/templates/base.html:100
+msgctxt "Sidebar link"
+msgid "Terms of Use"
+msgstr "Terms of Use"
+
+#: thscoreboard/templates/base.html:101
+msgctxt "Sidebar link"
+msgid "Credits"
+msgstr "Credits"
 
 #: users/forms.py:32
 msgid "An account has already been registered with this username."
