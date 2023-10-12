@@ -93,3 +93,27 @@ There isn't a hook yet to actually switch the language to Japanese.
 - set up constant tables
 - add tests
 - add front end translations for added string literals
+
+## The production environment
+
+The production server uses venv:
+
+https://docs.python.org/3/library/venv.html
+
+It was a fun surprise to see the version of pip installed by default in Debian
+Bookworm only supports venv by default!
+
+venv is essentially a way of isolating Python environments from each other, so
+that (for example) different servers can use different versions of the same
+module.
+
+The virtual environment is installed to .venv in each server directory (that is,
+for example, `/home/silentselene/silentselene-staging/.venv)`. To enter the
+venv, run  `. .venv/bin/activate`. Once you're in the venv, Python and related
+tools are referenced from the venv; for example, python is
+`/home/silentselene/silentselene-staging/.venv/bin/python`. Commands like
+`pip install` will install to the venv.
+
+Note that the venvs were created by running `python -m venv .venv` in these
+directories. As always, manage these as `silentselene`, not root, or else
+root will wind up owning files.
