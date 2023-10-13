@@ -25,7 +25,10 @@ def ListTemplateFiles() -> list[str]:
 
 
 def ListTemplates():
-    return [(filepath, filepath.read_text()) for filepath in ListTemplateFiles()]
+    return [
+        (filepath, filepath.read_text(encoding="utf-8"))
+        for filepath in ListTemplateFiles()
+    ]
 
 
 class TemplatesTestCase(test.TestCase):
