@@ -31,9 +31,6 @@ def edit_replay(request, game_id, replay_id):
             status=403,
         )
 
-    # try:
-    #     unused = replay.replayfile
-    # except models.Replay.replayfile.RelatedObjectDoesNotExist:
     if not hasattr(replay, "replayfile"):
         return shortcuts.render(
             request,
