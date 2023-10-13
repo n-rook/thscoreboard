@@ -2,6 +2,7 @@ from django import test
 from replays import models
 from replays.management.commands.setup_constant_tables import (
     GameConstants,
+    InvalidConstantsMutationException,
     create_or_update_games,
 )
 
@@ -100,7 +101,7 @@ class CreateOrUpdateGamesTest(test.TestCase):
 
         test_game_constants.shots = ["Reimu", "Marisa", "Cirno"]
 
-        with self.assertRaises(Exception):
+        with self.assertRaises(InvalidConstantsMutationException):
             create_or_update_games([test_game_constants])
 
     def test_disallows_modifying_route_ids(self):
@@ -116,7 +117,7 @@ class CreateOrUpdateGamesTest(test.TestCase):
 
         test_game_constants.routes = ["a", "b", "c"]
 
-        with self.assertRaises(Exception):
+        with self.assertRaises(InvalidConstantsMutationException):
             create_or_update_games([test_game_constants])
 
     def test_disallows_modifying_route_order(self):
@@ -132,5 +133,5 @@ class CreateOrUpdateGamesTest(test.TestCase):
 
         test_game_constants.routes = ["b", "a"]
 
-        with self.assertRaises(Exception):
+        with self.assertRaises(InvalidConstantsMutationException):
             create_or_update_games([test_game_constants])

@@ -23,6 +23,10 @@ def SetUpConstantTables():
     create_or_update_games(all_game_constants)
 
 
+class InvalidConstantsMutationException(Exception):
+    pass
+
+
 @dataclass
 class GameConstants:
     id: str
@@ -292,7 +296,7 @@ def create_or_update_games(all_game_constants: List[GameConstants]):
         if game_row.game_id not in (
             game_constants.id for game_constants in all_game_constants
         ):
-            raise Exception(
+            raise InvalidConstantsMutationException(
                 f"Found game {game_row.game_id} in database, "
                 "but this game is not in the list of game constants."
             )
@@ -319,7 +323,7 @@ def create_or_update_shots(game=models.Game, shots=List[str]):
     if shot_rows:
         shot_ids_in_db = {shot.shot_id for shot in shot_rows}
         if shot_ids_in_db != set(shots):
-            raise Exception(
+            raise InvalidConstantsMutationException(
                 "The shots in the constant tables did not match the shots in the db"
             )
 
@@ -335,7 +339,7 @@ def create_or_update_routes(game=models.Game, routes=List[str]):
     if route_rows:
         route_ids_in_db = {(route.order_number, route.route_id) for route in route_rows}
         if route_ids_in_db != set(enumerate(routes)):
-            raise Exception(
+            raise InvalidConstantsMutationException(
                 "The routes in the constant tables did not match the routes in the db"
             )
 
