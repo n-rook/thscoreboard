@@ -12,6 +12,7 @@ from replays import game_ids
 from replays import game_fields
 from replays import models
 from replays import limits
+from replays.lib import custom_fields
 
 difficulty_names = (
     ("0", "Easy"),
@@ -138,7 +139,7 @@ class PublishReplayForm(forms.Form):
             del self.fields["misses"]
 
     score = forms.IntegerField(min_value=0)
-    category = forms.ChoiceField(choices=models.Category.choices)
+    category = custom_fields.ChoicesEnumField(models.Category)
     comment = _create_comment_field()
     is_good = forms.BooleanField(initial=True, required=False)
     is_clear = forms.BooleanField(initial=True, required=False)
@@ -182,8 +183,8 @@ class PublishReplayWithoutFileForm(forms.Form):
     shot = ShotField()
     route = RouteField()
     score = forms.IntegerField(min_value=0)
-    category = forms.ChoiceField(choices=models.Category.choices)
-    replay_type = forms.ChoiceField(choices=models.ReplayType.choices)  # overridden
+    category = custom_fields.ChoicesEnumField(models.Category)
+    replay_type = custom_fields.ChoicesEnumField(models.ReplayType)  # overridden
     is_clear = forms.BooleanField(initial=True, required=False)
     comment = _create_comment_field()
     video_link = VideoReplayLinkField(required=True)
