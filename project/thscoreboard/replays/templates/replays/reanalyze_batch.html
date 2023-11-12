@@ -10,8 +10,15 @@
             <li>None!</li>
         {% endfor %}
     </ul>
-    <form method="POST">
+    {% if replays %}
+    <form method="POST" action="{% url 'Replays/ReanalyzePagePost' current_token next_token %}">
         {% csrf_token %}
         <input type="submit" />
     </form>
+    {% endif %}
+    {% if more_pages %}
+    <p><a href="{% url 'Replays/ReanalyzeBatch' next_token %}">Continue to next page</a></p>
+    {% else %}
+    <p>No more replays to analyze.</p>
+    {% endif %}
 {% endblock %}
