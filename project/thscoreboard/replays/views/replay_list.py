@@ -1,7 +1,10 @@
 """Contains views which list various replays."""
 
+from typing import Optional
+
+from django import urls
 from django.views.decorators import http as http_decorators
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.db.models import Manager
 from django.core.handlers.wsgi import WSGIRequest
 
@@ -17,6 +20,26 @@ def game_scoreboard_json(request: WSGIRequest, game_id: str):
     replays = _get_all_replay_for_game(game_id)
     replay_jsons = convert_replays_to_json_bytes(replays)
     return stream_json_bytes_to_http_reponse(replay_jsons)
+
+
+def game_scoreboard_old_url(
+    request: WSGIRequest, game_id: str, difficulty: int, shot_id: Optional[str] = None
+):
+    """Redirect requests going to the old filtered game scoreboard URLs.
+
+    We still get occasional requests to these URLs.
+
+    Note that the extra parameters are currently ignored. If we add query
+    strings or similar filter representations to the game scoreboard page, we
+    should update this function to use them.
+
+    Args:
+        request: The request object.
+        game_id: The game ID the user is interested in viewing.
+        difficulty: An integer corresponding to the replay difficulty to display.
+        shot_id: The shot ID the user is interested in viewing.
+    """
+    return redirect(urls.reverse("Replays/GameScoreboard", args=[game_id]))
 
 
 @http_decorators.require_safe
