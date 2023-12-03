@@ -1,5 +1,7 @@
 """Reanalyze all replays."""
 
+import os
+
 from django.contrib.auth import decorators as auth_decorators
 from django.views.decorators import http as http_decorators
 from django.shortcuts import render
@@ -13,7 +15,7 @@ from replays import reanalyze_replay
 # The number of replays to view and reanalyze at once.
 # This must be low enough that the request will never take over 30 seconds,
 # to avoid timeouts.
-_BATCH_SIZE = 5000
+_BATCH_SIZE = os.environ.get("REANALYZE_BATCH_SIZE") or 1000
 
 
 def _ShortNameForReplay(r):
