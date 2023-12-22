@@ -1,3 +1,4 @@
+from django.template import response as template_response
 from django import test as django_test
 from django import urls
 
@@ -78,3 +79,29 @@ class EditReplayTestCase(test_case.ReplayTestCase):
         )
 
         self.assertEqual(updated_replay.category, models.Category.TAS)
+
+    def testEditsReplay(self):
+        r = test_replays.CreateAsPublishedReplay(
+            "th10_normal", self.user, category=models.Category.STANDARD
+        )
+
+        response = self._Post(
+            r.shot.game.game_id,
+            r.id,
+            {
+                "name": "AAAAAAAA",
+                "score": 294127890,
+                "category": models.Category.TAS,
+                "video_link": "https://not_a_valid_site.example",
+                "is_clear": True,
+                "is_good": True,
+                "uses_bombs": True,
+                "misses": "",
+                "comment": "",
+            },
+        )
+
+        self.assertIsInstance(response, template_response.TemplateResponse)
+        self.assertEqual(response.status_code, 200)
+        response_form = response.context_data["form"]
+        self.assertIn("video_link", response_form.errors)
