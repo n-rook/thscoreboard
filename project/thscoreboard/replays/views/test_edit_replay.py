@@ -40,7 +40,7 @@ class EditReplayTestCase(test_case.ReplayTestCase):
         other_user = self.createUser("bob")
         r = test_replays.CreateAsPublishedReplay("th10_normal", other_user)
 
-        response = self._Get(r.shot.game.game_id, r.id)
+        response = self._Post(r.shot.game.game_id, r.id, {})
         self.assertEqual(response.status_code, 403)
 
     def testDisplaysPage(self):

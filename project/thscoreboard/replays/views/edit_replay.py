@@ -4,7 +4,7 @@
 from django import urls
 from django import shortcuts
 from django.template import response as template_response
-from django.http import Http404
+from django import http
 from django.utils.translation import gettext as _
 from django.views.decorators import http as http_decorators
 from django.contrib.auth import decorators as auth_decorators
@@ -15,13 +15,13 @@ from replays import models
 
 @auth_decorators.login_required
 @http_decorators.require_http_methods(["GET", "HEAD", "POST"])
-def edit_replay(request, game_id, replay_id):
+def edit_replay(request: http.HttpRequest, game_id: str, replay_id: int):
     """Edit an existing replay."""
 
     try:
         replay = models.Replay.objects.get(id=replay_id)
     except models.Replay.DoesNotExist:
-        raise Http404()
+        raise http.Http404()
 
     if request.user != replay.user:
         return shortcuts.render(

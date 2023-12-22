@@ -61,7 +61,7 @@ urlpatterns = [
         edit_replay.edit_replay,
         name="edit_replay",
     ),
-    path("<str:game_id>/<int:replay_id>/edit_comment", view_replay.edit_replay),
+    path("<str:game_id>/<int:replay_id>/edit_comment", view_replay.edit_comment),
     path("<str:game_id>/<int:replay_id>/download", view_replay.download_replay),
     path("<str:game_id>/<int:replay_id>/delete", view_replay.delete_replay),
     path("<str:game_id>/<int:replay_id>/list", view_replay.list_replay),

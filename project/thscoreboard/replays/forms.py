@@ -1,6 +1,6 @@
 """Various forms useful for the replays site."""
 
-from typing import Any, List, Sequence, Tuple
+from typing import Any, List, Mapping, Optional, Sequence, Tuple
 from urllib import parse
 
 from django import forms
@@ -129,7 +129,7 @@ class UploadReplayFileForm(forms.Form):
 
 
 def initialize_publish_replay_form_from_replay(
-    r: models.Replay, data=None
+    r: models.Replay, data: Optional[Mapping[str, Any]] = None
 ) -> "PublishReplayForm":
     """Return a new PublishReplayForm based on an existing replay.
 
