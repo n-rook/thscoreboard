@@ -21,11 +21,36 @@ urlpatterns = [
     path("publish/<str:game_id>", create_replay.publish_replay_no_file),
     path("user/<str:username>", user.user_page, name="user_page"),
     path("user/<str:username>/json", user.user_page_json),
-    path("reanalyze_all", reanalyze_all_replays.reanalyze_all),
-    path("<str:game_id>", replay_list.game_scoreboard),
-    path("<str:game_id>/json", replay_list.game_scoreboard_json),
-    path("<str:game_id>/d<int:difficulty>", replay_list.game_scoreboard),
-    path("<str:game_id>/d<int:difficulty>/<str:shot_id>", replay_list.game_scoreboard),
+    path(
+        "reanalyze_all",
+        reanalyze_all_replays.batch_reanalyze_preview,
+        name="Replays/ReanalyzeBatch",
+    ),
+    path(
+        "reanalyze_all/<int:pagination_token>",
+        reanalyze_all_replays.batch_reanalyze_preview,
+        name="Replays/ReanalyzeBatch",
+    ),
+    path(
+        "reanalyze_batch/<int:start_token>/<int:end_token>",
+        reanalyze_all_replays.reanalyze_page,
+        name="Replays/ReanalyzePagePost",
+    ),
+    path("<str:game_id>", replay_list.game_scoreboard, name="Replays/GameScoreboard"),
+    path(
+        "<str:game_id>/json",
+        replay_list.game_scoreboard_json,
+    ),
+    path(
+        "<str:game_id>/d<int:difficulty>",
+        replay_list.game_scoreboard_old_url,
+        name="Replays/GameScoreboardOldRedirect",
+    ),
+    path(
+        "<str:game_id>/d<int:difficulty>/<str:shot_id>",
+        replay_list.game_scoreboard_old_url,
+        name="Replays/GameScoreboardOldRedirect",
+    ),
     path(
         "<str:game_id>/<int:replay_id>",
         view_replay.replay_details,

@@ -1,4 +1,5 @@
-import logging
+from dataclasses import dataclass
+from typing import List
 
 from django.core.management.base import BaseCommand
 from django.db import transaction
@@ -19,53 +20,35 @@ def SetUpConstantTables():
     In addition to the command, this procedure is available here as a
     separate function, so that tests can call it easily.
     """
-
-    _CreateIfNotLoaded("th18", _Create18)
-    _CreateIfNotLoaded("th17", _Create17)
-    _CreateIfNotLoaded("th16", _Create16)
-    _CreateIfNotLoaded("th15", _Create15)
-    _CreateIfNotLoaded("th14", _Create14)
-    _CreateIfNotLoaded("th13", _Create13)
-    _CreateIfNotLoaded("th128", _Create128)
-    _CreateIfNotLoaded("th12", _Create12)
-    _CreateIfNotLoaded("th11", _Create11)
-    _CreateIfNotLoaded("th10", _Create10)
-    _CreateIfNotLoaded("th09", _Create09)
-    _CreateIfNotLoaded("th08", _Create08)
-    _CreateIfNotLoaded("th07", _Create07)
-    _CreateIfNotLoaded("th06", _Create06)
-    _CreateIfNotLoaded("th05", _Create05)
-    _CreateIfNotLoaded("th04", _Create04)
-    _CreateIfNotLoaded("th03", _Create03)
-    _CreateIfNotLoaded("th02", _Create02)
-    _CreateIfNotLoaded("th01", _Create01)
+    create_or_update_games(all_game_constants)
 
 
-def _CreateIfNotLoaded(game_id, constant_creation_function):
-    if models.Game.objects.filter(game_id=game_id):
-        logging.info("%s already loaded", game_id)
-    else:
-        constant_creation_function()
-        logging.info("Created %s", game_id)
+class InvalidConstantsMutationException(Exception):
+    pass
 
 
-@transaction.atomic
-def _Create18():
-    th18 = models.Game(game_id="th18", has_replays=True, num_difficulties=5)
-    th18.save()
-
-    shots = ["Reimu", "Marisa", "Sakuya", "Sanae"]
-    for shot in shots:
-        shot_row = models.Shot(game=th18, shot_id=shot)
-        shot_row.save()
+@dataclass
+class GameConstants:
+    id: str
+    has_replays: bool
+    num_difficulties: int
+    shots: List[str]
+    routes: List[str]
 
 
-@transaction.atomic
-def _Create17():
-    th17 = models.Game(game_id="th17", has_replays=True, num_difficulties=5)
-    th17.save()
+th18 = GameConstants(
+    id="th18",
+    has_replays=True,
+    num_difficulties=5,
+    shots=["Reimu", "Marisa", "Sakuya", "Sanae"],
+    routes=[],
+)
 
-    shots = [
+th17 = GameConstants(
+    id="th17",
+    has_replays=True,
+    num_difficulties=5,
+    shots=[
         "ReimuWolf",
         "ReimuOtter",
         "ReimuEagle",
@@ -75,18 +58,15 @@ def _Create17():
         "YoumuWolf",
         "YoumuOtter",
         "YoumuEagle",
-    ]
-    for shot in shots:
-        shot_row = models.Shot(game=th17, shot_id=shot)
-        shot_row.save()
+    ],
+    routes=[],
+)
 
-
-@transaction.atomic
-def _Create16():
-    th16 = models.Game(game_id="th16", has_replays=True, num_difficulties=5)
-    th16.save()
-
-    shots = [
+th16 = GameConstants(
+    id="th16",
+    has_replays=True,
+    num_difficulties=5,
+    shots=[
         "ReimuSpring",
         "ReimuSummer",
         "ReimuAutumn",
@@ -107,106 +87,78 @@ def _Create16():
         "Cirno",
         "Aya",
         "Marisa",
-    ]
-    for shot in shots:
-        shot_row = models.Shot(game=th16, shot_id=shot)
-        shot_row.save()
+    ],
+    routes=[],
+)
 
+th15 = GameConstants(
+    id="th15",
+    has_replays=True,
+    num_difficulties=5,
+    shots=["Reimu", "Marisa", "Sanae", "Reisen"],
+    routes=[],
+)
 
-@transaction.atomic
-def _Create15():
-    th15 = models.Game(game_id="th15", has_replays=True, num_difficulties=5)
-    th15.save()
+th14 = GameConstants(
+    id="th14",
+    has_replays=True,
+    num_difficulties=5,
+    shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"],
+    routes=[],
+)
 
-    shots = ["Reimu", "Marisa", "Sanae", "Reisen"]
-    for shot in shots:
-        shot_row = models.Shot(game=th15, shot_id=shot)
-        shot_row.save()
+th13 = GameConstants(
+    id="th13",
+    has_replays=True,
+    num_difficulties=5,
+    shots=["Reimu", "Marisa", "Sanae", "Youmu"],
+    routes=[],
+)
 
-
-@transaction.atomic
-def _Create14():
-    th14 = models.Game(game_id="th14", has_replays=True, num_difficulties=5)
-    th14.save()
-
-    shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"]
-    for shot in shots:
-        shot_row = models.Shot(game=th14, shot_id=shot)
-        shot_row.save()
-
-
-@transaction.atomic
-def _Create13():
-    th13 = models.Game(game_id="th13", has_replays=True, num_difficulties=6)
-    th13.save()
-
-    shots = ["Reimu", "Marisa", "Sanae", "Youmu"]
-    for shot in shots:
-        shot_row = models.Shot(game=th13, shot_id=shot)
-        shot_row.save()
-
-
-@transaction.atomic
-def _Create128():
-    th128 = models.Game(game_id="th128", has_replays=True, num_difficulties=5)
-    th128.save()
-
-    shot = models.Shot(game=th128, shot_id="Cirno")
-    shot.save()
-
-    routes = [
+th128 = GameConstants(
+    id="th128",
+    has_replays=True,
+    num_difficulties=5,
+    shots=["Cirno"],
+    routes=[
         "A-1",
         "A-2",
         "B-1",
         "B-2",
         "C-1",
         "C-2",
-    ]
+    ],
+)
 
-    for i, route_id in enumerate(routes):
-        route = models.Route(game=th128, route_id=route_id, order_number=i)
-        route.save()
+th12 = GameConstants(
+    id="th12",
+    has_replays=True,
+    num_difficulties=5,
+    shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SanaeA", "SanaeB"],
+    routes=[],
+)
 
+th11 = GameConstants(
+    id="th11",
+    has_replays=True,
+    num_difficulties=5,
+    shots=["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"],
+    routes=[],
+)
 
-@transaction.atomic
-def _Create12():
-    th12 = models.Game(game_id="th12", has_replays=True, num_difficulties=5)
-    th12.save()
+th10 = GameConstants(
+    id="th10",
+    has_replays=True,
+    num_difficulties=5,
+    shots=["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"],
+    routes=[],
+)
 
-    shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SanaeA", "SanaeB"]
-    for shot in shots:
-        shot_row = models.Shot(game=th12, shot_id=shot)
-        shot_row.save()
-
-
-@transaction.atomic
-def _Create11():
-    th11 = models.Game(game_id="th11", has_replays=True, num_difficulties=5)
-    th11.save()
-
-    shots = ["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"]
-    for shot in shots:
-        shot_row = models.Shot(game=th11, shot_id=shot)
-        shot_row.save()
-
-
-@transaction.atomic
-def _Create10():
-    th10 = models.Game(game_id="th10", has_replays=True, num_difficulties=5)
-    th10.save()
-
-    shots = ["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"]
-    for shot in shots:
-        shot_row = models.Shot(game=th10, shot_id=shot)
-        shot_row.save()
-
-
-@transaction.atomic
-def _Create09():
-    th09 = models.Game(game_id="th09", has_replays=True, num_difficulties=5)
-    th09.save()
-
-    shots = [
+th09 = GameConstants(
+    id="th09",
+    has_replays=True,
+    num_difficulties=5,
+    shots=[
         "Reimu",
         "Marisa",
         "Sakuya",
@@ -223,18 +175,15 @@ def _Create09():
         "Eiki",
         "Merlin",
         "Lunasa",
-    ]
-    for shot in shots:
-        shot_row = models.Shot(game=th09, shot_id=shot)
-        shot_row.save()
+    ],
+    routes=[],
+)
 
-
-@transaction.atomic
-def _Create08():
-    th08 = models.Game(game_id="th08", has_replays=True, num_difficulties=5)
-    th08.save()
-
-    shots = [
+th08 = GameConstants(
+    id="th08",
+    has_replays=True,
+    num_difficulties=5,
+    shots=[
         "Reimu & Yukari",
         "Marisa & Alice",
         "Sakuya & Remilia",
@@ -247,66 +196,47 @@ def _Create08():
         "Remilia",
         "Youmu",
         "Yuyuko",
-    ]
-    for shot in shots:
-        shot_row = models.Shot(game=th08, shot_id=shot)
-        shot_row.save()
+    ],
+    routes=["Final A", "Final B"],
+)
 
-    routes = ["Final A", "Final B"]
-    for i, route_id in enumerate(routes):
-        route = models.Route(game=th08, route_id=route_id, order_number=i)
-        route.save()
+th07 = GameConstants(
+    id="th07",
+    has_replays=True,
+    num_difficulties=6,
+    shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"],
+    routes=[],
+)
 
+th06 = GameConstants(
+    id="th06",
+    has_replays=True,
+    num_difficulties=5,
+    shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB"],
+    routes=[],
+)
 
-@transaction.atomic
-def _Create07():
-    th07 = models.Game(game_id="th07", has_replays=True, num_difficulties=6)
-    th07.save()
+th05 = GameConstants(
+    id="th05",
+    has_replays=False,
+    num_difficulties=5,
+    shots=["Reimu", "Marisa", "Mima", "Yuuka"],
+    routes=[],
+)
 
-    shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"]
-    for shot in shots:
-        shot_row = models.Shot(game=th07, shot_id=shot)
-        shot_row.save()
+th04 = GameConstants(
+    id="th04",
+    has_replays=False,
+    num_difficulties=5,
+    shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB"],
+    routes=[],
+)
 
-
-@transaction.atomic
-def _Create06():
-    th06 = models.Game(game_id="th06", has_replays=True, num_difficulties=5)
-    th06.save()
-
-    shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
-    for shot in shots:
-        shot_row = models.Shot(game=th06, shot_id=shot)
-        shot_row.save()
-
-
-@transaction.atomic
-def _Create05():
-    th05 = models.Game(game_id="th05", has_replays=False, num_difficulties=5)
-    th05.save()
-
-    shots = ["Reimu", "Marisa", "Mima", "Yuuka"]
-    for shot in shots:
-        shot_row = models.Shot(game=th05, shot_id=shot)
-        shot_row.save()
-
-
-@transaction.atomic
-def _Create04():
-    th04 = models.Game(game_id="th04", has_replays=False, num_difficulties=5)
-    th04.save()
-
-    shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
-    for shot in shots:
-        shot_row = models.Shot(game=th04, shot_id=shot)
-        shot_row.save()
-
-
-def _Create03():
-    th03 = models.Game(game_id="th03", has_replays=False, num_difficulties=5)
-    th03.save()
-
-    shots = [
+th03 = GameConstants(
+    id="th03",
+    has_replays=False,
+    num_difficulties=5,
+    shots=[
         "Reimu",
         "Mima",
         "Marisa",
@@ -316,33 +246,107 @@ def _Create03():
         "Rikako",
         "Chiyuri",
         "Yumemi",
-    ]
-    for shot in shots:
-        shot_row = models.Shot(game=th03, shot_id=shot)
-        shot_row.save()
+    ],
+    routes=[],
+)
+
+th02 = GameConstants(
+    id="th02",
+    has_replays=False,
+    num_difficulties=5,
+    shots=["ReimuA", "ReimuB", "ReimuC"],
+    routes=[],
+)
+
+th01 = GameConstants(
+    id="th01",
+    has_replays=False,
+    num_difficulties=4,  # No extra in HRtP!
+    shots=["Reimu"],
+    routes=["Jigoku", "Makai"],
+)
+
+all_game_constants = [
+    th01,
+    th02,
+    th03,
+    th04,
+    th05,
+    th06,
+    th07,
+    th08,
+    th09,
+    th10,
+    th11,
+    th12,
+    th128,
+    th13,
+    th14,
+    th15,
+    th16,
+    th17,
+    th18,
+]
 
 
 @transaction.atomic
-def _Create02():
-    th02 = models.Game(game_id="th02", has_replays=False, num_difficulties=5)
-    th02.save()
+def create_or_update_games(all_game_constants: List[GameConstants]):
+    game_rows = models.Game.objects.all()
+    for game_row in game_rows:
+        if game_row.game_id not in (
+            game_constants.id for game_constants in all_game_constants
+        ):
+            raise InvalidConstantsMutationException(
+                f"Found game {game_row.game_id} in database, "
+                "but this game is not in the list of game constants."
+            )
 
-    shots = ["ReimuA", "ReimuB", "ReimuC"]
+    for game_constants in all_game_constants:
+        game_row = models.Game.objects.filter(game_id=game_constants.id).first()
+        if game_row:
+            game_row.has_replays = game_constants.has_replays
+            game_row.num_difficulties = game_constants.num_difficulties
+        else:
+            game_row = models.Game(
+                game_id=game_constants.id,
+                has_replays=game_constants.has_replays,
+                num_difficulties=game_constants.num_difficulties,
+            )
+
+        create_or_update_shots(game_row, game_constants.shots)
+        create_or_update_routes(game_row, game_constants.routes)
+        game_row.save()
+
+
+def create_or_update_shots(game=models.Game, shots=List[str]):
+    shot_rows = models.Shot.objects.filter(game=game).all()
+    if shot_rows:
+        shot_ids_in_db = {shot.shot_id for shot in shot_rows}
+        if shot_ids_in_db != set(shots):
+            raise InvalidConstantsMutationException(
+                "The shots in the constant tables did not match the shots in the db"
+            )
+
     for shot in shots:
-        shot_row = models.Shot(game=th02, shot_id=shot)
-        shot_row.save()
+        shot_row = models.Shot.objects.filter(shot_id=shot, game=game).first()
+        if shot_row is None:
+            shot_row = models.Shot(game=game, shot_id=shot)
+            shot_row.save()
 
 
-@transaction.atomic
-def _Create01():
-    # No extra in HRtP!
-    th01 = models.Game(game_id="th01", has_replays=False, num_difficulties=4)
-    th01.save()
+def create_or_update_routes(game=models.Game, routes=List[str]):
+    route_rows = models.Route.objects.filter(game=game).all()
+    if route_rows:
+        route_ids_in_db = {(route.order_number, route.route_id) for route in route_rows}
+        if route_ids_in_db != set(enumerate(routes)):
+            raise InvalidConstantsMutationException(
+                "The routes in the constant tables did not match the routes in the db"
+            )
 
-    shot = models.Shot(game=th01, shot_id="Reimu")
-    shot.save()
-
-    routes = ["Jigoku", "Makai"]
-    for i, route_id in enumerate(routes):
-        route = models.Route(game=th01, route_id=route_id, order_number=i)
-        route.save()
+    for i, route in enumerate(routes):
+        route_row = models.Route.objects.filter(route_id=route, game=game).first()
+        if route_row is None:
+            route_row = models.Route(
+                route_id=route, order_number=i, game_id=game.game_id
+            )
+            route_row.save()
