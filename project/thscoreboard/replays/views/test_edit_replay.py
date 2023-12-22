@@ -80,7 +80,7 @@ class EditReplayTestCase(test_case.ReplayTestCase):
 
         self.assertEqual(updated_replay.category, models.Category.TAS)
 
-    def testEditsReplay(self):
+    def testInvalidEditReturnsFormWithError(self):
         r = test_replays.CreateAsPublishedReplay(
             "th10_normal", self.user, category=models.Category.STANDARD
         )
