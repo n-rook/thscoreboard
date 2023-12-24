@@ -126,9 +126,9 @@ def _Parse06(rep_raw):
     rep_stages = []
 
     enumerated_non_dummy_stages = [
-        (i, _stage)
-        for i, _stage in enumerate(replay.stages)
-        if replay.file_header.stage_offsets[i] != 0
+        (i, _pointer.body)
+        for i, _pointer in enumerate(replay.file_header.stage_offsets)
+        if _pointer.body
     ]
     # TH06 stores stage data values from the start of the stage but score from the end
     for (i, current_stage), (j, next_stage) in zip(
