@@ -6,7 +6,7 @@ from django.core.management import base
 import pathlib
 
 
-_PROJECT_ROOT = pathlib.Path(__file__).parent / '../../..'
+_PROJECT_ROOT = pathlib.Path(__file__).parent / "../../.."
 
 
 def _ksy_files():
@@ -19,14 +19,12 @@ class Command(base.BaseCommand):
 
     def handle(*args, **options) -> None:
         ksc_args = [
-                "kaitai-struct-compiler",
-                "--target",
-                "python",
-                "--outdir",
-                _PROJECT_ROOT / 'replays/kaitai_parsers',
-            ] + _ksy_files()
-        
-        logging.info('Running: %s', ksc_args)
-        subprocess.run(
-            ksc_args
-        )
+            "kaitai-struct-compiler",
+            "--target",
+            "python",
+            "--outdir",
+            _PROJECT_ROOT / "replays/kaitai_parsers",
+        ] + _ksy_files()
+
+        logging.info("Running: %s", ksc_args)
+        subprocess.run(ksc_args)
