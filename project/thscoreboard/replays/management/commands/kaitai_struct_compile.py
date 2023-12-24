@@ -1,9 +1,10 @@
+"""A command to regenerate the .ksy files."""
+
 import logging
-import subprocess
 import pathlib
+import subprocess
 
 from django.core.management import base
-import pathlib
 
 
 _PROJECT_ROOT = pathlib.Path(__file__).parent / "../../.."
