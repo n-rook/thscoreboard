@@ -18,18 +18,6 @@ class Th09(KaitaiStruct):
         self.file_header = Th09.FileHeader(self._io, self, self._root)
         self.header = Th09.Header(self._io, self, self._root)
 
-    class Dummy(KaitaiStruct):
-        """blank type."""
-        def __init__(self, _io, _parent=None, _root=None):
-            self._io = _io
-            self._parent = _parent
-            self._root = _root if _root else self
-            self._read()
-
-        def _read(self):
-            pass
-
-
     class FileHeader(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
@@ -50,7 +38,7 @@ class Th09(KaitaiStruct):
             self.decomp_size = self._io.read_u4le()
             self.stage_offsets = []
             for i in range(20):
-                self.stage_offsets.append(self._io.read_u4le())
+                self.stage_offsets.append(Th09.StagePointer(self._io, self, self._root))
 
             self.unknown_offsets = []
             for i in range(20):
@@ -72,6 +60,30 @@ class Th09(KaitaiStruct):
             self.difficulty = self._io.read_u1()
 
 
+    class StagePointer(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.offset = self._io.read_u4le()
+
+        @property
+        def body(self):
+            if hasattr(self, '_m_body'):
+                return self._m_body
+
+            if self.offset != 0:
+                _pos = self._io.pos()
+                self._io.seek(self.offset)
+                self._m_body = Th09.Stage(self._io, self, self._root)
+                self._io.seek(_pos)
+
+            return getattr(self, '_m_body', None)
+
+
     class Stage(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
@@ -88,23 +100,5 @@ class Th09(KaitaiStruct):
             self.lives = self._io.read_u1()
             self.unknown = self._io.read_u1()
 
-
-    @property
-    def stages(self):
-        if hasattr(self, '_m_stages'):
-            return self._m_stages
-
-        _pos = self._io.pos()
-        self._m_stages = []
-        for i in range(20):
-            _on = self.file_header.stage_offsets[i]
-            if _on == 0:
-                self._m_stages.append(Th09.Dummy(self._io, self, self._root))
-            else:
-                self._io.seek(self.file_header.stage_offsets[i])
-                self._m_stages.append(Th09.Stage(self._io, self, self._root))
-
-        self._io.seek(_pos)
-        return getattr(self, '_m_stages', None)
 
 

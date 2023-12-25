@@ -17,18 +17,6 @@ class Th06(KaitaiStruct):
     def _read(self):
         self.file_header = Th06.FileHeader(self._io, self, self._root)
 
-    class Dummy(KaitaiStruct):
-        """blank type."""
-        def __init__(self, _io, _parent=None, _root=None):
-            self._io = _io
-            self._parent = _parent
-            self._root = _root if _root else self
-            self._read()
-
-        def _read(self):
-            pass
-
-
     class FileHeader(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io

@@ -6,8 +6,6 @@ seq:
   - id: file_header
     type: file_header
 types:
-  dummy:
-    doc: blank type
   file_header:
     seq:
       - id: unknown_2

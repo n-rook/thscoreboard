@@ -7,19 +7,7 @@ seq:
     type: file_header
   - id: header
     type: header
-instances:
-  stages:
-    pos: file_header.stage_offsets[_index]
-    type:
-      switch-on: file_header.stage_offsets[_index]
-      cases:
-        0: dummy
-        _: stage
-    repeat: expr
-    repeat-expr: 9
 types:
-  dummy:
-    doc: blank type
   file_header:
     seq:
       - id: magic
@@ -41,7 +29,7 @@ types:
       - id: decomp_size
         type: u4
       - id: stage_offsets
-        type: u4
+        type: stage_pointer
         repeat: expr
         repeat-expr: 9
       - id: potential_stage_size
@@ -81,6 +69,16 @@ types:
         repeat-expr: 25
       - id: slowdown
         type: f4
+  stage_pointer:
+    seq:
+      - id: offset
+        doc: Location of the stage struct
+        type: u4
+    instances:
+      body:
+        pos: offset
+        type: stage
+        if: offset != 0
   stage:
     seq:
       - id: score
