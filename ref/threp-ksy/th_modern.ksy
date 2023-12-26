@@ -20,12 +20,12 @@ types:
         type: u4
       - id: unused_2
         size: 12
-      - id: comp_size
+      - id: len_comp_data
         type: u4
       - id: size
         type: u4
       - id: comp_data
-        size: comp_size
+        size: len_comp_data
   userdata:
     seq:
       - id: magic_user

@@ -43,7 +43,7 @@ types:
         type: u2
       - id: ignore
         type: u4
-      - id: stage_size
+      - id: len_stage_data
         type: u4
       - id: score
         type: u4
@@ -62,5 +62,5 @@ types:
       - id: unknown_2
         size: 88
       - id: stage_data
-        size: stage_size
+        size: len_stage_data
       

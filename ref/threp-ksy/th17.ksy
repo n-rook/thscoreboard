@@ -47,7 +47,7 @@ types:
       type: u2
     - id: frame_count
       type: u4
-    - id: end_off
+    - id: len_stage_data
       type: u4
     - id: pos_subpixel_x
       type: u4
@@ -144,7 +144,7 @@ types:
       repeat: expr
       repeat-expr: 21
     - id: stage_data
-      size: end_off
+      size: len_stage_data
   timer:
     seq:
     - id: prev_time

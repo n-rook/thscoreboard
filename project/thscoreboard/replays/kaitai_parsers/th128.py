@@ -53,7 +53,7 @@ class Th128(KaitaiStruct):
             self.stage = self._io.read_u2le()
             self.seed = self._io.read_u2le()
             self.frames = self._io.read_u4le()
-            self.stage_size = self._io.read_u4le()
+            self.len_stage_data = self._io.read_u4le()
             self.score = self._io.read_u4le()
             self.unknown_0 = self._io.read_u4le()
             self.piv = self._io.read_u4le()
@@ -66,7 +66,7 @@ class Th128(KaitaiStruct):
             self.perfect_freeze = self._io.read_u4le()
             self.frozen_area = self._io.read_f4le()
             self.unused_1 = self._io.read_bytes(4)
-            self.stage_data = self._io.read_bytes(self.stage_size)
+            self.stage_data = self._io.read_bytes(self.len_stage_data)
 
 
 

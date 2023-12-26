@@ -55,7 +55,7 @@ class Th16(KaitaiStruct):
             self.stage_num = self._io.read_u2le()
             self.rng = self._io.read_u2le()
             self.frame_count = self._io.read_u4le()
-            self.end_off = self._io.read_u4le()
+            self.len_stage_data = self._io.read_u4le()
             self.pos_subpixel_x = self._io.read_u4le()
             self.pos_subpixel_y = self._io.read_u4le()
             self.stage_num_2 = self._io.read_u4le()
@@ -115,7 +115,7 @@ class Th16(KaitaiStruct):
             for i in range(21):
                 self.spellcard_real_times.append(self._io.read_u4le())
 
-            self.stage_data = self._io.read_bytes(self.end_off)
+            self.stage_data = self._io.read_bytes(self.len_stage_data)
 
 
 
