@@ -9,8 +9,7 @@ We use Black, the Python formatting tool, to format our code automatically. As s
 
 ### Generating the replay parsers
 
-Start by installing `kaitai-struct-compiler`. Once it is installed,
-run `python manage.py kaitai_struct_compile`. Or, directly run the compiler: Navigate to `project/thscoreboard/replays/kaitai_parsers` and run `kaitai-struct-compiler -t python ../../../../ref/threp-ksy/*.ksy` (note that you don't need to change the slashes to backslashes to run this on Windows).
+Start by installing `kaitai-struct-compiler`. Then, navigate to `project/thscoreboard/replays/kaitai_parsers` and run `kaitai-struct-compiler -t python ../../../../ref/threp-ksy/*.ksy` (note that you don't need to change the slashes to backslashes to run this on Windows).
 
 ### Database configuration
 
