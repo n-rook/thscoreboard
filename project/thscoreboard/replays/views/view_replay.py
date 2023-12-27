@@ -25,7 +25,7 @@ from replays import game_ids
 
 
 @http_decorators.require_POST
-def edit_replay(request, game_id: str, replay_id: int):
+def edit_comment(request, game_id: str, replay_id: int):
     replay_instance, replay_stages = GetReplayWithStagesOr404(request.user, replay_id)
 
     edit = forms.EditReplayForm(request.POST)

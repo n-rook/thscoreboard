@@ -1,0 +1,11 @@
+{% extends "simple_centered.html" %}
+
+{% block centered-title %}
+    {% if title %}
+    <p>{{ title }}</p>
+    {% endif %}
+{% endblock %}
+
+{% block centered-content %}
+<p>{{ message }}</p>
+{% endblock %}

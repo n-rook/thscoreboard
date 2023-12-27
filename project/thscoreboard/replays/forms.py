@@ -1,6 +1,6 @@
 """Various forms useful for the replays site."""
 
-from typing import Any, List, Sequence, Tuple
+from typing import Any, List, Mapping, Optional, Sequence, Tuple
 from urllib import parse
 
 from django import forms
@@ -22,6 +22,10 @@ difficulty_names = (
     ("4", "Extra"),
     ("5", "Phantasm"),
 )
+
+
+class UnboundFormError(Exception):
+    """A form was unbound, but this operation requires it be bound."""
 
 
 _ALLOWED_REPLAY_HOSTS = [
@@ -124,6 +128,43 @@ class UploadReplayFileForm(forms.Form):
     replay_file = forms.FileField()
 
 
+def initialize_publish_replay_form_from_replay(
+    r: models.Replay, data: Optional[Mapping[str, Any]] = None
+) -> "PublishReplayForm":
+    """Return a new PublishReplayForm based on an existing replay.
+
+    Information from the Replay is used to populate the "initial" data. Note
+    that initial data is not used as a fallback for real values from a
+    populated form. See
+    https://docs.djangoproject.com/en/4.2/ref/forms/fields/#initial for more
+    detail.
+
+    Args:
+        r: The replay to use as initial values.
+        data: If present, form data from a POST used to populate the Form.
+
+    Returns:
+        A PublishReplayForm.
+    """
+
+    return PublishReplayForm(
+        r.shot.game.game_id,
+        r.replay_type,
+        initial={
+            "name": r.name,
+            "score": r.score,
+            "category": r.category,
+            "comment": r.comment,
+            "is_good": r.is_good,
+            "is_clear": r.is_clear,
+            "video_link": r.video_link,
+            "uses_bombs": not r.no_bomb,
+            "misses": r.miss_count,
+        },
+        data=data,
+    )
+
+
 class PublishReplayForm(forms.Form):
     def __init__(self, gameID: str, replay_type: models.ReplayType, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -159,6 +200,33 @@ class PublishReplayForm(forms.Form):
                     "so it can still be watched."
                 ),
             )
+
+    def update_replay(self, r: models.Replay):
+        """Update an existing Replay row with information from this form.
+
+        This form must be bound and cleaned. This method does not save
+        the updated replay.
+
+        Args:
+            r: The replay to update.
+        """
+        if not self.is_bound:
+            raise UnboundFormError()
+
+        r.score = self.cleaned_data["score"]
+        r.category = self.cleaned_data["category"]
+        r.comment = self.cleaned_data["comment"]
+        r.is_good = self.cleaned_data["is_good"]
+        r.is_clear = self.cleaned_data["is_clear"]
+        if "uses_bombs" in self.cleaned_data:
+            r.no_bomb = not self.cleaned_data["uses_bombs"]
+        else:
+            r.no_bomb = None
+        if "misses" in self.cleaned_data:
+            r.miss_count = self.cleaned_data["misses"]
+        else:
+            r.miss_count = None
+        r.video_link = self.cleaned_data["video_link"]
 
 
 class PublishReplayWithoutFileForm(forms.Form):
