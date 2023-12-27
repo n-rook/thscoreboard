@@ -5,19 +5,7 @@ meta:
 seq:
   - id: file_header
     type: file_header
-instances:
-  stages:
-    pos: file_header.stage_offsets[_index] - 15
-    type:
-      switch-on: file_header.stage_offsets[_index]
-      cases:
-        0: dummy
-        _: stage
-    repeat: expr
-    repeat-expr: 7
 types:
-  dummy:
-    doc: blank type
   file_header:
     seq:
       - id: unknown_2
@@ -43,9 +31,25 @@ types:
       - id: unknown_5
         type: u4
       - id: stage_offsets
-        type: u4
+        type: stage_pointer
         repeat: expr
         repeat-expr: 7
+  stage_pointer:
+    seq:
+      - id: raw_offset
+        doc: Raw offset, relative to encrypted file
+        type: u4
+    instances:
+      offset:
+        doc: Offset relative to decrypted file
+        value: raw_offset - 15
+      # See https://github.com/kaitai-io/kaitai_struct/issues/14
+      # for an explanation of this pattern.
+      body:
+        pos: offset
+        type: stage
+        if: raw_offset != 0
+
   stage:
     seq:
       - id: score

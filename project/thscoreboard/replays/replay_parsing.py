@@ -126,9 +126,9 @@ def _Parse06(rep_raw):
     rep_stages = []
 
     enumerated_non_dummy_stages = [
-        (i, _stage)
-        for i, _stage in enumerate(replay.stages)
-        if replay.file_header.stage_offsets[i] != 0
+        (i, _pointer.body)
+        for i, _pointer in enumerate(replay.file_header.stage_offsets)
+        if _pointer.body
     ]
     # TH06 stores stage data values from the start of the stage but score from the end
     for (i, current_stage), (j, next_stage) in zip(
@@ -180,9 +180,9 @@ def _Parse07(rep_raw):
     rep_stages = []
 
     enumerated_non_dummy_stages = [
-        (i, _stage)
-        for i, _stage in enumerate(replay.stages)
-        if replay.file_header.stage_offsets[i] != 0
+        (i, _pointer.body)
+        for i, _pointer in enumerate(replay.file_header.stage_offsets)
+        if _pointer.body
     ]
 
     def is_phantasm(difficulty_code: int) -> bool:
@@ -282,11 +282,13 @@ def _Parse08(rep_raw):
 
     # TH08 stores stage data values from the start of the stage but score from the end
     route = None
+
     enumerated_non_dummy_stages = [
-        (i, _stage)
-        for i, _stage in enumerate(replay.stages)
-        if replay.file_header.stage_offsets[i] != 0
+        (i, _pointer.body)
+        for i, _pointer in enumerate(replay.file_header.stage_offsets)
+        if _pointer.body
     ]
+
     for (i, current_stage), (j, next_stage) in zip(
         enumerated_non_dummy_stages, enumerated_non_dummy_stages[1:] + [(None, None)]
     ):
@@ -337,6 +339,7 @@ def _Parse09(rep_raw):
     replay = th09.Th09.from_bytes(
         bytearray(rep_raw[0:24]) + comp_data[0:168] + td.unlzss(comp_data[168:])
     )
+    stage_pointers = replay.file_header.stage_offsets
     shots = [
         "Reimu",
         "Marisa",
@@ -362,14 +365,14 @@ def _Parse09(rep_raw):
     r_type = game_ids.ReplayTypes.FULL_GAME
 
     highest_stage = 0
-    if replay.file_header.stage_offsets[9] == 0:
+    if not stage_pointers[9].body:
         #  story mode
         #  collect start-of-stage data
         for i in range(9):
-            if replay.file_header.stage_offsets[i] != 0:
+            if stage_pointers[i].body:
                 #   real stage
-                p1 = replay.stages[i]
-                p2 = replay.stages[i + 10]
+                p1 = stage_pointers[i].body
+                p2 = stage_pointers[i + 10].body
 
                 s = ReplayStage()
                 s.stage = i + 1
@@ -385,7 +388,7 @@ def _Parse09(rep_raw):
                 rep_stages.append(s)
 
             #  fill in replayinfo
-            p1 = replay.stages[highest_stage]
+            p1 = stage_pointers[highest_stage].body
             r_shot = shots[p1.shot]
             r_score = p1.score * 10
 
@@ -406,8 +409,8 @@ def _Parse09(rep_raw):
 
     else:
         #   vs mode
-        p1 = replay.stages[9]
-        p2 = replay.stages[19]
+        p1 = stage_pointers[9].body
+        p2 = stage_pointers[19].body
 
         r_shot = shots[p1.shot]
         r_score = p1.score * 10
