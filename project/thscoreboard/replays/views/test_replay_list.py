@@ -72,18 +72,18 @@ class GetFilterOptionsTestCase(test_case.ReplayTestCase):
         game = models.Game.objects.get(game_id=game_ids.GameIDs.TH16)
         filter_options = replay_list.get_filter_options(game)
         self.assertCountEqual(
-            filter_options.keys(), ("Difficulty", "Character", "Season")
+            filter_options.keys(), ("Difficulty", "Character", "Subshot")
         )
         self.assertEqual(len(filter_options["Difficulty"]), 5)
-        self.assertEqual(len(filter_options["Season"]), 4)
-        self.assertEqual(len(filter_options["Season"]), 4)
+        self.assertEqual(len(filter_options["Character"]), 4)
+        self.assertEqual(len(filter_options["Subshot"]), 4)
 
     def test_th17(self):
         game = models.Game.objects.get(game_id=game_ids.GameIDs.TH17)
         filter_options = replay_list.get_filter_options(game)
         self.assertCountEqual(
-            filter_options.keys(), ("Difficulty", "Character", "Goast")
+            filter_options.keys(), ("Difficulty", "Character", "Subshot")
         )
         self.assertEqual(len(filter_options["Difficulty"]), 5)
         self.assertEqual(len(filter_options["Character"]), 3)
-        self.assertEqual(len(filter_options["Goast"]), 3)
+        self.assertEqual(len(filter_options["Subshot"]), 3)
