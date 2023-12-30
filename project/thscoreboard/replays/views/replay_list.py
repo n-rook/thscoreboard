@@ -48,7 +48,7 @@ def game_scoreboard(
     game_id: str,
 ):
     game: Game = get_object_or_404(Game, game_id=game_id)
-    filter_options = _get_filter_options(game)
+    filter_options = get_filter_options(game)
     show_route = game_id in [
         game_ids.GameIDs.TH01,
         game_ids.GameIDs.TH08,
@@ -66,7 +66,7 @@ def game_scoreboard(
     )
 
 
-def _get_filter_options(game: Game) -> dict[str, list[str]]:
+def get_filter_options(game: Game) -> dict[str, list[str]]:
     if game.game_id == game_ids.GameIDs.TH01 or game.game_id == game_ids.GameIDs.TH128:
         return _get_filter_options_th01_th128(game)
     elif game.game_id == game_ids.GameIDs.TH08:
