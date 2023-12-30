@@ -23,8 +23,8 @@ DIVINE_CYCLE_GAME_IDS = [
     game_ids.GameIDs.TH10,
     game_ids.GameIDs.TH11,
     game_ids.GameIDs.TH12,
-    game_ids.GameIDs.TH13,
     game_ids.GameIDs.TH128,
+    game_ids.GameIDs.TH13,
 ]
 
 NEW_GAME_IDS = [
