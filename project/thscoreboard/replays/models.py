@@ -36,6 +36,17 @@ class Game(models.Model):
     has_replays = models.BooleanField()
     """Whether the game supports replay files."""
 
+    has_multiple_shots = models.BooleanField()
+    """Whether the game has multiple shots to choose between."""
+
+    has_subshots = models.BooleanField()
+    """Whether the game has subshots that are shared between characters, like seasons
+    or goasts.
+    """
+
+    has_routes = models.BooleanField()
+    """Whether the game has multiple routes that can be selected by the player."""
+
     num_difficulties = models.IntegerField()
     """The number of difficulties the game has.
 
