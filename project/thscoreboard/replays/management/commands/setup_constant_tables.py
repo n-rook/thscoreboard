@@ -110,7 +110,7 @@ th14 = GameConstants(
 th13 = GameConstants(
     id="th13",
     has_replays=True,
-    num_difficulties=5,
+    num_difficulties=6,
     shots=["Reimu", "Marisa", "Sanae", "Youmu"],
     routes=[],
 )
