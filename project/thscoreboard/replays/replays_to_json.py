@@ -35,13 +35,22 @@ class ReplayToJsonConverter:
             "text": game.GetShortName(),
             "url": f"/replays/{game.game_id}",
         }
-        json_dict["Difficulty"] = game_ids.GetDifficultyName(
-            game.game_id, replay.difficulty
-        )
-        json_dict["Shot"] = self._get_shot_name(shot)
+        json_dict["Difficulty"] = {
+            "text": game_ids.GetDifficultyName(game.game_id, replay.difficulty),
+            "url": f"/replays/{game.game_id}?difficulty={replay.difficulty}",
+        }
+        json_dict["Shot"] = {
+            "text": self._get_shot_name(shot),
+            "url": f"/replays/{game.game_id}?difficulty={replay.difficulty}&shot={shot.shot_id}",
+        }
         if game.has_routes:
             route = replay.route
-            json_dict["Route"] = route.GetName() if route is not None else ""
+            route_name = route.GetName() if route is not None else ""
+            route_id = route.route_id if route is not None else ""
+            json_dict["Route"] = {
+                "text": route_name,
+                "url": f"/replays/{game.game_id}?difficulty={replay.difficulty}&shot={shot.shot_id}&route={route_id}",
+            }
         if game.game_id == game_ids.GameIDs.TH128 and replay.difficulty == 4:
             json_dict["Route"] = "Extra"
         json_dict["Score"] = {

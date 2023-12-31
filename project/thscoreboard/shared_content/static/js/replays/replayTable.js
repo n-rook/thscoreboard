@@ -95,7 +95,8 @@ function filterReplays(filters, replays) {
   for (const [filterType, allowedValues] of Object.entries(filters)) {
     if (allowedValues !== "All") {
       filteredReplays = filteredReplays.filter((replay) => {
-        return replay[filterType] === allowedValues;
+        return replay[filterType] === allowedValues
+        || replay[filterType].text === allowedValues;
       });
     }
   };
