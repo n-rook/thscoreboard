@@ -41,7 +41,7 @@ def game_scoreboard_old_url(
         shot_id: The shot ID the user is interested in viewing.
     """
     return redirect(
-        urls.reverse("Replays/GameScoreboard", args=[game_id, difficulty, shot_id])
+        urls.reverse("Replays/GameScoreboard", args=[game_id])
     )
 
 
