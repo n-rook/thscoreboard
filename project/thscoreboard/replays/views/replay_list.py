@@ -1,11 +1,12 @@
 """Contains views which list various replays."""
 
+import json
 from typing import Optional
 
 from django import urls
 from django.views.decorators import http as http_decorators
 from django.shortcuts import get_object_or_404, render, redirect
-from django.db.models import Manager
+from django.db.models import Manager, Q
 from django.core.handlers.wsgi import WSGIRequest
 
 from replays import models
@@ -39,7 +40,9 @@ def game_scoreboard_old_url(
         difficulty: An integer corresponding to the replay difficulty to display.
         shot_id: The shot ID the user is interested in viewing.
     """
-    return redirect(urls.reverse("Replays/GameScoreboard", args=[game_id]))
+    return redirect(
+        urls.reverse("Replays/GameScoreboard", args=[game_id, difficulty, shot_id])
+    )
 
 
 @http_decorators.require_safe
@@ -47,6 +50,10 @@ def game_scoreboard(
     request: WSGIRequest,
     game_id: str,
 ):
+    difficulty = request.GET.get("difficulty", None)
+    shot_id = request.GET.get("shot", None)
+    route = request.GET.get("route", None)
+
     game: Game = get_object_or_404(Game, game_id=game_id)
     filter_options = get_filter_options(game)
     show_route = game_id in [
@@ -54,6 +61,10 @@ def game_scoreboard(
         game_ids.GameIDs.TH08,
         game_ids.GameIDs.TH128,
     ]
+    starting_filters = get_starting_filters(
+        filter_options, game, difficulty, shot_id, route
+    )
+    print(json.dumps(starting_filters)),
 
     return render(
         request,
@@ -62,6 +73,7 @@ def game_scoreboard(
             "game": game,
             "filters": filter_options,
             "show_route": show_route,
+            "starting_filters": starting_filters,
         },
     )
 
@@ -101,6 +113,28 @@ def get_filter_options(game: Game) -> dict[str, list[str]]:
         filter_options["Difficulty"].remove("Overdrive")
 
     return filter_options
+
+
+def get_starting_filters(
+    filter_options: dict[str, list[str]],
+    game: Game,
+    difficulty: Optional[str],
+    shot_id: Optional[str],
+    route: Optional[str],
+) -> dict[str, str]:
+    starting_filters = {filter_type: "All" for filter_type in filter_options.keys()}
+    if difficulty is not None:
+        starting_filters["Difficulty"] = game.GetDifficultyName(int(difficulty))
+    if route is not None:
+        starting_filters["Route"] = route
+    if shot_id is not None:
+        shot = Shot.objects.get(game=game.game_id, shot_id__iexact=shot_id)
+        if game.has_subshots:
+            starting_filters["Character"] = shot.GetCharacterName()
+            starting_filters["Subshot"] = shot.GetSubshotName()
+        else:
+            starting_filters["Shot"] = shot.GetName()
+    return starting_filters
 
 
 def _get_all_replay_for_game(game_id: str) -> Manager[models.Replay]:
