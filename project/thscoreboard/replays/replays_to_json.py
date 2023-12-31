@@ -1,6 +1,7 @@
 import json
-from typing import Any, Iterable
+from typing import Any, Iterable, Optional
 from functools import lru_cache
+import urllib.parse
 
 from django.core.serializers import json as django_json
 from django.utils.functional import Promise
@@ -33,15 +34,17 @@ class ReplayToJsonConverter:
             json_dict["User"] = replay.imported_username or replay.name
         json_dict["Game"] = {
             "text": game.GetShortName(),
-            "url": f"/replays/{game.game_id}",
+            "url": create_leaderboard_url(game.game_id),
         }
         json_dict["Difficulty"] = {
             "text": game_ids.GetDifficultyName(game.game_id, replay.difficulty),
-            "url": f"/replays/{game.game_id}?difficulty={replay.difficulty}",
+            "url": create_leaderboard_url(game.game_id, replay.difficulty),
         }
         json_dict["Shot"] = {
             "text": self._get_shot_name(shot),
-            "url": f"/replays/{game.game_id}?difficulty={replay.difficulty}&shot={shot.shot_id}",
+            "url": create_leaderboard_url(
+                game.game_id, replay.difficulty, shot.shot_id
+            ),
         }
         if game.has_routes:
             route = replay.route
@@ -49,7 +52,9 @@ class ReplayToJsonConverter:
             route_id = route.route_id if route is not None else ""
             json_dict["Route"] = {
                 "text": route_name,
-                "url": f"/replays/{game.game_id}?difficulty={replay.difficulty}&shot={shot.shot_id}&route={route_id}",
+                "url": create_leaderboard_url(
+                    game.game_id, replay.difficulty, shot.shot_id, route_id
+                ),
             }
         if game.game_id == game_ids.GameIDs.TH128 and replay.difficulty == 4:
             json_dict["Route"] = "Extra"
@@ -74,6 +79,22 @@ class ReplayToJsonConverter:
         replay_dict = self.convert_replay_to_dict(replay)
         json_str = json.dumps(replay_dict, cls=_LazyDjangoJSONEncoder)
         return f"{json_str}\n".encode("utf-8")
+
+
+def create_leaderboard_url(
+    game_id: str,
+    difficulty_id: Optional[int] = None,
+    shot_id: Optional[str] = None,
+    route_id: Optional[str] = None,
+) -> str:
+    url = f"/replays/{game_id}"
+    if difficulty_id is not None:
+        url += f"?difficulty={difficulty_id}"
+    if shot_id is not None:
+        url += f"&shot={urllib.parse.quote(shot_id)}"
+    if route_id is not None:
+        url += f"&route={urllib.parse.quote(route_id)}"
+    return url
 
 
 def convert_replays_to_json_bytes(

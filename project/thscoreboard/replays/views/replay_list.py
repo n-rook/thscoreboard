@@ -64,7 +64,6 @@ def game_scoreboard(
     starting_filters = get_starting_filters(
         filter_options, game, difficulty, shot_id, route
     )
-    print(json.dumps(starting_filters)),
 
     return render(
         request,

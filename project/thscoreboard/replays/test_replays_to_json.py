@@ -2,7 +2,7 @@ import datetime
 from unittest.mock import patch
 
 from replays.testing import test_case
-from replays.replays_to_json import ReplayToJsonConverter
+from replays.replays_to_json import ReplayToJsonConverter, create_leaderboard_url
 from replays.test_replay_parsing import ParseTestReplay
 from replays.create_replay import PublishNewReplay
 from replays import models
@@ -140,3 +140,25 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
         self.assertEquals(json_data[0]["Score"]["text"], "🥇1,000,000,000")
         self.assertEquals(json_data[1]["Score"]["text"], "🥇900,000,000")
+
+    def testCreateLeaderboardUrlWithUrlEncoding(self) -> None:
+        actual = create_leaderboard_url(
+            game_id="th08",
+            difficulty_id=1,
+            shot_id="Reimu & Yukari",
+            route_id="Final A",
+        )
+        expected = (
+            "/replays/th08?difficulty=1&shot=Reimu%20%26%20Yukari&route=Final%20A"
+        )
+        self.assertEquals(actual, expected)
+
+    def testCreateLeaderboardUrlWithoutOptionalFields(self) -> None:
+        actual = create_leaderboard_url(
+            game_id="th08",
+            difficulty_id=1,
+        )
+        expected = (
+            "/replays/th08?difficulty=1"
+        )
+        self.assertEquals(actual, expected)
