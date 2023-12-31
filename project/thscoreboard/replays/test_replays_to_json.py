@@ -158,7 +158,5 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             game_id="th08",
             difficulty_id=1,
         )
-        expected = (
-            "/replays/th08?difficulty=1"
-        )
+        expected = "/replays/th08?difficulty=1"
         self.assertEquals(actual, expected)

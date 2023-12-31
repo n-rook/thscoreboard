@@ -1,12 +1,11 @@
 """Contains views which list various replays."""
 
-import json
 from typing import Optional
 
 from django import urls
 from django.views.decorators import http as http_decorators
 from django.shortcuts import get_object_or_404, render, redirect
-from django.db.models import Manager, Q
+from django.db.models import Manager
 from django.core.handlers.wsgi import WSGIRequest
 
 from replays import models
@@ -40,9 +39,7 @@ def game_scoreboard_old_url(
         difficulty: An integer corresponding to the replay difficulty to display.
         shot_id: The shot ID the user is interested in viewing.
     """
-    return redirect(
-        urls.reverse("Replays/GameScoreboard", args=[game_id])
-    )
+    return redirect(urls.reverse("Replays/GameScoreboard", args=[game_id]))
 
 
 @http_decorators.require_safe

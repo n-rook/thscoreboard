@@ -119,5 +119,5 @@ class GetStartingFiltersTestCase(test_case.ReplayTestCase):
             )
         self.assertEqual(
             starting_filters,
-            {'Character': 'Reimu', 'Difficulty': 'Lunatic', 'Subshot': 'Winter'},
+            {"Character": "Reimu", "Difficulty": "Lunatic", "Subshot": "Winter"},
         )
