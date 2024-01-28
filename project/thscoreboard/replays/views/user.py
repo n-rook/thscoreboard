@@ -1,6 +1,5 @@
 """The public page for a user's information."""
 
-
 from django.contrib import auth
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators import http as http_decorators

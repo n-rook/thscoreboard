@@ -1,6 +1,5 @@
 """Views related to editing an existing replay."""
 
-
 from django import urls
 from django import shortcuts
 from django.template import response as template_response

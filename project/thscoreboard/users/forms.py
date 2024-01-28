@@ -164,22 +164,22 @@ class ClaimUsernameForm(forms.Form):
             username=silentselene_username
         ).exists()
         if not silentselene_is_valid:
-            errors[
-                "silentselene_username"
-            ] = f"Silentselene user {silentselene_username} does not exist."
+            errors["silentselene_username"] = (
+                f"Silentselene user {silentselene_username} does not exist."
+            )
 
         royalflare_username = cleaned_data["royalflare_username"]
         royalflare_replays = Replay.objects.filter(
             imported_username__iexact=royalflare_username
         )
         if not royalflare_replays.exists():
-            errors[
-                "royalflare_username"
-            ] = f"No Royalflare replays found for username {royalflare_username}."
+            errors["royalflare_username"] = (
+                f"No Royalflare replays found for username {royalflare_username}."
+            )
         elif not royalflare_replays.filter(user__isnull=True).exists():
-            errors[
-                "royalflare_username"
-            ] = f"All replays for {royalflare_username} have already been assigned."
+            errors["royalflare_username"] = (
+                f"All replays for {royalflare_username} have already been assigned."
+            )
 
         if len(errors) > 0:
             raise forms.ValidationError(errors)

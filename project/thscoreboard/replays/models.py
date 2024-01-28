@@ -1,6 +1,5 @@
 """Contains all of the models for the replay site."""
 
-
 import dataclasses
 import datetime
 from typing import Optional

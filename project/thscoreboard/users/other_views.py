@@ -1,4 +1,5 @@
 """Defines views for user and account management."""
+
 # TODO: Separate views in different files and put in views/.
 
 from django.http import HttpResponseBadRequest
