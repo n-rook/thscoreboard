@@ -40,7 +40,7 @@
                 {% endif %}
                 {% else %}
                 <div class="banner-link">
-                    <a href="/users/login">{% translate 'Log in' context 'Top bar' %}</a>
+                    <a href="/users/login{% if request.path != "/users/logout" %}?next={{request.path}}{% endif %}">{% translate 'Log in' context 'Top bar' %}</a>
                 </div>
                 <div class="banner-link">
                     <a href="/users/register">{% translate 'Sign Up' context 'Top bar' %}</a>
