@@ -20,9 +20,9 @@ class GlobalRankAnnotationsTestCase(test_case.ReplayTestCase):
                     user=self.user,
                     score=1_000_000_000 - 100_000_000 * i,
                     difficulty=0,
-                    category=models.Category.TAS
-                    if is_tas
-                    else models.Category.STANDARD,
+                    category=(
+                        models.Category.TAS if is_tas else models.Category.STANDARD
+                    ),
                 )
 
     def testRanksAgainstAllReplays(self):
