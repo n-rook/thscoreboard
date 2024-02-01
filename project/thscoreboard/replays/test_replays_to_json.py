@@ -2,7 +2,7 @@ import datetime
 from unittest.mock import patch
 
 from replays.testing import test_case
-from replays.replays_to_json import ReplayToJsonConverter
+from replays.replays_to_json import ReplayToJsonConverter, create_leaderboard_url
 from replays.test_replay_parsing import ParseTestReplay
 from replays.create_replay import PublishNewReplay
 from replays import models
@@ -80,8 +80,10 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         assert json_data[0]["User"]["url"] == f"/replays/user/{self.user.username}"
         assert json_data[0]["Game"]["text"] == "th06"
         assert json_data[0]["Game"]["url"] == "/replays/th06"
-        assert json_data[0]["Difficulty"] == "Easy"
-        assert json_data[0]["Shot"] == "Reimu A"
+        assert json_data[0]["Difficulty"]["text"] == "Easy"
+        assert json_data[0]["Difficulty"]["url"] == "/replays/th06?difficulty=0"
+        assert json_data[0]["Shot"]["text"] == "Reimu A"
+        assert json_data[0]["Shot"]["url"] == "/replays/th06?difficulty=0&shot=ReimuA"
         assert json_data[0]["Score"]["text"] == "🥇1,000,000"
         assert json_data[0]["Upload Date"] == "2000-01-01"
         assert json_data[0]["Comment"] == "鼻毛"
@@ -91,7 +93,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
         assert json_data[1]["User"] == "あ"
         assert json_data[1]["Character"] == "Marisa"
-        assert json_data[1]["Season"] is None
+        assert json_data[1]["Subshot"] is None
 
     def testMedalEmojisSingleShot(self):
         for i in range(5):
@@ -138,3 +140,23 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
         self.assertEquals(json_data[0]["Score"]["text"], "🥇1,000,000,000")
         self.assertEquals(json_data[1]["Score"]["text"], "🥇900,000,000")
+
+    def testCreateLeaderboardUrlWithUrlEncoding(self) -> None:
+        actual = create_leaderboard_url(
+            game_id="th08",
+            difficulty_id=1,
+            shot_id="Reimu & Yukari",
+            route_id="Final A",
+        )
+        expected = (
+            "/replays/th08?difficulty=1&shot=Reimu%20%26%20Yukari&route=Final%20A"
+        )
+        self.assertEquals(actual, expected)
+
+    def testCreateLeaderboardUrlWithoutOptionalFields(self) -> None:
+        actual = create_leaderboard_url(
+            game_id="th08",
+            difficulty_id=1,
+        )
+        expected = "/replays/th08?difficulty=1"
+        self.assertEquals(actual, expected)

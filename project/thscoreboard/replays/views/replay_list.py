@@ -47,6 +47,10 @@ def game_scoreboard(
     request: WSGIRequest,
     game_id: str,
 ):
+    difficulty = request.GET.get("difficulty", None)
+    shot_id = request.GET.get("shot", None)
+    route = request.GET.get("route", None)
+
     game: Game = get_object_or_404(Game, game_id=game_id)
     filter_options = get_filter_options(game)
     show_route = game_id in [
@@ -54,6 +58,9 @@ def game_scoreboard(
         game_ids.GameIDs.TH08,
         game_ids.GameIDs.TH128,
     ]
+    starting_filters = get_starting_filters(
+        filter_options, game, difficulty, shot_id, route
+    )
 
     return render(
         request,
@@ -62,85 +69,68 @@ def game_scoreboard(
             "game": game,
             "filters": filter_options,
             "show_route": show_route,
+            "starting_filters": starting_filters,
         },
     )
 
 
 def get_filter_options(game: Game) -> dict[str, list[str]]:
-    if game.game_id == game_ids.GameIDs.TH01 or game.game_id == game_ids.GameIDs.TH128:
-        return _get_filter_options_th01_th128(game)
-    elif game.game_id == game_ids.GameIDs.TH08:
-        return _get_filter_options_th08(game)
-    elif game.game_id == game_ids.GameIDs.TH13:
-        return _get_filter_options_th13(game)
-    elif game.game_id == game_ids.GameIDs.TH16:
-        return _get_filter_options_th16(game)
-    elif game.game_id == game_ids.GameIDs.TH17:
-        return _get_filter_options_th17(game)
-    else:
-        return _get_filter_options_default(game)
+    filter_options = {}
+    filter_options["Difficulty"] = [
+        game.GetDifficultyName(d) for d in range(game.num_difficulties)
+    ]
 
+    if game.has_routes:
+        filter_options["Route"] = [
+            route.GetName() for route in Route.objects.filter(game=game.game_id)
+        ]
 
-def _get_filter_options_default(game: Game) -> dict[str, list[str]]:
-    all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game.game_id)]
-    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    return {"Difficulty": all_difficulties, "Shot": all_shots}
+    if game.has_multiple_shots:
+        if game.has_subshots:
+            all_characters = _deduplicate_list_preserving_order(
+                shot.GetCharacterName()
+                for shot in Shot.objects.filter(game=game.game_id)
+            )
+            all_subshots = _deduplicate_list_preserving_order(
+                shot.GetSubshotName() for shot in Shot.objects.filter(game=game.game_id)
+            )
+            if None in all_subshots:
+                all_subshots.remove(None)
+            filter_options["Character"] = all_characters
+            filter_options["Subshot"] = all_subshots
+        else:
+            filter_options["Shot"] = [
+                shot.GetName() for shot in Shot.objects.filter(game=game.game_id)
+            ]
 
+    if game.game_id == game_ids.GameIDs.TH13:
+        # The Overdrive difficulty only exists for spell practice, but we do not show
+        # any spell practice replays.
+        filter_options["Difficulty"].remove("Overdrive")
 
-def _get_filter_options_th01_th128(game: Game) -> dict[str, list[str]]:
-    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    all_routes = [route.GetName() for route in Route.objects.filter(game=game.game_id)]
-    return {"Difficulty": all_difficulties, "Route": all_routes}
-
-
-def _get_filter_options_th08(game: Game) -> dict[str, list[str]]:
-    all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game.game_id)]
-    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    all_routes = [route.GetName() for route in Route.objects.filter(game=game.game_id)]
-    return {
-        "Difficulty": all_difficulties,
-        "Shot": all_shots,
-        "Route": all_routes,
-    }
-
-
-def _get_filter_options_th13(game: Game) -> dict[str, list[str]]:
-    filter_options = _get_filter_options_default(game)
-    # The Overdrive difficulty only exists for spell practice, but we do not show any
-    # spell practice replays.
-    filter_options["Difficulty"].remove("Overdrive")
     return filter_options
 
 
-def _get_filter_options_th16(game: Game) -> dict[str, list[str]]:
-    all_characters = _deduplicate_list_preserving_order(
-        shot.GetCharacterName() for shot in Shot.objects.filter(game=game.game_id)
-    )
-    all_seasons = _deduplicate_list_preserving_order(
-        shot.GetSubshotName() for shot in Shot.objects.filter(game=game.game_id)
-    )
-    all_seasons.remove(None)
-    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    return {
-        "Difficulty": all_difficulties,
-        "Character": all_characters,
-        "Season": all_seasons,
-    }
-
-
-def _get_filter_options_th17(game: Game) -> dict[str, list[str]]:
-    all_characters = _deduplicate_list_preserving_order(
-        shot.GetCharacterName() for shot in Shot.objects.filter(game=game.game_id)
-    )
-    all_goasts = _deduplicate_list_preserving_order(
-        shot.GetSubshotName() for shot in Shot.objects.filter(game=game.game_id)
-    )
-    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    return {
-        "Difficulty": all_difficulties,
-        "Character": all_characters,
-        "Goast": all_goasts,
-    }
+def get_starting_filters(
+    filter_options: dict[str, list[str]],
+    game: Game,
+    difficulty: Optional[str],
+    shot_id: Optional[str],
+    route: Optional[str],
+) -> dict[str, str]:
+    starting_filters = {filter_type: "All" for filter_type in filter_options.keys()}
+    if difficulty is not None:
+        starting_filters["Difficulty"] = game.GetDifficultyName(int(difficulty))
+    if route is not None:
+        starting_filters["Route"] = route
+    if shot_id is not None:
+        shot = Shot.objects.get(game=game.game_id, shot_id__iexact=shot_id)
+        if game.has_subshots:
+            starting_filters["Character"] = shot.GetCharacterName()
+            starting_filters["Subshot"] = shot.GetSubshotName()
+        else:
+            starting_filters["Shot"] = shot.GetName()
+    return starting_filters
 
 
 def _get_all_replay_for_game(game_id: str) -> Manager[models.Replay]:

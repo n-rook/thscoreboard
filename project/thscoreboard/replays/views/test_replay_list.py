@@ -4,7 +4,7 @@ from replays import models
 
 from replays import game_ids
 from replays.views import replay_list
-from replays.testing import test_case
+from replays.testing import test_case, test_utilities
 
 
 class GameScoreboardRedirectTestCase(test_case.ReplayTestCase):
@@ -72,18 +72,52 @@ class GetFilterOptionsTestCase(test_case.ReplayTestCase):
         game = models.Game.objects.get(game_id=game_ids.GameIDs.TH16)
         filter_options = replay_list.get_filter_options(game)
         self.assertCountEqual(
-            filter_options.keys(), ("Difficulty", "Character", "Season")
+            filter_options.keys(), ("Difficulty", "Character", "Subshot")
         )
         self.assertEqual(len(filter_options["Difficulty"]), 5)
-        self.assertEqual(len(filter_options["Season"]), 4)
-        self.assertEqual(len(filter_options["Season"]), 4)
+        self.assertEqual(len(filter_options["Character"]), 4)
+        self.assertEqual(len(filter_options["Subshot"]), 4)
 
     def test_th17(self):
         game = models.Game.objects.get(game_id=game_ids.GameIDs.TH17)
         filter_options = replay_list.get_filter_options(game)
         self.assertCountEqual(
-            filter_options.keys(), ("Difficulty", "Character", "Goast")
+            filter_options.keys(), ("Difficulty", "Character", "Subshot")
         )
         self.assertEqual(len(filter_options["Difficulty"]), 5)
         self.assertEqual(len(filter_options["Character"]), 3)
-        self.assertEqual(len(filter_options["Goast"]), 3)
+        self.assertEqual(len(filter_options["Subshot"]), 3)
+
+
+class GetStartingFiltersTestCase(test_case.ReplayTestCase):
+    def test_th08(self):
+        game = models.Game.objects.get(game_id=game_ids.GameIDs.TH08)
+        filter_options = replay_list.get_filter_options(game)
+        with test_utilities.OverrideTranslations():
+            starting_filters = replay_list.get_starting_filters(
+                filter_options,
+                game=game,
+                difficulty=1,
+                shot_id="Reimu & Yukari",
+                route=None,
+            )
+        self.assertEqual(
+            starting_filters,
+            {"Difficulty": "Normal", "Route": "All", "Shot": "Reimu & Yukari"},
+        )
+
+    def test_th16(self):
+        game = models.Game.objects.get(game_id=game_ids.GameIDs.TH16)
+        filter_options = replay_list.get_filter_options(game)
+        with test_utilities.OverrideTranslations():
+            starting_filters = replay_list.get_starting_filters(
+                filter_options,
+                game=game,
+                difficulty=3,
+                shot_id="ReimuWinter",
+                route=None,
+            )
+        self.assertEqual(
+            starting_filters,
+            {"Character": "Reimu", "Difficulty": "Lunatic", "Subshot": "Winter"},
+        )
