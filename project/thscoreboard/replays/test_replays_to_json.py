@@ -91,7 +91,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
         assert json_data[1]["User"] == "あ"
         assert json_data[1]["Character"] == "Marisa"
-        assert json_data[1]["Season"] is None
+        assert json_data[1]["Subshot"] is None
 
     def testMedalEmojisSingleShot(self):
         for i in range(5):

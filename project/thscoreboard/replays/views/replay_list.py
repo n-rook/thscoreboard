@@ -67,80 +67,40 @@ def game_scoreboard(
 
 
 def get_filter_options(game: Game) -> dict[str, list[str]]:
-    if game.game_id == game_ids.GameIDs.TH01 or game.game_id == game_ids.GameIDs.TH128:
-        return _get_filter_options_th01_th128(game)
-    elif game.game_id == game_ids.GameIDs.TH08:
-        return _get_filter_options_th08(game)
-    elif game.game_id == game_ids.GameIDs.TH13:
-        return _get_filter_options_th13(game)
-    elif game.game_id == game_ids.GameIDs.TH16:
-        return _get_filter_options_th16(game)
-    elif game.game_id == game_ids.GameIDs.TH17:
-        return _get_filter_options_th17(game)
-    else:
-        return _get_filter_options_default(game)
+    filter_options = {}
+    filter_options["Difficulty"] = [
+        game.GetDifficultyName(d) for d in range(game.num_difficulties)
+    ]
 
+    if game.has_routes:
+        filter_options["Route"] = [
+            route.GetName() for route in Route.objects.filter(game=game.game_id)
+        ]
 
-def _get_filter_options_default(game: Game) -> dict[str, list[str]]:
-    all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game.game_id)]
-    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    return {"Difficulty": all_difficulties, "Shot": all_shots}
+    if game.has_multiple_shots:
+        if game.has_subshots:
+            all_characters = _deduplicate_list_preserving_order(
+                shot.GetCharacterName()
+                for shot in Shot.objects.filter(game=game.game_id)
+            )
+            all_subshots = _deduplicate_list_preserving_order(
+                shot.GetSubshotName() for shot in Shot.objects.filter(game=game.game_id)
+            )
+            if None in all_subshots:
+                all_subshots.remove(None)
+            filter_options["Character"] = all_characters
+            filter_options["Subshot"] = all_subshots
+        else:
+            filter_options["Shot"] = [
+                shot.GetName() for shot in Shot.objects.filter(game=game.game_id)
+            ]
 
+    if game.game_id == game_ids.GameIDs.TH13:
+        # The Overdrive difficulty only exists for spell practice, but we do not show
+        # any spell practice replays.
+        filter_options["Difficulty"].remove("Overdrive")
 
-def _get_filter_options_th01_th128(game: Game) -> dict[str, list[str]]:
-    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    all_routes = [route.GetName() for route in Route.objects.filter(game=game.game_id)]
-    return {"Difficulty": all_difficulties, "Route": all_routes}
-
-
-def _get_filter_options_th08(game: Game) -> dict[str, list[str]]:
-    all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game.game_id)]
-    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    all_routes = [route.GetName() for route in Route.objects.filter(game=game.game_id)]
-    return {
-        "Difficulty": all_difficulties,
-        "Shot": all_shots,
-        "Route": all_routes,
-    }
-
-
-def _get_filter_options_th13(game: Game) -> dict[str, list[str]]:
-    filter_options = _get_filter_options_default(game)
-    # The Overdrive difficulty only exists for spell practice, but we do not show any
-    # spell practice replays.
-    filter_options["Difficulty"].remove("Overdrive")
     return filter_options
-
-
-def _get_filter_options_th16(game: Game) -> dict[str, list[str]]:
-    all_characters = _deduplicate_list_preserving_order(
-        shot.GetCharacterName() for shot in Shot.objects.filter(game=game.game_id)
-    )
-    all_seasons = _deduplicate_list_preserving_order(
-        shot.GetSubshotName() for shot in Shot.objects.filter(game=game.game_id)
-    )
-    all_seasons.remove(None)
-    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    return {
-        "Difficulty": all_difficulties,
-        "Character": all_characters,
-        "Season": all_seasons,
-    }
-
-
-def _get_filter_options_th17(game: Game) -> dict[str, list[str]]:
-    all_characters = _deduplicate_list_preserving_order(
-        shot.GetCharacterName() for shot in Shot.objects.filter(game=game.game_id)
-    )
-    all_goasts = _deduplicate_list_preserving_order(
-        shot.GetSubshotName() for shot in Shot.objects.filter(game=game.game_id)
-    )
-    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    return {
-        "Difficulty": all_difficulties,
-        "Character": all_characters,
-        "Goast": all_goasts,
-    }
 
 
 def _get_all_replay_for_game(game_id: str) -> Manager[models.Replay]:
