@@ -18,6 +18,7 @@ class GameIDs:
     TH07 = "th07"
     TH08 = "th08"
     TH09 = "th09"
+    TH095 = "th095"
     TH10 = "th10"
     TH11 = "th11"
     TH12 = "th12"

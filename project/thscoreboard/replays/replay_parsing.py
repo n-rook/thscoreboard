@@ -9,6 +9,7 @@ from .kaitai_parsers import th06
 from .kaitai_parsers import th07
 from .kaitai_parsers import th08
 from .kaitai_parsers import th09
+from .kaitai_parsers import th095_encrypted
 from .kaitai_parsers import th10
 from .kaitai_parsers import th11
 from .kaitai_parsers import th12
@@ -444,6 +445,27 @@ def _Parse09(rep_raw):
     )
 
     return r
+
+
+def _Parse095(rep_raw):
+    encrypted_replay = th095_encrypted.Th095Encrypted.from_bytes(rep_raw)
+
+    # This is goofy and probably not a good idea
+    spell_card_id = int(encrypted_replay.userdata.level.value) << 8 + int(
+        encrypted_replay.userdata.scene.value
+    )
+
+    return ReplayInfo(
+        game=game_ids.GameIDs.TH095,
+        shot="Aya",
+        difficulty=0,
+        score=int(encrypted_replay.userdata.score.value),
+        timestamp=time.strptime(encrypted_replay.userdata.date.value, "%y/%m/%d %H:%M"),
+        name=encrypted_replay.userdata.username.value,
+        replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
+        spell_card_id=spell_card_id,
+        slowdown=float(encrypted_replay.userdata.slowdown.value),
+    )
 
 
 def _Parse10(rep_raw):
@@ -1104,6 +1126,8 @@ def Parse(replay) -> ReplayInfo:
             return _Parse08(replay)
         elif gamecode == b"T9RP":
             return _Parse09(replay)
+        elif gamecode == b"t95r":
+            return _Parse095(replay)
         elif gamecode == b"t10r":
             return _Parse10(replay)
         elif gamecode == b"t11r":
