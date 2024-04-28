@@ -451,9 +451,9 @@ def _Parse095(rep_raw):
     encrypted_replay = th095_encrypted.Th095Encrypted.from_bytes(rep_raw)
 
     # This is goofy and probably not a good idea
-    spell_card_id = int(encrypted_replay.userdata.level.value) << 8 + int(
-        encrypted_replay.userdata.scene.value
-    )
+    spell_level = int(encrypted_replay.userdata.level.value)
+    spell_scene = int(encrypted_replay.userdata.scene.value)
+    spell_card_id = (spell_level << 8) + spell_scene
 
     return ReplayInfo(
         game=game_ids.GameIDs.TH095,
