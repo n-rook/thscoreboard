@@ -5,6 +5,7 @@ from pathlib import Path
 import typing
 
 from replays import create_replay
+from replays import game_ids
 from replays import models
 from replays import replay_parsing
 
@@ -82,4 +83,36 @@ def CreateAsPublishedReplay(
         miss_count=miss_count,
         created_timestamp=created_timestamp,
         imported_username=imported_username,
+    )
+
+
+def CreateReplayWithoutFile(
+    user,
+    shot,
+    difficulty,
+    score,
+    route=None,
+    category=models.Category.STANDARD,
+    comment="",
+    is_clear=True,
+    video_link="",
+    no_bomb=False,
+    miss_count=None,
+    replay_type: models.ReplayType = game_ids.ReplayTypes.FULL_GAME,
+):
+    """Create a replay without a file (for things like PC-98 replays)."""
+
+    return create_replay.PublishReplayWithoutFile(
+        user=user,
+        difficulty=difficulty,
+        shot=shot,
+        score=score,
+        route=route,
+        category=category,
+        comment=comment,
+        is_clear=is_clear,
+        video_link=video_link,
+        replay_type=replay_type,
+        no_bomb=no_bomb,
+        miss_count=miss_count,
     )
