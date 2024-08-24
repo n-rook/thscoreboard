@@ -9,8 +9,7 @@ from django.db import utils
 from django.utils import formats
 from django.utils import timezone
 from django.utils.translation import pgettext_lazy
-from django.db.models import Q, F, Window, QuerySet, When, Case, Value
-from django.db.models.functions import RowNumber
+from django.db.models import Q, QuerySet
 
 from replays import game_ids
 from replays import limits
@@ -196,35 +195,6 @@ class ReplayQuerySet(QuerySet):
         """
 
         return self.filter(Q(user__is_active=True) | Q(imported_username__isnull=False))
-
-    def annotate_with_rank(self) -> "ReplayQuerySet":
-        """Annotate each standard replay with a rank, starting from 1 descending, with
-        separate ranks for each difficulty and shot. Set rank to -1 for other replays.
-        """
-
-        return self.annotate(
-            rank=Case(
-                When(
-                    Q(category=Category.STANDARD) & Q(replay_type=ReplayType.FULL_GAME),
-                    then=Window(
-                        expression=RowNumber(),
-                        order_by=[
-                            F("score").desc(),
-                            F("created"),
-                            F("id"),
-                        ],
-                        partition_by=[
-                            F("shot_id"),
-                            F("difficulty"),
-                            F("shot__game_id"),
-                            F("route"),
-                        ],
-                    ),
-                ),
-                default=Value(-1),
-                output_field=models.IntegerField(),
-            )
-        )
 
     def ghosts_of(self, replay_hash: bytes) -> "ReplayQuerySet":
         """Matches ghosts of a given replay file.

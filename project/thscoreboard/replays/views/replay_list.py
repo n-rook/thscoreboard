@@ -147,13 +147,13 @@ def _get_all_replay_for_game(game_id: str) -> Manager[models.Replay]:
     return (
         models.Replay.objects.prefetch_related("shot")
         .prefetch_related("route")
+        .select_related("rank_view")
         .filter(category=models.Category.STANDARD)
         .filter(shot__game=game_id)
         .filter(replay_type=1)
         .filter(is_listed=True)
         .filter_visible()
         .order_by("-score")
-        .annotate_with_rank()
     )
 
 

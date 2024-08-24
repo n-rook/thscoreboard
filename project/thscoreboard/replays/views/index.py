@@ -11,12 +11,10 @@ from replays.replays_to_json import convert_replays_to_json_bytes
 @http_decorators.require_safe
 def index_json(request):
     recent_replays = (
-        models.Replay.objects.filter(
-            category__in=[models.Category.STANDARD, models.Category.TAS]
-        )
+        models.Replay.objects.select_related("rank_view")
+        .filter(category__in=[models.Category.STANDARD, models.Category.TAS])
         .filter(is_listed=True)
         .filter_visible()
-        .annotate_with_rank()
         .order_by("-created")[:50]
     )
     replay_jsons = convert_replays_to_json_bytes(recent_replays)

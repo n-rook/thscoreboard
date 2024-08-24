@@ -133,17 +133,11 @@ class ReplayTest(test_case.ReplayTestCase):
             )
 
         replays = (
-            models.Replay.objects.order_by("-score")
-            .select_related("rank_view")
-            .annotate_with_rank()
-            .all()
+            models.Replay.objects.order_by("-score").select_related("rank_view").all()
         )
 
-        self.assertEquals(replays[0].rank, 1)
         self.assertEquals(replays[0].GetRank(), 1)
-        self.assertEquals(replays[1].rank, 2)
         self.assertEquals(replays[1].GetRank(), 2)
-        self.assertEquals(replays[2].rank, 1)
         self.assertEquals(replays[2].GetRank(), 1)
 
     def testRanksTasReplay(self):
@@ -154,9 +148,8 @@ class ReplayTest(test_case.ReplayTestCase):
             category=models.Category.TAS,
         )
 
-        replay = models.Replay.objects.order_by("-score").annotate_with_rank().first()
+        replay = models.Replay.objects.order_by("-score").first()
 
-        self.assertEquals(replay.rank, -1)
         self.assertIsNone(replay.GetRank())
 
     def testRanksBreakTiesUsingUploadDate(self):
@@ -190,17 +183,11 @@ class ReplayTest(test_case.ReplayTestCase):
             )
 
         replays = (
-            models.Replay.objects.select_related("rank_view")
-            .order_by("created")
-            .annotate_with_rank()
-            .all()
+            models.Replay.objects.select_related("rank_view").order_by("created").all()
         )
 
-        self.assertEquals(replays[0].rank, 1)
         self.assertEquals(replays[0].GetRank(), 1)
-        self.assertEquals(replays[1].rank, 2)
         self.assertEquals(replays[1].GetRank(), 2)
-        self.assertEquals(replays[2].rank, 3)
         self.assertEquals(replays[2].GetRank(), 3)
 
     def testStagePracticeReplaysAreUnranked(self) -> None:
@@ -210,12 +197,7 @@ class ReplayTest(test_case.ReplayTestCase):
             replay_type=models.ReplayType.STAGE_PRACTICE,
         )
 
-        replay = (
-            models.Replay.objects.select_related("rank_view")
-            .annotate_with_rank()
-            .first()
-        )
-        self.assertEquals(replay.rank, -1)
+        replay = models.Replay.objects.select_related("rank_view").first()
         self.assertIsNone(replay.GetRank())
 
     def testRankCountsTasSeparately(self):
@@ -253,8 +235,6 @@ class ReplayTest(test_case.ReplayTestCase):
             .all()
         )
 
-        # Note that .annotate_with_rank() performs incorrectly with this query,
-        # which is why we're moving to the join-with-view implementation instead.
         self.assertEqual(len(replays), 3)
         (returned_standard_1, returned_standard_2, returned_tas) = replays
         self.assertEqual(returned_standard_1.category, models.Category.STANDARD)
