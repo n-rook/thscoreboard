@@ -1,6 +1,5 @@
 """Contains all of the models for the replay site."""
 
-
 import dataclasses
 import datetime
 from typing import Optional
@@ -278,6 +277,21 @@ class Replay(models.Model):
             ),
         ]
 
+        indexes = [
+            # Supports querying for the top scores in some field.
+            models.Index(
+                name="scoring_division",
+                fields=[
+                    "replay_type",
+                    "shot_id",
+                    "difficulty",
+                    "route_id",
+                    "category",
+                    "-score",
+                ],
+            )
+        ]
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True
     )
@@ -416,6 +430,21 @@ class Replay(models.Model):
 
         return f"{gamecode}_ud{rpy_id}.rpy"
 
+    def GetRank(self) -> int | None:
+        """Returns this replay's rank if it is a top-ranking replay.
+
+        Only the top 3 replays (in a given field: the ranking is divided
+        by game, shot, difficulty, and so on) have a rank; for the others,
+        None is returned.
+
+        This method is instant if "rank_view" is selected, which is strongly
+        recommended.
+        """
+        if hasattr(self, "rank_view"):
+            return self.rank_view.place
+        else:
+            return None
+
     def SetFromReplayInfo(self, r: replay_parsing.ReplayInfo):
         """Set certain derived fields on this replay from parsed information.
 
@@ -453,6 +482,60 @@ class Replay(models.Model):
             fmt = "d F Y"
 
         return formats.date_format(self.timestamp, format=fmt)
+
+
+class ReplayRank(models.Model):
+    """Represents a replay's rank on the scoreboard.
+
+    Most replays are not listed here. Only top-3 replays in a field will have
+    rows in this view.
+
+    IMPORTANT NOTE: This model represents a view, not a table. It is defined
+    by the following query:
+
+    CREATE OR REPLACE VIEW replays_rank
+    AS
+    SELECT row_number() over () as id, replay, score, shot_id, difficulty, route_id, category, place
+    FROM (
+    SELECT id as replay, score, shot_id, difficulty, route_id, category, rank() OVER (PARTITION BY shot_id, difficulty, route_id, category ORDER BY score DESC, created, id) as place
+    FROM replays_replay
+    WHERE replay_type = 1  -- FULL_GAME
+    AND (category = 1 OR category = 2)  -- STANDARD or TAS
+    ) AS ranked
+    WHERE place <= 3
+    ORDER BY shot_id, difficulty, route_id, category, place desc
+    ;
+    """
+
+    class Meta:
+        db_table = "replays_rank"
+        managed = False
+
+    replay = models.OneToOneField(
+        "Replay",
+        db_column="replay",
+        on_delete=models.DO_NOTHING,
+        related_name="rank_view",
+    )
+    """The replay being ranked."""
+
+    shot = models.ForeignKey("Shot", on_delete=models.DO_NOTHING)
+
+    difficulty = models.IntegerField()
+    """The difficulty on which the player played."""
+
+    route = models.ForeignKey(
+        "Route", on_delete=models.DO_NOTHING, blank=True, null=True
+    )
+    """The route on which the game was played."""
+
+    category = models.IntegerField(choices=Category.choices)
+
+    place = models.IntegerField("Place")
+    """The replay's rank. 1 is first place, 2 is second, 3 is third.
+
+    In the case of a tie, the tied replays will all share the same place.
+    """
 
 
 class ReplayStage(models.Model):

@@ -132,11 +132,19 @@ class ReplayTest(test_case.ReplayTestCase):
                 score=800_000_000,
             )
 
-        replays = models.Replay.objects.order_by("-score").annotate_with_rank().all()
+        replays = (
+            models.Replay.objects.order_by("-score")
+            .select_related("rank_view")
+            .annotate_with_rank()
+            .all()
+        )
 
         self.assertEquals(replays[0].rank, 1)
+        self.assertEquals(replays[0].GetRank(), 1)
         self.assertEquals(replays[1].rank, 2)
+        self.assertEquals(replays[1].GetRank(), 2)
         self.assertEquals(replays[2].rank, 1)
+        self.assertEquals(replays[2].GetRank(), 1)
 
     def testRanksTasReplay(self):
         test_replays.CreateAsPublishedReplay(
@@ -149,6 +157,7 @@ class ReplayTest(test_case.ReplayTestCase):
         replay = models.Replay.objects.order_by("-score").annotate_with_rank().first()
 
         self.assertEquals(replay.rank, -1)
+        self.assertIsNone(replay.GetRank())
 
     def testRanksBreakTiesUsingUploadDate(self):
         with patch("replays.constant_helpers.CalculateReplayFileHash") as mocked_hash:
@@ -180,11 +189,19 @@ class ReplayTest(test_case.ReplayTestCase):
                 ),
             )
 
-        replays = models.Replay.objects.order_by("created").annotate_with_rank().all()
+        replays = (
+            models.Replay.objects.select_related("rank_view")
+            .order_by("created")
+            .annotate_with_rank()
+            .all()
+        )
 
         self.assertEquals(replays[0].rank, 1)
+        self.assertEquals(replays[0].GetRank(), 1)
         self.assertEquals(replays[1].rank, 2)
+        self.assertEquals(replays[1].GetRank(), 2)
         self.assertEquals(replays[2].rank, 3)
+        self.assertEquals(replays[2].GetRank(), 3)
 
     def testStagePracticeReplaysAreUnranked(self) -> None:
         test_replays.CreateAsPublishedReplay(
@@ -193,8 +210,59 @@ class ReplayTest(test_case.ReplayTestCase):
             replay_type=models.ReplayType.STAGE_PRACTICE,
         )
 
-        replay = models.Replay.objects.annotate_with_rank().first()
+        replay = (
+            models.Replay.objects.select_related("rank_view")
+            .annotate_with_rank()
+            .first()
+        )
         self.assertEquals(replay.rank, -1)
+        self.assertIsNone(replay.GetRank())
+
+    def testRankCountsTasSeparately(self):
+        th05_mima = models.Shot.objects.get(
+            game_id=game_ids.GameIDs.TH05, shot_id="Mima"
+        )
+
+        test_replays.CreateReplayWithoutFile(
+            user=self.author,
+            difficulty=1,
+            shot=th05_mima,
+            score=10000,
+            category=models.Category.STANDARD,
+        )
+        test_replays.CreateReplayWithoutFile(
+            user=self.author,
+            difficulty=1,
+            shot=th05_mima,
+            score=7500,
+            category=models.Category.STANDARD,
+        )
+        test_replays.CreateReplayWithoutFile(
+            user=self.author,
+            difficulty=1,
+            shot=th05_mima,
+            score=20000,
+            category=models.Category.TAS,
+        )
+        replays = (
+            models.Replay.objects.filter(
+                category__in=[models.Category.STANDARD, models.Category.TAS]
+            )
+            .select_related("rank_view")
+            .order_by("created")
+            .all()
+        )
+
+        # Note that .annotate_with_rank() performs incorrectly with this query,
+        # which is why we're moving to the join-with-view implementation instead.
+        self.assertEqual(len(replays), 3)
+        (returned_standard_1, returned_standard_2, returned_tas) = replays
+        self.assertEqual(returned_standard_1.category, models.Category.STANDARD)
+        self.assertEqual(returned_standard_1.GetRank(), 1)
+        self.assertEqual(returned_standard_2.category, models.Category.STANDARD)
+        self.assertEqual(returned_standard_2.GetRank(), 2)
+        self.assertEqual(returned_tas.category, models.Category.TAS)
+        self.assertIsNone(returned_tas.GetRank())
 
     def testReplayQueryForGhosts(self):
         inactive_user = self.createUser("inactive")
