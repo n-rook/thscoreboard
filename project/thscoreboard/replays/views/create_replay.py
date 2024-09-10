@@ -2,6 +2,7 @@
 
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import gettext as _
 from django.views.decorators import http as http_decorators
 from django.contrib.auth import decorators as auth_decorators
 from django.core.exceptions import ValidationError
@@ -41,9 +42,20 @@ def _HandleReplay(request, replay_bytes):
         )
 
     try:
-        return replay_parsing.Parse(replay_bytes)
+        replay_info = replay_parsing.Parse(replay_bytes)
     except replay_parsing.Error as e:
         raise ValidationError(str(e))
+
+    try:
+        constant_helpers.GetModelInstancesForReplay(replay_info)
+    except constant_helpers.UnknownGameError as e:
+        # It would be nice to actually specify the game here, but adding formatting parameters
+        # runs into issues with Django rendering.
+        raise ValidationError(
+            message=_("This game is not yet supported."),
+        )
+
+    return replay_info
 
 
 @auth_decorators.login_required
