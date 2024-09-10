@@ -218,8 +218,8 @@ class Th095ReplayTestCase(unittest.TestCase):
             r.timestamp,
             datetime.datetime(2024, 4, 27, 16, 42, tzinfo=datetime.timezone.utc),
         )
-        self.assertEqual(r.spell_card_id >> 8, 3)
-        self.assertEqual(r.spell_card_id & 0xFF, 1)
+        self.assertEqual(r.scene_game_level, 3)
+        self.assertEqual(r.scene_game_scene, 1)
         self.assertEqual(r.name, "nrook3.1")
         self.assertEqual(r.slowdown, 0.00)
 
@@ -231,8 +231,8 @@ class Th095ReplayTestCase(unittest.TestCase):
             r.timestamp,
             datetime.datetime(2024, 4, 27, 19, 54, tzinfo=datetime.timezone.utc),
         )
-        self.assertEqual(r.spell_card_id >> 8, 2)
-        self.assertEqual(r.spell_card_id & 0xFF, 5)
+        self.assertEqual(r.scene_game_level, 2)
+        self.assertEqual(r.scene_game_scene, 5)
         self.assertEqual(r.name, "nrook   ")
         self.assertEqual(r.slowdown, 0.00)
 
