@@ -48,7 +48,7 @@ def _HandleReplay(request, replay_bytes):
 
     try:
         constant_helpers.GetModelInstancesForReplay(replay_info)
-    except constant_helpers.UnknownGameError as e:
+    except constant_helpers.UnknownGameError:
         # It would be nice to actually specify the game here, but adding formatting parameters
         # runs into issues with Django rendering.
         raise ValidationError(
