@@ -52,19 +52,20 @@ def _get_all_player_rankings_for_games(
     rankings = defaultdict(lambda: RankCount(0, 0, 0))
     game_ids = [game.game_id for game in games]
     top_3_replays = (
-        replay_models.Replay.objects.filter(category=replay_models.Category.STANDARD)
+        replay_models.Replay.objects.select_related("rank_view")
+        .filter(category=replay_models.Category.STANDARD)
         .filter(shot__game__in=game_ids)
         .filter(replay_type=1)
         .filter(is_listed=True)
-        .annotate_with_rank()
-        .filter(rank__lte=3)
+        .filter(rank_view__place__lte=3)
     )
 
     for replay in top_3_replays:
         player = replay.user if replay.user is not None else replay.imported_username
-        if replay.rank == 1:
+        rank = replay.GetRank()
+        if rank == 1:
             rankings[player].first_place_count += 1
-        elif replay.rank == 2:
+        elif rank == 2:
             rankings[player].second_place_count += 1
         else:
             rankings[player].third_place_count += 1

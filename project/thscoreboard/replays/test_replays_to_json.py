@@ -62,7 +62,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             imported_username="あ",
         )
 
-        replays = models.Replay.objects.order_by("-score").annotate_with_rank()
+        replays = models.Replay.objects.order_by("-score")
 
         with test_utilities.OverrideTranslations():
             converter = ReplayToJsonConverter()
@@ -106,7 +106,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
                     difficulty=0,
                 )
 
-        replays = models.Replay.objects.order_by("-score").annotate_with_rank()
+        replays = models.Replay.objects.order_by("-score")
         with test_utilities.OverrideTranslations():
             converter = ReplayToJsonConverter()
             json_data = [converter.convert_replay_to_dict(replay) for replay in replays]
@@ -130,7 +130,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
                 difficulty=0,
             )
 
-        replays = models.Replay.objects.order_by("-score").annotate_with_rank()
+        replays = models.Replay.objects.order_by("-score")
 
         with test_utilities.OverrideTranslations():
             converter = ReplayToJsonConverter()
