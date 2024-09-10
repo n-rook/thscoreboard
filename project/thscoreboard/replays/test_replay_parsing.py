@@ -209,6 +209,34 @@ class Th09ReplayTestCase(unittest.TestCase):
         self.assertEqual(s.th09_p2_score, 0)
 
 
+class Th095ReplayTestCase(unittest.TestCase):
+    def testOne(self):
+        r = ParseTestReplay("th95_3-1")
+        self.assertEqual(r.game, "th095")
+        self.assertEqual(r.score, 132030)
+        self.assertEqual(
+            r.timestamp,
+            datetime.datetime(2024, 4, 27, 16, 42, tzinfo=datetime.timezone.utc),
+        )
+        self.assertEqual(r.scene_game_level, 3)
+        self.assertEqual(r.scene_game_scene, 1)
+        self.assertEqual(r.name, "nrook3.1")
+        self.assertEqual(r.slowdown, 0.00)
+
+    def testTwo(self):
+        r = ParseTestReplay("th95_2-5")
+        self.assertEqual(r.game, "th095")
+        self.assertEqual(r.score, 128830)
+        self.assertEqual(
+            r.timestamp,
+            datetime.datetime(2024, 4, 27, 19, 54, tzinfo=datetime.timezone.utc),
+        )
+        self.assertEqual(r.scene_game_level, 2)
+        self.assertEqual(r.scene_game_scene, 5)
+        self.assertEqual(r.name, "nrook   ")
+        self.assertEqual(r.slowdown, 0.00)
+
+
 class Th10ReplayTestCase(unittest.TestCase):
     def testNormal(self):
         r = ParseTestReplay("th10_normal")

@@ -28,3 +28,13 @@ class ConstantHelpersTest(test_case.ReplayTestCase):
         self.assertEqual(constants.shot.shot_id, "Yukari")
         self.assertIsNotNone(constants.route)
         self.assertEqual(constants.route.route_id, "Final B")
+
+    def testGetUnknownGame(self):
+        replay_file_contents = test_replays.GetRaw("th10_normal")
+        replay_info = replay_parsing.Parse(replay_file_contents)
+        replay_info.game = "th5000"
+
+        with self.assertRaises(constant_helpers.UnknownGameError) as ctx:
+            constant_helpers.GetModelInstancesForReplay(replay_info)
+
+        self.assertEqual(ctx.exception.id, "th5000")

@@ -12,12 +12,24 @@ import hashlib
 from replays import models
 
 
+def _Game():
+    return apps.apps.get_model("replays", "Game")
+
+
 def _Route():
     return apps.apps.get_model("replays", "Route")
 
 
 def _Shot():
     return apps.apps.get_model("replays", "Shot")
+
+
+class UnknownGameError(Exception):
+    """An ID for a constant row did not match any row in the database."""
+
+    def __init__(self, game_id: str):
+        super().__init__(self, game_id)
+        self.id = game_id
 
 
 @dataclasses.dataclass(frozen=True)
@@ -30,12 +42,28 @@ class ReplayConstantModels:
 def GetModelInstancesForReplay(
     replay_info: replay_parsing.ReplayInfo,
 ) -> models.ReplayConstantModels:
-    """Get the constant model instances related to this replay."""
-    shot = (
-        _Shot()
-        .objects.select_related("game")
-        .get(game=replay_info.game, shot_id=replay_info.shot)
-    )
+    """Get the constant model instances related to this replay.
+
+    Raises:
+        UnknownGameError: If the "game" field of the replay does not correspond
+            to a row in the database.
+    """
+    try:
+        shot = (
+            _Shot()
+            .objects.select_related("game")
+            .get(game=replay_info.game, shot_id=replay_info.shot)
+        )
+    except _Shot().DoesNotExist:
+        # If the game also does not exist, we can raise an appropriate exception.
+        # If the game exists but the shot does not, either we have a bug or the
+        # replay is extremely bizarre.
+        try:
+            _ = _Game().objects.get(game_id=replay_info.game)
+        except _Game().DoesNotExist:
+            raise UnknownGameError(replay_info.game)
+        raise
+
     if replay_info.route:
         route = _Route().objects.get(game=shot.game, route_id=replay_info.route)
     else:
