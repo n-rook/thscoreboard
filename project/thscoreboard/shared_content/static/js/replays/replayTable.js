@@ -4,10 +4,12 @@ const displayedColumns = [
   "User", "Game", "Difficulty", "Shot", "Route", "Score", "Upload Date", "Comment", "Replay"
 ];
 
-var activeFilters = {};
+var activeFilters = JSON.parse(startingFilters.textContent);
+updateButtons(activeFilters)
 var allReplays = [];
 var tableResetCounter = 0;
 
+removeQueriesFromUrl();
 requestAndInitializeReplays();
 
 async function requestAndInitializeReplays() {
@@ -53,14 +55,6 @@ async function requestAndInitializeReplays() {
   } catch (error) {}
 }
 
-function initializeFilters() {
-  const allButtons = document.querySelectorAll('button[filtertype]')
-  for (const button of allButtons) {
-    const filterType = button.getAttribute('filtertype');
-    activeFilters[filterType] = 'All';
-  }
-}
-
 function onClick(elm) {
   const filterType = elm.getAttribute('filterType');
   const value = elm.getAttribute('value');
@@ -70,6 +64,11 @@ function onClick(elm) {
   const filteredReplays = filterReplays(activeFilters, allReplays);
   clearTableHtml();
   addReplaysToTable(filteredReplays);
+}
+
+function removeQueriesFromUrl() {
+  const urlWithoutQuery = window.location.origin + window.location.pathname;
+  window.history.replaceState({}, document.title, urlWithoutQuery);
 }
 
 function updateButtons(activeFilters) {
@@ -96,7 +95,8 @@ function filterReplays(filters, replays) {
   for (const [filterType, allowedValues] of Object.entries(filters)) {
     if (allowedValues !== "All") {
       filteredReplays = filteredReplays.filter((replay) => {
-        return replay[filterType] === allowedValues;
+        return replay[filterType] === allowedValues
+        || replay[filterType].text === allowedValues;
       });
     }
   };

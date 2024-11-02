@@ -31,6 +31,9 @@ class InvalidConstantsMutationException(Exception):
 class GameConstants:
     id: str
     has_replays: bool
+    has_multiple_shots: bool
+    has_subshots: bool
+    has_routes: bool
     num_difficulties: int
     shots: List[str]
     routes: List[str]
@@ -39,6 +42,9 @@ class GameConstants:
 th18 = GameConstants(
     id="th18",
     has_replays=True,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=False,
     num_difficulties=5,
     shots=["Reimu", "Marisa", "Sakuya", "Sanae"],
     routes=[],
@@ -47,6 +53,9 @@ th18 = GameConstants(
 th17 = GameConstants(
     id="th17",
     has_replays=True,
+    has_multiple_shots=True,
+    has_subshots=True,
+    has_routes=False,
     num_difficulties=5,
     shots=[
         "ReimuWolf",
@@ -65,6 +74,9 @@ th17 = GameConstants(
 th16 = GameConstants(
     id="th16",
     has_replays=True,
+    has_multiple_shots=True,
+    has_subshots=True,
+    has_routes=False,
     num_difficulties=5,
     shots=[
         "ReimuSpring",
@@ -94,6 +106,9 @@ th16 = GameConstants(
 th15 = GameConstants(
     id="th15",
     has_replays=True,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=False,
     num_difficulties=5,
     shots=["Reimu", "Marisa", "Sanae", "Reisen"],
     routes=[],
@@ -102,6 +117,9 @@ th15 = GameConstants(
 th14 = GameConstants(
     id="th14",
     has_replays=True,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=False,
     num_difficulties=5,
     shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"],
     routes=[],
@@ -110,6 +128,9 @@ th14 = GameConstants(
 th13 = GameConstants(
     id="th13",
     has_replays=True,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=False,
     num_difficulties=6,
     shots=["Reimu", "Marisa", "Sanae", "Youmu"],
     routes=[],
@@ -118,6 +139,9 @@ th13 = GameConstants(
 th128 = GameConstants(
     id="th128",
     has_replays=True,
+    has_multiple_shots=False,
+    has_subshots=False,
+    has_routes=True,
     num_difficulties=5,
     shots=["Cirno"],
     routes=[
@@ -133,6 +157,9 @@ th128 = GameConstants(
 th12 = GameConstants(
     id="th12",
     has_replays=True,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=False,
     num_difficulties=5,
     shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SanaeA", "SanaeB"],
     routes=[],
@@ -141,6 +168,9 @@ th12 = GameConstants(
 th11 = GameConstants(
     id="th11",
     has_replays=True,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=False,
     num_difficulties=5,
     shots=["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"],
     routes=[],
@@ -149,6 +179,9 @@ th11 = GameConstants(
 th10 = GameConstants(
     id="th10",
     has_replays=True,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=False,
     num_difficulties=5,
     shots=["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"],
     routes=[],
@@ -157,6 +190,9 @@ th10 = GameConstants(
 th09 = GameConstants(
     id="th09",
     has_replays=True,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=False,
     num_difficulties=5,
     shots=[
         "Reimu",
@@ -182,6 +218,9 @@ th09 = GameConstants(
 th08 = GameConstants(
     id="th08",
     has_replays=True,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=True,
     num_difficulties=5,
     shots=[
         "Reimu & Yukari",
@@ -203,6 +242,9 @@ th08 = GameConstants(
 th07 = GameConstants(
     id="th07",
     has_replays=True,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=False,
     num_difficulties=6,
     shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"],
     routes=[],
@@ -211,6 +253,9 @@ th07 = GameConstants(
 th06 = GameConstants(
     id="th06",
     has_replays=True,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=False,
     num_difficulties=5,
     shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB"],
     routes=[],
@@ -219,6 +264,9 @@ th06 = GameConstants(
 th05 = GameConstants(
     id="th05",
     has_replays=False,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=False,
     num_difficulties=5,
     shots=["Reimu", "Marisa", "Mima", "Yuuka"],
     routes=[],
@@ -227,6 +275,9 @@ th05 = GameConstants(
 th04 = GameConstants(
     id="th04",
     has_replays=False,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=False,
     num_difficulties=5,
     shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB"],
     routes=[],
@@ -235,6 +286,9 @@ th04 = GameConstants(
 th03 = GameConstants(
     id="th03",
     has_replays=False,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=False,
     num_difficulties=5,
     shots=[
         "Reimu",
@@ -253,6 +307,9 @@ th03 = GameConstants(
 th02 = GameConstants(
     id="th02",
     has_replays=False,
+    has_multiple_shots=True,
+    has_subshots=False,
+    has_routes=False,
     num_difficulties=5,
     shots=["ReimuA", "ReimuB", "ReimuC"],
     routes=[],
@@ -261,6 +318,9 @@ th02 = GameConstants(
 th01 = GameConstants(
     id="th01",
     has_replays=False,
+    has_multiple_shots=False,
+    has_subshots=False,
+    has_routes=True,
     num_difficulties=4,  # No extra in HRtP!
     shots=["Reimu"],
     routes=["Jigoku", "Makai"],
@@ -306,10 +366,16 @@ def create_or_update_games(all_game_constants: List[GameConstants]):
         if game_row:
             game_row.has_replays = game_constants.has_replays
             game_row.num_difficulties = game_constants.num_difficulties
+            game_row.has_multiple_shots = game_constants.has_multiple_shots
+            game_row.has_subshots = game_constants.has_subshots
+            game_row.has_routes = game_constants.has_routes
         else:
             game_row = models.Game(
                 game_id=game_constants.id,
                 has_replays=game_constants.has_replays,
+                has_multiple_shots=game_constants.has_multiple_shots,
+                has_subshots=game_constants.has_subshots,
+                has_routes=game_constants.has_routes,
                 num_difficulties=game_constants.num_difficulties,
             )
 
