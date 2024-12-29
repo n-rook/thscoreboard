@@ -405,7 +405,9 @@ class Replay(models.Model):
 
         Only the top 3 replays (in a given field: the ranking is divided
         by game, shot, difficulty, and so on) have a rank; for the others,
-        None is returned.
+        None is returned. Only the best replay from a specific user is ranked;
+        if someone has the top 3 runs, their best replay will get the
+        number-one slot, but the next two will go unranked.
 
         This method is instant if "rank_view" is selected, which is strongly
         recommended.
