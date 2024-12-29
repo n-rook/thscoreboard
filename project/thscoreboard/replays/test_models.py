@@ -1,6 +1,6 @@
 import datetime
 import logging
-from unittest.mock import patch
+from unittest import mock
 
 from django.db import utils
 
@@ -15,6 +15,153 @@ from replays.testing import test_replays
 
 REPLAY_1 = test_replays.GetRaw("th6_extra")
 REPLAY_2 = test_replays.GetRaw("th10_normal")
+
+
+class ReplayRankTest(test_case.ReplayTestCase):
+    def setUp(self):
+        super().setUp()
+        self.author = self.createUser("author")
+        self.viewer = self.createUser("viewer")
+
+        # Ease testing by artificially giving every replay a different unique hash,
+        # so we can reuse the same filename in tests.
+        self._next_id = 0
+        self._mock_calculate_replay_hash = self.enterContext(
+            mock.patch.object(constant_helpers, "CalculateReplayFileHash")
+        )
+
+        def _ReturnIncrementing(replay_file_contents):
+            del replay_file_contents
+            val = self._next_id
+            self._next_id += 1
+            return val.to_bytes(length=4)
+
+        self._mock_calculate_replay_hash.side_effect = _ReturnIncrementing
+
+    def testRanks(self):
+        test_replays.CreateAsPublishedReplay(
+            filename="th6_extra",
+            user=self.author,
+            score=1_000_000_000,
+        )
+        test_replays.CreateAsPublishedReplay(
+            filename="th6_extra",
+            user=self.author,
+            score=900_000_000,
+        )
+        test_replays.CreateAsPublishedReplay(
+            filename="th7_extra",
+            user=self.author,
+            score=800_000_000,
+        )
+
+        replays = (
+            models.Replay.objects.order_by("-score").select_related("rank_view").all()
+        )
+
+        self.assertEqual(replays[0].GetRank(), 1)
+        self.assertEqual(replays[1].GetRank(), 2)
+        self.assertEqual(replays[2].GetRank(), 1)
+
+    def testRanksTasReplay(self):
+        test_replays.CreateAsPublishedReplay(
+            filename="th6_extra",
+            user=self.author,
+            score=1_000_000_000,
+            category=models.Category.TAS,
+        )
+
+        replay = models.Replay.objects.order_by("-score").first()
+
+        self.assertIsNone(replay.GetRank())
+
+    def testRanksBreakTiesUsingUploadDate(self):
+        test_replays.CreateAsPublishedReplay(
+            filename="th17_lunatic",
+            user=self.author,
+            score=9_999_999_990,
+            created_timestamp=datetime.datetime(
+                2001, 1, 1, tzinfo=datetime.timezone.utc
+            ),
+        )
+        test_replays.CreateAsPublishedReplay(
+            filename="th17_lunatic",
+            user=self.author,
+            score=9_999_999_990,
+            created_timestamp=datetime.datetime(
+                2003, 3, 3, tzinfo=datetime.timezone.utc
+            ),
+        )
+        test_replays.CreateAsPublishedReplay(
+            filename="th17_lunatic",
+            user=self.author,
+            score=9_999_999_990,
+            created_timestamp=datetime.datetime(
+                2002, 2, 2, tzinfo=datetime.timezone.utc
+            ),
+        )
+
+        replays = (
+            models.Replay.objects.select_related("rank_view").order_by("created").all()
+        )
+
+        self.assertEqual(replays[0].GetRank(), 1)
+        self.assertEqual(replays[1].GetRank(), 2)
+        self.assertEqual(replays[2].GetRank(), 3)
+
+    def testStagePracticeReplaysAreUnranked(self) -> None:
+        test_replays.CreateAsPublishedReplay(
+            filename="th6_extra",
+            user=self.author,
+            replay_type=models.ReplayType.STAGE_PRACTICE,
+        )
+
+        replay = models.Replay.objects.select_related("rank_view").first()
+        self.assertIsNone(replay.GetRank())
+
+    def testRankCountsTasSeparately(self):
+        th05_mima = models.Shot.objects.get(
+            game_id=game_ids.GameIDs.TH05, shot_id="Mima"
+        )
+
+        test_replays.CreateReplayWithoutFile(
+            user=self.author,
+            difficulty=1,
+            shot=th05_mima,
+            score=10000,
+            category=models.Category.STANDARD,
+        )
+        test_replays.CreateReplayWithoutFile(
+            user=self.author,
+            difficulty=1,
+            shot=th05_mima,
+            score=7500,
+            category=models.Category.STANDARD,
+        )
+        test_replays.CreateReplayWithoutFile(
+            user=self.author,
+            difficulty=1,
+            shot=th05_mima,
+            score=20000,
+            category=models.Category.TAS,
+        )
+        replays = (
+            models.Replay.objects.filter(
+                category__in=[models.Category.STANDARD, models.Category.TAS]
+            )
+            .select_related("rank_view")
+            .order_by("created")
+            .all()
+        )
+
+        self.assertEqual(len(replays), 3)
+        (returned_standard_1, returned_standard_2, returned_tas) = replays
+        self.assertEqual(returned_standard_1.category, models.Category.STANDARD)
+        self.assertEqual(returned_standard_1.GetRank(), 1)
+        self.assertEqual(returned_standard_2.category, models.Category.STANDARD)
+        self.assertEqual(returned_standard_2.GetRank(), 2)
+        self.assertEqual(returned_tas.category, models.Category.TAS)
+        self.assertIsNone(returned_tas.GetRank())
 
 
 class ReplayTest(test_case.ReplayTestCase):
@@ -110,139 +257,6 @@ class ReplayTest(test_case.ReplayTestCase):
         )
         expected_shortened_comment = "a" * limits.MAX_SHORTENED_COMMENT_LENGTH + "..."
         self.assertEqual(replay.GetShortenedComment(), expected_shortened_comment)
-
-    def testRanks(self):
-        with patch("replays.constant_helpers.CalculateReplayFileHash") as mocked_hash:
-            mocked_hash.return_value = bytes(0)
-            test_replays.CreateAsPublishedReplay(
-                filename="th6_extra",
-                user=self.author,
-                score=1_000_000_000,
-            )
-            mocked_hash.return_value = bytes(1)
-            test_replays.CreateAsPublishedReplay(
-                filename="th6_extra",
-                user=self.author,
-                score=900_000_000,
-            )
-            mocked_hash.return_value = bytes(2)
-            test_replays.CreateAsPublishedReplay(
-                filename="th7_extra",
-                user=self.author,
-                score=800_000_000,
-            )
-
-        replays = (
-            models.Replay.objects.order_by("-score").select_related("rank_view").all()
-        )
-
-        self.assertEquals(replays[0].GetRank(), 1)
-        self.assertEquals(replays[1].GetRank(), 2)
-        self.assertEquals(replays[2].GetRank(), 1)
-
-    def testRanksTasReplay(self):
-        test_replays.CreateAsPublishedReplay(
-            filename="th6_extra",
-            user=self.author,
-            score=1_000_000_000,
-            category=models.Category.TAS,
-        )
-
-        replay = models.Replay.objects.order_by("-score").first()
-
-        self.assertIsNone(replay.GetRank())
-
-    def testRanksBreakTiesUsingUploadDate(self):
-        with patch("replays.constant_helpers.CalculateReplayFileHash") as mocked_hash:
-            mocked_hash.return_value = bytes(0)
-            test_replays.CreateAsPublishedReplay(
-                filename="th17_lunatic",
-                user=self.author,
-                score=9_999_999_990,
-                created_timestamp=datetime.datetime(
-                    2001, 1, 1, tzinfo=datetime.timezone.utc
-                ),
-            )
-            mocked_hash.return_value = bytes(1)
-            test_replays.CreateAsPublishedReplay(
-                filename="th17_lunatic",
-                user=self.author,
-                score=9_999_999_990,
-                created_timestamp=datetime.datetime(
-                    2003, 3, 3, tzinfo=datetime.timezone.utc
-                ),
-            )
-            mocked_hash.return_value = bytes(2)
-            test_replays.CreateAsPublishedReplay(
-                filename="th17_lunatic",
-                user=self.author,
-                score=9_999_999_990,
-                created_timestamp=datetime.datetime(
-                    2002, 2, 2, tzinfo=datetime.timezone.utc
-                ),
-            )
-
-        replays = (
-            models.Replay.objects.select_related("rank_view").order_by("created").all()
-        )
-
-        self.assertEquals(replays[0].GetRank(), 1)
-        self.assertEquals(replays[1].GetRank(), 2)
-        self.assertEquals(replays[2].GetRank(), 3)
-
-    def testStagePracticeReplaysAreUnranked(self) -> None:
-        test_replays.CreateAsPublishedReplay(
-            filename="th6_extra",
-            user=self.author,
-            replay_type=models.ReplayType.STAGE_PRACTICE,
-        )
-
-        replay = models.Replay.objects.select_related("rank_view").first()
-        self.assertIsNone(replay.GetRank())
-
-    def testRankCountsTasSeparately(self):
-        th05_mima = models.Shot.objects.get(
-            game_id=game_ids.GameIDs.TH05, shot_id="Mima"
-        )
-
-        test_replays.CreateReplayWithoutFile(
-            user=self.author,
-            difficulty=1,
-            shot=th05_mima,
-            score=10000,
-            category=models.Category.STANDARD,
-        )
-        test_replays.CreateReplayWithoutFile(
-            user=self.author,
-            difficulty=1,
-            shot=th05_mima,
-            score=7500,
-            category=models.Category.STANDARD,
-        )
-        test_replays.CreateReplayWithoutFile(
-            user=self.author,
-            difficulty=1,
-            shot=th05_mima,
-            score=20000,
-            category=models.Category.TAS,
-        )
-        replays = (
-            models.Replay.objects.filter(
-                category__in=[models.Category.STANDARD, models.Category.TAS]
-            )
-            .select_related("rank_view")
-            .order_by("created")
-            .all()
-        )
-
-        self.assertEqual(len(replays), 3)
-        (returned_standard_1, returned_standard_2, returned_tas) = replays
-        self.assertEqual(returned_standard_1.category, models.Category.STANDARD)
-        self.assertEqual(returned_standard_1.GetRank(), 1)
-        self.assertEqual(returned_standard_2.category, models.Category.STANDARD)
-        self.assertEqual(returned_standard_2.GetRank(), 2)
-        self.assertEqual(returned_tas.category, models.Category.TAS)
-        self.assertIsNone(returned_tas.GetRank())
 
     def testReplayQueryForGhosts(self):
         inactive_user = self.createUser("inactive")
