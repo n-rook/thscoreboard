@@ -94,22 +94,7 @@ ORDER BY
   route_id, 
   category, 
   place DESC;
-""",            
-# old:
-# """
-# CREATE OR REPLACE VIEW replays_rank
-# AS
-# SELECT row_number() over () as id, replay, score, shot_id, difficulty, route_id, category, place
-# FROM (
-# SELECT id as replay, score, shot_id, difficulty, route_id, category, rank() OVER (PARTITION BY shot_id, difficulty, route_id, category ORDER BY score DESC, created, id) as place
-# FROM replays_replay
-# WHERE replay_type = 1  -- FULL_GAME
-# AND category = 1  -- STANDARD
-# ) AS ranked
-# WHERE place <= 3
-# ORDER BY shot_id, difficulty, route_id, category, place desc
-# ;
-#                           """,
+""",
             reverse_sql="""
 CREATE OR REPLACE VIEW replays_rank
 AS
