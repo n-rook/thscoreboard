@@ -14,85 +14,85 @@ class Migration(migrations.Migration):
             sql="""
 CREATE OR REPLACE VIEW replays_rank
 AS
-SELECT 
-  row_number() over () as id, 
-  replay, 
-  score, 
-  shot_id, 
-  difficulty, 
-  route_id, 
+SELECT
+  row_number() over () as id,
+  replay,
+  score,
+  shot_id,
+  difficulty,
+  route_id,
   category,
-  place 
-FROM 
+  place
+FROM
   (
-    SELECT 
-      replay, 
-      score, 
-      shot_id, 
-      difficulty, 
-      route_id, 
-      category, 
-	  created,
+    SELECT
+      replay,
+      score,
+      shot_id,
+      difficulty,
+      route_id,
+      category,
+      created,
       rank() OVER (
-        PARTITION BY shot_id, 
-        difficulty, 
-        route_id, 
-        category 
-        ORDER BY 
-          score DESC, 
-          created, 
+        PARTITION BY shot_id,
+        difficulty,
+        route_id,
+        category
+        ORDER BY
+          score DESC,
+          created,
           replay
-      ) as place 
-    FROM 
+      ) as place
+    FROM
       (
-        SELECT 
-          replay, 
-          score, 
-          shot_id, 
-          difficulty, 
-          route_id, 
-          category, 
-		  created,
-          user_id 
-        FROM 
+        SELECT
+          replay,
+          score,
+          shot_id,
+          difficulty,
+          route_id,
+          category,
+          created,
+          user_id
+        FROM
           (
-            SELECT 
-              id as replay, 
-              score, 
-              shot_id, 
-              difficulty, 
-              route_id, 
-              category, 
-			  created,
-              user_id, 
+            SELECT
+              id as replay,
+              score,
+              shot_id,
+              difficulty,
+              route_id,
+              category,
+              created,
+              user_id,
               rank() OVER (
-                PARTITION BY shot_id, 
-                difficulty, 
-                route_id, 
-                category, 
-                user_id 
-                ORDER BY 
-                  score DESC, 
-                  created, 
+                PARTITION BY shot_id,
+                difficulty,
+                route_id,
+                category,
+                user_id
+                ORDER BY
+                  score DESC,
+                  created,
                   id
-              ) as per_user_place 
-            FROM 
-              replays_replay 
-            WHERE 
+              ) as per_user_place
+            FROM
+              replays_replay
+            WHERE
               replay_type = 1 -- FULL_GAME
               AND category = 1 -- STANDARD
-              ) AS replays_ranked_per_user 
-        WHERE 
+              ) AS replays_ranked_per_user
+        WHERE
           per_user_place = 1
       ) AS top_replays_per_user
-  ) AS top_replays 
-WHERE 
-  place <= 3 
-ORDER BY 
-  shot_id, 
-  difficulty, 
-  route_id, 
-  category, 
+  ) AS top_replays
+WHERE
+  place <= 3
+ORDER BY
+  shot_id,
+  difficulty,
+  route_id,
+  category,
   place DESC;
 """,
             reverse_sql="""
