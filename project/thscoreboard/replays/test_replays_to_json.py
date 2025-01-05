@@ -95,13 +95,14 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
 
     def testMedalEmojisSingleShot(self):
         for i in range(5):
+            user = self.createUser(f"user{i}")
             with patch(
                 "replays.constant_helpers.CalculateReplayFileHash"
             ) as mocked_hash:
                 mocked_hash.return_value = bytes(i)
                 test_replays.CreateAsPublishedReplay(
                     "th10_normal",
-                    user=self.user,
+                    user=user,
                     score=1_000_000_000 - 100_000_000 * i,
                     difficulty=0,
                 )
@@ -111,11 +112,11 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             converter = ReplayToJsonConverter()
             json_data = [converter.convert_replay_to_dict(replay) for replay in replays]
 
-        self.assertEquals(json_data[0]["Score"]["text"], "🥇1,000,000,000")
-        self.assertEquals(json_data[1]["Score"]["text"], "🥈900,000,000")
-        self.assertEquals(json_data[2]["Score"]["text"], "🥉800,000,000")
-        self.assertEquals(json_data[3]["Score"]["text"], "700,000,000")
-        self.assertEquals(json_data[4]["Score"]["text"], "600,000,000")
+        self.assertEqual(json_data[0]["Score"]["text"], "🥇1,000,000,000")
+        self.assertEqual(json_data[1]["Score"]["text"], "🥈900,000,000")
+        self.assertEqual(json_data[2]["Score"]["text"], "🥉800,000,000")
+        self.assertEqual(json_data[3]["Score"]["text"], "700,000,000")
+        self.assertEqual(json_data[4]["Score"]["text"], "600,000,000")
 
     def testMedalEmojisMultipleShots(self):
         replay_filenames = [
@@ -136,5 +137,5 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
             converter = ReplayToJsonConverter()
             json_data = [converter.convert_replay_to_dict(replay) for replay in replays]
 
-        self.assertEquals(json_data[0]["Score"]["text"], "🥇1,000,000,000")
-        self.assertEquals(json_data[1]["Score"]["text"], "🥇900,000,000")
+        self.assertEqual(json_data[0]["Score"]["text"], "🥇1,000,000,000")
+        self.assertEqual(json_data[1]["Score"]["text"], "🥇900,000,000")
