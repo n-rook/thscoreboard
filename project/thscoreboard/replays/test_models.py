@@ -231,6 +231,62 @@ class ReplayRankTest(test_case.ReplayTestCase):
         self.assertIsNone(replays[1].GetRank())
         self.assertIsNone(replays[3].GetRank())
 
+    def testCorrectlyRanksMixOfOwnedAndLegacyReplays(self):
+        test_replays.CreateAsPublishedReplay(
+            filename="th6_extra",
+            user=self.user1,
+            imported_username=None,
+            score=1_000_000_000,
+        )
+        test_replays.CreateAsPublishedReplay(
+            filename="th6_extra",
+            user=None,
+            imported_username="user2",
+            score=900_000_000,
+        )
+        test_replays.CreateAsPublishedReplay(
+            filename="th6_extra",
+            user=None,
+            imported_username="user2",
+            score=800_000_000,
+        )
+        test_replays.CreateAsPublishedReplay(
+            filename="th6_extra",
+            user=None,
+            imported_username="user3",
+            score=700_000_000,
+        )
+
+        replays = (
+            models.Replay.objects.order_by("-score").select_related("rank_view").all()
+        )
+
+        self.assertEqual(replays[0].GetRank(), 1)
+        self.assertEqual(replays[1].GetRank(), 2)
+        self.assertIsNone(replays[2].GetRank())
+        self.assertEqual(replays[3].GetRank(), 3)
+
+    def testOwnedLegacyReplayRankedTogetherWithOwnedNewReplay(self):
+        test_replays.CreateAsPublishedReplay(
+            filename="th6_extra",
+            user=self.user1,
+            imported_username=None,
+            score=1_000_000_000,
+        )
+        test_replays.CreateAsPublishedReplay(
+            filename="th6_extra",
+            user=self.user1,
+            imported_username="user1",
+            score=900_000_000,
+        )
+
+        replays = (
+            models.Replay.objects.order_by("-score").select_related("rank_view").all()
+        )
+
+        self.assertEqual(replays[0].GetRank(), 1)
+        self.assertIsNone(replays[1].GetRank())
+
 
 class ReplayTest(test_case.ReplayTestCase):
     def setUp(self):
