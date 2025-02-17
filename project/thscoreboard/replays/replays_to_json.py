@@ -44,11 +44,7 @@ class ReplayToJsonConverter:
             game.game_id, replay.difficulty
         )
         json_dict["Shot"] = self._get_shot_name(shot)
-        if game.game_id in [
-            game_ids.GameIDs.TH01,
-            game_ids.GameIDs.TH08,
-            game_ids.GameIDs.TH128,
-        ]:
+        if game.has_routes:
             route = replay.route
             json_dict["Route"] = route.GetName() if route is not None else ""
         if game.game_id == game_ids.GameIDs.TH128 and replay.difficulty == 4:
@@ -64,24 +60,11 @@ class ReplayToJsonConverter:
             "url": f"/replays/{game.game_id}/{replay.id}/download",
         }
 
-        if game.game_id == game_ids.GameIDs.TH16:
-            json_dict |= self._get_th16_additional_fields(shot)
-        elif game.game_id == game_ids.GameIDs.TH17:
-            json_dict |= self._get_th17_additional_fields(shot)
+        if game.has_subshots:
+            json_dict["Character"] = shot.GetCharacterName()
+            json_dict["Subshot"] = shot.GetSubshotName()
 
         return json_dict
-
-    def _get_th16_additional_fields(self, shot: models.Shot) -> dict:
-        return {
-            "Character": shot.GetCharacterName(),
-            "Season": shot.GetSubshotName(),
-        }
-
-    def _get_th17_additional_fields(self, shot: models.Shot) -> dict:
-        return {
-            "Character": shot.GetCharacterName(),
-            "Goast": shot.GetSubshotName(),
-        }
 
     def convert_replay_to_json_bytes(self, replay: models.Replay) -> bytes:
         replay_dict = self.convert_replay_to_dict(replay)
