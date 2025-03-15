@@ -9,6 +9,7 @@ from django.db import utils
 from django.db.models import deletion
 from django.utils import timezone
 
+from replays import game_ids
 from replays import models as replay_models
 from replays.testing import test_case
 from replays.testing import test_replays
@@ -443,6 +444,44 @@ class DeleteAnAccountWithReplaysTestCase(test_case.ReplayTestCase):
         self.assertFalse(models.User.objects.filter(id=u.id).exists())
         self.assertFalse(replay_models.Replay.objects.filter(id=r.id).exists())
         self.assertFalse(models.Visits.objects.filter(ip="test.ip.address").exists())
+
+
+class DeleteAllReplaysTestCase(test_case.ReplayTestCase):
+    def testDeleteAllReplays(self):
+        doomed_user = self.createUser("doomed")
+        other_user = self.createUser("notdoomed")
+
+        d1 = test_replays.CreateAsPublishedReplay(
+            filename="th6_extra", user=doomed_user
+        )
+        th05_mima = replay_models.Shot.objects.get(
+            game_id=game_ids.GameIDs.TH05, shot_id="Mima"
+        )
+        o1 = test_replays.CreateAsPublishedReplay(
+            filename="th6_hard_1cc", user=other_user
+        )
+
+        d2 = test_replays.CreateReplayWithoutFile(
+            user=doomed_user,
+            difficulty=1,
+            shot=th05_mima,
+            score=7500,
+            category=replay_models.Category.STANDARD,
+        )
+        o2 = test_replays.CreateReplayWithoutFile(
+            user=other_user,
+            difficulty=1,
+            shot=th05_mima,
+            score=7500,
+            category=replay_models.Category.STANDARD,
+        )
+
+        doomed_user.DeleteAllReplays()
+
+        self.assertFalse(replay_models.Replay.objects.filter(id=d1.id).exists())
+        self.assertFalse(replay_models.Replay.objects.filter(id=d2.id).exists())
+        self.assertTrue(replay_models.Replay.objects.filter(id=o1.id).exists())
+        self.assertTrue(replay_models.Replay.objects.filter(id=o2.id).exists())
 
 
 class ClaimReplayRequestTest(test_case.ReplayTestCase):

@@ -5,6 +5,7 @@ import logging
 from typing import Optional
 import secrets
 
+from django.apps import apps
 from django.core.exceptions import ValidationError
 from django.contrib.auth import models as auth_models
 from django.contrib.auth import hashers
@@ -146,6 +147,15 @@ class User(auth_models.AbstractUser):
         self.is_active = False
         self.deleted_on = datetime.datetime.now(datetime.timezone.utc)
         self.save()
+
+    def DeleteAllReplays(self):
+        """Delete all replays by this user."""
+        replays_model = apps.get_model("replays", "Replay")
+        to_delete = list(replays_model.objects.filter(user=self))
+        logging.info("Deleting %d replays by %s...", len(to_delete), self.username)
+        for r in to_delete:
+            r.delete()
+        logging.info("Done deleting replays by %s", self.username)
 
 
 _USERNAME_MAX_LENGTH = 150
