@@ -132,6 +132,10 @@ class BanForm(forms.Form):
     reason = forms.CharField(label=_("Reason"), required=True)
     days = forms.IntegerField(label=_("Days"), required=False)
     hours = forms.IntegerField(label=_("Hours"), required=False)
+    also_delete_replays = forms.BooleanField(
+        label=_("Also delete all replays uploaded by this user"),
+        required=False,
+    )
 
     def clean_target(self):
         t = self.cleaned_data["target"]

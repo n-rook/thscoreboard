@@ -43,6 +43,15 @@
                 {{ form.hours }}
             </td>
         </tr>
+        <tr>
+            <td>
+                <label for="{{ form.also_delete_replays.id_for_label }}">{{form.also_delete_replays.label}}</label>
+                {{ form.also_delete_replays.errors }}
+            </td>
+            <td>
+                {{ form.also_delete_replays }}
+            </td>
+        </tr>
     </table>
     <input type="submit">
 </form>

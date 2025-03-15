@@ -42,16 +42,20 @@ def staff_ban(request):
     if request.method == "POST":
         form = forms.BanForm(request.POST)
         if form.is_valid():
-            form.cleaned_data["target"].BanUser(
+            target = form.cleaned_data["target"]
+            target.BanUser(
                 author=request.user,
                 reason=form.cleaned_data["reason"],
                 duration=form.GetDuration(),
             )
 
+            if form.cleaned_data["also_delete_replays"]:
+                target.DeleteAllReplays()
+
             return render(
                 request,
                 "users/ban_success.html",
-                {"target": form.cleaned_data["target"]},
+                {"target": target},
             )
 
         # If the form is not valid, fall through to the GET page, and render it that way.
