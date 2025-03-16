@@ -528,3 +528,17 @@ class ClaimReplayRequestTest(test_case.ReplayTestCase):
                 request_status=models.RequestStatus.SUBMITTED,
             )
             claim_replay_request.save()
+
+
+class ForbiddenEmailDomainsTest(test_case.UserTestCase):
+    def testForbiddenDomain(self):
+        models.ForbiddenEmailDomain.objects.create(domain="example.com")
+
+        for name, email, assert_fn in (
+            ("match", "foo@example.com", self.assertTrue),
+            ("caps", "foo@EXAMPLE.COM", self.assertTrue),
+            ("no match", "foo@example.net", self.assertFalse),
+            ("invalid", "foo", self.assertFalse),
+        ):
+            with self.subTest(name):
+                assert_fn(models.ForbiddenEmailDomain.is_domain_forbidden(email))
