@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.db import transaction
 from django.shortcuts import render, redirect
+from django.utils.translation import gettext as _
 from django.views.decorators import http as http_decorators
 
 from thscoreboard import settings
@@ -20,6 +21,10 @@ if settings.REQUIRE_PASSCODE:
     RegisterForm = forms.RegisterFormWithPasscode
 else:
     RegisterForm = forms.RegisterForm
+
+
+class DomainForbiddenException(Exception):
+    """An exception raised if an email's domain is forbidden."""
 
 
 @http_decorators.require_http_methods(["GET", "HEAD", "POST"])
@@ -59,6 +64,11 @@ def register(request):
                 else:
                     passcode = None
 
+                if models.ForbiddenEmailDomain.is_domain_forbidden(
+                    form.cleaned_data["email"]
+                ):
+                    raise DomainForbiddenException()
+
                 unverified_user = _preregister(
                     username=form.cleaned_data["username"],
                     email=form.cleaned_data["email"],
@@ -70,6 +80,8 @@ def register(request):
 
         except models.EarlyAccessPasscode.DoesNotExist:
             form.add_error("passcode", "Early access; must provide a valid passcode")
+        except DomainForbiddenException:
+            form.add_error("email", _("This email address is forbidden."))
     else:
         form = RegisterForm()
 

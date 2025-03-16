@@ -665,3 +665,22 @@ class ClaimReplayRequest(models.Model):
             return "Deleted by staff"
         else:
             return "Error"
+
+
+class ForbiddenEmailDomain(models.Model):
+    """Domains that are not allowed to register new accounts."""
+
+    domain = models.TextField(blank=False)
+
+    def __str__(self):
+        return self.domain
+
+    @classmethod
+    def is_domain_forbidden(cls, email: str) -> bool:
+        """Checks whether an email address has a forbidden domain."""
+
+        if "@" not in email:
+            return False  # No domain; this will presumably fail elsewhere
+
+        domain = email.rpartition("@")[2].lower()
+        return cls.objects.filter(domain=domain).exists()
