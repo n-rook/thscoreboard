@@ -69,19 +69,12 @@ running "runserver" and then going to /rosetta on your local page. (It is not
 included in the prod release.) I have no special attachment to django-rosetta;
 I would not be surprised if we found a better editor later.
 
-To add new strings-to-be-translated to the .po files, run `python manage.py makemessages --all`. This updates the .po files to include the new strings.
+To add new strings-to-be-translated to the .po files, run
+`python manage.py makemessages --all --no-wrap`. This updates the .po files to include the new strings.
 
 The .po files must be compiled into .mo files with "python manage.py compilemessages"
-in order to be used. It's probably a good idea to rerun this command whenever you
-need to edit the translations.
-
-(At some point, we should probably install a Git hook to do this, too.)
-
-The easiest way to tell if translations are working properly is to look at the
-score table; the games will be abbreviated in the style of "EoSD" if the
-names are translated into English, but will be in the style of "th06" otherwise.
-
-There isn't a hook yet to actually switch the language to Japanese.
+in order to be used. This is done automatically on the server, so you do not
+need to include .mo files in your pull requests.
 
 ### Adding support for new games
 
