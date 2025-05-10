@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-10 21:13+0000\n"
+"POT-Creation-Date: 2025-05-10 21:31+0000\n"
 "PO-Revision-Date: 2023-05-06 19:43+0000\n"
 "Last-Translator: ゑふまいか, 2025-05-10 16:44+0900\n"
 "Language-Team: Japanese (https://app.transifex.com/silent-selene/teams/168285/ja/)\n"
@@ -2284,6 +2284,14 @@ msgid "Welcome to Silent Selene!"
 msgstr "サイレントセレナへようこそ！"
 
 #: replays/templates/replays/index.html:10
+#, python-format
+msgid ""
+"\n"
+"    Welcome to Silent Selene, the home of Touhou replays on the Internet. We support uploading replays for almost all Touhou games, so <a href=\"%(register_url)s\">create an account</a> and show us what you've got! Or <a href=\"%(blog_url)s\">check out our blog</a> to find out what's new and what we have planned for the future.\n"
+"    "
+msgstr ""
+
+#: replays/templates/replays/index.html:15
 msgid "Recent uploads"
 msgstr "新着一覧"
 
