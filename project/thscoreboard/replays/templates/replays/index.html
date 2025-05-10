@@ -8,7 +8,7 @@
     {% url 'users:register' as register_url %}
     {% with blog_url="https://news.silentselene.net" %}
     {% blocktranslate %}
-    Welcome to Silent Selene, the home of Touhou replays on the Internet. We support uploading replays for almost all Touhou games, so <a href="{{ register_url }}">create an account</a> and show us what you've got! Or <a href="https://news.silentselene.net">check out our blog</a> to find out what's new and what we have planned for the future.
+    Welcome to Silent Selene, the home of Touhou replays on the Internet. We support uploading replays for almost all Touhou games, so <a href="{{ register_url }}">create an account</a> and show us what you've got! Or <a href="{{ blog_url }}">check out our blog</a> to find out what's new and what we have planned for the future.
     {% endblocktranslate %}
     {% endwith %}
 </p>
