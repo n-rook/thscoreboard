@@ -2200,7 +2200,25 @@ msgstr ""
 msgid "Welcome to Silent Selene!"
 msgstr "Welcome to Silent Selene!"
 
-#: replays/templates/replays/index.html:10
+#: replays/templates/replays/index.html:7
+msgid ""
+"\n"
+"<p>\n"
+"    Welcome to Silent Selene, the home of Touhou replays on the Internet. We support uploading replays for almost all\n"
+"    Touhou games, so <a href="{% url 'users:register' %}">create an account</a> and show us what you've got! Or <a\n"
+"        href="https://news.silentselene.net">check out our blog</a> to find out what's new and what we have planned for\n"
+"    the future.\n"
+"</p>\n"
+msgstr ""
+"\n"
+"<p>\n"
+"    Welcome to Silent Selene, the home of Touhou replays on the Internet. We support uploading replays for almost all\n"
+"    Touhou games, so <a href="{% url 'users:register' %}">create an account</a> and show us what you've got! Or <a\n"
+"        href="https://news.silentselene.net">check out our blog</a> to find out what's new and what we have planned for\n"
+"    the future.\n"
+"</p>\n"
+
+#: replays/templates/replays/index.html:15
 msgid "Recent uploads"
 msgstr "Recent uploads"
 
