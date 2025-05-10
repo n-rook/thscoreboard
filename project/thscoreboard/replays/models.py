@@ -6,7 +6,6 @@ from typing import Optional
 
 from django.db import models
 from django.db import utils
-from django.utils import formats
 from django.utils import timezone
 from django.utils.translation import pgettext_lazy
 from django.db.models import Q, QuerySet
@@ -14,6 +13,7 @@ from django.db.models import Q, QuerySet
 from replays import game_ids
 from replays import limits
 from replays import replay_parsing
+from replays.lib import time as time_lib
 from shared_content import db_errors
 from shared_content import model_ttl
 from thscoreboard import settings
@@ -449,11 +449,9 @@ class Replay(models.Model):
             return None
 
         if self.shot.game_id == game_ids.GameIDs.TH07:
-            fmt = "d F"
+            return time_lib.format_month_day(self.timestamp)
         else:
-            fmt = "d F Y"
-
-        return formats.date_format(self.timestamp, format=fmt)
+            return time_lib.format_date(self.timestamp)
 
 
 class ReplayRank(models.Model):
