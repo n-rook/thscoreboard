@@ -5,7 +5,12 @@
 
 <h1 class="highlight">{% translate "Welcome to Silent Selene!" %}</h1>
 <p>
-    Welcome to Silent Selene, the home of Touhou replays on the Internet. We support uploading replays for almost all Touhou games, so <a href="{% url 'users:register' %}">create an account</a> and show us what you've got! Or <a href="https://news.silentselene.net">check out our blog</a> to find out what's new and what we have planned for the future.
+    {% url 'users:register' as register_url %}
+    {% with blog_url="https://news.silentselene.net" %}
+    {% blocktranslate %}
+    Welcome to Silent Selene, the home of Touhou replays on the Internet. We support uploading replays for almost all Touhou games, so <a href="{{ register_url }}">create an account</a> and show us what you've got! Or <a href="https://news.silentselene.net">check out our blog</a> to find out what's new and what we have planned for the future.
+    {% endblocktranslate %}
+    {% endwith %}
 </p>
 <h1 class="highlight">{% translate "Recent uploads" %}</h1>
 {% include "replays/replay_table.html" with show_game=True %}
