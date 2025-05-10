@@ -6,7 +6,6 @@ from typing import Optional
 
 from django.db import models
 from django.db import utils
-from django.utils import formats
 from django.utils import timezone
 from django.utils.translation import pgettext_lazy
 from django.db.models import Q, QuerySet
