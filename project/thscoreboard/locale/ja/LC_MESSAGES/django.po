@@ -2,7 +2,7 @@
 # Translators:
 # Maribel Hearn, 2023
 # Anomalo Caris, 2023
-# ゑふまいか, 2023
+# ゑふまいか, 2025
 # 
 msgid ""
 msgstr ""
@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-09 16:15+0000\n"
 "PO-Revision-Date: 2023-05-06 19:43+0000\n"
-"Last-Translator: ゑふまいか, 2023\n"
+"Last-Translator: ゑふまいか, 2025-05-10 16:44+0900\n"
 "Language-Team: Japanese (https://app.transifex.com/silent-selene/teams/168285/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: replays/game_ids.py:42
 msgid "Full Game"
-msgstr ""
+msgstr "通しプレイ"
 
 #: replays/game_ids.py:44
 msgid "Stage Practice"
@@ -219,17 +219,17 @@ msgstr "東方星蓮船　～ Undefined Fantastic Object"
 #: replays/game_ids.py:127
 msgctxt "short game name"
 msgid "th12.8"
-msgstr ""
+msgstr "大"
 
 #: replays/game_ids.py:128
 msgctxt "standard game name"
 msgid "Great Fairy Wars"
-msgstr ""
+msgstr "妖精大戦争"
 
 #: replays/game_ids.py:129
 msgctxt "full game name"
 msgid "Great Fairy Wars - 東方三月精"
-msgstr ""
+msgstr "妖精大戦争　～ 東方三月精"
 
 #: replays/game_ids.py:132
 msgctxt "short game name"
@@ -323,7 +323,7 @@ msgstr "東方虹龍洞　～ Unconnected Marketeers"
 
 #: replays/game_ids.py:168
 msgid "Unknown game (bug!)"
-msgstr ""
+msgstr "不明なゲームです (バグの可能性があります！)"
 
 #: replays/game_ids.py:174
 msgctxt "th01"
@@ -333,17 +333,17 @@ msgstr "靈夢"
 #: replays/game_ids.py:177
 msgctxt "th02"
 msgid "Mobility"
-msgstr ""
+msgstr "高機動力タイプ"
 
 #: replays/game_ids.py:179
 msgctxt "th02"
 msgid "Defensive"
-msgstr ""
+msgstr "防御重視タイプ"
 
 #: replays/game_ids.py:181
 msgctxt "th02"
 msgid "Offensive"
-msgstr ""
+msgstr "攻撃重視タイプ"
 
 #: replays/game_ids.py:185
 msgctxt "th03"
@@ -713,7 +713,7 @@ msgstr "蛙符"
 #: replays/game_ids.py:399
 msgctxt "th128"
 msgid "Cirno"
-msgstr ""
+msgstr "チルノ"
 
 #: replays/game_ids.py:403
 msgctxt "th13"
@@ -988,17 +988,17 @@ msgstr "冬"
 #: replays/game_ids.py:545
 msgctxt "th17"
 msgid "Wolf"
-msgstr ""
+msgstr "オオカミ"
 
 #: replays/game_ids.py:547
 msgctxt "th17"
 msgid "Otter"
-msgstr ""
+msgstr "カワウソ"
 
 #: replays/game_ids.py:549
 msgctxt "th17"
 msgid "Eagle"
-msgstr ""
+msgstr "オオワシ"
 
 #: replays/game_ids.py:557
 msgctxt "th01"
@@ -1023,89 +1023,89 @@ msgstr "Bルート"
 #: replays/game_ids.py:567
 msgctxt "th128"
 msgid "A-1"
-msgstr ""
+msgstr "A-1"
 
 #: replays/game_ids.py:569
 msgctxt "th128"
 msgid "A-2"
-msgstr ""
+msgstr "A-2"
 
 #: replays/game_ids.py:571
 msgctxt "th128"
 msgid "B-1"
-msgstr ""
+msgstr "B-1"
 
 #: replays/game_ids.py:573
 msgctxt "th128"
 msgid "B-2"
-msgstr ""
+msgstr "B-2"
 
 #: replays/game_ids.py:575
 msgctxt "th128"
 msgid "C-1"
-msgstr ""
+msgstr "C-1"
 
 #: replays/game_ids.py:577
 msgctxt "th128"
 msgid "C-2"
-msgstr ""
+msgstr "C-2"
 
 #: replays/game_ids.py:579
 msgctxt "th128"
 msgid "Extra"
-msgstr ""
+msgstr "Extra"
 
 #: replays/game_ids.py:606
 msgid "Easy"
-msgstr ""
+msgstr "Easy"
 
 #: replays/game_ids.py:608
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: replays/game_ids.py:610
 msgid "Hard"
-msgstr ""
+msgstr "Hard"
 
 #: replays/game_ids.py:612
 msgid "Lunatic"
-msgstr ""
+msgstr "Lunatic"
 
 #: replays/game_ids.py:614
 msgid "Extra"
-msgstr ""
+msgstr "Extra"
 
 #: replays/game_ids.py:617
 msgid "Phantasm"
-msgstr ""
+msgstr "Phantasm"
 
 #: replays/game_ids.py:620
 msgid "Overdrive"
-msgstr ""
+msgstr "Overdrive"
 
 #: replays/game_ids.py:622
 msgid "Bug difficulty"
-msgstr ""
+msgstr "不正な難易度"
 
 #: replays/models.py:113
 msgctxt "Category"
 msgid "Standard"
-msgstr ""
+msgstr "通常プレイ"
 
 #: replays/models.py:116
 msgctxt "Category"
 msgid "Tool-Assisted"
-msgstr ""
+msgstr "ツール使用"
 
 #: replays/models.py:119
 msgctxt "Category"
 msgid "Unusual"
-msgstr ""
+msgstr "その他"
 
 #: replays/models.py:130
 msgctxt "Replay Type"
 msgid "Full Game"
-msgstr ""
+msgstr "通しプレイ"
 
 #: replays/models.py:133
 msgctxt "Replay Type"
@@ -1125,11 +1125,11 @@ msgstr "二人対戦"
 #: replays/templates/replays/claim_replays.html:6
 #: replays/templates/replays/claim_replays.html:26
 msgid "Select replays"
-msgstr ""
+msgstr "リプレイを選択してください。"
 
 #: replays/templates/replays/claim_replays.html:16
 msgid "Contact info"
-msgstr ""
+msgstr "連絡先"
 
 #: replays/templates/replays/claim_replays.html:19
 msgid ""
@@ -1138,26 +1138,30 @@ msgid ""
 "            For example, link your twitter, discord, or bilibili account.\n"
 "        "
 msgstr ""
+"\n"
+"            ご本人のSNSアカウントを教えてください。\n"
+"            (例: Twitter, Discord, bilibili等のリンク)\n"
+"        "
 
 #: replays/templates/replays/claim_replays.html:31
 msgid "Select"
-msgstr ""
+msgstr "選択"
 
 #: replays/templates/replays/claim_replays.html:32
 msgid "Game"
-msgstr ""
+msgstr "ゲーム"
 
 #: replays/templates/replays/claim_replays.html:33
 #: replays/templates/replays/publish.html:23
 #: replays/templates/replays/publish_no_replay.html:16
 msgid "Difficulty"
-msgstr ""
+msgstr "難易度"
 
 #: replays/templates/replays/claim_replays.html:34
 #: replays/templates/replays/publish.html:27
 #: replays/templates/replays/publish_no_replay.html:25
 msgid "Shot"
-msgstr ""
+msgstr "機体"
 
 #: replays/templates/replays/claim_replays.html:35
 #: replays/templates/replays/publish.html:72
@@ -1169,52 +1173,52 @@ msgstr " スコア"
 
 #: replays/templates/replays/claim_replays.html:36
 msgid "Date"
-msgstr ""
+msgstr "日付"
 
 #: replays/templates/replays/claim_replays.html:37
 #: replays/templates/replays/publish.html:140
 #: replays/templates/replays/publish_no_replay.html:122
 #: replays/templates/replays/replay_details.html:165
 msgid "Comment"
-msgstr ""
+msgstr "コメント"
 
 #: replays/templates/replays/claim_username.html:4
 msgid "Claim replays"
-msgstr ""
+msgstr "リプレイを引き継ぐ"
 
 #: replays/templates/replays/claim_username.html:7
 #: replays/templates/replays/my_claims.html:12
 msgid "My claims"
-msgstr ""
+msgstr "申請"
 
 #: replays/templates/replays/claim_username.html:11
 msgid "Please enter a silentselene username."
-msgstr ""
+msgstr "サイレントセレナの名前を入力してください"
 
 #: replays/templates/replays/claim_username.html:19
 msgid "Please enter a royalflare username."
-msgstr ""
+msgstr "ロイヤルフレアの名前を入力してください"
 
 #: replays/templates/replays/claim_username.html:23
 msgid "Next"
-msgstr ""
+msgstr "次へ"
 
 #: replays/templates/replays/delete_replay.html:9
 #: replays/templates/replays/unclaim_replay.html:12
 msgid "Total score"
-msgstr ""
+msgstr "スコア"
 
 #: replays/templates/replays/delete_replay.html:11
 msgid "Are you sure you want to delete this replay?"
-msgstr ""
+msgstr "本当にこのリプレイを削除していいですか？"
 
 #: replays/templates/replays/delete_replay.html:14
 msgid "Yes, delete it!"
-msgstr ""
+msgstr "はい、削除します。"
 
 #: replays/templates/replays/docs/about.html:5
 msgid "About Silent Selene"
-msgstr "Silent Seleneについて"
+msgstr "サイレントセレナについて"
 
 #: replays/templates/replays/docs/about.html:6
 #, python-format
@@ -1259,7 +1263,7 @@ msgstr ""
 
 #: replays/templates/replays/docs/credits.html:5
 msgid "Credits"
-msgstr ""
+msgstr "スタッフ紹介"
 
 #: replays/templates/replays/docs/credits.html:6
 msgid ""
@@ -1290,10 +1294,10 @@ msgstr ""
 "\n"
 "<h2>ウェブサイトの開発</h2>\n"
 "<ul>\n"
-"<li><a href=\"https://github.com/n-rook\">nrook</a>様</li>\n"
-"<li><a href=\"https://github.com/raviddog\">raviddog</a>様</li>\n"
-"<li><a href=\"https://github.com/32th-System\">32th System</a>様</li>\n"
-"<li><a href=\"https://github.com/jgdhs27\">morth</a>様</li>\n"
+"<li><a href=\"https://github.com/n-rook\">nrook</a></li>\n"
+"<li><a href=\"https://github.com/raviddog\">raviddog</a></li>\n"
+"<li><a href=\"https://github.com/32th-System\">32th System</a></li>\n"
+"<li><a href=\"https://github.com/jgdhs27\">morth</a></li>\n"
 "</ul>\n"
 "<h2>絵</h2>\n"
 "<ul>\n"
@@ -1327,6 +1331,17 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"    <h2>このサイト</h2>\n"
+"    <p>\n"
+"        サイレントセレナはApache License 2.0にて提供されています。ソースコードは<a href=\"https://github.com/n-rook/thscoreboard\">Github</a>から手に入れることができます。\n"
+"    </p>\n"
+"    <h2>Other Components</h2>\n"
+"    <p>\n"
+"        このサイトで使用しているフォントは<a href=\"https://www.latofonts.com/\">Lato</a>と<a href=\"https://github.com/octaviopardo/EBGaramond12\">EB Garamond 12</a>です。どちらも<a href=\"http://scripts.sil.org/OFL\">SIL Open Font License 1.1</a>にて提供されています。\n"
+"    </p>\n"
+"\n"
+"    "
 
 #: replays/templates/replays/docs/privacy_policy.html:5
 msgid "Privacy Policy"
@@ -1511,6 +1526,182 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"    <h2>概要</h2>\n"
+"    <p>\n"
+"        サイレントセレナでは東方のリプレイをアップロードしたり、他人のリプレイを見ることができます。このサービスの都合上、我々は情報を収集し保管する必要があります。ここではその処理について説明します。\n"
+"    </p>\n"
+"    <h2>この文書の範囲</h2>\n"
+"    <p>\n"
+"        このプライバシーポリシーは本ウェブサイトである silentselene.net に適用されます。\n"
+"    </p>\n"
+"    <h2>収集する情報</h2>\n"
+"    <h3>ユーザから提供される情報</h3>\n"
+"    <p>\n"
+"        我々が収集する情報の多くはユーザから収集するものです。例えば以下があります。\n"
+"    </p>\n"
+"    <p>\n"
+"        <ul>\n"
+"            <li>\n"
+"                <b>基本的なアカウント情報:</b> アカウントにログインするために必要なユーザ名やパスワードやメールアドレスの情報。また、アカウントに設定した言語やどのゲームに興味があるか等も保存されます。\n"
+"            </li>\n"
+"            <li>\n"
+"                <b>公開プロフィール情報:</b> あなたのプロフィールに表示される、ユーザ名等の公開情報とみなせる情報。ただしメールアドレスは公開情報ではありません。\n"
+"            </li>\n"
+"            <li>\n"
+"                <b>コンテンツ:</b> サイレントセレナは主にリプレイを共有するためのサイトです。よって、リプレイやその詳細情報を保存し、以降あなたやその他の人がその情報を確認できるようにするために使われます。\n"
+"            </li>\n"
+"        </ul>\n"
+"    </p>\n"
+"    <h3>自動的に収集する情報</h3>\n"
+"    <p>\n"
+"        我々は以下の情報を自動的に収集します。\n"
+"    </p>\n"
+"    <p>\n"
+"        <ul>\n"
+"            <li>\n"
+"                <b>ログ情報:</b> 多くのサービスプロバイダと同様、我々はウェブブラウザ、モバイル端末、及びサーバが通常利用可能な情報を収集します。これにはブラウザの種類、IPアドレス、ユニークなデバイス識別子、言語情報、訪問元サイト、アクセス時刻、OS, そしてモバイルネットワーク情報を含みます。\n"
+"            </li>\n"
+"            <li>\n"
+"                <b>Cookie:</b> Cookie はインターネットの基盤技術の1つです。我々はCookieをユーザのログイン管理に使用します。これらのCookieはサイレントセレナの機能に必要不可欠です。\n"
+"            </li>\n"
+"        </ul>\n"
+"    </p>\n"
+"\n"
+"    <h2>情報の使用方法と目的</h2>\n"
+"    <h3>情報の使用方法</h3>\n"
+"    <p>\n"
+"        我々はユーザのために以下の目的で情報を使用します。\n"
+"        <ul>\n"
+"            <li>\n"
+"                <b>サイトのサービス提供</b> 例えばアカウントの設定や維持するためや、リプレイを利用可能にするため、及びユーザの東方のプレイに関する追加情報を提供するため。\n"
+"            </li>\n"
+"            <li>\n"
+"                <b>サイトの改善</b> 例えばサービスの利用状況を確認することによって人気の機能を特定するため。\n"
+"            </li>\n"
+"            <li>\n"
+"                <b>サイレントセレナや我々のユーザ、及び一般利用者の保護</b> 例えばセキュリティインシデントの検知や、サイト上の悪意的・欺瞞的・詐欺的・違法な活動の検知のため。過去に悪意のある人間が東方ファンサイトを使用して無実の人間の個人情報を公開したり、他のプレイヤーになりすますことでそのプレイヤーの評判を落とすなど、他人に危害を与えることがありました。我々はサイレントセレナがこのような攻撃に利用されることや、サイト自体が攻撃されるのを防ぎたいと考えています。\n"
+"            </li>\n"
+"            <li>\n"
+"                <b>サイレントセレナの不具合修正</b> 例えばサイトのバグの検知や修正のため。\n"
+"            </li>\n"
+"            <li>\n"
+"                <b>ユーザとの連絡</b> 例えばユーザのコンテンツに関する情報をユーザ自身と共有するため。\n"
+"            </li>\n"
+"        </ul>\n"
+"    </p>\n"
+"\n"
+"    <h3>EU圏の利用者のための法的根拠</h3>\n"
+"    <p>\n"
+"        私たちが個人情報を処理する法的根拠は二つあります。ほとんどの処理はユーザの同意に基づいて行われます。例えばアカウントを作成すると、アカウントを利用できるようにするためにユーザ名・パスワード・メールアドレスを使用しなければなりません。また、ユーザが他人に見せるコンテンツをアップロードした際はコンテンツを他人に見せなければなりません。一部の情報は我々の正当な利益のために処理されます。例えばサイレントセレナが他人への攻撃に使われるのを防ぐ目的がこれに該当します。例えばIPアドレスの収集や保存をすることで利用停止されたユーザがこのサイトにアクセスするのを困難にするためです。\n"
+"    </p>\n"
+"    <h2>情報の共有</h2>\n"
+"    <h3>情報の共有方法</h3>\n"
+"    <p>\n"
+"        ユーザの情報は以下の限られた目的にのみ共有されます.\n"
+"        <ul>\n"
+"            <li>\n"
+"                <b>サードパーティサービス:</b> 我々のサービスを提供するためにサードパーティサービスを使用します。例えば我々のサーバはVultrによって提供されており、メールはAmazon SESを使用して送信しています。これらのサードパーティサービスはこのプライバシーポリシーに基づいて使用されます。\n"
+"            </li>\n"
+"            <li>\n"
+"                <b>法的及び規制の要件:</b> 我々は召喚状、裁判所命令、その他政府からの要求によって情報を開示することがあります。これはほとんど起こりえないことですが念の為ここに記載されています。東方のリプレイで犯罪をしないでください。咲夜の最後のスペルカードの奇術「エターナルミーク」を安全地帯を使用して取得しても、あの世で悪いカルマや罰に繋がるかもしれませんがこのプライバシーポリシーでは犯罪とみなされません。\n"
+"            </li>\n"
+"        </ul>\n"
+"    </p>\n"
+"\n"
+"    <h3>公開情報</h3>\n"
+"    <p>\n"
+"        公開情報は実際に公開されるものです。ユーザが情報を公開する設定をすると我々はその情報を公開します。ウェブサイトの訪問者はその情報を見ることができ、第三者がDiscord等のサードパーティサービスにリンクを共有した場合は我々はそれに情報を提供します。加えて、当サイトに投稿された公開リプレイを一括利用可能にすることもあります。\n"
+"    </p>\n"
+"\n"
+"    <h2>情報の保持期間</h2>\n"
+"    <p>\n"
+"        我々は収集し使用する目的に必要な期間のみ情報を保持します。一部の情報について、これはユーザが削除要求をしない限り無期限に保持することを意味します。例えばリプレイをアップロードした場合、ユーザが削除するまで情報を保持します。\n"
+"    </p>\n"
+"    <p>\n"
+"        ユーザが情報の削除を要求した場合、我々はバックアップの保存やサイトの問題点の調査、ユーザの取り消し要求に応えるため、その他必要の目的のために短期間その情報を保持することがあります。しかしほとんどの場合においてそのような情報を120日以上保持することはありません。120日以上保持する可能性がある情報については以下に明示されています。\n"
+"    </p>\n"
+"    <p>\n"
+"        我々はサイト訪問者のIPアドレスを記録します。訪問者が自分のアカウントでログインしている場合、我々はIPアドレスをアカウントに紐付けます。これはサイトを悪用しようとする人から守る為に必要なことです。また上記の通り、これらのIPアドレスは120日以上保存されることはありません。\n"
+"    </p>\n"
+"    <p>\n"
+"        我々はサイトの保護のために特定IPアドレスのサイトアクセスを禁止することがあります。この場合、当該IPアドレスとアクセス禁止理由を保持し続けます。この情報は15年以上保存されることはありません。\n"
+"    </p>\n"
+"    <p>\n"
+"        アカウントの利用が停止された場合、我々はユーザ名とメールアドレス、そして利用停止理由を利用停止期間中保持し続けます。これはユーザがアカウントを削除要求をしても変わりません。これはユーザのアカウント利用停止の回避を防ぎ、サイト全体を守るために必要なことです。この情報は利用停止期間が終了した後、もしくはアカウントの削除要求があった後の遅い方から数えて120日以上保持されることはありません。利用停止処分は最長でも15年間です。\n"
+"    </p>\n"
+"\n"
+"    <h2>\n"
+"        セキュリティ\n"
+"    </h2>\n"
+"\n"
+"    <p>\n"
+"        完全に安全なサービスは存在しないですがユーザに関する情報を不正アクセス・不正使用から守るように努めています。\n"
+"    </p>\n"
+"\n"
+"    <h2>\n"
+"        選択権\n"
+"    </h2>\n"
+"\n"
+"    我々に情報の提供を望まない場合は最初から提供しないのが最適解です。特にメールアドレスやオンラインIDを提供したくない場合、アカウントを作成しないでください。もしアカウント作成後でその選択に後悔した場合は既存のアカウントを削除するように要求することができます。\n"
+"\n"
+"    <h2>\n"
+"        GDPR (EUが制定した一般データ保護規則)\n"
+"    </h2>\n"
+"\n"
+"    <p>\n"
+"        もしユーザがGDPRの適用範囲に含まれる国にお住いの場合、データ保護法によりユーザには法律で定められた例外を除き以下の権利を含む個人情報に関する特定の権利を有します。\n"
+"        <ul>\n"
+"            <li>\n"
+"                自身の個人情報へのアクセス要求\n"
+"            </li>\n"
+"            <li>\n"
+"                自身の個人情報の訂正、または削除要求\n"
+"            </li>\n"
+"            <li>\n"
+"                自身の個人情報の我々の使用及び処理に対する異議申し立て\n"
+"            </li>\n"
+"            <li>\n"
+"                自身の個人情報の我々の使用及び処理に関する制限の要求\n"
+"            </li>\n"
+"            <li>\n"
+"                自身の個人情報のデータ移転の要求\n"
+"            </li>\n"
+"        </ul>\n"
+"    </p>\n"
+"    <p>\n"
+"        また、政府の監督機関に苦情を申し立てる権利もあります。\n"
+"    </p>\n"
+"\n"
+"    <h2>\n"
+"        お問い合わせ\n"
+"    </h2>\n"
+"\n"
+"    <p>\n"
+"        本プライバシーポリシーについて質問がある場合や何らかの理由で我々に連絡を希望する場合は、我々のメールアドレスである<a href=\"mailto:privacy@silentselene.net\">privacy@silentselene.net</a>にてご連絡ください。\n"
+"    </p>\n"
+"\n"
+"    <h2>\n"
+"        プライバシーポリシーの変更\n"
+"    </h2>\n"
+"\n"
+"    <p>\n"
+"        サイレントセレナは完全にリリースされていません。そのため今後プライバシーポリシーに大幅な変更が加わる場合があります。プライバシーポリシーが変更された後に本サービスを使用し続ける場合は更新後のポリシーが適用されます。\n"
+"    </p>\n"
+"\n"
+"    <h2>\n"
+"        翻訳\n"
+"    </h2>\n"
+"    <p>\n"
+"        プライバシーポリシーの原本は英語(US)です。他の言語に翻訳されていて英語版と矛盾がある場合、英語版が優先されます。\n"
+"    </p>\n"
+"\n"
+"    <h2>License and Attribution</h2>\n"
+"        <p>\n"
+"            このプライバシーポリシーは<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>ライセンスのもとで提供されています。気に入った場合は自身のサイトで使用することも可能です。これは<a href=\"https://github.com/Automattic/legalmattic/blob/master/Privacy-Policy.md\">the Automattic Privacy Policy.</a>をもとに作成されています。\n"
+"        </p>\n"
+"\n"
+"    "
 
 #: replays/templates/replays/docs/replay_rules.html:5
 msgid "Replay Rules"
@@ -1609,6 +1800,96 @@ msgid ""
 "    </ul>\n"
 "    "
 msgstr ""
+"\n"
+"    <h2>免責事項</h2>\n"
+"    <p>これらのルールは暫定的なものです。そのため我々は利用者の意見をもとに調整していく予定です。その場合、いくつかのリプレイは再分類される可能性があります。</p>\n"
+"    <h2>概要</h2>\n"
+"    <p>\n"
+"        サイレントセレナのリプレイは『通常プレイ』『ツール使用』『その他』の3種類に分類されます。多くのリプレイは<b>通常プレイ</b>に分類されます。通常プレイはプレイヤーに作用する特殊なツールを用いてプレイしたものではないことを意味します。(ただしプレイ内容に変更がないツールは通常プレイに分類されます。)<b>ツール使用</b>のリプレイは外部ツールを使用してプレイされたリプレイのことを指します。任意のツールが該当し、ステートセーブのように明らかに『不正』とみなされる行為が行われているリプレイであっても許されます。しかし、そのリプレイは実際のゲームで動作するリプレイでなければなりません。そして<b>その他</b>は上記2つに該当しないもの全てのリプレイを指します。これはゲームの内容を改変したリプレイや、その他著しく通常の挙動から逸脱した変更を加えたリプレイが該当します。\n"
+"    </p>\n"
+"    <h2>要約</h2>\n"
+"    <p>\n"
+"        通常プレイではVpatchと翻訳パッチが許可されています。ポーズバッファリング(一時停止を濫用して疑似的にゲーム速度を遅くすること)は許可されていません。\n"
+"    </p>\n"
+"    <h2>自分のプレイが通常プレイに当てはまるか否か</h2>\n"
+"    <h3>一般規則</h3>\n"
+"    <h4>高難度プレイのリプレイ</h4>\n"
+"    <p>\n"
+"        いくつかの内容は<b>高難度プレイのリプレイ</b>では許可されませんが、それ以外のリプレイでは許可されます。高難度プレイのリプレイにあたって許されるべきでないものもありますが、我々は初心者・中級者が何かを達成したことの記念にリプレイをアップロードする行為を過度に制限したくはありません。高難度プレイのリプレイは以下の基準のいずれかを満たすリプレイのことを指します。\n"
+"    </p>\n"
+"    <ul>\n"
+"        <li>\n"
+"            Lunatic\n"
+"        </li>\n"
+"        <li>\n"
+"            ノーボム\n"
+"        </li>\n"
+"        <li>\n"
+"            ノーミス。これは残機を失わなかったことを指します。\n"
+"        </li>\n"
+"        <li>\n"
+"            高いスコアを取ったリプレイ。これはスコア意識をしない平均的な1コインクリアプレイより明らかにスコアが高いプレイを指します。\n"
+"        </li>\n"
+"    </ul>\n"
+"    <h4>何が許可されるか</h4>\n"
+"    <p>\n"
+"        これらのツール(及びこれらに分類されるツール)は通常プレイで使用可能です。\n"
+"    </p>\n"
+"    <ul>\n"
+"        <li>\n"
+"            『Vpatch』等の入力遅延を軽減するツール。\n"
+"        </li>\n"
+"        <li>\n"
+"            DirectXを他のグラフィックAPIに変換する特殊なDLL。例えば『ENB Converter』や『dgVoodoo』等です。\n"
+"        </li>\n"
+"        <li>\n"
+"            エミュレータ等のゲームが本来対応環境外のOSやハードで動かすためのツール。これには『Neko Project Ⅱ』のようなPC-98エミュレータや、『Wine』等のWindowsゲームを他のOS上で動かすプログラムが含まれます。\n"
+"        </li>\n"
+"        <li>\n"
+"            ゲームのテキストを翻訳するパッチ。\n"
+"        </li>\n"
+"        <li>\n"
+"            スコアがカウンターストップ（表示上限）に達した際にも正しく表示されるよう、スコアの表示方法を変更するパッチ。\n"
+"        </li>\n"
+"    </ul>\n"
+"    <h4>何が禁止されているか</h4>\n"
+"    <p>\n"
+"        通常プレイでは以下のことが明示的に禁止されています。\n"
+"    </p>\n"
+"    <ul>\n"
+"        <li>\n"
+"            ゲームの動作を変更するようなパッチの使用。\n"
+"        </li>\n"
+"        <li>\n"
+"            ステートセーブの読み込み。これには入力遅延を減らすために未来のフレームを予測して実行(いわゆる先行実行、runahead)した後その状態をステートセーブし、入力に応じてステートセーブをロードする一部のエミュレータ機能も含まれます。\n"
+"        </li>\n"
+"        <li>\n"
+"            ポーズバッファリング(一時停止を濫用することによりゲーム進行を有利に進める行為)。\n"
+"        </li>\n"
+"        <li>\n"
+"            プレイ進行を有利に進めるための一時停止。例えば弾幕が画面上にあるときに一時停止したうえで避け方を考えたうえで避ける行為です。ただし意図的でない一時停止については、その行為が不正でないと認められれば、そのリプレイは例外として許可される場合もあります。\n"
+"        </li>\n"
+"        <li>\n"
+"            保存後のリプレイファイルの編集。ただしファイル名の変更は除きます。\n"
+"        </li>\n"
+"    </ul>\n"
+"    <h4>自分の使用しているツールがここに言及されていない場合</h4>\n"
+"    <p>\n"
+"        上記に記載されていないツールに関しては遠慮なくサイレントセレナ運営にお問い合わせください。ケースバイケースで判断し、それに応じてルールを更新します。\n"
+"    </p>\n"
+"    <h3>特定のゲームに適用されるルール</h3>\n"
+"    <ul>\n"
+"        <li>\n"
+"            <b>東方紅魔郷</b>: 当たり判定表示パッチなど、ゲームの表示に影響を与えるパッチは高難度プレイのリプレイでは使用できません。\n"
+"        </li>\n"
+"        <li>\n"
+"            <b>東方風神録</b>: 『ヒントファイル』の使用は許可されています。\n"
+"        </li>\n"
+"        <li>\n"
+"            <b>東方地霊殿</b>: 『ヒントファイル』の使用は許可されています。\n"
+"        </li>\n"
+"    </ul>\n"
+"    "
 
 #: replays/templates/replays/docs/rules.html:6
 msgid "Rules"
@@ -1663,7 +1944,7 @@ msgstr ""
 
 #: replays/templates/replays/docs/terms_of_use.html:6
 msgid "Terms of Service"
-msgstr ""
+msgstr "利用規約"
 
 #: replays/templates/replays/docs/terms_of_use.html:7
 #, python-format
@@ -1795,118 +2076,244 @@ msgid ""
 "    </p>\n"
 "    "
 msgstr ""
+"\n"
+"    <h2>概要</h2>\n"
+"\n"
+"    <p>\n"
+"        サイレントセレナは東方のゲーム体験を他人にシェアすることができます。本利用規約(以下『本規約』と言います。)は我々の責任と、ユーザがサービスを利用する際の権利と義務を定めるものです。<b>もし本規約に同意できない場合、サービスを利用することができません。</b>\n"
+"    </p>\n"
+"\n"
+"    <h2>利用規約</h2>\n"
+"    <p>\n"
+"        <i>最終更新: 2022年9月5日</i>\n"
+"    </p>\n"
+"    <p>\n"
+"        本規約は<a href=\"https://silentselene.net\">silentselene.net</a>、及び我々が将来運営するサイト(以下『本サービス』と言います。)に対して適用されます。ユーザは我々のサービスの一部にアクセス、または利用するとき、本規約及び本サービスで公表するその他の方針(以下『本契約』と言います。)の全てに同意したものとみなします。\n"
+"    </p>\n"
+"\n"
+"    <h3>用語</h3>\n"
+"    <p>\n"
+"        『ユーザ』とは我々のサービスを利用する個人または組織を指します。『我々』及び『サイレントセレナ』は現時点ではサイト管理者である『nrook』を指し、 webmaster@silentselene.net または Discordの『nrook#1848』宛に連絡することが可能です。『我々のサービス』とはウェブサイトである silentselene.net 及び我々がサービス提供のために使用するウェブサイト及びツールのことを指します。\n"
+"    </p>\n"
+"\n"
+"    <h3>アカウント作成</h3>\n"
+"    <p>\n"
+"        アカウント作成にあたり、ユーザは我々が当サイト上での活動に対する取引メール、新機能の追加や利用規約・プライバシーポリシーの変更に関するお知らせを我々から送信することに同意したものとみなします。ユーザのアカウントに置ける全ての行為はユーザ自身が単独で責任を負うものとします。我々は理由の有無を問わずユーザのアカウントを停止または削除することがあります。\n"
+"    </p>\n"
+"    <p>\n"
+"        ユーザのアカウントの一部として提供された情報を我々がどう扱うか知りたい場合は<a href=\"%(privacy_url)s\">プライバシーポリシー</a>をご覧ください。\n"
+"    </p>\n"
+"\n"
+"    <h3>年齢制限</h3>\n"
+"    <p>\n"
+"        ユーザが13歳未満(ヨーロッパの場合は16歳未満)の場合、我々のサービスへのアクセスおよび利用をすることは出来ません。\n"
+"    </p>\n"
+"\n"
+"    <h3>一般訪問者及びアカウント保持者の責任</h3>\n"
+"    <p>\n"
+"        我々は我々のサービスを通じて投稿または利用可能になったリプレイやコメントなどのコンテンツ(以下『コンテンツ』と言います。)の全てを精査することはしておらず、それが可能でもありません。\n"
+"    </p>\n"
+"    <p>\n"
+"        特に我々はこのサイトから手に入れたリプレイが安全に視聴できることを保証する責任を負いません。\n"
+"    </p>\n"
+"\n"
+"    <h3>一般的な表明及び保証</h3>\n"
+"    <p>\n"
+"        我々の目的は東方コミュニティがリプレイを共有し楽しめる場を提供することです。ユーザは我々のサービスを利用するにあたり以下を表明、保証するものとします。\n"
+"        <ul>\n"
+"            <li>本契約に厳格に従うこと。</li>\n"
+"            <li>違法な目的での使用、違法なコンテンツの公開、または違法行為の助長をしないこと。</li>\n"
+"            <li>サイレントセレナや本サイトの投稿者、または第三者の知的財産権を侵害もしくは流用しないこと。</li>\n"
+"            <li>我々が独断で裁量するところにおいて、我々のシステムに過度の負担や干渉を掛けたり、我々のインフラに対して不合理な負荷を与えないこと。</li>\n"
+"            <li>他人の個人情報を開示しないこと。</li>\n"
+"            <li>スパムや大量の迷惑メッセージを送信しないこと。</li>\n"
+"            <li>いかなるサービスやネットワークも妨害、混乱、攻撃しないこと。</li>\n"
+"            <li>マルウェア、スパイウェア、アドウェア、及びその他悪意のあるプログラムやコードを作成及び配布、またはそれらを可能にするために、あるいはそれらと連携して動作させる目的で本サービスを利用しないこと。</li>\n"
+"        </ul>\n"
+"    </p>\n"
+"\n"
+"    <h3>ユーザのコンテンツ</h3>\n"
+"    <p>\n"
+"        <b>ライセンス。</b> 我々のサービスはユーザによって提供されたコンテンツを共有するために存在しています。コンテンツをアップロードもしくは共有するにあたり、ユーザは我々に対し当サービス上でコンテンツを使用、複製、修正、配布、改変、公に表示、公開するための、全世界におけるロイヤリティフリーで譲渡可能かつサブライセンス可能な非独占的ライセンスを許諾したものとみなします。\n"
+"    </p>\n"
+"    <p>\n"
+"        <b>コンテンツの削除。</b> ユーザがコンテンツを削除するとき、我々はそれを公的に閲覧可能な範囲(サイト上でプライベートな場合は許可されたサイト訪問者から閲覧可能な範囲)から削除するよう合理的な努力を行いますが、コンテンツのキャッシュされたバージョンやコンテンツの参照が直ちに利用不可能になるとは限らないことをユーザは認識しています。\n"
+"    </p>\n"
+"    <p>\n"
+"        <b>我々によるコンテンツ修正。</b> 我々の独断の裁量により、我々はユーザが提供したコンテンツをより正確にするため、もしくはその他の理由によって修正することがあります。(例えばリプレイに記載される最終スコアが間違っていた場合、我々は正しいスコアに修正する場合があります。)もしユーザがそのような修正に異議を唱える場合、ユーザは自身のコンテンツを削除することができます。\n"
+"    </p>\n"
+"\n"
+"    <h3>変更</h3>\n"
+"    <p>\n"
+"        我々は本サービスの法律上、規制上、セキュリティ上の理由から本規約を随時更新することがあります。この場合、我々は改訂された本規約の掲載と最終更新日の更新等によって変更の通知を行います。また、その変更点が我々の独断かつ重大であると判断できる場合、我々は本サービスもしくはその他の手段を用いてユーザに通知することがあります。いかなる変更も将来にわたって適用され、別途定めがない限り、本規約は直ちに効力を持ちます。我々の通知後もユーザが我々のサービスを使用し続けることにより、ユーザは新しい本規約に拘束されることに同意したものとみなします。ユーザは我々のサービスの利用を中止し我々のウェブサイトに投稿された全てのコンテンツを削除することにより、いつでも任意の変更に異議を唱える権利を持ちます。\n"
+"    </p>\n"
+"\n"
+"    <h3>利用停止</h3>\n"
+"    <p>\n"
+"        我々は、理由の有無および通知の有無を問わず、ユーザによる我々のサービスの全てもしくは一部へのアクセスを直ちに終了させることができます。我々は我々のサービス上で利用可能なあらゆるコンテンツを削除する権利を持ちます。\n"
+"    </p>\n"
+"\n"
+"    <h3>フィードバック</h3>\n"
+"    <p>\n"
+"        我々は我々のサービス改善のためにユーザからのご意見を歓迎しています。ユーザがコメント、アイデア、フィードバックを我々に共有して頂いた場合、ユーザは我々がそれらを自由に使用でき、ユーザからのいかなる制限や補償も発生しないことに同意したものとみなします。\n"
+"    </p>\n"
+"\n"
+"    <h3>免責事項</h3>\n"
+"    <p>\n"
+"        我々のサービスは『現状のまま』提供されます。これによりサイレントセレナは適用される法律の許す最大限の範囲で、明示的あるいは暗黙的ないかなる保証を否認します。これには商品適格性の保証や特定目的への非侵害の適合を含みますが、これに限定されません。サイレントセレナやその関係者およびライセンス提供者は、我々のサービスがエラー無しで提供されること、またはそこへのアクセスが継続的かつ中断なく行われることを保証しません。ユーザは、我々のサービスを通じてコンテンツやサービスをダウンロードする際にその判断とリスクをに基づいて行わなければならないことを理解しているものとみなします。\n"
+"    </p>\n"
+"\n"
+"    <h3>裁判管轄および準拠法</h3>\n"
+"    <p>\n"
+"        適用される法律に特段の定めがない限り、本契約および全てのサービスのアクセスまたはその利用に関してアメリカ合衆国ニューヨーク州の法律が適用されます。本契約のいかなる内容もユーザの居住国における強行規定に基づく消費者としての権利に影響を及ぼすものではありません。\n"
+"    </p>\n"
+"\n"
+"    <h3>責任の制限</h3>\n"
+"    <p>\n"
+"        いかなる場合においても、サイレントセレナ、関係者、協力者およびライセンス提供者は、契約、過失、厳格責任、またはその他の法律あるいは衡平法上の理論に基づき、本サービスに関して以下の事項について責任を負わないものとします。(1)特別損害、付随的損害、派生的損害。(2)代替製品またはサービスの調達にかかる費用。(3)利用の中断、またはデータの喪失や破損。(4)合計額が50アメリカドルを超える損害。サイレントセレナは合理的制御の範疇を超える不履行や遅延について一切の責任を負わないものとします。上記の内容は適用法によって禁止されている範囲には適用されません。\n"
+"    </p>\n"
+"    <p>\n"
+"        ヨーロッパのユーザについて: もし我々がヨーロッパに在住のユーザに対して損害を与えた場合、我々の責任はユーザが在住の国で認められる最大限の範囲までに制限されます。責任の範囲は、この種の契約に通常想定される重大な契約義務の違反に起因する、予見可能な損害に限定されます。サイレントセレナはその他の適用される注意義務における、重大でない違反によって生じた損害について責任を負わないものとします。この責任制限は、制限のできない法的責任、我々の過失によって生じた死亡または人身傷害の責任、我々の故意の不正行為または重大な過失によって生じた責任、我々が明示的にユーザと約束した事項の責任には適用されません。我々の責任が制限もしくは免除される範囲において、我々の法定代理人や被用者の個人的責任にもその責任の制限や免除は適用されます。\n"
+"    </p>\n"
+"\n"
+"    <h3>補償</h3>\n"
+"    <p>\n"
+"        ユーザは、サイレントセレナ、その契約者、そのライセンス提供者、およびびそれぞれの運営メンバー、スタッフ、関係者、そして代理人を、本サービスの利用に起因もしくは関連して生じた損失、責任、請求、損害、費用、主張、経費(弁護士費用を含む)から免責し、補償することに同意したものとします。これにはユーザの本契約あるいはその他本サービスに関連して使用されるサードパーティサービス提供者との契約の違反を含みますが、これに限りません。\n"
+"    </p>\n"
+"\n"
+"    <h3>翻訳</h3>\n"
+"    <p>\n"
+"        これらの本規約は原本は英語(US)です。他の言語に翻訳されていて英語版と矛盾がある場合、英語版が優先されます。\n"
+"    </p>\n"
+"\n"
+"    <h3>その他の規定</h3>\n"
+"    <p>\n"
+"        本契約(および特定の本サービスに適用される他の規約も含む)はサイレントセレナとユーザの間で我々のサービスに関する全ての合意について取り決めたものです。本契約の一部が不法、無効、または効力を持たない場合、その部分は本契約から切り離され、本契約の残りの部分の有効性、および効力には影響を与えません。いずれかの当事者による本契約の条項、規約、またはその違反に対する権利放棄が一度行われた場合であっても、その条項や規約、又はその後の違反に対する権利放棄にはならないものとします。\n"
+"    </p>\n"
+"    <p>\n"
+"        サイレントセレナは本契約に基づく権利を無条件で譲渡することができます。ユーザは本契約に基づく権利を譲渡する場合、我々に書面による同意を得る必要があります。\n"
+"    </p>\n"
+"\n"
+"    <h2>プライバシーポリシー</h2>\n"
+"    <p>我々の個人情報の取り扱いについては<a href=\"%(privacy_url)s\">プライバシーポリシー</a>をご覧ください。</p>\n"
+"\n"
+"    <h2>ライセンスおよび帰属</h3>\n"
+"    <p>\n"
+"        これらの規約は<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0</a>ライセンスのもとで提供されているので、ユーザは気に入った場合自身のサイトで使用することができます。それらは<a href=\"https://wordpress.com/tos/\">WordPressの利用規約</a>をもとにしています。\n"
+"    </p>\n"
+"    "
 
 #: replays/templates/replays/index.html:6
 msgid "Welcome to Silent Selene!"
-msgstr ""
+msgstr "サイレントセレナへようこそ！"
 
-#: replays/templates/replays/index.html:10
+#: replays/templates/replays/index.html:15
 msgid "Recent uploads"
-msgstr ""
+msgstr "新着一覧"
 
 #: replays/templates/replays/my_claims.html:8
 msgid "All claims"
-msgstr ""
+msgstr "申請一覧"
 
 #: replays/templates/replays/my_claims.html:18
 msgid "Id"
-msgstr ""
+msgstr "ID"
 
 #: replays/templates/replays/my_claims.html:19
 msgid "User"
-msgstr ""
+msgstr "ユーザ"
 
 #: replays/templates/replays/my_claims.html:20
 msgid "Status"
-msgstr ""
+msgstr "ステータス"
 
 #: replays/templates/replays/my_claims.html:21
 msgid "Link"
-msgstr ""
+msgstr "リンク"
 
 #: replays/templates/replays/my_claims.html:29
 msgid "View"
-msgstr ""
+msgstr "見る"
 
 #: replays/templates/replays/publish.html:5
 msgid "Finish uploading your replay"
-msgstr ""
+msgstr "リプレイ投稿内容の確認"
 
 #: replays/templates/replays/publish.html:12
 msgid "Replay Date"
-msgstr ""
+msgstr "リプレイ日付"
 
 #: replays/templates/replays/publish.html:32
 #: replays/templates/replays/publish_no_replay.html:35
 msgid "Route"
-msgstr ""
+msgstr "ルート"
 
 #: replays/templates/replays/publish.html:38
 #: replays/templates/replays/replay_details.html:193
 msgid "Slowdown"
-msgstr ""
+msgstr "処理落ち率"
 
 #: replays/templates/replays/publish.html:43
 #: replays/templates/replays/publish_no_replay.html:63
 msgid "Replay Type"
-msgstr ""
+msgstr "リプレイ種類"
 
 #: replays/templates/replays/publish.html:48
 msgid "Spell Card ID"
-msgstr ""
+msgstr "スペルカードID"
 
 #: replays/templates/replays/publish.html:63
 msgid "Name"
-msgstr ""
+msgstr "名前"
 
 #: replays/templates/replays/publish.html:81
 #: replays/templates/replays/publish_no_replay.html:54
 msgid "Category"
-msgstr ""
+msgstr "カテゴリー"
 
 #: replays/templates/replays/publish.html:90
 #: replays/templates/replays/publish_no_replay.html:72
 msgid "Video link"
-msgstr ""
+msgstr "動画リンク"
 
 #: replays/templates/replays/publish.html:99
 #: replays/templates/replays/publish_no_replay.html:81
 msgid "Did it clear?"
-msgstr ""
+msgstr "クリアしましたか？"
 
 #: replays/templates/replays/publish.html:108
 #: replays/templates/replays/publish_no_replay.html:90
 msgid "No desyncs"
-msgstr ""
+msgstr "リプレイを再生できますか？(リプズレは起きていませんか？)"
 
 #: replays/templates/replays/publish.html:119
 #: replays/templates/replays/publish_no_replay.html:101
 msgid "Did you use bombs?"
-msgstr ""
+msgstr "ボムは使用しましたか？"
 
 #: replays/templates/replays/publish.html:130
 #: replays/templates/replays/publish_no_replay.html:112
 msgid "Miss count (optional)"
-msgstr ""
+msgstr "ミス数 (任意)"
 
 #: replays/templates/replays/publish.html:143
 #: replays/templates/replays/publish_no_replay.html:125
 msgid "Publish Replay"
-msgstr ""
+msgstr "リプレイを公開する"
 
 #: replays/templates/replays/publish_no_replay.html:5
 msgid "Upload a new video replay"
-msgstr ""
+msgstr "動画によるリプレイ投稿"
 
 #: replays/templates/replays/replay_details.html:15
 #, python-format
 msgid "Played by %(player_name)s on %(replay_timestamp)s"
-msgstr ""
+msgstr "プレイヤー：%(player_name)s 日付：%(replay_timestamp)s"
 
 #: replays/templates/replays/replay_details.html:15
 #, python-format
 msgid "Played by %(player_name)s"
-msgstr ""
+msgstr "プレイヤー：%(player_name)s"
 
 #: replays/templates/replays/replay_details.html:48
 #, python-format
@@ -1915,6 +2322,9 @@ msgid ""
 "                        Played by <a href=\"%(user_url)s\">%(username)s</a> on %(replay_timestamp)s\n"
 "                    "
 msgstr ""
+"\n"
+"                        プレイヤー：<a href=\"%(user_url)s\">%(username)s</a> 日付：%(replay_timestamp)s\n"
+"                    "
 
 #: replays/templates/replays/replay_details.html:53
 #, python-format
@@ -1923,6 +2333,9 @@ msgid ""
 "                    Played by %(player_name)s (%(source)s) on %(replay_timestamp)s\n"
 "                  "
 msgstr ""
+"\n"
+"                    プレイヤー：%(player_name)s (%(source)s) 日付：%(replay_timestamp)s\n"
+"                  "
 
 #: replays/templates/replays/replay_details.html:62
 #, python-format
@@ -1931,6 +2344,9 @@ msgid ""
 "                        Played by <a href=\"%(user_url)s\">%(username)s</a>\n"
 "                    "
 msgstr ""
+"\n"
+"                        プレイヤー：<a href=\"%(user_url)s\">%(username)s</a>\n"
+"                    "
 
 #: replays/templates/replays/replay_details.html:67
 #, python-format
@@ -1939,26 +2355,29 @@ msgid ""
 "                    Played by %(player_name)s (%(source)s)\n"
 "                "
 msgstr ""
+"\n"
+"                    プレイヤー：%(player_name)s (%(source)s)\n"
+"                "
 
 #: replays/templates/replays/replay_details.html:76
 msgid "Download replay"
-msgstr ""
+msgstr "リプレイをダウンロードする"
 
 #: replays/templates/replays/replay_details.html:78
 msgid "Download replay (desyncs)"
-msgstr ""
+msgstr "リプレイをダウンロードする(リプズレが起きていて正常に再生できません)"
 
 #: replays/templates/replays/replay_details.html:85
 msgid "Badges and Stage Splits"
-msgstr ""
+msgstr "プレイ進行"
 
 #: replays/templates/replays/replay_details.html:90
 msgid "This run did not use bombs"
-msgstr ""
+msgstr "ノーボム"
 
 #: replays/templates/replays/replay_details.html:99
 msgid "This run never missed"
-msgstr ""
+msgstr "ノーミス"
 
 #: replays/templates/replays/replay_details.html:137
 msgid ""
@@ -1966,10 +2385,13 @@ msgid ""
 "            Stage split information is unavailable for this replay.\n"
 "            "
 msgstr ""
+"\n"
+"            このリプレイはプレイ進行情報の表示ができません。\n"
+"            "
 
 #: replays/templates/replays/replay_details.html:149
 msgid "Watch externally"
-msgstr ""
+msgstr "外部ページで見る"
 
 #: replays/templates/replays/replay_details.html:155
 #, python-format
@@ -1978,71 +2400,74 @@ msgid ""
 "                    Failed to embed video, <a href=\"%(replay.video_link)s\">watch replay here</a>\n"
 "                "
 msgstr ""
+"\n"
+"                    動画の埋め込みに失敗しました。<a href=\"%(replay.video_link)s\">こちら</a>から動画を見ることができます\n"
+"                "
 
 #: replays/templates/replays/replay_details.html:182
 msgid "Details"
-msgstr ""
+msgstr "詳細"
 
 #: replays/templates/replays/replay_details.html:187
 msgid "In-game name"
-msgstr ""
+msgstr "リプレイ名"
 
 #: replays/templates/replays/replay_details.html:199
 msgid "Misses"
-msgstr ""
+msgstr "ミス数"
 
 #: replays/templates/replays/replay_details.html:204
 msgid "Uploaded on"
-msgstr ""
+msgstr "投稿日付"
 
 #: replays/templates/replays/replay_details.html:209
 msgid "Spell Card"
-msgstr ""
+msgstr "スペルカード"
 
 #: replays/templates/replays/replay_details.html:214
 msgid "Clears?"
-msgstr ""
+msgstr "クリアしたか"
 
 #: replays/templates/replays/replay_details.html:217
 #: replays/templates/replays/unclaim_replay.html:17
 msgid "Yes"
-msgstr ""
+msgstr "はい"
 
 #: replays/templates/replays/replay_details.html:219
 msgid "No"
-msgstr ""
+msgstr "いいえ"
 
 #: replays/templates/replays/replay_details.html:229
 msgid "Stage details"
-msgstr ""
+msgstr "ステージの詳細"
 
 #: replays/templates/replays/replay_details.html:234
 msgid "Manage replay"
-msgstr ""
+msgstr "リプレイの管理"
 
 #: replays/templates/replays/replay_details.html:237
 msgid "Unclaim this replay"
-msgstr ""
+msgstr "これは自分のリプレイではありません"
 
 #: replays/templates/replays/replay_details.html:243
 msgid "Hide replay on the leaderboards"
-msgstr ""
+msgstr "スコアボード上で非公開にする"
 
 #: replays/templates/replays/replay_details.html:247
 msgid "Show replay on the leaderboards"
-msgstr ""
+msgstr "スコアボード上で公開する"
 
 #: replays/templates/replays/replay_details.html:253
 msgid "Permanently delete this replay"
-msgstr ""
+msgstr "リプレイを削除する"
 
 #: replays/templates/replays/replay_details.html:258
 msgid "Reanalyze this replay"
-msgstr ""
+msgstr "このリプレイを再度解析する"
 
 #: replays/templates/replays/replay_details.html:263
 msgid "Report"
-msgstr ""
+msgstr "報告する"
 
 #: replays/templates/replays/replay_stages.html:7
 msgid "Stage"
@@ -2074,15 +2499,15 @@ msgstr "ボム"
 
 #: replays/templates/replays/replay_stages.html:31
 msgid "Motivation"
-msgstr ""
+msgstr "やる気"
 
 #: replays/templates/replays/replay_stages.html:34
 msgid "Perfect Freeze"
-msgstr ""
+msgstr "パーフェクトフリーズ"
 
 #: replays/templates/replays/replay_stages.html:37
 msgid "Frozen Area"
-msgstr ""
+msgstr "こおらせた面積"
 
 #: replays/templates/replays/replay_stages.html:40
 msgid "Rank"
@@ -2098,11 +2523,11 @@ msgstr "桜MAX"
 
 #: replays/templates/replays/replay_stages.html:49
 msgid "P1 CPU?"
-msgstr ""
+msgstr "P1がCPU？"
 
 #: replays/templates/replays/replay_stages.html:52
 msgid "P2 CPU?"
-msgstr ""
+msgstr "P2がCPU？"
 
 #: replays/templates/replays/replay_stages.html:55
 msgid "P2 Shot"
@@ -2122,27 +2547,27 @@ msgstr "季節ゲージ"
 
 #: replays/templates/replays/success.html:6
 msgid "Success!"
-msgstr ""
+msgstr "成功しました！"
 
 #: replays/templates/replays/unclaim_replay.html:9
 msgid "Original username"
-msgstr ""
+msgstr "元のユーザ名"
 
 #: replays/templates/replays/unclaim_replay.html:14
 msgid "Are you sure that this replay does not belong to you?"
-msgstr ""
+msgstr "このリプレイがあなたのものでないことを確認しましたか？"
 
 #: replays/templates/replays/upload.html:5
 msgid "Publish a replay"
-msgstr ""
+msgstr "リプレイを公開する"
 
 #: replays/templates/replays/upload.html:6
 msgid "Upload a replay file"
-msgstr ""
+msgstr "リプレイファイルのアップロード"
 
 #: replays/templates/replays/upload.html:8
 msgid "Upload a new replay from one of the following games:"
-msgstr ""
+msgstr "リプレイファイルは以下のゲームに対応しています。"
 
 #: replays/templates/replays/upload.html:14
 msgid ""
@@ -2151,22 +2576,26 @@ msgid ""
 "        Touhou games soon.\n"
 "    "
 msgstr ""
+"\n"
+"        このサイトは現在開発中です。全ての東方公式作品に対応できるよう\n"
+"        順次対応を進めております。\n"
+"    "
 
 #: replays/templates/replays/upload.html:25
 msgid "Choose replay:"
-msgstr ""
+msgstr "リプレイを選択してください:"
 
 #: replays/templates/replays/upload.html:35
 msgid "Upload"
-msgstr ""
+msgstr "アップロード"
 
 #: replays/templates/replays/upload.html:37
 msgid "Publish a replay for a game without replay files"
-msgstr ""
+msgstr "リプレイ機能非対応作品の記録投稿"
 
 #: replays/templates/replays/user_page.html:8
 msgid "Claim replays from royalflare"
-msgstr ""
+msgstr "ロイヤルフレアのリプレイを引き継ぐ"
 
 #: thscoreboard/settings.py:215
 msgid "English"
@@ -2179,104 +2608,104 @@ msgstr "日本語"
 #: thscoreboard/templates/base.html:28
 msgctxt "Top bar"
 msgid "Upload"
-msgstr ""
+msgstr "新規投稿"
 
 #: thscoreboard/templates/base.html:31
 msgctxt "Top bar"
 msgid "My replays"
-msgstr ""
+msgstr "自分の記録"
 
 #: thscoreboard/templates/base.html:34
 msgctxt "Top bar"
 msgid "Profile"
-msgstr ""
+msgstr "プロフィール"
 
 #: thscoreboard/templates/base.html:38
 msgctxt "Top bar"
 msgid "Staff tools"
-msgstr ""
+msgstr "管理者用ツール"
 
 #: thscoreboard/templates/base.html:43
 msgctxt "Top bar"
 msgid "Log in"
-msgstr ""
+msgstr "ログイン"
 
 #: thscoreboard/templates/base.html:54
 msgctxt "language"
 msgid "Japanese"
-msgstr ""
+msgstr "日本語"
 
 #: thscoreboard/templates/base.html:54
 msgctxt "language"
 msgid "English"
-msgstr ""
+msgstr "英語"
 
 #: thscoreboard/templates/base.html:65
 msgctxt "Sidebar header"
 msgid "Scoreboards"
-msgstr ""
+msgstr "スコアボード一覧"
 
 #: thscoreboard/templates/base.html:85
 msgctxt "Sidebar header"
 msgid "More"
-msgstr ""
+msgstr "その他"
 
 #: thscoreboard/templates/base.html:88
 msgid "Player Rankings"
-msgstr ""
+msgstr "プレイヤーランキング"
 
 #: thscoreboard/templates/base.html:91
 msgctxt "Sidebar header"
 msgid "About the site"
-msgstr ""
+msgstr "このサイトについて"
 
 #: thscoreboard/templates/base.html:94
 msgctxt "Sidebar link"
 msgid "About"
-msgstr ""
+msgstr "このサイトについて"
 
 #: thscoreboard/templates/base.html:95
 msgctxt "Sidebar link"
 msgid "Blog"
-msgstr ""
+msgstr "ブログ"
 
 #: thscoreboard/templates/base.html:96
 msgctxt "Sidebar link"
 msgid "Website rules"
-msgstr ""
+msgstr "サイトに関するルール"
 
 #: thscoreboard/templates/base.html:97
 msgctxt "Sidebar link"
 msgid "Replay rules"
-msgstr ""
+msgstr "リプレイに関するルール"
 
 #: thscoreboard/templates/base.html:98
 msgctxt "Sidebar link"
 msgid "Privacy policy"
-msgstr ""
+msgstr "プライバシーポリシー"
 
 #: thscoreboard/templates/base.html:99
 msgctxt "Sidebar link"
 msgid "Licences"
-msgstr ""
+msgstr "ライセンス"
 
 #: thscoreboard/templates/base.html:100
 msgctxt "Sidebar link"
 msgid "Terms of Use"
-msgstr ""
+msgstr "利用規約"
 
 #: thscoreboard/templates/base.html:101
 msgctxt "Sidebar link"
 msgid "Credits"
-msgstr ""
+msgstr "スタッフ紹介"
 
 #: users/forms.py:32
 msgid "An account has already been registered with this username."
-msgstr ""
+msgstr "このユーザ名は既に登録されています。"
 
 #: users/forms.py:54
 msgid "An account has already been registered with this email address."
-msgstr ""
+msgstr "このメールアドレスは既に登録されています。"
 
 #: users/forms.py:93 users/forms.py:118 users/forms.py:131
 msgid "Username"
@@ -2292,11 +2721,11 @@ msgstr "メールアドレス"
 
 #: users/forms.py:113
 msgid "Invite File Contents"
-msgstr ""
+msgstr "招待ファイルの内容"
 
 #: users/forms.py:132
 msgid "Reason"
-msgstr ""
+msgstr "理由"
 
 #: users/forms.py:133
 msgid "Days"
@@ -2309,19 +2738,19 @@ msgstr "時間"
 #: users/forms.py:142
 #, python-format
 msgid "User %(username)s does not exist."
-msgstr ""
+msgstr "%(username)sというユーザは存在しません。"
 
 #: users/forms.py:155
 msgid "Silent Selene username"
-msgstr ""
+msgstr "サイレントセレナでのユーザ名"
 
 #: users/forms.py:157
 msgid "Royalflare username"
-msgstr ""
+msgstr "ロイヤルフレアでのユーザ名"
 
 #: users/forms.py:198
 msgid "Contact Info"
-msgstr ""
+msgstr "連絡先"
 
 #: users/templates/registration/password_change_form.html:4
 #: users/templates/registration/password_change_form.html:42
@@ -2335,10 +2764,12 @@ msgid ""
 "\n"
 "    The user %(target_username)s has been temporarily banned.\n"
 msgstr ""
+"\n"
+"    %(target_username)sが一時的にBANされました。\n"
 
 #: users/templates/users/banned.html:9
 msgid "Your account has been suspended."
-msgstr ""
+msgstr "あなたのアカウントは停止されています。"
 
 #: users/templates/users/banned.html:14
 #, python-format
@@ -2348,6 +2779,10 @@ msgid ""
 "        You may also <a href=\"%(logout_url)s\">log out</a> and browse anonymously.\n"
 "    "
 msgstr ""
+"\n"
+"        あなたのアカウント停止は%(expiration)sに解除され、それ以降再びサイレントセレナを利用することができます。\n"
+"        <a href=\"%(logout_url)s\">ログアウト</a>することで匿名での閲覧は可能です。\n"
+"    "
 
 #: users/templates/users/banned.html:20
 #, python-format
@@ -2357,10 +2792,14 @@ msgid ""
 "        will not shorten the length of the suspension.\n"
 "    "
 msgstr ""
+"\n"
+"        <a href=\"%(delete_account_url)s\">アカウントを削除</a>することは可能ですが、\n"
+"        これによってアカウント停止期間が短くなることはありません。\n"
+"    "
 
 #: users/templates/users/batch_invite_upload.html:17
 msgid "Upload invite file:"
-msgstr ""
+msgstr "招待用ファイルのアップロード"
 
 #: users/templates/users/delete_account.html:9
 msgid ""
@@ -2369,6 +2808,10 @@ msgid ""
 "    and will delete all of your replays.\n"
 "    "
 msgstr ""
+"\n"
+"    本当にアカウントを削除しますか？この操作は取り消せず、\n"
+"    全てのリプレイが削除されます。\n"
+"    "
 
 #: users/templates/users/delete_account.html:16
 msgid ""
@@ -2376,6 +2819,9 @@ msgid ""
 "    If you're completely sure, confirm your password below.\n"
 "    "
 msgstr ""
+"\n"
+"    本当に削除して良い場合はパスワードを入力してください\n"
+"    "
 
 #: users/templates/users/delete_account_successful.html:6
 msgid ""
@@ -2388,6 +2834,14 @@ msgid ""
 "    Thank you for using Silent Selene.\n"
 "</p>\n"
 msgstr ""
+"\n"
+"<p>\n"
+"    アカウントを削除しました。削除後もしばらくの間は記録とアカウントのバックアップが保持される場合があります。\n"
+"</p>\n"
+"\n"
+"<p>\n"
+"    サイレントセレナをご利用いただきありがとうございました。\n"
+"</p>\n"
 
 #: users/templates/users/profile.html:5
 msgid "My Profile"
@@ -2399,4 +2853,4 @@ msgstr "ログアウト"
 
 #: users/templates/users/profile.html:43
 msgid "Permanently delete my account"
-msgstr ""
+msgstr "アカウントを削除する"
