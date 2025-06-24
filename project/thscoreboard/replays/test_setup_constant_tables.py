@@ -12,6 +12,9 @@ class CreateOrUpdateGamesTest(test.TestCase):
         test_game_constants = GameConstants(
             id="th00",
             has_replays=True,
+            has_multiple_shots=True,
+            has_subshots=True,
+            has_routes=True,
             num_difficulties=5,
             shots=["Reimu", "Marisa"],
             routes=["A", "B"],
@@ -26,6 +29,11 @@ class CreateOrUpdateGamesTest(test.TestCase):
 
         self.assertEquals(game_in_db.game_id, test_game_constants.id)
         self.assertEquals(game_in_db.has_replays, test_game_constants.has_replays)
+        self.assertEquals(
+            game_in_db.has_multiple_shots, test_game_constants.has_multiple_shots
+        )
+        self.assertEquals(game_in_db.has_subshots, test_game_constants.has_subshots)
+        self.assertEquals(game_in_db.has_routes, test_game_constants.has_routes)
         self.assertEquals(
             game_in_db.num_difficulties, test_game_constants.num_difficulties
         )
@@ -44,6 +52,9 @@ class CreateOrUpdateGamesTest(test.TestCase):
         test_game_constants = GameConstants(
             id="th00",
             has_replays=False,
+            has_multiple_shots=False,
+            has_subshots=False,
+            has_routes=False,
             num_difficulties=0,
             shots=[],
             routes=[],
@@ -69,6 +80,9 @@ class CreateOrUpdateGamesTest(test.TestCase):
         test_game_constants = GameConstants(
             id="th00",
             has_replays=False,
+            has_multiple_shots=False,
+            has_subshots=False,
+            has_routes=False,
             num_difficulties=0,
             shots=[],
             routes=[],
@@ -77,6 +91,9 @@ class CreateOrUpdateGamesTest(test.TestCase):
         create_or_update_games([test_game_constants])
 
         test_game_constants.has_replays = True
+        test_game_constants.has_multiple_shots = True
+        test_game_constants.has_subshots = True
+        test_game_constants.has_routes = True
         test_game_constants.num_difficulties = 5
 
         create_or_update_games([test_game_constants])
@@ -92,6 +109,9 @@ class CreateOrUpdateGamesTest(test.TestCase):
         test_game_constants = GameConstants(
             id="th00",
             has_replays=False,
+            has_multiple_shots=False,
+            has_subshots=False,
+            has_routes=False,
             num_difficulties=0,
             shots=["Reimu", "Marisa"],
             routes=[],
@@ -108,6 +128,9 @@ class CreateOrUpdateGamesTest(test.TestCase):
         test_game_constants = GameConstants(
             id="th00",
             has_replays=False,
+            has_multiple_shots=False,
+            has_subshots=False,
+            has_routes=False,
             num_difficulties=0,
             shots=[],
             routes=["a", "b"],
@@ -124,6 +147,9 @@ class CreateOrUpdateGamesTest(test.TestCase):
         test_game_constants = GameConstants(
             id="th00",
             has_replays=False,
+            has_multiple_shots=False,
+            has_subshots=False,
+            has_routes=False,
             num_difficulties=0,
             shots=[],
             routes=["a", "b"],

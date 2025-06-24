@@ -9,7 +9,14 @@ from replays.testing import test_replays
 
 class DbErrorsTest(test_case.ReplayTestCase):
     def testRecognizesUniqueViolation(self):
-        game = models.Game(game_id="th999", has_replays=True, num_difficulties=5)
+        game = models.Game(
+            game_id="th999",
+            has_replays=True,
+            has_multiple_shots=False,
+            has_subshots=False,
+            has_routes=False,
+            num_difficulties=5,
+        )
         game.save()
 
         shot = models.Shot(game=game, shot_id="foo")
