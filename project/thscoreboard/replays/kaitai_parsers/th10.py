@@ -53,14 +53,14 @@ class Th10(KaitaiStruct):
             self.stage_num = self._io.read_u2le()
             self.unknown_1 = self._io.read_u2le()
             self.unknown_2 = self._io.read_u4le()
-            self.next_stage_offset = self._io.read_u4le()
+            self.len_stage_data = self._io.read_u4le()
             self.score = self._io.read_u4le()
             self.power = self._io.read_u4le()
             self.piv = self._io.read_u4le()
             self.unknown_3 = self._io.read_u4le()
             self.lives = self._io.read_u4le()
             self.rest_of_header = self._io.read_bytes(420)
-            self.stage_data = self._io.read_bytes(self.next_stage_offset)
+            self.stage_data = self._io.read_bytes(self.len_stage_data)
 
 
 

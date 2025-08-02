@@ -52,7 +52,7 @@ class Th11(KaitaiStruct):
             self.stage_num = self._io.read_u2le()
             self.seed = self._io.read_u2le()
             self.ignore = self._io.read_u4le()
-            self.stage_size = self._io.read_u4le()
+            self.len_stage_data = self._io.read_u4le()
             self.score = self._io.read_u4le()
             self.power = self._io.read_u4le()
             self.piv = self._io.read_u4le()
@@ -61,7 +61,7 @@ class Th11(KaitaiStruct):
             self.unknown_1 = self._io.read_bytes(24)
             self.graze = self._io.read_u4le()
             self.unknown_2 = self._io.read_bytes(88)
-            self.stage_data = self._io.read_bytes(self.stage_size)
+            self.stage_data = self._io.read_bytes(self.len_stage_data)
 
 
 
