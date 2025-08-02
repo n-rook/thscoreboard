@@ -31,9 +31,9 @@ class ThModern(KaitaiStruct):
             self.unused_1 = self._io.read_u4le()
             self.userdata_offset = self._io.read_u4le()
             self.unused_2 = self._io.read_bytes(12)
-            self.comp_size = self._io.read_u4le()
+            self.len_comp_data = self._io.read_u4le()
             self.size = self._io.read_u4le()
-            self.comp_data = self._io.read_bytes(self.comp_size)
+            self.comp_data = self._io.read_bytes(self.len_comp_data)
 
 
     class Userdata(KaitaiStruct):

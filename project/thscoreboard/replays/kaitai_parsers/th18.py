@@ -55,7 +55,7 @@ class Th18(KaitaiStruct):
             self.stage_num = self._io.read_u2le()
             self.rng = self._io.read_u2le()
             self.frame_count = self._io.read_u4le()
-            self.end_off = self._io.read_u4le()
+            self.len_stage_data = self._io.read_u4le()
             self.pos_subpixel_x = self._io.read_u4le()
             self.pos_subpixel_y = self._io.read_u4le()
             self.player_is_focused_start = self._io.read_u4le()
@@ -66,7 +66,7 @@ class Th18(KaitaiStruct):
             self.stage_data_start = Th18.StageData(self._io, self, self._root)
             self.stage_data_end = Th18.StageData(self._io, self, self._root)
             self.player_is_focused_end = self._io.read_u4le()
-            self.stage_data = self._io.read_bytes(self.end_off)
+            self.stage_data = self._io.read_bytes(self.len_stage_data)
 
 
     class StageData(KaitaiStruct):

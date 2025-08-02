@@ -44,7 +44,7 @@ types:
         type: u2
       - id: unknown_2
         type: u4
-      - id: next_stage_offset
+      - id: len_stage_data
         type: u4
         doc: add to current stage offset, + current stage header length which is 0x1c4
       - id: score
@@ -60,4 +60,4 @@ types:
       - id: rest_of_header
         size: 420
       - id: stage_data
-        size: next_stage_offset
+        size: len_stage_data
