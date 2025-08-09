@@ -29,6 +29,7 @@ class GameIDs:
     TH16 = "th16"
     TH17 = "th17"
     TH18 = "th18"
+    TH20 = "th20"
 
 
 class ReplayTypes:

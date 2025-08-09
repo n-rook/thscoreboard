@@ -20,7 +20,9 @@ from .kaitai_parsers import th15
 from .kaitai_parsers import th16
 from .kaitai_parsers import th17
 from .kaitai_parsers import th18
+from .kaitai_parsers import th20
 from .kaitai_parsers import th_modern
+from .kaitai_parsers import th_modern_20_header
 from .kaitai_parsers import th08_userdata
 
 import math
@@ -98,6 +100,13 @@ class ReplayInfo:
 
     stages: List[ReplayStage] = dataclasses.field(default_factory=list)
     slowdown: Optional[float] = None
+
+    # Equipment chosen at the beginning of the game.
+    # This is currently only used in th20, in which it is the stones selected
+    # by the player.
+    # The order is significant; in th20, the first incident stone is the "main"
+    # stone.
+    equipment: tuple[str] = dataclasses.field(default_factory=tuple)
 
     @property
     def spell_card_id_format(self):
@@ -1091,6 +1100,58 @@ def _Parse18(rep_raw) -> ReplayInfo:
     return r
 
 
+def _20SubshotToStone(stone_id: int) -> str:
+    return [
+        "Red",
+        "Red2",
+        "Blue",
+        "Blue2",
+        "Yellow",
+        "Yellow2",
+        "Green",
+        "Green2",
+        "Common",
+    ][stone_id]
+
+
+def _Parse20(rep_raw) -> ReplayInfo:
+    header = th_modern_20_header.ThModern20Header.from_bytes(rep_raw)
+    comp_data = bytearray(header.main.comp_data)
+
+    td.decrypt(comp_data, 0x400, 0x5C, 0xE1)
+    td.decrypt(comp_data, 0x100, 0x7D, 0x3A)
+    decomp = td.unlzss(comp_data)
+
+    replay = th20.Th20.from_bytes(decomp)
+    shot = ["Reimu", "Marisa"][replay.header.shot]
+    stones = [_20SubshotToStone(stone_id) for stone_id in replay.header.stones]
+
+    if _is_spell_practice_modern(replay.header):
+        raise Exception("Spell practice is not yet supported")
+
+    # No stage practice support yet.
+
+    r_type = game_ids.ReplayTypes.FULL_GAME
+    if replay.header.stage_count == 1 and replay.header.difficulty != 4:
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
+
+    r = ReplayInfo(
+        game=game_ids.GameIDs.TH20,
+        shot=shot,
+        equipment=stones,
+        difficulty=replay.header.difficulty,
+        score=replay.header.score * 10,
+        timestamp=datetime.datetime.fromtimestamp(
+            replay.header.timestamp, tz=datetime.timezone.utc
+        ),
+        name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
+        replay_type=r_type,
+    )
+
+    return r
+
+
 def _DetermineTH13orTH14(replay):
     # thank you ZUN
     # yes, one of the only indications of which game a replay is from here is from a USERDATA string
@@ -1150,6 +1211,9 @@ def Parse(replay) -> ReplayInfo:
             return _Parse17(replay)
         elif gamecode == b"t18r":
             return _Parse18(replay)
+        elif gamecode == b"t20t":
+            # TODO: Parse real replays, not the demo
+            return _Parse20(replay)
         elif gamecode == b"128r":
             return _Parse128(replay)
         else:
