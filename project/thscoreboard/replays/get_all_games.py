@@ -33,6 +33,7 @@ NEW_GAME_IDS = [
     game_ids.GameIDs.TH16,
     game_ids.GameIDs.TH17,
     game_ids.GameIDs.TH18,
+    game_ids.GameIDs.TH20,
 ]
 
 

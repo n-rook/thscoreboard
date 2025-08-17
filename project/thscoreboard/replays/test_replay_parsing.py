@@ -595,11 +595,10 @@ class Th18ReplayTestCase(unittest.TestCase):
 
 
 class Th20ReplayTestCase(unittest.TestCase):
-
     def testFullGame(self) -> None:
         r = ParseTestReplay("th20_normal")
         self.assertEqual(r.game, "th20")
-        self.assertEqual(r.shot, "Reimu")
+        self.assertEqual(r.shot, "ReimuRed")
         self.assertEqual(r.equipment, ["Red", "Common", "Common", "Common"])
         self.assertEqual(r.difficulty, 1)
         self.assertEqual(r.score, 585_186_620)
