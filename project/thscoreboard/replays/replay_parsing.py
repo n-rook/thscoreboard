@@ -1123,8 +1123,9 @@ def _Parse20(rep_raw) -> ReplayInfo:
     decomp = td.unlzss(comp_data)
 
     replay = th20.Th20.from_bytes(decomp)
-    shot = ["Reimu", "Marisa"][replay.header.shot]
+    character = ["Reimu", "Marisa"][replay.header.shot]
     stones = [_20SubshotToStone(stone_id) for stone_id in replay.header.stones]
+    shot = character + stones[0]
 
     if _is_spell_practice_modern(replay.header):
         raise Exception("Spell practice is not yet supported")
@@ -1211,8 +1212,7 @@ def Parse(replay) -> ReplayInfo:
             return _Parse17(replay)
         elif gamecode == b"t18r":
             return _Parse18(replay)
-        elif gamecode == b"t20t":
-            # TODO: Parse real replays, not the demo
+        elif gamecode == b"t20r":
             return _Parse20(replay)
         elif gamecode == b"128r":
             return _Parse128(replay)

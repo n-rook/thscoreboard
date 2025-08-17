@@ -160,6 +160,11 @@ _GAME_NAMES = immutabledict(
             pgettext_lazy("standard game name", "Unconnected Marketeers"),
             pgettext_lazy("full game name", "東方虹龍洞 - Unconnected Marketeers"),
         ),
+        GameIDs.TH20: (
+            pgettext_lazy("short game name", "th20"),
+            pgettext_lazy("standard game name", "Fossilized Wonders"),
+            pgettext_lazy("full game name", "東方錦上京 - Fossilized Wonders"),
+        ),
     }
 )
 
@@ -506,6 +511,41 @@ def GetShotName(game_id: str, shot_id: str) -> str:
         elif shot_id == "Sanae":
             return pgettext("th18", "Sanae")
 
+    if game_id == GameIDs.TH20:
+        match shot_id:
+            case "ReimuRed":
+                return pgettext("th20", "ReimuRed")
+            case "ReimuRed2":
+                return pgettext("th20", "ReimuRed2")
+            case "ReimuBlue":
+                return pgettext("th20", "ReimuBlue")
+            case "ReimuBlue2":
+                return pgettext("th20", "ReimuBlue2")
+            case "ReimuYellow":
+                return pgettext("th20", "ReimuYellow")
+            case "ReimuYellow2":
+                return pgettext("th20", "ReimuYellow2")
+            case "ReimuGreen":
+                return pgettext("th20", "ReimuGreen")
+            case "ReimuGreen2":
+                return pgettext("th20", "ReimuGreen2")
+            case "MarisaRed":
+                return pgettext("th20", "MarisaRed")
+            case "MarisaRed2":
+                return pgettext("th20", "MarisaRed2")
+            case "MarisaBlue":
+                return pgettext("th20", "MarisaBlue")
+            case "MarisaBlue2":
+                return pgettext("th20", "MarisaBlue2")
+            case "MarisaYellow":
+                return pgettext("th20", "MarisaYellow")
+            case "MarisaYellow2":
+                return pgettext("th20", "MarisaYellow2")
+            case "MarisaGreen":
+                return pgettext("th20", "MarisaGreen")
+            case "MarisaGreen2":
+                return pgettext("th20", "MarisaGreen2")
+
     return "Bug shot"
 
 
@@ -526,6 +566,11 @@ def GetCharacterName(game_id: str, shot_id: str) -> str:
             return pgettext("th17", "Marisa")
         elif shot_id.startswith("Youmu"):
             return pgettext("th17", "Youmu")
+    if game_id == GameIDs.TH20:
+        if shot_id.startswith("Reimu"):
+            return pgettext("th20", "Reimu")
+        elif shot_id.startswith("Marisa"):
+            return pgettext("th20", "Marisa")
 
     return "Character name not implemented"
 
@@ -549,6 +594,31 @@ def GetSubshotName(game_id: str, shot_id: str) -> Optional[str]:
             return pgettext("th17", "Otter")
         elif shot_id.endswith("Eagle"):
             return pgettext("th17", "Eagle")
+    if game_id == GameIDs.TH20:
+        if shot_id.startswith("Reimu"):
+            main_stone = shot_id.removeprefix("Reimu")
+        elif shot_id.startswith("Marisa"):
+            main_stone = shot_id.removeprefix("Marisa")
+        else:
+            return pgettext("th20", "Buggy subshot")
+
+        match main_stone:
+            case "Red":
+                return pgettext("th20", "Red")
+            case "Red2":
+                return pgettext("th20", "Red2")
+            case "Blue":
+                return pgettext("th20", "Blue")
+            case "Blue2":
+                return pgettext("th20", "Blue2")
+            case "Yellow":
+                return pgettext("th20", "Yellow")
+            case "Yellow2":
+                return pgettext("th20", "Yellow2")
+            case "Green":
+                return pgettext("th20", "Green")
+            case "Green2":
+                return pgettext("th20", "Green2")
 
     return "Subshot not implemented"
 
@@ -603,6 +673,7 @@ def GetDifficultyName(game_id: str, difficulty: int):
         GameIDs.TH16,
         GameIDs.TH17,
         GameIDs.TH18,
+        GameIDs.TH20,
     }:
         if difficulty == 0:
             return _("Easy")
