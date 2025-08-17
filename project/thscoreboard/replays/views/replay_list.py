@@ -77,6 +77,8 @@ def get_filter_options(game: Game) -> dict[str, list[str]]:
         return _get_filter_options_th16(game)
     elif game.game_id == game_ids.GameIDs.TH17:
         return _get_filter_options_th17(game)
+    elif game.game_id == game_ids.GameIDs.TH20:
+        return _get_filter_options_th20(game)
     else:
         return _get_filter_options_default(game)
 
@@ -140,6 +142,21 @@ def _get_filter_options_th17(game: Game) -> dict[str, list[str]]:
         "Difficulty": all_difficulties,
         "Character": all_characters,
         "Goast": all_goasts,
+    }
+
+
+def _get_filter_options_th20(game: Game) -> dict[str, list[str]]:
+    all_characters = _deduplicate_list_preserving_order(
+        shot.GetCharacterName() for shot in Shot.objects.filter(game=game.game_id)
+    )
+    all_stones = _deduplicate_list_preserving_order(
+        shot.GetSubshotName() for shot in Shot.objects.filter(game=game.game_id)
+    )
+    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
+    return {
+        "Difficulty": all_difficulties,
+        "Character": all_characters,
+        "Stone": all_stones,
     }
 
 
