@@ -595,14 +595,15 @@ class Th18ReplayTestCase(unittest.TestCase):
 
 
 class Th20ReplayTestCase(unittest.TestCase):
-    def testTrial(self) -> None:
-        r = ParseTestReplay("th20_trial")
+
+    def testFullGame(self) -> None:
+        r = ParseTestReplay("th20_normal")
         self.assertEqual(r.game, "th20")
         self.assertEqual(r.shot, "Reimu")
-        self.assertEqual(r.equipment, ["Yellow2", "Common", "Common", "Common"])
+        self.assertEqual(r.equipment, ["Red", "Common", "Common", "Common"])
         self.assertEqual(r.difficulty, 1)
-        self.assertEqual(r.score, 50_311_520)
-        self.assertEqual(r.timestamp.date(), datetime.date(2025, 8, 2))
+        self.assertEqual(r.score, 585_186_620)
+        self.assertEqual(r.timestamp.date(), datetime.date(2025, 8, 17))
         self.assertEqual(r.name.rstrip(), "nrook")
-        self.assertAlmostEqual(r.slowdown, 0.0448, places=4)
+        self.assertAlmostEqual(r.slowdown, 0.0818, places=4)
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)

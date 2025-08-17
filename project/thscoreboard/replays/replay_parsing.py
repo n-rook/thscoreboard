@@ -1211,8 +1211,7 @@ def Parse(replay) -> ReplayInfo:
             return _Parse17(replay)
         elif gamecode == b"t18r":
             return _Parse18(replay)
-        elif gamecode == b"t20t":
-            # TODO: Parse real replays, not the demo
+        elif gamecode == b"t20r":
             return _Parse20(replay)
         elif gamecode == b"128r":
             return _Parse128(replay)
