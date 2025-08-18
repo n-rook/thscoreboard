@@ -606,3 +606,9 @@ class Th20ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.name.rstrip(), "nrook")
         self.assertAlmostEqual(r.slowdown, 0.0818, places=4)
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
+
+    def testBug(self) -> None:
+        # Regression test for bug when "Chara" userdata field is set to junk.
+        r = ParseTestReplay("th20_kc_bug_report")
+        self.assertEqual(r.game, "th20")
+        self.assertEqual(r.score, 1520626210)

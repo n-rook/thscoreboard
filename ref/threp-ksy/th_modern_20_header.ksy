@@ -50,7 +50,7 @@ types:
       - id: date
         type: userdata_field
       - id: shot
-        type: userdata_field
+        type: chara_userdata_field
       - id: difficulty
         type: userdata_field
       - id: stage
@@ -77,5 +77,17 @@ types:
         type: str
         terminator: 0xd
         encoding: ASCII
+      - id: term
+        type: u1
+  # For some reason, it seems like this field often is set to what appears to be
+  # junk data.
+  chara_userdata_field:
+    seq:
+      - id: name
+        type: str
+        terminator: 0x20
+        encoding: ASCII
+      - id: value
+        terminator: 0xd
       - id: term
         type: u1
