@@ -321,6 +321,21 @@ msgctxt "full game name"
 msgid "東方虹龍洞 - Unconnected Marketeers"
 msgstr "東方虹龍洞　～ Unconnected Marketeers"
 
+#: replays/game_ids.py:164
+msgctxt "short game name"
+msgid "th20"
+msgstr "錦"
+
+#: replays/game_ids.py:165
+msgctxt "standard game name"
+msgid "Fossilized Wonders"
+msgstr "東方錦上京"
+
+#: replays/game_ids.py:166
+msgctxt "full game name"
+msgid "東方錦上京 - Fossilized Wonders"
+msgstr "東方錦上京　～ Fossilized Wonders"
+
 #: replays/game_ids.py:169
 msgid "Unknown game (bug!)"
 msgstr "不明なゲームです (バグの可能性があります！)"
@@ -950,6 +965,116 @@ msgctxt "th18"
 msgid "Sanae"
 msgstr "早苗"
 
+#: replays/game_ids.py:517
+#| msgctxt "th01"
+#| msgid "Reimu"
+msgctxt "th20"
+msgid "ReimuRed"
+msgstr "霊夢 赤1"
+
+#: replays/game_ids.py:519
+#| msgctxt "th01"
+#| msgid "Reimu"
+msgctxt "th20"
+msgid "ReimuRed2"
+msgstr "霊夢 赤2"
+
+#: replays/game_ids.py:521
+#| msgctxt "th04"
+#| msgid "Reimu B"
+msgctxt "th20"
+msgid "ReimuBlue"
+msgstr "霊夢 青1"
+
+#: replays/game_ids.py:523
+#| msgctxt "th04"
+#| msgid "Reimu B"
+msgctxt "th20"
+msgid "ReimuBlue2"
+msgstr "霊夢 青2"
+
+#: replays/game_ids.py:525
+#| msgctxt "th01"
+#| msgid "Reimu"
+msgctxt "th20"
+msgid "ReimuYellow"
+msgstr "霊夢 黄1"
+
+#: replays/game_ids.py:527
+msgctxt "th20"
+msgid "ReimuYellow2"
+msgstr "霊夢 黄2"
+
+#: replays/game_ids.py:529
+#| msgctxt "th01"
+#| msgid "Reimu"
+msgctxt "th20"
+msgid "ReimuGreen"
+msgstr "霊夢 緑1"
+
+#: replays/game_ids.py:531
+#| msgctxt "th01"
+#| msgid "Reimu"
+msgctxt "th20"
+msgid "ReimuGreen2"
+msgstr "霊夢 緑2"
+
+#: replays/game_ids.py:533
+#| msgctxt "th03"
+#| msgid "Marisa"
+msgctxt "th20"
+msgid "MarisaRed"
+msgstr "魔理沙 赤1"
+
+#: replays/game_ids.py:535
+#| msgctxt "th03"
+#| msgid "Marisa"
+msgctxt "th20"
+msgid "MarisaRed2"
+msgstr "魔理沙 赤2"
+
+#: replays/game_ids.py:537
+#| msgctxt "th04"
+#| msgid "Marisa B"
+msgctxt "th20"
+msgid "MarisaBlue"
+msgstr "魔理沙 青1"
+
+#: replays/game_ids.py:539
+#| msgctxt "th04"
+#| msgid "Marisa B"
+msgctxt "th20"
+msgid "MarisaBlue2"
+msgstr "魔理沙 青2"
+
+#: replays/game_ids.py:541
+#| msgctxt "th03"
+#| msgid "Marisa"
+msgctxt "th20"
+msgid "MarisaYellow"
+msgstr "魔理沙 黄1"
+
+#: replays/game_ids.py:543
+#| msgctxt "th03"
+#| msgid "Marisa"
+msgctxt "th20"
+msgid "MarisaYellow2"
+msgstr "魔理沙 黄2"
+
+#: replays/game_ids.py:545
+#| msgctxt "th03"
+#| msgid "Marisa"
+msgctxt "th20"
+msgid "MarisaGreen"
+msgstr "魔理沙 緑1"
+
+#: replays/game_ids.py:547
+#| msgctxt "th03"
+#| msgid "Marisa"
+msgctxt "th20"
+msgid "MarisaGreen2"
+msgstr "魔理沙 緑2"
+
 #: replays/game_ids.py:523
 msgctxt "th17"
 msgid "Reimu"
@@ -964,6 +1089,20 @@ msgstr "魔理沙"
 msgctxt "th17"
 msgid "Youmu"
 msgstr "妖夢"
+
+#: replays/game_ids.py:571
+#| msgctxt "th01"
+#| msgid "Reimu"
+msgctxt "th20"
+msgid "Reimu"
+msgstr "霊夢"
+
+#: replays/game_ids.py:573
+#| msgctxt "th03"
+#| msgid "Marisa"
+msgctxt "th20"
+msgid "Marisa"
+msgstr "魔理沙"
 
 #: replays/game_ids.py:535
 msgctxt "th16"
@@ -999,6 +1138,51 @@ msgstr "カワウソ"
 msgctxt "th17"
 msgid "Eagle"
 msgstr "オオワシ"
+
+#: replays/game_ids.py:603
+msgctxt "th20"
+msgid "Buggy subshot"
+msgstr "不明な装備"
+
+#: replays/game_ids.py:607
+msgctxt "th20"
+msgid "Red"
+msgstr "赤1"
+
+#: replays/game_ids.py:609
+msgctxt "th20"
+msgid "Red2"
+msgstr "赤2"
+
+#: replays/game_ids.py:611
+msgctxt "th20"
+msgid "Blue"
+msgstr "青1"
+
+#: replays/game_ids.py:613
+msgctxt "th20"
+msgid "Blue2"
+msgstr "青2"
+
+#: replays/game_ids.py:615
+msgctxt "th20"
+msgid "Yellow"
+msgstr "黄1"
+
+#: replays/game_ids.py:617
+msgctxt "th20"
+msgid "Yellow2"
+msgstr "黄2"
+
+#: replays/game_ids.py:619
+msgctxt "th20"
+msgid "Green"
+msgstr "緑1"
+
+#: replays/game_ids.py:621
+msgctxt "th20"
+msgid "Green2"
+msgstr "緑2"
 
 #: replays/game_ids.py:558
 msgctxt "th01"
