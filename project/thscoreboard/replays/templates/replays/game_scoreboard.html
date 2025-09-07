@@ -3,22 +3,39 @@
 {% block content %}
     <h2><a href="/replays/{{game.game_id}}">{{ game.GetFullName }}</a></h2>
 
-    {% for filter_name, filter_values in filters.items %}
+    {% for filter in filters %}
         <div class=button-container>
+            {% if filter.has_all %}
             <button
                 class="button pressed"
-                filterType="{{filter_name}}"
+                filterType="{{filter.name}}"
                 value="All"
                 onclick="onClick(this)"
             >All</button>
-            {% for filter_value in filter_values %}
+            {% for filter_value in filter.values %}
                 <button
                     class="button"
-                    filterType="{{filter_name}}"
+                    filterType="{{filter.name}}"
                     value="{{filter_value}}"
                     onclick="onClick(this)"
                 >{{ filter_value }}</button>
             {% endfor %}
+            {% else %}
+            {% for filter_value in filter.values %}
+                {% if forloop.first %}
+                <button
+                    class="button pressed"
+                    filterType="{{filter.name}}"
+                    value="{{filter_value}}"
+                    onclick="onClick(this)"
+                >{% else %}<button
+                    class="button"
+                    filterType="{{filter.name}}"
+                    value="{{filter_value}}"
+                    onclick="onClick(this)"
+                >{% endif %}{{ filter_value }}</button>
+            {% endfor %}
+            {% endif %}
         </div>
     {% endfor %}
     <br />

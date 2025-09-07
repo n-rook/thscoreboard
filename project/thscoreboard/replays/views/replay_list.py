@@ -1,5 +1,6 @@
 """Contains views which list various replays."""
 
+import dataclasses
 from typing import Optional
 
 from django import urls
@@ -13,6 +14,9 @@ from replays import game_ids
 from replays.models import Game, Shot, Route
 from replays.replays_to_json import convert_replays_to_json_bytes
 from replays.views.replay_table_helpers import stream_json_bytes_to_http_reponse
+
+
+_SCOREBOARD_CATEGORIES = (models.Category.STANDARD, models.Category.TAS)
 
 
 @http_decorators.require_safe
@@ -49,6 +53,9 @@ def game_scoreboard(
 ):
     game: Game = get_object_or_404(Game, game_id=game_id)
     filter_options = get_filter_options(game)
+    filter_options.append(
+        Filter("Category", _get_scoreboard_category_names(), has_all=False)
+    )
     show_route = game_id in [
         game_ids.GameIDs.TH01,
         game_ids.GameIDs.TH08,
@@ -64,6 +71,13 @@ def game_scoreboard(
             "show_route": show_route,
         },
     )
+
+
+@dataclasses.dataclass(frozen=True)
+class Filter:
+    name: str
+    values: str
+    has_all: bool = True
 
 
 def get_filter_options(game: Game) -> dict[str, list[str]]:
@@ -83,38 +97,51 @@ def get_filter_options(game: Game) -> dict[str, list[str]]:
         return _get_filter_options_default(game)
 
 
-def _get_filter_options_default(game: Game) -> dict[str, list[str]]:
+def _get_scoreboard_category_names() -> list[str]:
+    return [c.label for c in _SCOREBOARD_CATEGORIES]
+
+
+def _get_filter_options_default(game: Game) -> list[Filter]:
     all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game.game_id)]
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    return {"Difficulty": all_difficulties, "Shot": all_shots}
+    return [
+        Filter("Difficulty", all_difficulties),
+        Filter("Shot", all_shots),
+    ]
 
 
-def _get_filter_options_th01_th128(game: Game) -> dict[str, list[str]]:
+def _get_filter_options_th01_th128(game: Game) -> list[Filter]:
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
     all_routes = [route.GetName() for route in Route.objects.filter(game=game.game_id)]
-    return {"Difficulty": all_difficulties, "Route": all_routes}
+    return [
+        Filter("Difficulty", all_difficulties),
+        Filter("Route", all_routes),
+    ]
 
 
-def _get_filter_options_th08(game: Game) -> dict[str, list[str]]:
+def _get_filter_options_th08(game: Game) -> list[Filter]:
     all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game.game_id)]
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
     all_routes = [route.GetName() for route in Route.objects.filter(game=game.game_id)]
-    return {
-        "Difficulty": all_difficulties,
-        "Shot": all_shots,
-        "Route": all_routes,
-    }
+    return [
+        Filter("Difficulty", all_difficulties),
+        Filter("Shot", all_shots),
+        Filter("Route", all_routes),
+    ]
 
 
-def _get_filter_options_th13(game: Game) -> dict[str, list[str]]:
-    filter_options = _get_filter_options_default(game)
-    # The Overdrive difficulty only exists for spell practice, but we do not show any
-    # spell practice replays.
-    filter_options["Difficulty"].remove("Overdrive")
-    return filter_options
+def _get_filter_options_th13(game: Game) -> list[Filter]:
+    all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game.game_id)]
+    # Exclude difficulty 5, Overdrive, which only appears in spell practice.
+    all_difficulties = [game.GetDifficultyName(d) for d in range(5)]
+
+    return [
+        Filter("Difficulty", all_difficulties),
+        Filter("Shot", all_shots),
+    ]
 
 
-def _get_filter_options_th16(game: Game) -> dict[str, list[str]]:
+def _get_filter_options_th16(game: Game) -> list[Filter]:
     all_characters = _deduplicate_list_preserving_order(
         shot.GetCharacterName() for shot in Shot.objects.filter(game=game.game_id)
     )
@@ -123,14 +150,14 @@ def _get_filter_options_th16(game: Game) -> dict[str, list[str]]:
     )
     all_seasons.remove(None)
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    return {
-        "Difficulty": all_difficulties,
-        "Character": all_characters,
-        "Season": all_seasons,
-    }
+    return [
+        Filter("Difficulty", all_difficulties),
+        Filter("Character", all_characters),
+        Filter("Season", all_seasons),
+    ]
 
 
-def _get_filter_options_th17(game: Game) -> dict[str, list[str]]:
+def _get_filter_options_th17(game: Game) -> list[Filter]:
     all_characters = _deduplicate_list_preserving_order(
         shot.GetCharacterName() for shot in Shot.objects.filter(game=game.game_id)
     )
@@ -138,14 +165,14 @@ def _get_filter_options_th17(game: Game) -> dict[str, list[str]]:
         shot.GetSubshotName() for shot in Shot.objects.filter(game=game.game_id)
     )
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    return {
-        "Difficulty": all_difficulties,
-        "Character": all_characters,
-        "Goast": all_goasts,
-    }
+    return [
+        Filter("Difficulty", all_difficulties),
+        Filter("Character", all_characters),
+        Filter("Goast", all_goasts),
+    ]
 
 
-def _get_filter_options_th20(game: Game) -> dict[str, list[str]]:
+def _get_filter_options_th20(game: Game) -> list[Filter]:
     all_characters = _deduplicate_list_preserving_order(
         shot.GetCharacterName() for shot in Shot.objects.filter(game=game.game_id)
     )
@@ -153,11 +180,11 @@ def _get_filter_options_th20(game: Game) -> dict[str, list[str]]:
         shot.GetSubshotName() for shot in Shot.objects.filter(game=game.game_id)
     )
     all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
-    return {
-        "Difficulty": all_difficulties,
-        "Character": all_characters,
-        "Stone": all_stones,
-    }
+    return [
+        Filter("Difficulty", all_difficulties),
+        Filter("Character", all_characters),
+        Filter("Stone", all_stones),
+    ]
 
 
 def _get_all_replay_for_game(game_id: str) -> Manager[models.Replay]:
@@ -165,7 +192,7 @@ def _get_all_replay_for_game(game_id: str) -> Manager[models.Replay]:
         models.Replay.objects.prefetch_related("shot")
         .prefetch_related("route")
         .select_related("rank_view")
-        .filter(category=models.Category.STANDARD)
+        .filter(category__in=(models.Category.STANDARD, models.Category.TAS))
         .filter(shot__game=game_id)
         .filter(replay_type=1)
         .filter(is_listed=True)
