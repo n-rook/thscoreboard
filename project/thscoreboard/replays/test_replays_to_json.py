@@ -82,6 +82,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         assert json_data[0]["Game"]["url"] == "/replays/th06"
         assert json_data[0]["Difficulty"] == "Easy"
         assert json_data[0]["Shot"] == "Reimu A"
+        assert json_data[0]["Category"] == "Standard"
         assert json_data[0]["Score"]["text"] == "🥇1,000,000"
         assert json_data[0]["Upload Date"] == "2000-01-01"
         assert json_data[0]["Comment"] == "鼻毛"

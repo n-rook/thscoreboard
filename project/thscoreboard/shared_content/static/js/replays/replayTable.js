@@ -53,14 +53,6 @@ async function requestAndInitializeReplays() {
   } catch (error) {}
 }
 
-function initializeFilters() {
-  const allButtons = document.querySelectorAll('button[filtertype]')
-  for (const button of allButtons) {
-    const filterType = button.getAttribute('filtertype');
-    activeFilters[filterType] = 'All';
-  }
-}
-
 function onClick(elm) {
   const filterType = elm.getAttribute('filterType');
   const value = elm.getAttribute('value');

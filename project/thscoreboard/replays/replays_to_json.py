@@ -36,6 +36,7 @@ class ReplayToJsonConverter:
             }
         else:
             json_dict["User"] = replay.imported_username or replay.name
+        json_dict["Category"] = replay.get_category_display()
         json_dict["Game"] = {
             "text": game.GetShortName(),
             "url": f"/replays/{game.game_id}",
