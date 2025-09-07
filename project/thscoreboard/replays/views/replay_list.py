@@ -80,7 +80,7 @@ class Filter:
     has_all: bool = True
 
 
-def get_filter_options(game: Game) -> dict[str, list[str]]:
+def get_filter_options(game: Game) -> list[Filter]:
     if game.game_id == game_ids.GameIDs.TH01 or game.game_id == game_ids.GameIDs.TH128:
         return _get_filter_options_th01_th128(game)
     elif game.game_id == game_ids.GameIDs.TH08:

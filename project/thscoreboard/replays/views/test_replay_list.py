@@ -39,51 +39,55 @@ class GameScoreboardRedirectTestCase(test_case.ReplayTestCase):
 
 
 class GetFilterOptionsTestCase(test_case.ReplayTestCase):
+    def assertHasFilterWithNValues(self, expected_name, expected_length, filters):
+        for f in filters:
+            if f.name == expected_name:
+                break
+        else:
+            self.fail(f"No filter in {filters} with name {expected_name}")
+        self.assertEqual(len(f.values), expected_length)
+
     def test_default(self):
         game = models.Game.objects.get(game_id=game_ids.GameIDs.TH06)
         filter_options = replay_list.get_filter_options(game)
-        self.assertCountEqual(filter_options.keys(), ("Difficulty", "Shot"))
-        self.assertEqual(len(filter_options["Difficulty"]), 5)
-        self.assertEqual(len(filter_options["Shot"]), 4)
+        self.assertEqual(len(filter_options), 2)
+        self.assertHasFilterWithNValues("Difficulty", 5, filter_options)
+        self.assertHasFilterWithNValues("Shot", 4, filter_options)
 
     def test_th01(self):
         game = models.Game.objects.get(game_id=game_ids.GameIDs.TH01)
         filter_options = replay_list.get_filter_options(game)
-        self.assertCountEqual(filter_options.keys(), ("Difficulty", "Route"))
-        self.assertEqual(len(filter_options["Difficulty"]), 4)
-        self.assertEqual(len(filter_options["Route"]), 2)
+        self.assertEqual(len(filter_options), 2)
+        self.assertHasFilterWithNValues("Difficulty", 4, filter_options)
+        self.assertHasFilterWithNValues("Route", 2, filter_options)
 
     def test_th08(self):
         game = models.Game.objects.get(game_id=game_ids.GameIDs.TH08)
         filter_options = replay_list.get_filter_options(game)
-        self.assertCountEqual(filter_options.keys(), ("Difficulty", "Route", "Shot"))
-        self.assertEqual(len(filter_options["Difficulty"]), 5)
-        self.assertEqual(len(filter_options["Route"]), 2)
-        self.assertEqual(len(filter_options["Shot"]), 12)
+        self.assertEqual(len(filter_options), 3)
+        self.assertHasFilterWithNValues("Difficulty", 5, filter_options)
+        self.assertHasFilterWithNValues("Route", 2, filter_options)
+        self.assertHasFilterWithNValues("Shot", 12, filter_options)
 
     def test_th13(self):
         game = models.Game.objects.get(game_id=game_ids.GameIDs.TH13)
         filter_options = replay_list.get_filter_options(game)
-        self.assertCountEqual(filter_options.keys(), ("Difficulty", "Shot"))
-        self.assertEqual(len(filter_options["Difficulty"]), 5)
-        self.assertEqual(len(filter_options["Shot"]), 4)
+        self.assertEqual(len(filter_options), 2)
+        self.assertHasFilterWithNValues("Difficulty", 5, filter_options)
+        self.assertHasFilterWithNValues("Shot", 4, filter_options)
 
     def test_th16(self):
         game = models.Game.objects.get(game_id=game_ids.GameIDs.TH16)
         filter_options = replay_list.get_filter_options(game)
-        self.assertCountEqual(
-            filter_options.keys(), ("Difficulty", "Character", "Season")
-        )
-        self.assertEqual(len(filter_options["Difficulty"]), 5)
-        self.assertEqual(len(filter_options["Season"]), 4)
-        self.assertEqual(len(filter_options["Season"]), 4)
+        self.assertEqual(len(filter_options), 3)
+        self.assertHasFilterWithNValues("Difficulty", 5, filter_options)
+        self.assertHasFilterWithNValues("Character", 4, filter_options)
+        self.assertHasFilterWithNValues("Season", 4, filter_options)
 
     def test_th17(self):
         game = models.Game.objects.get(game_id=game_ids.GameIDs.TH17)
         filter_options = replay_list.get_filter_options(game)
-        self.assertCountEqual(
-            filter_options.keys(), ("Difficulty", "Character", "Goast")
-        )
-        self.assertEqual(len(filter_options["Difficulty"]), 5)
-        self.assertEqual(len(filter_options["Character"]), 3)
-        self.assertEqual(len(filter_options["Goast"]), 3)
+        self.assertEqual(len(filter_options), 3)
+        self.assertHasFilterWithNValues("Difficulty", 5, filter_options)
+        self.assertHasFilterWithNValues("Character", 3, filter_options)
+        self.assertHasFilterWithNValues("Goast", 3, filter_options)
