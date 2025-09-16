@@ -1,5 +1,6 @@
 {% load humanize %}
 {% load i18n %}
+{% load replay_filters %}
 <table class="replay-table">
     <thead>
         <tr>
@@ -123,7 +124,7 @@
             <td>{{stage.th09_p2_score|intcomma}}</td>
             {% endif %}
             {% if table_fields.th13_trance %}
-            <td>{{stage.th13_trance}}</td>
+            <td>{{stage.th13_trance|convert_th13_trance}}</td>
             {% endif %}
             {% if table_fields.th16_season_power %}
             <td>{{stage.th16_season_power}}</td>
