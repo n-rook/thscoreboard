@@ -666,7 +666,7 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
             stage.th13_trance = ""
         else:
             stage.th13_trance = (
-                f"{stage.th13_trance//200} + {stage.th13_trance%200}/200"
+                f"{stage.th13_trance//200} ({stage.th13_trance%200}/200)"
             )
 
         if stage.stage is None:
