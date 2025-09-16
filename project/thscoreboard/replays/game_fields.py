@@ -692,6 +692,10 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
             stage.th09_p2_score = ""
         if stage.th13_trance is None:
             stage.th13_trance = ""
+        else:
+            stage.th13_trance = (
+                f"{stage.th13_trance//200} + {stage.th13_trance%200}/200"
+            )
         if stage.th16_season_power is None:
             stage.th16_season_power = ""
         if stage.extends is None:
