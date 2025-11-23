@@ -610,7 +610,8 @@ def _Parse12(rep_raw):
             if s.life_pieces > 0:
                 s.life_pieces -= 1
             s.bombs = next_stage_start_data.bombs
-            s.bomb_pieces = next_stage_start_data.bomb_pieces
+            # For some reason, bomb_pieces ends up being twice its original value.
+            s.bomb_pieces = next_stage_start_data.bomb_pieces / 2
             s.graze = next_stage_start_data.graze
         else:
             # no next stage means this is the last stage, so use the final run score
