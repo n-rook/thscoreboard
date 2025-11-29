@@ -1156,7 +1156,7 @@ def _Parse20(rep_raw) -> ReplayInfo:
     return r
 
 
-def _ParseAlco(rep_raw):
+def _ParseAlco(rep_raw) -> ReplayInfo:
     header = alco_userdata.AlcoUserdata.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
 
