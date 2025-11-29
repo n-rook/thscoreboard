@@ -1,51 +1,28 @@
 # This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
-# type: ignore
 
 import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 
 
-if getattr(kaitaistruct, 'API_VERSION', (0, 9)) < (0, 11):
-    raise Exception("Incompatible Kaitai Struct Python API: 0.11 or later is required, but you have %s" % (kaitaistruct.__version__))
+if getattr(kaitaistruct, 'API_VERSION', (0, 9)) < (0, 9):
+    raise Exception("Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s" % (kaitaistruct.__version__))
 
 class AlcoUserdata(KaitaiStruct):
     def __init__(self, _io, _parent=None, _root=None):
-        super(AlcoUserdata, self).__init__(_io)
+        self._io = _io
         self._parent = _parent
-        self._root = _root or self
+        self._root = _root if _root else self
         self._read()
 
     def _read(self):
         self.main = AlcoUserdata.Main(self._io, self, self._root)
         self.userdata = AlcoUserdata.Userdata(self._io, self, self._root)
 
-
-    def _fetch_instances(self):
-        pass
-        self.main._fetch_instances()
-        self.userdata._fetch_instances()
-
-    class Crlfstring(KaitaiStruct):
-        def __init__(self, _io, _parent=None, _root=None):
-            super(AlcoUserdata.Crlfstring, self).__init__(_io)
-            self._parent = _parent
-            self._root = _root
-            self._read()
-
-        def _read(self):
-            self.value = (self._io.read_bytes_term(13, False, True, True)).decode(u"Shift_JIS")
-            self.term = self._io.read_u1()
-
-
-        def _fetch_instances(self):
-            pass
-
-
     class Main(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            super(AlcoUserdata.Main, self).__init__(_io)
+            self._io = _io
             self._parent = _parent
-            self._root = _root
+            self._root = _root if _root else self
             self._read()
 
         def _read(self):
@@ -61,15 +38,11 @@ class AlcoUserdata(KaitaiStruct):
             self.comp_data = self._io.read_bytes(self.len_comp_data)
 
 
-        def _fetch_instances(self):
-            pass
-
-
     class Userdata(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            super(AlcoUserdata.Userdata, self).__init__(_io)
+            self._io = _io
             self._parent = _parent
-            self._root = _root
+            self._root = _root if _root else self
             self._read()
 
         def _read(self):
@@ -95,24 +68,23 @@ class AlcoUserdata(KaitaiStruct):
             self.slowdown = AlcoUserdata.UserdataField(u"Slow Rate", self._io, self, self._root)
 
 
-        def _fetch_instances(self):
-            pass
-            for i in range(len(self.user_desc)):
-                pass
+    class Crlfstring(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
 
-            self.user_ver._fetch_instances()
-            self.name._fetch_instances()
-            self.date._fetch_instances()
-            self.stage._fetch_instances()
-            self.score._fetch_instances()
-            self.slowdown._fetch_instances()
+        def _read(self):
+            self.value = (self._io.read_bytes_term(13, False, True, True)).decode(u"SJIS")
+            self.term = self._io.read_u1()
 
 
     class UserdataField(KaitaiStruct):
         def __init__(self, expected_name, _io, _parent=None, _root=None):
-            super(AlcoUserdata.UserdataField, self).__init__(_io)
+            self._io = _io
             self._parent = _parent
-            self._root = _root
+            self._root = _root if _root else self
             self.expected_name = expected_name
             self._read()
 
@@ -125,16 +97,12 @@ class AlcoUserdata(KaitaiStruct):
                 raise kaitaistruct.ValidationNotEqualError(b"\x20", self.name_value_separator_space, self._io, u"/types/userdata_field/seq/1")
             self.value_with_space = (self._io.read_bytes_term(10, False, True, True)).decode(u"ASCII")
 
-
-        def _fetch_instances(self):
-            pass
-
         @property
         def value(self):
             if hasattr(self, '_m_value'):
                 return self._m_value
 
-            self._m_value = self.value_with_space[0:len(self.value_with_space) - 1]
+            self._m_value = (self.value_with_space)[0:(len(self.value_with_space) - 1)]
             return getattr(self, '_m_value', None)
 
 
