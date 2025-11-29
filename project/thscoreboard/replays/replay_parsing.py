@@ -82,7 +82,7 @@ class ReplayStage:
 class ReplayInfo:
     game: str
     shot: str
-    difficulty: int
+    difficulty: Optional[int] = None
     score: int
     timestamp: datetime.datetime
     """The timestamp for the replay.
