@@ -41,9 +41,12 @@ class ReplayToJsonConverter:
             "text": game.GetShortName(),
             "url": f"/replays/{game.game_id}",
         }
-        json_dict["Difficulty"] = game_ids.GetDifficultyName(
-            game.game_id, replay.difficulty
-        )
+        if game.game_id not in [
+            game_ids.GameIDs.ALCO,
+        ]:
+            json_dict["Difficulty"] = game_ids.GetDifficultyName(
+                game.game_id, replay.difficulty
+            )
         json_dict["Shot"] = self._get_shot_name(shot)
         if game.game_id in [
             game_ids.GameIDs.TH01,
