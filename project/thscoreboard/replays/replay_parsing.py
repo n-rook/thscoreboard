@@ -84,7 +84,6 @@ class ReplayStage:
 class ReplayInfo:
     game: str
     shot: str
-    difficulty: Optional[int] = None
     score: int
     timestamp: datetime.datetime
     """The timestamp for the replay.
@@ -94,6 +93,8 @@ class ReplayInfo:
 
     name: str
     replay_type: int
+
+    difficulty: Optional[int] = None
     route: Optional[str] = None
 
     spell_card_id: Optional[int] = None
