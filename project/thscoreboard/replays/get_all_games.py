@@ -36,6 +36,10 @@ NEW_GAME_IDS = [
     game_ids.GameIDs.TH20,
 ]
 
+OTHER_GAME_IDS = [
+    game_ids.GameIDs.ALCO,
+]
+
 
 def get_pc98_games() -> list[models.Game]:
     all_games: Iterable[models.Game] = models.Game.objects.all()
@@ -67,4 +71,5 @@ def get_all_games_by_category() -> dict[str, list[models.Game]]:
         "Classic": GamesIn(CLASSIC_GAME_IDS),
         "Divine": GamesIn(DIVINE_CYCLE_GAME_IDS),
         "New": GamesIn(NEW_GAME_IDS),
+        "Other": GamesIn(OTHER_GAME_IDS),
     }
