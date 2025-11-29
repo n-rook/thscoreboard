@@ -30,6 +30,7 @@ class GameIDs:
     TH17 = "th17"
     TH18 = "th18"
     TH20 = "th20"
+    ALCO = "alco"
 
 
 class ReplayTypes:
@@ -164,6 +165,11 @@ _GAME_NAMES = immutabledict(
             pgettext_lazy("short game name", "th20"),
             pgettext_lazy("standard game name", "Fossilized Wonders"),
             pgettext_lazy("full game name", "東方錦上京 - Fossilized Wonders"),
+        ),
+        GameIDs.ALCO: (
+            pgettext_lazy("short game name", "alco"),
+            pgettext_lazy("standard game name", "Uwabami Breakers"),
+            pgettext_lazy("full game name", "黄昏酒場 - Uwabami Breakers"),
         ),
     }
 )
@@ -545,6 +551,10 @@ def GetShotName(game_id: str, shot_id: str) -> str:
                 return pgettext("th20", "MarisaGreen")
             case "MarisaGreen2":
                 return pgettext("th20", "MarisaGreen2")
+
+    if game_id == GameIDs.ALCO:
+        if shot_id == "Isami":
+            return pgettext("alco", "Isami")
 
     return "Bug shot"
 
