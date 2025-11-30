@@ -18,7 +18,7 @@ types:
         encoding: SJIS
       - id: timestamp
         type: u4
-      - id: total_score
+      - id: score
         type: u4
       - id: unknown_1
         size: 52

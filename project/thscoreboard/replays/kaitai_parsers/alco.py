@@ -31,7 +31,7 @@ class Alco(KaitaiStruct):
         def _read(self):
             self.name = (self._io.read_bytes(12)).decode(u"SJIS")
             self.timestamp = self._io.read_u4le()
-            self.total_score = self._io.read_u4le()
+            self.score = self._io.read_u4le()
             self.unknown_1 = self._io.read_bytes(52)
             self.slowdown = self._io.read_f4le()
             self.stagecount = self._io.read_u4le()
