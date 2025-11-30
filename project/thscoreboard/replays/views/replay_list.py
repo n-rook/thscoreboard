@@ -93,6 +93,8 @@ def get_filter_options(game: Game) -> list[Filter]:
         return _get_filter_options_th17(game)
     elif game.game_id == game_ids.GameIDs.TH20:
         return _get_filter_options_th20(game)
+    elif game.game_id == game_ids.GameIDs.ALCO:
+        return _get_filter_options_alco(game)
     else:
         return _get_filter_options_default(game)
 
@@ -185,6 +187,10 @@ def _get_filter_options_th20(game: Game) -> list[Filter]:
         Filter("Character", all_characters),
         Filter("Stone", all_stones),
     ]
+
+
+def _get_filter_options_alco(game: Game) -> list[Filter]:
+    return []
 
 
 def _get_all_replay_for_game(game_id: str) -> Manager[models.Replay]:
