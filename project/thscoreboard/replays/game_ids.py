@@ -662,7 +662,7 @@ def GetRouteName(game_id: str, route_id: str):
     return "Bug route"
 
 
-def GetDifficultyName(game_id: str, difficulty: int):
+def GetDifficultyName(game_id: str, difficulty: int | None):
     if game_id in {
         GameIDs.TH01,
         GameIDs.TH02,

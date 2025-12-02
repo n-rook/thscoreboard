@@ -56,7 +56,7 @@ class Game(models.Model):
         """Get the full name for this game."""
         return game_ids.GetGameName(self.game_id, game_ids.NameLength.FULL)
 
-    def GetDifficultyName(self, difficulty: int) -> str:
+    def GetDifficultyName(self, difficulty: int | None) -> str:
         """Gets the name of a difficulty in this game."""
         return game_ids.GetDifficultyName(self.game_id, difficulty)
 
@@ -492,7 +492,7 @@ class ReplayRank(models.Model):
 
     shot = models.ForeignKey("Shot", on_delete=models.DO_NOTHING)
 
-    difficulty = models.IntegerField()
+    difficulty = models.IntegerField(blank=True, null=True)
     """The difficulty on which the player played."""
 
     route = models.ForeignKey(

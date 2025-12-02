@@ -27,7 +27,10 @@ def game_scoreboard_json(request: WSGIRequest, game_id: str):
 
 
 def game_scoreboard_old_url(
-    request: WSGIRequest, game_id: str, difficulty: int, shot_id: Optional[str] = None
+    request: WSGIRequest,
+    game_id: str,
+    difficulty: Optional[int] = None,
+    shot_id: Optional[str] = None,
 ):
     """Redirect requests going to the old filtered game scoreboard URLs.
 

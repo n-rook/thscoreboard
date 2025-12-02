@@ -52,7 +52,7 @@ def _CreateNewReplayFile(rf: models.ReplayFile):
 @transaction.atomic
 def PublishNewReplay(
     user,
-    difficulty: int,
+    difficulty: Optional[int],
     score: int,
     category: str,
     comment: str,
