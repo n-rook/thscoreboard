@@ -36,6 +36,14 @@ class GameConstants:
     routes: List[str]
 
 
+alco = GameConstants(
+    id="alco",
+    has_replays=True,
+    num_difficulties=0,
+    shots=["Isami"],
+    routes=[],
+)
+
 th20 = GameConstants(
     id="th20",
     has_replays=True,
@@ -312,6 +320,7 @@ all_game_constants = [
     th17,
     th18,
     th20,
+    alco,
 ]
 
 

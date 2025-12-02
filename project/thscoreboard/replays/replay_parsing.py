@@ -21,9 +21,11 @@ from .kaitai_parsers import th16
 from .kaitai_parsers import th17
 from .kaitai_parsers import th18
 from .kaitai_parsers import th20
+from .kaitai_parsers import alco
 from .kaitai_parsers import th_modern
 from .kaitai_parsers import th_modern_20_header
 from .kaitai_parsers import th08_userdata
+from .kaitai_parsers import alco_userdata
 
 import math
 import logging
@@ -82,7 +84,6 @@ class ReplayStage:
 class ReplayInfo:
     game: str
     shot: str
-    difficulty: int
     score: int
     timestamp: datetime.datetime
     """The timestamp for the replay.
@@ -92,6 +93,8 @@ class ReplayInfo:
 
     name: str
     replay_type: int
+
+    difficulty: Optional[int] = None
     route: Optional[str] = None
 
     spell_card_id: Optional[int] = None
@@ -1154,6 +1157,45 @@ def _Parse20(rep_raw) -> ReplayInfo:
     return r
 
 
+def _ParseAlco(rep_raw) -> ReplayInfo:
+    header = alco_userdata.AlcoUserdata.from_bytes(rep_raw)
+    comp_data = bytearray(header.main.comp_data)
+
+    td.decrypt(comp_data, 0x400, 0xAA, 0xE1)
+    td.decrypt(comp_data, 0x80, 0x3D, 0x7A)
+    replay = alco.Alco.from_bytes(td.unlzss(comp_data))
+
+    rep_stages = []
+
+    for current_stage_start_data, next_stage_start_data in zip(
+        replay.stages, replay.stages[1:] + [None]
+    ):
+        s = ReplayStage(
+            stage=current_stage_start_data.stage_num,
+        )
+        if next_stage_start_data is not None:
+            s.score = next_stage_start_data.score
+        else:
+            # no next stage means this is the last stage, so use the final run score
+            s.score = replay.header.score
+        rep_stages.append(s)
+
+    r = ReplayInfo(
+        game=game_ids.GameIDs.ALCO,
+        shot="Isami",
+        score=replay.header.score,
+        timestamp=datetime.datetime.fromtimestamp(
+            replay.header.timestamp, tz=datetime.timezone.utc
+        ),
+        name=replay.header.name.replace("\x00", ""),
+        slowdown=replay.header.slowdown,
+        replay_type=game_ids.ReplayTypes.FULL_GAME,
+        stages=rep_stages,
+    )
+
+    return r
+
+
 def _DetermineTH13orTH14(replay):
     # thank you ZUN
     # yes, one of the only indications of which game a replay is from here is from a USERDATA string
@@ -1217,6 +1259,8 @@ def Parse(replay) -> ReplayInfo:
             return _Parse20(replay)
         elif gamecode == b"128r":
             return _Parse128(replay)
+        elif gamecode == b"al1r":
+            return _ParseAlco(replay)
         else:
             logging.warning("Failed to comprehend gamecode %s", str(gamecode))
             raise UnsupportedGameError("This game is unsupported.")

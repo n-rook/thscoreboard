@@ -336,6 +336,21 @@ msgctxt "full game name"
 msgid "東方錦上京 - Fossilized Wonders"
 msgstr "東方錦上京　～ Fossilized Wonders"
 
+#: replays/game_ids.py:170
+msgctxt "short game name"
+msgid "alco"
+msgstr "UB"
+
+#: replays/game_ids.py:171
+msgctxt "standard game name"
+msgid "Uwabami Breakers"
+msgstr "黄昏酒場"
+
+#: replays/game_ids.py:172
+msgctxt "full game name"
+msgid "黄昏酒場 - Uwabami Breakers"
+msgstr "黄昏酒場　～ Uwabami Breakers"
+
 #: replays/game_ids.py:169
 msgid "Unknown game (bug!)"
 msgstr "不明なゲームです (バグの可能性があります！)"
@@ -1075,6 +1090,11 @@ msgctxt "th20"
 msgid "MarisaGreen2"
 msgstr "魔理沙 緑2"
 
+#: replays/game_ids.py:557
+msgctxt "alco"
+msgid "Isami"
+msgid "伊佐美"
+
 #: replays/game_ids.py:523
 msgctxt "th17"
 msgid "Reimu"
@@ -1266,6 +1286,10 @@ msgstr "Phantasm"
 #: replays/game_ids.py:621
 msgid "Overdrive"
 msgstr "Overdrive"
+
+#: replays/game_ids.py:705
+msgid "No difficulty"
+msgstr "難易度無し"
 
 #: replays/game_ids.py:623
 msgid "Bug difficulty"

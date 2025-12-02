@@ -612,3 +612,18 @@ class Th20ReplayTestCase(unittest.TestCase):
         r = ParseTestReplay("th20_kc_bug_report")
         self.assertEqual(r.game, "th20")
         self.assertEqual(r.score, 1520626210)
+
+
+class AlcoReplayTestCase(unittest.TestCase):
+    def testAllClear(self) -> None:
+        r = ParseTestReplay("alco_all_clear")
+        self.assertEqual(r.game, "alco")
+        self.assertEqual(r.score, 8234609)
+        self.assertEqual(r.timestamp.date(), datetime.date(2024, 1, 31))
+        self.assertEqual(r.name.rstrip(), "WEF")
+        self.assertAlmostEqual(r.slowdown, 0.0, places=4)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
+
+        s1end = r.stages[0]
+        self.assertEqual(s1end.stage, 1)
+        self.assertEqual(s1end.score, 1269907)

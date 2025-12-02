@@ -27,7 +27,10 @@ def game_scoreboard_json(request: WSGIRequest, game_id: str):
 
 
 def game_scoreboard_old_url(
-    request: WSGIRequest, game_id: str, difficulty: int, shot_id: Optional[str] = None
+    request: WSGIRequest,
+    game_id: str,
+    difficulty: Optional[int] = None,
+    shot_id: Optional[str] = None,
 ):
     """Redirect requests going to the old filtered game scoreboard URLs.
 
@@ -93,6 +96,8 @@ def get_filter_options(game: Game) -> list[Filter]:
         return _get_filter_options_th17(game)
     elif game.game_id == game_ids.GameIDs.TH20:
         return _get_filter_options_th20(game)
+    elif game.game_id == game_ids.GameIDs.ALCO:
+        return _get_filter_options_alco(game)
     else:
         return _get_filter_options_default(game)
 
@@ -185,6 +190,10 @@ def _get_filter_options_th20(game: Game) -> list[Filter]:
         Filter("Character", all_characters),
         Filter("Stone", all_stones),
     ]
+
+
+def _get_filter_options_alco(game: Game) -> list[Filter]:
+    return []
 
 
 def _get_all_replay_for_game(game_id: str) -> Manager[models.Replay]:
