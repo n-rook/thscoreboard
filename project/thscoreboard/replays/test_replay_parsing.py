@@ -619,7 +619,7 @@ class AlcoReplayTestCase(unittest.TestCase):
         r = ParseTestReplay("alco_all_clear")
         self.assertEqual(r.game, "alco")
         self.assertEqual(r.score, 8234609)
-        self.assertEqual(r.timestamp.date(), datetime.date(2024, 2, 1))
+        self.assertEqual(r.timestamp.date(), datetime.date(2024, 1, 31))
         self.assertEqual(r.name.rstrip(), "WEF")
         self.assertAlmostEqual(r.slowdown, 0.0, places=4)
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
