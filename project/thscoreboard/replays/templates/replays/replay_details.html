@@ -144,7 +144,7 @@
     {% if video_embed %}
     <div class="replay-box avoid-horizontal-join">
         <div class="video-wrapper">
-            <iframe src="{{video_embed}}" width="100%" height="100%" allowfullscreen frameborder="0"></iframe>
+            <iframe src="{{video_embed}}" width="100%" height="100%" allowfullscreen frameborder="0" referrerpolicy="origin-when-cross-origin"></iframe>
         </div>
         <p><a href="{{replay.video_link}}">{% translate "Watch externally" %}</a></p>
     </div>
