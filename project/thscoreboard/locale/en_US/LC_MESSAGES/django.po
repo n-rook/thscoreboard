@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-17 19:58+0000\n"
+"POT-Creation-Date: 2025-12-31 18:32+0000\n"
 "PO-Revision-Date: 2025-08-17 20:05+0000\n"
 "Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: \n"
@@ -522,7 +522,7 @@ msgstr "Sakuya & Remilia"
 #: replays/game_ids.py:263
 msgctxt "th08"
 msgid "Youmu & Yuyuko"
-msgstr "Youmu & Yuyuko "
+msgstr "Youmu & Yuyuko"
 
 #: replays/game_ids.py:265
 msgctxt "th08"
@@ -657,7 +657,7 @@ msgstr "Reimu B"
 #: replays/game_ids.py:368
 msgctxt "th10"
 msgid "Reimu C"
-msgstr "Reimu C (Sealing Type)"
+msgstr "Reimu C"
 
 #: replays/game_ids.py:370
 msgctxt "th10"
@@ -672,37 +672,37 @@ msgstr "Marisa B"
 #: replays/game_ids.py:374
 msgctxt "th10"
 msgid "Marisa C"
-msgstr "Marisa C (Magician Type)"
+msgstr "Marisa C"
 
 #: replays/game_ids.py:378
 msgctxt "th11"
 msgid "Reimu A"
-msgstr "Reimu A (Yukari Yakumo)"
+msgstr "Reimu A (Yukari)"
 
 #: replays/game_ids.py:380
 msgctxt "th11"
 msgid "Reimu B"
-msgstr "Reimu B (Suika Ibuki)"
+msgstr "Reimu B (Suika)"
 
 #: replays/game_ids.py:382
 msgctxt "th11"
 msgid "Reimu C"
-msgstr "Reimu C (Aya Shameimaru)"
+msgstr "Reimu C (Aya)"
 
 #: replays/game_ids.py:384
 msgctxt "th11"
 msgid "Marisa A"
-msgstr "Marisa A (Alice Margatroid)"
+msgstr "Marisa A (Alice)"
 
 #: replays/game_ids.py:386
 msgctxt "th11"
 msgid "Marisa B"
-msgstr "Marisa B (Patchouli Knowledge)"
+msgstr "Marisa B (Patchouli)"
 
 #: replays/game_ids.py:388
 msgctxt "th11"
 msgid "Marisa C"
-msgstr "Marisa C (Nitori Kawashiro)"
+msgstr "Marisa C (Nitori)"
 
 #: replays/game_ids.py:392
 msgctxt "th12"
@@ -975,36 +975,26 @@ msgid "Sanae"
 msgstr "Sanae A"
 
 #: replays/game_ids.py:517
-#| msgctxt "th01"
-#| msgid "Reimu"
 msgctxt "th20"
 msgid "ReimuRed"
 msgstr "Reimu Red"
 
 #: replays/game_ids.py:519
-#| msgctxt "th01"
-#| msgid "Reimu"
 msgctxt "th20"
 msgid "ReimuRed2"
 msgstr "Reimu Red2"
 
 #: replays/game_ids.py:521
-#| msgctxt "th04"
-#| msgid "Reimu B"
 msgctxt "th20"
 msgid "ReimuBlue"
 msgstr "Reimu Blue"
 
 #: replays/game_ids.py:523
-#| msgctxt "th04"
-#| msgid "Reimu B"
 msgctxt "th20"
 msgid "ReimuBlue2"
 msgstr "Reimu Blue2"
 
 #: replays/game_ids.py:525
-#| msgctxt "th01"
-#| msgid "Reimu"
 msgctxt "th20"
 msgid "ReimuYellow"
 msgstr "Reimu Yellow"
@@ -1015,71 +1005,51 @@ msgid "ReimuYellow2"
 msgstr "Reimu Yellow2"
 
 #: replays/game_ids.py:529
-#| msgctxt "th01"
-#| msgid "Reimu"
 msgctxt "th20"
 msgid "ReimuGreen"
 msgstr "Reimu Green"
 
 #: replays/game_ids.py:531
-#| msgctxt "th01"
-#| msgid "Reimu"
 msgctxt "th20"
 msgid "ReimuGreen2"
 msgstr "Reimu Green2"
 
 #: replays/game_ids.py:533
-#| msgctxt "th03"
-#| msgid "Marisa"
 msgctxt "th20"
 msgid "MarisaRed"
 msgstr "Marisa Red"
 
 #: replays/game_ids.py:535
-#| msgctxt "th03"
-#| msgid "Marisa"
 msgctxt "th20"
 msgid "MarisaRed2"
 msgstr "Marisa Red2"
 
 #: replays/game_ids.py:537
-#| msgctxt "th04"
-#| msgid "Marisa B"
 msgctxt "th20"
 msgid "MarisaBlue"
 msgstr "Marisa Blue"
 
 #: replays/game_ids.py:539
-#| msgctxt "th04"
-#| msgid "Marisa B"
 msgctxt "th20"
 msgid "MarisaBlue2"
 msgstr "Marisa Blue2"
 
 #: replays/game_ids.py:541
-#| msgctxt "th03"
-#| msgid "Marisa"
 msgctxt "th20"
 msgid "MarisaYellow"
 msgstr "Marisa Yellow"
 
 #: replays/game_ids.py:543
-#| msgctxt "th03"
-#| msgid "Marisa"
 msgctxt "th20"
 msgid "MarisaYellow2"
 msgstr "Marisa Yellow2"
 
 #: replays/game_ids.py:545
-#| msgctxt "th03"
-#| msgid "Marisa"
 msgctxt "th20"
 msgid "MarisaGreen"
 msgstr "Marisa Green"
 
 #: replays/game_ids.py:547
-#| msgctxt "th03"
-#| msgid "Marisa"
 msgctxt "th20"
 msgid "MarisaGreen2"
 msgstr "Marisa Green2"
@@ -1105,15 +1075,11 @@ msgid "Youmu"
 msgstr "Youmu"
 
 #: replays/game_ids.py:571
-#| msgctxt "th01"
-#| msgid "Reimu"
 msgctxt "th20"
 msgid "Reimu"
 msgstr "Reimu"
 
 #: replays/game_ids.py:573
-#| msgctxt "th03"
-#| msgid "Marisa"
 msgctxt "th20"
 msgid "Marisa"
 msgstr "Marisa"
