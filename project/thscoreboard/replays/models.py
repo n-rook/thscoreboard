@@ -141,6 +141,9 @@ class ReplayType(models.IntegerChoices):
     PVP = 4, pgettext_lazy("Replay Type", "PVP")
     """Player vs player replays"""
 
+    SCENE_GAME = 5, pgettext_lazy("Replay Type", "Scene Game")
+    """Replays of the scene game mode like TH095 or TH143 or etc"""
+
 
 class Route(models.Model):
     """One of several sets of stages pickable by the player in a run.
@@ -345,6 +348,12 @@ class Replay(models.Model):
     spell_card_id = models.IntegerField(blank=True, null=True)
     """In the case of a spell practice replay, the spell card ID attempted"""
 
+    scene_game_level = models.IntegerField(blank=True, null=True)
+    """In the case of a scene game replay (like TH095), the scene level attempted"""
+
+    scene_game_scene = models.IntegerField(blank=True, null=True)
+    """In the case of a scene game replay (like TH095), the scene index attempted"""
+
     replay_type = models.IntegerField(choices=ReplayType.choices)
     """Type of replay (full run run, stage practice, etc)"""
 
@@ -429,6 +438,8 @@ class Replay(models.Model):
         self.spell_card_id = r.spell_card_id
         self.replay_type = r.replay_type
         self.slowdown = r.slowdown
+        self.scene_game_level = r.scene_game_level
+        self.scene_game_scene = r.scene_game_scene
 
     def SetForeignKeysFromConstantModels(self, c: ReplayConstantModels):
         """Set the shot and route foreign keys on this Replay."""
