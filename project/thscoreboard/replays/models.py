@@ -73,9 +73,28 @@ class Game(models.Model):
         """Get the full name for this game."""
         return game_ids.GetGameName(self.game_id, game_ids.NameLength.FULL)
 
+<<<<<<< HEAD
     def GetDifficultyName(self, difficulty: int | None) -> str:
+=======
+    def GetDifficultyName(
+        self,
+        difficulty: int | None,
+        scene_game_level: int | None,
+        scene_game_scene: int | None,
+    ) -> str:
+>>>>>>> 01b4b4e (fix GetDifficultyName, add GetSceneGameLevelName and GetSceneGameSceneName)
         """Gets the name of a difficulty in this game."""
-        return game_ids.GetDifficultyName(self.game_id, difficulty)
+        return game_ids.GetDifficultyName(
+            self.game_id, difficulty, scene_game_level, scene_game_scene
+        )
+
+    def GetSceneGameLevelName(self, scene_game_level: int | None) -> str:
+        """Gets the name of a scene game level in this game."""
+        return game_ids.GetSceneGameLevelName(self.game_id, scene_game_level)
+
+    def GetSceneGameSceneName(self, scene_game_scene: int | None) -> str:
+        """Gets the name of a scene game scene in this game."""
+        return game_ids.GetSceneGameSceneName(self.game_id, scene_game_scene)
 
     def GetIconPath(self) -> str:
         """Get the HTTP path to get a small icon for this game."""
@@ -310,7 +329,12 @@ class Replay(models.Model):
 
     def GetDifficultyName(self):
         """Get a pretty name for this difficulty. Note: Populates shot and game."""
-        return game_ids.GetDifficultyName(self.shot.game.game_id, self.difficulty)
+        return game_ids.GetDifficultyName(
+            self.shot.game.game_id,
+            self.difficulty,
+            self.scene_game_level,
+            self.scene_game_scene,
+        )
 
     def GetDifficultyUrlCode(self):
         return f"d{self.difficulty}"

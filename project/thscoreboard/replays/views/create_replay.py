@@ -165,7 +165,11 @@ def publish_replay(request, temp_replay_id):
         "form": form,
         "game_name": constants.game.GetName(),
         "game_id": constants.game.game_id,
-        "difficulty_name": constants.game.GetDifficultyName(replay_info.difficulty),
+        "difficulty_name": constants.game.GetDifficultyName(
+            replay_info.difficulty,
+            replay_info.scene_game_level,
+            replay_info.scene_game_scene,
+        ),
         "shot_name": constants.shot.GetName(),
         "route_name": None,
         "has_replay_file": True,
