@@ -64,7 +64,12 @@ def replay_details(request, game_id: str, replay_id: int):
         "difficulty_name": replay_instance.GetDifficultyName(),
         "category": replay_instance.get_category_display(),
         "game_id": game_id,
-        "spell_name": spell_names.get(game_id, replay_instance.spell_card_id),
+        "spell_name": spell_names.get(
+            game_id,
+            replay_instance.spell_card_id,
+            replay_instance.scene_game_level,
+            replay_instance.scene_game_scene,
+        ),
         "replay": replay_instance,
         "can_edit": request.user == replay_instance.user,
         "can_delete": request.user == replay_instance.user or request.user.is_staff,
