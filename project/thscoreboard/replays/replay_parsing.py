@@ -463,17 +463,37 @@ def _Parse09(rep_raw):
 def _Parse095(rep_raw):
     encrypted_replay = th095_encrypted.Th095Encrypted.from_bytes(rep_raw)
 
-    spell_level = int(encrypted_replay.userdata.level.value)
+    if encrypted_replay.userdata.level.value == "EX":
+        spell_level = 10
+    else:
+        spell_level = int(encrypted_replay.userdata.level.value)
     spell_scene = int(encrypted_replay.userdata.scene.value)
+
+    scene_count_per_level = {
+        1: 6,
+        2: 6,
+        3: 8,
+        4: 9,
+        5: 8,
+        6: 8,
+        7: 8,
+        8: 8,
+        9: 8,
+        10: 8,
+        11: 8,
+    }
+    if spell_level not in scene_count_per_level:
+        raise BadReplayError("Invalid spell level in replay")
+    if spell_scene < 1 or spell_scene > scene_count_per_level[spell_level]:
+        raise BadReplayError("Invalid spell scene in replay")
 
     return ReplayInfo(
         game=game_ids.GameIDs.TH095,
         shot="Aya",
-        difficulty=0,
         score=int(encrypted_replay.userdata.score.value),
         timestamp=time.strptime(encrypted_replay.userdata.date.value, "%y/%m/%d %H:%M"),
         name=encrypted_replay.userdata.username.value,
-        replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
+        replay_type=game_ids.ReplayTypes.SCENE_GAME,
         scene_game_level=spell_level,
         scene_game_scene=spell_scene,
         slowdown=float(encrypted_replay.userdata.slowdown.value),
