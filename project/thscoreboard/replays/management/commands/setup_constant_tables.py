@@ -32,14 +32,28 @@ class GameConstants:
     id: str
     has_replays: bool
     num_difficulties: int
+    num_scene_game_levels: int
+    num_scene_game_scenes: int
     shots: List[str]
     routes: List[str]
 
+
+alco = GameConstants(
+    id="alco",
+    has_replays=True,
+    num_difficulties=0,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
+    shots=["Isami"],
+    routes=[],
+)
 
 th20 = GameConstants(
     id="th20",
     has_replays=True,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=[
         "ReimuRed",
         "ReimuRed2",
@@ -65,6 +79,8 @@ th18 = GameConstants(
     id="th18",
     has_replays=True,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=["Reimu", "Marisa", "Sakuya", "Sanae"],
     routes=[],
 )
@@ -73,6 +89,8 @@ th17 = GameConstants(
     id="th17",
     has_replays=True,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=[
         "ReimuWolf",
         "ReimuOtter",
@@ -91,6 +109,8 @@ th16 = GameConstants(
     id="th16",
     has_replays=True,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=[
         "ReimuSpring",
         "ReimuSummer",
@@ -120,6 +140,8 @@ th15 = GameConstants(
     id="th15",
     has_replays=True,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=["Reimu", "Marisa", "Sanae", "Reisen"],
     routes=[],
 )
@@ -128,6 +150,8 @@ th14 = GameConstants(
     id="th14",
     has_replays=True,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"],
     routes=[],
 )
@@ -136,6 +160,8 @@ th13 = GameConstants(
     id="th13",
     has_replays=True,
     num_difficulties=6,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=["Reimu", "Marisa", "Sanae", "Youmu"],
     routes=[],
 )
@@ -144,6 +170,8 @@ th128 = GameConstants(
     id="th128",
     has_replays=True,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=["Cirno"],
     routes=[
         "A-1",
@@ -159,6 +187,8 @@ th12 = GameConstants(
     id="th12",
     has_replays=True,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SanaeA", "SanaeB"],
     routes=[],
 )
@@ -167,6 +197,8 @@ th11 = GameConstants(
     id="th11",
     has_replays=True,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"],
     routes=[],
 )
@@ -175,7 +207,19 @@ th10 = GameConstants(
     id="th10",
     has_replays=True,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=["ReimuA", "ReimuB", "ReimuC", "MarisaA", "MarisaB", "MarisaC"],
+    routes=[],
+)
+
+th095 = GameConstants(
+    id="th095",
+    has_replays=True,
+    num_difficulties=0,
+    num_scene_game_levels=11,
+    num_scene_game_scenes=9,
+    shots=["Aya"],
     routes=[],
 )
 
@@ -183,6 +227,8 @@ th09 = GameConstants(
     id="th09",
     has_replays=True,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=[
         "Reimu",
         "Marisa",
@@ -208,6 +254,8 @@ th08 = GameConstants(
     id="th08",
     has_replays=True,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=[
         "Reimu & Yukari",
         "Marisa & Alice",
@@ -229,6 +277,8 @@ th07 = GameConstants(
     id="th07",
     has_replays=True,
     num_difficulties=6,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"],
     routes=[],
 )
@@ -237,6 +287,8 @@ th06 = GameConstants(
     id="th06",
     has_replays=True,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB"],
     routes=[],
 )
@@ -245,6 +297,8 @@ th05 = GameConstants(
     id="th05",
     has_replays=False,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=["Reimu", "Marisa", "Mima", "Yuuka"],
     routes=[],
 )
@@ -253,6 +307,8 @@ th04 = GameConstants(
     id="th04",
     has_replays=False,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB"],
     routes=[],
 )
@@ -261,6 +317,8 @@ th03 = GameConstants(
     id="th03",
     has_replays=False,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=[
         "Reimu",
         "Mima",
@@ -279,6 +337,8 @@ th02 = GameConstants(
     id="th02",
     has_replays=False,
     num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=["ReimuA", "ReimuB", "ReimuC"],
     routes=[],
 )
@@ -287,6 +347,8 @@ th01 = GameConstants(
     id="th01",
     has_replays=False,
     num_difficulties=4,  # No extra in HRtP!
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
     shots=["Reimu"],
     routes=["Jigoku", "Makai"],
 )
@@ -301,6 +363,7 @@ all_game_constants = [
     th07,
     th08,
     th09,
+    th095,
     th10,
     th11,
     th12,
@@ -332,11 +395,15 @@ def create_or_update_games(all_game_constants: List[GameConstants]):
         if game_row:
             game_row.has_replays = game_constants.has_replays
             game_row.num_difficulties = game_constants.num_difficulties
+            game_row.num_scene_game_levels = game_constants.num_scene_game_levels
+            game_row.num_scene_game_scenes = game_constants.num_scene_game_scenes
         else:
             game_row = models.Game(
                 game_id=game_constants.id,
                 has_replays=game_constants.has_replays,
                 num_difficulties=game_constants.num_difficulties,
+                num_scene_game_levels=game_constants.num_scene_game_levels,
+                num_scene_game_scenes=game_constants.num_scene_game_scenes,
             )
 
         create_or_update_shots(game_row, game_constants.shots)

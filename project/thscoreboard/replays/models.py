@@ -44,6 +44,23 @@ class Game(models.Model):
     starting from 0.
     """
 
+    num_scene_game_levels = models.IntegerField(default=0)
+    """The number of scene game levels the game has.
+
+    like th095 has 11 levels.
+    starting from 0, and Ex is represented as 10.
+
+    The levels will be given numeric values in actual replay rows, starting from 0.
+    """
+
+    num_scene_game_scenes = models.IntegerField(default=0)
+    """The number of scene game scenes the game has.
+
+    like th095 has max 8 scenes.
+
+    The scenes will be given numeric values in actual replay rows, starting from 0.
+    """
+
     def GetName(self):
         """Get a standard name for the game."""
         return game_ids.GetGameName(self.game_id, game_ids.NameLength.STANDARD)
@@ -352,10 +369,10 @@ class Replay(models.Model):
     """In the case of a spell practice replay, the spell card ID attempted"""
 
     scene_game_level = models.IntegerField(blank=True, null=True)
-    """In the case of a scene game replay (like TH095), the scene level attempted"""
+    """In the case of a scene game replay (like TH095), the scene level attempted. starts at 1."""
 
     scene_game_scene = models.IntegerField(blank=True, null=True)
-    """In the case of a scene game replay (like TH095), the scene index attempted"""
+    """In the case of a scene game replay (like TH095), the scene index attempted. starts at 1."""
 
     replay_type = models.IntegerField(choices=ReplayType.choices)
     """Type of replay (full run run, stage practice, etc)"""
@@ -514,6 +531,16 @@ class ReplayRank(models.Model):
     """The route on which the game was played."""
 
     category = models.IntegerField(choices=Category.choices)
+
+    scene_game_level = models.IntegerField(blank=True, null=True)
+    """The number of scene game level the game has.
+    For example, th095 has this as number.
+    """
+
+    scene_game_scene = models.IntegerField(blank=True, null=True)
+    """The number of scene game scene the game has.
+    For example, th095 has this as number.
+    """
 
     place = models.IntegerField("Place")
     """The replay's rank. 1 is first place, 2 is second, 3 is third.
