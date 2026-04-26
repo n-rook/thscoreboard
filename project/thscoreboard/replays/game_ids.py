@@ -113,6 +113,11 @@ _GAME_NAMES = immutabledict(
             pgettext_lazy("standard game name", "Phantasmagoria of Flower View"),
             pgettext_lazy("full game name", "東方花映塚 - Phantasmagoria of Flower View"),
         ),
+        GameIDs.TH095: (
+            pgettext_lazy("short game name", "th095"),
+            pgettext_lazy("standard game name", "Shoot the Bullet"),
+            pgettext_lazy("full game name", "東方文花帖 - Shoot the Bullet"),
+        ),
         GameIDs.TH10: (
             pgettext_lazy("short game name", "th10"),
             pgettext_lazy("standard game name", "Mountain of Faith"),
@@ -361,6 +366,10 @@ def GetShotName(game_id: str, shot_id: str) -> str:
         if shot_id == "Lunasa":
             return pgettext("th09", "Lunasa")
         return shot_id
+
+    if game_id == GameIDs.TH095:
+        if shot_id == "Aya":
+            return pgettext("th125", "Aya")
 
     if game_id == GameIDs.TH10:
         if shot_id == "ReimuA":
@@ -707,6 +716,8 @@ def GetRpyGameCode(game_id: str) -> str:
         return "th8"
     elif game_id == GameIDs.TH09:
         return "th9"
+    elif game_id == GameIDs.TH095:
+        return "th95"
     else:
         return game_id
 
