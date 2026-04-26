@@ -71,7 +71,9 @@ _GAME_NAMES = immutabledict(
         GameIDs.TH01: (
             pgettext_lazy("short game name", "th01"),
             pgettext_lazy("standard game name", "The Highly Responsive to Prayers"),
-            pgettext_lazy("full game name", "東方靈異伝 - The Highly Responsive to Prayers"),
+            pgettext_lazy(
+                "full game name", "東方靈異伝 - The Highly Responsive to Prayers"
+            ),
         ),
         GameIDs.TH02: (
             pgettext_lazy("short game name", "th02"),
@@ -81,7 +83,9 @@ _GAME_NAMES = immutabledict(
         GameIDs.TH03: (
             pgettext_lazy("short game name", "th03"),
             pgettext_lazy("standard game name", "The Phantasmagoria of Dim. Dream"),
-            pgettext_lazy("full game name", "東方夢時空 - The Phantasmagoria of Dim. Dream"),
+            pgettext_lazy(
+                "full game name", "東方夢時空 - The Phantasmagoria of Dim. Dream"
+            ),
         ),
         GameIDs.TH04: (
             pgettext_lazy("short game name", "th04"),
@@ -111,7 +115,9 @@ _GAME_NAMES = immutabledict(
         GameIDs.TH09: (
             pgettext_lazy("short game name", "th09"),
             pgettext_lazy("standard game name", "Phantasmagoria of Flower View"),
-            pgettext_lazy("full game name", "東方花映塚 - Phantasmagoria of Flower View"),
+            pgettext_lazy(
+                "full game name", "東方花映塚 - Phantasmagoria of Flower View"
+            ),
         ),
         GameIDs.TH095: (
             pgettext_lazy("short game name", "th095"),
@@ -161,7 +167,9 @@ _GAME_NAMES = immutabledict(
         GameIDs.TH17: (
             pgettext_lazy("short game name", "th17"),
             pgettext_lazy("standard game name", "Wily Beast and Weakest Creature"),
-            pgettext_lazy("full game name", "東方鬼形獣 - Wily Beast and Weakest Creature"),
+            pgettext_lazy(
+                "full game name", "東方鬼形獣 - Wily Beast and Weakest Creature"
+            ),
         ),
         GameIDs.TH18: (
             pgettext_lazy("short game name", "th18"),
@@ -664,7 +672,28 @@ def GetRouteName(game_id: str, route_id: str):
     return "Bug route"
 
 
-def GetDifficultyName(game_id: str, difficulty: int):
+def GetSceneGameLevelName(game_id: str, scene_game_level: int | None) -> str:
+    if game_id == GameIDs.TH095:
+        if scene_game_level == 11:
+            return pgettext("th095", "Ex")
+        elif scene_game_level is not None:
+            return str(scene_game_level)
+    return "Bug level"
+
+
+def GetSceneGameSceneName(game_id: str, scene_game_scene: int | None) -> str:
+    if game_id == GameIDs.TH095:
+        if scene_game_scene is not None:
+            return str(scene_game_scene)
+    return "Bug scene"
+
+
+def GetDifficultyName(
+    game_id: str,
+    difficulty: int | None,
+    scene_game_level: int | None,
+    scene_game_scene: int | None,
+) -> str:
     if game_id in {
         GameIDs.TH01,
         GameIDs.TH02,
@@ -703,6 +732,16 @@ def GetDifficultyName(game_id: str, difficulty: int):
     if game_id in {GameIDs.TH13}:
         if difficulty == 5:
             return _("Overdrive")
+    if game_id in {GameIDs.ALCO}:
+        return _("No difficulty")
+    if game_id in GameIDs.TH095:
+        if scene_game_level is None or scene_game_scene is None:
+            return _("Bug difficulty")
+        if scene_game_level == 11:
+            scene_game_level_str = _("Ex")
+        else:
+            scene_game_level_str = str(scene_game_level)
+        return scene_game_level_str + "-" + str(scene_game_scene)
 
     return _("Bug difficulty")
 
