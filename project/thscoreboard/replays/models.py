@@ -241,6 +241,9 @@ class Replay(models.Model):
                         spell_card_id__isnull=False,
                     )
                     | models.Q(replay_type=ReplayType.PVP, spell_card_id__isnull=True)
+                    | models.Q(
+                        replay_type=ReplayType.SCENE_GAME, spell_card_id__isnull=True
+                    )
                 ),
             ),
             models.CheckConstraint(
@@ -480,7 +483,7 @@ class ReplayRank(models.Model):
     FROM (
     SELECT id as replay, score, shot_id, difficulty, route_id, category, rank() OVER (PARTITION BY shot_id, difficulty, route_id, category ORDER BY score DESC, created, id) as place
     FROM replays_replay
-    WHERE replay_type = 1  -- FULL_GAME
+    WHERE replay_type = 1 OR replay_type = 5  -- FULL_GAME or SCENE_GAME
     AND (category = 1 OR category = 2)  -- STANDARD or TAS
     ) AS ranked
     WHERE place <= 3
