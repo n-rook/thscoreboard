@@ -464,7 +464,7 @@ def _Parse095(rep_raw):
     encrypted_replay = th095_encrypted.Th095Encrypted.from_bytes(rep_raw)
 
     if encrypted_replay.userdata.level.value == "EX":
-        spell_level = 10
+        spell_level = 11
     else:
         spell_level = int(encrypted_replay.userdata.level.value)
     spell_scene = int(encrypted_replay.userdata.scene.value)
