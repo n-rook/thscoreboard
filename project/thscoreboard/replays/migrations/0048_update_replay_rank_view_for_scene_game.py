@@ -11,21 +11,272 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunSQL(
             sql="""
-CREATE OR REPLACE VIEW replays_rank
+DROP VIEW IF EXISTS replays_rank;
+
+CREATE VIEW replays_rank
 AS
-SELECT row_number() over () as id, replay, score, shot_id, difficulty, route_id, category, scene_game_level, scene_game_scene, place
-FROM (
-SELECT id as replay, score, shot_id, difficulty, route_id, category, scene_game_level, scene_game_scene, rank() OVER (PARTITION BY shot_id, difficulty, route_id, category, scene_game_level, scene_game_scene ORDER BY score DESC, created, id) as place
-FROM replays_replay
-WHERE replay_type IN (1, 5)  -- FULL_GAME, SCENE_GAME
-AND category = 1  -- STANDARD
-) AS ranked
-WHERE place <= 3
-ORDER BY shot_id, difficulty, route_id, category, scene_game_level, scene_game_scene, place desc
-;
+SELECT
+  row_number() over () as id,
+  replay,
+  score,
+  shot_id,
+  difficulty,
+  route_id,
+  category,
+  scene_game_level,
+  scene_game_scene,
+  place
+FROM
+  (
+    SELECT
+      replay,
+      score,
+      shot_id,
+      difficulty,
+      route_id,
+      category,
+      scene_game_level,
+      scene_game_scene,
+      created,
+      rank() OVER (
+        PARTITION BY shot_id,
+        difficulty,
+        route_id,
+        category,
+        scene_game_level,
+        scene_game_scene
+        ORDER BY
+          score DESC,
+          created,
+          replay
+      ) as place
+    FROM
+      (
+        SELECT
+          replay,
+          score,
+          shot_id,
+          difficulty,
+          route_id,
+          category,
+          scene_game_level,
+          scene_game_scene,
+          created,
+          user_id,
+          imported_username
+        FROM
+          (
+            -- Per-user bests
+            (
+            SELECT
+              id as replay,
+              score,
+              shot_id,
+              difficulty,
+              route_id,
+              category,
+              scene_game_level,
+              scene_game_scene,
+              created,
+              user_id,
+              NULL as imported_username,
+              rank() OVER (
+                PARTITION BY shot_id,
+                difficulty,
+                route_id,
+                category,
+                scene_game_level,
+                scene_game_scene,
+                user_id
+                ORDER BY
+                  score DESC,
+                  created,
+                  id
+              ) as per_user_place
+            FROM
+              replays_replay
+            WHERE
+              replay_type IN (1, 5) -- FULL_GAME, SCENE_GAME
+              AND category = 1 -- STANDARD
+              AND user_id IS NOT NULL
+            )
+            UNION ALL
+            -- Per-username bests for imported, unowned Royalflare replays
+            (
+            SELECT
+              id as replay,
+              score,
+              shot_id,
+              difficulty,
+              route_id,
+              category,
+              scene_game_level,
+              scene_game_scene,
+              created,
+              NULL as user_id,
+              imported_username,
+              rank() OVER (
+                PARTITION BY shot_id,
+                difficulty,
+                route_id,
+                category,
+                scene_game_level,
+                scene_game_scene,
+                imported_username
+                ORDER BY
+                  score DESC,
+                  created,
+                  id
+              ) as per_user_place
+            FROM
+              replays_replay
+            WHERE
+              replay_type IN (1, 5) -- FULL_GAME, SCENE_GAME
+              AND category = 1 -- STANDARD
+              AND user_id IS NULL
+              AND imported_username IS NOT NULL
+            )
+            )
+            AS replays_ranked_per_user
+        WHERE
+          per_user_place = 1
+      ) AS top_replays_per_user
+  ) AS top_replays
+WHERE
+  place <= 3
+ORDER BY
+  shot_id,
+  difficulty,
+  route_id,
+  category,
+  scene_game_level,
+  scene_game_scene,
+  place DESC;
                           """,
             reverse_sql="""
 DROP VIEW IF EXISTS replays_rank;
+
+CREATE VIEW replays_rank
+AS
+SELECT
+  row_number() over () as id,
+  replay,
+  score,
+  shot_id,
+  difficulty,
+  route_id,
+  category,
+  place
+FROM
+  (
+    SELECT
+      replay,
+      score,
+      shot_id,
+      difficulty,
+      route_id,
+      category,
+      created,
+      rank() OVER (
+        PARTITION BY shot_id,
+        difficulty,
+        route_id,
+        category
+        ORDER BY
+          score DESC,
+          created,
+          replay
+      ) as place
+    FROM
+      (
+        SELECT
+          replay,
+          score,
+          shot_id,
+          difficulty,
+          route_id,
+          category,
+          created,
+          user_id,
+          imported_username
+        FROM
+          (
+            -- Per-user bests
+            (
+            SELECT
+              id as replay,
+              score,
+              shot_id,
+              difficulty,
+              route_id,
+              category,
+              created,
+              user_id,
+              NULL as imported_username,
+              rank() OVER (
+                PARTITION BY shot_id,
+                difficulty,
+                route_id,
+                category,
+                user_id
+                ORDER BY
+                  score DESC,
+                  created,
+                  id
+              ) as per_user_place
+            FROM
+              replays_replay
+            WHERE
+              replay_type = 1 -- FULL_GAME
+              AND category = 1 -- STANDARD
+              AND user_id IS NOT NULL
+            )
+            UNION ALL
+            -- Per-username bests for imported, unowned Royalflare replays
+            (
+            SELECT
+              id as replay,
+              score,
+              shot_id,
+              difficulty,
+              route_id,
+              category,
+              created,
+              NULL as user_id,
+              imported_username,
+              rank() OVER (
+                PARTITION BY shot_id,
+                difficulty,
+                route_id,
+                category,
+                imported_username
+                ORDER BY
+                  score DESC,
+                  created,
+                  id
+              ) as per_user_place
+            FROM
+              replays_replay
+            WHERE
+              replay_type = 1 -- FULL_GAME
+              AND category = 1 -- STANDARD
+              AND user_id IS NULL
+              AND imported_username IS NOT NULL
+            )
+            )
+            AS replays_ranked_per_user
+        WHERE
+          per_user_place = 1
+      ) AS top_replays_per_user
+  ) AS top_replays
+WHERE
+  place <= 3
+ORDER BY
+  shot_id,
+  difficulty,
+  route_id,
+  category,
+  place DESC;
 """,
         )
     ]
