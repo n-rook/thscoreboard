@@ -69,7 +69,7 @@ def edit_replay(request: http.HttpRequest, game_id: str, replay_id: int):
     if replay.slowdown is not None:
         context["replay_slowdown"] = replay.slowdown
     if replay.spell_card_id:
-        context["replay_spell_card_id"] = replay.spell_card_id_format
+        context["replay_spell_card_id"] = replay.spell_card_id + 1
     if replay.route:
         context["route_name"] = replay.route.GetName()
 
