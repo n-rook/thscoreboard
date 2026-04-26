@@ -218,7 +218,9 @@ def _get_all_replay_for_game(game_id: str) -> Manager[models.Replay]:
         .select_related("rank_view")
         .filter(category__in=(models.Category.STANDARD, models.Category.TAS))
         .filter(shot__game=game_id)
-        .filter(replay_type=1)
+        .filter(
+            replay_type__in=(models.ReplayType.FULL_GAME, models.ReplayType.SCENE_GAME)
+        )
         .filter(is_listed=True)
         .filter_visible()
         .order_by("-score")
