@@ -401,6 +401,32 @@ _table_fields_th128 = immutabledict(
     }
 )
 
+_table_fields_alco = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": False,
+        "graze": False,
+        "point_items": False,
+        "power": False,
+        "lives": False,
+        "bombs": False,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+    }
+)
+
 _game_fields = immutabledict(
     {
         "th01": None,
@@ -419,6 +445,7 @@ _game_fields = immutabledict(
         "th16": _table_fields_th16,
         "th17": _table_fields_th17,
         "th18": _table_fields_th18,
+        "alco": _table_fields_alco,
     }
 )
 
@@ -440,6 +467,7 @@ _game_fields_PVP = immutabledict(
         "th16": None,
         "th17": None,
         "th18": None,
+        "alco": None,
     }
 )
 

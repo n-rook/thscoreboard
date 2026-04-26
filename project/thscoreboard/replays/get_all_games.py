@@ -76,8 +76,12 @@ def get_all_games_by_category() -> dict[str, list[models.Game]]:
         "Divine": GamesIn(DIVINE_CYCLE_GAME_IDS),
         "New": GamesIn(NEW_GAME_IDS),
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         "Scene": GamesIn(SCENE_GAME_IDS),
         "Other": GamesIn(OTHER_GAME_IDS),
 >>>>>>> 673993c (change photo_game to scene_game)
+=======
+        "Other": GamesIn(OTHER_GAME_IDS),
+>>>>>>> ffeca45 (add Uwabami Breakers (#546))
     }

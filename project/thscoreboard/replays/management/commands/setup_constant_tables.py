@@ -375,6 +375,7 @@ all_game_constants = [
     th17,
     th18,
     th20,
+    alco,
 ]
 
 

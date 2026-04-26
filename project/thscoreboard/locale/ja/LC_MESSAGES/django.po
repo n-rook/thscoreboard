@@ -500,22 +500,22 @@ msgctxt "th06"
 msgid "Marisa B"
 msgstr "恋符"
 
-#: replays/game_ids.py:264
+#: replays/game_ids.py:248
 msgctxt "th07"
 msgid "Reimu A"
 msgstr "霊符"
 
-#: replays/game_ids.py:266
+#: replays/game_ids.py:250
 msgctxt "th07"
 msgid "Reimu B"
 msgstr "夢符"
 
-#: replays/game_ids.py:268
+#: replays/game_ids.py:252
 msgctxt "th07"
 msgid "Marisa A"
 msgstr "魔符"
 
-#: replays/game_ids.py:270
+#: replays/game_ids.py:254
 msgctxt "th07"
 msgid "Marisa B"
 msgstr "恋符"
