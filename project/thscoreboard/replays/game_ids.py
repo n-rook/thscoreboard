@@ -377,7 +377,7 @@ def GetShotName(game_id: str, shot_id: str) -> str:
 
     if game_id == GameIDs.TH095:
         if shot_id == "Aya":
-            return pgettext("th125", "Aya")
+            return pgettext("th095", "Aya")
 
     if game_id == GameIDs.TH10:
         if shot_id == "ReimuA":
