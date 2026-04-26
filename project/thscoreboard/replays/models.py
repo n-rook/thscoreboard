@@ -56,7 +56,7 @@ class Game(models.Model):
         """Get the full name for this game."""
         return game_ids.GetGameName(self.game_id, game_ids.NameLength.FULL)
 
-    def GetDifficultyName(self, difficulty: int) -> str:
+    def GetDifficultyName(self, difficulty: int | None) -> str:
         """Gets the name of a difficulty in this game."""
         return game_ids.GetDifficultyName(self.game_id, difficulty)
 
@@ -221,7 +221,8 @@ class Replay(models.Model):
 
         constraints = [
             models.CheckConstraint(
-                check=models.Q(difficulty__gte=0), name="difficulty_gte_0"
+                check=models.Q(difficulty__gte=0) | models.Q(difficulty__isnull=True),
+                name="difficulty_gte_0",
             ),
             models.CheckConstraint(
                 name="replay_type_spell_card_id_isnull",
@@ -278,7 +279,7 @@ class Replay(models.Model):
     shot = models.ForeignKey("Shot", on_delete=models.PROTECT)
     """The shot type the player used."""
 
-    difficulty = models.IntegerField()
+    difficulty = models.IntegerField(null=True, blank=True)
     """The difficulty on which the player played."""
 
     route = models.ForeignKey("Route", on_delete=models.PROTECT, blank=True, null=True)
@@ -491,7 +492,7 @@ class ReplayRank(models.Model):
 
     shot = models.ForeignKey("Shot", on_delete=models.DO_NOTHING)
 
-    difficulty = models.IntegerField()
+    difficulty = models.IntegerField(blank=True, null=True)
     """The difficulty on which the player played."""
 
     route = models.ForeignKey(

@@ -30,6 +30,7 @@ class GameIDs:
     TH17 = "th17"
     TH18 = "th18"
     TH20 = "th20"
+    ALCO = "alco"
 
 
 class ReplayTypes:
@@ -164,6 +165,11 @@ _GAME_NAMES = immutabledict(
             pgettext_lazy("short game name", "th20"),
             pgettext_lazy("standard game name", "Fossilized Wonders"),
             pgettext_lazy("full game name", "東方錦上京 - Fossilized Wonders"),
+        ),
+        GameIDs.ALCO: (
+            pgettext_lazy("short game name", "alco"),
+            pgettext_lazy("standard game name", "Uwabami Breakers"),
+            pgettext_lazy("full game name", "黄昏酒場 - Uwabami Breakers"),
         ),
     }
 )
@@ -546,6 +552,10 @@ def GetShotName(game_id: str, shot_id: str) -> str:
             case "MarisaGreen2":
                 return pgettext("th20", "MarisaGreen2")
 
+    if game_id == GameIDs.ALCO:
+        if shot_id == "Isami":
+            return pgettext("alco", "Isami")
+
     return "Bug shot"
 
 
@@ -652,7 +662,7 @@ def GetRouteName(game_id: str, route_id: str):
     return "Bug route"
 
 
-def GetDifficultyName(game_id: str, difficulty: int):
+def GetDifficultyName(game_id: str, difficulty: int | None):
     if game_id in {
         GameIDs.TH01,
         GameIDs.TH02,
@@ -691,6 +701,8 @@ def GetDifficultyName(game_id: str, difficulty: int):
     if game_id in {GameIDs.TH13}:
         if difficulty == 5:
             return _("Overdrive")
+    if game_id in {GameIDs.ALCO}:
+        return _("No difficulty")
 
     return _("Bug difficulty")
 
