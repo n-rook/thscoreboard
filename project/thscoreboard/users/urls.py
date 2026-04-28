@@ -53,8 +53,15 @@ urlpatterns = [
     ),
     path(
         "change_password",
-        auth_views.PasswordChangeView.as_view(),
+        auth_views.PasswordChangeView.as_view(
+            success_url=reverse_lazy("users:change_password_complete"),
+        ),
         name="change_password",
+    ),
+    path(
+        "change_password/done",
+        auth_views.PasswordChangeDoneView.as_view(),
+        name="change_password_complete",
     ),
     path(
         "forgot_password",
