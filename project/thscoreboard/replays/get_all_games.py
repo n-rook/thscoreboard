@@ -55,6 +55,11 @@ def get_windows_games() -> list[models.Game]:
     return [game for game in all_games if game.game_id not in PC98_GAME_IDS]
 
 
+def get_scene_games() -> list[models.Game]:
+    all_games: Iterable[models.Game] = models.Game.objects.all()
+    return [game for game in all_games if game.game_id in SCENE_GAME_IDS]
+
+
 def get_all_games_by_category() -> dict[str, list[models.Game]]:
     """Returns all Touhou games, organized by category.
 
