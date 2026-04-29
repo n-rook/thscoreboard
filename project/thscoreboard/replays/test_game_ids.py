@@ -2,6 +2,7 @@ from django import test
 
 from replays import game_ids
 from replays import models
+from replays import get_all_games
 from replays.testing import test_case
 from replays.testing import test_utilities
 
@@ -125,10 +126,17 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
     def testNoBugDifficultyNamesForGames(self):
         games = models.Game.objects.all()
         for game in games:
+            if game in get_all_games.get_scene_games():
+                # Scene games use level-scene names rather than fixed difficulty names, so
+                # this table-driven test does not apply to them.
+                continue
             for difficulty in range(game.num_difficulties):
                 self.AssertNoBug(
                     game_ids.GetDifficultyName(
-                        game_id=game.game_id, difficulty=difficulty
+                        game_id=game.game_id,
+                        difficulty=difficulty,
+                        scene_game_level=None,
+                        scene_game_scene=None,
                     )
                 )
 
