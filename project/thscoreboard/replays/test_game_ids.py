@@ -32,7 +32,10 @@ class GameIDsTestCase(test.SimpleTestCase):
 
     def testGetDifficultyName(self):
         difficulty_name = game_ids.GetDifficultyName(
-            game_id=game_ids.GameIDs.TH06, difficulty=0
+            game_id=game_ids.GameIDs.TH06,
+            difficulty=0,
+            scene_game_level=None,
+            scene_game_scene=None,
         )
         self.assertEqual(difficulty_name, "Easy")
 
