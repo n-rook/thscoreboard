@@ -49,10 +49,14 @@ def _AllowedVideoDomainsValidator(value: str):
         raise exceptions.ValidationError("The replay link cannot be an embed link")
 
 
-def _GetDifficultyChoices(game: models.Game) -> Tuple[int, str]:
-    """Return pairs like (0, "Easy") for each difficulty of a game."""
+def _GetDifficultyChoices(game: models.Game) -> list[Tuple[int, str]]:
+    """Return pairs like (0, "Easy") for each difficulty of a game.
+
+    This is only used by the no-replay upload form. Scene games have no
+    difficulty concept and always require a replay file, so they should not
+    reach this path."""
     return [
-        (i, game_ids.GetDifficultyName(game.game_id, i))
+        (i, game_ids.GetDifficultyName(game.game_id, i, None, None))
         for i in range(game.num_difficulties)
     ]
 
