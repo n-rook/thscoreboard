@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-11 09:26+0000\n"
+"POT-Creation-Date: 2026-04-30 14:33+0000\n"
 "PO-Revision-Date: 2023-05-06 19:43+0000\n"
 "Last-Translator: ゑふまいか, 2025-05-10 16:44+0900\n"
 "Language-Team: Japanese (https://app.transifex.com/silent-selene/"
@@ -2963,11 +2963,11 @@ msgstr "リプレイ投稿内容の確認"
 
 #: replays/templates/replays/edit_replay_not_allowed.html:5
 msgid "You cannot edit this replay; only its owner can edit it."
-msgstr ""
+msgstr "このリプレイは編集できません。自分のリプレイのみ編集できます。"
 
 #: replays/templates/replays/edit_replay_not_allowed.html:6
 msgid "Go back to the replay"
-msgstr ""
+msgstr "リプレイ画面に戻る"
 
 #: replays/templates/replays/index.html:6
 msgid "Welcome to Silent Selene!"
@@ -2984,6 +2984,12 @@ msgid ""
 "and what we have planned for the future.\n"
 "    "
 msgstr ""
+"\n"
+"サイレントセレナへようこそ。ここはインターネット上の東方リプレイフォーラムです。"
+"ほぼ全ての東方リプレイの投稿に対応しています。"
+"まずは<a href=\"%(register_url)s\">アカウントを作成</a>して、達成したことを公開しましょう！"
+"また、<a href=\"%(blog_url)s\">ブログをご覧いただく</a>ことで、新機能や今後の予定を確認することができます。"
+"    "
 
 #: replays/templates/replays/index.html:15
 msgid "Recent uploads"
@@ -3337,7 +3343,7 @@ msgstr ""
 
 #: thscoreboard/settings.py:215
 msgid "English"
-msgstr "English"
+msgstr "英語"
 
 #: thscoreboard/settings.py:216
 msgid "Japanese"
@@ -3371,73 +3377,63 @@ msgstr "ログイン"
 #: thscoreboard/templates/base.html:46
 msgctxt "Top bar"
 msgid "Sign Up"
-msgstr ""
+msgstr "アカウント作成"
 
-#: thscoreboard/templates/base.html:54
-msgctxt "language"
-msgid "Japanese"
-msgstr "日本語"
-
-#: thscoreboard/templates/base.html:54
-msgctxt "language"
-msgid "English"
-msgstr "英語"
-
-#: thscoreboard/templates/base.html:65
+#: thscoreboard/templates/base.html:71
 msgctxt "Sidebar header"
 msgid "Scoreboards"
 msgstr "スコアボード一覧"
 
-#: thscoreboard/templates/base.html:85
+#: thscoreboard/templates/base.html:91
 msgctxt "Sidebar header"
 msgid "More"
 msgstr "その他"
 
-#: thscoreboard/templates/base.html:88
+#: thscoreboard/templates/base.html:94
 msgid "Player Rankings"
 msgstr "プレイヤーランキング"
 
-#: thscoreboard/templates/base.html:91
+#: thscoreboard/templates/base.html:97
 msgctxt "Sidebar header"
 msgid "About the site"
 msgstr "このサイトについて"
 
-#: thscoreboard/templates/base.html:94
+#: thscoreboard/templates/base.html:100
 msgctxt "Sidebar link"
 msgid "About"
 msgstr "このサイトについて"
 
-#: thscoreboard/templates/base.html:95
+#: thscoreboard/templates/base.html:101
 msgctxt "Sidebar link"
 msgid "Blog"
 msgstr "ブログ"
 
-#: thscoreboard/templates/base.html:96
+#: thscoreboard/templates/base.html:102
 msgctxt "Sidebar link"
 msgid "Website rules"
 msgstr "サイトに関するルール"
 
-#: thscoreboard/templates/base.html:97
+#: thscoreboard/templates/base.html:103
 msgctxt "Sidebar link"
 msgid "Replay rules"
 msgstr "リプレイに関するルール"
 
-#: thscoreboard/templates/base.html:98
+#: thscoreboard/templates/base.html:104
 msgctxt "Sidebar link"
 msgid "Privacy policy"
 msgstr "プライバシーポリシー"
 
-#: thscoreboard/templates/base.html:99
+#: thscoreboard/templates/base.html:105
 msgctxt "Sidebar link"
 msgid "Licences"
 msgstr "ライセンス"
 
-#: thscoreboard/templates/base.html:100
+#: thscoreboard/templates/base.html:106
 msgctxt "Sidebar link"
 msgid "Terms of Use"
 msgstr "利用規約"
 
-#: thscoreboard/templates/base.html:101
+#: thscoreboard/templates/base.html:107
 msgctxt "Sidebar link"
 msgid "Credits"
 msgstr "スタッフ紹介"
@@ -3480,7 +3476,7 @@ msgstr "時間"
 
 #: users/forms.py:136
 msgid "Also delete all replays uploaded by this user"
-msgstr ""
+msgstr "このユーザがアップロードしたリプレイを全て削除する"
 
 #: users/forms.py:146
 #, python-format
@@ -3499,11 +3495,16 @@ msgstr "ロイヤルフレアでのユーザ名"
 msgid "Contact Info"
 msgstr "連絡先"
 
+#: users/templates/registration/password_change_done.html:4
 #: users/templates/registration/password_change_form.html:4
 #: users/templates/registration/password_change_form.html:42
 #: users/templates/users/profile.html:42
 msgid "Change Password"
 msgstr "パスワードを変更する"
+
+#: users/templates/registration/password_change_done.html:8
+msgid "Your password has been successfully changed."
+msgstr "パスワードの変更に成功しました。"
 
 #: users/templates/users/ban_success.html:7
 #, python-format
@@ -3613,4 +3614,4 @@ msgstr "アカウントを削除する"
 
 #: users/views/register.py:84
 msgid "This email address is forbidden."
-msgstr ""
+msgstr "このメールアドレスは禁止されています。"
