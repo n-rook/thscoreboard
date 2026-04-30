@@ -33,7 +33,7 @@ def set_language(request: http.HttpRequest):
     resp.set_cookie(
         settings.LANGUAGE_COOKIE_NAME,
         lang,
-        datetime.timedelta(days=365),
+        int(datetime.timedelta(days=365).total_seconds()),
     )
     return resp
 
