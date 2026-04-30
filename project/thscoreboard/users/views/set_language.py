@@ -7,6 +7,11 @@ from django.core import exceptions
 from django.views.decorators import http as http_decorators
 
 
+def get_available_language_codes() -> list[str]:
+    """Returns the language codes configured in settings.LANGUAGES."""
+    return [code for code, _name in settings.LANGUAGES]
+
+
 @http_decorators.require_http_methods(["GET", "HEAD", "POST"])
 def set_language(request: http.HttpRequest):
     destination = request.META.get("HTTP_REFERER") or "/"
@@ -20,7 +25,7 @@ def set_language(request: http.HttpRequest):
         raise exceptions.BadRequest("Invalid form")
     lang = form.cleaned_data["language"]
 
-    if lang not in {"en_US", "ja"}:
+    if lang not in get_available_language_codes():
         raise exceptions.BadRequest(f"Unknown language {lang}")
 
     destination = request.META.get("HTTP_REFERER") or "/"
