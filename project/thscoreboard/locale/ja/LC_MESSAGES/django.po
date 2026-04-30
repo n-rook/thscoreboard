@@ -3503,8 +3503,6 @@ msgid "Change Password"
 msgstr "パスワードを変更する"
 
 #: users/templates/registration/password_change_done.html:8
-#, fuzzy
-#| msgid "Your account has been suspended."
 msgid "Your password has been successfully changed."
 msgstr "パスワードの変更に成功しました。"
 
