@@ -47,11 +47,17 @@
                 </div>
                 {% endif %}
                 <div class="banner-link">
+                    {% get_current_language as language_code %}
+                    {% static 'icons/flags/' as flag_icon_base %}
+                    <img src="{{ flag_icon_base }}{{ language_code }}.svg" class="inline-flag" />
                     <form method="post" action="/users/set_language" class="language-switcher">
                         {% csrf_token %}
-                        {% get_current_language as language_code %}
-                        <input type="hidden" name="language" value="{% if language_code == 'ja' %}en_US{% else %}ja{% endif %}" />
-                        <button type="submit">{% if language_code == 'ja' %}<img src="{% static 'icons/flags/jp.svg' %}" class="inline-flag" /> {% translate "Japanese" context "language" %}{% else %}<img src="{% static 'icons/flags/us.svg' %}" class="inline-flag" /> {% translate "English" context "language" %}{% endif %}</button>
+                        {% get_available_languages as languages %}
+                        <select class="language-select" name="language" onchange="this.form.submit()">
+                            {% for code, name in languages %}
+                            <option value="{{ code }}"{% if code == language_code %} selected{% endif %}>{{ name }}</option>
+                            {% endfor %}
+                        </select>
                     </form>
                 </div>
                 <div class="banner-link">
