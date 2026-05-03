@@ -45,6 +45,20 @@ class GameIDsTestCase(test.SimpleTestCase):
         )
         self.assertEqual(difficulty_name, "Jigoku")
 
+    def testGetSceneGameLevelName(self):
+        level_name = game_ids.GetSceneGameLevelName(
+            game_id=game_ids.GameIDs.TH095, scene_game_level=1
+        )
+        self.assertNotIn("bug", level_name.lower())
+        self.assertIsNotNone(level_name)
+
+    def testGetSceneGameSceneName(self):
+        scene_name = game_ids.GetSceneGameSceneName(
+            game_id=game_ids.GameIDs.TH095, scene_game_scene=1
+        )
+        self.assertNotIn("bug", scene_name.lower())
+        self.assertIsNotNone(scene_name)
+
     def testHasBombs(self):
         cases = [
             ["TH05", game_ids.GameIDs.TH05, None, True],
@@ -160,6 +174,21 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
                 self.AssertNoBug(
                     game_ids.GetRouteName(game_id=game.game_id, route_id=route.route_id)
                 )
+
+    def testSceneGameDifficultyNamesForSceneGames(self):
+        scene_games = get_all_games.get_scene_games()
+        for game in scene_games:
+            with self.subTest(game=game.game_id):
+                self.assertGreater(game.num_scene_game_levels, 0)
+                self.assertGreater(game.num_scene_game_scenes, 0)
+
+                for level in range(game.num_scene_game_levels):
+                    level_name = game_ids.GetSceneGameLevelName(game.game_id, level)
+                    self.AssertNoBug(level_name)
+
+                for scene in range(game.num_scene_game_scenes):
+                    scene_name = game_ids.GetSceneGameSceneName(game.game_id, scene)
+                    self.AssertNoBug(scene_name)
 
 
 class ReplayIdTestCase(test.SimpleTestCase):
