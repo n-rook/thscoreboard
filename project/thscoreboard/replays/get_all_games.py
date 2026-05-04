@@ -3,7 +3,6 @@ from typing import Iterable
 from replays import game_ids
 from replays import models
 
-
 PC98_GAME_IDS = [
     game_ids.GameIDs.TH01,
     game_ids.GameIDs.TH02,
@@ -36,6 +35,10 @@ NEW_GAME_IDS = [
     game_ids.GameIDs.TH20,
 ]
 
+SCENE_GAME_IDS = [
+    game_ids.GameIDs.TH095,
+]
+
 OTHER_GAME_IDS = [
     game_ids.GameIDs.ALCO,
 ]
@@ -49,6 +52,11 @@ def get_pc98_games() -> list[models.Game]:
 def get_windows_games() -> list[models.Game]:
     all_games: Iterable[models.Game] = models.Game.objects.all()
     return [game for game in all_games if game.game_id not in PC98_GAME_IDS]
+
+
+def get_scene_games() -> list[models.Game]:
+    all_games: Iterable[models.Game] = models.Game.objects.all()
+    return [game for game in all_games if game.game_id in SCENE_GAME_IDS]
 
 
 def get_all_games_by_category() -> dict[str, list[models.Game]]:
@@ -71,5 +79,6 @@ def get_all_games_by_category() -> dict[str, list[models.Game]]:
         "Classic": GamesIn(CLASSIC_GAME_IDS),
         "Divine": GamesIn(DIVINE_CYCLE_GAME_IDS),
         "New": GamesIn(NEW_GAME_IDS),
+        "Scene": GamesIn(SCENE_GAME_IDS),
         "Other": GamesIn(OTHER_GAME_IDS),
     }

@@ -1607,6 +1607,369 @@ spell_names_jp = immutabledict(
     }
 )
 
+scene_game_spell_names = immutabledict(
+    {
+        "th095": {
+            1: {
+                1: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                2: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                3: {
+                    "en-us": 'Firefly Sign "Fixed Stars on Earth"',
+                    "ja": "蛍符「地上の恒星」",
+                },
+                4: {
+                    "en-us": 'Darkness Sign "Dark Side of the Moon"',
+                    "ja": "闇符「ダークサイドオブザムーン」",
+                },
+                5: {
+                    "en-us": 'Butterfly Sign "Butterfly Storm"',
+                    "ja": "蝶符「バタフライストーム」",
+                },
+                6: {
+                    "en-us": 'Night Sign "Midnight Bird"',
+                    "ja": "夜符「ミッドナイトバード」",
+                },
+            },
+            2: {
+                1: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                2: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                3: {
+                    "en-us": 'Snow Sign "Diamond Blizzard"',
+                    "ja": "雪符「ダイアモンドブリザード」",
+                },
+                4: {
+                    "en-us": 'Cold Sign "Cold Snap"',
+                    "ja": "寒符「コールドスナップ」",
+                },
+                5: {
+                    "en-us": 'Freeze Sign "Minus K"',
+                    "ja": "凍符「マイナスK」",
+                },
+                6: {
+                    "en-us": 'Winter Sign "Northern Winner"',
+                    "ja": "冬符「ノーザンウイナー」",
+                },
+            },
+            3: {
+                1: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                2: {
+                    "en-us": 'Light Sign "Amaterasu"',
+                    "ja": "光符「アマテラス」",
+                },
+                3: {
+                    "en-us": 'Puppeteer Sign "Dolls in Sea"',
+                    "ja": "操符「ドールズインシー」",
+                },
+                4: {
+                    "en-us": 'Shroud Sign "Rain of Showa"',
+                    "ja": "包符「昭和の雨」",
+                },
+                5: {
+                    "en-us": 'Curse Sign "Straw Doll Kamikaze"',
+                    "ja": "呪符「ストロードールカミカゼ」",
+                },
+                6: {
+                    "en-us": 'Hollyhock Sign "Mito no Mitsukuni"',
+                    "ja": "葵符「水戸の光圀」",
+                },
+                7: {
+                    "en-us": 'Red Sign "Doll Mira Ceti"',
+                    "ja": "赤符「ドールミラセティ」",
+                },
+                8: {
+                    "en-us": 'Japan Sign "Yamato Kingdom"',
+                    "ja": "倭符「邪馬台の国」",
+                },
+            },
+            4: {
+                1: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                2: {
+                    "en-us": 'Fog Sign "Gassing Garden"',
+                    "ja": "霧符「ガシングガーデン」",
+                },
+                3: {
+                    "en-us": 'Runaway Rabbit "Fluster Escape"',
+                    "ja": "脱兎「フラスターエスケープ」",
+                },
+                4: {
+                    "en-us": 'Spread Sign "Rocket in Mist"',
+                    "ja": "散符「朧月花栞（ロケット・イン・ミスト）」",
+                },
+                5: {
+                    "en-us": 'Poison Sign "Poison Breath"',
+                    "ja": "毒符「ポイズンブレス」",
+                },
+                6: {
+                    "en-us": 'Wave Sign "Invisible Half-Moon"',
+                    "ja": "波符「幻の月（インビジブルハーフムーン）」",
+                },
+                7: {
+                    "en-us": 'Confusion "Into Delirium"',
+                    "ja": "譫妄「イントゥデリリウム」",
+                },
+                8: {
+                    "en-us": 'Owing Sign "Vulnerary of Ohnamuji-sama"',
+                    "ja": "借符「大穴牟遅様の薬」",
+                },
+                9: {
+                    "en-us": 'Mad Drean "Dream World"',
+                    "ja": "狂夢「風狂の夢（ドリームワールド）」",
+                },
+            },
+            5: {
+                1: {"en-us": "Non Spell", "ja": "通常"},
+                2: {
+                    "en-us": 'Sun & Water Sign "Hydrogenous Prominence"',
+                    "ja": "日＆水符「ハイドロジェナスプロミネンス」",
+                },
+                3: {
+                    "en-us": 'Flower Sign "Colorful Light Lotus Flower Palm"',
+                    "ja": "華符「彩光蓮華掌」",
+                },
+                4: {
+                    "en-us": 'Water & Fire Sign "Phlogistic Rain"',
+                    "ja": "水＆火符「フロギスティックレイン」",
+                },
+                5: {
+                    "en-us": 'Colorful Flip "Fluttering Petals and Falling Leaves"',
+                    "ja": "彩翔「飛花落葉」",
+                },
+                6: {
+                    "en-us": 'Moon Wood Sign "Satellite Himawari"',
+                    "ja": "月＆木符「サテライトヒマワリ」",
+                },
+                7: {
+                    "en-us": 'Colorful Chinese Flower "Rainbow Taijiquan"',
+                    "ja": "彩華「虹色太極拳」",
+                },
+                8: {
+                    "en-us": 'Sun Moon Sign "Royal Diamond Ring"',
+                    "ja": "日＆月符「ロイヤルダイアモンドリング」",
+                },
+            },
+            6: {
+                1: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                2: {
+                    "en-us": 'Human Knowledge Sword "Turning Angel Cut"',
+                    "ja": "人智剣「天女返し」",
+                },
+                3: {
+                    "en-us": 'Star Sign "Leaping Kasane-Uroko Star"',
+                    "ja": "星符「飛び重ね鱗」",
+                },
+                4: {
+                    "en-us": 'Obsession Sword "Blood of Asura"',
+                    "ja": "妄執剣「修羅の血」",
+                },
+                5: {
+                    "en-us": 'Kishin "Rumbling Jikokuten"',
+                    "ja": "鬼神「鳴動持国天」",
+                },
+                6: {
+                    "en-us": 'Celestial Star Sword "As the Silent Nirvana"',
+                    "ja": "天星剣「涅槃寂静の如し」",
+                },
+                7: {
+                    "en-us": 'Bakeneko "Chen"',
+                    "ja": "化猫「橙」",
+                },
+                8: {
+                    "en-us": 'Four Births Sword "Echoes of the Inclemency of All Beings"',
+                    "ja": "四生剣「衆生無情の響き」",
+                },
+            },
+            7: {
+                1: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                2: {
+                    "en-us": 'Devil Sign "All the World in Nightmare"',
+                    "ja": "魔符「全世界ナイトメア」",
+                },
+                3: {
+                    "en-us": 'Time Sign "Tunnel Effect"',
+                    "ja": "時符「トンネルエフェクト」",
+                },
+                4: {
+                    "en-us": 'Scarlet Sign "Bloody Magic Square"',
+                    "ja": "紅符「ブラッディマジックスクウェア」",
+                },
+                5: {
+                    "en-us": 'Void "Inflation Square"',
+                    "ja": "空虚「インフレーションスクウェア」",
+                },
+                6: {
+                    "en-us": 'Scarlet Bat "Vampirish Night"',
+                    "ja": "紅蝙蝠「ヴァンピリッシュナイト」",
+                },
+                7: {
+                    "en-us": 'Silver Sign "Perfect Maid"',
+                    "ja": "銀符「パーフェクトメイド」",
+                },
+                8: {
+                    "en-us": 'God Devil "Remilia Stoker"',
+                    "ja": "神鬼「レミリアストーカー」",
+                },
+            },
+            8: {
+                1: {"en-us": "Non Spell", "ja": "通常"},
+                2: {
+                    "en-us": 'Ghostly Elegance "Light Trap of Passing Away"',
+                    "ja": "幽雅「死出の誘蛾灯」",
+                },
+                3: {
+                    "en-us": 'Esoteric Sign "Odaishi-sama\'s Secret Key"',
+                    "ja": "密符「御大師様の秘鍵」",
+                },
+                4: {
+                    "en-us": 'Butterfly Sign "Deadly Lance of the Swallowtail Butterfly Crest"',
+                    "ja": "蝶符「鳳蝶紋の死槍」",
+                },
+                5: {
+                    "en-us": 'Ascetic Sign "Eighty Million Goma Boards"',
+                    "ja": "行符「八千万枚護摩」",
+                },
+                6: {
+                    "en-us": 'Death Sign "Life of Drunk, Dream of Death"',
+                    "ja": "死符「酔人の生、死の夢幻」",
+                },
+                7: {
+                    "en-us": 'Superhuman "Soaring En no Ozunu"',
+                    "ja": "超人「飛翔役小角」",
+                },
+                8: {
+                    "en-us": '"Death Butterfly, Floating Moon"',
+                    "ja": "「死蝶浮月」",
+                },
+            },
+            9: {
+                1: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                2: {
+                    "en-us": 'New Impossible Request "Lunar Ilmenite"',
+                    "ja": "新難題「月のイルメナイト」",
+                },
+                3: {
+                    "en-us": 'Medicine Sign "Butterfly Dream Pill - Nightmare Type"',
+                    "ja": "薬符「胡蝶夢丸ナイトメア」",
+                },
+                4: {
+                    "en-us": 'New Impossible Request "Red Stone of Aja"',
+                    "ja": "新難題「エイジャの赤石」",
+                },
+                5: {
+                    "en-us": 'Elixir "Quicksilver Sea"',
+                    "ja": "錬丹「水銀の海」",
+                },
+                6: {
+                    "en-us": 'New Impossible Request "Seamless Ceiling of Kinkaku-ji"',
+                    "ja": "新難題「金閣寺の一枚天井」",
+                },
+                7: {
+                    "en-us": 'Secret Elixir "Lunar Rabbit Incense"',
+                    "ja": "秘薬「仙香玉兎」",
+                },
+                8: {
+                    "en-us": 'New Impossible Request "Mysterium"',
+                    "ja": "新難題「ミステリウム」",
+                },
+            },
+            10: {
+                1: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                2: {
+                    "en-us": 'Lie "Tongue of Wolf"',
+                    "ja": "嘘言「タン・オブ・ウルフ」",
+                },
+                3: {
+                    "en-us": 'Death Song "Ferry of the Deep Fog"',
+                    "ja": "死歌「八重霧の渡し」",
+                },
+                4: {
+                    "en-us": 'Judgement "Trial of the Ten Kings"',
+                    "ja": "審判「十王裁判」",
+                },
+                5: {
+                    "en-us": 'Old Rain "Rain in the Liminal Journey Through Yomi"',
+                    "ja": "古雨「黄泉中有の旅の雨」",
+                },
+                6: {
+                    "en-us": 'Judgement "Guilty or Not Guilty"',
+                    "ja": "審判「ギルティ・オワ・ノットギルティ」",
+                },
+                7: {
+                    "en-us": 'Death Price "Price of Life"',
+                    "ja": "死価「プライス・オブ・ライフ」",
+                },
+                8: {
+                    "en-us": 'Judgement "Cleansed Crystal Judgement -Aya Shameimaru-"',
+                    "ja": "審判「浄頗梨審判 -射命丸文-」",
+                },
+            },
+            11: {
+                1: {
+                    "en-us": 'Taboo "Forbidden Fruit"',
+                    "ja": "禁忌「フォービドゥンフルーツ」",
+                },
+                2: {
+                    "en-us": 'Taboo "Forbidden Games"',
+                    "ja": "禁忌「禁じられた遊び」",
+                },
+                3: {
+                    "en-us": 'Border Sign "Boundary of Form and Emptiness"',
+                    "ja": "境符「色と空の境界」",
+                },
+                4: {
+                    "en-us": 'Border Sign "Boundary of Wave and Particle"',
+                    "ja": "境符「波と粒の境界」",
+                },
+                5: {
+                    "en-us": 'Exalted Personage "Forewarning of St. Germain"',
+                    "ja": "貴人「サンジェルマンの忠告」",
+                },
+                6: {
+                    "en-us": 'Hourai "Mizunoe no Uranoshimako and the Five-Colored Turtle"',
+                    "ja": "蓬莱「瑞江浦嶋子と五色の瑞亀」",
+                },
+                7: {
+                    "en-us": 'Ghastly Air "Deep Fog Labyrinth"',
+                    "ja": "鬼気「濛々迷霧」",
+                },
+                8: {
+                    "en-us": '"Night Parade of a Million Demons"',
+                    "ja": "「百万鬼夜行」",
+                },
+            },
+        }
+    }
+)
+
 
 def _CheckDictIntegrity() -> bool:
     for i in spell_names_en:
@@ -1618,20 +1981,46 @@ def _CheckDictIntegrity() -> bool:
     return True
 
 
+def _CheckSceneGameDictIntegrity() -> bool:
+    for levels in scene_game_spell_names.values():
+        for level, scenes in levels.items():
+            if not isinstance(level, int):
+                return False
+            for scene, names in scenes.items():
+                if not isinstance(scene, int):
+                    return False
+                if set(names.keys()) != {"en-us", "ja"}:
+                    return False
+    return True
+
+
 assert len(spell_names_en) == len(spell_names_jp)
 assert _CheckDictIntegrity()
+assert _CheckSceneGameDictIntegrity()
 
 
-def get(game_id: str, spell_id: int):
+def get(
+    game_id: str,
+    spell_id: int | None,
+    scene_game_level: int | None,
+    scene_game_scene: int | None,
+) -> str | None:
     """
     Obtains a spell card name given a game ID and a spell ID
 
     Uses the language set in gettext to automatically retrieve the spell name in English or in Japanese
     """
     try:
-        if get_language() == "ja":
-            return spell_names_jp[game_id][spell_id]
+        if game_id in list(scene_game_spell_names.keys()):
+            if scene_game_level is None or scene_game_scene is None:
+                return None
+            return scene_game_spell_names[game_id][scene_game_level][scene_game_scene][
+                get_language()
+            ]
         else:
-            return spell_names_en[game_id][spell_id]
+            if get_language() == "ja":
+                return spell_names_jp[game_id][spell_id]
+            else:
+                return spell_names_en[game_id][spell_id]
     except (IndexError, KeyError, TypeError):
         return None

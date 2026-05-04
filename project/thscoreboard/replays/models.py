@@ -44,6 +44,23 @@ class Game(models.Model):
     starting from 0.
     """
 
+    num_scene_game_levels = models.IntegerField(default=0)
+    """The number of scene game levels the game has.
+
+    like th095 has 11 levels.
+    starting from 0, and Ex is represented as 10.
+
+    The levels will be given numeric values in actual replay rows, starting from 0.
+    """
+
+    num_scene_game_scenes = models.IntegerField(default=0)
+    """The number of scene game scenes the game has.
+
+    like th095 has max 8 scenes.
+
+    The scenes will be given numeric values in actual replay rows, starting from 0.
+    """
+
     def GetName(self):
         """Get a standard name for the game."""
         return game_ids.GetGameName(self.game_id, game_ids.NameLength.STANDARD)
@@ -56,9 +73,24 @@ class Game(models.Model):
         """Get the full name for this game."""
         return game_ids.GetGameName(self.game_id, game_ids.NameLength.FULL)
 
-    def GetDifficultyName(self, difficulty: int | None) -> str:
+    def GetDifficultyName(
+        self,
+        difficulty: int | None,
+        scene_game_level: int | None,
+        scene_game_scene: int | None,
+    ) -> str:
         """Gets the name of a difficulty in this game."""
-        return game_ids.GetDifficultyName(self.game_id, difficulty)
+        return game_ids.GetDifficultyName(
+            self.game_id, difficulty, scene_game_level, scene_game_scene
+        )
+
+    def GetSceneGameLevelName(self, scene_game_level: int | None) -> str:
+        """Gets the name of a scene game level in this game."""
+        return game_ids.GetSceneGameLevelName(self.game_id, scene_game_level)
+
+    def GetSceneGameSceneName(self, scene_game_scene: int | None) -> str:
+        """Gets the name of a scene game scene in this game."""
+        return game_ids.GetSceneGameSceneName(self.game_id, scene_game_scene)
 
     def GetIconPath(self) -> str:
         """Get the HTTP path to get a small icon for this game."""
@@ -140,6 +172,9 @@ class ReplayType(models.IntegerChoices):
 
     PVP = 4, pgettext_lazy("Replay Type", "PVP")
     """Player vs player replays"""
+
+    SCENE_GAME = 5, pgettext_lazy("Replay Type", "Scene Game")
+    """Replays of the scene game mode like TH095 or TH143 or etc"""
 
 
 class Route(models.Model):
@@ -239,6 +274,9 @@ class Replay(models.Model):
                         spell_card_id__isnull=False,
                     )
                     | models.Q(replay_type=ReplayType.PVP, spell_card_id__isnull=True)
+                    | models.Q(
+                        replay_type=ReplayType.SCENE_GAME, spell_card_id__isnull=True
+                    )
                 ),
             ),
             models.CheckConstraint(
@@ -287,7 +325,12 @@ class Replay(models.Model):
 
     def GetDifficultyName(self):
         """Get a pretty name for this difficulty. Note: Populates shot and game."""
-        return game_ids.GetDifficultyName(self.shot.game.game_id, self.difficulty)
+        return game_ids.GetDifficultyName(
+            self.shot.game.game_id,
+            self.difficulty,
+            self.scene_game_level,
+            self.scene_game_scene,
+        )
 
     def GetDifficultyUrlCode(self):
         return f"d{self.difficulty}"
@@ -345,6 +388,12 @@ class Replay(models.Model):
 
     spell_card_id = models.IntegerField(blank=True, null=True)
     """In the case of a spell practice replay, the spell card ID attempted"""
+
+    scene_game_level = models.IntegerField(blank=True, null=True)
+    """In the case of a scene game replay (like TH095), the scene level attempted. starts at 1."""
+
+    scene_game_scene = models.IntegerField(blank=True, null=True)
+    """In the case of a scene game replay (like TH095), the scene index attempted. starts at 1."""
 
     replay_type = models.IntegerField(choices=ReplayType.choices)
     """Type of replay (full run run, stage practice, etc)"""
@@ -430,6 +479,8 @@ class Replay(models.Model):
         self.spell_card_id = r.spell_card_id
         self.replay_type = r.replay_type
         self.slowdown = r.slowdown
+        self.scene_game_level = r.scene_game_level
+        self.scene_game_scene = r.scene_game_scene
 
     def SetForeignKeysFromConstantModels(self, c: ReplayConstantModels):
         """Set the shot and route foreign keys on this Replay."""
@@ -470,7 +521,7 @@ class ReplayRank(models.Model):
     FROM (
     SELECT id as replay, score, shot_id, difficulty, route_id, category, rank() OVER (PARTITION BY shot_id, difficulty, route_id, category ORDER BY score DESC, created, id) as place
     FROM replays_replay
-    WHERE replay_type = 1  -- FULL_GAME
+    WHERE replay_type = 1 OR replay_type = 5  -- FULL_GAME or SCENE_GAME
     AND (category = 1 OR category = 2)  -- STANDARD or TAS
     ) AS ranked
     WHERE place <= 3
@@ -501,6 +552,16 @@ class ReplayRank(models.Model):
     """The route on which the game was played."""
 
     category = models.IntegerField(choices=Category.choices)
+
+    scene_game_level = models.IntegerField(blank=True, null=True)
+    """The number of scene game level the game has.
+    For example, th095 has this as number.
+    """
+
+    scene_game_scene = models.IntegerField(blank=True, null=True)
+    """The number of scene game scene the game has.
+    For example, th095 has this as number.
+    """
 
     place = models.IntegerField("Place")
     """The replay's rank. 1 is first place, 2 is second, 3 is third.

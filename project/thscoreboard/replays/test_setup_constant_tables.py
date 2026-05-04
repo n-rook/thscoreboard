@@ -13,6 +13,8 @@ class CreateOrUpdateGamesTest(test.TestCase):
             id="th00",
             has_replays=True,
             num_difficulties=5,
+            num_scene_game_levels=10,
+            num_scene_game_scenes=10,
             shots=["Reimu", "Marisa"],
             routes=["A", "B"],
         )
@@ -28,6 +30,12 @@ class CreateOrUpdateGamesTest(test.TestCase):
         self.assertEquals(game_in_db.has_replays, test_game_constants.has_replays)
         self.assertEquals(
             game_in_db.num_difficulties, test_game_constants.num_difficulties
+        )
+        self.assertEqual(
+            game_in_db.num_scene_game_levels, test_game_constants.num_scene_game_levels
+        )
+        self.assertEqual(
+            game_in_db.num_scene_game_scenes, test_game_constants.num_scene_game_scenes
         )
 
         shots_in_db = models.Shot.objects.all()
@@ -45,6 +53,8 @@ class CreateOrUpdateGamesTest(test.TestCase):
             id="th00",
             has_replays=False,
             num_difficulties=0,
+            num_scene_game_levels=0,
+            num_scene_game_scenes=0,
             shots=[],
             routes=[],
         )
@@ -61,6 +71,12 @@ class CreateOrUpdateGamesTest(test.TestCase):
         self.assertEquals(
             game_in_db.num_difficulties, test_game_constants.num_difficulties
         )
+        self.assertEqual(
+            game_in_db.num_scene_game_levels, test_game_constants.num_scene_game_levels
+        )
+        self.assertEqual(
+            game_in_db.num_scene_game_scenes, test_game_constants.num_scene_game_scenes
+        )
 
         self.assertEquals(len(models.Shot.objects.all()), 0)
         self.assertEquals(len(models.Route.objects.all()), 0)
@@ -70,6 +86,8 @@ class CreateOrUpdateGamesTest(test.TestCase):
             id="th00",
             has_replays=False,
             num_difficulties=0,
+            num_scene_game_levels=0,
+            num_scene_game_scenes=0,
             shots=[],
             routes=[],
         )
@@ -78,6 +96,8 @@ class CreateOrUpdateGamesTest(test.TestCase):
 
         test_game_constants.has_replays = True
         test_game_constants.num_difficulties = 5
+        test_game_constants.num_scene_game_levels = 10
+        test_game_constants.num_scene_game_scenes = 10
 
         create_or_update_games([test_game_constants])
 
@@ -87,12 +107,16 @@ class CreateOrUpdateGamesTest(test.TestCase):
 
         self.assertEquals(game_in_db.has_replays, True)
         self.assertEquals(game_in_db.num_difficulties, 5)
+        self.assertEqual(game_in_db.num_scene_game_levels, 10)
+        self.assertEqual(game_in_db.num_scene_game_scenes, 10)
 
     def test_disallows_modifying_shot_ids(self):
         test_game_constants = GameConstants(
             id="th00",
             has_replays=False,
             num_difficulties=0,
+            num_scene_game_levels=0,
+            num_scene_game_scenes=0,
             shots=["Reimu", "Marisa"],
             routes=[],
         )
@@ -109,6 +133,8 @@ class CreateOrUpdateGamesTest(test.TestCase):
             id="th00",
             has_replays=False,
             num_difficulties=0,
+            num_scene_game_levels=0,
+            num_scene_game_scenes=0,
             shots=[],
             routes=["a", "b"],
         )
@@ -125,6 +151,8 @@ class CreateOrUpdateGamesTest(test.TestCase):
             id="th00",
             has_replays=False,
             num_difficulties=0,
+            num_scene_game_levels=0,
+            num_scene_game_scenes=0,
             shots=[],
             routes=["a", "b"],
         )
