@@ -682,7 +682,6 @@ def GetRouteName(game_id: str, route_id: str):
     return "Bug route"
 
 
-<<<<<<< HEAD
 def GetSceneGameLevelName(game_id: str, scene_game_level: int | None) -> str:
     if game_id == GameIDs.TH095:
         if scene_game_level == 11:
@@ -705,9 +704,6 @@ def GetDifficultyName(
     scene_game_level: int | None,
     scene_game_scene: int | None,
 ) -> str:
-=======
-def GetDifficultyName(game_id: str, difficulty: int | None):
->>>>>>> ffeca45 (add Uwabami Breakers (#546))
     if game_id in {
         GameIDs.TH01,
         GameIDs.TH02,

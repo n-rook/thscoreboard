@@ -3,7 +3,6 @@ from typing import Iterable
 from replays import game_ids
 from replays import models
 
-
 PC98_GAME_IDS = [
     game_ids.GameIDs.TH01,
     game_ids.GameIDs.TH02,
@@ -80,13 +79,6 @@ def get_all_games_by_category() -> dict[str, list[models.Game]]:
         "Classic": GamesIn(CLASSIC_GAME_IDS),
         "Divine": GamesIn(DIVINE_CYCLE_GAME_IDS),
         "New": GamesIn(NEW_GAME_IDS),
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
         "Scene": GamesIn(SCENE_GAME_IDS),
         "Other": GamesIn(OTHER_GAME_IDS),
->>>>>>> 673993c (change photo_game to scene_game)
-=======
-        "Other": GamesIn(OTHER_GAME_IDS),
->>>>>>> ffeca45 (add Uwabami Breakers (#546))
     }

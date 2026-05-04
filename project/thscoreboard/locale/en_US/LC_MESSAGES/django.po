@@ -493,7 +493,6 @@ msgctxt "th06"
 msgid "Marisa B"
 msgstr "Marisa B"
 
-<<<<<<< HEAD
 #: replays/game_ids.py:248
 msgctxt "th07"
 msgid "Reimu A"
@@ -514,9 +513,6 @@ msgctxt "th07"
 msgid "Marisa B"
 msgstr "Marisa B"
 
-#: replays/game_ids.py:272
-msgctxt "th07"
-=======
 #: replays/game_ids.py:256
 msgctxt "th07"
 msgid "Reimu A"
@@ -539,7 +535,6 @@ msgstr "Marisa B"
 
 #: replays/game_ids.py:264
 msgctxt "th07"
->>>>>>> b884ead (fix makemessages)
 msgid "Sakuya A"
 msgstr "Sakuya A"
 
