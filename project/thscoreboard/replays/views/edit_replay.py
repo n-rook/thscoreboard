@@ -1,6 +1,5 @@
 """Views related to editing an existing replay."""
 
-
 from django import urls
 from django import shortcuts
 from django.template import response as template_response
@@ -11,6 +10,7 @@ from django.contrib.auth import decorators as auth_decorators
 
 from replays import forms
 from replays import models
+from replays import game_ids
 
 
 @auth_decorators.login_required
@@ -55,11 +55,16 @@ def edit_replay(request: http.HttpRequest, game_id: str, replay_id: int):
     else:
         form = forms.initialize_publish_replay_form_from_replay(replay)
 
+    if replay.replay_type == game_ids.ReplayTypes.SCENE_GAME:
+        difficulty_name = replay.GetSceneGameLabelName()
+    else:
+        difficulty_name = replay.GetDifficultyName()
+
     context = {
         "form": form,
         "game_name": game.GetName(),
         "game_id": game.game_id,
-        "difficulty_name": replay.GetDifficultyName(),
+        "difficulty_name": difficulty_name,
         "shot_name": replay.shot.GetName(),
         "has_replay_file": True,
         "replay_type": replay.GetReplayTypeName(),

@@ -58,10 +58,15 @@ def replay_details(request, game_id: str, replay_id: int):
         request.user == replay_instance.user or request.user.is_staff
     )
 
+    if replay_instance.replay_type == game_ids.ReplayTypes.SCENE_GAME:
+        difficulty_name = replay_instance.GetSceneGameLabelName()
+    else:
+        difficulty_name = replay_instance.GetDifficultyName()
+
     context = {
         "game_name": replay_instance.shot.game.GetName(),
         "shot_name": replay_instance.shot.GetName(),
-        "difficulty_name": replay_instance.GetDifficultyName(),
+        "difficulty_name": difficulty_name,
         "category": replay_instance.get_category_display(),
         "game_id": game_id,
         "spell_name": spell_names.get(

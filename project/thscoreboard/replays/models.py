@@ -73,20 +73,13 @@ class Game(models.Model):
         """Get the full name for this game."""
         return game_ids.GetGameName(self.game_id, game_ids.NameLength.FULL)
 
-<<<<<<< HEAD
     def GetDifficultyName(self, difficulty: int | None) -> str:
-=======
-    def GetDifficultyName(
-        self,
-        difficulty: int | None,
-        scene_game_level: int | None,
-        scene_game_scene: int | None,
-    ) -> str:
->>>>>>> 01b4b4e (fix GetDifficultyName, add GetSceneGameLevelName and GetSceneGameSceneName)
         """Gets the name of a difficulty in this game."""
-        return game_ids.GetDifficultyName(
-            self.game_id, difficulty, scene_game_level, scene_game_scene
-        )
+        return game_ids.GetDifficultyName(self.game_id, difficulty)
+
+    def GetSceneGameLabel(self, level: int | None, scene: int | None) -> str:
+        """Gets the label for a scene game level and scene in this game."""
+        return game_ids.GetSceneGameLabelName(self.game_id, level, scene)
 
     def GetSceneGameLevelName(self, scene_game_level: int | None) -> str:
         """Gets the name of a scene game level in this game."""
@@ -332,8 +325,11 @@ class Replay(models.Model):
         return game_ids.GetDifficultyName(
             self.shot.game.game_id,
             self.difficulty,
-            self.scene_game_level,
-            self.scene_game_scene,
+        )
+
+    def GetSceneGameLabelName(self):
+        return game_ids.GetSceneGameLabelName(
+            self.shot.game.game_id, self.scene_game_level, self.scene_game_scene
         )
 
     def GetDifficultyUrlCode(self):

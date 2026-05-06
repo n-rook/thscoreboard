@@ -56,7 +56,7 @@ def _GetDifficultyChoices(game: models.Game) -> list[Tuple[int, str]]:
     difficulty concept and always require a replay file, so they should not
     reach this path."""
     return [
-        (i, game_ids.GetDifficultyName(game.game_id, i, None, None))
+        (i, game_ids.GetDifficultyName(game.game_id, i))
         for i in range(game.num_difficulties)
     ]
 

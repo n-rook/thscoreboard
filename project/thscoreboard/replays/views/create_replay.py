@@ -161,15 +161,18 @@ def publish_replay(request, temp_replay_id):
         initial={"score": replay_info.score, "name": replay_info.name},
     )
 
+    if replay_info.game in [game_ids.GameIDs.TH095]:
+        difficulty_name = constants.game.GetSceneGameLabel(
+            replay_info.scene_game_level, replay_info.scene_game_scene
+        )
+    else:
+        difficulty_name = constants.game.GetDifficultyName(replay_info.difficulty)
+
     context = {
         "form": form,
         "game_name": constants.game.GetName(),
         "game_id": constants.game.game_id,
-        "difficulty_name": constants.game.GetDifficultyName(
-            replay_info.difficulty,
-            replay_info.scene_game_level,
-            replay_info.scene_game_scene,
-        ),
+        "difficulty_name": difficulty_name,
         "shot_name": constants.shot.GetName(),
         "route_name": None,
         "has_replay_file": True,

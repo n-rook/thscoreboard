@@ -701,8 +701,6 @@ def GetSceneGameSceneName(game_id: str, scene_game_scene: int | None) -> str:
 def GetDifficultyName(
     game_id: str,
     difficulty: int | None,
-    scene_game_level: int | None,
-    scene_game_scene: int | None,
 ) -> str:
     if game_id in {
         GameIDs.TH01,
@@ -744,19 +742,20 @@ def GetDifficultyName(
             return _("Overdrive")
     if game_id in {GameIDs.ALCO}:
         return _("No difficulty")
-<<<<<<< HEAD
-=======
-    if game_id in GameIDs.TH095:
-        if scene_game_level is None or scene_game_scene is None:
-            return _("Bug difficulty")
-        if scene_game_level == 11:
-            scene_game_level_str = _("Ex")
-        else:
-            scene_game_level_str = str(scene_game_level)
-        return scene_game_level_str + "-" + str(scene_game_scene)
->>>>>>> 01b4b4e (fix GetDifficultyName, add GetSceneGameLevelName and GetSceneGameSceneName)
 
     return _("Bug difficulty")
+
+
+def GetSceneGameLabelName(game_id: str, level: int | None, scene: int | None) -> str:
+    if game_id == GameIDs.TH095:
+        if level is None or scene is None:
+            return _("Bug level and scene")
+        if level == 11:
+            level_str = _("Ex")
+        else:
+            level_str = str(level)
+        return level_str + "-" + str(scene)
+    return _("Bug level and scene")
 
 
 def GetRpyGameCode(game_id: str) -> str:
