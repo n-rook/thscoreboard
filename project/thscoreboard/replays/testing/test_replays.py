@@ -9,11 +9,18 @@ from replays import game_ids
 from replays import models
 from replays import replay_parsing
 
-
 TEST_REPLAY_LOCATION = Path("replays/replays_for_tests")
 
 _filename_type = typing.Literal[
-    "th6_extra", "th6_hard_1cc", "th7_lunatic", "th10_normal"
+    "th6_extra",
+    "th6_hard_1cc",
+    "th7_lunatic",
+    "th8_normal",
+    "th8_spell_practice",
+    "th9_lunatic",
+    "th95_3-1",
+    "th95_Ex-2",
+    "th10_normal",
 ]
 """A special literal type which defines all possible filenames.
 

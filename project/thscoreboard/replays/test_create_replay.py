@@ -120,6 +120,60 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertIsNotNone(new_replay.route)
         self.assertEqual(new_replay.route.route_id, "Final B")
 
+    def testPublishReplaySavesSceneGameLevelInteger_TH095(self):
+        replay_file_contents = test_replays.GetRaw("th95_3-1")
+
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user, replay=replay_file_contents
+        )
+        temp_replay.save()
+
+        replay_info = replay_parsing.Parse(replay_file_contents)
+
+        new_replay = create_replay.PublishNewReplay(
+            user=self.user,
+            difficulty=replay_info.difficulty,
+            score=replay_info.score,
+            category=models.Category.STANDARD,
+            comment="Hello",
+            video_link="",
+            is_good=True,
+            is_clear=True,
+            no_bomb=False,
+            miss_count=None,
+            temp_replay_instance=temp_replay,
+            replay_info=replay_info,
+        )
+        self.assertEqual(new_replay.scene_game_level, 3)
+        self.assertEqual(new_replay.scene_game_scene, 1)
+
+    def testPublishReplaySavesSceneGameLevelExtra_TH095(self):
+        replay_file_contents = test_replays.GetRaw("th95_Ex-2")
+
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user, replay=replay_file_contents
+        )
+        temp_replay.save()
+
+        replay_info = replay_parsing.Parse(replay_file_contents)
+
+        new_replay = create_replay.PublishNewReplay(
+            user=self.user,
+            difficulty=replay_info.difficulty,
+            score=replay_info.score,
+            category=models.Category.STANDARD,
+            comment="Hello",
+            video_link="",
+            is_good=True,
+            is_clear=True,
+            no_bomb=False,
+            miss_count=None,
+            temp_replay_instance=temp_replay,
+            replay_info=replay_info,
+        )
+        self.assertEqual(new_replay.scene_game_level, 11)
+        self.assertEqual(new_replay.scene_game_scene, 2)
+
     def testPublishReplayIgnoresNoBombWhenNotApplicable(self):
         replay_file_contents = test_replays.GetRaw("th9_lunatic")
 

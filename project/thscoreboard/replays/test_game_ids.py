@@ -34,8 +34,6 @@ class GameIDsTestCase(test.SimpleTestCase):
         difficulty_name = game_ids.GetDifficultyName(
             game_id=game_ids.GameIDs.TH06,
             difficulty=0,
-            scene_game_level=None,
-            scene_game_scene=None,
         )
         self.assertEqual(difficulty_name, "Easy")
 
@@ -46,18 +44,30 @@ class GameIDsTestCase(test.SimpleTestCase):
         self.assertEqual(difficulty_name, "Jigoku")
 
     def testGetSceneGameLevelName(self):
-        level_name = game_ids.GetSceneGameLevelName(
+        level_1 = game_ids.GetSceneGameLevelName(
             game_id=game_ids.GameIDs.TH095, scene_game_level=1
         )
-        self.assertNotIn("bug", level_name.lower())
-        self.assertIsNotNone(level_name)
+        level_ex = game_ids.GetSceneGameLevelName(
+            game_id=game_ids.GameIDs.TH095, scene_game_level=11
+        )
+        self.assertEqual("1", level_1)
+        self.assertEqual("Ex", level_ex)
 
     def testGetSceneGameSceneName(self):
         scene_name = game_ids.GetSceneGameSceneName(
             game_id=game_ids.GameIDs.TH095, scene_game_scene=1
         )
-        self.assertNotIn("bug", scene_name.lower())
-        self.assertIsNotNone(scene_name)
+        self.assertEqual("1", scene_name)
+
+    def testGetSceneGameLabelName(self):
+        label_1_1 = game_ids.GetSceneGameLabelName(
+            game_id=game_ids.GameIDs.TH095, level=1, scene=1
+        )
+        self.assertEqual("1-1", label_1_1)
+        label_ex_1 = game_ids.GetSceneGameLabelName(
+            game_id=game_ids.GameIDs.TH095, level=11, scene=1
+        )
+        self.assertEqual("Ex-1", label_ex_1)
 
     def testHasBombs(self):
         cases = [
@@ -152,8 +162,6 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
                     game_ids.GetDifficultyName(
                         game_id=game.game_id,
                         difficulty=difficulty,
-                        scene_game_level=None,
-                        scene_game_scene=None,
                     )
                 )
 
