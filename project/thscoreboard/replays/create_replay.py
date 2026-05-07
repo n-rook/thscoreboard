@@ -54,7 +54,7 @@ def PublishNewReplay(
     user,
     difficulty: Optional[int],
     score: int,
-    category: str,
+    category: int,
     comment: str,
     video_link: str,
     is_good: bool,
