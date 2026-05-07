@@ -332,6 +332,11 @@ class Replay(models.Model):
             self.shot.game.game_id, self.scene_game_level, self.scene_game_scene
         )
 
+    def GetDifficultyDisplayName(self):
+        if self.replay_type == ReplayType.SCENE_GAME:
+            return self.GetSceneGameLabelName()
+        return self.GetDifficultyName()
+
     def GetDifficultyUrlCode(self):
         return f"d{self.difficulty}"
 

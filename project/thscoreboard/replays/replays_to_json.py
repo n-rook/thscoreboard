@@ -43,13 +43,8 @@ class ReplayToJsonConverter:
         }
         if game.game_id in [game_ids.GameIDs.ALCO]:
             json_dict["Difficulty"] = ""
-        elif game.game_id in [game_ids.GameIDs.TH095]:
-            json_dict["Difficulty"] = replay.GetSceneGameLabelName()
         else:
-            json_dict["Difficulty"] = game_ids.GetDifficultyName(
-                game.game_id,
-                replay.difficulty,
-            )
+            json_dict["Difficulty"] = replay.GetDifficultyDisplayName()
         json_dict["Shot"] = self._get_shot_name(shot)
         if game.game_id in [
             game_ids.GameIDs.TH01,

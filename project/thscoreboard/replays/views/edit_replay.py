@@ -55,16 +55,11 @@ def edit_replay(request: http.HttpRequest, game_id: str, replay_id: int):
     else:
         form = forms.initialize_publish_replay_form_from_replay(replay)
 
-    if replay.replay_type == game_ids.ReplayTypes.SCENE_GAME:
-        difficulty_name = replay.GetSceneGameLabelName()
-    else:
-        difficulty_name = replay.GetDifficultyName()
-
     context = {
         "form": form,
         "game_name": game.GetName(),
         "game_id": game.game_id,
-        "difficulty_name": difficulty_name,
+        "difficulty_name": replay.GetDifficultyDisplayName(),
         "shot_name": replay.shot.GetName(),
         "has_replay_file": True,
         "replay_type": replay.GetReplayTypeName(),
