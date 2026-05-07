@@ -418,7 +418,7 @@ class Replay(models.Model):
     miss_count = models.IntegerField(blank=True, null=True)
     """The number of times the player died during the run.
 
-    This field is optional; if it is null, the player probably just didn't set it.
+    This field is optional; if it is null, the player probably just didn't set it or the replay is for a scene game.
     """
 
     is_listed = models.BooleanField(default=True)
