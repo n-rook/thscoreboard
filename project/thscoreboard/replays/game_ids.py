@@ -801,6 +801,13 @@ def HasBombs(game_id: str, replay_type: Optional[int] = None) -> bool:
         # not worth tracking.
         return False
 
+    if replay_type == ReplayTypes.SCENE_GAME:
+        # In SceneGame, you cannot use bombs.
+        # Some games such as TH143 allow the use of items,
+        # but they are difficult to consider bombs,
+        # so they are not treated as bombs.
+        return False
+
     return True
 
 
@@ -813,15 +820,18 @@ def HasLives(game_id: str, replay_type: Optional[int] = None) -> bool:
             if we should track misses for any replay type (for the given game).
     """
 
-    # All currently supported games have lives, but scene games don't, so in
-    # the future we will return False sometimes here.
-    del game_id  # Stop flake8 from complaining that it is unused.
-
     if replay_type == ReplayTypes.SPELL_PRACTICE:
         # In most cases, you cannot bomb in spell practice.
         # In rare cases, you can (for example, in TH16 you can get a score
         # extend, allowing you to die and then bomb), but even then, it is
         # not worth tracking.
+        return False
+
+    if game_id in [GameIDs.TH095]:
+        # Almost all SceneGames do not have a lives system.
+        # However, in TH143, using items allows the player to take hits.
+        # Therefore, whether the game has a lives system should be determined
+        # by the game ID rather than the replay type.
         return False
 
     return True
