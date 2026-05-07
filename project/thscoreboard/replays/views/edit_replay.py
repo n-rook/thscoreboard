@@ -10,7 +10,6 @@ from django.contrib.auth import decorators as auth_decorators
 
 from replays import forms
 from replays import models
-from replays import game_ids
 
 
 @auth_decorators.login_required
