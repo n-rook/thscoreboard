@@ -675,17 +675,23 @@ def GetRouteName(game_id: str, route_id: str):
 
 
 def GetSceneGameLevelName(game_id: str, scene_game_level: int | None) -> str:
+    if scene_game_level is None or scene_game_level < 1:
+        # Scene game levels are 1-indexed.
+        return "Bug level"
     if game_id == GameIDs.TH095:
         if scene_game_level == 11:
             return pgettext("th095", "Ex")
-        elif scene_game_level is not None:
+        elif scene_game_level < 11:
             return str(scene_game_level)
     return "Bug level"
 
 
 def GetSceneGameSceneName(game_id: str, scene_game_scene: int | None) -> str:
+    if scene_game_scene is None or scene_game_scene < 1:
+        # Scene game scenes are 1-indexed.
+        return "Bug scene"
     if game_id == GameIDs.TH095:
-        if scene_game_scene is not None:
+        if scene_game_scene <= 9:
             return str(scene_game_scene)
     return "Bug scene"
 

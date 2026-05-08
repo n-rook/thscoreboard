@@ -193,11 +193,11 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
                 self.assertGreater(game.num_scene_game_scenes, 0)
 
                 for level in range(game.num_scene_game_levels):
-                    level_name = game_ids.GetSceneGameLevelName(game.game_id, level)
+                    level_name = game_ids.GetSceneGameLevelName(game.game_id, level + 1)
                     self.AssertNoBug(level_name)
 
                 for scene in range(game.num_scene_game_scenes):
-                    scene_name = game_ids.GetSceneGameSceneName(game.game_id, scene)
+                    scene_name = game_ids.GetSceneGameSceneName(game.game_id, scene + 1)
                     self.AssertNoBug(scene_name)
 
 
