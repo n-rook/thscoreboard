@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-08 16:25+0000\n"
+"POT-Creation-Date: 2026-05-08 18:55+0000\n"
 "PO-Revision-Date: 2025-08-17 20:05+0000\n"
 "Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: \n"
@@ -1243,52 +1243,52 @@ msgctxt "th128"
 msgid "Extra"
 msgstr "Extra"
 
-#: replays/game_ids.py:680
+#: replays/game_ids.py:683
 msgctxt "th095"
 msgid "Ex"
 msgstr "Ex"
 
-#: replays/game_ids.py:720
+#: replays/game_ids.py:726
 msgid "Easy"
 msgstr "Easy"
 
-#: replays/game_ids.py:722
+#: replays/game_ids.py:728
 msgid "Normal"
 msgstr "Normal"
 
-#: replays/game_ids.py:724
+#: replays/game_ids.py:730
 msgid "Hard"
 msgstr "Hard"
 
-#: replays/game_ids.py:726
+#: replays/game_ids.py:732
 msgid "Lunatic"
 msgstr "Lunatic"
 
-#: replays/game_ids.py:728
+#: replays/game_ids.py:734
 msgid "Extra"
 msgstr "Extra"
 
-#: replays/game_ids.py:731
+#: replays/game_ids.py:737
 msgid "Phantasm"
 msgstr "Phantasm"
 
-#: replays/game_ids.py:734
+#: replays/game_ids.py:740
 msgid "Overdrive"
 msgstr "Overdrive"
 
-#: replays/game_ids.py:736
+#: replays/game_ids.py:742
 msgid "No difficulty"
 msgstr "No difficulty"
 
-#: replays/game_ids.py:738
+#: replays/game_ids.py:744
 msgid "Bug difficulty"
 msgstr "Bug difficulty"
 
-#: replays/game_ids.py:744 replays/game_ids.py:750
+#: replays/game_ids.py:750 replays/game_ids.py:756
 msgid "Bug level and scene"
 msgstr "Bug level and scene"
 
-#: replays/game_ids.py:746
+#: replays/game_ids.py:752
 msgid "Ex"
 msgstr "Ex"
 
