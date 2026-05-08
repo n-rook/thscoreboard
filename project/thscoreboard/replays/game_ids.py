@@ -72,9 +72,7 @@ _GAME_NAMES = immutabledict(
         GameIDs.TH01: (
             pgettext_lazy("short game name", "th01"),
             pgettext_lazy("standard game name", "The Highly Responsive to Prayers"),
-            pgettext_lazy(
-                "full game name", "東方靈異伝 - The Highly Responsive to Prayers"
-            ),
+            pgettext_lazy("full game name", "東方靈異伝 - The Highly Responsive to Prayers"),
         ),
         GameIDs.TH02: (
             pgettext_lazy("short game name", "th02"),
@@ -84,9 +82,7 @@ _GAME_NAMES = immutabledict(
         GameIDs.TH03: (
             pgettext_lazy("short game name", "th03"),
             pgettext_lazy("standard game name", "The Phantasmagoria of Dim. Dream"),
-            pgettext_lazy(
-                "full game name", "東方夢時空 - The Phantasmagoria of Dim. Dream"
-            ),
+            pgettext_lazy("full game name", "東方夢時空 - The Phantasmagoria of Dim. Dream"),
         ),
         GameIDs.TH04: (
             pgettext_lazy("short game name", "th04"),
@@ -116,9 +112,7 @@ _GAME_NAMES = immutabledict(
         GameIDs.TH09: (
             pgettext_lazy("short game name", "th09"),
             pgettext_lazy("standard game name", "Phantasmagoria of Flower View"),
-            pgettext_lazy(
-                "full game name", "東方花映塚 - Phantasmagoria of Flower View"
-            ),
+            pgettext_lazy("full game name", "東方花映塚 - Phantasmagoria of Flower View"),
         ),
         GameIDs.TH095: (
             pgettext_lazy("short game name", "th095"),
@@ -168,9 +162,7 @@ _GAME_NAMES = immutabledict(
         GameIDs.TH17: (
             pgettext_lazy("short game name", "th17"),
             pgettext_lazy("standard game name", "Wily Beast and Weakest Creature"),
-            pgettext_lazy(
-                "full game name", "東方鬼形獣 - Wily Beast and Weakest Creature"
-            ),
+            pgettext_lazy("full game name", "東方鬼形獣 - Wily Beast and Weakest Creature"),
         ),
         GameIDs.TH18: (
             pgettext_lazy("short game name", "th18"),
