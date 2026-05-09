@@ -17,11 +17,36 @@ class Migration(migrations.Migration):
             model_name="replay",
             constraint=models.CheckConstraint(
                 check=models.Q(
-                    models.Q(("replay_type", 1), ("spell_card_id__isnull", True)),
-                    models.Q(("replay_type", 2), ("spell_card_id__isnull", True)),
-                    models.Q(("replay_type", 3), ("spell_card_id__isnull", False)),
-                    models.Q(("replay_type", 4), ("spell_card_id__isnull", True)),
-                    models.Q(("replay_type", 5), ("spell_card_id__isnull", True)),
+                    models.Q(
+                        ("replay_type", 1),
+                        ("scene_game_level__isnull", True),
+                        ("scene_game_scene__isnull", True),
+                        ("spell_card_id__isnull", True),
+                    ),
+                    models.Q(
+                        ("replay_type", 2),
+                        ("scene_game_level__isnull", True),
+                        ("scene_game_scene__isnull", True),
+                        ("spell_card_id__isnull", True),
+                    ),
+                    models.Q(
+                        ("replay_type", 3),
+                        ("scene_game_level__isnull", True),
+                        ("scene_game_scene__isnull", True),
+                        ("spell_card_id__isnull", False),
+                    ),
+                    models.Q(
+                        ("replay_type", 4),
+                        ("scene_game_level__isnull", True),
+                        ("scene_game_scene__isnull", True),
+                        ("spell_card_id__isnull", True),
+                    ),
+                    models.Q(
+                        ("replay_type", 5),
+                        ("scene_game_level__isnull", False),
+                        ("scene_game_scene__isnull", False),
+                        ("spell_card_id__isnull", True),
+                    ),
                     _connector="OR",
                 ),
                 name="replay_type_spell_card_id_isnull",
