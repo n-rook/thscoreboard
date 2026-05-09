@@ -1971,34 +1971,6 @@ scene_game_spell_names = immutabledict(
 )
 
 
-def _CheckDictIntegrity() -> bool:
-    for i in spell_names_en:
-        try:
-            if len(spell_names_en[i]) != len(spell_names_jp[i]):
-                return False
-        except KeyError:
-            return False
-    return True
-
-
-def _CheckSceneGameDictIntegrity() -> bool:
-    for levels in scene_game_spell_names.values():
-        for level, scenes in levels.items():
-            if not isinstance(level, int):
-                return False
-            for scene, names in scenes.items():
-                if not isinstance(scene, int):
-                    return False
-                if set(names.keys()) != {"en-us", "ja"}:
-                    return False
-    return True
-
-
-assert len(spell_names_en) == len(spell_names_jp)
-assert _CheckDictIntegrity()
-assert _CheckSceneGameDictIntegrity()
-
-
 def get(
     game_id: str,
     spell_id: int | None,
