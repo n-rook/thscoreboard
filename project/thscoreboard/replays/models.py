@@ -260,19 +260,34 @@ class Replay(models.Model):
                 name="replay_type_spell_card_id_isnull",
                 check=(
                     models.Q(
-                        replay_type=ReplayType.FULL_GAME, spell_card_id__isnull=True
+                        replay_type=ReplayType.FULL_GAME,
+                        spell_card_id__isnull=True,
+                        scene_game_level__isnull=True,
+                        scene_game_scene__isnull=True,
                     )
                     | models.Q(
                         replay_type=ReplayType.STAGE_PRACTICE,
                         spell_card_id__isnull=True,
+                        scene_game_level__isnull=True,
+                        scene_game_scene__isnull=True,
                     )
                     | models.Q(
                         replay_type=ReplayType.SPELL_PRACTICE,
                         spell_card_id__isnull=False,
+                        scene_game_level__isnull=True,
+                        scene_game_scene__isnull=True,
                     )
-                    | models.Q(replay_type=ReplayType.PVP, spell_card_id__isnull=True)
                     | models.Q(
-                        replay_type=ReplayType.SCENE_GAME, spell_card_id__isnull=True
+                        replay_type=ReplayType.PVP,
+                        spell_card_id__isnull=True,
+                        scene_game_level__isnull=True,
+                        scene_game_scene__isnull=True,
+                    )
+                    | models.Q(
+                        replay_type=ReplayType.SCENE_GAME,
+                        spell_card_id__isnull=True,
+                        scene_game_level__isnull=False,
+                        scene_game_scene__isnull=False,
                     )
                 ),
             ),
