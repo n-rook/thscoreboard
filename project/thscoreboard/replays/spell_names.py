@@ -2006,21 +2006,22 @@ def get(
     scene_game_scene: int | None,
 ) -> str | None:
     """
-    Obtains a spell card name given a game ID and a spell ID
+    Returns the spell card name for the given game, identified either by spell ID or by scene-game level and scene.
 
     Uses the language set in gettext to automatically retrieve the spell name in English or in Japanese
     """
+    if game_id in scene_game_spell_names:
+        if scene_game_level is None or scene_game_scene is None:
+            # This should not be reached during normal replay handling.
+            return None
+        return scene_game_spell_names[game_id][scene_game_level][scene_game_scene][
+            get_language()
+        ]
+
     try:
-        if game_id in list(scene_game_spell_names.keys()):
-            if scene_game_level is None or scene_game_scene is None:
-                return None
-            return scene_game_spell_names[game_id][scene_game_level][scene_game_scene][
-                get_language()
-            ]
+        if get_language() == "ja":
+            return spell_names_jp[game_id][spell_id]
         else:
-            if get_language() == "ja":
-                return spell_names_jp[game_id][spell_id]
-            else:
-                return spell_names_en[game_id][spell_id]
+            return spell_names_en[game_id][spell_id]
     except (IndexError, KeyError, TypeError):
         return None
