@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-30 14:33+0000\n"
+"POT-Creation-Date: 2026-05-11 12:18+0000\n"
 "PO-Revision-Date: 2025-08-17 20:05+0000\n"
 "Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: \n"
@@ -2961,10 +2961,8 @@ msgstr ""
 "</p>"
 
 #: replays/templates/replays/edit_replay.html:4
-#, fuzzy
-#| msgid "Finish uploading your replay"
 msgid "Edit your replay"
-msgstr "Finish uploading your replay"
+msgstr "Edit your replay"
 
 #: replays/templates/replays/edit_replay_not_allowed.html:5
 msgid "You cannot edit this replay; only its owner can edit it."
@@ -3176,10 +3174,8 @@ msgid "Unclaim this replay"
 msgstr "Unclaim this replay"
 
 #: replays/templates/replays/replay_details.html:243
-#, fuzzy
-#| msgid "Claim replays"
 msgid "Edit replay"
-msgstr "Claim replays"
+msgstr "Edit replay"
 
 #: replays/templates/replays/replay_details.html:248
 msgid "Hide replay on the leaderboards"
@@ -3375,61 +3371,71 @@ msgctxt "Top bar"
 msgid "Sign Up"
 msgstr "Sign Up"
 
-#: thscoreboard/templates/base.html:71
+#: thscoreboard/templates/base.html:54
+msgctxt "language"
+msgid "Japanese"
+msgstr "Japanese"
+
+#: thscoreboard/templates/base.html:54
+msgctxt "language"
+msgid "English"
+msgstr "English"
+
+#: thscoreboard/templates/base.html:65
 msgctxt "Sidebar header"
 msgid "Scoreboards"
 msgstr "Scoreboards"
 
-#: thscoreboard/templates/base.html:91
+#: thscoreboard/templates/base.html:85
 msgctxt "Sidebar header"
 msgid "More"
 msgstr "More"
 
-#: thscoreboard/templates/base.html:94
+#: thscoreboard/templates/base.html:88
 msgid "Player Rankings"
 msgstr "Player Rankings"
 
-#: thscoreboard/templates/base.html:97
+#: thscoreboard/templates/base.html:91
 msgctxt "Sidebar header"
 msgid "About the site"
 msgstr "About the site"
 
-#: thscoreboard/templates/base.html:100
+#: thscoreboard/templates/base.html:94
 msgctxt "Sidebar link"
 msgid "About"
 msgstr "About"
 
-#: thscoreboard/templates/base.html:101
+#: thscoreboard/templates/base.html:95
 msgctxt "Sidebar link"
 msgid "Blog"
 msgstr "Blog"
 
-#: thscoreboard/templates/base.html:102
+#: thscoreboard/templates/base.html:96
 msgctxt "Sidebar link"
 msgid "Website rules"
 msgstr "Website rules"
 
-#: thscoreboard/templates/base.html:103
+#: thscoreboard/templates/base.html:97
 msgctxt "Sidebar link"
 msgid "Replay rules"
 msgstr "Replay rules"
 
-#: thscoreboard/templates/base.html:104
+#: thscoreboard/templates/base.html:98
 msgctxt "Sidebar link"
 msgid "Privacy policy"
 msgstr "Privacy policy"
 
-#: thscoreboard/templates/base.html:105
+#: thscoreboard/templates/base.html:99
 msgctxt "Sidebar link"
 msgid "Licences"
 msgstr "Licences"
 
-#: thscoreboard/templates/base.html:106
+#: thscoreboard/templates/base.html:100
 msgctxt "Sidebar link"
 msgid "Terms of Use"
 msgstr "Terms of Use"
 
-#: thscoreboard/templates/base.html:107
+#: thscoreboard/templates/base.html:101
 msgctxt "Sidebar link"
 msgid "Credits"
 msgstr "Credits"

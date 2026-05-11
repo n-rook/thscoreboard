@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-30 14:33+0000\n"
+"POT-Creation-Date: 2026-05-11 12:18+0000\n"
 "PO-Revision-Date: 2023-05-06 19:43+0000\n"
 "Last-Translator: ゑふまいか, 2025-05-10 16:44+0900\n"
 "Language-Team: Japanese (https://app.transifex.com/silent-selene/"
@@ -2956,10 +2956,8 @@ msgstr ""
 "    "
 
 #: replays/templates/replays/edit_replay.html:4
-#, fuzzy
-#| msgid "Finish uploading your replay"
 msgid "Edit your replay"
-msgstr "リプレイ投稿内容の確認"
+msgstr "リプレイを編集する"
 
 #: replays/templates/replays/edit_replay_not_allowed.html:5
 msgid "You cannot edit this replay; only its owner can edit it."
@@ -2985,11 +2983,11 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"サイレントセレナへようこそ。ここはインターネット上の東方リプレイフォーラムです。"
-"ほぼ全ての東方リプレイの投稿に対応しています。"
-"まずは<a href=\"%(register_url)s\">アカウントを作成</a>して、達成したことを公開しましょう！"
-"また、<a href=\"%(blog_url)s\">ブログをご覧いただく</a>ことで、新機能や今後の予定を確認することができます。"
-"    "
+"サイレントセレナへようこそ。ここはインターネット上の東方リプレイフォーラムで"
+"す。ほぼ全ての東方リプレイの投稿に対応しています。まずは<a "
+"href=\"%(register_url)s\">アカウントを作成</a>して、達成したことを公開しま"
+"しょう！また、<a href=\"%(blog_url)s\">ブログをご覧いただく</a>ことで、新機能"
+"や今後の予定を確認することができます。    "
 
 #: replays/templates/replays/index.html:15
 msgid "Recent uploads"
@@ -3179,10 +3177,8 @@ msgid "Unclaim this replay"
 msgstr "これは自分のリプレイではありません"
 
 #: replays/templates/replays/replay_details.html:243
-#, fuzzy
-#| msgid "Claim replays"
 msgid "Edit replay"
-msgstr "リプレイを引き継ぐ"
+msgstr "リプレイを編集する"
 
 #: replays/templates/replays/replay_details.html:248
 msgid "Hide replay on the leaderboards"
@@ -3335,11 +3331,11 @@ msgstr "ロイヤルフレアのリプレイを引き継ぐ"
 
 #: replays/views/create_replay.py:55
 msgid "This game is not yet supported."
-msgstr ""
+msgstr "このゲームはまだ対応していません。"
 
 #: replays/views/edit_replay.py:39
 msgid "We do not yet support editing PC-98 replays."
-msgstr ""
+msgstr "旧作のリプレイの編集にはまだ対応していません。"
 
 #: thscoreboard/settings.py:215
 msgid "English"
@@ -3379,61 +3375,71 @@ msgctxt "Top bar"
 msgid "Sign Up"
 msgstr "アカウント作成"
 
-#: thscoreboard/templates/base.html:71
+#: thscoreboard/templates/base.html:54
+msgctxt "language"
+msgid "Japanese"
+msgstr "日本語"
+
+#: thscoreboard/templates/base.html:54
+msgctxt "language"
+msgid "English"
+msgstr "英語"
+
+#: thscoreboard/templates/base.html:65
 msgctxt "Sidebar header"
 msgid "Scoreboards"
 msgstr "スコアボード一覧"
 
-#: thscoreboard/templates/base.html:91
+#: thscoreboard/templates/base.html:85
 msgctxt "Sidebar header"
 msgid "More"
 msgstr "その他"
 
-#: thscoreboard/templates/base.html:94
+#: thscoreboard/templates/base.html:88
 msgid "Player Rankings"
 msgstr "プレイヤーランキング"
 
-#: thscoreboard/templates/base.html:97
+#: thscoreboard/templates/base.html:91
 msgctxt "Sidebar header"
 msgid "About the site"
 msgstr "このサイトについて"
 
-#: thscoreboard/templates/base.html:100
+#: thscoreboard/templates/base.html:94
 msgctxt "Sidebar link"
 msgid "About"
 msgstr "このサイトについて"
 
-#: thscoreboard/templates/base.html:101
+#: thscoreboard/templates/base.html:95
 msgctxt "Sidebar link"
 msgid "Blog"
 msgstr "ブログ"
 
-#: thscoreboard/templates/base.html:102
+#: thscoreboard/templates/base.html:96
 msgctxt "Sidebar link"
 msgid "Website rules"
 msgstr "サイトに関するルール"
 
-#: thscoreboard/templates/base.html:103
+#: thscoreboard/templates/base.html:97
 msgctxt "Sidebar link"
 msgid "Replay rules"
 msgstr "リプレイに関するルール"
 
-#: thscoreboard/templates/base.html:104
+#: thscoreboard/templates/base.html:98
 msgctxt "Sidebar link"
 msgid "Privacy policy"
 msgstr "プライバシーポリシー"
 
-#: thscoreboard/templates/base.html:105
+#: thscoreboard/templates/base.html:99
 msgctxt "Sidebar link"
 msgid "Licences"
 msgstr "ライセンス"
 
-#: thscoreboard/templates/base.html:106
+#: thscoreboard/templates/base.html:100
 msgctxt "Sidebar link"
 msgid "Terms of Use"
 msgstr "利用規約"
 
-#: thscoreboard/templates/base.html:107
+#: thscoreboard/templates/base.html:101
 msgctxt "Sidebar link"
 msgid "Credits"
 msgstr "スタッフ紹介"
