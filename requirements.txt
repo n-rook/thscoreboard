@@ -1,5 +1,5 @@
 bcrypt==4.0.1
-django==4.2.4
+django==5.2.14
 django-compressor==4.4
 django-sass-processor==1.2.2
 freezegun==1.2.2
