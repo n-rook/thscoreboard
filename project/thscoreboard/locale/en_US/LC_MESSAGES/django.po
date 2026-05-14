@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-08 18:55+0000\n"
+"POT-Creation-Date: 2026-05-11 12:18+0000\n"
 "PO-Revision-Date: 2025-08-17 20:05+0000\n"
 "Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: \n"
@@ -3003,18 +3003,16 @@ msgstr ""
 "</p>"
 
 #: replays/templates/replays/edit_replay.html:4
-#, fuzzy
-#| msgid "Finish uploading your replay"
 msgid "Edit your replay"
-msgstr "Finish uploading your replay"
+msgstr "Edit your replay"
 
 #: replays/templates/replays/edit_replay_not_allowed.html:5
 msgid "You cannot edit this replay; only its owner can edit it."
-msgstr ""
+msgstr "You cannot edit this replay; only its owner can edit it."
 
 #: replays/templates/replays/edit_replay_not_allowed.html:6
 msgid "Go back to the replay"
-msgstr ""
+msgstr "Go back to the replay"
 
 #: replays/templates/replays/index.html:6
 msgid "Welcome to Silent Selene!"
@@ -3031,6 +3029,13 @@ msgid ""
 "and what we have planned for the future.\n"
 "    "
 msgstr ""
+"\n"
+"    Welcome to Silent Selene, the home of Touhou replays on the Internet. We "
+"support uploading replays for almost all Touhou games, so <a "
+"href=\"%(register_url)s\">create an account</a> and show us what you've got! "
+"Or <a href=\"%(blog_url)s\">check out our blog</a> to find out what's new "
+"and what we have planned for the future.\n"
+"    "
 
 #: replays/templates/replays/index.html:15
 msgid "Recent uploads"
@@ -3211,10 +3216,8 @@ msgid "Unclaim this replay"
 msgstr "Unclaim this replay"
 
 #: replays/templates/replays/replay_details.html:243
-#, fuzzy
-#| msgid "Claim replays"
 msgid "Edit replay"
-msgstr "Claim replays"
+msgstr "Edit replay"
 
 #: replays/templates/replays/replay_details.html:248
 msgid "Hide replay on the leaderboards"
@@ -3366,11 +3369,11 @@ msgstr "Claim replays from royalflare"
 
 #: replays/views/create_replay.py:55
 msgid "This game is not yet supported."
-msgstr ""
+msgstr "This game is not yet supported."
 
 #: replays/views/edit_replay.py:38
 msgid "We do not yet support editing PC-98 replays."
-msgstr ""
+msgstr "We do not yet support editing PC-98 replays."
 
 #: thscoreboard/settings.py:215
 msgid "English"
@@ -3408,7 +3411,7 @@ msgstr "Log in"
 #: thscoreboard/templates/base.html:46
 msgctxt "Top bar"
 msgid "Sign Up"
-msgstr ""
+msgstr "Sign Up"
 
 #: thscoreboard/templates/base.html:54
 msgctxt "language"
@@ -3517,7 +3520,7 @@ msgstr "Hours"
 
 #: users/forms.py:136
 msgid "Also delete all replays uploaded by this user"
-msgstr ""
+msgstr "Also delete all replays uploaded by this user"
 
 #: users/forms.py:146
 #, python-format
@@ -3545,7 +3548,7 @@ msgstr "Change Password"
 
 #: users/templates/registration/password_change_done.html:8
 msgid "Your password has been successfully changed."
-msgstr "Your account has been suspended."
+msgstr "Your password has been successfully changed."
 
 #: users/templates/users/ban_success.html:7
 #, python-format
@@ -3650,4 +3653,4 @@ msgstr "Permanently delete my account"
 
 #: users/views/register.py:84
 msgid "This email address is forbidden."
-msgstr ""
+msgstr "This email address is forbidden."
