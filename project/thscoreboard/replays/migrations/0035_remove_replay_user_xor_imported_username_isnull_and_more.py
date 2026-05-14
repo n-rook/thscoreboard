@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="replay",
             constraint=models.CheckConstraint(
-                check=models.Q(
+                condition=models.Q(
                     ("user__isnull", False),
                     ("imported_username__isnull", False),
                     _connector="OR",

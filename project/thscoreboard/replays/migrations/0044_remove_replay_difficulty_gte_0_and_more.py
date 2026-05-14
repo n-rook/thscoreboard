@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="replay",
             constraint=models.CheckConstraint(
-                check=models.Q(
+                condition=models.Q(
                     ("difficulty__gte", 0),
                     ("difficulty__isnull", True),
                     _connector="OR",

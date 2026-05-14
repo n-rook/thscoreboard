@@ -39,7 +39,9 @@ class User(auth_models.AbstractUser):
         constraints = [
             models.UniqueConstraint("email", name="unique_email"),
             models.CheckConstraint(
-                check=(models.Q(deleted_on__isnull=False) & models.Q(is_active=False))
+                condition=(
+                    models.Q(deleted_on__isnull=False) & models.Q(is_active=False)
+                )
                 | (models.Q(deleted_on__isnull=True) & models.Q(is_active=True)),
                 name="deleted_on_set_iff_not_active",
             ),
@@ -466,7 +468,7 @@ class Ban(models.Model):
     class Meta:
         constraints = [
             models.CheckConstraint(
-                check=(
+                condition=(
                     models.Q(target__isnull=True)
                     & models.Q(deleted_account_username__isnull=False)
                     & models.Q(deleted_account_email__isnull=False)
