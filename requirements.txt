@@ -6,7 +6,7 @@ freezegun==1.2.2
 immutabledict==3.0.0
 kaitaistruct==0.10
 libsass==0.22.0
-postgres==4.0
+psycopg2-binary==2.9.12
 requests==2.31.0
 tsadecode==0.6
 whitenoise==6.5.0
