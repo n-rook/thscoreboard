@@ -45,9 +45,7 @@
 <p>
     <form method="post" action="{% url 'users:logout' %}">
         {% csrf_token %}
-        <button
-            type="submit"
-        >
+        <button type="submit">
             {% translate "Log out" %}
         </button>
     </form>
