@@ -1,6 +1,5 @@
 """Views related to editing an existing replay."""
 
-
 from django import urls
 from django import shortcuts
 from django.template import response as template_response
@@ -59,7 +58,7 @@ def edit_replay(request: http.HttpRequest, game_id: str, replay_id: int):
         "form": form,
         "game_name": game.GetName(),
         "game_id": game.game_id,
-        "difficulty_name": replay.GetDifficultyName(),
+        "difficulty_name": replay.GetDifficultyDisplayName(),
         "shot_name": replay.shot.GetName(),
         "has_replay_file": True,
         "replay_type": replay.GetReplayTypeName(),

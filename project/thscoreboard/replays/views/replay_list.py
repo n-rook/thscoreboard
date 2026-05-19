@@ -15,7 +15,6 @@ from replays.models import Game, Shot, Route
 from replays.replays_to_json import convert_replays_to_json_bytes
 from replays.views.replay_table_helpers import stream_json_bytes_to_http_reponse
 
-
 _SCOREBOARD_CATEGORIES = (models.Category.STANDARD, models.Category.TAS)
 
 
@@ -88,6 +87,8 @@ def get_filter_options(game: Game) -> list[Filter]:
         return _get_filter_options_th01_th128(game)
     elif game.game_id == game_ids.GameIDs.TH08:
         return _get_filter_options_th08(game)
+    elif game.game_id == game_ids.GameIDs.TH095:
+        return _get_filter_options_th095(game)
     elif game.game_id == game_ids.GameIDs.TH13:
         return _get_filter_options_th13(game)
     elif game.game_id == game_ids.GameIDs.TH16:
@@ -133,6 +134,16 @@ def _get_filter_options_th08(game: Game) -> list[Filter]:
         Filter("Shot", all_shots),
         Filter("Route", all_routes),
     ]
+
+
+def _get_filter_options_th095(game: Game) -> list[Filter]:
+    all_levels = [
+        game.GetSceneGameLevelName(d + 1) for d in range(game.num_scene_game_levels)
+    ]
+    all_scenes = [
+        game.GetSceneGameSceneName(d + 1) for d in range(game.num_scene_game_scenes)
+    ]
+    return [Filter("Level", all_levels), Filter("Scene", all_scenes)]
 
 
 def _get_filter_options_th13(game: Game) -> list[Filter]:
@@ -203,7 +214,9 @@ def _get_all_replay_for_game(game_id: str) -> Manager[models.Replay]:
         .select_related("rank_view")
         .filter(category__in=(models.Category.STANDARD, models.Category.TAS))
         .filter(shot__game=game_id)
-        .filter(replay_type=1)
+        .filter(
+            replay_type__in=(models.ReplayType.FULL_GAME, models.ReplayType.SCENE_GAME)
+        )
         .filter(is_listed=True)
         .filter_visible()
         .order_by("-score")

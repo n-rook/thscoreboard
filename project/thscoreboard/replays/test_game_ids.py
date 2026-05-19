@@ -2,6 +2,7 @@ from django import test
 
 from replays import game_ids
 from replays import models
+from replays import get_all_games
 from replays.testing import test_case
 from replays.testing import test_utilities
 
@@ -31,7 +32,8 @@ class GameIDsTestCase(test.SimpleTestCase):
 
     def testGetDifficultyName(self):
         difficulty_name = game_ids.GetDifficultyName(
-            game_id=game_ids.GameIDs.TH06, difficulty=0
+            game_id=game_ids.GameIDs.TH06,
+            difficulty=0,
         )
         self.assertEqual(difficulty_name, "Easy")
 
@@ -41,11 +43,38 @@ class GameIDsTestCase(test.SimpleTestCase):
         )
         self.assertEqual(difficulty_name, "Jigoku")
 
+    def testGetSceneGameLevelName(self):
+        level_1 = game_ids.GetSceneGameLevelName(
+            game_id=game_ids.GameIDs.TH095, scene_game_level=1
+        )
+        level_ex = game_ids.GetSceneGameLevelName(
+            game_id=game_ids.GameIDs.TH095, scene_game_level=11
+        )
+        self.assertEqual("1", level_1)
+        self.assertEqual("Ex", level_ex)
+
+    def testGetSceneGameSceneName(self):
+        scene_name = game_ids.GetSceneGameSceneName(
+            game_id=game_ids.GameIDs.TH095, scene_game_scene=1
+        )
+        self.assertEqual("1", scene_name)
+
+    def testGetSceneGameLabelName(self):
+        label_1_1 = game_ids.GetSceneGameLabelName(
+            game_id=game_ids.GameIDs.TH095, level=1, scene=1
+        )
+        self.assertEqual("1-1", label_1_1)
+        label_ex_1 = game_ids.GetSceneGameLabelName(
+            game_id=game_ids.GameIDs.TH095, level=11, scene=1
+        )
+        self.assertEqual("Ex-1", label_ex_1)
+
     def testHasBombs(self):
         cases = [
             ["TH05", game_ids.GameIDs.TH05, None, True],
             ["TH06", game_ids.GameIDs.TH06, None, True],
             ["TH09", game_ids.GameIDs.TH09, None, False],
+            ["TH095", game_ids.GameIDs.TH095, game_ids.ReplayTypes.SCENE_GAME, False],
             ["TH13", game_ids.GameIDs.TH13, None, True],
             ["TH13_Full", game_ids.GameIDs.TH13, game_ids.ReplayTypes.FULL_GAME, True],
             [
@@ -68,6 +97,7 @@ class GameIDsTestCase(test.SimpleTestCase):
             ["TH05", game_ids.GameIDs.TH05, None, True],
             ["TH06", game_ids.GameIDs.TH06, None, True],
             ["TH09", game_ids.GameIDs.TH09, None, True],
+            ["TH095", game_ids.GameIDs.TH095, game_ids.ReplayTypes.SCENE_GAME, False],
             ["TH13", game_ids.GameIDs.TH13, None, True],
             ["TH13_Full", game_ids.GameIDs.TH13, game_ids.ReplayTypes.FULL_GAME, True],
             [
@@ -125,10 +155,15 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
     def testNoBugDifficultyNamesForGames(self):
         games = models.Game.objects.all()
         for game in games:
+            if game in get_all_games.get_scene_games():
+                # Scene games use level-scene names rather than fixed difficulty names, so
+                # this table-driven test does not apply to them.
+                continue
             for difficulty in range(game.num_difficulties):
                 self.AssertNoBug(
                     game_ids.GetDifficultyName(
-                        game_id=game.game_id, difficulty=difficulty
+                        game_id=game.game_id,
+                        difficulty=difficulty,
                     )
                 )
 
@@ -149,6 +184,21 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
                 self.AssertNoBug(
                     game_ids.GetRouteName(game_id=game.game_id, route_id=route.route_id)
                 )
+
+    def testSceneGameDifficultyNamesForSceneGames(self):
+        scene_games = get_all_games.get_scene_games()
+        for game in scene_games:
+            with self.subTest(game=game.game_id):
+                self.assertGreater(game.num_scene_game_levels, 0)
+                self.assertGreater(game.num_scene_game_scenes, 0)
+
+                for level in range(game.num_scene_game_levels):
+                    level_name = game_ids.GetSceneGameLevelName(game.game_id, level + 1)
+                    self.AssertNoBug(level_name)
+
+                for scene in range(game.num_scene_game_scenes):
+                    scene_name = game_ids.GetSceneGameSceneName(game.game_id, scene + 1)
+                    self.AssertNoBug(scene_name)
 
 
 class ReplayIdTestCase(test.SimpleTestCase):

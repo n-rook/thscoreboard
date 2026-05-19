@@ -38,6 +38,7 @@ class ReplayTypes:
     STAGE_PRACTICE = 2
     SPELL_PRACTICE = 3
     PVP = 4
+    SCENE_GAME = 5
 
 
 def GetReplayType(r_type: int):
@@ -49,6 +50,8 @@ def GetReplayType(r_type: int):
         return _("Spell Practice")
     elif r_type == 4:
         return _("PVP")
+    elif r_type == 5:
+        return _("Scene Game")
     return "Bug type"
 
 
@@ -110,6 +113,11 @@ _GAME_NAMES = immutabledict(
             pgettext_lazy("short game name", "th09"),
             pgettext_lazy("standard game name", "Phantasmagoria of Flower View"),
             pgettext_lazy("full game name", "東方花映塚 - Phantasmagoria of Flower View"),
+        ),
+        GameIDs.TH095: (
+            pgettext_lazy("short game name", "th095"),
+            pgettext_lazy("standard game name", "Shoot the Bullet"),
+            pgettext_lazy("full game name", "東方文花帖 - Shoot the Bullet"),
         ),
         GameIDs.TH10: (
             pgettext_lazy("short game name", "th10"),
@@ -364,6 +372,10 @@ def GetShotName(game_id: str, shot_id: str) -> str:
         if shot_id == "Lunasa":
             return pgettext("th09", "Lunasa")
         return shot_id
+
+    if game_id == GameIDs.TH095:
+        if shot_id == "Aya":
+            return pgettext("th095", "Aya")
 
     if game_id == GameIDs.TH10:
         if shot_id == "ReimuA":
@@ -662,7 +674,32 @@ def GetRouteName(game_id: str, route_id: str):
     return "Bug route"
 
 
-def GetDifficultyName(game_id: str, difficulty: int | None):
+def GetSceneGameLevelName(game_id: str, scene_game_level: int | None) -> str:
+    if scene_game_level is None or scene_game_level < 1:
+        # Scene game levels are 1-indexed.
+        return "Bug level"
+    if game_id == GameIDs.TH095:
+        if scene_game_level == 11:
+            return pgettext("th095", "Ex")
+        elif scene_game_level < 11:
+            return str(scene_game_level)
+    return "Bug level"
+
+
+def GetSceneGameSceneName(game_id: str, scene_game_scene: int | None) -> str:
+    if scene_game_scene is None or scene_game_scene < 1:
+        # Scene game scenes are 1-indexed.
+        return "Bug scene"
+    if game_id == GameIDs.TH095:
+        if scene_game_scene <= 9:
+            return str(scene_game_scene)
+    return "Bug scene"
+
+
+def GetDifficultyName(
+    game_id: str,
+    difficulty: int | None,
+) -> str:
     if game_id in {
         GameIDs.TH01,
         GameIDs.TH02,
@@ -707,6 +744,18 @@ def GetDifficultyName(game_id: str, difficulty: int | None):
     return _("Bug difficulty")
 
 
+def GetSceneGameLabelName(game_id: str, level: int | None, scene: int | None) -> str:
+    if game_id == GameIDs.TH095:
+        if level is None or scene is None:
+            return _("Bug level and scene")
+        if level == 11:
+            level_str = _("Ex")
+        else:
+            level_str = str(level)
+        return level_str + "-" + str(scene)
+    return _("Bug level and scene")
+
+
 def GetRpyGameCode(game_id: str) -> str:
     if game_id == GameIDs.TH06:
         return "th6"
@@ -716,6 +765,8 @@ def GetRpyGameCode(game_id: str) -> str:
         return "th8"
     elif game_id == GameIDs.TH09:
         return "th9"
+    elif game_id == GameIDs.TH095:
+        return "th95"
     else:
         return game_id
 
@@ -748,6 +799,13 @@ def HasBombs(game_id: str, replay_type: Optional[int] = None) -> bool:
         # not worth tracking.
         return False
 
+    if replay_type == ReplayTypes.SCENE_GAME:
+        # In SceneGame, you cannot use bombs.
+        # Some games such as TH143 allow the use of items,
+        # but they are difficult to consider bombs,
+        # so they are not treated as bombs.
+        return False
+
     return True
 
 
@@ -760,15 +818,18 @@ def HasLives(game_id: str, replay_type: Optional[int] = None) -> bool:
             if we should track misses for any replay type (for the given game).
     """
 
-    # All currently supported games have lives, but scene games don't, so in
-    # the future we will return False sometimes here.
-    del game_id  # Stop flake8 from complaining that it is unused.
-
     if replay_type == ReplayTypes.SPELL_PRACTICE:
         # In most cases, you cannot bomb in spell practice.
         # In rare cases, you can (for example, in TH16 you can get a score
         # extend, allowing you to die and then bomb), but even then, it is
         # not worth tracking.
+        return False
+
+    if game_id in [GameIDs.TH095]:
+        # Almost all SceneGames do not have a lives system.
+        # However, in TH143, using items allows the player to take hits.
+        # Therefore, whether the game has a lives system should be determined
+        # by the game ID rather than the replay type.
         return False
 
     return True
