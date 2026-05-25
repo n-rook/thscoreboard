@@ -5,3 +5,4 @@ flake8==6.1.0
 python-dotenv==1.0.0
 # Remember to update .github/workflows/black.yml too if you update black.
 black==23.7.0
+pip-tools==7.5.3
