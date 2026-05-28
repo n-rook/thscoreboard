@@ -4,7 +4,7 @@ from django.contrib.auth import decorators as auth_decorators
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import Http404, HttpResponse
 from django.db import transaction
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, BadRequest
 
 
 from users import forms
@@ -54,14 +54,17 @@ def review(request: WSGIRequest, claim_replay_request_id: int) -> HttpResponse:
         raise PermissionDenied
 
     if request.method == "POST":
-        form = forms.ClaimReplaysForm(
-            request.POST, replays=replay_models.Replay.objects.all()
-        )
+        form = forms.ClaimReplaysForm(request.POST, replays=claim.replays.all())
         if form.is_valid():
             submit_action = form.cleaned_data["submit_action"]
-            replays, user = _get_replays_and_user_from_form(form)
             if submit_action == forms.ClaimReplaysForm.SUBMIT_ACTIONS.APPROVE:
-                _assign_selected_replays_to_user(replays, user, claim)
+                if not request.user.is_staff:
+                    raise PermissionDenied
+                selected_replay_ids = form.cleaned_data["choices"]
+                selected_replays = claim.replays.filter(id__in=selected_replay_ids)
+                if not selected_replays.exists():
+                    raise BadRequest("No replay is selected.")
+                _assign_selected_replays_to_user(selected_replays, claim.user, claim)
                 return render(request, "replays/success.html")
             elif submit_action == forms.ClaimReplaysForm.SUBMIT_ACTIONS.DELETE:
                 _delete_claim_replay_request(claim, request.user.is_staff)
