@@ -10,6 +10,7 @@ from .kaitai_parsers import th07
 from .kaitai_parsers import th08
 from .kaitai_parsers import th09
 from .kaitai_parsers import th095_encrypted
+from .kaitai_parsers import th125_encrypted
 from .kaitai_parsers import th10
 from .kaitai_parsers import th11
 from .kaitai_parsers import th12
@@ -662,6 +663,63 @@ def _Parse12(rep_raw):
     return r
 
 
+def _Parse125(rep_raw):
+    encrypted_replay = th125_encrypted.Th125Encrypted.from_bytes(rep_raw)
+
+    shot_with_space = encrypted_replay.userdata.shot.value
+    # if shot_with_space == "Aya     ":
+    #     shot = "Aya"
+    # elif shot_with_space == "Hatate  ":
+    #     shot = "Hatate"
+    # else:
+    #     print("a" + shot_with_space + "a")
+    #     raise BadReplayError("Invalid shot name")
+    shot = encrypted_replay.userdata.shot.value.rstrip()
+    if shot not in ["Aya", "Hatate"]:
+        raise BadReplayError("Invalid shot name")
+
+    if encrypted_replay.userdata.level_scene.level == "EX":
+        spell_level = 13
+    elif encrypted_replay.userdata.level_scene.level == "SP":
+        spell_level = 14
+    else:
+        spell_level = int(encrypted_replay.userdata.level_scene.level)
+    spell_scene = int(encrypted_replay.userdata.level_scene.scene)
+
+    scene_count_per_level = {
+        1: 6,
+        2: 6,
+        3: 8,
+        4: 7,
+        5: 8,
+        6: 8,
+        7: 7,
+        8: 8,
+        9: 8,
+        10: 8,
+        11: 8,
+        12: 8,
+        13: 9,
+        14: 9,
+    }
+    if spell_level not in scene_count_per_level:
+        raise BadReplayError("Invalid spell level in replay")
+    if spell_scene < 1 or spell_scene > scene_count_per_level[spell_level]:
+        raise BadReplayError("Invalid spell scene in replay")
+
+    return ReplayInfo(
+        game=game_ids.GameIDs.TH125,
+        shot=shot,
+        score=int(encrypted_replay.userdata.score.value),
+        timestamp=time.strptime(encrypted_replay.userdata.date.value, "%y/%m/%d %H:%M"),
+        name=encrypted_replay.userdata.username.value,
+        replay_type=game_ids.ReplayTypes.SCENE_GAME,
+        scene_game_level=spell_level,
+        scene_game_scene=spell_scene,
+        slowdown=float(encrypted_replay.userdata.slowdown.value),
+    )
+
+
 def _Parse128(rep_raw):
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
@@ -1262,6 +1320,8 @@ def Parse(replay) -> ReplayInfo:
             return _Parse11(replay)
         elif gamecode == b"t12r":
             return _Parse12(replay)
+        elif gamecode == b"t125":
+            return _Parse125(replay)
         elif gamecode == b"t13r":
             # ZUN was drunk and did not change the gamecode for TH14, so this is now used for two games
             # and thus we have to do fuckery to find which one it is
