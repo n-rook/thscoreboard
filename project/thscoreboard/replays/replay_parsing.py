@@ -666,7 +666,6 @@ def _Parse12(rep_raw):
 def _Parse125(rep_raw):
     encrypted_replay = th125_encrypted.Th125Encrypted.from_bytes(rep_raw)
 
-    shot_with_space = encrypted_replay.userdata.shot.value
     # if shot_with_space == "Aya     ":
     #     shot = "Aya"
     # elif shot_with_space == "Hatate  ":
