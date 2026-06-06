@@ -666,13 +666,6 @@ def _Parse12(rep_raw):
 def _Parse125(rep_raw):
     encrypted_replay = th125_encrypted.Th125Encrypted.from_bytes(rep_raw)
 
-    # if shot_with_space == "Aya     ":
-    #     shot = "Aya"
-    # elif shot_with_space == "Hatate  ":
-    #     shot = "Hatate"
-    # else:
-    #     print("a" + shot_with_space + "a")
-    #     raise BadReplayError("Invalid shot name")
     shot = encrypted_replay.userdata.shot.value.rstrip()
     if shot not in ["Aya", "Hatate"]:
         raise BadReplayError("Invalid shot name")
