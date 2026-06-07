@@ -256,8 +256,8 @@ class BanTestCase(test_case.UserTestCase):
 
         b = models.Ban.objects.get(id=b.id)
         self.assertIsNone(b.target)
-        self.assertEquals("target", b.deleted_account_username)
-        self.assertEquals(self.target.email, b.deleted_account_email)
+        self.assertEqual("target", b.deleted_account_username)
+        self.assertEqual(self.target.email, b.deleted_account_email)
 
     def testCleanUpBannedUser_IsXBanned(self):
         target_email = self.target.email
