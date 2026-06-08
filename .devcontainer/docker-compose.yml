@@ -1,0 +1,33 @@
+services:
+  devcontainer:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
+    # Share the Postgres container's network namespace so localhost matches the
+    # production-style setup where Postgres runs on the same host as the app.
+    network_mode: service:postgres
+    depends_on:
+      - postgres
+    volumes:
+      - ../:/workspace/thscoreboard:cached
+      - vscode_server:/home/vscode/.vscode-server
+    environment:
+      - DJANGO_SUPERUSER_USERNAME=${ADMIN_USERNAME}
+      - DJANGO_SUPERUSER_PASSWORD=${ADMIN_PASSWORD}
+  postgres:
+    image: postgres:18.4-alpine3.22@sha256:774521500f4c22761b25a6bdb772a0a3c2e8dd32468210bdad9231c5752ea398
+    env_file:
+      - ../project/thscoreboard/.env
+    environment:
+      POSTGRES_DB: thscoreboard
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_table:/var/lib/postgresql
+      - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+
+
+
+volumes:
+  vscode_server:
+  postgres_table:

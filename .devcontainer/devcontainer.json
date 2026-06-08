@@ -1,0 +1,43 @@
+{
+    "name": "thscoreboard",
+    "dockerComposeFile": [
+        "docker-compose.yml",
+        "local/docker-compose.yml"
+    ],
+    "service": "devcontainer",
+    "workspaceFolder": "/workspace/thscoreboard",
+    "forwardPorts": [
+        8000,
+        5432
+    ],
+    "portsAttributes": {
+        "8000": {
+            "label": "Application",
+            "onAutoForward": "notify"
+        },
+        "5432": {
+            "label": "Database"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.black-formatter"
+            ],
+            "settings": {
+                "[python]": {
+                    "editor.defaultFormatter": "ms-python.black-formatter",
+                    "editor.formatOnSave": true
+                },
+                "black-formatter.path": [
+                    "/home/vscode/.local/bin/black"
+                ],
+                "black-formatter.interpreter": [
+                    "/usr/local/bin/python"
+                ]
+            }
+        }
+    },
+    "initializeCommand": "test -f .devcontainer/local/docker-compose.yml || cp .devcontainer/docker-compose.empty.yml .devcontainer/local/docker-compose.yml",
+    "postCreateCommand": ".devcontainer/post-create.sh"
+}
