@@ -1,0 +1,6 @@
+services:
+  devcontainer:
+    volumes:
+      - ${HOME}/.gnupg:/home/vscode/.gnupg:ro
+      - ${HOME}/.ssh:/home/vscode/.ssh:ro
+      - ${HOME}/.codex:/home/vscode/.codex
