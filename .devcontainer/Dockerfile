@@ -24,12 +24,10 @@ RUN mkdir -p \
         /workspace/thscoreboard \
         /workspace/.pnpm-store \
         /home/vscode/.ssh \
-        /home/vscode/.codex \
         /home/vscode/.vscode-server \
     && chown -R vscode:vscode \
         /workspace \
         /home/vscode/.ssh \
-        /home/vscode/.codex \
         /home/vscode/.vscode-server \
     && printf '\nexport GPG_TTY=$(tty)\n' >> /etc/bash.bashrc
 
