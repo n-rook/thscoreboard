@@ -71,3 +71,5 @@ if not User.objects.filter(username=username).exists():
         password=password,
     )
 "
+
+npm ci

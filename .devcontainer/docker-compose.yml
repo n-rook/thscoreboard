@@ -12,6 +12,7 @@ services:
     volumes:
       - ../:/workspace/thscoreboard:cached
       - vscode_server:/home/vscode/.vscode-server
+      - npm_dir:/home/vscode/.npm
     environment:
       - DJANGO_SUPERUSER_USERNAME=${ADMIN_USERNAME}
       - DJANGO_SUPERUSER_PASSWORD=${ADMIN_PASSWORD}
@@ -30,4 +31,5 @@ services:
 
 volumes:
   vscode_server:
+  npm_dir:
   postgres_table:

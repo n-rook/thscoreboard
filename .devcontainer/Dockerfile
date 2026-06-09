@@ -1,3 +1,4 @@
+FROM node:24.13.0-bullseye-slim@sha256:8c1784228377880d8e8992ce35aa3f4a496e5ee00960a33262bbc7d17718890f AS node
 FROM sbtscala/scala-sbt:eclipse-temurin-21.0.8_9_1.11.6_2.13.16@sha256:7f8d1f78e15fd13905253b41b984ac9d52ae035b20e8376d385317e91c68bf13 AS kaitai-struct-compiler-builder
 
 WORKDIR /tmp
@@ -11,6 +12,7 @@ RUN curl -fsSL -o kaitai-struct-compiler-0.9.zip https://github.com/kaitai-io/ka
 
 FROM mcr.microsoft.com/devcontainers/python:3.11@sha256:2da3e966c6fde093c757c6ea372bfb5b4302c6ec7d9f5fb60796cd211aaacc67
 
+COPY --from=node /usr/local /usr/local
 COPY --from=kaitai-struct-compiler-builder /opt/java/openjdk /opt/java/openjdk
 COPY --from=kaitai-struct-compiler-builder /opt/kaitai-struct-compiler /opt/kaitai-struct-compiler
 
@@ -25,10 +27,12 @@ RUN mkdir -p \
         /workspace/.pnpm-store \
         /home/vscode/.ssh \
         /home/vscode/.vscode-server \
+        /home/vscode/.npm \
     && chown -R vscode:vscode \
         /workspace \
         /home/vscode/.ssh \
         /home/vscode/.vscode-server \
+        /home/vscode/.npm \
     && printf '\nexport GPG_TTY=$(tty)\n' >> /etc/bash.bashrc
 
 USER vscode
