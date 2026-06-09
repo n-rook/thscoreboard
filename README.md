@@ -3,15 +3,21 @@ An open-source scoreboard for Touhou games.
 
 ## Setting up a development environment
 
-### Black
+There are two ways to set up a development environment.
+
+### Standard setup
+
+This method is similar to setting up the production environment.
+
+#### Black
 
 We use Black, the Python formatting tool, to format our code automatically. As such, we strongly recommend setting up your IDE or code editor to run Black automatically when saving a file. The beauty of Black is that it can just format things for you, so take advantage of that by doing this, and it'll never bother you or stop you from pushing code.
 
-### Generating the replay parsers
+#### Generating the replay parsers
 
 Start by installing `kaitai-struct-compiler`. Then, navigate to `project/thscoreboard/replays/kaitai_parsers` and run `kaitai-struct-compiler -t python ../../../../ref/threp-ksy/*.ksy` (note that you don't need to change the slashes to backslashes to run this on Windows).
 
-### Database configuration
+#### Database configuration
 
 settings.py is configured to use a local instance of PostgreSQL by default. To set up local Postgres:
 
@@ -23,6 +29,31 @@ settings.py is configured to use a local instance of PostgreSQL by default. To s
 1. Run "python manage.py runserver" and see if it successfully connects. If so, run "python manage.py migrate" to set up the initial database contents.
 1. Run "python manage.py setup_constant_tables" to set up constant tables, like the Game and Shot tables.
 1. Install jest, for example with `npm install jest --global`, and run `jest` to run js tests.
+
+### Using a devcontainer
+
+This method is an easy way to set up a development environment.
+Using [Docker](https://docs.docker.com/get-started/docker-overview/) container technology, you can easily create and destroy a development environment.
+In addition, you do not have to install any packages on your device. You only need to install Docker Engine.
+This method assumes that you use [Visual Studio Code](https://code.visualstudio.com/).
+
+The steps are as follows:
+
+1. [Install Docker Engine](https://docs.docker.com/engine/install/).
+1. Add your user to the docker group. Note that any user who belongs to the docker group effectively has root-level access. This is especially important in a production environment, but it is usually acceptable in a development environment.
+1. Create a .env file in ./project/thscoreboard, and write an environment variable named `LOCAL_DATABASE_PASSWORD`. This variable is used when the server logs in to PostgreSQL. This is the same step as in the standard setup.
+1. Create a .env file in ./.devcontainer, and write the environment variables `POSTGRES_PASSWORD`, `ADMIN_USERNAME`, and `ADMIN_PASSWORD`. `POSTGRES_PASSWORD` is the root password for PostgreSQL. `ADMIN_USERNAME` and `ADMIN_PASSWORD` are the credentials for the thscoreboard application administrator. You can log in to thscoreboard with these credentials after running the server.
+1. If you are proficient with devcontainers, you can override the docker-compose.yml settings in ./.devcontainer/local/docker-compose.yml. You can skip this step if you do not want to customize the devcontainer environment.
+1. Open Visual Studio Code, press `Ctrl + Shift + P`, type `devcontainers`, and select `Dev Containers: Reopen in Container`. After a few minutes, Visual Studio Code will open in the Docker environment.
+
+Then you can do as follows:
+
+-  Run `cd ./project/thscoreboard` and `python manage.py runserver`, and then you will be able to access thscoreboard.
+- When you save a python file, the file is automatically format with Black
+- You can command `kaitai-structor-compiler`
+- You can jest test with command `npm test`
+
+## Edit project
 
 ### Email configuration
 
