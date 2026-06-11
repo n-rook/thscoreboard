@@ -25,12 +25,10 @@ RUN ln -s /opt/kaitai-struct-compiler/bin/kaitai-struct-compiler /usr/local/bin/
 RUN mkdir -p \
         /workspace/thscoreboard \
         /workspace/.pnpm-store \
-        /home/vscode/.ssh \
         /home/vscode/.vscode-server \
         /home/vscode/.npm \
     && chown -R vscode:vscode \
         /workspace \
-        /home/vscode/.ssh \
         /home/vscode/.vscode-server \
         /home/vscode/.npm \
     && printf '\nexport GPG_TTY=$(tty)\n' >> /etc/bash.bashrc
