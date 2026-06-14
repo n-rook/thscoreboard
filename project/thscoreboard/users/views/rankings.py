@@ -55,7 +55,12 @@ def _get_all_player_rankings_for_games(
         replay_models.Replay.objects.select_related("rank_view")
         .filter(category=replay_models.Category.STANDARD)
         .filter(shot__game__in=game_ids)
-        .filter(replay_type=1)
+        .filter(
+            replay_type__in=(
+                replay_models.ReplayType.FULL_GAME,
+                replay_models.ReplayType.SCENE_GAME,
+            )
+        )
         .filter(is_listed=True)
         .filter(rank_view__place__lte=3)
     )
