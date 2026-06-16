@@ -253,12 +253,13 @@ class Replay(models.Model):
 
         constraints = [
             models.CheckConstraint(
-                check=models.Q(difficulty__gte=0) | models.Q(difficulty__isnull=True),
+                condition=models.Q(difficulty__gte=0)
+                | models.Q(difficulty__isnull=True),
                 name="difficulty_gte_0",
             ),
             models.CheckConstraint(
                 name="replay_type_spell_card_id_isnull",
-                check=(
+                condition=(
                     models.Q(
                         replay_type=ReplayType.FULL_GAME,
                         spell_card_id__isnull=True,
@@ -293,7 +294,7 @@ class Replay(models.Model):
             ),
             models.CheckConstraint(
                 name="user_or_imported_username_is_nonnull",
-                check=models.Q(user__isnull=False)
+                condition=models.Q(user__isnull=False)
                 | models.Q(imported_username__isnull=False),
             ),
         ]

@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="ban",
             constraint=models.CheckConstraint(
-                check=models.Q(
+                condition=models.Q(
                     models.Q(
                         ("target__isnull", True),
                         ("deleted_account_username__isnull", False),

@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="user",
             constraint=models.CheckConstraint(
-                check=models.Q(
+                condition=models.Q(
                     models.Q(("deleted_on__isnull", False), ("is_active", False)),
                     models.Q(("deleted_on__isnull", True), ("is_active", True)),
                     _connector="OR",

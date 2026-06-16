@@ -15,7 +15,7 @@ Start by installing `kaitai-struct-compiler`. Then, navigate to `project/thscore
 
 settings.py is configured to use a local instance of PostgreSQL by default. To set up local Postgres:
 
-1. Install postgres
+1. Install PostgreSQL 14 or later.
 1. Create a database on your local postgres, called "thscoreboard".
 1. Create a login user that the server will use, also called "thscoreboard". You can pick whatever password you want. Give this user rights to access and change the "thscoreboard" database. In general, it is best not to use a superuser account to connect to a database like this, since superusers can do all sorts of messed up stuff by accident.
 1. Give "thscoreboard" rights to create databases. This is not necessary for running the server locally, but you need it to run tests.

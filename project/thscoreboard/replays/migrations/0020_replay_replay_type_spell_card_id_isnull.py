@@ -12,6 +12,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddConstraint(
             model_name='replay',
-            constraint=models.CheckConstraint(check=models.Q(models.Q(('replay_type', 1), ('spell_card_id__isnull', True)), models.Q(('replay_type', 2), ('spell_card_id__isnull', True)), models.Q(('replay_type', 3), ('spell_card_id__isnull', False)), models.Q(('replay_type', 4), ('spell_card_id__isnull', True)), _connector='OR'), name='replay_type_spell_card_id_isnull'),
+            constraint=models.CheckConstraint(condition=models.Q(models.Q(('replay_type', 1), ('spell_card_id__isnull', True)), models.Q(('replay_type', 2), ('spell_card_id__isnull', True)), models.Q(('replay_type', 3), ('spell_card_id__isnull', False)), models.Q(('replay_type', 4), ('spell_card_id__isnull', True)), _connector='OR'), name='replay_type_spell_card_id_isnull'),
         ),
     ]
