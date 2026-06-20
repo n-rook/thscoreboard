@@ -161,6 +161,9 @@ if "DATABASE_SOCKET" in os.environ:
             "ENGINE": "django.db.backends.postgresql",
             "NAME": os.environ.get("LOCAL_DATABASE_NAME", "thscoreboard"),
             "USER": os.environ.get("LOCAL_DATABASE_USER", "thscoreboard"),
+            # The "port number" is also used to find the name of the socket
+            # file used to connect to the database.
+            "PORT": os.environ.get("LOCAL_DATABASE_PORT", "5432"),
             "PASSWORD": os.environ["LOCAL_DATABASE_PASSWORD"],
         },
     }
