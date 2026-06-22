@@ -34,8 +34,8 @@ jobs:
         python-version: "3.11"
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+        if [ -f requirements-pip.txt ]; then pip install --require-hashes -r requirements-pip.txt; fi
+        if [ -f requirements-dev.txt ]; then pip install --require-hashes -r requirements-dev.txt; fi
     - name: Run linter
       working-directory: ./project/thscoreboard
       run: flake8
