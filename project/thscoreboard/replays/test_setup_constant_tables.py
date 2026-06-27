@@ -22,13 +22,13 @@ class CreateOrUpdateGamesTest(test.TestCase):
         create_or_update_games([test_game_constants])
 
         games_id_db = models.Game.objects.all()
-        self.assertEquals(len(games_id_db), 1)
+        self.assertEqual(len(games_id_db), 1)
 
         game_in_db = games_id_db[0]
 
-        self.assertEquals(game_in_db.game_id, test_game_constants.id)
-        self.assertEquals(game_in_db.has_replays, test_game_constants.has_replays)
-        self.assertEquals(
+        self.assertEqual(game_in_db.game_id, test_game_constants.id)
+        self.assertEqual(game_in_db.has_replays, test_game_constants.has_replays)
+        self.assertEqual(
             game_in_db.num_difficulties, test_game_constants.num_difficulties
         )
         self.assertEqual(
@@ -62,13 +62,13 @@ class CreateOrUpdateGamesTest(test.TestCase):
         create_or_update_games([test_game_constants])
 
         games_id_db = models.Game.objects.all()
-        self.assertEquals(len(games_id_db), 1)
+        self.assertEqual(len(games_id_db), 1)
 
         game_in_db = games_id_db[0]
 
-        self.assertEquals(game_in_db.game_id, test_game_constants.id)
-        self.assertEquals(game_in_db.has_replays, test_game_constants.has_replays)
-        self.assertEquals(
+        self.assertEqual(game_in_db.game_id, test_game_constants.id)
+        self.assertEqual(game_in_db.has_replays, test_game_constants.has_replays)
+        self.assertEqual(
             game_in_db.num_difficulties, test_game_constants.num_difficulties
         )
         self.assertEqual(
@@ -78,8 +78,8 @@ class CreateOrUpdateGamesTest(test.TestCase):
             game_in_db.num_scene_game_scenes, test_game_constants.num_scene_game_scenes
         )
 
-        self.assertEquals(len(models.Shot.objects.all()), 0)
-        self.assertEquals(len(models.Route.objects.all()), 0)
+        self.assertEqual(len(models.Shot.objects.all()), 0)
+        self.assertEqual(len(models.Route.objects.all()), 0)
 
     def test_allows_modifying_fields(self):
         test_game_constants = GameConstants(
@@ -102,11 +102,11 @@ class CreateOrUpdateGamesTest(test.TestCase):
         create_or_update_games([test_game_constants])
 
         games_id_db = models.Game.objects.all()
-        self.assertEquals(len(games_id_db), 1)
+        self.assertEqual(len(games_id_db), 1)
         game_in_db = games_id_db[0]
 
-        self.assertEquals(game_in_db.has_replays, True)
-        self.assertEquals(game_in_db.num_difficulties, 5)
+        self.assertEqual(game_in_db.has_replays, True)
+        self.assertEqual(game_in_db.num_difficulties, 5)
         self.assertEqual(game_in_db.num_scene_game_levels, 10)
         self.assertEqual(game_in_db.num_scene_game_scenes, 10)
 

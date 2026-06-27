@@ -63,5 +63,5 @@ class DeleteImportedReplaysTest(test_case.ReplayTestCase):
             delete_imported_replays()
 
         all_replays_after = models.Replay.objects.all()
-        self.assertEquals(len(all_replays_after), 1)
+        self.assertEqual(len(all_replays_after), 1)
         self.assertIsNone(all_replays_after[0].imported_username)
