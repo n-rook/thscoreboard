@@ -183,6 +183,16 @@ th128 = GameConstants(
     ],
 )
 
+th125 = GameConstants(
+    id="th125",
+    has_replays=True,
+    num_difficulties=0,
+    num_scene_game_levels=14,
+    num_scene_game_scenes=9,
+    shots=["Aya", "Hatate"],
+    routes=[],
+)
+
 th12 = GameConstants(
     id="th12",
     has_replays=True,
@@ -367,6 +377,7 @@ all_game_constants = [
     th10,
     th11,
     th12,
+    th125,
     th128,
     th13,
     th14,

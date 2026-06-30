@@ -352,6 +352,47 @@ class Th12ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.STAGE_PRACTICE)
 
 
+class Th125ReplayTestCase(unittest.TestCase):
+    def testLevelNormal(self):
+        r = ParseTestReplay("th125_5-7")
+        self.assertEqual(r.name, "WEF     ")
+        self.assertEqual(r.score, 139652)
+        self.assertEqual(r.shot, "Hatate")
+        self.assertEqual(
+            r.timestamp,
+            datetime.datetime(2026, 5, 31, 13, 18, tzinfo=datetime.timezone.utc),
+        )
+        self.assertEqual(r.scene_game_level, 5)
+        self.assertEqual(r.scene_game_scene, 7)
+        self.assertEqual(r.slowdown, 0.00)
+
+    def testLevelEx(self):
+        r = ParseTestReplay("th125_Ex-2")
+        self.assertEqual(r.name, "yc8000  ")
+        self.assertEqual(r.score, 79979)
+        self.assertEqual(r.shot, "Hatate")
+        self.assertEqual(
+            r.timestamp,
+            datetime.datetime(2026, 5, 31, 13, 11, tzinfo=datetime.timezone.utc),
+        )
+        self.assertEqual(r.scene_game_level, 13)
+        self.assertEqual(r.scene_game_scene, 2)
+        self.assertEqual(r.slowdown, 0.00)
+
+    def testLevelSp(self):
+        r = ParseTestReplay("th125_Sp-1")
+        self.assertEqual(r.name, "NhhYCY  ")
+        self.assertEqual(r.score, 28021)
+        self.assertEqual(r.shot, "Aya")
+        self.assertEqual(
+            r.timestamp,
+            datetime.datetime(2026, 5, 31, 13, 14, tzinfo=datetime.timezone.utc),
+        )
+        self.assertEqual(r.scene_game_level, 14)
+        self.assertEqual(r.scene_game_scene, 1)
+        self.assertEqual(r.slowdown, 0.00)
+
+
 class Th128ReplayTestCase(unittest.TestCase):
     def testC1(self):
         r = ParseTestReplay("th128_c1")
