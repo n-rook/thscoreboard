@@ -7,6 +7,7 @@ from replays import replay_parsing
 from replays import constant_helpers
 from replays.testing import test_case
 from replays.testing import test_replays
+from django import urls
 from django.db import utils
 
 
@@ -230,6 +231,115 @@ class GameIDsComprehensiveTestCase(test_case.ReplayTestCase):
         self.assertEqual(len(stages), 6)
 
         self.assertEqual(stages[0].score, 12996310)
+
+    def testPublishReplaySavesStages_TH03(self):
+        replay_file_contents = test_replays.GetRaw("th3_normal")
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user, replay=replay_file_contents
+        )
+        temp_replay.save()
+        replay_info = replay_parsing.Parse(replay_file_contents)
+
+        new_replay = create_replay.PublishNewReplay(
+            user=self.user,
+            difficulty=replay_info.difficulty,
+            score=replay_info.score,
+            category=models.Category.STANDARD,
+            comment="",
+            video_link="",
+            is_good=True,
+            is_clear=False,
+            no_bomb=None,
+            miss_count=replay_info.miss_count,
+            temp_replay_instance=temp_replay,
+            replay_info=replay_info,
+        )
+
+        self.assertEqual(new_replay.shot.shot_id, "Reimu")
+        self.assertTrue(new_replay.is_clear)
+        self.assertEqual(new_replay.miss_count, 3)
+        self.assertEqual(new_replay.slowdown, 2.5)
+        self.assertIsNone(new_replay.no_bomb)
+        stages = list(
+            models.ReplayStage.objects.filter(replay=new_replay).select_related(
+                "th03_opponent_shot"
+            )
+        )
+        self.assertEqual(len(stages), 2)
+        self.assertEqual(stages[0].score, 12_345_670)
+        self.assertEqual(stages[0].th03_opponent_shot.shot_id, "Mima")
+        self.assertEqual(stages[0].th03_opponent_score, 9_876_540)
+        self.assertEqual(stages[0].lives, 3)
+        self.assertEqual(stages[1].lives, 3)
+        self.assertEqual(new_replay.th03_ruleset, 0)
+        self.assertFalse(new_replay.th03_is_netplay)
+        self.assertEqual(new_replay.th03_recorder_source, 3)
+        self.assertIsNone(new_replay.th03_p1_uuid)
+        self.assertIsNone(new_replay.th03_p1_name)
+
+    def testPublishNetplayReplayKeepsIdentityAndLocalProjection_TH03(self):
+        replay_file_contents = bytearray(test_replays.GetRaw("th3_pvp"))
+        replay_file_contents[0x26F] = 1
+        replay_file_contents[0x270] = 2
+        replay_file_contents[0x271] = 2
+        replay_file_contents[0x272:0x282] = bytes(range(1, 17))
+        replay_file_contents[0x282:0x292] = bytes(range(17, 33))
+        replay_file_contents[0x292:0x2A2] = bytes(range(33, 49))
+        replay_file_contents[0x2A2] = len(b"Alice Example")
+        replay_file_contents[0x2A3] = len(b"Bob")
+        replay_file_contents[0x2A4 : 0x2A4 + len(b"Alice Example")] = b"Alice Example"
+        replay_file_contents[0x2DD : 0x2DD + len(b"Bob")] = b"Bob"
+        replay_file_contents = bytes(replay_file_contents)
+        temp_replay = models.TemporaryReplayFile(
+            user=self.user, replay=replay_file_contents
+        )
+        temp_replay.save()
+        replay_info = replay_parsing.Parse(replay_file_contents)
+
+        new_replay = create_replay.PublishNewReplay(
+            user=self.user,
+            difficulty=replay_info.difficulty,
+            score=replay_info.score,
+            category=models.Category.STANDARD,
+            comment="",
+            video_link="",
+            is_good=True,
+            is_clear=False,
+            no_bomb=None,
+            miss_count=None,
+            temp_replay_instance=temp_replay,
+            replay_info=replay_info,
+        )
+        new_replay.refresh_from_db()
+
+        self.assertEqual(new_replay.shot.shot_id, "Yumemi")
+        self.assertEqual(new_replay.rep_score, 98_765_430)
+        self.assertTrue(new_replay.th03_is_netplay)
+        self.assertEqual(new_replay.th03_recorder_role, 2)
+        self.assertEqual(new_replay.th03_p1_name, "Alice Example")
+        self.assertEqual(new_replay.th03_p2_name, "Bob")
+        self.assertEqual(
+            str(new_replay.th03_p1_uuid), "01020304-0506-0708-090a-0b0c0d0e0f10"
+        )
+        stage = models.ReplayStage.objects.select_related("th03_opponent_shot").get(
+            replay=new_replay
+        )
+        self.assertEqual(stage.score, 98_765_430)
+        self.assertEqual(stage.th03_opponent_shot.shot_id, "Reimu")
+        self.assertEqual(stage.th03_opponent_score, 12_345_670)
+
+        self.client.force_login(self.user)
+        response = self.client.get(
+            urls.reverse(
+                "Replays/Details",
+                kwargs={"game_id": game_ids.GameIDs.TH03, "replay_id": new_replay.id},
+            )
+        )
+        self.assertContains(response, "Alice Example")
+        self.assertContains(response, "Bob")
+        self.assertContains(response, "Netplay?")
+        self.assertNotContains(response, "Dopamine Arrange")
+        self.assertContains(response, "Stock")
 
     def testPublishReplaySpellPractice(self):
         replay_file_contents = test_replays.GetRaw("th8_spell_practice")

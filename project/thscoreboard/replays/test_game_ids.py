@@ -73,6 +73,7 @@ class GameIDsTestCase(test.SimpleTestCase):
         cases = [
             ["TH05", game_ids.GameIDs.TH05, None, True],
             ["TH06", game_ids.GameIDs.TH06, None, True],
+            ["TH03", game_ids.GameIDs.TH03, None, False],
             ["TH09", game_ids.GameIDs.TH09, None, False],
             ["TH095", game_ids.GameIDs.TH095, game_ids.ReplayTypes.SCENE_GAME, False],
             ["TH13", game_ids.GameIDs.TH13, None, True],

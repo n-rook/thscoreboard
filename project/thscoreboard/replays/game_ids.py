@@ -788,8 +788,8 @@ def HasBombs(game_id: str, replay_type: Optional[int] = None) -> bool:
         replay_type: The type of replay. If unset, this function returns True
             if any replay type (for the given game) has bombs.
     """
-    if game_id == GameIDs.TH09:
-        # PoFV does not have traditional bombs.
+    if game_id in [GameIDs.TH03, GameIDs.TH09]:
+        # PoDD and PoFV do not have traditional bombs.
         return False
 
     if replay_type == ReplayTypes.SPELL_PRACTICE:

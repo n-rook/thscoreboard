@@ -7,6 +7,8 @@ from . import game_fields
 
 
 tests = [
+    (game_ids.GameIDs.TH03, "th3_normal"),
+    (game_ids.GameIDs.TH03, "th3_pvp"),
     (game_ids.GameIDs.TH06, "th6_hard_1cc"),
     (game_ids.GameIDs.TH07, "th7_lunatic"),
     (game_ids.GameIDs.TH10, "th10_normal"),

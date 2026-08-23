@@ -85,7 +85,7 @@ def upload_file(request):
 
     all_games = models.Game.objects.all()
     replay_games = [g for g in all_games if g.has_replays]
-    no_replay_games = [g for g in all_games if not g.has_replays]
+    no_replay_games = [g for g in all_games if g.AllowsReplaylessSubmissions()]
 
     return render(
         request,
@@ -158,7 +158,14 @@ def publish_replay(request, temp_replay_id):
     form = forms.PublishReplayForm(
         replay_info.game,
         replay_info.replay_type,
-        initial={"score": replay_info.score, "name": replay_info.name},
+        initial={
+            "score": replay_info.score,
+            "name": replay_info.name,
+            "misses": replay_info.miss_count,
+            "is_clear": (
+                replay_info.is_clear if replay_info.is_clear is not None else True
+            ),
+        },
     )
 
     if replay_info.replay_type == game_ids.ReplayTypes.SCENE_GAME:
@@ -196,7 +203,9 @@ def publish_replay(request, temp_replay_id):
 @http_decorators.require_http_methods(["GET", "HEAD", "POST"])
 def publish_replay_no_file(request, game_id: str):
     """Publish a replay for a game without replays."""
-    game = get_object_or_404(models.Game, game_id=game_id, has_replays=False)
+    game = get_object_or_404(models.Game, game_id=game_id)
+    if not game.AllowsReplaylessSubmissions():
+        raise Http404()
 
     if request.method == "POST":
         form = forms.PublishReplayWithoutFileForm(request.POST, game=game)
