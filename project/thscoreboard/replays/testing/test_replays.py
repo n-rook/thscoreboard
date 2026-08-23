@@ -12,6 +12,8 @@ from replays import replay_parsing
 TEST_REPLAY_LOCATION = Path("replays/replays_for_tests")
 
 _filename_type = typing.Literal[
+    "th3_normal",
+    "th3_pvp",
     "th6_extra",
     "th6_hard_1cc",
     "th7_lunatic",

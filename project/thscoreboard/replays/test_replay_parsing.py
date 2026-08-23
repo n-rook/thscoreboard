@@ -13,6 +13,89 @@ def ParseTestReplay(filename: str) -> ReplayInfo:
     return replay_parsing.Parse(test_replays.GetRaw(filename))
 
 
+class Th03ReplayTestCase(unittest.TestCase):
+    def testNormal(self):
+        replay = ParseTestReplay("th3_normal")
+
+        self.assertEqual(replay.game, game_ids.GameIDs.TH03)
+        self.assertEqual(replay.difficulty, 2)
+        self.assertEqual(replay.shot, "Reimu")
+        self.assertEqual(replay.score, 23_456_780)
+        self.assertEqual(replay.name, "SELENE")
+        self.assertEqual(replay.timestamp.date(), datetime.date(2026, 8, 9))
+        self.assertEqual(replay.replay_type, game_ids.ReplayTypes.FULL_GAME)
+        self.assertEqual(replay.slowdown, 2.5)
+        self.assertEqual(replay.miss_count, 3)
+        self.assertTrue(replay.is_clear)
+        self.assertEqual(replay.th03_ruleset, 0)
+        self.assertFalse(replay.th03_is_netplay)
+        self.assertIsNone(replay.th03_p1_uuid)
+        self.assertIsNone(replay.th03_p1_name)
+
+        stage = replay.stages[0]
+        self.assertEqual(stage.score, 12_345_670)
+        self.assertEqual(stage.lives, 3)
+        self.assertEqual(stage.th03_p2_shot, "Mima")
+        self.assertEqual(stage.th03_p2_score, 9_876_540)
+
+    def testPVP(self):
+        replay = ParseTestReplay("th3_pvp")
+
+        self.assertEqual(replay.replay_type, game_ids.ReplayTypes.PVP)
+        self.assertEqual(replay.score, 98_765_430)
+        self.assertEqual(replay.stages[0].th03_p2_shot, "Yumemi")
+        self.assertEqual(replay.stages[0].th03_p2_score, 98_765_430)
+
+    def testNetplayP2ProjectionAndIdentity(self):
+        raw = bytearray(test_replays.GetRaw("th3_pvp"))
+        raw[0x26F] = 1
+        raw[0x270] = 2
+        raw[0x271] = 2
+        raw[0x272:0x282] = bytes(range(1, 17))
+        raw[0x282:0x292] = bytes(range(17, 33))
+        raw[0x292:0x2A2] = bytes(range(33, 49))
+        p1_name = b"Alice Example"
+        p2_name = b"Bob"
+        raw[0x2A2] = len(p1_name)
+        raw[0x2A3] = len(p2_name)
+        raw[0x2A4 : 0x2A4 + len(p1_name)] = p1_name
+        raw[0x2DD : 0x2DD + len(p2_name)] = p2_name
+
+        replay = replay_parsing.Parse(raw)
+
+        self.assertTrue(replay.th03_is_netplay)
+        self.assertEqual(replay.th03_recorder_role, 2)
+        self.assertEqual(replay.th03_recorder_source, 2)
+        self.assertEqual(replay.shot, "Yumemi")
+        self.assertEqual(replay.score, 98_765_430)
+        self.assertEqual(replay.stages[0].score, 98_765_430)
+        self.assertEqual(replay.stages[0].th03_p2_shot, "Reimu")
+        self.assertEqual(replay.stages[0].th03_p2_score, 12_345_670)
+        self.assertEqual(replay.th03_p1_uuid, "01020304-0506-0708-090a-0b0c0d0e0f10")
+        self.assertEqual(replay.th03_p2_uuid, "11121314-1516-1718-191a-1b1c1d1e1f20")
+        self.assertEqual(replay.th03_match_id, "21222324-2526-2728-292a-2b2c2d2e2f30")
+        self.assertEqual(replay.th03_p1_name, "Alice Example")
+        self.assertEqual(replay.th03_p2_name, "Bob")
+
+    def testPracticeIsUnsupported(self):
+        raw = bytearray(test_replays.GetRaw("th3_pvp"))
+        raw[14] |= 4
+        with self.assertRaises(replay_parsing.UnsupportedReplayError):
+            replay_parsing.Parse(raw)
+
+    def testOlderVersionRequiresConversion(self):
+        raw = bytearray(test_replays.GetRaw("th3_normal"))
+        raw[:8] = b"T3RPLY13"
+        with self.assertRaises(replay_parsing.UnsupportedReplayError):
+            replay_parsing.Parse(raw)
+
+    def testMalformedIdentityExtension(self):
+        raw = bytearray(test_replays.GetRaw("th3_normal"))
+        raw[0x316] = 1
+        with self.assertRaises(replay_parsing.BadReplayError):
+            replay_parsing.Parse(raw)
+
+
 class Th06ReplayTestCase(unittest.TestCase):
     def testHard1cc(self):
         r = ParseTestReplay("th6_hard_1cc")
