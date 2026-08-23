@@ -42,9 +42,29 @@ class Th03ReplayTestCase(unittest.TestCase):
         replay = ParseTestReplay("th3_pvp")
 
         self.assertEqual(replay.replay_type, game_ids.ReplayTypes.PVP)
-        self.assertEqual(replay.score, 98_765_430)
+        self.assertEqual(replay.shot, "Reimu")
+        self.assertEqual(replay.score, 12_345_670)
+        self.assertEqual(replay.score, replay.stages[0].score)
         self.assertEqual(replay.stages[0].th03_opponent_shot, "Yumemi")
         self.assertEqual(replay.stages[0].th03_opponent_score, 98_765_430)
+
+    def testPVPWithoutWinnerStillUsesP1(self):
+        raw = bytearray(test_replays.GetRaw("th3_pvp"))
+        raw[0x40] = 0xFF
+
+        replay = replay_parsing.Parse(raw)
+
+        self.assertEqual(replay.shot, "Reimu")
+        self.assertEqual(replay.score, 12_345_670)
+        self.assertEqual(replay.score, replay.stages[0].score)
+
+    def testCpuVsCpuIsUnsupported(self):
+        raw = bytearray(test_replays.GetRaw("th3_pvp"))
+        raw[0x12] = 0x82
+        raw[0x18] = 1
+        raw[0x19] = 1
+        with self.assertRaises(replay_parsing.UnsupportedReplayError):
+            replay_parsing.Parse(raw)
 
     def testNetplayP2ProjectionAndIdentity(self):
         raw = bytearray(test_replays.GetRaw("th3_pvp"))
@@ -92,6 +112,30 @@ class Th03ReplayTestCase(unittest.TestCase):
     def testMalformedIdentityExtension(self):
         raw = bytearray(test_replays.GetRaw("th3_normal"))
         raw[0x316] = 1
+        with self.assertRaises(replay_parsing.BadReplayError):
+            replay_parsing.Parse(raw)
+
+    def testUnpublishedArrangeRulesetIsRejected(self):
+        raw = bytearray(test_replays.GetRaw("th3_normal"))
+        raw[0x26E] = 1
+        with self.assertRaises(replay_parsing.BadReplayError):
+            replay_parsing.Parse(raw)
+
+    def testUnsetReplayNameIsAccepted(self):
+        raw = bytearray(test_replays.GetRaw("th3_normal"))
+        raw[0x78:0x80] = bytes(8)
+        self.assertEqual(replay_parsing.Parse(raw).name, "")
+
+    def testUnknownBaseFlagIsRejected(self):
+        raw = bytearray(test_replays.GetRaw("th3_normal"))
+        raw[0x0E] |= 0x08
+        with self.assertRaises(replay_parsing.BadReplayError):
+            replay_parsing.Parse(raw)
+
+    def testSlowFramesCannotExceedTimedFrames(self):
+        raw = bytearray(test_replays.GetRaw("th3_normal"))
+        raw[0x256:0x25A] = (1).to_bytes(4, "little")
+        raw[0x25A:0x25E] = (2).to_bytes(4, "little")
         with self.assertRaises(replay_parsing.BadReplayError):
             replay_parsing.Parse(raw)
 

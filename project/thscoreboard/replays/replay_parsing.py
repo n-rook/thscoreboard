@@ -166,6 +166,7 @@ _TH03_GAME_MODE_VS_CPU_CPU = 0x82
 _TH03_FLAG_RLE_INPUT = 0x0001
 _TH03_FLAG_CHARGE_INPUT = 0x0002
 _TH03_FLAG_PRACTICE = 0x0004
+_TH03_FLAGS_KNOWN = _TH03_FLAG_RLE_INPUT | _TH03_FLAG_CHARGE_INPUT | _TH03_FLAG_PRACTICE
 _TH03_RECORDING_FLAG_NETPLAY = 0x01
 _TH03_END_REASON_COMPLETE = 1
 _TH03_SUMMARY_UNKNOWN = 0xFF
@@ -294,10 +295,12 @@ def _TH03StoryStageLives(replay) -> list[Optional[int]]:
 def _TH03Validate(replay) -> None:
     if (replay.flags & (_TH03_FLAG_RLE_INPUT | _TH03_FLAG_CHARGE_INPUT)) != (
         _TH03_FLAG_RLE_INPUT | _TH03_FLAG_CHARGE_INPUT
-    ):
+    ) or replay.flags & ~_TH03_FLAGS_KNOWN:
         raise ValueError("Unsupported PoDD input encoding")
     if replay.status != 2:
         raise ValueError("PoDD replay was not finalized")
+    if replay.end_reason > 6:
+        raise ValueError("Invalid PoDD replay end reason")
     if replay.game_mode not in (
         _TH03_GAME_MODE_STORY,
         _TH03_GAME_MODE_VS_1P_CPU,
@@ -308,17 +311,26 @@ def _TH03Validate(replay) -> None:
 
     if replay.flags & _TH03_FLAG_PRACTICE:
         raise UnsupportedReplayError("PoDD Practice replays are not supported.")
+    if replay.game_mode == _TH03_GAME_MODE_VS_CPU_CPU:
+        raise UnsupportedReplayError("PoDD CPU vs CPU replays are not supported.")
     if replay.rank > 3 or replay.key_mode > 2:
         raise ValueError("Invalid PoDD game settings")
     if replay.is_cpu_p1 > 1 or replay.is_cpu_p2 > 1 or replay.autofire > 3:
         raise ValueError("Invalid PoDD player settings")
+    expected_cpu = (0, 0) if replay.game_mode == _TH03_GAME_MODE_VS_1P_2P else (0, 1)
+    if (replay.is_cpu_p1, replay.is_cpu_p2) != expected_cpu:
+        raise ValueError("PoDD CPU flags disagree with the game mode")
     if replay.sample_count == 0 or replay.input_size == 0:
         raise ValueError("Empty PoDD replay")
-    if replay.stage_reached_count > 9:
+    if replay.stage_reached_count > 9 or (
+        replay.game_mode != _TH03_GAME_MODE_STORY and replay.stage_reached_count != 0
+    ):
         raise ValueError("Invalid PoDD stage count")
+    if replay.game_mode == _TH03_GAME_MODE_STORY and replay.story_stage >= 9:
+        raise ValueError("Invalid PoDD initial Story stage")
 
     netplay = bool(replay.recording_flags & _TH03_RECORDING_FLAG_NETPLAY)
-    if replay.ruleset > 1 or replay.recording_flags & ~_TH03_RECORDING_FLAG_NETPLAY:
+    if replay.ruleset != 0 or replay.recording_flags & ~_TH03_RECORDING_FLAG_NETPLAY:
         raise ValueError("Invalid PoDD V14 rules metadata")
     if replay.recorder_role > 2 or replay.recorder_source > 3:
         raise ValueError("Invalid PoDD V14 recorder metadata")
@@ -331,10 +343,32 @@ def _TH03Validate(replay) -> None:
     if any(replay.identity_reserved):
         raise ValueError("PoDD V14 reserved header bytes are not zero")
 
-    if (replay.summary_flags & _TH03_SUMMARY_FLAGS) != _TH03_SUMMARY_FLAGS:
+    if replay.summary_flags != _TH03_SUMMARY_FLAGS:
         raise ValueError("Outdated PoDD replay summary")
-    if (replay.summary.flags & _TH03_SUMMARY_FLAGS) != _TH03_SUMMARY_FLAGS:
+    if replay.summary.flags != _TH03_SUMMARY_FLAGS:
         raise ValueError("Outdated PoDD round summary")
+    if replay.summary.slow_frames > replay.summary.timed_frames:
+        raise ValueError("Invalid PoDD slowdown counters")
+    if replay.final_route != _TH03_SUMMARY_UNKNOWN and replay.final_route > 2:
+        raise ValueError("Invalid PoDD final route")
+    if (
+        replay.final_game_mode != _TH03_SUMMARY_UNKNOWN
+        and replay.final_game_mode
+        not in (
+            _TH03_GAME_MODE_STORY,
+            _TH03_GAME_MODE_VS_1P_CPU,
+            _TH03_GAME_MODE_VS_1P_2P,
+            _TH03_GAME_MODE_VS_CPU_CPU,
+        )
+    ):
+        raise ValueError("Invalid PoDD final game mode")
+    if (
+        replay.final_story_stage != _TH03_SUMMARY_UNKNOWN
+        and replay.final_story_stage > 9
+    ):
+        raise ValueError("Invalid PoDD final Story stage")
+    if replay.final_winner != _TH03_SUMMARY_UNKNOWN and replay.final_winner > 1:
+        raise ValueError("Invalid PoDD final winner")
     if replay.game_mode == _TH03_GAME_MODE_STORY:
         checkpoint_capacity = 15
     else:
@@ -355,7 +389,7 @@ def _TH03Validate(replay) -> None:
     _TH03UnpackPlaychar(replay.playchar_p1)
     _TH03UnpackPlaychar(replay.playchar_p2)
     _TH03UnpackScore(replay.final_score)
-    if any(byte not in _TH03_NAME_BYTES for byte in replay.name):
+    if any(replay.name) and any(byte not in _TH03_NAME_BYTES for byte in replay.name):
         raise ValueError("Invalid PoDD replay name")
 
 
@@ -427,24 +461,9 @@ def _Parse03(rep_raw):
 
         p1_shot = local_shot
         if round_split is not None:
-            if netplay:
-                final_score = local_score
-            elif replay.game_mode == _TH03_GAME_MODE_VS_1P_CPU:
-                final_score = p1_score
-            elif (
-                replay.game_mode == _TH03_GAME_MODE_VS_1P_2P
-                and replay.final_winner == 0
-            ):
-                final_score = p1_score
-            elif (
-                replay.game_mode == _TH03_GAME_MODE_VS_1P_2P
-                and replay.final_winner == 1
-            ):
-                final_score = p2_score
-            else:
-                final_score = max(p1_score, p2_score)
+            final_score = local_score
 
-    name = replay.name.decode("ascii").rstrip()
+    name = replay.name.decode("ascii").rstrip() if any(replay.name) else ""
     misses = None if replay.final_misses == _TH03_SCORE_UNKNOWN else replay.final_misses
     return ReplayInfo(
         game=game_ids.GameIDs.TH03,
