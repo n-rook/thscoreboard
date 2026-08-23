@@ -77,10 +77,10 @@ class ReplayStage:
     th13_trance: int = None
     extends: int = None
     th16_season_power: int = None
-    th03_p1_cpu: bool = None
-    th03_p2_cpu: bool = None
-    th03_p2_shot: str = None
-    th03_p2_score: int = None
+    th03_player_cpu: bool = None
+    th03_opponent_cpu: bool = None
+    th03_opponent_shot: str = None
+    th03_opponent_score: int = None
 
     def __getitem__(self, item):
         return getattr(self, item)
@@ -385,10 +385,10 @@ def _Parse03(rep_raw):
                     stage=stage_index + 1,
                     score=_TH03UnpackScore(replay.story.stage_scores[stage_index]),
                     lives=stage_lives[stage_index],
-                    th03_p1_cpu=bool(replay.is_cpu_p1),
-                    th03_p2_cpu=bool(replay.is_cpu_p2),
-                    th03_p2_shot=opponent,
-                    th03_p2_score=(
+                    th03_player_cpu=bool(replay.is_cpu_p1),
+                    th03_opponent_cpu=bool(replay.is_cpu_p2),
+                    th03_opponent_shot=opponent,
+                    th03_opponent_score=(
                         _TH03UnpackScore(round_split.score_p2)
                         if round_split is not None
                         else None
@@ -418,10 +418,10 @@ def _Parse03(rep_raw):
             ReplayStage(
                 stage=1,
                 score=local_score,
-                th03_p1_cpu=bool(local_cpu),
-                th03_p2_cpu=bool(opponent_cpu),
-                th03_p2_shot=opponent_shot,
-                th03_p2_score=opponent_score,
+                th03_player_cpu=bool(local_cpu),
+                th03_opponent_cpu=bool(opponent_cpu),
+                th03_opponent_shot=opponent_shot,
+                th03_opponent_score=opponent_score,
             )
         )
 

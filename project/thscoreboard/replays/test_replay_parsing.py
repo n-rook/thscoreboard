@@ -35,16 +35,16 @@ class Th03ReplayTestCase(unittest.TestCase):
         stage = replay.stages[0]
         self.assertEqual(stage.score, 12_345_670)
         self.assertEqual(stage.lives, 3)
-        self.assertEqual(stage.th03_p2_shot, "Mima")
-        self.assertEqual(stage.th03_p2_score, 9_876_540)
+        self.assertEqual(stage.th03_opponent_shot, "Mima")
+        self.assertEqual(stage.th03_opponent_score, 9_876_540)
 
     def testPVP(self):
         replay = ParseTestReplay("th3_pvp")
 
         self.assertEqual(replay.replay_type, game_ids.ReplayTypes.PVP)
         self.assertEqual(replay.score, 98_765_430)
-        self.assertEqual(replay.stages[0].th03_p2_shot, "Yumemi")
-        self.assertEqual(replay.stages[0].th03_p2_score, 98_765_430)
+        self.assertEqual(replay.stages[0].th03_opponent_shot, "Yumemi")
+        self.assertEqual(replay.stages[0].th03_opponent_score, 98_765_430)
 
     def testNetplayP2ProjectionAndIdentity(self):
         raw = bytearray(test_replays.GetRaw("th3_pvp"))
@@ -69,8 +69,8 @@ class Th03ReplayTestCase(unittest.TestCase):
         self.assertEqual(replay.shot, "Yumemi")
         self.assertEqual(replay.score, 98_765_430)
         self.assertEqual(replay.stages[0].score, 98_765_430)
-        self.assertEqual(replay.stages[0].th03_p2_shot, "Reimu")
-        self.assertEqual(replay.stages[0].th03_p2_score, 12_345_670)
+        self.assertEqual(replay.stages[0].th03_opponent_shot, "Reimu")
+        self.assertEqual(replay.stages[0].th03_opponent_score, 12_345_670)
         self.assertEqual(replay.th03_p1_uuid, "01020304-0506-0708-090a-0b0c0d0e0f10")
         self.assertEqual(replay.th03_p2_uuid, "11121314-1516-1718-191a-1b1c1d1e1f20")
         self.assertEqual(replay.th03_match_id, "21222324-2526-2728-292a-2b2c2d2e2f30")
