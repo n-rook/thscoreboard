@@ -87,6 +87,10 @@ class CreateReplayTestCase(test_case.ReplayTestCase):
         self.assertIn(game_ids.GameIDs.TH03, replay_game_ids)
         self.assertIn(game_ids.GameIDs.TH03, no_replay_game_ids)
 
+        self.client.force_login(self.user)
+        response = self.client.get("/replays/upload")
+        self.assertContains(response, "Publish a score without a replay file")
+
     def testOldTh03FormatsRequireInstallerUpgrade(self):
         message = (
             "This PoDD replay uses an older format. Please use the Replay Patch "
