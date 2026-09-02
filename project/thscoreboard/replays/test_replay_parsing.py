@@ -109,11 +109,11 @@ class Th03ReplayTestCase(unittest.TestCase):
         with self.assertRaises(replay_parsing.UnsupportedReplayError):
             replay_parsing.Parse(raw)
 
-    def testMalformedIdentityExtension(self):
+    def testOpaqueReservedBytesAreAccepted(self):
         raw = bytearray(test_replays.GetRaw("th3_normal"))
-        raw[0x316] = 1
-        with self.assertRaises(replay_parsing.BadReplayError):
-            replay_parsing.Parse(raw)
+        raw[0x316:0x380] = bytes(range(106))
+        replay = replay_parsing.Parse(raw)
+        self.assertEqual(replay.game, game_ids.GameIDs.TH03)
 
     def testUnpublishedArrangeRulesetIsRejected(self):
         raw = bytearray(test_replays.GetRaw("th3_normal"))

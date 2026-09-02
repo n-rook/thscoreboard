@@ -340,9 +340,6 @@ def _TH03Validate(replay) -> None:
         raise ValueError("Invalid PoDD V14 netplay game mode")
     _TH03FallbackNametag(replay.player_one_nametag, replay.player_one_nametag_length)
     _TH03FallbackNametag(replay.player_two_nametag, replay.player_two_nametag_length)
-    if any(replay.identity_reserved):
-        raise ValueError("PoDD V14 reserved header bytes are not zero")
-
     if replay.summary_flags != _TH03_SUMMARY_FLAGS:
         raise ValueError("Outdated PoDD replay summary")
     if replay.summary.flags != _TH03_SUMMARY_FLAGS:
