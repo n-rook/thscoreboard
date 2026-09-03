@@ -6,6 +6,7 @@ from kaitaistruct import KaitaiStructError
 from replays.lib import time
 from . import game_ids
 from .kaitai_parsers import th06
+from .kaitai_parsers import th06nc
 from .kaitai_parsers import th07
 from .kaitai_parsers import th08
 from .kaitai_parsers import th09
@@ -169,6 +170,54 @@ def _Parse06(rep_raw):
         game=game_ids.GameIDs.TH06,
         shot=shots[rep_raw[6]],
         difficulty=rep_raw[7],
+        score=replay.file_header.score,
+        timestamp=time.strptime(replay.file_header.date, "%m/%d/%y"),
+        name=replay.file_header.name.replace("\x00", ""),
+        slowdown=replay.file_header.slowdown,
+        replay_type=r_type,
+        stages=rep_stages,
+    )
+
+    return r
+
+def _Parse06nc(rep_raw):
+    
+    cryptdata = bytearray(rep_raw[15:])
+    td.decrypt06(cryptdata, 99)     # temp for now, I need more replays in order to test and verify this
+    replay = th06nc.Th06nc.from_bytes(cryptdata)
+
+    shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
+
+    rep_stages = []
+
+    enumerated_non_dummy_stages = [
+        (i, _pointer.body)
+        for i, _pointer in enumerate(replay.file_header.stage_offsets)
+        if _pointer.body
+    ]
+    # TH06 stores stage data values from the start of the stage but score from the end
+    for (i, current_stage), (j, next_stage) in zip(
+        enumerated_non_dummy_stages, enumerated_non_dummy_stages[1:] + [(None, None)]
+    ):
+        s = ReplayStage(stage=i + 1, score=current_stage.score)
+        if next_stage is not None:
+            s.power = next_stage.power
+            s.lives = next_stage.lives
+            s.bombs = next_stage.bombs
+            # s.th06_rank = next_stage.rank
+
+        rep_stages.append(s)
+
+    print("parse")
+    print(rep_stages)
+    r_type = game_ids.ReplayTypes.FULL_GAME
+    if len(rep_stages) == 1 and rep_raw[8] != 4:
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
+
+    r = ReplayInfo(
+        game=game_ids.GameIDs.TH06NC,
+        shot=shots[rep_raw[7]],
+        difficulty=rep_raw[8],
         score=replay.file_header.score,
         timestamp=time.strptime(replay.file_header.date, "%m/%d/%y"),
         name=replay.file_header.name.replace("\x00", ""),
@@ -1281,6 +1330,13 @@ def _DetermineTH13orTH14(replay):
     # if its not either of the two above, then I don't know
     raise ValueError()
 
+def _DetermineTH06orTH06NC(replay):
+    # EoSD New Classic reuses the game code, but the file format is slightly different
+    # Fortunately they've incremented the version byte, so we can check that
+    if replay[4] == 0x02:
+        return _Parse06(replay)
+    elif replay[4] >= 0x0b:
+        return _Parse06nc(replay)
 
 def _is_spell_practice_modern(replay_header) -> bool:
     return replay_header.spell_practice_id != 0xFFFFFFFF
@@ -1297,7 +1353,7 @@ def Parse(replay) -> ReplayInfo:
 
     try:
         if gamecode == b"T6RP":
-            return _Parse06(replay)
+            return _DetermineTH06orTH06NC(replay)
         elif gamecode == b"T7RP":
             return _Parse07(replay)
         elif gamecode == b"T8RP":
