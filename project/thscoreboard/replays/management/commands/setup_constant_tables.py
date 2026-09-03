@@ -283,6 +283,16 @@ th07 = GameConstants(
     routes=[],
 )
 
+th06nc = GameConstants(
+    id="th06nc",
+    has_replays=True,
+    num_difficulties=5,
+    num_scene_game_levels=0,
+    num_scene_game_scenes=0,
+    shots=["ReimuA", "ReimuB", "MarisaA", "MarisaB"],
+    routes=[],
+)
+
 th06 = GameConstants(
     id="th06",
     has_replays=True,
@@ -360,6 +370,7 @@ all_game_constants = [
     th04,
     th05,
     th06,
+    th06nc,
     th07,
     th08,
     th09,

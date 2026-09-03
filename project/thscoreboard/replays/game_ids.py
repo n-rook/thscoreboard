@@ -15,6 +15,7 @@ class GameIDs:
     TH04 = "th04"
     TH05 = "th05"
     TH06 = "th06"
+    TH06NC = "th06nc"
     TH07 = "th07"
     TH08 = "th08"
     TH09 = "th09"
@@ -98,6 +99,11 @@ _GAME_NAMES = immutabledict(
             pgettext_lazy("short game name", "th06"),
             pgettext_lazy("standard game name", "Embodiment of Scarlet Devil"),
             pgettext_lazy("full game name", "東方紅魔郷 - Embodiment of Scarlet Devil"),
+        ),
+        GameIDs.TH06NC: (
+            pgettext_lazy("short game name", "th06nc"),
+            pgettext_lazy("standard game name", "Embodiment of Scarlet Devil: New Classic"),
+            pgettext_lazy("full game name", "東方紅魔郷: New Classic - the Embodiment of Scarlet Devil"),
         ),
         GameIDs.TH07: (
             pgettext_lazy("short game name", "th07"),
@@ -250,6 +256,16 @@ def GetShotName(game_id: str, shot_id: str) -> str:
             return pgettext("th06", "Marisa A")
         elif shot_id == "MarisaB":
             return pgettext("th06", "Marisa B")
+
+    if game_id == GameIDs.TH06NC:
+        if shot_id == "ReimuA":
+            return pgettext("th06nc", "Reimu A")
+        elif shot_id == "ReimuB":
+            return pgettext("th06nc", "Reimu B")
+        elif shot_id == "MarisaA":
+            return pgettext("th06nc", "Marisa A")
+        elif shot_id == "MarisaB":
+            return pgettext("th06nc", "Marisa B")
 
     if game_id == GameIDs.TH07:
         if shot_id == "ReimuA":
@@ -707,6 +723,7 @@ def GetDifficultyName(
         GameIDs.TH04,
         GameIDs.TH05,
         GameIDs.TH06,
+        GameIDs.TH06NC,
         GameIDs.TH07,
         GameIDs.TH08,
         GameIDs.TH09,
@@ -758,6 +775,8 @@ def GetSceneGameLabelName(game_id: str, level: int | None, scene: int | None) ->
 
 def GetRpyGameCode(game_id: str) -> str:
     if game_id == GameIDs.TH06:
+        return "th6"
+    elif game_id == GameIDs.TH06NC:
         return "th6"
     elif game_id == GameIDs.TH07:
         return "th7"
