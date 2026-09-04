@@ -1337,6 +1337,7 @@ def _DetermineTH06orTH06NC(replay):
         return _Parse06(replay)
     elif replay[4] >= 0x0b:
         return _Parse06nc(replay)
+    raise ValueError()
 
 def _is_spell_practice_modern(replay_header) -> bool:
     return replay_header.spell_practice_id != 0xFFFFFFFF
