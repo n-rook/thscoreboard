@@ -13,6 +13,7 @@ PC98_GAME_IDS = [
 
 CLASSIC_GAME_IDS = [
     game_ids.GameIDs.TH06,
+    game_ids.GameIDs.TH06NC,
     game_ids.GameIDs.TH07,
     game_ids.GameIDs.TH08,
     game_ids.GameIDs.TH09,
