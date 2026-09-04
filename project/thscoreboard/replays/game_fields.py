@@ -505,7 +505,12 @@ def GetFormatPower(
 ) -> str:
     if power is None:
         return ""
-    if game_id in (game_ids.GameIDs.TH06, game_ids.GameIDs.TH06NC, game_ids.GameIDs.TH07, game_ids.GameIDs.TH08):
+    if game_id in (
+        game_ids.GameIDs.TH06,
+        game_ids.GameIDs.TH06NC,
+        game_ids.GameIDs.TH07,
+        game_ids.GameIDs.TH08,
+    ):
         return str(power)
     if game_id == game_ids.GameIDs.TH11 and shot == "MarisaA":
         return "%.2f" % round(float(power) / 12, ndigits=2)

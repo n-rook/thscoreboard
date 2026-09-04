@@ -179,10 +179,13 @@ def _Parse06(rep_raw):
 
     return r
 
+
 def _Parse06nc(rep_raw):
-    
+
     cryptdata = bytearray(rep_raw[15:])
-    td.decrypt06(cryptdata, 99)     # temp for now, I need more replays in order to test and verify this
+    td.decrypt06(
+        cryptdata, 99
+    )  # temp for now, I need more replays in order to test and verify this
     replay = th06nc.Th06nc.from_bytes(cryptdata)
 
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
@@ -1280,14 +1283,16 @@ def _DetermineTH13orTH14(replay):
     # if its not either of the two above, then I don't know
     raise ValueError()
 
+
 def _DetermineTH06orTH06NC(replay):
     # EoSD New Classic reuses the game code, but the file format is slightly different
     # Fortunately they've incremented the version byte, so we can check that
     if replay[4] == 0x02:
         return _Parse06(replay)
-    elif replay[4] >= 0x0b:
+    elif replay[4] >= 0x0B:
         return _Parse06nc(replay)
     raise ValueError()
+
 
 def _is_spell_practice_modern(replay_header) -> bool:
     return replay_header.spell_practice_id != 0xFFFFFFFF
