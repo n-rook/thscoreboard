@@ -181,7 +181,6 @@ def _Parse06(rep_raw):
 
 
 def _Parse06nc(rep_raw):
-
     cryptdata = bytearray(rep_raw[15:])
     td.decrypt06(
         cryptdata, 99
@@ -210,7 +209,6 @@ def _Parse06nc(rep_raw):
 
         rep_stages.append(s)
 
-    print("parse")
     print(rep_stages)
     r_type = game_ids.ReplayTypes.FULL_GAME
     if len(rep_stages) == 1 and rep_raw[8] != 4:
