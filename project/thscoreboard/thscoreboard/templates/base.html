@@ -71,6 +71,7 @@
                 <ul class="game-list">
                     {% for game in games %}
                     <li>
+                        {{game.GetSidebarPrefix}}
                         <div class="sidebar-game-icon">
                             <img src="{{game.GetIconPath}}"/>
                         </div>

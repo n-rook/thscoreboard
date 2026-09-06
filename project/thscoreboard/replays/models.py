@@ -93,6 +93,9 @@ class Game(models.Model):
         """Get the HTTP path to get a small icon for this game."""
         return f"/static/icons/{self.game_id}.png"
 
+    def GetSidebarPrefix(self):
+        return game_ids.GetSidebarPrefix(self.game_id)
+
 
 class Shot(models.Model):
     """The character selected by the player.
