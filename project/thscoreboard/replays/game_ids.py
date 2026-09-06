@@ -898,3 +898,10 @@ def HasLives(game_id: str, replay_type: Optional[int] = None) -> bool:
         return False
 
     return True
+
+
+def GetSidebarPrefix(game_id: str) -> str:
+    if game_id in {GameIDs.TH06NC}:
+        return "└"
+    else:
+        return ""
