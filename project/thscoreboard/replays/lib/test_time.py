@@ -30,7 +30,8 @@ class TimeTest(unittest.TestCase):
     def test_format_month_day_ja(self):
         self.enterContext(test.override_settings(LANGUAGE_CODE="ja"))
         self.assertEqual(
-            time.format_month_day(datetime.datetime(year=2024, month=5, day=4)), "5月 4日"
+            time.format_month_day(datetime.datetime(year=2024, month=5, day=4)),
+            "5月 4日",
         )
 
     def test_format_month_day_en(self):
