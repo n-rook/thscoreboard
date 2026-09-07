@@ -183,9 +183,10 @@ def _Parse06(rep_raw):
 
 def _Parse06nc(rep_raw):
     cryptdata = bytearray(rep_raw[15:])
-    td.decrypt06(
-        cryptdata, 99
-    )  # temp for now, I need more replays in order to test and verify this
+
+    # Calculate crypt key by using a known 0 byte and an expected difference
+    key = (rep_raw[0x1C] + 165) % 256
+    td.decrypt06(cryptdata, key)
     replay = th06nc.Th06nc.from_bytes(cryptdata)
 
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
