@@ -193,6 +193,9 @@ def _Parse06nc(rep_raw):
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
 
     rep_stages = []
+    r_type = game_ids.ReplayTypes.FULL_GAME
+    if rep_raw[6] == 1:
+        r_type = game_ids.ReplayTypes.NC_CHALLENGE
 
     enumerated_non_dummy_stages = [
         (i, _pointer.body)
@@ -204,21 +207,18 @@ def _Parse06nc(rep_raw):
         enumerated_non_dummy_stages, enumerated_non_dummy_stages[1:] + [(None, None)]
     ):
         s = ReplayStage(stage=i + 1, score=current_stage.score)
-        if rep_raw[6] == 1:
-            # Challenge mode, include misses
-            s.misses = current_stage.misses
 
         if next_stage is not None:
             s.power = next_stage.power
-            s.lives = next_stage.lives
-            s.bombs = next_stage.bombs
+            if r_type == game_ids.ReplayTypes.NC_CHALLENGE:
+                s.misses = next_stage.misses
+            else:
+                s.lives = next_stage.lives
+                s.bombs = next_stage.bombs
 
         rep_stages.append(s)
 
-    r_type = game_ids.ReplayTypes.FULL_GAME
-    if rep_raw[6] == 1:
-        r_type = game_ids.ReplayTypes.NC_CHALLENGE
-    elif len(rep_stages) == 1 and rep_raw[8] != 4:
+    if len(rep_stages) == 1 and rep_raw[8] != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
     r = ReplayInfo(
