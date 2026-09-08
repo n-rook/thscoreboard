@@ -2753,7 +2753,8 @@ msgstr "詳細"
 msgid "In-game name"
 msgstr "リプレイ名"
 
-#: replays/templates/replays/replay_details.html:199
+#: .\replays\templates\replays\replay_details.html:199
+#: .\replays\templates\replays\replay_stages.html:67
 msgid "Misses"
 msgstr "ミス数"
 

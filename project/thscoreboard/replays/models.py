@@ -701,6 +701,12 @@ class ReplayStage(models.Model):
     th16_season_power = models.IntegerField(blank=True, null=True)
     """Value of the season gauge in TH16"""
 
+    misses = models.IntegerField(blank=True, null=True)
+    """Miss count in Challenge mode replays in TH06NC
+    This is a generic enough field name that I've opted not to specify a game, lest it be reused sometime in the future
+    or we find out that an older game contains this data
+    """
+
     def SetFromReplayStageInfo(self, s: replay_parsing.ReplayStage):
         """Set derived fields on this row from a replay stage.
 
@@ -744,6 +750,7 @@ class ReplayStage(models.Model):
         self.th128_frozen_area = s.th128_frozen_area
         self.th13_trance = s.th13_trance
         self.th16_season_power = s.th16_season_power
+        self.misses = s.misses
 
 
 _REPLAY_FILE_UNIQUE_HASH_CONSTRAINT = "unique_hash"
