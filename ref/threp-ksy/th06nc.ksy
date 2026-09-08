@@ -57,12 +57,18 @@ types:
       - id: score
         type: u8
       - id: seed
-        type: u4
+        type: u2
+      - id: unknown_1
+        size: 2
       - id: power
         type: u1
       - id: lives
         type: s1
       - id: bombs
         type: s1
-      - id: rank
+      - id: unknown_2
+        size: 3
+      - id: misses
         type: u1
+      - id: unknown_3
+        size: 1

@@ -89,8 +89,11 @@ class Th06nc(KaitaiStruct):
 
         def _read(self):
             self.score = self._io.read_u8le()
-            self.seed = self._io.read_u4le()
+            self.seed = self._io.read_u2le()
+            self.unknown_1 = self._io.read_bytes(2)
             self.power = self._io.read_u1()
             self.lives = self._io.read_s1()
             self.bombs = self._io.read_s1()
-            self.rank = self._io.read_u1()
+            self.unknown_2 = self._io.read_bytes(3)
+            self.misses = self._io.read_u1()
+            self.unknown_3 = self._io.read_bytes(1)

@@ -76,6 +76,7 @@ class ReplayStage:
     th13_trance: int = None
     extends: int = None
     th16_season_power: int = None
+    misses: int = None
 
     def __getitem__(self, item):
         return getattr(self, item)
@@ -202,15 +203,19 @@ def _Parse06nc(rep_raw):
         enumerated_non_dummy_stages, enumerated_non_dummy_stages[1:] + [(None, None)]
     ):
         s = ReplayStage(stage=i + 1, score=current_stage.score)
+        if rep_raw[6] == 1:
+            # Challenge mode, include misses
+            s.misses = current_stage.misses
+        else:
+            s.misses = 0
+
         if next_stage is not None:
             s.power = next_stage.power
             s.lives = next_stage.lives
             s.bombs = next_stage.bombs
-            # s.th06_rank = next_stage.rank
 
         rep_stages.append(s)
 
-    print(rep_stages)
     r_type = game_ids.ReplayTypes.FULL_GAME
     if len(rep_stages) == 1 and rep_raw[8] != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE

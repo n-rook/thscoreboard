@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 23:20+1000\n"
+"POT-Creation-Date: 2026-09-08 22:46+1000\n"
 "PO-Revision-Date: 2026-05-25 19:12+0000\n"
 "Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: Japanese (https://app.transifex.com/silent-selene/teams/168285/ja/)\n"
@@ -2709,6 +2709,7 @@ msgid "In-game name"
 msgstr "リプレイ名"
 
 #: .\replays\templates\replays\replay_details.html:199
+#: .\replays\templates\replays\replay_stages.html:67
 msgid "Misses"
 msgstr "ミス数"
 

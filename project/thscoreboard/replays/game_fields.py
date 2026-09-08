@@ -34,6 +34,7 @@ _table_fields_th06 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -60,6 +61,7 @@ _table_fields_th06nc = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": True,
     }
 )
 
@@ -86,6 +88,7 @@ _table_fields_th07 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -112,6 +115,7 @@ _table_fields_th08 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -138,6 +142,7 @@ _table_fields_th09 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -164,6 +169,7 @@ _table_fields_th09_PVP = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -190,6 +196,7 @@ _table_fields_th10 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -216,6 +223,7 @@ _table_fields_th11 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -242,6 +250,7 @@ _table_fields_th12 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -294,6 +303,7 @@ _table_fields_th14 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -320,6 +330,7 @@ _table_fields_th15 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -346,6 +357,7 @@ _table_fields_th16 = immutabledict(
         "th13_trance": False,
         "th16_season_power": True,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -372,6 +384,7 @@ _table_fields_th17 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -398,6 +411,7 @@ _table_fields_th18 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -424,6 +438,7 @@ _table_fields_th128 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -450,6 +465,7 @@ _table_fields_alco = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
