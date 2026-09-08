@@ -207,8 +207,6 @@ def _Parse06nc(rep_raw):
         if rep_raw[6] == 1:
             # Challenge mode, include misses
             s.misses = current_stage.misses
-        else:
-            s.misses = 0
 
         if next_stage is not None:
             s.power = next_stage.power
@@ -218,7 +216,9 @@ def _Parse06nc(rep_raw):
         rep_stages.append(s)
 
     r_type = game_ids.ReplayTypes.FULL_GAME
-    if len(rep_stages) == 1 and rep_raw[8] != 4:
+    if rep_raw[6] == 1:
+        r_type = game_ids.ReplayTypes.NC_CHALLENGE
+    elif len(rep_stages) == 1 and rep_raw[8] != 4:
         r_type = game_ids.ReplayTypes.STAGE_PRACTICE
 
     r = ReplayInfo(
