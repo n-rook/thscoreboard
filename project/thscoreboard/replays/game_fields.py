@@ -565,6 +565,7 @@ _game_fields_nc_challenge = immutabledict(
     }
 )
 
+
 def GetFormatPower(
     game_id: str, power: Optional[int], shot: Optional[str] = None
 ) -> str:
