@@ -40,6 +40,7 @@ class ReplayTypes:
     SPELL_PRACTICE = 3
     PVP = 4
     SCENE_GAME = 5
+    NC_CHALLENGE = 6
 
 
 def GetReplayType(r_type: int):
@@ -53,6 +54,8 @@ def GetReplayType(r_type: int):
         return _("PVP")
     elif r_type == 5:
         return _("Scene Game")
+    elif r_type == 6:
+        return _("New Classic: Challenge")
     return "Bug type"
 
 

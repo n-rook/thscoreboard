@@ -176,6 +176,9 @@ class ReplayType(models.IntegerChoices):
     SCENE_GAME = 5, pgettext_lazy("Replay Type", "Scene Game")
     """Replays of the scene game mode like TH095 or TH143 or etc"""
 
+    NC_CHALLENGE = 6, pgettext_lazy("Replay Type", "New Classic: Challenge")
+    """Replays from the Challenge mode of the New Classic remake games"""
+
 
 class Route(models.Model):
     """One of several sets of stages pickable by the player in a run.
@@ -292,6 +295,12 @@ class Replay(models.Model):
                         spell_card_id__isnull=True,
                         scene_game_level__isnull=False,
                         scene_game_scene__isnull=False,
+                    )
+                    | models.Q(
+                        replay_type=ReplayType.NC_CHALLENGE,
+                        spell_card_id__isnull=True,
+                        scene_game_level__isnull=True,
+                        scene_game_scene__isnull=True,
                     )
                 ),
             ),

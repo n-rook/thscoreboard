@@ -61,6 +61,33 @@ _table_fields_th06nc = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
+    }
+)
+
+_table_fields_th06nc_challenge = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": False,
+        "graze": False,
+        "point_items": False,
+        "power": True,
+        "lives": False,
+        "bombs": False,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
         "misses": True,
     }
 )
@@ -515,6 +542,28 @@ _game_fields_PVP = immutabledict(
     }
 )
 
+_game_fields_nc_challenge = immutabledict(
+    {
+        "th01": None,
+        "th05": None,
+        "th06": None,
+        "th06nc": _table_fields_th06nc_challenge,
+        "th07": None,
+        "th08": None,
+        "th09": None,
+        "th10": None,
+        "th11": None,
+        "th12": None,
+        "th128": None,
+        "th13": None,
+        "th14": None,
+        "th15": None,
+        "th16": None,
+        "th17": None,
+        "th18": None,
+        "alco": None,
+    }
+)
 
 def GetFormatPower(
     game_id: str, power: Optional[int], shot: Optional[str] = None
@@ -656,6 +705,9 @@ def GetGameField(gameid: str, replay_type: game_ids.ReplayTypes):
     if replay_type is game_ids.ReplayTypes.PVP:
         if gameid in _game_fields_PVP:
             return _game_fields_PVP[gameid]
+    elif replay_type is game_ids.ReplayTypes.NC_CHALLENGE:
+        if gameid in _game_fields_nc_challenge:
+            return _game_fields_nc_challenge[gameid]
     else:
         if gameid in _game_fields:
             return _game_fields[gameid]
@@ -795,6 +847,8 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
             stage.th09_p2_score = ""
         if stage.extends is None:
             stage.extends = ""
+        if stage.misses is None:
+            stage.misses = ""
 
     return new_stages
 
