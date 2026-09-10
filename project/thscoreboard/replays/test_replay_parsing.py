@@ -686,5 +686,12 @@ class AlcoReplayTestCase(unittest.TestCase):
 class Th06CReplayTestCase(unittest.TestCase):
     def testLunatic(self) -> None:
         r = ParseTestReplay("th6c_lunatic")
-        print(r)
         self.assertIsNotNone(r)
+
+class Th06NCReplayTestCase(unittest.TestCase):
+    def testSpellPractice(self) -> None:
+        r = ParseTestReplay("th6nc_spell_practice")
+        self.assertEqual(r.game, "th06nc")
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.SPELL_PRACTICE)
+        self.assertEqual(r.spell_card_id, 54)
+        self.assertEqual(r.spell_card_id_format, 55)
