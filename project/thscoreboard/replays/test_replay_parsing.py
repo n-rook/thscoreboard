@@ -688,6 +688,7 @@ class Th06CReplayTestCase(unittest.TestCase):
         r = ParseTestReplay("th6c_lunatic")
         self.assertIsNotNone(r)
 
+
 class Th06NCReplayTestCase(unittest.TestCase):
     def testSpellPractice(self) -> None:
         r = ParseTestReplay("th6nc_spell_practice")
