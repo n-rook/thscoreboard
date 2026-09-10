@@ -4,12 +4,8 @@ import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 
 
-if getattr(kaitaistruct, "API_VERSION", (0, 9)) < (0, 9):
-    raise Exception(
-        "Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s"
-        % (kaitaistruct.__version__)
-    )
-
+if getattr(kaitaistruct, 'API_VERSION', (0, 9)) < (0, 9):
+    raise Exception("Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s" % (kaitaistruct.__version__))
 
 class Th06nc(KaitaiStruct):
     def __init__(self, _io, _parent=None, _root=None):
@@ -29,24 +25,20 @@ class Th06nc(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.unknown_2 = self._io.read_bytes(5)
-            self.date = (
-                KaitaiStream.bytes_terminate(self._io.read_bytes(9), 0, False)
-            ).decode("ASCII")
-            self.name = (
-                KaitaiStream.bytes_terminate(self._io.read_bytes(9), 0, False)
-            ).decode("SJIS")
-            self.unknown_4 = self._io.read_u2le()
+            self.unknown = self._io.read_bytes(1)
+            self.date = (KaitaiStream.bytes_terminate(self._io.read_bytes(9), 0, False)).decode(u"ASCII")
+            self.name = (KaitaiStream.bytes_terminate(self._io.read_bytes(9), 0, False)).decode(u"SJIS")
+            self.unknown_2 = self._io.read_u2le()
             self.score = self._io.read_u8le()
-            self.unknown_5 = self._io.read_u4le()
+            self.unknown_3 = self._io.read_f4le()
             self.slowdown = self._io.read_f4le()
-            self.unknown_6 = self._io.read_u4le()
+            self.unknown_4 = self._io.read_f4le()
             self.unknown_7 = self._io.read_u4le()
             self.stage_offsets = []
             for i in range(7):
-                self.stage_offsets.append(
-                    Th06nc.StagePointer(self._io, self, self._root)
-                )
+                self.stage_offsets.append(Th06nc.StagePointer(self._io, self, self._root))
+
+
 
     class StagePointer(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
@@ -61,15 +53,15 @@ class Th06nc(KaitaiStruct):
         @property
         def offset(self):
             """Offset relative to decrypted file."""
-            if hasattr(self, "_m_offset"):
+            if hasattr(self, '_m_offset'):
                 return self._m_offset
 
-            self._m_offset = self.raw_offset - 15
-            return getattr(self, "_m_offset", None)
+            self._m_offset = (self.raw_offset - 15)
+            return getattr(self, '_m_offset', None)
 
         @property
         def body(self):
-            if hasattr(self, "_m_body"):
+            if hasattr(self, '_m_body'):
                 return self._m_body
 
             if self.raw_offset != 0:
@@ -78,7 +70,8 @@ class Th06nc(KaitaiStruct):
                 self._m_body = Th06nc.Stage(self._io, self, self._root)
                 self._io.seek(_pos)
 
-            return getattr(self, "_m_body", None)
+            return getattr(self, '_m_body', None)
+
 
     class Stage(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
@@ -97,3 +90,6 @@ class Th06nc(KaitaiStruct):
             self.unknown_2 = self._io.read_bytes(3)
             self.misses = self._io.read_u1()
             self.unknown_3 = self._io.read_bytes(1)
+
+
+

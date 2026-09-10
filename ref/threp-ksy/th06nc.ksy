@@ -8,8 +8,8 @@ seq:
 types:
   file_header:
     seq:
-      - id: unknown_2
-        size: 5
+      - id: unknown
+        size: 1
       - id: date
         type: str
         size: 9
@@ -20,16 +20,16 @@ types:
         size: 9
         encoding: SJIS
         terminator: 0x0
-      - id: unknown_4
+      - id: unknown_2
         type: u2
       - id: score
         type: u8
-      - id: unknown_5
-        type: u4
+      - id: unknown_3
+        type: f4
       - id: slowdown
         type: f4
-      - id: unknown_6
-        type: u4
+      - id: unknown_4
+        type: f4
       - id: unknown_7
         type: u4
       - id: stage_offsets

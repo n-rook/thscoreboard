@@ -773,6 +773,9 @@ def GetDifficultyName(
             return _("Overdrive")
     if game_id in {GameIDs.ALCO}:
         return _("No difficulty")
+    if game_id in {GameIDs.TH06NC}:
+        if difficulty == 5:
+            return _("No difficulty")
 
     return _("Bug difficulty")
 

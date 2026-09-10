@@ -182,19 +182,34 @@ def _Parse06(rep_raw):
 
 
 def _Parse06nc(rep_raw):
-    cryptdata = bytearray(rep_raw[15:])
-
-    # Calculate crypt key by using a known 0 byte and an expected difference
-    key = (rep_raw[0x1C] + 165) % 256
+    cryptdata = bytearray(rep_raw[0x13:])
+    key = rep_raw[0x12]
     td.decrypt06(cryptdata, key)
     replay = th06nc.Th06nc.from_bytes(cryptdata)
 
     shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
 
     rep_stages = []
+
     r_type = game_ids.ReplayTypes.FULL_GAME
     if rep_raw[6] == 1:
         r_type = game_ids.ReplayTypes.NC_CHALLENGE
+    elif rep_raw[6] == 3:
+        r_type = game_ids.ReplayTypes.SPELL_PRACTICE
+
+    if r_type == game_ids.ReplayTypes.SPELL_PRACTICE:
+        #   spell practice, so stage info isn't necessary
+        return ReplayInfo(
+            game=game_ids.GameIDs.TH06NC,
+            shot=shots[rep_raw[7]],
+            difficulty=5,
+            score=replay.file_header.score,
+            timestamp=time.strptime(replay.file_header.date, "%m/%d/%y"),
+            name=replay.file_header.name.replace("\x00", ""),
+            slowdown=replay.file_header.slowdown,
+            replay_type=r_type,
+            spell_card_id=rep_raw[8],
+        )
 
     enumerated_non_dummy_stages = [
         (i, _pointer.body)
@@ -1291,9 +1306,9 @@ def _DetermineTH13orTH14(replay):
 def _DetermineTH06orTH06NC(replay):
     # EoSD New Classic reuses the game code, but the file format is slightly different
     # Fortunately they've incremented the version byte, so we can check that
-    if replay[4] == 0x02:
+    if replay[4] in {0x02, 0x03}:
         return _Parse06(replay)
-    elif replay[4] >= 0x0B:
+    elif replay[4] in {0x0B, 0x0F}:
         return _Parse06nc(replay)
     raise ValueError()
 
