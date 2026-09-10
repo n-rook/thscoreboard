@@ -70,6 +70,7 @@ def replay_details(request, game_id: str, replay_id: int):
             replay_instance.scene_game_level,
             replay_instance.scene_game_scene,
         ),
+        "version": replay_instance.version,
         "replay": replay_instance,
         "can_edit": request.user == replay_instance.user,
         "can_delete": request.user == replay_instance.user or request.user.is_staff,

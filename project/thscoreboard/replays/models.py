@@ -459,6 +459,10 @@ class Replay(models.Model):
     shown on a user's profile.
     """
 
+    version = models.TextField(max_length=6, blank=True, null=True)
+    """The version of the game the replay was played on
+    """
+
     @property
     def lesanae(self):
         """An easter egg."""
@@ -514,6 +518,7 @@ class Replay(models.Model):
         self.slowdown = r.slowdown
         self.scene_game_level = r.scene_game_level
         self.scene_game_scene = r.scene_game_scene
+        self.version = r.version
 
     def SetForeignKeysFromConstantModels(self, c: ReplayConstantModels):
         """Set the shot and route foreign keys on this Replay."""
