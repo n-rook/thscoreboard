@@ -44,7 +44,7 @@ types:
     instances:
       offset:
         doc: Offset relative to decrypted file
-        value: raw_offset - 15
+        value: raw_offset - 19
       # See https://github.com/kaitai-io/kaitai_struct/issues/14
       # for an explanation of this pattern.
       body:

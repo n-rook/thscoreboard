@@ -56,7 +56,7 @@ class Th06nc(KaitaiStruct):
             if hasattr(self, '_m_offset'):
                 return self._m_offset
 
-            self._m_offset = (self.raw_offset - 15)
+            self._m_offset = (self.raw_offset - 19)
             return getattr(self, '_m_offset', None)
 
         @property
