@@ -681,3 +681,10 @@ class AlcoReplayTestCase(unittest.TestCase):
         s1end = r.stages[0]
         self.assertEqual(s1end.stage, 1)
         self.assertEqual(s1end.score, 1269907)
+
+
+class Th06CReplayTestCase(unittest.TestCase):
+    def testLunatic(self) -> None:
+        r = ParseTestReplay("th6c_lunatic")
+        print(r)
+        self.assertIsNotNone(r)

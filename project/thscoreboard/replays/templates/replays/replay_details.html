@@ -210,6 +210,12 @@
                     <td>{{ spell_name }}</td>
                 </tr>
                 {% endif %}
+                {% if version %}
+                <tr>
+                    <td>{% translate "Version" %}</td>
+                    <td>{{ version }}</td>
+                </tr>
+                {% endif %}
                 <tr>
                     <td>{% translate "Clears?" %}</td>
                     <td>

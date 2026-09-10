@@ -6,6 +6,7 @@ from kaitaistruct import KaitaiStructError
 from replays.lib import time
 from . import game_ids
 from .kaitai_parsers import th06
+from .kaitai_parsers import th06c
 from .kaitai_parsers import th06nc
 from .kaitai_parsers import th07
 from .kaitai_parsers import th08
@@ -106,6 +107,7 @@ class ReplayInfo:
 
     stages: List[ReplayStage] = dataclasses.field(default_factory=list)
     slowdown: Optional[float] = None
+    version: Optional[str] = None
 
     # Equipment chosen at the beginning of the game.
     # This is currently only used in th20, in which it is the stones selected
@@ -177,6 +179,54 @@ def _Parse06(rep_raw):
         slowdown=replay.file_header.slowdown,
         replay_type=r_type,
         stages=rep_stages,
+        version="1.02",
+    )
+
+    return r
+
+
+def _Parse06c(rep_raw):
+    cryptdata = bytearray(rep_raw[15:])
+    td.decrypt06(cryptdata, rep_raw[14])
+    replay = th06c.Th06c.from_bytes(cryptdata)
+
+    shots = ["ReimuA", "ReimuB", "MarisaA", "MarisaB"]
+
+    rep_stages = []
+
+    enumerated_non_dummy_stages = [
+        (i, _pointer.body)
+        for i, _pointer in enumerate(replay.file_header.stage_offsets)
+        if _pointer.body
+    ]
+    # TH06 stores stage data values from the start of the stage but score from the end
+    for (i, current_stage), (j, next_stage) in zip(
+        enumerated_non_dummy_stages, enumerated_non_dummy_stages[1:] + [(None, None)]
+    ):
+        s = ReplayStage(stage=i + 1, score=current_stage.score)
+        if next_stage is not None:
+            s.power = next_stage.power
+            s.lives = next_stage.lives
+            s.bombs = next_stage.bombs
+            s.th06_rank = next_stage.rank
+
+        rep_stages.append(s)
+
+    r_type = game_ids.ReplayTypes.FULL_GAME
+    if len(rep_stages) == 1 and rep_raw[7] != 4:
+        r_type = game_ids.ReplayTypes.STAGE_PRACTICE
+
+    r = ReplayInfo(
+        game=game_ids.GameIDs.TH06,
+        shot=shots[rep_raw[6]],
+        difficulty=rep_raw[7],
+        score=replay.file_header.score,
+        timestamp=time.strptime(replay.file_header.date, "%m/%d/%y"),
+        name=replay.file_header.name.replace("\x00", ""),
+        slowdown=replay.file_header.slowdown,
+        replay_type=r_type,
+        stages=rep_stages,
+        version="1.03",
     )
 
     return r
@@ -209,6 +259,7 @@ def _Parse06nc(rep_raw):
             name=replay.file_header.name.replace("\x00", ""),
             slowdown=replay.file_header.slowdown,
             replay_type=r_type,
+            version="1.15",
             spell_card_id=rep_raw[8],
         )
 
@@ -245,6 +296,7 @@ def _Parse06nc(rep_raw):
         name=replay.file_header.name.replace("\x00", ""),
         slowdown=replay.file_header.slowdown,
         replay_type=r_type,
+        version="1.15",
         stages=rep_stages,
     )
 
@@ -1353,12 +1405,14 @@ def _DetermineTH13orTH14(replay):
     raise ValueError()
 
 
-def _DetermineTH06orTH06NC(replay):
-    # EoSD New Classic reuses the game code, but the file format is slightly different
-    # Fortunately they've incremented the version byte, so we can check that
-    if replay[4] in {0x02, 0x03}:
+def _DetermineTH06version(replay):
+    # Both EoSD Classic (steam) and EoSD New Classic reuse the game code
+    # but have slightly different file structures, and thus need to be parsed separately
+    if replay[4] == 0x02:
         return _Parse06(replay)
-    elif replay[4] in {0x0B, 0x0F}:
+    elif replay[4] == 0x03:
+        return _Parse06c(replay)
+    elif replay[4] in {0x0F}:
         return _Parse06nc(replay)
     raise ValueError()
 
@@ -1378,7 +1432,7 @@ def Parse(replay) -> ReplayInfo:
 
     try:
         if gamecode == b"T6RP":
-            return _DetermineTH06orTH06NC(replay)
+            return _DetermineTH06version(replay)
         elif gamecode == b"T7RP":
             return _Parse07(replay)
         elif gamecode == b"T8RP":
