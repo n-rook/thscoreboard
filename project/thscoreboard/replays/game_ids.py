@@ -22,6 +22,7 @@ class GameIDs:
     TH10 = "th10"
     TH11 = "th11"
     TH12 = "th12"
+    TH125 = "th125"
     TH128 = "th128"
     TH13 = "th13"
     TH14 = "th14"
@@ -133,6 +134,11 @@ _GAME_NAMES = immutabledict(
             pgettext_lazy("short game name", "th12"),
             pgettext_lazy("standard game name", "Undefined Fantastic Object"),
             pgettext_lazy("full game name", "東方星蓮船 - Undefined Fantastic Object"),
+        ),
+        GameIDs.TH125: (
+            pgettext_lazy("short game name", "th125"),
+            pgettext_lazy("standard game name", "Double Spoiler"),
+            pgettext_lazy("full game name", "Double Spoiler - 東方文花帖"),
         ),
         GameIDs.TH128: (
             pgettext_lazy("short game name", "th12.8"),
@@ -419,6 +425,12 @@ def GetShotName(game_id: str, shot_id: str) -> str:
         elif shot_id == "SanaeB":
             return pgettext("th12", "Sanae B")
 
+    if game_id == GameIDs.TH125:
+        if shot_id == "Aya":
+            return pgettext("th125", "Aya")
+        elif shot_id == "Hatate":
+            return pgettext("th125", "Hatate")
+
     if game_id == GameIDs.TH128:
         if shot_id == "Cirno":
             return pgettext("th128", "Cirno")
@@ -683,6 +695,13 @@ def GetSceneGameLevelName(game_id: str, scene_game_level: int | None) -> str:
             return pgettext("th095", "Ex")
         elif scene_game_level < 11:
             return str(scene_game_level)
+    if game_id == GameIDs.TH125:
+        if scene_game_level == 13:
+            return pgettext("th125", "Ex")
+        elif scene_game_level == 14:
+            return pgettext("th125", "Sp")
+        elif scene_game_level < 13:
+            return str(scene_game_level)
     return "Bug level"
 
 
@@ -691,6 +710,9 @@ def GetSceneGameSceneName(game_id: str, scene_game_scene: int | None) -> str:
         # Scene game scenes are 1-indexed.
         return "Bug scene"
     if game_id == GameIDs.TH095:
+        if scene_game_scene <= 9:
+            return str(scene_game_scene)
+    if game_id == GameIDs.TH125:
         if scene_game_scene <= 9:
             return str(scene_game_scene)
     return "Bug scene"
@@ -745,11 +767,19 @@ def GetDifficultyName(
 
 
 def GetSceneGameLabelName(game_id: str, level: int | None, scene: int | None) -> str:
+    if level is None or scene is None:
+        return _("Bug level and scene")
     if game_id == GameIDs.TH095:
-        if level is None or scene is None:
-            return _("Bug level and scene")
         if level == 11:
             level_str = _("Ex")
+        else:
+            level_str = str(level)
+        return level_str + "-" + str(scene)
+    if game_id == GameIDs.TH125:
+        if level == 13:
+            level_str = _("Ex")
+        elif level == 14:
+            level_str = _("Sp")
         else:
             level_str = str(level)
         return level_str + "-" + str(scene)
@@ -825,7 +855,10 @@ def HasLives(game_id: str, replay_type: Optional[int] = None) -> bool:
         # not worth tracking.
         return False
 
-    if game_id in [GameIDs.TH095]:
+    if game_id in [
+        GameIDs.TH095,
+        GameIDs.TH125,
+    ]:
         # Almost all SceneGames do not have a lives system.
         # However, in TH143, using items allows the player to take hits.
         # Therefore, whether the game has a lives system should be determined

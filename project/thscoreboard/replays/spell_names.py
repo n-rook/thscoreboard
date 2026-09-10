@@ -1966,7 +1966,232 @@ scene_game_spell_names = immutabledict(
                     "ja": "「百万鬼夜行」",
                 },
             },
-        }
+        },
+        "th125": {
+            1: {
+                1: {"en-us": "Non Spell", "ja": "通常"},
+                2: {"en-us": "Non Spell", "ja": "通常"},
+                3: {"en-us": 'Autumn Sign "Falling Blast"', "ja": "秋符「フォーリンブラスト」"},
+                4: {
+                    "en-us": 'Fruit Sign "Warm Colour Harvest"',
+                    "ja": "実符「ウォームカラーハーヴェスト」",
+                },
+                5: {"en-us": 'Wilted Path "Lost Windrow"', "ja": "枯道「ロストウィンドロウ」"},
+                6: {
+                    "en-us": 'Baked Sweet Potato "Sweet Potato Room"',
+                    "ja": "焼芋「スイートポテトルーム」",
+                },
+            },
+            2: {
+                1: {"en-us": "Non Spell", "ja": "通常"},
+                2: {"en-us": "Non Spell", "ja": "通常"},
+                3: {"en-us": 'Jealousy "Jealousy Bomber"', "ja": "嫉妬「ジェラシーボンバー」"},
+                4: {
+                    "en-us": 'Cursed Field "Purification River Deposit"',
+                    "ja": "厄野「禊川の堆積」",
+                },
+                5: {"en-us": 'Resentment Art "Grudge Returning"', "ja": "怨み念法「積怨返し」"},
+                6: {"en-us": 'Calamity "Cursed Hina Dolls"', "ja": "災禍「呪いの雛人形」"},
+            },
+            3: {
+                1: {"en-us": "Non Spell", "ja": "通常"},
+                2: {
+                    "en-us": 'Umbrella Sign "One-Legged Return Hit"',
+                    "ja": "傘符「一本足ピッチャー返し」",
+                },
+                3: {"en-us": 'Well Bucket "Like a Moth to a Well"', "ja": "釣瓶「飛んで井の中」"},
+                4: {"en-us": 'Small Thread "Kandata\'s Rope"', "ja": "細綱「カンダタロープ」"},
+                5: {
+                    "en-us": 'Rainbow Sign "Over The Rainbow"',
+                    "ja": "虹符「オーバー・ザ・レインボー」",
+                },
+                6: {"en-us": 'Well Bucket "Well Destructor"', "ja": "釣瓶「ウェルディストラクター」"},
+                7: {"en-us": 'Poison Sign "Japanese Foliage Spider"', "ja": "毒符「樺黄小町」"},
+                8: {"en-us": 'Umbrella Sign "Flurry Travelers"', "ja": "傘符「細雪の過客」"},
+            },
+            4: {
+                1: {"en-us": "Non Spell", "ja": "通常"},
+                2: {"en-us": "Non Spell", "ja": "通常"},
+                3: {"en-us": 'Water Sign "Water Carpet"', "ja": "水符「ウォーターカーペット」"},
+                4: {"en-us": 'Dog Sign "Rabies Bite"', "ja": "狗符「レイビーズバイト」"},
+                5: {"en-us": 'River Sign "Dividing Edge"', "ja": "河符「ディバイディングエッジ」"},
+                6: {
+                    "en-us": 'Mountain Nomad "Expellee\'s Canaan"',
+                    "ja": "山窩「エクスペリーズカナン」",
+                },
+                7: {"en-us": 'Kappa "Dried Shirikodama"', "ja": "河童「乾燥尻子玉」"},
+            },
+            5: {
+                1: {"en-us": "Non Spell", "ja": "通常"},
+                2: {"en-us": "Non Spell", "ja": "通常"},
+                3: {"en-us": 'Fist "Falling Sky Hammer"', "ja": "拳骨「天空鉄槌落とし」"},
+                4: {
+                    "en-us": 'Anchor Sign "Phantom Ship\'s Long-Term Anchorage"',
+                    "ja": "錨符「幽霊船長期停泊」",
+                },
+                5: {"en-us": 'Lightning "Electrified Nyuudou"', "ja": "稲妻「帯電入道」"},
+                6: {"en-us": 'Flood "Venus of the Bilge"', "ja": "浸水「船底のヴィーナス」"},
+                7: {"en-us": 'Iron Fist "Nyuudou Nyoki"', "ja": "鉄拳「入道にょき」"},
+                8: {"en-us": '"Deep Sinker"', "ja": "「ディープシンカー」"},
+            },
+            6: {
+                1: {"en-us": "Non Spell", "ja": "通常"},
+                2: {"en-us": "Non Spell", "ja": "通常"},
+                3: {"en-us": 'Light Oni "Adamant Helix"', "ja": "光鬼「金剛螺旋」"},
+                4: {"en-us": 'Oni Sign "Pea-Sized Needle Hell"', "ja": "鬼符「豆粒大の針地獄」"},
+                5: {"en-us": 'Oni Sign "Dreadful Raging Waves"', "ja": "鬼符「鬼気狂瀾」"},
+                6: {"en-us": 'Hell "Purgatorial Sigh"', "ja": "地獄「煉獄吐息」"},
+                7: {"en-us": 'Oni\'s Voice "Annihilating Roar"', "ja": "鬼声「壊滅の咆哮」"},
+                8: {"en-us": 'Oni Sign "Missing Power"', "ja": "鬼符「ミッシングパワー」"},
+            },
+            7: {
+                1: {"en-us": "Non Spell", "ja": "通常"},
+                2: {"en-us": "Non Spell", "ja": "通常"},
+                3: {"en-us": 'Tiger Sign "Hungry Tiger"', "ja": "寅符「ハングリータイガー」"},
+                4: {"en-us": 'Rod Sign "Nazrin Rod"', "ja": "棒符「ナズーリンロッド」"},
+                5: {"en-us": 'Heaven Sign "Scorched Earth Mandala"', "ja": "天符「焦土曼荼羅」"},
+                6: {"en-us": 'Treasure "Gold Rush"', "ja": "財宝「ゴールドラッシュ」"},
+                7: {"en-us": 'Treasure Sign "Dazzling Gold"', "ja": "宝符「黄金の震眩」"},
+            },
+            8: {
+                1: {"en-us": "Non Spell", "ja": "通常"},
+                2: {"en-us": 'Fusion "Melting White"', "ja": "熔解「メルティングホワイト」"},
+                3: {"en-us": 'Death Sign "Ghost Town"', "ja": "死符「ゴーストタウン」"},
+                4: {"en-us": 'Giant Star "Red Giant"', "ja": "巨星「レッドジャイアント」"},
+                5: {"en-us": '"Corpse Shopping District"', "ja": "「死体繁華街」"},
+                6: {"en-us": 'Star Sign "Fall of Great Stars"', "ja": "星符「巨星墜つ」"},
+                7: {
+                    "en-us": 'Drunkard\'s Walk "Cat Random Walk"',
+                    "ja": "酔歩「キャットランダムウォーク」",
+                },
+                8: {"en-us": 'Seven Stars "Septentrion"', "ja": "七星「セプテントリオン」"},
+            },
+            9: {
+                1: {"en-us": "Non Spell", "ja": "通常"},
+                2: {"en-us": 'Heart Sign "Selfless Love"', "ja": "心符「没我の愛」"},
+                3: {
+                    "en-us": 'Brain Sign "Brain Fingerprint"',
+                    "ja": "脳符「ブレインフィンガープリント」",
+                },
+                4: {"en-us": 'Memory "DNA\'s Flaw"', "ja": "記憶「ＤＮＡの瑕」"},
+                5: {"en-us": 'Heart Flower "Camera-Shy Rose"', "ja": "心花「カメラシャイローズ」"},
+                6: {"en-us": '"Embryo\'s Dream"', "ja": "「胎児の夢」"},
+                7: {
+                    "en-us": 'Recollection "Vague Recollection of Kinkaku-ji"',
+                    "ja": "想起「うろおぼえの金閣寺」",
+                },
+                8: {"en-us": '"Rose Hell"', "ja": "「ローズ地獄」"},
+            },
+            10: {
+                1: {"en-us": 'Temperament "High-Spirited Sword"', "ja": "気性「勇気凛々の剣」"},
+                2: {"en-us": 'Thunder Sign "Lightning Fish"', "ja": "雷符「ライトニングフィッシュ」"},
+                3: {
+                    "en-us": 'Earthquake "Escarpment Evacuation Route"',
+                    "ja": "地震「避難険路」",
+                },
+                4: {
+                    "en-us": 'Orb Sign "Orb of the Five-Clawed Dragon"',
+                    "ja": "珠符「五爪龍の珠」",
+                },
+                5: {"en-us": 'Keystone "Kaname Funnel"', "ja": "要石「カナメファンネル」"},
+                6: {
+                    "en-us": 'Dragon Palace "Dance of Sea Breams and Flounders"',
+                    "ja": "龍宮「タイヤヒラメダンス」",
+                },
+                7: {
+                    "en-us": '"Sky of Scarlet Perception of All Humankind"',
+                    "ja": "「全人類の緋想天」",
+                },
+                8: {
+                    "en-us": 'Dragon Fish "Oarfish\'s Swimming Shot"',
+                    "ja": "龍魚「龍宮の使い遊泳弾」",
+                },
+            },
+            11: {
+                1: {"en-us": "Non Spell", "ja": "通常"},
+                2: {
+                    "en-us": 'Divine Sakura "Full Sakura Blizzard"',
+                    "ja": "神桜「湛えの桜吹雪」",
+                },
+                3: {"en-us": 'Snake Sign "Ground Serpent"', "ja": "蛇符「グラウンドサーペント」"},
+                4: {
+                    "en-us": 'Hime River "Princess Jade Green"',
+                    "ja": "姫川「プリンセスジェイドグリーン」",
+                },
+                5: {
+                    "en-us": 'Divine Pillar "Meteoric Onbashira"',
+                    "ja": "御柱「メテオリックオンバシラ」",
+                },
+                6: {"en-us": 'Iron Ring "Mythical Ring"', "ja": "鉄輪「ミシカルリング」"},
+                7: {"en-us": 'Fleeting Path "Omiwatari Cross"', "ja": "儚道「御神渡りクロス」"},
+                8: {"en-us": 'Native God "Mishaguji-sama"', "ja": "土着神「御射軍神さま」"},
+            },
+            12: {
+                1: {"en-us": "Non Spell", "ja": "通常"},
+                2: {"en-us": 'Unidentified "Purple Mirror"', "ja": "正体不明「紫鏡」"},
+                3: {"en-us": '"Yugyou Hijiri"', "ja": "「遊行聖」"},
+                4: {
+                    "en-us": 'Unidentified "Red Cloak, Blue Cloak"',
+                    "ja": "正体不明「赤マント青マント」",
+                },
+                5: {
+                    "en-us": 'Syncretism "Manifestation of Mahavairocana"',
+                    "ja": "習合「垂迹大日如来」",
+                },
+                6: {
+                    "en-us": 'Unidentified "Ms. Hanako of the Toilet"',
+                    "ja": "正体不明「厠の花子さん」",
+                },
+                7: {"en-us": '"Star Sword Apologetics"', "ja": "「スターソードの護法」"},
+                8: {"en-us": '"Danmaku X from a Wandering Star"', "ja": "「遊星よりの弾幕Ｘ」"},
+            },
+            13: {
+                1: {
+                    "en-us": 'Talisman "Exorcism of the Newspaper Subscription Solicitors"',
+                    "ja": "お札「新聞拡張団調伏」",
+                },
+                2: {"en-us": 'Star Sign "Oort Cloud"', "ja": "星符「オールトクラウド」"},
+                3: {
+                    "en-us": 'Miracle "Divine Wind of the Kouan Era"',
+                    "ja": "奇跡「弘安の神風」",
+                },
+                4: {
+                    "en-us": 'Barrier "Paparazzi-Repelling Barrier"',
+                    "ja": "結界「パパラッチ撃退結界」",
+                },
+                5: {
+                    "en-us": 'Celestial Apparatus "Orrery\'s Solar System"',
+                    "ja": "天儀「オーレリーズソーラーシステム」",
+                },
+                6: {"en-us": 'Frog Sign "Wily Toad"', "ja": "蛙符「手管の蝦蟇」"},
+                7: {"en-us": 'Dream Sign "Dream Dimensional Rift"', "ja": "夢符「夢想亜空穴」"},
+                8: {"en-us": 'Comet "Blazing Star"', "ja": "彗星「ブレイジングスター」"},
+                9: {
+                    "en-us": 'Youkai Extermination "Youkai Power Spoiler"',
+                    "ja": "妖怪退治「妖力スポイラー」",
+                },
+            },
+            14: {
+                1: {"en-us": "Non Spell", "ja": "通常"},
+                2: {
+                    "en-us": 'Reporting "Hatate Himekaidou\'s Reporting Training"',
+                    "ja": "取材「姫海棠はたての練習取材」",
+                },
+                3: {"en-us": 'Continuous Shooting "Rapid Shot"', "ja": "連写「ラピッドショット」"},
+                4: {
+                    "en-us": 'Far-sightedness "Tengu Psychography"',
+                    "ja": "遠眼「天狗サイコグラフィ」",
+                },
+                5: {"en-us": "Non Spell", "ja": "通常"},
+                6: {
+                    "en-us": 'Reporting "Aya Shameimaru\'s Coercive Reporting"',
+                    "ja": "取材「射命丸文の圧迫取材」",
+                },
+                7: {"en-us": 'Telescoping "Candid Shot"', "ja": "望遠「キャンディッドショット」"},
+                8: {"en-us": 'Snapshot "Fast Shot"', "ja": "速写「ファストショット」"},
+                9: {"en-us": '"Taking Fantasy by Storm"', "ja": "「幻想風靡」"},
+            },
+        },
     }
 )
 

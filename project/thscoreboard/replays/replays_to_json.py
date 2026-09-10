@@ -56,7 +56,10 @@ class ReplayToJsonConverter:
         if game.game_id == game_ids.GameIDs.TH128 and replay.difficulty == 4:
             json_dict["Route"] = "Extra"
 
-        if game.game_id in [game_ids.GameIDs.TH095]:
+        if game.game_id in [
+            game_ids.GameIDs.TH095,
+            game_ids.GameIDs.TH125,
+        ]:
             level = replay.scene_game_level
             scene = replay.scene_game_scene
             json_dict["Level"] = game_ids.GetSceneGameLevelName(game.game_id, level)
