@@ -696,3 +696,18 @@ class Th06NCReplayTestCase(unittest.TestCase):
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.SPELL_PRACTICE)
         self.assertEqual(r.spell_card_id, 54)
         self.assertEqual(r.spell_card_id_format, 55)
+
+    def testNormal(self) -> None:
+        r = ParseTestReplay("th6nc_normal")
+        self.assertEqual(r.difficulty, 1)
+        self.assertEqual(r.score, 76770000)
+
+        s5 = r.stages[4]
+        self.assertEqual(s5.score, 55815400)
+        self.assertEqual(s5.power, 128)
+        self.assertEqual(s5.lives, 4)
+        self.assertEqual(s5.bombs, 2)
+
+        s6 = r.stages[5]
+        self.assertEqual(s6.power, 125)
+        self.assertEqual(s6.score, 76770000)
