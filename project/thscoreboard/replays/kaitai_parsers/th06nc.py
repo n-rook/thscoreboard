@@ -88,8 +88,7 @@ class Th06nc(KaitaiStruct):
             self.lives = self._io.read_s1()
             self.bombs = self._io.read_s1()
             self.unknown_2 = self._io.read_bytes(3)
-            self.misses = self._io.read_s1()
-            self.unknown_3 = self._io.read_bytes(1)
+            self.misses = self._io.read_s2le()
 
 
 

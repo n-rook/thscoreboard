@@ -713,8 +713,8 @@ class Th06NCReplayTestCase(unittest.TestCase):
         s5 = r.stages[4]
         self.assertEqual(s5.score, 55815400)
         self.assertEqual(s5.power, 125)
-        self.assertEqual(s5.lives, 4)
-        self.assertEqual(s5.bombs, 2)
+        self.assertEqual(s5.lives, 2)
+        self.assertEqual(s5.bombs, 3)
 
         s6 = r.stages[5]
         self.assertEqual(s6.power, 125)
@@ -732,3 +732,9 @@ class Th06NCReplayTestCase(unittest.TestCase):
         s4 = r.stages[3]
         self.assertEqual(s4.power, 125)
         self.assertEqual(s4.misses, 9)
+
+    def testChallenge2(self) -> None:
+        r = ParseTestReplay("th6nc_challenge_2")
+
+        s5 = r.stages[4]
+        self.assertEqual(s5.misses, 258)
