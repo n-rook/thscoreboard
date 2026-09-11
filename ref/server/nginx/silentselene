@@ -1,24 +1,27 @@
 server {
-        listen 80;
-        listen [::]:80;
 
-        server_name silentselene.net;
+        server_name www.silentselene.net;
 
         location / {
                 include uwsgi_params;
                 uwsgi_pass localhost:8000;
         }
 
-        location = /static {
-               alias /home/silentselene/silentselene/project/thscoreboard/staticfiles;
+        location /static/ {
+                alias /home/silentselene/silentselene-staging/project/thscoreboard/staticfiles/;
+
+                location ~ \.(png|woff2) {
+                        expires 1h;
+                }
         }
 
         location = /favicon.ico {
                 alias /home/silentselene/silentselene/project/thscoreboard/staticfiles/favicon.ico;
         }
-		
+
         error_page 502 /epic-fail.html;
         location = /epic-fail.html {
                 alias /home/silentselene/silentselene/ref/epic-fail.html;
         }
+
 }
