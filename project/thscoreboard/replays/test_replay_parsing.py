@@ -686,7 +686,15 @@ class AlcoReplayTestCase(unittest.TestCase):
 class Th06CReplayTestCase(unittest.TestCase):
     def testLunatic(self) -> None:
         r = ParseTestReplay("th6c_lunatic")
-        self.assertIsNotNone(r)
+        self.assertEqual(r.version, "1.03")
+        self.assertEqual(r.score, 70547420)
+
+        s1 = r.stages[0]
+        self.assertEqual(s1.score, 8745000)
+        self.assertEqual(s1.power, 78)
+        self.assertEqual(s1.lives, 2)
+        self.assertEqual(s1.bombs, 3)
+        self.assertEqual(s1.th06_rank, 32)
 
 
 class Th06NCReplayTestCase(unittest.TestCase):
@@ -704,10 +712,23 @@ class Th06NCReplayTestCase(unittest.TestCase):
 
         s5 = r.stages[4]
         self.assertEqual(s5.score, 55815400)
-        self.assertEqual(s5.power, 128)
+        self.assertEqual(s5.power, 125)
         self.assertEqual(s5.lives, 4)
         self.assertEqual(s5.bombs, 2)
 
         s6 = r.stages[5]
         self.assertEqual(s6.power, 125)
         self.assertEqual(s6.score, 76770000)
+
+    def testChallenge(self) -> None:
+        r = ParseTestReplay("th6nc_challenge")
+        self.assertEqual(r.difficulty, 3)
+        self.assertEqual(r.version, "1.15")
+
+        s2 = r.stages[1]
+        self.assertEqual(s2.score, 33761470)
+        self.assertEqual(s2.misses, -2)
+
+        s4 = r.stages[3]
+        self.assertEqual(s4.power, 125)
+        self.assertEqual(s4.misses, 9)
