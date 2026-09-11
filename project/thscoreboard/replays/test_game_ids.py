@@ -75,6 +75,7 @@ class GameIDsTestCase(test.SimpleTestCase):
             ["TH06", game_ids.GameIDs.TH06, None, True],
             ["TH09", game_ids.GameIDs.TH09, None, False],
             ["TH095", game_ids.GameIDs.TH095, game_ids.ReplayTypes.SCENE_GAME, False],
+            ["TH143", game_ids.GameIDs.TH143, game_ids.ReplayTypes.SCENE_GAME, False],
             ["TH13", game_ids.GameIDs.TH13, None, True],
             ["TH13_Full", game_ids.GameIDs.TH13, game_ids.ReplayTypes.FULL_GAME, True],
             [
@@ -98,6 +99,7 @@ class GameIDsTestCase(test.SimpleTestCase):
             ["TH06", game_ids.GameIDs.TH06, None, True],
             ["TH09", game_ids.GameIDs.TH09, None, True],
             ["TH095", game_ids.GameIDs.TH095, game_ids.ReplayTypes.SCENE_GAME, False],
+            ["TH143", game_ids.GameIDs.TH143, game_ids.ReplayTypes.SCENE_GAME, True],
             ["TH13", game_ids.GameIDs.TH13, None, True],
             ["TH13_Full", game_ids.GameIDs.TH13, game_ids.ReplayTypes.FULL_GAME, True],
             [

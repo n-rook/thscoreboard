@@ -492,6 +492,34 @@ class Th14ReplayTestCase(unittest.TestCase):
         self.assertEqual(r.game, "th14")
 
 
+class Th143ReplayTestCase(unittest.TestCase):
+    def testLevel2(self) -> None:
+        r = ParseTestReplay("th143_2_2")
+        self.assertEqual(r.name, "WEF         ")
+        self.assertEqual(r.score, 2507)
+        self.assertEqual(r.shot, "Seija")
+        self.assertEqual(
+            r.timestamp,
+            datetime.datetime(2018, 3, 6, 2, 6, tzinfo=datetime.timezone.utc),
+        )
+        self.assertEqual(r.scene_game_level, 2)
+        self.assertEqual(r.scene_game_scene, 2)
+        self.assertEqual(r.slowdown, 0.00)
+
+    def testLevel10(self) -> None:
+        r = ParseTestReplay("th143_10_7")
+        self.assertEqual(r.name, "WEF         ")
+        self.assertEqual(r.score, 138291)
+        self.assertEqual(r.shot, "Seija")
+        self.assertEqual(
+            r.timestamp,
+            datetime.datetime(2016, 4, 2, 17, 38, tzinfo=datetime.timezone.utc),
+        )
+        self.assertEqual(r.scene_game_level, 10)
+        self.assertEqual(r.scene_game_scene, 7)
+        self.assertEqual(r.slowdown, 0.00)
+
+
 class Th15ReplayTestCase(unittest.TestCase):
     def testHard(self) -> None:
         r = ParseTestReplay("th15_hard")
