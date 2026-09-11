@@ -2,9 +2,10 @@ import unittest
 
 from replays.testing import test_replays
 from replays import replay_parsing
-from replays.game_ids import GameIDs
+from replays.game_ids import GameIDs, ReplayTypes
 from replays.replay_parsing import ReplayInfo
 from replays.game_fields import (
+    GetGameField,
     GetFormatBombs,
     GetFormatLives,
     GetFormatPower,
@@ -29,6 +30,11 @@ class FormatStageTestCase(unittest.TestCase):
         self.assertEqual(format_stage_ex, "Extra")
         format_stage_ex = GetFormatStage(GameIDs.TH07, 8)
         self.assertEqual(format_stage_ex, "Phantasm")
+
+    def testTh03(self) -> None:
+        self.assertEqual(GetFormatStage(GameIDs.TH03, 7), "7")
+        self.assertEqual(GetFormatStage(GameIDs.TH03, 8), "8")
+        self.assertEqual(GetFormatStage(GameIDs.TH03, 9), "9")
 
     def testTh08(self) -> None:
         format_stage_2 = GetFormatStage(GameIDs.TH08, 2)
@@ -152,3 +158,18 @@ class GameHasPvpTestCase(unittest.TestCase):
     def testNoPvp(self) -> None:
         for game_id in [GameIDs.TH01, GameIDs.TH06, GameIDs.TH18]:
             self.assertFalse(game_has_pvp(game_id))
+
+
+class Th03TableFieldsTestCase(unittest.TestCase):
+    def testStory(self) -> None:
+        fields = GetGameField(GameIDs.TH03, ReplayTypes.FULL_GAME)
+
+        self.assertTrue(fields["lives"])
+        self.assertTrue(fields["th03_opponent_shot"])
+        self.assertTrue(fields["th03_opponent_score"])
+
+    def testPVP(self) -> None:
+        fields = GetGameField(GameIDs.TH03, ReplayTypes.PVP)
+
+        self.assertFalse(fields["stage"])
+        self.assertTrue(fields["th03_opponent_shot"])

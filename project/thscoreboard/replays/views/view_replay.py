@@ -11,6 +11,7 @@ from django.contrib.auth import decorators as auth_decorators
 from django.views.decorators import http as http_decorators
 from django.shortcuts import redirect, render
 from django.db import transaction
+from django.utils.translation import gettext as _
 
 from replays import models
 from replays.lib import http_util
@@ -52,6 +53,8 @@ def replay_details(request, game_id: str, replay_id: int):
         game_id, replay_stages, replay_instance.shot.shot_id
     )
 
+    th03_stage = replay_stages.first() if game_id == game_ids.GameIDs.TH03 else None
+
     edit_form = forms.EditReplayForm(initial={"comment": replay_instance.comment})
 
     can_remove_claim = _is_replay_claimed(replay_instance) and (
@@ -82,6 +85,24 @@ def replay_details(request, game_id: str, replay_id: int):
         "replay_type": game_ids.GetReplayType(replay_instance.replay_type),
         "site_base": settings.SITE_BASE,
         "can_remove_claim": can_remove_claim,
+        "show_th03_cpu": (
+            th03_stage is not None
+            and (
+                th03_stage.th03_player_cpu is not None
+                or th03_stage.th03_opponent_cpu is not None
+            )
+        ),
+        "th03_player_cpu": th03_stage.th03_player_cpu if th03_stage else None,
+        "th03_opponent_cpu": th03_stage.th03_opponent_cpu if th03_stage else None,
+        "th03_ruleset_name": (
+            (_("Stock"), _("Dopamine Arrange"))[replay_instance.th03_ruleset]
+            if replay_instance.th03_ruleset in (0, 1)
+            else None
+        ),
+        "show_th03_netplay": (
+            game_id == game_ids.GameIDs.TH03
+            and replay_instance.replay_type == game_ids.ReplayTypes.PVP
+        ),
     }
 
     if hasattr(replay_instance, "replayfile"):
@@ -111,7 +132,7 @@ def view_replay_reanalysis(request, game_id: str, replay_id: int):
 
     if replay_instance.shot.game.game_id != game_id:
         raise Http404()
-    if not replay_instance.shot.game.has_replays:
+    if not hasattr(replay_instance, "replayfile"):
         return HttpResponseBadRequest()
 
     if request.method == "POST":
@@ -137,15 +158,10 @@ def download_replay(request, game_id: str, replay_id: int):
 
     if replay_instance.shot.game.game_id != game_id:
         raise Http404()
-    if not replay_instance.shot.game.has_replays:
-        return HttpResponseBadRequest()
-
     try:
         replay_file_instance = models.ReplayFile.objects.get(replay=replay_instance)
     except models.ReplayFile.DoesNotExist:
-        raise ValueError(
-            "No replay file for this submission. This should not be possible"
-        )
+        raise Http404()
 
     download_headers = http_util.GetDownloadFileHeaders(
         replay_instance.GetNiceFilename(replay_file_instance.id)

@@ -57,6 +57,12 @@
             {% if table_fields.th09_p2_score %}
             <th>{% translate "P2 Score" %}</th>
             {% endif %}
+            {% if table_fields.th03_opponent_shot %}
+            <th>{% translate "Opponent" %}</th>
+            {% endif %}
+            {% if table_fields.th03_opponent_score %}
+            <th>{% translate "Opponent Score" %}</th>
+            {% endif %}
             {% if table_fields.th13_trance %}
             <th>{% translate "Trance Gauge" %}</th>
             {% endif %}
@@ -121,6 +127,12 @@
             {% endif %}
             {% if table_fields.th09_p2_score %}
             <td>{{stage.th09_p2_score|intcomma}}</td>
+            {% endif %}
+            {% if table_fields.th03_opponent_shot %}
+            <td>{{stage.th03_opponent_shotFormat}}</td>
+            {% endif %}
+            {% if table_fields.th03_opponent_score %}
+            <td>{{stage.th03_opponent_score|intcomma}}</td>
             {% endif %}
             {% if table_fields.th13_trance %}
             <td>{{stage.th13_trance}}</td>

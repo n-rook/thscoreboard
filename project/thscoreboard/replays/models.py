@@ -73,6 +73,10 @@ class Game(models.Model):
         """Get the full name for this game."""
         return game_ids.GetGameName(self.game_id, game_ids.NameLength.FULL)
 
+    def AllowsReplaylessSubmissions(self):
+        """Whether users may submit a video without a replay file."""
+        return not self.has_replays or self.game_id == game_ids.GameIDs.TH03
+
     def GetDifficultyName(self, difficulty: int | None) -> str:
         """Gets the name of a difficulty in this game."""
         return game_ids.GetDifficultyName(self.game_id, difficulty)
@@ -419,6 +423,33 @@ class Replay(models.Model):
     replay_type = models.IntegerField(choices=ReplayType.choices)
     """Type of replay (full run run, stage practice, etc)"""
 
+    th03_ruleset = models.PositiveSmallIntegerField(blank=True, null=True)
+    """The PoDD gameplay ruleset ID."""
+
+    th03_is_netplay = models.BooleanField(blank=True, null=True)
+    """Whether this PoDD replay was recorded during netplay."""
+
+    th03_recorder_role = models.PositiveSmallIntegerField(blank=True, null=True)
+    """The local PoDD recorder role: unknown, P1, or P2."""
+
+    th03_recorder_source = models.PositiveSmallIntegerField(blank=True, null=True)
+    """The PoDD recorder implementation source."""
+
+    th03_p1_uuid = models.UUIDField(blank=True, null=True)
+    """The opaque PoDD P1 account UUID, when linked."""
+
+    th03_p2_uuid = models.UUIDField(blank=True, null=True)
+    """The opaque PoDD P2 account UUID, when linked."""
+
+    th03_match_id = models.UUIDField(blank=True, null=True)
+    """The opaque PoDD netplay match ID, when present."""
+
+    th03_p1_name = models.CharField(max_length=57, blank=True, null=True)
+    """The offline fallback for the PoDD P1 public nametag."""
+
+    th03_p2_name = models.CharField(max_length=57, blank=True, null=True)
+    """The offline fallback for the PoDD P2 public nametag."""
+
     def GetReplayTypeName(self) -> str:
         """Returns a string description of this replay's type."""
         return game_ids.GetReplayType(self.replay_type)
@@ -502,6 +533,19 @@ class Replay(models.Model):
         self.slowdown = r.slowdown
         self.scene_game_level = r.scene_game_level
         self.scene_game_scene = r.scene_game_scene
+        self.th03_ruleset = r.th03_ruleset
+        self.th03_is_netplay = r.th03_is_netplay
+        self.th03_recorder_role = r.th03_recorder_role
+        self.th03_recorder_source = r.th03_recorder_source
+        self.th03_p1_uuid = r.th03_p1_uuid
+        self.th03_p2_uuid = r.th03_p2_uuid
+        self.th03_match_id = r.th03_match_id
+        self.th03_p1_name = r.th03_p1_name
+        self.th03_p2_name = r.th03_p2_name
+        if r.miss_count is not None:
+            self.miss_count = r.miss_count
+        if r.is_clear is not None:
+            self.is_clear = r.is_clear
 
     def SetForeignKeysFromConstantModels(self, c: ReplayConstantModels):
         """Set the shot and route foreign keys on this Replay."""
@@ -698,6 +742,24 @@ class ReplayStage(models.Model):
     th16_season_power = models.IntegerField(blank=True, null=True)
     """Value of the season gauge in TH16"""
 
+    th03_player_cpu = models.BooleanField(blank=True, null=True)
+    """Whether the displayed player is a CPU in TH03"""
+
+    th03_opponent_cpu = models.BooleanField(blank=True, null=True)
+    """Whether the displayed opponent is a CPU in TH03"""
+
+    th03_opponent_shot = models.ForeignKey(
+        "Shot",
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name="+",
+    )
+    """The displayed opponent character in TH03"""
+
+    th03_opponent_score = models.BigIntegerField(blank=True, null=True)
+    """The displayed opponent score in TH03"""
+
     def SetFromReplayStageInfo(self, s: replay_parsing.ReplayStage):
         """Set derived fields on this row from a replay stage.
 
@@ -741,6 +803,9 @@ class ReplayStage(models.Model):
         self.th128_frozen_area = s.th128_frozen_area
         self.th13_trance = s.th13_trance
         self.th16_season_power = s.th16_season_power
+        self.th03_player_cpu = s.th03_player_cpu
+        self.th03_opponent_cpu = s.th03_opponent_cpu
+        self.th03_opponent_score = s.th03_opponent_score
 
 
 _REPLAY_FILE_UNIQUE_HASH_CONSTRAINT = "unique_hash"

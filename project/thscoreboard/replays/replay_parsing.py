@@ -1,10 +1,12 @@
 import dataclasses
 from typing import List, Optional
 import datetime
+import uuid
 from kaitaistruct import KaitaiStructError
 
 from replays.lib import time
 from . import game_ids
+from .kaitai_parsers import th03_v14
 from .kaitai_parsers import th06
 from .kaitai_parsers import th07
 from .kaitai_parsers import th08
@@ -76,6 +78,10 @@ class ReplayStage:
     th13_trance: int = None
     extends: int = None
     th16_season_power: int = None
+    th03_player_cpu: bool = None
+    th03_opponent_cpu: bool = None
+    th03_opponent_shot: str = None
+    th03_opponent_score: int = None
 
     def __getitem__(self, item):
         return getattr(self, item)
@@ -86,10 +92,10 @@ class ReplayInfo:
     game: str
     shot: str
     score: int
-    timestamp: datetime.datetime
+    timestamp: Optional[datetime.datetime]
     """The timestamp for the replay.
 
-    This field is an aware datetime.
+    This field is either an aware datetime or None when the replay has no date.
     """
 
     name: str
@@ -111,6 +117,17 @@ class ReplayInfo:
     # The order is significant; in th20, the first incident stone is the "main"
     # stone.
     equipment: tuple[str] = dataclasses.field(default_factory=tuple)
+    miss_count: Optional[int] = None
+    is_clear: Optional[bool] = None
+    th03_ruleset: Optional[int] = None
+    th03_is_netplay: Optional[bool] = None
+    th03_recorder_role: Optional[int] = None
+    th03_recorder_source: Optional[int] = None
+    th03_p1_uuid: Optional[str] = None
+    th03_p2_uuid: Optional[str] = None
+    th03_match_id: Optional[str] = None
+    th03_p1_name: Optional[str] = None
+    th03_p2_name: Optional[str] = None
 
     @property
     def spell_card_id_format(self):
@@ -118,13 +135,368 @@ class ReplayInfo:
         return self.spell_card_id + 1
 
     def __post_init__(self):
-        if self.timestamp.tzinfo is None:
+        if self.timestamp is not None and self.timestamp.tzinfo is None:
             # Why require the datetime be aware?
             # Basically, it's because Python timezone handling is a disaster.
             # datetimes without explicit timezone info tend to be converted
             # in weird ways by builtin methods, so it's way too easy to
             # accidentally apply a timezone correction twice.
             raise ValueError("timestamp datetime must be aware")
+
+
+_TH03_SHOTS = [
+    "Reimu",
+    "Mima",
+    "Marisa",
+    "Ellen",
+    "Kotohime",
+    "Kana",
+    "Rikako",
+    "Chiyuri",
+    "Yumemi",
+]
+
+_TH03_HEADER_SIZE = 896
+_TH03_CHECKPOINT_SIZE = 289
+_TH03_SUMMARY_FLAGS = 0x7F
+_TH03_SCORE_UNKNOWN = 0xFF
+_TH03_GAME_MODE_STORY = 1
+_TH03_GAME_MODE_VS_1P_CPU = 0x80
+_TH03_GAME_MODE_VS_1P_2P = 0x81
+_TH03_GAME_MODE_VS_CPU_CPU = 0x82
+_TH03_FLAG_RLE_INPUT = 0x0001
+_TH03_FLAG_CHARGE_INPUT = 0x0002
+_TH03_FLAG_PRACTICE = 0x0004
+_TH03_FLAGS_KNOWN = _TH03_FLAG_RLE_INPUT | _TH03_FLAG_CHARGE_INPUT | _TH03_FLAG_PRACTICE
+_TH03_RECORDING_FLAG_NETPLAY = 0x01
+_TH03_END_REASON_COMPLETE = 1
+_TH03_SUMMARY_UNKNOWN = 0xFF
+_TH03_NAME_BYTES = frozenset(b"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,!?")
+_TH03_OLD_FORMAT_MESSAGE = (
+    "This PoDD replay uses an older format. Please use the Replay Patch installer "
+    "or Data Manager to update it to V14 before uploading."
+)
+
+
+def _TH03UnpackScore(score) -> int:
+    value = 0
+    multiplier = 1
+    for packed_digits in score.digits:
+        for digit in (packed_digits & 0x0F, packed_digits >> 4):
+            if digit > 9:
+                raise ValueError("Invalid packed score")
+            value += digit * multiplier
+            multiplier *= 10
+
+    # PoDD internally stores the eight digits to the left of the always-zero
+    # units digit.
+    return value * 10
+
+
+def _TH03UnpackPlaychar(playchar_paletted: int) -> str:
+    # PlaycharPalettedOptional reserves 0 for no character, then stores the
+    # alternate-palette bit below the character ID.
+    if playchar_paletted < 1 or playchar_paletted > (len(_TH03_SHOTS) * 2):
+        raise ValueError("Invalid PoDD character")
+    return _TH03_SHOTS[(playchar_paletted - 1) // 2]
+
+
+def _TH03ParseDosDate(dos_date: int) -> Optional[datetime.datetime]:
+    if dos_date == 0:
+        return None
+
+    year = 1980 + (dos_date >> 9)
+    month = (dos_date >> 5) & 0x0F
+    day = dos_date & 0x1F
+    return datetime.datetime(year, month, day, tzinfo=datetime.timezone.utc)
+
+
+def _TH03Uuid(value: bytes) -> Optional[str]:
+    if not any(value):
+        return None
+    return str(uuid.UUID(bytes=value))
+
+
+def _TH03FallbackNametag(raw: bytes, length: int) -> Optional[str]:
+    if length > 57 or any(raw[length:]):
+        raise ValueError("Invalid PoDD fallback nametag storage")
+    value = raw[:length]
+    if not value:
+        return None
+    if (
+        value.startswith(b" ")
+        or value.endswith(b" ")
+        or b"  " in value
+        or any(byte < 0x20 or byte > 0x7E for byte in value)
+    ):
+        raise ValueError("Invalid PoDD fallback nametag")
+
+    lines = 1
+    line_size = 0
+    for word in value.split(b" "):
+        if len(word) > 28:
+            raise ValueError("PoDD fallback nametag does not fit")
+        required = len(word) if line_size == 0 else line_size + 1 + len(word)
+        if required > 28:
+            lines += 1
+            line_size = len(word)
+            if lines > 2:
+                raise ValueError("PoDD fallback nametag does not fit")
+        else:
+            line_size = required
+    return value.decode("ascii")
+
+
+def _TH03RoundSplits(replay):
+    if replay.summary.round_reached_count > len(replay.summary.round_splits):
+        raise ValueError("Invalid PoDD round split count")
+    return replay.summary.round_splits[: replay.summary.round_reached_count]
+
+
+def _TH03LatestRoundSplit(round_splits, stage: int):
+    matching_splits = [
+        split for split in round_splits if (split.stage_round & 0x0F) == stage
+    ]
+    if not matching_splits:
+        return None
+    return max(matching_splits, key=lambda split: split.stage_round >> 4)
+
+
+def _TH03StoryStageLives(replay) -> list[Optional[int]]:
+    """Return exact end-of-stage stock from the next stage checkpoint.
+
+    The first checkpoint for the following stage contains the stock left after
+    the previous stage, including score extends and losses. The header contains
+    the same authoritative value for the final reached stage, including an
+    unfinished stage ended through the pause menu.
+    """
+
+    first_checkpoint_by_stage = {}
+    for index in range(replay.summary.checkpoint_count):
+        stage_round = replay.summary.checkpoint_stage_round[index]
+        stage = stage_round & 0x0F
+        checkpoint = replay.checkpoints[index]
+        first_checkpoint_by_stage.setdefault(stage, checkpoint)
+
+    stage_lives = []
+    for stage in range(replay.stage_reached_count):
+        if stage == (replay.stage_reached_count - 1):
+            lives = replay.final_story_lives
+        else:
+            next_stage = first_checkpoint_by_stage.get(stage + 1)
+            lives = next_stage.snapshot.story_lives if next_stage else None
+
+        if lives == _TH03_SUMMARY_UNKNOWN:
+            lives = None
+        stage_lives.append(lives)
+
+    return stage_lives
+
+
+def _TH03Validate(replay) -> None:
+    if (replay.flags & (_TH03_FLAG_RLE_INPUT | _TH03_FLAG_CHARGE_INPUT)) != (
+        _TH03_FLAG_RLE_INPUT | _TH03_FLAG_CHARGE_INPUT
+    ) or replay.flags & ~_TH03_FLAGS_KNOWN:
+        raise ValueError("Unsupported PoDD input encoding")
+    if replay.status != 2:
+        raise ValueError("PoDD replay was not finalized")
+    if replay.end_reason > 6:
+        raise ValueError("Invalid PoDD replay end reason")
+    if replay.game_mode not in (
+        _TH03_GAME_MODE_STORY,
+        _TH03_GAME_MODE_VS_1P_CPU,
+        _TH03_GAME_MODE_VS_1P_2P,
+        _TH03_GAME_MODE_VS_CPU_CPU,
+    ):
+        raise ValueError("Unsupported PoDD game mode")
+
+    if replay.flags & _TH03_FLAG_PRACTICE:
+        raise UnsupportedReplayError("PoDD Practice replays are not supported.")
+    if replay.game_mode == _TH03_GAME_MODE_VS_CPU_CPU:
+        raise UnsupportedReplayError("PoDD CPU vs CPU replays are not supported.")
+    if replay.rank > 3 or replay.key_mode > 2:
+        raise ValueError("Invalid PoDD game settings")
+    if replay.is_cpu_p1 > 1 or replay.is_cpu_p2 > 1 or replay.autofire > 3:
+        raise ValueError("Invalid PoDD player settings")
+    expected_cpu = (0, 0) if replay.game_mode == _TH03_GAME_MODE_VS_1P_2P else (0, 1)
+    if (replay.is_cpu_p1, replay.is_cpu_p2) != expected_cpu:
+        raise ValueError("PoDD CPU flags disagree with the game mode")
+    if replay.sample_count == 0 or replay.input_size == 0:
+        raise ValueError("Empty PoDD replay")
+    if replay.stage_reached_count > 9 or (
+        replay.game_mode != _TH03_GAME_MODE_STORY and replay.stage_reached_count != 0
+    ):
+        raise ValueError("Invalid PoDD stage count")
+    if replay.game_mode == _TH03_GAME_MODE_STORY and replay.story_stage >= 9:
+        raise ValueError("Invalid PoDD initial Story stage")
+
+    netplay = bool(replay.recording_flags & _TH03_RECORDING_FLAG_NETPLAY)
+    if replay.ruleset != 0 or replay.recording_flags & ~_TH03_RECORDING_FLAG_NETPLAY:
+        raise ValueError("Invalid PoDD V14 rules metadata")
+    if replay.recorder_role > 2 or replay.recorder_source > 3:
+        raise ValueError("Invalid PoDD V14 recorder metadata")
+    if netplay != bool(replay.recorder_role):
+        raise ValueError("Inconsistent PoDD V14 netplay ownership")
+    if netplay and replay.game_mode != _TH03_GAME_MODE_VS_1P_2P:
+        raise ValueError("Invalid PoDD V14 netplay game mode")
+    _TH03FallbackNametag(replay.player_one_nametag, replay.player_one_nametag_length)
+    _TH03FallbackNametag(replay.player_two_nametag, replay.player_two_nametag_length)
+    if replay.summary_flags != _TH03_SUMMARY_FLAGS:
+        raise ValueError("Outdated PoDD replay summary")
+    if replay.summary.flags != _TH03_SUMMARY_FLAGS:
+        raise ValueError("Outdated PoDD round summary")
+    if replay.summary.slow_frames > replay.summary.timed_frames:
+        raise ValueError("Invalid PoDD slowdown counters")
+    if replay.final_route != _TH03_SUMMARY_UNKNOWN and replay.final_route > 2:
+        raise ValueError("Invalid PoDD final route")
+    if (
+        replay.final_game_mode != _TH03_SUMMARY_UNKNOWN
+        and replay.final_game_mode
+        not in (
+            _TH03_GAME_MODE_STORY,
+            _TH03_GAME_MODE_VS_1P_CPU,
+            _TH03_GAME_MODE_VS_1P_2P,
+            _TH03_GAME_MODE_VS_CPU_CPU,
+        )
+    ):
+        raise ValueError("Invalid PoDD final game mode")
+    if (
+        replay.final_story_stage != _TH03_SUMMARY_UNKNOWN
+        and replay.final_story_stage > 9
+    ):
+        raise ValueError("Invalid PoDD final Story stage")
+    if replay.final_winner != _TH03_SUMMARY_UNKNOWN and replay.final_winner > 1:
+        raise ValueError("Invalid PoDD final winner")
+    if replay.game_mode == _TH03_GAME_MODE_STORY:
+        checkpoint_capacity = 15
+    else:
+        checkpoint_capacity = 3
+
+    expected_input_offset = _TH03_HEADER_SIZE + (
+        checkpoint_capacity * _TH03_CHECKPOINT_SIZE
+    )
+    if replay.input_offset != expected_input_offset:
+        raise ValueError("Invalid PoDD input offset")
+    if len(replay.checkpoints) != checkpoint_capacity:
+        raise ValueError("Invalid PoDD checkpoint reservation")
+    if not 1 <= replay.summary.checkpoint_count <= checkpoint_capacity:
+        raise ValueError("Invalid PoDD checkpoint count")
+    if replay.checkpoints[0].snapshot.autofire != replay.autofire:
+        raise ValueError("Inconsistent PoDD autofire setting")
+
+    _TH03UnpackPlaychar(replay.playchar_p1)
+    _TH03UnpackPlaychar(replay.playchar_p2)
+    _TH03UnpackScore(replay.final_score)
+    if any(replay.name) and any(byte not in _TH03_NAME_BYTES for byte in replay.name):
+        raise ValueError("Invalid PoDD replay name")
+
+
+def _Parse03(rep_raw):
+    if rep_raw[:8] in (b"T3RPLY11", b"T3RPLY12", b"T3RPLY13"):
+        raise UnsupportedReplayError(_TH03_OLD_FORMAT_MESSAGE)
+    if rep_raw[:8] != b"T3RPLY14":
+        raise ValueError("Unsupported PoDD replay version")
+    replay = th03_v14.Th03V14.from_bytes(rep_raw)
+    _TH03Validate(replay)
+
+    round_splits = _TH03RoundSplits(replay)
+    p1_shot = _TH03UnpackPlaychar(replay.playchar_p1)
+    p2_shot = _TH03UnpackPlaychar(replay.playchar_p2)
+    final_score = _TH03UnpackScore(replay.final_score)
+    netplay = bool(replay.recording_flags & _TH03_RECORDING_FLAG_NETPLAY)
+    stages = []
+
+    if replay.game_mode == _TH03_GAME_MODE_STORY:
+        replay_type = game_ids.ReplayTypes.FULL_GAME
+        stage_lives = _TH03StoryStageLives(replay)
+        for stage_index in range(replay.stage_reached_count):
+            opponent = _TH03UnpackPlaychar(replay.story.stage_opponents[stage_index])
+            round_split = _TH03LatestRoundSplit(round_splits, stage_index)
+            stages.append(
+                ReplayStage(
+                    stage=stage_index + 1,
+                    score=_TH03UnpackScore(replay.story.stage_scores[stage_index]),
+                    lives=stage_lives[stage_index],
+                    th03_player_cpu=bool(replay.is_cpu_p1),
+                    th03_opponent_cpu=bool(replay.is_cpu_p2),
+                    th03_opponent_shot=opponent,
+                    th03_opponent_score=(
+                        _TH03UnpackScore(round_split.score_p2)
+                        if round_split is not None
+                        else None
+                    ),
+                )
+            )
+    else:
+        replay_type = game_ids.ReplayTypes.PVP
+        round_split = _TH03LatestRoundSplit(round_splits, 0x0F)
+        p1_score = (
+            _TH03UnpackScore(round_split.score_p1)
+            if round_split is not None
+            else final_score
+        )
+        p2_score = (
+            _TH03UnpackScore(round_split.score_p2) if round_split is not None else None
+        )
+
+        local_is_p2 = netplay and replay.recorder_role == 2
+        local_shot = p2_shot if local_is_p2 else p1_shot
+        opponent_shot = p1_shot if local_is_p2 else p2_shot
+        local_score = p2_score if local_is_p2 else p1_score
+        opponent_score = p1_score if local_is_p2 else p2_score
+        local_cpu = replay.is_cpu_p2 if local_is_p2 else replay.is_cpu_p1
+        opponent_cpu = replay.is_cpu_p1 if local_is_p2 else replay.is_cpu_p2
+        stages.append(
+            ReplayStage(
+                stage=1,
+                score=local_score,
+                th03_player_cpu=bool(local_cpu),
+                th03_opponent_cpu=bool(opponent_cpu),
+                th03_opponent_shot=opponent_shot,
+                th03_opponent_score=opponent_score,
+            )
+        )
+
+        p1_shot = local_shot
+        if round_split is not None:
+            final_score = local_score
+
+    name = replay.name.decode("ascii").rstrip() if any(replay.name) else ""
+    misses = None if replay.final_misses == _TH03_SCORE_UNKNOWN else replay.final_misses
+    return ReplayInfo(
+        game=game_ids.GameIDs.TH03,
+        shot=p1_shot,
+        difficulty=replay.rank,
+        score=final_score,
+        timestamp=_TH03ParseDosDate(replay.dos_date),
+        name=name,
+        replay_type=replay_type,
+        stages=stages,
+        slowdown=(
+            (replay.summary.slow_frames * 100 / replay.summary.timed_frames)
+            if replay.summary.timed_frames
+            else None
+        ),
+        miss_count=misses,
+        is_clear=(
+            replay.end_reason == _TH03_END_REASON_COMPLETE
+            if replay.game_mode == _TH03_GAME_MODE_STORY
+            else None
+        ),
+        th03_ruleset=replay.ruleset,
+        th03_is_netplay=netplay,
+        th03_recorder_role=replay.recorder_role,
+        th03_recorder_source=replay.recorder_source,
+        th03_p1_uuid=_TH03Uuid(replay.player_one_uuid),
+        th03_p2_uuid=_TH03Uuid(replay.player_two_uuid),
+        th03_match_id=_TH03Uuid(replay.match_id),
+        th03_p1_name=_TH03FallbackNametag(
+            replay.player_one_nametag, replay.player_one_nametag_length
+        ),
+        th03_p2_name=_TH03FallbackNametag(
+            replay.player_two_nametag, replay.player_two_nametag_length
+        ),
+    )
 
 
 # piv is stored with extra precision, we trunctate the value to what is shown ingame
@@ -1296,7 +1668,9 @@ def Parse(replay) -> ReplayInfo:
     gamecode = replay[:4]
 
     try:
-        if gamecode == b"T6RP":
+        if gamecode == b"T3RP":
+            return _Parse03(replay)
+        elif gamecode == b"T6RP":
             return _Parse06(replay)
         elif gamecode == b"T7RP":
             return _Parse07(replay)

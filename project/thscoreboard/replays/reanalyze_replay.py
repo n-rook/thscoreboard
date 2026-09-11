@@ -138,6 +138,13 @@ def _Reanalyze(replay_id: int, recorder: _Recorder) -> str:
             seen_stages.add(replay_file_stage_info.stage)
             matching_stage = matching_stages[0]
             matching_stage_to_update = copy.deepcopy(matching_stage)
+            if replay_info.game == game_ids.GameIDs.TH03:
+                matching_stage_to_update.th03_opponent_shot = (
+                    models.Shot.objects.select_related("game").get(
+                        game=game_ids.GameIDs.TH03,
+                        shot_id=replay_file_stage_info.th03_opponent_shot,
+                    )
+                )
             matching_stage_to_update.SetFromReplayStageInfo(replay_file_stage_info)
             recorder.Change(stage_name, matching_stage, matching_stage_to_update)
         else:
@@ -149,6 +156,13 @@ def _Reanalyze(replay_id: int, recorder: _Recorder) -> str:
                 new_stage.th09_p2_shot = models.Shot.objects.select_related("game").get(
                     game=game_ids.GameIDs.TH09,
                     shot_id=replay_file_stage_info.th09_p2_shot,
+                )
+            elif replay_info.game == game_ids.GameIDs.TH03:
+                new_stage.th03_opponent_shot = models.Shot.objects.select_related(
+                    "game"
+                ).get(
+                    game=game_ids.GameIDs.TH03,
+                    shot_id=replay_file_stage_info.th03_opponent_shot,
                 )
             new_stage.SetFromReplayStageInfo(replay_file_stage_info)
             recorder.New(stage_name, new_stage)

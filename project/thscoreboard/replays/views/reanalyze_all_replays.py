@@ -32,7 +32,7 @@ def _select_next_replays_with_files(pagination_token, end_token=None):
         q.filter(id__lte=end_token)
     return (
         q.select_related("shot", "shot__game")
-        .filter(shot__game__has_replays=True)
+        .filter(replayfile__isnull=False)
         .order_by("id")[:_BATCH_SIZE]
     )
 

@@ -11,6 +11,26 @@ from replays import models
 #       depending on whether it is relevant to show that field
 #   eg. life_pieces will almost always be False as displaying it is integrated into Lives
 
+_table_fields_th03 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "lives": True,
+        "th03_opponent_shot": True,
+        "th03_opponent_score": True,
+    }
+)
+
+_table_fields_th03_PVP = immutabledict(
+    {
+        "stage": False,
+        "score": True,
+        "lives": False,
+        "th03_opponent_shot": True,
+        "th03_opponent_score": True,
+    }
+)
+
 _table_fields_th06 = immutabledict(
     {
         "stage": True,
@@ -430,6 +450,7 @@ _table_fields_alco = immutabledict(
 _game_fields = immutabledict(
     {
         "th01": None,
+        "th03": _table_fields_th03,
         "th05": None,
         "th06": _table_fields_th06,
         "th07": _table_fields_th07,
@@ -452,6 +473,7 @@ _game_fields = immutabledict(
 _game_fields_PVP = immutabledict(
     {
         "th01": None,
+        "th03": _table_fields_th03_PVP,
         "th05": None,
         "th06": None,
         "th07": None,
@@ -634,6 +656,8 @@ def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
     if game_id == "th09":
         if stage == 10:
             return FORMAT_EXTRA
+    elif game_id == "th03":
+        return str(stage)
     elif game_id == "th07" and stage == 8:
         return FORMAT_PHANTASM
     elif game_id == "th128":
@@ -674,6 +698,8 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
         stage.bombs = GetFormatBombs(game_id, stage.bombs, stage.bomb_pieces)
         if game_id == game_ids.GameIDs.TH09:
             stage.th09_p2_shotFormat = stage.th09_p2_shot.GetName()
+        elif game_id == game_ids.GameIDs.TH03:
+            stage.th03_opponent_shotFormat = stage.th03_opponent_shot.GetName()
 
         if stage.th128_motivation is None:
             stage.th128_motivation = ""
@@ -742,6 +768,8 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
             stage.th09_p2_cpu = ""
         if stage.th09_p2_score is None:
             stage.th09_p2_score = ""
+        if stage.th03_opponent_score is None:
+            stage.th03_opponent_score = ""
         if stage.extends is None:
             stage.extends = ""
 

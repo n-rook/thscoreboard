@@ -188,6 +188,58 @@
                     <td>{{ replay.name }}</td>
                 </tr>
                 {% endif %}
+                {% if show_th03_cpu %}
+                <tr>
+                    <td>{% translate "Player CPU?" %}</td>
+                    <td>
+                        {% if th03_player_cpu %}
+                            {% translate "Yes" %}
+                        {% else %}
+                            {% translate "No" %}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{% translate "Opponent CPU?" %}</td>
+                    <td>
+                        {% if th03_opponent_cpu %}
+                            {% translate "Yes" %}
+                        {% else %}
+                            {% translate "No" %}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endif %}
+                {% if th03_ruleset_name %}
+                <tr>
+                    <td>{% translate "Ruleset" %}</td>
+                    <td>{{ th03_ruleset_name }}</td>
+                </tr>
+                {% endif %}
+                {% if show_th03_netplay %}
+                <tr>
+                    <td>{% translate "Netplay?" %}</td>
+                    <td>
+                        {% if replay.th03_is_netplay %}
+                            {% translate "Yes" %}
+                        {% else %}
+                            {% translate "No" %}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endif %}
+                {% if replay.th03_p1_name %}
+                <tr>
+                    <td>{% translate "P1 Nametag" %}</td>
+                    <td>{{ replay.th03_p1_name }}</td>
+                </tr>
+                {% endif %}
+                {% if replay.th03_p2_name %}
+                <tr>
+                    <td>{% translate "P2 Nametag" %}</td>
+                    <td>{{ replay.th03_p2_name }}</td>
+                </tr>
+                {% endif %}
                 {% if replay.slowdown is not None %}
                 <tr>
                     <td>{% translate "Slowdown" %}</td>

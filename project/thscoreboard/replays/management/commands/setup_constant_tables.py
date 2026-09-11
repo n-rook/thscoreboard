@@ -325,7 +325,7 @@ th04 = GameConstants(
 
 th03 = GameConstants(
     id="th03",
-    has_replays=False,
+    has_replays=True,
     num_difficulties=5,
     num_scene_game_levels=0,
     num_scene_game_scenes=0,
