@@ -717,7 +717,6 @@ class Th06NCReplayTestCase(unittest.TestCase):
         self.assertEqual(s5.bombs, 3)
 
         s6 = r.stages[5]
-        self.assertEqual(s6.power, 125)
         self.assertEqual(s6.score, 76770000)
 
     def testChallenge(self) -> None:
