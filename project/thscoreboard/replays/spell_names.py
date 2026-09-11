@@ -2588,6 +2588,328 @@ scene_game_spell_names = immutabledict(
                 9: {"en-us": '"Taking Fantasy by Storm"', "ja": "「幻想風靡」"},
             },
         },
+        "th143": {
+            1: {
+                1: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                2: {
+                    "en-us": 'Water Sign "Lunatic Red Slap"',
+                    "ja": "水符「ルナティックレッドスラップ」",
+                },
+                3: {
+                    "en-us": 'Ice Sign "Perfect Glacialist"',
+                    "ja": "氷符「パーフェクトグレーシェリスト」",
+                },
+                4: {
+                    "en-us": 'Tide Sign "Tidal Wave of the Lake"',
+                    "ja": "潮符「湖のタイダルウェイブ」",
+                },
+                5: {
+                    "en-us": 'Ice King "Frost King"',
+                    "ja": "氷王「フロストキング」",
+                },
+                6: {
+                    "en-us": 'Fish Sign "School of Fish"',
+                    "ja": "魚符「スクールオブフィッシュ」",
+                },
+            },
+            2: {
+                1: {
+                    "en-us": 'Scream "Primal Scream"',
+                    "ja": "叫喚「プライマルスクリーム」",
+                },
+                2: {
+                    "en-us": 'Flying Neck "Extreme Long Neck"',
+                    "ja": "飛首「エクストリームロングネック」",
+                },
+                3: {
+                    "en-us": 'Piercing Sound "Piercing Circle"',
+                    "ja": "劈音「ピアッシングサークル」",
+                },
+                4: {
+                    "en-us": 'Glinting Eyes "Hell\'s Ray"',
+                    "ja": "眼光「ヘルズレイ」",
+                },
+                5: {
+                    "en-us": 'Sutra "Infinite Nenbutsu"',
+                    "ja": "御経「無限念仏」",
+                },
+                6: {
+                    "en-us": 'Flying Neck "Twin Rokuro Head"',
+                    "ja": "飛首「ツインロクロヘッド」",
+                },
+            },
+            3: {
+                1: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                2: {
+                    "en-us": 'Full Moon "Full Moon Roar"',
+                    "ja": "満月「フルムーンロア」",
+                },
+                3: {
+                    "en-us": '"20XX: An Afterlife Odyssey"',
+                    "ja": "「２０ＸＸ年　死後の旅」",
+                },
+                4: {
+                    "en-us": 'Regretful Life "Immortality\'s Reckless Sacrifice"',
+                    "ja": "惜命「不死身の捨て身」",
+                },
+                5: {
+                    "en-us": 'Wolf Fang "Bloodthirsty Wolf Fang"',
+                    "ja": "狼牙「血に餓えたウルフファング」",
+                },
+                6: {
+                    "en-us": 'Great Fire "Flower of Edo"',
+                    "ja": "大火「江戸のフラワー」",
+                },
+                7: {
+                    "en-us": '"Fire Bird -Legend of Immortality-"',
+                    "ja": "「火の鳥 ―不死伝説―」",
+                },
+            },
+            4: {
+                1: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                2: {
+                    "en-us": 'Demonify "Excessive Zouhuo Rumo"',
+                    "ja": "入魔「過剰ゾウフォルゥモォ」",
+                },
+                3: {
+                    "en-us": 'Butterfly Sign "Flower, Butterfly, Wind and Moon"',
+                    "ja": "蝶符「花蝶風月」",
+                },
+                4: {
+                    "en-us": 'Poison Nail "Zombie Claw"',
+                    "ja": "毒爪「ゾンビクロー」",
+                },
+                5: {
+                    "en-us": 'Hermit Arts "Wall Runner"',
+                    "ja": "仙術「ウォールランナー」",
+                },
+                6: {
+                    "en-us": 'Cherry Blossom "Lovely Cherry Blossom Blizzard"',
+                    "ja": "桜花「桜吹雪花小町」",
+                },
+                7: {
+                    "en-us": 'Hermit Arts "Wall-Phasing Wormhole"',
+                    "ja": "仙術「壁抜けワームホール」",
+                },
+            },
+            5: {
+                1: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                2: {
+                    "en-us": 'Koto Sign "Ame no Norigoto"',
+                    "ja": "琴符「天の詔琴」",
+                },
+                3: {
+                    "en-us": 'Noise Sign "Biwa of Euphoric Song"',
+                    "ja": "音符「大熱唱琵琶」",
+                },
+                4: {
+                    "en-us": 'Thunder Sign "Den-Den Daiko of Rage"',
+                    "ja": "雷符「怒りのデンデン太鼓」",
+                },
+                5: {
+                    "en-us": 'Elegy "Human and Koto Die Together"',
+                    "ja": "哀歌「人琴ともに亡ぶ」",
+                },
+                6: {
+                    "en-us": 'Score "Score Web"',
+                    "ja": "楽譜「スコアウェブ」",
+                },
+                7: {
+                    "en-us": 'Taiko "Fantastic Woofer"',
+                    "ja": "太鼓「ファンタジックウーファー」",
+                },
+                8: {
+                    "en-us": 'Double Chant "Song of Falling Stars"',
+                    "ja": "両吟「星降る唄」",
+                },
+            },
+            6: {
+                1: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                2: {
+                    "en-us": 'Photography "Quick-Shooting Tengu Scoop"',
+                    "ja": "写真「激撮テングスクープ」",
+                },
+                3: {
+                    "en-us": 'Photography "Full Panoramic Shot"',
+                    "ja": "写真「フルパノラマショット」",
+                },
+                4: {
+                    "en-us": 'Waterfall Sign "Shiraito Falls"',
+                    "ja": "瀑符「シライトフォール」",
+                },
+                5: {
+                    "en-us": 'Fang Sign "Chewing Satisfaction"',
+                    "ja": "牙符「咀嚼玩味」",
+                },
+                6: {
+                    "en-us": 'Waterfall Sign "Kegon Gun"',
+                    "ja": "瀑符「ケゴンガン」",
+                },
+                7: {
+                    "en-us": 'Photography "Secluded Paparazzi"',
+                    "ja": "写真「籠もりパパラッチ」",
+                },
+                8: {
+                    "en-us": '"Instant Shot Journalist"',
+                    "ja": "「瞬撮ジャーナリスト」",
+                },
+            },
+            7: {
+                1: {
+                    "en-us": 'Love Sign "Wide Master"',
+                    "ja": "恋符「ワイドマスター」",
+                },
+                2: {
+                    "en-us": 'Time Sign "Time Stopper Sakuya"',
+                    "ja": "時符「タイムストッパー咲夜」",
+                },
+                3: {
+                    "en-us": 'Light Sign "Light Flash of the Netherworld"',
+                    "ja": "光符「冥府光芒一閃」",
+                },
+                4: {
+                    "en-us": 'Snake Sign "Bind Snake Come On"',
+                    "ja": "蛇符「バインドスネークカモン」",
+                },
+                5: {
+                    "en-us": 'Love Sign "Machine Gun Spark"',
+                    "ja": "恋符「マシンガンスパーク」",
+                },
+                6: {
+                    "en-us": 'Time Sign "Changeling Magic"',
+                    "ja": "時符「チェンジリングマジック」",
+                },
+                7: {
+                    "en-us": 'Higan Sword "Hacking Slashes of Hell and Paradise"',
+                    "ja": "彼岸剣「地獄極楽滅多斬り」",
+                },
+                8: {
+                    "en-us": 'Snake Sign "Green Snake Come On"',
+                    "ja": "蛇符「グリーンスネークカモン」",
+                },
+            },
+            8: {
+                1: {
+                    "en-us": "Non Spell",
+                    "ja": "通常",
+                },
+                2: {
+                    "en-us": 'Mikuji "Rule Violation Barrier"',
+                    "ja": "神籤「反則結界」",
+                },
+                3: {
+                    "en-us": '"If the Cuckoo Does Not Sing, Wait For It to Cry"',
+                    "ja": "「鳴かぬなら泣くまで待とう時鳥」",
+                },
+                4: {
+                    "en-us": '"Inchlings\' Hell"',
+                    "ja": "「小人の地獄」",
+                },
+                5: {
+                    "en-us": '"Persuasion Needle"',
+                    "ja": "「パスウェイジョンニードル」",
+                },
+                6: {
+                    "en-us": '"Humans Are Nice!"',
+                    "ja": "「にんげんって良いな」",
+                },
+                7: {
+                    "en-us": 'Shining Needle "Oni-Slaying, Eye-Stabbing Needle"',
+                    "ja": "輝針「鬼ごろし両目突きの針」",
+                },
+            },
+            9: {
+                1: {
+                    "en-us": 'Onbashira "Rising Onbashira"',
+                    "ja": "御柱「ライジングオンバシラ」",
+                },
+                2: {
+                    "en-us": 'Green Stone "Jade Break"',
+                    "ja": "緑石「ジェイドブレイク」",
+                },
+                3: {
+                    "en-us": 'Old Boat "Ancient Ship"',
+                    "ja": "古舟「エンシェントシップ」",
+                },
+                4: {
+                    "en-us": 'Oni Crowd "Imp Swarm"',
+                    "ja": "鬼群「インプスウォーム」",
+                },
+                5: {
+                    "en-us": '"Sacred Authority of the Gods"',
+                    "ja": "「神の御威光」",
+                },
+                6: {
+                    "en-us": 'Frog Sign "Bloody Mound of Red Frogs"',
+                    "ja": "蛙符「血塗られた赤蛙塚」",
+                },
+                7: {
+                    "en-us": 'Heat Dragon "Blazing Dragon Veins"',
+                    "ja": "熱龍「火焔龍脈」",
+                },
+                8: {
+                    "en-us": 'Oni Crowd "Hundred Oni Kaburo"',
+                    "ja": "鬼群「百鬼禿童」",
+                },
+            },
+            10: {
+                1: {
+                    "en-us": '"Binding Laws of Hari"',
+                    "ja": "「ハリの制縛」",
+                },
+                2: {
+                    "en-us": '"My Way is Truly That of Heaven!"',
+                    "ja": "「我こそが天道なり」",
+                },
+                3: {
+                    "en-us": '"Sky of Scarlet Perception of All Youkaikind"',
+                    "ja": "「全妖怪の緋想天」",
+                },
+                4: {
+                    "en-us": '"Fitful Nightmare"',
+                    "ja": "「フィットフルナイトメア」",
+                },
+                5: {
+                    "en-us": '"Impossible Danmaku Barrier"',
+                    "ja": "「不可能弾幕結界」",
+                },
+                6: {
+                    "en-us": '"Eyes of Brahma"',
+                    "ja": "「ブラフマーの瞳」",
+                },
+                7: {
+                    "en-us": '"Seventeen-Article Constitution Bombs"',
+                    "ja": "「十七条の憲法爆弾」",
+                },
+                8: {
+                    "en-us": '"Kashima Protection"',
+                    "ja": "「鹿島鎮護」",
+                },
+                9: {
+                    "en-us": '"Duck, Duck, Bat!"',
+                    "ja": "「きゅうけつ鬼ごっこ」",
+                },
+                10: {
+                    "en-us": '"Casebook of Luck, Resilience and Perseverance"',
+                    "ja": "「運鈍根の捕物帖」",
+                },
+            },
+        },
     }
 )
 
