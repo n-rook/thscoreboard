@@ -34,6 +34,61 @@ _table_fields_th06 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
+    }
+)
+
+_table_fields_th06nc = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": False,
+        "graze": False,
+        "point_items": False,
+        "power": True,
+        "lives": True,
+        "bombs": True,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+        "misses": False,
+    }
+)
+
+_table_fields_th06nc_challenge = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": False,
+        "graze": False,
+        "point_items": False,
+        "power": True,
+        "lives": False,
+        "bombs": False,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+        "misses": True,
     }
 )
 
@@ -60,6 +115,7 @@ _table_fields_th07 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -86,6 +142,7 @@ _table_fields_th08 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -112,6 +169,7 @@ _table_fields_th09 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -138,6 +196,7 @@ _table_fields_th09_PVP = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -164,6 +223,7 @@ _table_fields_th10 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -190,6 +250,7 @@ _table_fields_th11 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -216,6 +277,7 @@ _table_fields_th12 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -268,6 +330,7 @@ _table_fields_th14 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -294,6 +357,7 @@ _table_fields_th15 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -320,6 +384,7 @@ _table_fields_th16 = immutabledict(
         "th13_trance": False,
         "th16_season_power": True,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -346,6 +411,7 @@ _table_fields_th17 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -372,6 +438,7 @@ _table_fields_th18 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -398,6 +465,7 @@ _table_fields_th128 = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -424,6 +492,7 @@ _table_fields_alco = immutabledict(
         "th13_trance": False,
         "th16_season_power": False,
         "extends": False,
+        "misses": False,
     }
 )
 
@@ -432,6 +501,7 @@ _game_fields = immutabledict(
         "th01": None,
         "th05": None,
         "th06": _table_fields_th06,
+        "th06nc": _table_fields_th06nc,
         "th07": _table_fields_th07,
         "th08": _table_fields_th08,
         "th09": _table_fields_th09,
@@ -454,9 +524,33 @@ _game_fields_PVP = immutabledict(
         "th01": None,
         "th05": None,
         "th06": None,
+        "th06nc": None,
         "th07": None,
         "th08": None,
         "th09": _table_fields_th09_PVP,
+        "th10": None,
+        "th11": None,
+        "th12": None,
+        "th128": None,
+        "th13": None,
+        "th14": None,
+        "th15": None,
+        "th16": None,
+        "th17": None,
+        "th18": None,
+        "alco": None,
+    }
+)
+
+_game_fields_nc_challenge = immutabledict(
+    {
+        "th01": None,
+        "th05": None,
+        "th06": None,
+        "th06nc": _table_fields_th06nc_challenge,
+        "th07": None,
+        "th08": None,
+        "th09": None,
         "th10": None,
         "th11": None,
         "th12": None,
@@ -477,7 +571,12 @@ def GetFormatPower(
 ) -> str:
     if power is None:
         return ""
-    if game_id in (game_ids.GameIDs.TH06, game_ids.GameIDs.TH07, game_ids.GameIDs.TH08):
+    if game_id in (
+        game_ids.GameIDs.TH06,
+        game_ids.GameIDs.TH06NC,
+        game_ids.GameIDs.TH07,
+        game_ids.GameIDs.TH08,
+    ):
         return str(power)
     if game_id == game_ids.GameIDs.TH11 and shot == "MarisaA":
         return "%.2f" % round(float(power) / 12, ndigits=2)
@@ -509,6 +608,7 @@ _life_pieces = immutabledict(
         "th04": None,
         "th05": None,
         "th06": None,
+        "th06nc": None,
         "th07": None,
         "th08": None,
         "th09": None,
@@ -535,6 +635,7 @@ _bomb_pieces = immutabledict(
         "th04": None,
         "th05": None,
         "th06": None,
+        "th06nc": None,
         "th07": None,
         "th08": None,
         "th09": None,
@@ -605,6 +706,9 @@ def GetGameField(gameid: str, replay_type: game_ids.ReplayTypes):
     if replay_type is game_ids.ReplayTypes.PVP:
         if gameid in _game_fields_PVP:
             return _game_fields_PVP[gameid]
+    elif replay_type is game_ids.ReplayTypes.NC_CHALLENGE:
+        if gameid in _game_fields_nc_challenge:
+            return _game_fields_nc_challenge[gameid]
     else:
         if gameid in _game_fields:
             return _game_fields[gameid]
@@ -744,6 +848,8 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
             stage.th09_p2_score = ""
         if stage.extends is None:
             stage.extends = ""
+        if stage.misses is None:
+            stage.misses = ""
 
     return new_stages
 

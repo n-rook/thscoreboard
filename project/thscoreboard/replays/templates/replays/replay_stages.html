@@ -63,6 +63,9 @@
             {% if table_fields.th16_season_power %}
             <th>{% translate "Season Power" %}</th>
             {% endif %}
+            {% if table_fields.misses %}
+            <th>{% translate "Misses" %}</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -127,6 +130,9 @@
             {% endif %}
             {% if table_fields.th16_season_power %}
             <td>{{stage.th16_season_power}}</td>
+            {% endif %}
+            {% if table_fields.misses %}
+            <td>{{stage.misses}}</td>
             {% endif %}
         </tr>
     {% endfor %}

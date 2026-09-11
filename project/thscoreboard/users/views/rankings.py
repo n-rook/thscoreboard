@@ -78,7 +78,7 @@ def _get_all_player_rankings_for_games(
 
 
 def _rankings_to_dicts(
-    rankings: list[tuple[Union[str, user_models.User], RankCount]]
+    rankings: list[tuple[Union[str, user_models.User], RankCount]],
 ) -> list[dict]:
     rows = []
     sorted_ranking_items = sorted(

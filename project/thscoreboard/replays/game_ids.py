@@ -15,6 +15,7 @@ class GameIDs:
     TH04 = "th04"
     TH05 = "th05"
     TH06 = "th06"
+    TH06NC = "th06nc"
     TH07 = "th07"
     TH08 = "th08"
     TH09 = "th09"
@@ -40,6 +41,7 @@ class ReplayTypes:
     SPELL_PRACTICE = 3
     PVP = 4
     SCENE_GAME = 5
+    NC_CHALLENGE = 6
 
 
 def GetReplayType(r_type: int):
@@ -53,6 +55,8 @@ def GetReplayType(r_type: int):
         return _("PVP")
     elif r_type == 5:
         return _("Scene Game")
+    elif r_type == 6:
+        return _("New Classic: Challenge")
     return "Bug type"
 
 
@@ -73,7 +77,9 @@ _GAME_NAMES = immutabledict(
         GameIDs.TH01: (
             pgettext_lazy("short game name", "th01"),
             pgettext_lazy("standard game name", "The Highly Responsive to Prayers"),
-            pgettext_lazy("full game name", "東方靈異伝 - The Highly Responsive to Prayers"),
+            pgettext_lazy(
+                "full game name", "東方靈異伝 - The Highly Responsive to Prayers"
+            ),
         ),
         GameIDs.TH02: (
             pgettext_lazy("short game name", "th02"),
@@ -83,7 +89,9 @@ _GAME_NAMES = immutabledict(
         GameIDs.TH03: (
             pgettext_lazy("short game name", "th03"),
             pgettext_lazy("standard game name", "The Phantasmagoria of Dim. Dream"),
-            pgettext_lazy("full game name", "東方夢時空 - The Phantasmagoria of Dim. Dream"),
+            pgettext_lazy(
+                "full game name", "東方夢時空 - The Phantasmagoria of Dim. Dream"
+            ),
         ),
         GameIDs.TH04: (
             pgettext_lazy("short game name", "th04"),
@@ -100,6 +108,16 @@ _GAME_NAMES = immutabledict(
             pgettext_lazy("standard game name", "Embodiment of Scarlet Devil"),
             pgettext_lazy("full game name", "東方紅魔郷 - Embodiment of Scarlet Devil"),
         ),
+        GameIDs.TH06NC: (
+            pgettext_lazy("short game name", "th06nc"),
+            pgettext_lazy(
+                "standard game name", "Embodiment of Scarlet Devil: New Classic"
+            ),
+            pgettext_lazy(
+                "full game name",
+                "東方紅魔郷: New Classic - the Embodiment of Scarlet Devil",
+            ),
+        ),
         GameIDs.TH07: (
             pgettext_lazy("short game name", "th07"),
             pgettext_lazy("standard game name", "Perfect Cherry Blossom"),
@@ -113,7 +131,9 @@ _GAME_NAMES = immutabledict(
         GameIDs.TH09: (
             pgettext_lazy("short game name", "th09"),
             pgettext_lazy("standard game name", "Phantasmagoria of Flower View"),
-            pgettext_lazy("full game name", "東方花映塚 - Phantasmagoria of Flower View"),
+            pgettext_lazy(
+                "full game name", "東方花映塚 - Phantasmagoria of Flower View"
+            ),
         ),
         GameIDs.TH095: (
             pgettext_lazy("short game name", "th095"),
@@ -168,7 +188,9 @@ _GAME_NAMES = immutabledict(
         GameIDs.TH17: (
             pgettext_lazy("short game name", "th17"),
             pgettext_lazy("standard game name", "Wily Beast and Weakest Creature"),
-            pgettext_lazy("full game name", "東方鬼形獣 - Wily Beast and Weakest Creature"),
+            pgettext_lazy(
+                "full game name", "東方鬼形獣 - Wily Beast and Weakest Creature"
+            ),
         ),
         GameIDs.TH18: (
             pgettext_lazy("short game name", "th18"),
@@ -256,6 +278,16 @@ def GetShotName(game_id: str, shot_id: str) -> str:
             return pgettext("th06", "Marisa A")
         elif shot_id == "MarisaB":
             return pgettext("th06", "Marisa B")
+
+    if game_id == GameIDs.TH06NC:
+        if shot_id == "ReimuA":
+            return pgettext("th06nc", "Reimu A")
+        elif shot_id == "ReimuB":
+            return pgettext("th06nc", "Reimu B")
+        elif shot_id == "MarisaA":
+            return pgettext("th06nc", "Marisa A")
+        elif shot_id == "MarisaB":
+            return pgettext("th06nc", "Marisa B")
 
     if game_id == GameIDs.TH07:
         if shot_id == "ReimuA":
@@ -729,6 +761,7 @@ def GetDifficultyName(
         GameIDs.TH04,
         GameIDs.TH05,
         GameIDs.TH06,
+        GameIDs.TH06NC,
         GameIDs.TH07,
         GameIDs.TH08,
         GameIDs.TH09,
@@ -762,6 +795,9 @@ def GetDifficultyName(
             return _("Overdrive")
     if game_id in {GameIDs.ALCO}:
         return _("No difficulty")
+    if game_id in {GameIDs.TH06NC}:
+        if difficulty == 5:
+            return _("No difficulty")
 
     return _("Bug difficulty")
 
@@ -788,6 +824,8 @@ def GetSceneGameLabelName(game_id: str, level: int | None, scene: int | None) ->
 
 def GetRpyGameCode(game_id: str) -> str:
     if game_id == GameIDs.TH06:
+        return "th6"
+    elif game_id == GameIDs.TH06NC:
         return "th6"
     elif game_id == GameIDs.TH07:
         return "th7"
@@ -866,3 +904,10 @@ def HasLives(game_id: str, replay_type: Optional[int] = None) -> bool:
         return False
 
     return True
+
+
+def GetSidebarPrefix(game_id: str) -> str:
+    if game_id in {GameIDs.TH06NC}:
+        return "└"
+    else:
+        return ""

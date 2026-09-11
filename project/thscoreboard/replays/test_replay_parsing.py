@@ -681,3 +681,66 @@ class AlcoReplayTestCase(unittest.TestCase):
         s1end = r.stages[0]
         self.assertEqual(s1end.stage, 1)
         self.assertEqual(s1end.score, 1269907)
+
+
+class Th06CReplayTestCase(unittest.TestCase):
+    def testLunatic(self) -> None:
+        r = ParseTestReplay("th6c_lunatic")
+        self.assertEqual(r.version, "1.03")
+        self.assertEqual(r.score, 70547420)
+
+        s1 = r.stages[0]
+        self.assertEqual(s1.score, 8745000)
+        self.assertEqual(s1.power, 78)
+        self.assertEqual(s1.lives, 2)
+        self.assertEqual(s1.bombs, 3)
+        self.assertEqual(s1.th06_rank, 32)
+
+        s3 = r.stages[2]
+        self.assertEqual(s3.score, 61369280)
+        self.assertEqual(s3.power, 128)
+        self.assertEqual(s3.lives, 4)
+        self.assertEqual(s3.bombs, 3)
+
+
+class Th06NCReplayTestCase(unittest.TestCase):
+    def testSpellPractice(self) -> None:
+        r = ParseTestReplay("th6nc_spell_practice")
+        self.assertEqual(r.game, "th06nc")
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.SPELL_PRACTICE)
+        self.assertEqual(r.spell_card_id, 54)
+        self.assertEqual(r.spell_card_id_format, 55)
+
+    def testNormal(self) -> None:
+        r = ParseTestReplay("th6nc_normal")
+        self.assertEqual(r.difficulty, 1)
+        self.assertEqual(r.score, 76770000)
+
+        s5 = r.stages[4]
+        self.assertEqual(s5.score, 55815400)
+        self.assertEqual(s5.power, 125)
+        self.assertEqual(s5.lives, 2)
+        self.assertEqual(s5.bombs, 3)
+
+        s6 = r.stages[5]
+        self.assertEqual(s6.score, 76770000)
+
+    def testChallenge(self) -> None:
+        r = ParseTestReplay("th6nc_challenge")
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.NC_CHALLENGE)
+        self.assertEqual(r.difficulty, 3)
+        self.assertEqual(r.version, "1.15")
+
+        s2 = r.stages[1]
+        self.assertEqual(s2.score, 33761470)
+        self.assertEqual(s2.misses, -2)
+
+        s4 = r.stages[3]
+        self.assertEqual(s4.power, 125)
+        self.assertEqual(s4.misses, 9)
+
+    def testChallenge2(self) -> None:
+        r = ParseTestReplay("th6nc_challenge_2")
+
+        s5 = r.stages[4]
+        self.assertEqual(s5.misses, 258)

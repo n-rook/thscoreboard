@@ -93,6 +93,9 @@ class Game(models.Model):
         """Get the HTTP path to get a small icon for this game."""
         return f"/static/icons/{self.game_id}.png"
 
+    def GetSidebarPrefix(self):
+        return game_ids.GetSidebarPrefix(self.game_id)
+
 
 class Shot(models.Model):
     """The character selected by the player.
@@ -172,6 +175,9 @@ class ReplayType(models.IntegerChoices):
 
     SCENE_GAME = 5, pgettext_lazy("Replay Type", "Scene Game")
     """Replays of the scene game mode like TH095 or TH143 or etc"""
+
+    NC_CHALLENGE = 6, pgettext_lazy("Replay Type", "New Classic: Challenge")
+    """Replays from the Challenge mode of the New Classic remake games"""
 
 
 class Route(models.Model):
@@ -289,6 +295,12 @@ class Replay(models.Model):
                         spell_card_id__isnull=True,
                         scene_game_level__isnull=False,
                         scene_game_scene__isnull=False,
+                    )
+                    | models.Q(
+                        replay_type=ReplayType.NC_CHALLENGE,
+                        spell_card_id__isnull=True,
+                        scene_game_level__isnull=True,
+                        scene_game_scene__isnull=True,
                     )
                 ),
             ),
@@ -447,6 +459,10 @@ class Replay(models.Model):
     shown on a user's profile.
     """
 
+    version = models.TextField(max_length=6, blank=True, null=True)
+    """The version of the game the replay was played on
+    """
+
     @property
     def lesanae(self):
         """An easter egg."""
@@ -502,6 +518,7 @@ class Replay(models.Model):
         self.slowdown = r.slowdown
         self.scene_game_level = r.scene_game_level
         self.scene_game_scene = r.scene_game_scene
+        self.version = r.version
 
     def SetForeignKeysFromConstantModels(self, c: ReplayConstantModels):
         """Set the shot and route foreign keys on this Replay."""
@@ -698,6 +715,12 @@ class ReplayStage(models.Model):
     th16_season_power = models.IntegerField(blank=True, null=True)
     """Value of the season gauge in TH16"""
 
+    misses = models.IntegerField(blank=True, null=True)
+    """Miss count in Challenge mode replays in TH06NC
+    This is a generic enough field name that I've opted not to specify a game, lest it be reused sometime in the future
+    or we find out that an older game contains this data
+    """
+
     def SetFromReplayStageInfo(self, s: replay_parsing.ReplayStage):
         """Set derived fields on this row from a replay stage.
 
@@ -741,6 +764,7 @@ class ReplayStage(models.Model):
         self.th128_frozen_area = s.th128_frozen_area
         self.th13_trance = s.th13_trance
         self.th16_season_power = s.th16_season_power
+        self.misses = s.misses
 
 
 _REPLAY_FILE_UNIQUE_HASH_CONSTRAINT = "unique_hash"
