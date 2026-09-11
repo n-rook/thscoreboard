@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-11 21:57+1000\n"
+"POT-Creation-Date: 2026-09-11 18:55+0000\n"
 "PO-Revision-Date: 2026-09-11 18:35+0000\n"
 "Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: \n"
@@ -249,8 +249,6 @@ msgid "東方星蓮船 - Undefined Fantastic Object"
 msgstr "東方星蓮船 - Undefined Fantastic Object"
 
 #: replays/game_ids.py:159
-#| msgctxt "short game name"
-#| msgid "th12"
 msgctxt "short game name"
 msgid "th125"
 msgstr "DS"
@@ -815,8 +813,6 @@ msgid "Sanae B"
 msgstr "Sanae B"
 
 #: replays/game_ids.py:462
-#| msgctxt "th09"
-#| msgid "Aya"
 msgctxt "th125"
 msgid "Aya"
 msgstr "Aya"
@@ -901,7 +897,7 @@ msgctxt "th15"
 msgid "Reisen"
 msgstr "Reisen"
 
-#: replays/game_ids.py:506 ./replays/game_ids.py:621
+#: replays/game_ids.py:506 replays/game_ids.py:621
 msgctxt "th16"
 msgid "Reimu"
 msgstr "Reimu"
@@ -926,7 +922,7 @@ msgctxt "th16"
 msgid "Reimu Winter"
 msgstr "Reimu Winter"
 
-#: replays/game_ids.py:516 ./replays/game_ids.py:623
+#: replays/game_ids.py:516 replays/game_ids.py:623
 msgctxt "th16"
 msgid "Cirno"
 msgstr "Cirno"
@@ -951,7 +947,7 @@ msgctxt "th16"
 msgid "Cirno Winter"
 msgstr "Cirno Winter"
 
-#: replays/game_ids.py:526 ./replays/game_ids.py:625
+#: replays/game_ids.py:526 replays/game_ids.py:625
 msgctxt "th16"
 msgid "Aya"
 msgstr "Aya"
@@ -976,7 +972,7 @@ msgctxt "th16"
 msgid "Aya Winter"
 msgstr "Aya Winter"
 
-#: replays/game_ids.py:536 ./replays/game_ids.py:627
+#: replays/game_ids.py:536 replays/game_ids.py:627
 msgctxt "th16"
 msgid "Marisa"
 msgstr "Marisa"
@@ -1317,7 +1313,6 @@ msgid "Ex"
 msgstr "Ex"
 
 #: replays/game_ids.py:732
-#| msgid "Ex"
 msgctxt "th125"
 msgid "Ex"
 msgstr "Ex"
@@ -1355,7 +1350,7 @@ msgstr "Phantasm"
 msgid "Overdrive"
 msgstr "Overdrive"
 
-#: replays/game_ids.py:797 ./replays/game_ids.py:800
+#: replays/game_ids.py:797 replays/game_ids.py:800
 msgid "No difficulty"
 msgstr "No difficulty"
 
@@ -1363,11 +1358,11 @@ msgstr "No difficulty"
 msgid "Bug difficulty"
 msgstr "Bug difficulty"
 
-#: replays/game_ids.py:807 ./replays/game_ids.py:822
+#: replays/game_ids.py:807 replays/game_ids.py:822
 msgid "Bug level and scene"
 msgstr "Bug level and scene"
 
-#: replays/game_ids.py:810 ./replays/game_ids.py:816
+#: replays/game_ids.py:810 replays/game_ids.py:816
 msgid "Ex"
 msgstr "Ex"
 
@@ -3043,11 +3038,11 @@ msgstr "An account has already been registered with this username."
 msgid "An account has already been registered with this email address."
 msgstr "An account has already been registered with this email address."
 
-#: users/forms.py:93 ./users/forms.py:118 ./users/forms.py:131
+#: users/forms.py:93 users/forms.py:118 users/forms.py:131
 msgid "Username"
 msgstr "Username"
 
-#: users/forms.py:95 ./users/templates/users/delete_account.html:29
+#: users/forms.py:95 users/templates/users/delete_account.html:29
 msgid "Password"
 msgstr "Password"
 
