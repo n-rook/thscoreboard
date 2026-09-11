@@ -27,6 +27,7 @@ class GameIDs:
     TH128 = "th128"
     TH13 = "th13"
     TH14 = "th14"
+    TH143 = "th143"
     TH15 = "th15"
     TH16 = "th16"
     TH17 = "th17"
@@ -174,6 +175,11 @@ _GAME_NAMES = immutabledict(
             pgettext_lazy("short game name", "th14"),
             pgettext_lazy("standard game name", "Double Dealing Character"),
             pgettext_lazy("full game name", "東方輝針城 - Double Dealing Character"),
+        ),
+        GameIDs.TH143: (
+            pgettext_lazy("short game name", "th143"),
+            pgettext_lazy("standard game name", "Impossible Spell Card"),
+            pgettext_lazy("full game name", "弾幕アマノジャク - Impossible Spell Card"),
         ),
         GameIDs.TH15: (
             pgettext_lazy("short game name", "th15"),
@@ -491,6 +497,10 @@ def GetShotName(game_id: str, shot_id: str) -> str:
         elif shot_id == "SakuyaB":
             return pgettext("th14", "Sakuya B")
 
+    if game_id == GameIDs.TH143:
+        if shot_id == "Seija":
+            return pgettext("th143", "Seija")
+
     if game_id == GameIDs.TH15:
         if shot_id == "Reimu":
             return pgettext("th15", "Reimu")
@@ -734,6 +744,9 @@ def GetSceneGameLevelName(game_id: str, scene_game_level: int | None) -> str:
             return pgettext("th125", "Sp")
         elif scene_game_level < 13:
             return str(scene_game_level)
+    if game_id == GameIDs.TH143:
+        if scene_game_level <= 10:
+            return str(scene_game_level)
     return "Bug level"
 
 
@@ -746,6 +759,9 @@ def GetSceneGameSceneName(game_id: str, scene_game_scene: int | None) -> str:
             return str(scene_game_scene)
     if game_id == GameIDs.TH125:
         if scene_game_scene <= 9:
+            return str(scene_game_scene)
+    if game_id == GameIDs.TH143:
+        if scene_game_scene <= 10:
             return str(scene_game_scene)
     return "Bug scene"
 
@@ -819,6 +835,8 @@ def GetSceneGameLabelName(game_id: str, level: int | None, scene: int | None) ->
         else:
             level_str = str(level)
         return level_str + "-" + str(scene)
+    if game_id == GameIDs.TH143:
+        return str(level) + "-" + str(scene)
     return _("Bug level and scene")
 
 
