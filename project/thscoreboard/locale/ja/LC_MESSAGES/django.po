@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-09-11 21:57+1000\n"
-"PO-Revision-Date: 2026-09-11 22:04+1000\n"
-"Last-Translator: nrook+admin@nrook.com\n"
+"PO-Revision-Date: 2026-09-11 18:50+0000\n"
+"Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: Japanese (https://app.transifex.com/silent-selene/teams/168285/ja/)\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -264,22 +264,21 @@ msgid "東方星蓮船 - Undefined Fantastic Object"
 msgstr "東方星蓮船　～ Undefined Fantastic Object"
 
 #: replays/game_ids.py:159
-#, fuzzy
 #| msgctxt "short game name"
 #| msgid "th12"
 msgctxt "short game name"
 msgid "th125"
-msgstr "星"
+msgstr "DS"
 
 #: replays/game_ids.py:160
 msgctxt "standard game name"
 msgid "Double Spoiler"
-msgstr ""
+msgstr "ダブルスポイラー"
 
 #: replays/game_ids.py:161
 msgctxt "full game name"
 msgid "Double Spoiler - 東方文花帖"
-msgstr ""
+msgstr "ダブルスポイラー　～ 東方文花帖"
 
 #: replays/game_ids.py:164
 msgctxt "short game name"
@@ -843,7 +842,6 @@ msgid "Sanae B"
 msgstr "蛙符"
 
 #: replays/game_ids.py:462
-#, fuzzy
 #| msgctxt "th09"
 #| msgid "Aya"
 msgctxt "th125"
@@ -853,7 +851,7 @@ msgstr "文"
 #: replays/game_ids.py:464
 msgctxt "th125"
 msgid "Hatate"
-msgstr ""
+msgstr "はたて"
 
 #: replays/game_ids.py:468
 msgctxt "th128"
@@ -1346,7 +1344,6 @@ msgid "Ex"
 msgstr "Ex"
 
 #: replays/game_ids.py:732
-#, fuzzy
 #| msgid "Ex"
 msgctxt "th125"
 msgid "Ex"
@@ -1355,7 +1352,7 @@ msgstr "Ex"
 #: replays/game_ids.py:734
 msgctxt "th125"
 msgid "Sp"
-msgstr ""
+msgstr "Sp"
 
 #: replays/game_ids.py:781
 msgid "Easy"
@@ -1403,7 +1400,7 @@ msgstr "Ex"
 
 #: replays/game_ids.py:818
 msgid "Sp"
-msgstr ""
+msgstr "Sp"
 
 #: replays/models.py:143
 msgctxt "Category"
