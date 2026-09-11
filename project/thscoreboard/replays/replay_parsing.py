@@ -19,6 +19,7 @@ from .kaitai_parsers import th12
 from .kaitai_parsers import th128
 from .kaitai_parsers import th13
 from .kaitai_parsers import th14
+from .kaitai_parsers import th143_encrypted
 from .kaitai_parsers import th15
 from .kaitai_parsers import th16
 from .kaitai_parsers import th17
@@ -1025,6 +1026,42 @@ def _Parse14(rep_raw):
     return r
 
 
+def _Parse143(rep_raw):
+    encrypted_replay = th143_encrypted.Th143Encrypted.from_bytes(rep_raw)
+
+    spell_level = int(encrypted_replay.userdata.level.value)
+    spell_scene = int(encrypted_replay.userdata.scene.value)
+
+    scene_count_per_level = {
+        1: 6,
+        2: 6,
+        3: 7,
+        4: 7,
+        5: 8,
+        6: 8,
+        7: 8,
+        8: 7,
+        9: 8,
+        10: 10,
+    }
+    if spell_level not in scene_count_per_level:
+        raise BadReplayError("Invalid spell level in replay")
+    if spell_scene < 1 or spell_scene > scene_count_per_level[spell_level]:
+        raise BadReplayError("Invalid spell scene in replay")
+
+    return ReplayInfo(
+        game=game_ids.GameIDs.TH143,
+        shot="Seija",
+        score=int(encrypted_replay.userdata.score.value),
+        timestamp=time.strptime(encrypted_replay.userdata.date.value, "%y/%m/%d %H:%M"),
+        name=encrypted_replay.userdata.username.value,
+        replay_type=game_ids.ReplayTypes.SCENE_GAME,
+        scene_game_level=spell_level,
+        scene_game_scene=spell_scene,
+        slowdown=float(encrypted_replay.userdata.slowdown.value),
+    )
+
+
 def _Parse15(rep_raw) -> ReplayInfo:
     header = th_modern.ThModern.from_bytes(rep_raw)
     comp_data = bytearray(header.main.comp_data)
@@ -1454,6 +1491,8 @@ def Parse(replay) -> ReplayInfo:
             # and thus we have to do fuckery to find which one it is
             # fun fact: the games themselves don't test this so if you rename the file you can crash them
             return _DetermineTH13orTH14(replay)
+        elif gamecode == b"t143":
+            return _Parse143(replay)
         elif gamecode == b"t15r":
             return _Parse15(replay)
         elif gamecode == b"t16r":
