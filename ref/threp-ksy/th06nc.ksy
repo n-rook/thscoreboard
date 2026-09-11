@@ -69,6 +69,6 @@ types:
       - id: unknown_2
         size: 3
       - id: misses
-        type: u1
+        type: s1
       - id: unknown_3
         size: 1
