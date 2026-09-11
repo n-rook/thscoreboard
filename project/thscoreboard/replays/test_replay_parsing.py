@@ -696,6 +696,12 @@ class Th06CReplayTestCase(unittest.TestCase):
         self.assertEqual(s1.bombs, 3)
         self.assertEqual(s1.th06_rank, 32)
 
+        s3 = r.stages[2]
+        self.assertEqual(s3.score, 61369280)
+        self.assertEqual(s3.power, 128)
+        self.assertEqual(s3.lives, 4)
+        self.assertEqual(s3.bombs, 3)
+
 
 class Th06NCReplayTestCase(unittest.TestCase):
     def testSpellPractice(self) -> None:
@@ -721,6 +727,7 @@ class Th06NCReplayTestCase(unittest.TestCase):
 
     def testChallenge(self) -> None:
         r = ParseTestReplay("th6nc_challenge")
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.NC_CHALLENGE)
         self.assertEqual(r.difficulty, 3)
         self.assertEqual(r.version, "1.15")
 
