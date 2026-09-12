@@ -101,6 +101,8 @@ def get_filter_options(game: Game) -> list[Filter]:
         return _get_filter_options_th20(game)
     elif game.game_id == game_ids.GameIDs.ALCO:
         return _get_filter_options_alco(game)
+    elif game.game_id == game_ids.GameIDs.TH06NC:
+        return _get_filter_options_th06nc(game)
     else:
         return _get_filter_options_default(game)
 
@@ -124,6 +126,27 @@ def _get_filter_options_th01_th128(game: Game) -> list[Filter]:
     return [
         Filter("Difficulty", all_difficulties),
         Filter("Route", all_routes),
+    ]
+
+
+def _get_filter_options_th06nc(game: Game) -> list[Filter]:
+    all_shots = [shot.GetName() for shot in Shot.objects.filter(game=game.game_id)]
+    all_difficulties = [game.GetDifficultyName(d) for d in range(game.num_difficulties)]
+    return [
+        Filter("Difficulty", all_difficulties),
+        Filter("Shot", all_shots),
+        Filter(
+            "GameMode",
+            [
+                game_ids.GetGameMode(
+                    game_ids.GameIDs.TH06NC, game_ids.ReplayTypes.FULL_GAME
+                ),
+                game_ids.GetGameMode(
+                    game_ids.GameIDs.TH06NC, game_ids.ReplayTypes.NC_CHALLENGE
+                ),
+            ],
+            False,
+        ),
     ]
 
 
@@ -232,7 +255,11 @@ def _get_all_replay_for_game(game_id: str) -> Manager[models.Replay]:
         .filter(category__in=(models.Category.STANDARD, models.Category.TAS))
         .filter(shot__game=game_id)
         .filter(
-            replay_type__in=(models.ReplayType.FULL_GAME, models.ReplayType.SCENE_GAME)
+            replay_type__in=(
+                models.ReplayType.FULL_GAME,
+                models.ReplayType.SCENE_GAME,
+                models.ReplayType.NC_CHALLENGE,
+            )
         )
         .filter(is_listed=True)
         .filter_visible()

@@ -60,6 +60,15 @@ def GetReplayType(r_type: int):
     return "Bug type"
 
 
+def GetGameMode(game_id: str, r_type: str) -> str:
+    if game_id == GameIDs.TH06NC:
+        if r_type == 1:
+            return _("Standard")
+        elif r_type == 6:
+            return _("Challenge")
+    return GetReplayType(r_type)
+
+
 class NameLength(enum.Enum):
     SHORT = 0
     """A short name for a game, like "EoSD"."""
