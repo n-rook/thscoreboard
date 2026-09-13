@@ -59,6 +59,7 @@ class ReplayToJsonConverter:
         if game.game_id in [
             game_ids.GameIDs.TH095,
             game_ids.GameIDs.TH125,
+            game_ids.GameIDs.TH143,
         ]:
             level = replay.scene_game_level
             scene = replay.scene_game_scene
