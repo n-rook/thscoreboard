@@ -74,6 +74,14 @@ class ReplayToJsonConverter:
         }
         json_dict["Upload Date"] = replay.created.strftime("%Y-%m-%d")
         json_dict["Comment"] = replay.GetShortenedComment()
+
+        if game.game_id in [game_ids.GameIDs.TH06NC]:
+            json_dict["GameMode"] = game_ids.GetGameMode(
+                game.game_id, replay.replay_type
+            )
+        else:
+            json_dict["GameMode"] = ""
+
         json_dict["Replay"] = {
             "text": "⬇",
             "url": f"/replays/{game.game_id}/{replay.id}/download",
