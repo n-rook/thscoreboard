@@ -1,17 +1,18 @@
 # This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
+# type: ignore
 
 import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 
 
-if getattr(kaitaistruct, 'API_VERSION', (0, 9)) < (0, 9):
-    raise Exception("Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s" % (kaitaistruct.__version__))
+if getattr(kaitaistruct, 'API_VERSION', (0, 9)) < (0, 11):
+    raise Exception("Incompatible Kaitai Struct Python API: 0.11 or later is required, but you have %s" % (kaitaistruct.__version__))
 
 class Th18(KaitaiStruct):
     def __init__(self, _io, _parent=None, _root=None):
-        self._io = _io
+        super(Th18, self).__init__(_io)
         self._parent = _parent
-        self._root = _root if _root else self
+        self._root = _root or self
         self._read()
 
     def _read(self):
@@ -21,15 +22,24 @@ class Th18(KaitaiStruct):
             self.stages.append(Th18.Stage(self._io, self, self._root))
 
 
+
+    def _fetch_instances(self):
+        pass
+        self.header._fetch_instances()
+        for i in range(len(self.stages)):
+            pass
+            self.stages[i]._fetch_instances()
+
+
     class Header(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            self._io = _io
+            super(Th18.Header, self).__init__(_io)
             self._parent = _parent
-            self._root = _root if _root else self
+            self._root = _root
             self._read()
 
         def _read(self):
-            self.name = (KaitaiStream.bytes_terminate(self._io.read_bytes(16), 0, False)).decode(u"SJIS")
+            self.name = (KaitaiStream.bytes_terminate(self._io.read_bytes(16), 0, False)).decode(u"Shift_JIS")
             self.timestamp = self._io.read_u8le()
             self.score = self._io.read_u4le()
             self.unknown_1 = self._io.read_bytes(136)
@@ -44,11 +54,15 @@ class Th18(KaitaiStruct):
             self.unknown_3 = self._io.read_u4le()
 
 
+        def _fetch_instances(self):
+            pass
+
+
     class Stage(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            self._io = _io
+            super(Th18.Stage, self).__init__(_io)
             self._parent = _parent
-            self._root = _root if _root else self
+            self._root = _root
             self._read()
 
         def _read(self):
@@ -69,11 +83,20 @@ class Th18(KaitaiStruct):
             self.stage_data = self._io.read_bytes(self.len_stage_data)
 
 
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.spellcard_real_times)):
+                pass
+
+            self.stage_data_start._fetch_instances()
+            self.stage_data_end._fetch_instances()
+
+
     class StageData(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            self._io = _io
+            super(Th18.StageData, self).__init__(_io)
             self._parent = _parent
-            self._root = _root if _root else self
+            self._root = _root
             self._read()
 
         def _read(self):
@@ -126,11 +149,26 @@ class Th18(KaitaiStruct):
             self.card_active = self._io.read_u4le()
 
 
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.time_in_stage)):
+                pass
+
+            self.unknown_9._fetch_instances()
+            self.unknown_10._fetch_instances()
+            for i in range(len(self.cards)):
+                pass
+
+            for i in range(len(self.cards_param)):
+                pass
+
+
+
     class Timer(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            self._io = _io
+            super(Th18.Timer, self).__init__(_io)
             self._parent = _parent
-            self._root = _root if _root else self
+            self._root = _root
             self._read()
 
         def _read(self):
@@ -139,6 +177,10 @@ class Th18(KaitaiStruct):
             self.time_f = self._io.read_f4le()
             self.game_speed_ununsed = self._io.read_u4le()
             self.control = self._io.read_u4le()
+
+
+        def _fetch_instances(self):
+            pass
 
 
 
