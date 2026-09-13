@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-11 18:55+0000\n"
-"PO-Revision-Date: 2026-09-11 18:35+0000\n"
+"POT-Creation-Date: 2026-09-13 16:06+0000\n"
+"PO-Revision-Date: 2026-09-13 16:00+0000\n"
 "Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -38,1335 +38,1343 @@ msgstr "Scene Game"
 msgid "New Classic: Challenge"
 msgstr "New Classic: Challenge"
 
-#: replays/game_ids.py:78
+#: replays/game_ids.py:66
+msgid "Standard Mode"
+msgstr "Standard Mode"
+
+#: replays/game_ids.py:68
+msgid "Challenge Mode"
+msgstr "Challenge Mode"
+
+#: replays/game_ids.py:87
 msgctxt "short game name"
 msgid "th01"
 msgstr "HRtP"
 
-#: replays/game_ids.py:79
+#: replays/game_ids.py:88
 msgctxt "standard game name"
 msgid "The Highly Responsive to Prayers"
 msgstr "The Highly Responsive to Prayers"
 
-#: replays/game_ids.py:81
+#: replays/game_ids.py:90
 msgctxt "full game name"
 msgid "東方靈異伝 - The Highly Responsive to Prayers"
 msgstr "東方靈異伝 - The Highly Responsive to Prayers"
 
-#: replays/game_ids.py:85
+#: replays/game_ids.py:94
 msgctxt "short game name"
 msgid "th02"
 msgstr "SoEW"
 
-#: replays/game_ids.py:86
+#: replays/game_ids.py:95
 msgctxt "standard game name"
 msgid "Story of Eastern Wonderland"
 msgstr "Story of Eastern Wonderland"
 
-#: replays/game_ids.py:87
+#: replays/game_ids.py:96
 msgctxt "full game name"
 msgid "東方封魔録 - Story of Eastern Wonderland"
 msgstr "東方封魔録 - Story of Eastern Wonderland"
 
-#: replays/game_ids.py:90
+#: replays/game_ids.py:99
 msgctxt "short game name"
 msgid "th03"
 msgstr "PoDD"
 
-#: replays/game_ids.py:91
+#: replays/game_ids.py:100
 msgctxt "standard game name"
 msgid "The Phantasmagoria of Dim. Dream"
 msgstr "The Phantasmagoria of Dim. Dream"
 
-#: replays/game_ids.py:93
+#: replays/game_ids.py:102
 msgctxt "full game name"
 msgid "東方夢時空 - The Phantasmagoria of Dim. Dream"
 msgstr "東方夢時空 - The Phantasmagoria of Dim. Dream"
 
-#: replays/game_ids.py:97
+#: replays/game_ids.py:106
 msgctxt "short game name"
 msgid "th04"
 msgstr "LLS"
 
-#: replays/game_ids.py:98
+#: replays/game_ids.py:107
 msgctxt "standard game name"
 msgid "Lotus Land Story"
 msgstr "Lotus Land Story"
 
-#: replays/game_ids.py:99
+#: replays/game_ids.py:108
 msgctxt "full game name"
 msgid "東方幻想郷 - Lotus Land Story"
 msgstr "東方幻想郷 - Lotus Land Story"
 
-#: replays/game_ids.py:102
+#: replays/game_ids.py:111
 msgctxt "short game name"
 msgid "th05"
 msgstr "MS"
 
-#: replays/game_ids.py:103
+#: replays/game_ids.py:112
 msgctxt "standard game name"
 msgid "Mystic Square"
 msgstr "Mystic Square"
 
-#: replays/game_ids.py:104
+#: replays/game_ids.py:113
 msgctxt "full game name"
 msgid "東方怪綺談 - Mystic Square"
 msgstr "東方怪綺談 - Mystic Square"
 
-#: replays/game_ids.py:107
+#: replays/game_ids.py:116
 msgctxt "short game name"
 msgid "th06"
 msgstr "EoSD"
 
-#: replays/game_ids.py:108
+#: replays/game_ids.py:117
 msgctxt "standard game name"
 msgid "Embodiment of Scarlet Devil"
 msgstr "Embodiment of Scarlet Devil"
 
-#: replays/game_ids.py:109
+#: replays/game_ids.py:118
 msgctxt "full game name"
 msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
 msgstr "東方紅魔郷 - Embodiment of Scarlet Devil"
 
-#: replays/game_ids.py:112
+#: replays/game_ids.py:121
 msgctxt "short game name"
 msgid "th06nc"
 msgstr "EoSD:NC"
 
-#: replays/game_ids.py:114
+#: replays/game_ids.py:123
 msgctxt "standard game name"
 msgid "Embodiment of Scarlet Devil: New Classic"
 msgstr "Embodiment of Scarlet Devil: New Classic"
 
-#: replays/game_ids.py:118
+#: replays/game_ids.py:127
 msgctxt "full game name"
 msgid "東方紅魔郷: New Classic - the Embodiment of Scarlet Devil"
 msgstr "東方紅魔郷: New Classic - Embodiment of Scarlet Devil"
 
-#: replays/game_ids.py:122
+#: replays/game_ids.py:131
 msgctxt "short game name"
 msgid "th07"
 msgstr "PCB"
 
-#: replays/game_ids.py:123
+#: replays/game_ids.py:132
 msgctxt "standard game name"
 msgid "Perfect Cherry Blossom"
 msgstr "Perfect Cherry Blossom"
 
-#: replays/game_ids.py:124
+#: replays/game_ids.py:133
 msgctxt "full game name"
 msgid "東方妖々夢 - Perfect Cherry Blossom"
 msgstr "東方妖々夢 - Perfect Cherry Blossom"
 
-#: replays/game_ids.py:127
+#: replays/game_ids.py:136
 msgctxt "short game name"
 msgid "th08"
 msgstr "IN"
 
-#: replays/game_ids.py:128
+#: replays/game_ids.py:137
 msgctxt "standard game name"
 msgid "Imperishable Night"
 msgstr "Imperishable Night"
 
-#: replays/game_ids.py:129
+#: replays/game_ids.py:138
 msgctxt "full game name"
 msgid "東方永夜抄 - Imperishable Night"
 msgstr "東方永夜抄 - Imperishable Night"
 
-#: replays/game_ids.py:132
+#: replays/game_ids.py:141
 msgctxt "short game name"
 msgid "th09"
 msgstr "PoFV"
 
-#: replays/game_ids.py:133
+#: replays/game_ids.py:142
 msgctxt "standard game name"
 msgid "Phantasmagoria of Flower View"
 msgstr "Phantasmagoria of Flower View"
 
-#: replays/game_ids.py:135
+#: replays/game_ids.py:144
 msgctxt "full game name"
 msgid "東方花映塚 - Phantasmagoria of Flower View"
 msgstr "東方花映塚 - Phantasmagoria of Flower View"
 
-#: replays/game_ids.py:139
+#: replays/game_ids.py:148
 msgctxt "short game name"
 msgid "th095"
 msgstr "StB"
 
-#: replays/game_ids.py:140
+#: replays/game_ids.py:149
 msgctxt "standard game name"
 msgid "Shoot the Bullet"
 msgstr "Shoot the Bullet"
 
-#: replays/game_ids.py:141
+#: replays/game_ids.py:150
 msgctxt "full game name"
 msgid "東方文花帖 - Shoot the Bullet"
 msgstr "東方文花帖 - Shoot the Bullet"
 
-#: replays/game_ids.py:144
+#: replays/game_ids.py:153
 msgctxt "short game name"
 msgid "th10"
 msgstr "MoF"
 
-#: replays/game_ids.py:145
+#: replays/game_ids.py:154
 msgctxt "standard game name"
 msgid "Mountain of Faith"
 msgstr "Mountain of Faith"
 
-#: replays/game_ids.py:146
+#: replays/game_ids.py:155
 msgctxt "full game name"
 msgid "東方風神録 - Mountain of Faith"
 msgstr "東方風神録 - Mountain of Faith"
 
-#: replays/game_ids.py:149
+#: replays/game_ids.py:158
 msgctxt "short game name"
 msgid "th11"
 msgstr "SA"
 
-#: replays/game_ids.py:150
+#: replays/game_ids.py:159
 msgctxt "standard game name"
 msgid "Subterranean Animism"
 msgstr "Subterranean Animism"
 
-#: replays/game_ids.py:151
+#: replays/game_ids.py:160
 msgctxt "full game name"
 msgid "東方地霊殿 - Subterranean Animism"
 msgstr "東方地霊殿 - Subterranean Animism"
 
-#: replays/game_ids.py:154
+#: replays/game_ids.py:163
 msgctxt "short game name"
 msgid "th12"
 msgstr "UFO"
 
-#: replays/game_ids.py:155
+#: replays/game_ids.py:164
 msgctxt "standard game name"
 msgid "Undefined Fantastic Object"
 msgstr "Undefined Fantastic Object"
 
-#: replays/game_ids.py:156
+#: replays/game_ids.py:165
 msgctxt "full game name"
 msgid "東方星蓮船 - Undefined Fantastic Object"
 msgstr "東方星蓮船 - Undefined Fantastic Object"
 
-#: replays/game_ids.py:159
+#: replays/game_ids.py:168
 msgctxt "short game name"
 msgid "th125"
 msgstr "DS"
 
-#: replays/game_ids.py:160
+#: replays/game_ids.py:169
 msgctxt "standard game name"
 msgid "Double Spoiler"
 msgstr "Double Spoiler"
 
-#: replays/game_ids.py:161
+#: replays/game_ids.py:170
 msgctxt "full game name"
 msgid "Double Spoiler - 東方文花帖"
 msgstr "Double Spoiler - 東方文花帖"
 
-#: replays/game_ids.py:164
+#: replays/game_ids.py:173
 msgctxt "short game name"
 msgid "th12.8"
 msgstr "GFW"
 
-#: replays/game_ids.py:165
+#: replays/game_ids.py:174
 msgctxt "standard game name"
 msgid "Great Fairy Wars"
 msgstr "Great Fairy Wars"
 
-#: replays/game_ids.py:166
+#: replays/game_ids.py:175
 msgctxt "full game name"
 msgid "Great Fairy Wars - 東方三月精"
 msgstr "Great Fairy Wars - 東方三月精"
 
-#: replays/game_ids.py:169
+#: replays/game_ids.py:178
 msgctxt "short game name"
 msgid "th13"
 msgstr "TD"
 
-#: replays/game_ids.py:170
+#: replays/game_ids.py:179
 msgctxt "standard game name"
 msgid "Ten Desires"
 msgstr "Ten Desires"
 
-#: replays/game_ids.py:171
+#: replays/game_ids.py:180
 msgctxt "full game name"
 msgid "東方神霊廟 - Ten Desires"
 msgstr "東方神霊廟 - Ten Desires"
 
-#: replays/game_ids.py:174
+#: replays/game_ids.py:183
 msgctxt "short game name"
 msgid "th14"
 msgstr "DDC"
 
-#: replays/game_ids.py:175
+#: replays/game_ids.py:184
 msgctxt "standard game name"
 msgid "Double Dealing Character"
 msgstr "Double Dealing Character"
 
-#: replays/game_ids.py:176
+#: replays/game_ids.py:185
 msgctxt "full game name"
 msgid "東方輝針城 - Double Dealing Character"
 msgstr "東方輝針城 - Double Dealing Character"
 
-#: replays/game_ids.py:179
+#: replays/game_ids.py:188
 msgctxt "short game name"
 msgid "th15"
 msgstr "LoLK"
 
-#: replays/game_ids.py:180
+#: replays/game_ids.py:189
 msgctxt "standard game name"
 msgid "Legacy of Lunatic Kingdom"
 msgstr "Legacy of Lunatic Kingdom"
 
-#: replays/game_ids.py:181
+#: replays/game_ids.py:190
 msgctxt "full game name"
 msgid "東方紺珠伝 - Legacy of Lunatic Kingdom"
 msgstr "東方紺珠伝 - Legacy of Lunatic Kingdom"
 
-#: replays/game_ids.py:184
+#: replays/game_ids.py:193
 msgctxt "short game name"
 msgid "th16"
 msgstr "HSiFS"
 
-#: replays/game_ids.py:185
+#: replays/game_ids.py:194
 msgctxt "standard game name"
 msgid "Hidden Star in Four Seasons"
 msgstr "Hidden Star in Four Seasons"
 
-#: replays/game_ids.py:186
+#: replays/game_ids.py:195
 msgctxt "full game name"
 msgid "東方天空璋 - Hidden Star in Four Seasons"
 msgstr "東方天空璋 - Hidden Star in Four Seasons"
 
-#: replays/game_ids.py:189
+#: replays/game_ids.py:198
 msgctxt "short game name"
 msgid "th17"
 msgstr "WBaWC"
 
-#: replays/game_ids.py:190
+#: replays/game_ids.py:199
 msgctxt "standard game name"
 msgid "Wily Beast and Weakest Creature"
 msgstr "Wily Beast and Weakest Creature"
 
-#: replays/game_ids.py:192
+#: replays/game_ids.py:201
 msgctxt "full game name"
 msgid "東方鬼形獣 - Wily Beast and Weakest Creature"
 msgstr "東方鬼形獣 - Wily Beast and Weakest Creature"
 
-#: replays/game_ids.py:196
+#: replays/game_ids.py:205
 msgctxt "short game name"
 msgid "th18"
 msgstr "UM"
 
-#: replays/game_ids.py:197
+#: replays/game_ids.py:206
 msgctxt "standard game name"
 msgid "Unconnected Marketeers"
 msgstr "Unconnected Marketeers"
 
-#: replays/game_ids.py:198
+#: replays/game_ids.py:207
 msgctxt "full game name"
 msgid "東方虹龍洞 - Unconnected Marketeers"
 msgstr "東方虹龍洞 - Unconnected Marketeers"
 
-#: replays/game_ids.py:201
+#: replays/game_ids.py:210
 msgctxt "short game name"
 msgid "th20"
 msgstr "FW"
 
-#: replays/game_ids.py:202
+#: replays/game_ids.py:211
 msgctxt "standard game name"
 msgid "Fossilized Wonders"
 msgstr "Fossilized Wonders"
 
-#: replays/game_ids.py:203
+#: replays/game_ids.py:212
 msgctxt "full game name"
 msgid "東方錦上京 - Fossilized Wonders"
 msgstr "東方錦上京 - Fossilized Wonders"
 
-#: replays/game_ids.py:206
+#: replays/game_ids.py:215
 msgctxt "short game name"
 msgid "alco"
 msgstr "UB"
 
-#: replays/game_ids.py:207
+#: replays/game_ids.py:216
 msgctxt "standard game name"
 msgid "Uwabami Breakers"
 msgstr "Uwabami Breakers"
 
-#: replays/game_ids.py:208
+#: replays/game_ids.py:217
 msgctxt "full game name"
 msgid "黄昏酒場 - Uwabami Breakers"
 msgstr "黄昏酒場 - Uwabami Breakers"
 
-#: replays/game_ids.py:217
+#: replays/game_ids.py:226
 msgid "Unknown game (bug!)"
 msgstr "Unknown game (bug!)"
 
-#: replays/game_ids.py:223
+#: replays/game_ids.py:232
 msgctxt "th01"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: replays/game_ids.py:226
+#: replays/game_ids.py:235
 msgctxt "th02"
 msgid "Mobility"
 msgstr "Mobility"
 
-#: replays/game_ids.py:228
+#: replays/game_ids.py:237
 msgctxt "th02"
 msgid "Defensive"
 msgstr "Defensive"
 
-#: replays/game_ids.py:230
+#: replays/game_ids.py:239
 msgctxt "th02"
 msgid "Offensive"
 msgstr "Offensive"
 
-#: replays/game_ids.py:234
+#: replays/game_ids.py:243
 msgctxt "th03"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: replays/game_ids.py:236
+#: replays/game_ids.py:245
 msgctxt "th03"
 msgid "Mima"
 msgstr "Mima"
 
-#: replays/game_ids.py:238
+#: replays/game_ids.py:247
 msgctxt "th03"
 msgid "Marisa"
 msgstr "Marisa"
 
-#: replays/game_ids.py:240
+#: replays/game_ids.py:249
 msgctxt "th03"
 msgid "Ellen"
 msgstr "Ellen"
 
-#: replays/game_ids.py:242
+#: replays/game_ids.py:251
 msgctxt "th03"
 msgid "Kotohime"
 msgstr "Kotohime"
 
-#: replays/game_ids.py:244
+#: replays/game_ids.py:253
 msgctxt "th03"
 msgid "Kana"
 msgstr "Kana"
 
-#: replays/game_ids.py:246
+#: replays/game_ids.py:255
 msgctxt "th03"
 msgid "Rikako"
 msgstr "Rikako"
 
-#: replays/game_ids.py:248
+#: replays/game_ids.py:257
 msgctxt "th03"
 msgid "Chiyuri"
 msgstr "Chiyuri"
 
-#: replays/game_ids.py:250
+#: replays/game_ids.py:259
 msgctxt "th03"
 msgid "Yumemi"
 msgstr "Yumemi"
 
-#: replays/game_ids.py:254
+#: replays/game_ids.py:263
 msgctxt "th04"
 msgid "Reimu A"
 msgstr "Reimu A"
 
-#: replays/game_ids.py:256
+#: replays/game_ids.py:265
 msgctxt "th04"
 msgid "Reimu B"
 msgstr "Reimu B"
 
-#: replays/game_ids.py:258
+#: replays/game_ids.py:267
 msgctxt "th04"
 msgid "Marisa A"
 msgstr "Marisa A"
 
-#: replays/game_ids.py:260
+#: replays/game_ids.py:269
 msgctxt "th04"
 msgid "Marisa B"
 msgstr "Marisa B"
 
-#: replays/game_ids.py:264
+#: replays/game_ids.py:273
 msgctxt "th05"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: replays/game_ids.py:266
+#: replays/game_ids.py:275
 msgctxt "th05"
 msgid "Marisa"
 msgstr "Marisa"
 
-#: replays/game_ids.py:268
+#: replays/game_ids.py:277
 msgctxt "th05"
 msgid "Mima"
 msgstr "Mima"
 
-#: replays/game_ids.py:270
+#: replays/game_ids.py:279
 msgctxt "th05"
 msgid "Yuuka"
 msgstr "Yuuka"
 
-#: replays/game_ids.py:274
+#: replays/game_ids.py:283
 msgctxt "th06"
 msgid "Reimu A"
 msgstr "Reimu A"
 
-#: replays/game_ids.py:276
+#: replays/game_ids.py:285
 msgctxt "th06"
 msgid "Reimu B"
 msgstr "Reimu B"
 
-#: replays/game_ids.py:278
+#: replays/game_ids.py:287
 msgctxt "th06"
 msgid "Marisa A"
 msgstr "Marisa A"
 
-#: replays/game_ids.py:280
+#: replays/game_ids.py:289
 msgctxt "th06"
 msgid "Marisa B"
 msgstr "Marisa B"
 
-#: replays/game_ids.py:284
+#: replays/game_ids.py:293
 msgctxt "th06nc"
 msgid "Reimu A"
 msgstr "Reimu A"
 
-#: replays/game_ids.py:286
+#: replays/game_ids.py:295
 msgctxt "th06nc"
 msgid "Reimu B"
 msgstr "Reimu B"
 
-#: replays/game_ids.py:288
+#: replays/game_ids.py:297
 msgctxt "th06nc"
 msgid "Marisa A"
 msgstr "Marisa A"
 
-#: replays/game_ids.py:290
+#: replays/game_ids.py:299
 msgctxt "th06nc"
 msgid "Marisa B"
 msgstr "Marisa B"
 
-#: replays/game_ids.py:294
+#: replays/game_ids.py:303
 msgctxt "th07"
 msgid "Reimu A"
 msgstr "Reimu A"
 
-#: replays/game_ids.py:296
+#: replays/game_ids.py:305
 msgctxt "th07"
 msgid "Reimu B"
 msgstr "Reimu B"
 
-#: replays/game_ids.py:298
+#: replays/game_ids.py:307
 msgctxt "th07"
 msgid "Marisa A"
 msgstr "Marisa A"
 
-#: replays/game_ids.py:300
+#: replays/game_ids.py:309
 msgctxt "th07"
 msgid "Marisa B"
 msgstr "Marisa B"
 
-#: replays/game_ids.py:302
+#: replays/game_ids.py:311
 msgctxt "th07"
 msgid "Sakuya A"
 msgstr "Sakuya A"
 
-#: replays/game_ids.py:304
+#: replays/game_ids.py:313
 msgctxt "th07"
 msgid "Sakuya B"
 msgstr "Sakuya B"
 
-#: replays/game_ids.py:309
+#: replays/game_ids.py:318
 msgctxt "th08"
 msgid "Reimu & Yukari"
 msgstr "Reimu & Yukari"
 
-#: replays/game_ids.py:311
+#: replays/game_ids.py:320
 msgctxt "th08"
 msgid "Marisa & Alice"
 msgstr "Marisa & Alice"
 
-#: replays/game_ids.py:313
+#: replays/game_ids.py:322
 msgctxt "th08"
 msgid "Sakuya & Remilia"
 msgstr "Sakuya & Remilia"
 
-#: replays/game_ids.py:315
+#: replays/game_ids.py:324
 msgctxt "th08"
 msgid "Youmu & Yuyuko"
 msgstr "Youmu & Yuyuko"
 
-#: replays/game_ids.py:317
+#: replays/game_ids.py:326
 msgctxt "th08"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: replays/game_ids.py:319
+#: replays/game_ids.py:328
 msgctxt "th08"
 msgid "Yukari"
 msgstr "Yukari"
 
-#: replays/game_ids.py:321
+#: replays/game_ids.py:330
 msgctxt "th08"
 msgid "Marisa"
 msgstr "Marisa"
 
-#: replays/game_ids.py:323
+#: replays/game_ids.py:332
 msgctxt "th08"
 msgid "Alice"
 msgstr "Alice"
 
-#: replays/game_ids.py:325
+#: replays/game_ids.py:334
 msgctxt "th08"
 msgid "Sakuya"
 msgstr "Sakuya"
 
-#: replays/game_ids.py:327
+#: replays/game_ids.py:336
 msgctxt "th08"
 msgid "Remilia"
 msgstr "Remilia"
 
-#: replays/game_ids.py:329
+#: replays/game_ids.py:338
 msgctxt "th08"
 msgid "Youmu"
 msgstr "Youmu"
 
-#: replays/game_ids.py:331
+#: replays/game_ids.py:340
 msgctxt "th08"
 msgid "Yuyuko"
 msgstr "Yuyuko"
 
-#: replays/game_ids.py:338
+#: replays/game_ids.py:347
 msgctxt "th09"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: replays/game_ids.py:343
+#: replays/game_ids.py:352
 msgctxt "th09"
 msgid "Marisa"
 msgstr "Marisa"
 
-#: replays/game_ids.py:348
+#: replays/game_ids.py:357
 msgctxt "th09"
 msgid "Sakuya"
 msgstr "Sakuya"
 
-#: replays/game_ids.py:353
+#: replays/game_ids.py:362
 msgctxt "th09"
 msgid "Youmu"
 msgstr "Youmu"
 
-#: replays/game_ids.py:358
+#: replays/game_ids.py:367
 msgctxt "th09"
 msgid "Reisen"
 msgstr "Reisen"
 
-#: replays/game_ids.py:363
+#: replays/game_ids.py:372
 msgctxt "th09"
 msgid "Cirno"
 msgstr "Cirno"
 
-#: replays/game_ids.py:368
+#: replays/game_ids.py:377
 msgctxt "th09"
 msgid "Lyrica"
 msgstr "Lyrica"
 
-#: replays/game_ids.py:373
+#: replays/game_ids.py:382
 msgctxt "th09"
 msgid "Mystia"
 msgstr "Mystia"
 
-#: replays/game_ids.py:378
+#: replays/game_ids.py:387
 msgctxt "th09"
 msgid "Tewi"
 msgstr "Tewi"
 
-#: replays/game_ids.py:383
+#: replays/game_ids.py:392
 msgctxt "th09"
 msgid "Yuuka"
 msgstr "Yuuka"
 
-#: replays/game_ids.py:388
+#: replays/game_ids.py:397
 msgctxt "th09"
 msgid "Aya"
 msgstr "Aya"
 
-#: replays/game_ids.py:393
+#: replays/game_ids.py:402
 msgctxt "th09"
 msgid "Medicine"
 msgstr "Medicine"
 
-#: replays/game_ids.py:398
+#: replays/game_ids.py:407
 msgctxt "th09"
 msgid "Komachi"
 msgstr "Komachi"
 
-#: replays/game_ids.py:403
+#: replays/game_ids.py:412
 msgctxt "th09"
 msgid "Eiki"
 msgstr "Eiki"
 
-#: replays/game_ids.py:408
+#: replays/game_ids.py:417
 msgctxt "th09"
 msgid "Merlin"
 msgstr "Merlin"
 
-#: replays/game_ids.py:411
+#: replays/game_ids.py:420
 msgctxt "th09"
 msgid "Lunasa"
 msgstr "Lunasa"
 
-#: replays/game_ids.py:416
+#: replays/game_ids.py:425
 msgctxt "th095"
 msgid "Aya"
 msgstr "Aya"
 
-#: replays/game_ids.py:420
+#: replays/game_ids.py:429
 msgctxt "th10"
 msgid "Reimu A"
 msgstr "Reimu A"
 
-#: replays/game_ids.py:422
+#: replays/game_ids.py:431
 msgctxt "th10"
 msgid "Reimu B"
 msgstr "Reimu B"
 
-#: replays/game_ids.py:424
+#: replays/game_ids.py:433
 msgctxt "th10"
 msgid "Reimu C"
 msgstr "Reimu C"
 
-#: replays/game_ids.py:426
+#: replays/game_ids.py:435
 msgctxt "th10"
 msgid "Marisa A"
 msgstr "Marisa A"
 
-#: replays/game_ids.py:428
+#: replays/game_ids.py:437
 msgctxt "th10"
 msgid "Marisa B"
 msgstr "Marisa B"
 
-#: replays/game_ids.py:430
+#: replays/game_ids.py:439
 msgctxt "th10"
 msgid "Marisa C"
 msgstr "Marisa C"
 
-#: replays/game_ids.py:434
+#: replays/game_ids.py:443
 msgctxt "th11"
 msgid "Reimu A"
 msgstr "Reimu A (Yukari)"
 
-#: replays/game_ids.py:436
+#: replays/game_ids.py:445
 msgctxt "th11"
 msgid "Reimu B"
 msgstr "Reimu B (Suika)"
 
-#: replays/game_ids.py:438
+#: replays/game_ids.py:447
 msgctxt "th11"
 msgid "Reimu C"
 msgstr "Reimu C (Aya)"
 
-#: replays/game_ids.py:440
+#: replays/game_ids.py:449
 msgctxt "th11"
 msgid "Marisa A"
 msgstr "Marisa A (Alice)"
 
-#: replays/game_ids.py:442
+#: replays/game_ids.py:451
 msgctxt "th11"
 msgid "Marisa B"
 msgstr "Marisa B (Patchouli)"
 
-#: replays/game_ids.py:444
+#: replays/game_ids.py:453
 msgctxt "th11"
 msgid "Marisa C"
 msgstr "Marisa C (Nitori)"
 
-#: replays/game_ids.py:448
+#: replays/game_ids.py:457
 msgctxt "th12"
 msgid "Reimu A"
 msgstr "Reimu A"
 
-#: replays/game_ids.py:450
+#: replays/game_ids.py:459
 msgctxt "th12"
 msgid "Reimu B"
 msgstr "Reimu B"
 
-#: replays/game_ids.py:452
+#: replays/game_ids.py:461
 msgctxt "th12"
 msgid "Marisa A"
 msgstr "Marisa A"
 
-#: replays/game_ids.py:454
+#: replays/game_ids.py:463
 msgctxt "th12"
 msgid "Marisa B"
 msgstr "Marisa B"
 
-#: replays/game_ids.py:456
+#: replays/game_ids.py:465
 msgctxt "th12"
 msgid "Sanae A"
 msgstr "Sanae A"
 
-#: replays/game_ids.py:458
+#: replays/game_ids.py:467
 msgctxt "th12"
 msgid "Sanae B"
 msgstr "Sanae B"
 
-#: replays/game_ids.py:462
+#: replays/game_ids.py:471
 msgctxt "th125"
 msgid "Aya"
 msgstr "Aya"
 
-#: replays/game_ids.py:464
+#: replays/game_ids.py:473
 msgctxt "th125"
 msgid "Hatate"
 msgstr "Hatate"
 
-#: replays/game_ids.py:468
+#: replays/game_ids.py:477
 msgctxt "th128"
 msgid "Cirno"
 msgstr "Cirno"
 
-#: replays/game_ids.py:472
+#: replays/game_ids.py:481
 msgctxt "th13"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: replays/game_ids.py:474
+#: replays/game_ids.py:483
 msgctxt "th13"
 msgid "Marisa"
 msgstr "Marisa"
 
-#: replays/game_ids.py:476
+#: replays/game_ids.py:485
 msgctxt "th13"
 msgid "Sanae"
 msgstr "Sanae"
 
-#: replays/game_ids.py:478
+#: replays/game_ids.py:487
 msgctxt "th13"
 msgid "Youmu"
 msgstr "Youmu"
 
-#: replays/game_ids.py:482
+#: replays/game_ids.py:491
 msgctxt "th14"
 msgid "Reimu A"
 msgstr "Reimu A"
 
-#: replays/game_ids.py:484
+#: replays/game_ids.py:493
 msgctxt "th14"
 msgid "Reimu B"
 msgstr "Reimu B"
 
-#: replays/game_ids.py:486
+#: replays/game_ids.py:495
 msgctxt "th14"
 msgid "Marisa A"
 msgstr "Marisa A"
 
-#: replays/game_ids.py:488
+#: replays/game_ids.py:497
 msgctxt "th14"
 msgid "Marisa B"
 msgstr "Marisa B"
 
-#: replays/game_ids.py:490
+#: replays/game_ids.py:499
 msgctxt "th14"
 msgid "Sakuya A"
 msgstr "Sakuya A"
 
-#: replays/game_ids.py:492
+#: replays/game_ids.py:501
 msgctxt "th14"
 msgid "Sakuya B"
 msgstr "Sakuya B"
 
-#: replays/game_ids.py:496
+#: replays/game_ids.py:505
 msgctxt "th15"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: replays/game_ids.py:498
+#: replays/game_ids.py:507
 msgctxt "th15"
 msgid "Marisa"
 msgstr "Marisa"
 
-#: replays/game_ids.py:500
+#: replays/game_ids.py:509
 msgctxt "th15"
 msgid "Sanae"
 msgstr "Sanae"
 
-#: replays/game_ids.py:502
+#: replays/game_ids.py:511
 msgctxt "th15"
 msgid "Reisen"
 msgstr "Reisen"
 
-#: replays/game_ids.py:506 replays/game_ids.py:621
+#: replays/game_ids.py:515 replays/game_ids.py:630
 msgctxt "th16"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: replays/game_ids.py:508
+#: replays/game_ids.py:517
 msgctxt "th16"
 msgid "Reimu Spring"
 msgstr "Reimu Spring"
 
-#: replays/game_ids.py:510
+#: replays/game_ids.py:519
 msgctxt "th16"
 msgid "Reimu Summer"
 msgstr "Reimu Summer"
 
-#: replays/game_ids.py:512
+#: replays/game_ids.py:521
 msgctxt "th16"
 msgid "Reimu Autumn"
 msgstr "Reimu Autumn"
 
-#: replays/game_ids.py:514
+#: replays/game_ids.py:523
 msgctxt "th16"
 msgid "Reimu Winter"
 msgstr "Reimu Winter"
 
-#: replays/game_ids.py:516 replays/game_ids.py:623
+#: replays/game_ids.py:525 replays/game_ids.py:632
 msgctxt "th16"
 msgid "Cirno"
 msgstr "Cirno"
 
-#: replays/game_ids.py:518
+#: replays/game_ids.py:527
 msgctxt "th16"
 msgid "Cirno Spring"
 msgstr "Cirno Spring"
 
-#: replays/game_ids.py:520
+#: replays/game_ids.py:529
 msgctxt "th16"
 msgid "Cirno Summer"
 msgstr "Cirno Summer"
 
-#: replays/game_ids.py:522
+#: replays/game_ids.py:531
 msgctxt "th16"
 msgid "Cirno Autumn"
 msgstr "Cirno Autumn"
 
-#: replays/game_ids.py:524
+#: replays/game_ids.py:533
 msgctxt "th16"
 msgid "Cirno Winter"
 msgstr "Cirno Winter"
 
-#: replays/game_ids.py:526 replays/game_ids.py:625
+#: replays/game_ids.py:535 replays/game_ids.py:634
 msgctxt "th16"
 msgid "Aya"
 msgstr "Aya"
 
-#: replays/game_ids.py:528
+#: replays/game_ids.py:537
 msgctxt "th16"
 msgid "Aya Spring"
 msgstr "Aya Spring"
 
-#: replays/game_ids.py:530
+#: replays/game_ids.py:539
 msgctxt "th16"
 msgid "Aya Summer"
 msgstr "Aya Summer"
 
-#: replays/game_ids.py:532
+#: replays/game_ids.py:541
 msgctxt "th16"
 msgid "Aya Autumn"
 msgstr "Aya Autumn"
 
-#: replays/game_ids.py:534
+#: replays/game_ids.py:543
 msgctxt "th16"
 msgid "Aya Winter"
 msgstr "Aya Winter"
 
-#: replays/game_ids.py:536 replays/game_ids.py:627
+#: replays/game_ids.py:545 replays/game_ids.py:636
 msgctxt "th16"
 msgid "Marisa"
 msgstr "Marisa"
 
-#: replays/game_ids.py:538
+#: replays/game_ids.py:547
 msgctxt "th16"
 msgid "Marisa Spring"
 msgstr "Marisa Spring"
 
-#: replays/game_ids.py:540
+#: replays/game_ids.py:549
 msgctxt "th16"
 msgid "Marisa Summer"
 msgstr "Marisa Summer"
 
-#: replays/game_ids.py:542
+#: replays/game_ids.py:551
 msgctxt "th16"
 msgid "Marisa Autumn"
 msgstr "Marisa Autumn"
 
-#: replays/game_ids.py:544
+#: replays/game_ids.py:553
 msgctxt "th16"
 msgid "Marisa Winter"
 msgstr "Marisa Winter"
 
-#: replays/game_ids.py:548
+#: replays/game_ids.py:557
 msgctxt "th17"
 msgid "Reimu Wolf"
 msgstr "Reimu Wolf"
 
-#: replays/game_ids.py:550
+#: replays/game_ids.py:559
 msgctxt "th17"
 msgid "Reimu Otter"
 msgstr "Reimu Otter"
 
-#: replays/game_ids.py:552
+#: replays/game_ids.py:561
 msgctxt "th17"
 msgid "Reimu Eagle"
 msgstr "Reimu Eagle"
 
-#: replays/game_ids.py:554
+#: replays/game_ids.py:563
 msgctxt "th17"
 msgid "Marisa Wolf"
 msgstr "Marisa Wolf"
 
-#: replays/game_ids.py:556
+#: replays/game_ids.py:565
 msgctxt "th17"
 msgid "Marisa Otter"
 msgstr "Marisa Otter"
 
-#: replays/game_ids.py:558
+#: replays/game_ids.py:567
 msgctxt "th17"
 msgid "Marisa Eagle"
 msgstr "Marisa Eagle"
 
-#: replays/game_ids.py:560
+#: replays/game_ids.py:569
 msgctxt "th17"
 msgid "Youmu Wolf"
 msgstr "Youmu Wolf"
 
-#: replays/game_ids.py:562
+#: replays/game_ids.py:571
 msgctxt "th17"
 msgid "Youmu Otter"
 msgstr "Youmu Otter"
 
-#: replays/game_ids.py:564
+#: replays/game_ids.py:573
 msgctxt "th17"
 msgid "Youmu Eagle"
 msgstr "Youmu Eagle"
 
-#: replays/game_ids.py:568
+#: replays/game_ids.py:577
 msgctxt "th18"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: replays/game_ids.py:570
+#: replays/game_ids.py:579
 msgctxt "th18"
 msgid "Marisa"
 msgstr "Marisa"
 
-#: replays/game_ids.py:572
+#: replays/game_ids.py:581
 msgctxt "th18"
 msgid "Sakuya"
 msgstr "Sakuya"
 
-#: replays/game_ids.py:574
+#: replays/game_ids.py:583
 msgctxt "th18"
 msgid "Sanae"
 msgstr "Sanae A"
 
-#: replays/game_ids.py:579
+#: replays/game_ids.py:588
 msgctxt "th20"
 msgid "ReimuRed"
 msgstr "Reimu Red"
 
-#: replays/game_ids.py:581
+#: replays/game_ids.py:590
 msgctxt "th20"
 msgid "ReimuRed2"
 msgstr "Reimu Red2"
 
-#: replays/game_ids.py:583
+#: replays/game_ids.py:592
 msgctxt "th20"
 msgid "ReimuBlue"
 msgstr "Reimu Blue"
 
-#: replays/game_ids.py:585
+#: replays/game_ids.py:594
 msgctxt "th20"
 msgid "ReimuBlue2"
 msgstr "Reimu Blue2"
 
-#: replays/game_ids.py:587
+#: replays/game_ids.py:596
 msgctxt "th20"
 msgid "ReimuYellow"
 msgstr "Reimu Yellow"
 
-#: replays/game_ids.py:589
+#: replays/game_ids.py:598
 msgctxt "th20"
 msgid "ReimuYellow2"
 msgstr "Reimu Yellow2"
 
-#: replays/game_ids.py:591
+#: replays/game_ids.py:600
 msgctxt "th20"
 msgid "ReimuGreen"
 msgstr "Reimu Green"
 
-#: replays/game_ids.py:593
+#: replays/game_ids.py:602
 msgctxt "th20"
 msgid "ReimuGreen2"
 msgstr "Reimu Green2"
 
-#: replays/game_ids.py:595
+#: replays/game_ids.py:604
 msgctxt "th20"
 msgid "MarisaRed"
 msgstr "Marisa Red"
 
-#: replays/game_ids.py:597
+#: replays/game_ids.py:606
 msgctxt "th20"
 msgid "MarisaRed2"
 msgstr "Marisa Red2"
 
-#: replays/game_ids.py:599
+#: replays/game_ids.py:608
 msgctxt "th20"
 msgid "MarisaBlue"
 msgstr "Marisa Blue"
 
-#: replays/game_ids.py:601
+#: replays/game_ids.py:610
 msgctxt "th20"
 msgid "MarisaBlue2"
 msgstr "Marisa Blue2"
 
-#: replays/game_ids.py:603
+#: replays/game_ids.py:612
 msgctxt "th20"
 msgid "MarisaYellow"
 msgstr "Marisa Yellow"
 
-#: replays/game_ids.py:605
+#: replays/game_ids.py:614
 msgctxt "th20"
 msgid "MarisaYellow2"
 msgstr "Marisa Yellow2"
 
-#: replays/game_ids.py:607
+#: replays/game_ids.py:616
 msgctxt "th20"
 msgid "MarisaGreen"
 msgstr "Marisa Green"
 
-#: replays/game_ids.py:609
+#: replays/game_ids.py:618
 msgctxt "th20"
 msgid "MarisaGreen2"
 msgstr "Marisa Green2"
 
-#: replays/game_ids.py:613
+#: replays/game_ids.py:622
 msgctxt "alco"
 msgid "Isami"
 msgstr "Isami"
 
-#: replays/game_ids.py:630
+#: replays/game_ids.py:639
 msgctxt "th17"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: replays/game_ids.py:632
+#: replays/game_ids.py:641
 msgctxt "th17"
 msgid "Marisa"
 msgstr "Marisa"
 
-#: replays/game_ids.py:634
+#: replays/game_ids.py:643
 msgctxt "th17"
 msgid "Youmu"
 msgstr "Youmu"
 
-#: replays/game_ids.py:637
+#: replays/game_ids.py:646
 msgctxt "th20"
 msgid "Reimu"
 msgstr "Reimu"
 
-#: replays/game_ids.py:639
+#: replays/game_ids.py:648
 msgctxt "th20"
 msgid "Marisa"
 msgstr "Marisa"
 
-#: replays/game_ids.py:647
+#: replays/game_ids.py:656
 msgctxt "th16"
 msgid "Spring"
 msgstr "Spring"
 
-#: replays/game_ids.py:649
+#: replays/game_ids.py:658
 msgctxt "th16"
 msgid "Summer"
 msgstr "Summer"
 
-#: replays/game_ids.py:651
+#: replays/game_ids.py:660
 msgctxt "th16"
 msgid "Autumn"
 msgstr "Autumn"
 
-#: replays/game_ids.py:653
+#: replays/game_ids.py:662
 msgctxt "th16"
 msgid "Winter"
 msgstr "Winter"
 
-#: replays/game_ids.py:658
+#: replays/game_ids.py:667
 msgctxt "th17"
 msgid "Wolf"
 msgstr "Wolf"
 
-#: replays/game_ids.py:660
+#: replays/game_ids.py:669
 msgctxt "th17"
 msgid "Otter"
 msgstr "Otter"
 
-#: replays/game_ids.py:662
+#: replays/game_ids.py:671
 msgctxt "th17"
 msgid "Eagle"
 msgstr "Eagle"
 
-#: replays/game_ids.py:669
+#: replays/game_ids.py:678
 msgctxt "th20"
 msgid "Buggy subshot"
 msgstr "Buggy subshot"
 
-#: replays/game_ids.py:673
+#: replays/game_ids.py:682
 msgctxt "th20"
 msgid "Red"
 msgstr "Red"
 
-#: replays/game_ids.py:675
+#: replays/game_ids.py:684
 msgctxt "th20"
 msgid "Red2"
 msgstr "Red2"
 
-#: replays/game_ids.py:677
+#: replays/game_ids.py:686
 msgctxt "th20"
 msgid "Blue"
 msgstr "Blue"
 
-#: replays/game_ids.py:679
+#: replays/game_ids.py:688
 msgctxt "th20"
 msgid "Blue2"
 msgstr "Blue2"
 
-#: replays/game_ids.py:681
+#: replays/game_ids.py:690
 msgctxt "th20"
 msgid "Yellow"
 msgstr "Yellow"
 
-#: replays/game_ids.py:683
+#: replays/game_ids.py:692
 msgctxt "th20"
 msgid "Yellow2"
 msgstr "Yellow2"
 
-#: replays/game_ids.py:685
+#: replays/game_ids.py:694
 msgctxt "th20"
 msgid "Green"
 msgstr "Green"
 
-#: replays/game_ids.py:687
+#: replays/game_ids.py:696
 msgctxt "th20"
 msgid "Green2"
 msgstr "Green2"
 
-#: replays/game_ids.py:695
+#: replays/game_ids.py:704
 msgctxt "th01"
 msgid "Jigoku"
 msgstr "Jigoku"
 
-#: replays/game_ids.py:697
+#: replays/game_ids.py:706
 msgctxt "th01"
 msgid "Makai"
 msgstr "Makai"
 
-#: replays/game_ids.py:700
+#: replays/game_ids.py:709
 msgctxt "th08"
 msgid "Final A"
 msgstr "Final A"
 
-#: replays/game_ids.py:702
+#: replays/game_ids.py:711
 msgctxt "th08"
 msgid "Final B"
 msgstr "Final B"
 
-#: replays/game_ids.py:705
+#: replays/game_ids.py:714
 msgctxt "th128"
 msgid "A-1"
 msgstr "A-1"
 
-#: replays/game_ids.py:707
+#: replays/game_ids.py:716
 msgctxt "th128"
 msgid "A-2"
 msgstr "A-2"
 
-#: replays/game_ids.py:709
+#: replays/game_ids.py:718
 msgctxt "th128"
 msgid "B-1"
 msgstr "B-1"
 
-#: replays/game_ids.py:711
+#: replays/game_ids.py:720
 msgctxt "th128"
 msgid "B-2"
 msgstr "B-2"
 
-#: replays/game_ids.py:713
+#: replays/game_ids.py:722
 msgctxt "th128"
 msgid "C-1"
 msgstr "C-1"
 
-#: replays/game_ids.py:715
+#: replays/game_ids.py:724
 msgctxt "th128"
 msgid "C-2"
 msgstr "C-2"
 
-#: replays/game_ids.py:717
+#: replays/game_ids.py:726
 msgctxt "th128"
 msgid "Extra"
 msgstr "Extra"
 
-#: replays/game_ids.py:727
+#: replays/game_ids.py:736
 msgctxt "th095"
 msgid "Ex"
 msgstr "Ex"
 
-#: replays/game_ids.py:732
+#: replays/game_ids.py:741
 msgctxt "th125"
 msgid "Ex"
 msgstr "Ex"
 
-#: replays/game_ids.py:734
+#: replays/game_ids.py:743
 msgctxt "th125"
 msgid "Sp"
 msgstr "Sp"
 
-#: replays/game_ids.py:781
+#: replays/game_ids.py:790
 msgid "Easy"
 msgstr "Easy"
 
-#: replays/game_ids.py:783
+#: replays/game_ids.py:792
 msgid "Normal"
 msgstr "Normal"
 
-#: replays/game_ids.py:785
+#: replays/game_ids.py:794
 msgid "Hard"
 msgstr "Hard"
 
-#: replays/game_ids.py:787
+#: replays/game_ids.py:796
 msgid "Lunatic"
 msgstr "Lunatic"
 
-#: replays/game_ids.py:789
+#: replays/game_ids.py:798
 msgid "Extra"
 msgstr "Extra"
 
-#: replays/game_ids.py:792
+#: replays/game_ids.py:801
 msgid "Phantasm"
 msgstr "Phantasm"
 
-#: replays/game_ids.py:795
+#: replays/game_ids.py:804
 msgid "Overdrive"
 msgstr "Overdrive"
 
-#: replays/game_ids.py:797 replays/game_ids.py:800
+#: replays/game_ids.py:806 replays/game_ids.py:809
 msgid "No difficulty"
 msgstr "No difficulty"
 
-#: replays/game_ids.py:802
+#: replays/game_ids.py:811
 msgid "Bug difficulty"
 msgstr "Bug difficulty"
 
-#: replays/game_ids.py:807 replays/game_ids.py:822
+#: replays/game_ids.py:816 replays/game_ids.py:831
 msgid "Bug level and scene"
 msgstr "Bug level and scene"
 
-#: replays/game_ids.py:810 replays/game_ids.py:816
+#: replays/game_ids.py:819 replays/game_ids.py:825
 msgid "Ex"
 msgstr "Ex"
 
-#: replays/game_ids.py:818
+#: replays/game_ids.py:827
 msgid "Sp"
 msgstr "Sp"
 
