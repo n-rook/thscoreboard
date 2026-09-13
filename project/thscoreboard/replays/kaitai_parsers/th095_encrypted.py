@@ -1,27 +1,38 @@
 # This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
+# type: ignore
 
 import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 
 
-if getattr(kaitaistruct, 'API_VERSION', (0, 9)) < (0, 9):
-    raise Exception("Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s" % (kaitaistruct.__version__))
+if getattr(kaitaistruct, 'API_VERSION', (0, 9)) < (0, 11):
+    raise Exception("Incompatible Kaitai Struct Python API: 0.11 or later is required, but you have %s" % (kaitaistruct.__version__))
 
 class Th095Encrypted(KaitaiStruct):
     def __init__(self, _io, _parent=None, _root=None):
-        self._io = _io
+        super(Th095Encrypted, self).__init__(_io)
         self._parent = _parent
-        self._root = _root if _root else self
+        self._root = _root or self
         self._read()
 
     def _read(self):
         self.header = Th095Encrypted.FileHeader(self._io, self, self._root)
 
+
+    def _fetch_instances(self):
+        pass
+        self.header._fetch_instances()
+        _ = self.userdata
+        if hasattr(self, '_m_userdata'):
+            pass
+            self._m_userdata._fetch_instances()
+
+
     class FileHeader(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            self._io = _io
+            super(Th095Encrypted.FileHeader, self).__init__(_io)
             self._parent = _parent
-            self._root = _root if _root else self
+            self._root = _root
             self._read()
 
         def _read(self):
@@ -32,11 +43,15 @@ class Th095Encrypted(KaitaiStruct):
             self.userdata_offset = self._io.read_u4le()
 
 
+        def _fetch_instances(self):
+            pass
+
+
     class Userdata(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            self._io = _io
+            super(Th095Encrypted.Userdata, self).__init__(_io)
             self._parent = _parent
-            self._root = _root if _root else self
+            self._root = _root
             self._read()
 
         def _read(self):
@@ -63,11 +78,25 @@ class Th095Encrypted(KaitaiStruct):
             self.slowdown = Th095Encrypted.UserdataField(u"Slow Rate", self._io, self, self._root)
 
 
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.user_desc)):
+                pass
+
+            self.version._fetch_instances()
+            self.username._fetch_instances()
+            self.level._fetch_instances()
+            self.scene._fetch_instances()
+            self.date._fetch_instances()
+            self.score._fetch_instances()
+            self.slowdown._fetch_instances()
+
+
     class UserdataField(KaitaiStruct):
         def __init__(self, expected_name, _io, _parent=None, _root=None):
-            self._io = _io
+            super(Th095Encrypted.UserdataField, self).__init__(_io)
             self._parent = _parent
-            self._root = _root if _root else self
+            self._root = _root
             self.expected_name = expected_name
             self._read()
 
@@ -80,12 +109,16 @@ class Th095Encrypted(KaitaiStruct):
                 raise kaitaistruct.ValidationNotEqualError(b"\x20", self.name_value_separator_space, self._io, u"/types/userdata_field/seq/1")
             self.value_with_space = (self._io.read_bytes_term(10, False, True, True)).decode(u"ASCII")
 
+
+        def _fetch_instances(self):
+            pass
+
         @property
         def value(self):
             if hasattr(self, '_m_value'):
                 return self._m_value
 
-            self._m_value = (self.value_with_space)[0:(len(self.value_with_space) - 1)]
+            self._m_value = self.value_with_space[0:len(self.value_with_space) - 1]
             return getattr(self, '_m_value', None)
 
 

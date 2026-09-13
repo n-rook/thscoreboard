@@ -1,17 +1,18 @@
 # This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
+# type: ignore
 
 import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 
 
-if getattr(kaitaistruct, 'API_VERSION', (0, 9)) < (0, 9):
-    raise Exception("Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s" % (kaitaistruct.__version__))
+if getattr(kaitaistruct, 'API_VERSION', (0, 9)) < (0, 11):
+    raise Exception("Incompatible Kaitai Struct Python API: 0.11 or later is required, but you have %s" % (kaitaistruct.__version__))
 
 class Th128(KaitaiStruct):
     def __init__(self, _io, _parent=None, _root=None):
-        self._io = _io
+        super(Th128, self).__init__(_io)
         self._parent = _parent
-        self._root = _root if _root else self
+        self._root = _root or self
         self._read()
 
     def _read(self):
@@ -21,15 +22,24 @@ class Th128(KaitaiStruct):
             self.stages.append(Th128.Stage(self._io, self, self._root))
 
 
+
+    def _fetch_instances(self):
+        pass
+        self.header._fetch_instances()
+        for i in range(len(self.stages)):
+            pass
+            self.stages[i]._fetch_instances()
+
+
     class Header(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            self._io = _io
+            super(Th128.Header, self).__init__(_io)
             self._parent = _parent
-            self._root = _root if _root else self
+            self._root = _root
             self._read()
 
         def _read(self):
-            self.name = (KaitaiStream.bytes_terminate(self._io.read_bytes(12), 0, False)).decode(u"SJIS")
+            self.name = (KaitaiStream.bytes_terminate(self._io.read_bytes(12), 0, False)).decode(u"Shift_JIS")
             self.timestamp = self._io.read_u8le()
             self.score = self._io.read_u4le()
             self.unknown_1 = self._io.read_bytes(60)
@@ -42,11 +52,15 @@ class Th128(KaitaiStruct):
             self.unknown_2 = self._io.read_bytes(4)
 
 
+        def _fetch_instances(self):
+            pass
+
+
     class Stage(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            self._io = _io
+            super(Th128.Stage, self).__init__(_io)
             self._parent = _parent
-            self._root = _root if _root else self
+            self._root = _root
             self._read()
 
         def _read(self):
@@ -67,6 +81,10 @@ class Th128(KaitaiStruct):
             self.frozen_area = self._io.read_f4le()
             self.unused_1 = self._io.read_bytes(4)
             self.stage_data = self._io.read_bytes(self.len_stage_data)
+
+
+        def _fetch_instances(self):
+            pass
 
 
 
