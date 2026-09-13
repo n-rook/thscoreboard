@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 15:59+0000\n"
+"POT-Creation-Date: 2026-09-13 16:06+0000\n"
 "PO-Revision-Date: 2026-09-13 16:03+0000\n"
 "Last-Translator:   <nrook+admin@nrook.com>\n"
 "Language-Team: Japanese (https://app.transifex.com/silent-selene/teams/168285/ja/)\n"
@@ -45,13 +45,10 @@ msgid "New Classic: Challenge"
 msgstr ""
 
 #: replays/game_ids.py:66
-#| msgctxt "Category"
-#| msgid "Standard"
 msgid "Standard Mode"
 msgstr ""
 
 #: replays/game_ids.py:68
-#| msgid "Change Password"
 msgid "Challenge Mode"
 msgstr ""
 
@@ -146,22 +143,16 @@ msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
 msgstr "東方紅魔郷　～ the Embodiment of Scarlet Devil"
 
 #: replays/game_ids.py:121
-#| msgctxt "short game name"
-#| msgid "th06"
 msgctxt "short game name"
 msgid "th06nc"
 msgstr ""
 
 #: replays/game_ids.py:123
-#| msgctxt "standard game name"
-#| msgid "Embodiment of Scarlet Devil"
 msgctxt "standard game name"
 msgid "Embodiment of Scarlet Devil: New Classic"
 msgstr ""
 
 #: replays/game_ids.py:127
-#| msgctxt "full game name"
-#| msgid "東方紅魔郷 - Embodiment of Scarlet Devil"
 msgctxt "full game name"
 msgid "東方紅魔郷: New Classic - the Embodiment of Scarlet Devil"
 msgstr ""
@@ -551,29 +542,21 @@ msgid "Marisa B"
 msgstr "恋符"
 
 #: replays/game_ids.py:293
-#| msgctxt "th04"
-#| msgid "Reimu A"
 msgctxt "th06nc"
 msgid "Reimu A"
 msgstr ""
 
 #: replays/game_ids.py:295
-#| msgctxt "th04"
-#| msgid "Reimu B"
 msgctxt "th06nc"
 msgid "Reimu B"
 msgstr ""
 
 #: replays/game_ids.py:297
-#| msgctxt "th04"
-#| msgid "Marisa A"
 msgctxt "th06nc"
 msgid "Marisa A"
 msgstr ""
 
 #: replays/game_ids.py:299
-#| msgctxt "th04"
-#| msgid "Marisa B"
 msgctxt "th06nc"
 msgid "Marisa B"
 msgstr ""
