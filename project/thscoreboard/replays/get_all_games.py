@@ -39,6 +39,7 @@ NEW_GAME_IDS = [
 SCENE_GAME_IDS = [
     game_ids.GameIDs.TH095,
     game_ids.GameIDs.TH125,
+    game_ids.GameIDs.TH143,
 ]
 
 OTHER_GAME_IDS = [

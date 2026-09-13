@@ -156,6 +156,16 @@ th14 = GameConstants(
     routes=[],
 )
 
+th143 = GameConstants(
+    id="th143",
+    has_replays=True,
+    num_difficulties=0,
+    num_scene_game_levels=10,
+    num_scene_game_scenes=10,
+    shots=["Seija"],
+    routes=[],
+)
+
 th13 = GameConstants(
     id="th13",
     has_replays=True,
@@ -392,6 +402,7 @@ all_game_constants = [
     th128,
     th13,
     th14,
+    th143,
     th15,
     th16,
     th17,

@@ -87,8 +87,10 @@ def get_filter_options(game: Game) -> list[Filter]:
         return _get_filter_options_th01_th128(game)
     elif game.game_id == game_ids.GameIDs.TH08:
         return _get_filter_options_th08(game)
-    elif game.game_id == game_ids.GameIDs.TH095:
-        return _get_filter_options_th095(game)
+    elif (
+        game.game_id == game_ids.GameIDs.TH095 or game.game_id == game_ids.GameIDs.TH143
+    ):
+        return _get_filter_options_th095_th143(game)
     elif game.game_id == game_ids.GameIDs.TH125:
         return _get_filter_options_th125(game)
     elif game.game_id == game_ids.GameIDs.TH13:
@@ -161,7 +163,7 @@ def _get_filter_options_th08(game: Game) -> list[Filter]:
     ]
 
 
-def _get_filter_options_th095(game: Game) -> list[Filter]:
+def _get_filter_options_th095_th143(game: Game) -> list[Filter]:
     all_levels = [
         game.GetSceneGameLevelName(d + 1) for d in range(game.num_scene_game_levels)
     ]
