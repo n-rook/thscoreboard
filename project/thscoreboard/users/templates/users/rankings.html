@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
-<h1>Player Rankings</h1>
+<h1>{% translate "Player Rankings" %}</h1>
 
 <form method="get">
     {% csrf_token %}

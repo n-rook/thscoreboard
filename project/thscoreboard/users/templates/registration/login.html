@@ -1,6 +1,7 @@
 {% extends "simple_centered.html" %}
+{% load i18n %}
 
-{% block centered-title %}<p>Log in</p>{% endblock %}
+{% block centered-title %}<p>{% translate "Log in" %}</p>{% endblock %}
 
 {% block centered-content %}
 
@@ -12,7 +13,7 @@
         <th style="width: 100%;"></th>
         <tr>
         <td>
-            <label for="{{ form.username.id_for_label }}">Username</label>
+            <label for="{{ form.username.id_for_label }}">{% translate "Username" %}</label>
             {{ form.username.errors }}
         </td>
         <td>
@@ -21,7 +22,7 @@
         </tr>
         <tr>
         <td>
-            <label for="{{ form.password.id_for_label }}">Password</label>
+            <label for="{{ form.password.id_for_label }}">{% translate "Password" %}</label>
             {{ form.password.errors }}
         </td>
         <td>
@@ -29,9 +30,9 @@
         </td>
         </tr>
     </table>
-    <input type="submit" value="Log in">
+    <input type="submit" value="{% translate 'Log in' %}">
 </form>
 
-<p>Forgot your password? <a href="{% url 'users:forgot_password' %}">Reset it here</a>.</p>
+<p>{% translate "Forgot your password?" %} <a href="{% url 'users:forgot_password' %}">{% translate "Reset it here" %}</a>.</p>
 
 {% endblock %}

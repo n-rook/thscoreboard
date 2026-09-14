@@ -1,7 +1,7 @@
 {% extends "simple_centered.html" %}
 {% load i18n %}
 
-{% block centered-title %}<p>Delete your account</p>{% endblock %}
+{% block centered-title %}<p>{% translate "Delete your account" %}</p>{% endblock %}
 
 {% block centered-content %}
 
@@ -34,7 +34,7 @@
         </td>
         </tr>
     </table>
-    <input type="submit" value="Delete it!">
+    <input type="submit" value="{% translate 'Delete it!' %}">
 </form>
 
 {% endblock %}
