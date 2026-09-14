@@ -1,9 +1,12 @@
 {% extends "simple_centered.html" %}
+{% load i18n %}
 
 {% block centered-content %}
 <p>
+    {% blocktranslate %}
     Thanks for signing up. We have sent you a message to verify your email
     address. Please look for it in your inbox. If it does not appear soon,
     check your spam folder.
+    {% endblocktranslate %}
 </p>
 {% endblock %}

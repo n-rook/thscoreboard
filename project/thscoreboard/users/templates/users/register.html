@@ -1,6 +1,7 @@
 {% extends "simple_centered.html" %}
+{% load i18n %}
 
-{% block centered-title %}<p>Register</p>{% endblock %}
+{% block centered-title %}<p>{% translate "Register" %}</p>{% endblock %}
 
 {% block centered-content %}
 <form method="post">
@@ -11,7 +12,7 @@
         <th style="width: 100%;"></th>
         <tr>
         <td>
-            <label for="{{ form.username.id_for_label }}">Username</label>
+            <label for="{{ form.username.id_for_label }}">{% translate "Username" %}</label>
             {{ form.username.errors }}
         </td>
         <td>
@@ -20,7 +21,7 @@
         </tr>
         <tr>
         <td>
-            <label for="{{ form.email.id_for_label }}">Email Address</label>
+            <label for="{{ form.email.id_for_label }}">{% translate "Email Address" %}</label>
             {{ form.email.errors }}
         </td>
         <td>
@@ -30,7 +31,7 @@
         <tr>
             <td>
                 {{ form.password.errors }}
-                <label for="{{ form.password.id_for_label }}">Password</label>
+                <label for="{{ form.password.id_for_label }}">{% translate "Password" %}</label>
             </td>
             <td>
                 {{ form.password }}
@@ -48,6 +49,6 @@
         </tr>
         {% endif %}
     </table>
-    <input type="submit" value="Register">
+    <input type="submit" value="{% translate 'Register' %}">
 </form>
 {% endblock %}

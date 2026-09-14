@@ -1,7 +1,8 @@
 {% extends "simple_centered.html" %}
+{% load i18n %}
 
 {% block centered-content %}
-<p>Thank you for joining Silent Selene and registering an account.</p>
+<p>{% translate "Thank you for joining Silent Selene and registering an account." %}</p>
 
-<p><a href="/">Return to the home page</a></p>
+<p><a href="/">{% translate "Return to the home page" %}</a></p>
 {% endblock %}

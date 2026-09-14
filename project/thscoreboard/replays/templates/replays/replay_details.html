@@ -162,7 +162,7 @@
 
     {% if replay.comment or can_edit %}
     <div class="replay-box avoid-horizontal-join">
-        <h3>{% translate "Comment" %}{% if can_edit %} <a href="#" onclick="editReplayComment();">(Edit)</a>{% endif %}</h3>
+        <h3>{% translate "Comment" %}{% if can_edit %} <a href="#" onclick="editReplayComment();">({% translate "Edit" %})</a>{% endif %}</h3>
         <div class="replay-comment">
             <p id="replay-comment">{{ replay.comment }}</p>
             {% if can_edit %}
@@ -171,7 +171,7 @@
                 {{ edit_form.non_field_errors }}
                 {{ edit_form.comment.errors }}
                 {{ edit_form.comment }}
-                <input type="submit" value="Save">
+                <input type="submit" value="{% translate 'Save' %}">
             </form>
             {% endif %}
         </div>
