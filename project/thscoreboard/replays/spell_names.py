@@ -135,9 +135,6 @@ spell_names_en = immutabledict(
             'Forbidden Barrage "Clock that Ticks Away the Past"',
             'Secret Barrage "And Then Will There Be None?"',
             'Q.E.D. "Ripples of 495 Years"',
-            'Cursed Barrage "Fragile Wing"'
-            'Cursed Barrage "Creeping Bloodstain"',
-            '"Danmaku Heart"',
         ),
         "th08": (
             'Firefly Sign "Earthly Meteor"',
@@ -1074,9 +1071,6 @@ spell_names_jp = immutabledict(
             "禁弾「過去を刻む時計」",
             "秘弾「そして誰もいなくなるか？」",
             "ＱＥＤ「４９５年の波紋」",
-            "呪弾「フラジャイルウィング」",
-            "呪弾「這い寄る血痕」",
-            "「弾幕の心臓」",
         ),
         "th08": (
             "蛍符「地上の流星」",
