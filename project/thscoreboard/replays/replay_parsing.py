@@ -260,8 +260,7 @@ def _Parse06nc(rep_raw):
             slowdown=replay.file_header.slowdown,
             replay_type=r_type,
             version="1.15",
-            # spell card id starts with 1
-            spell_card_id=rep_raw[8] - 1,
+            spell_card_id=rep_raw[8],
         )
 
     enumerated_non_dummy_stages = [
