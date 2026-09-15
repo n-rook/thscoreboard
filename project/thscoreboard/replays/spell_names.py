@@ -96,7 +96,7 @@ spell_names_en = immutabledict(
             'Illusionary Existence "Clock Corpse"',
             'Illusionary Phantom "Jack the Ludo Bile"',
             'Illusionary Phantom "Jack the Ludo Bile"',
-            'Illusionary Image "Luna Clock",
+            'Illusionary Image "Luna Clock"',
             'Illusionary Image "Luna Clock"',
             'Illusion World "The World"',
             'Illusion World "The World"',
