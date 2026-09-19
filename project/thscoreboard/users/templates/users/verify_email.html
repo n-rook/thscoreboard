@@ -1,14 +1,17 @@
 {% extends "simple_centered.html" %}
+{% load i18n %}
 
 {% block centered-content %}
 <p>
-    Are you sure you want to register your account (with username {{unverified_user.username}})?
+    {% blocktranslate with username=unverified_user.username %}
+        Are you sure you want to register your account (with username {{ username }})?
+    {% endblocktranslate %}
 </p>
 <p>
     <form method="POST">
         {% csrf_token %}
 
-        <input type="submit" name="register" value="Register" />
+        <input type="submit" name="register" value="{% translate 'Register' %}" />
     </form>
 </p>
 {% endblock %}
