@@ -14,5 +14,6 @@
 </p>
 <h1 class="highlight">{% translate "Recent uploads" %}</h1>
 {% include "replays/replay_table.html" with show_game=True %}
+<p><a href="{% url 'Replays/Recent' %}">{% translate "View more..." context "Link to Recent Uploads under recent uploads on index page" %}</a></p>
 
 {% endblock %}
