@@ -4,6 +4,6 @@
 {% load i18n %}
 
 {% block content %}
-  <h1>Recent Uploads</h1>
+  <h1>{% translate "Recent Uploads" context "Header on recent replays page" %}</h1>
     {% include "replays/replay_table.html" with show_game=True %}
 {% endblock %}
