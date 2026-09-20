@@ -13,3 +13,4 @@ jobs:
       - uses: psf/black@25.1.0
         with:
           src: "./project/thscoreboard"
+          version: "23.7.0"
