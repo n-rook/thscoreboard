@@ -6,19 +6,12 @@ from django.views.decorators import http as http_decorators
 from replays.views.replay_table_helpers import stream_json_bytes_to_http_reponse
 from replays import models
 from replays.replays_to_json import convert_replays_to_json_bytes
+from replays.views import replay_table_helpers
 
 
 @http_decorators.require_safe
 def index_json(request):
-    recent_replays = (
-        models.Replay.objects.select_related("rank_view")
-        .filter(category__in=[models.Category.STANDARD, models.Category.TAS])
-        .filter(is_listed=True)
-        .filter_visible()
-        .order_by("-created")[:50]
-    )
-    replay_jsons = convert_replays_to_json_bytes(recent_replays)
-    return stream_json_bytes_to_http_reponse(replay_jsons)
+    return replay_table_helpers.stream_recent_replays_json(count=20)
 
 
 @http_decorators.require_safe

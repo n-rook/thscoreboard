@@ -4,10 +4,10 @@ from replays.views import create_replay
 from replays.views import edit_replay
 from replays.views import index
 from replays.views import reanalyze_all_replays
+from replays.views import recent
 from replays.views import replay_list
 from replays.views import user
 from replays.views import view_replay
-
 
 urlpatterns = [
     path("", index.index, name="index"),
@@ -36,6 +36,8 @@ urlpatterns = [
         reanalyze_all_replays.reanalyze_page,
         name="Replays/ReanalyzePagePost",
     ),
+    path("recent", recent.recent_replays, name="Replays/Recent"),
+    path("recent/json", recent.recent_json),
     path("<str:game_id>", replay_list.game_scoreboard, name="Replays/GameScoreboard"),
     path(
         "<str:game_id>/json",
