@@ -60,14 +60,14 @@ You can also mark strings as being for translation in templates, too:
 
 https://docs.djangoproject.com/en/4.1/topics/i18n/translation/#internationalization-in-template-code
 
-In the future, we should just mark everything as being for translation.
+Every piece of text that is displayed on the site should be marked using these
+translation libraries.
 
 These translations are defined in `.po` files in the locale directory. You can
 edit them by hand, but it is easier to use a special editor for them. I've
 added the "django-rosetta" app to this site; it is an editor you can access by
 running "runserver" and then going to /rosetta on your local page. (It is not
-included in the prod release.) I have no special attachment to django-rosetta;
-I would not be surprised if we found a better editor later.
+included in the prod release.)
 
 To add new strings-to-be-translated to the .po files, run
 `python manage.py makemessages --all --no-wrap`. This updates the .po files to include the new strings.
@@ -75,6 +75,10 @@ To add new strings-to-be-translated to the .po files, run
 The .po files must be compiled into .mo files with "python manage.py compilemessages"
 in order to be used. This is done automatically on the server, so you do not
 need to include .mo files in your pull requests.
+
+As a general rule, **do not include new .po files as part of your PRs.** This
+is to avoid merge conflicts; if two different PRs both regenerate the .po
+files, they can be difficult to reconcile.
 
 ### Adding support for new games
 
