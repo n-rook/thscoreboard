@@ -11,6 +11,31 @@ RestartSec=1
 User=silentselene
 WorkingDirectory=/home/silentselene/silentselene-staging/project/thscoreboard/
 ExecStart=uwsgi_python311 /home/silentselene/silentselene-staging/ref/server/uwsgi-staging.ini
+CapabilityBoundingSet=
+ProtectSystem=strict
+ProtectHome=tmpfs
+# # If the origin is accessed over HTTP, you may comment out the following two lines.
+BindReadOnlyPaths=/home/silentselene
+InaccessiblePaths=/home/silentselene/backups
+# This application updates itself.
+BindPaths=/home/silentselene/silentselene-staging
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectProc=invisible
+ProcSubset=pid
+NoNewPrivileges=true
+ProtectClock=true
+SystemCallArchitectures=native
+RestrictNamespaces=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictRealtime=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+MemoryDenyWriteExecute=true
+ProtectHostname=true
 
 [Install]
 WantedBy=multi-user.target
