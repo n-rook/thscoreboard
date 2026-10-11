@@ -4,19 +4,6 @@
 {% block content %}
 <h1>{% translate "Publish a replay" %}</h1>
 <h2>{% translate "Upload a replay file" %}</h2>
-<p>
-    {% translate "Upload a new replay from one of the following games:" %}
-    <ul>
-        {% for game in replay_games %}
-            <li>{{ game.GetName }}</li>
-        {% endfor %}
-    </ul>
-    {% blocktranslate %}
-        This site is still under construction; we hope to support all official
-        Touhou games soon.
-    {% endblocktranslate %}
-</p>
-
 <form method="post" enctype="multipart/form-data" class="inline-form upload-form">
     {% csrf_token %}
     {{ form.non_field_errors }}
