@@ -620,6 +620,7 @@ def GetFormatPower(
         game_ids.GameIDs.TH16,
         game_ids.GameIDs.TH17,
         game_ids.GameIDs.TH18,
+        game_ids.GameIDs.TH20,
     ):
         return "{:.2f}".format(power / 100)
 
@@ -797,6 +798,14 @@ def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
     return str(stage)
 
 
+def GetFormatPiv(game_id: str, piv: Optional[int]) -> str:
+    if piv is None:
+        return ""
+    elif game_id in [game_ids.GameIDs.TH20]:
+        return str(piv / 100.0)
+    return str(piv)
+
+
 def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot: str):
     """This function formats the stage values to be displayed in the front end"""
     new_stages = copy.deepcopy(replay_stages)
@@ -813,6 +822,8 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
             game_id, stage.lives, stage.life_pieces, stage.extends
         )
         stage.bombs = GetFormatBombs(game_id, stage.bombs, stage.bomb_pieces)
+        stage.piv = GetFormatPiv(game_id, stage.piv)
+
         if game_id == game_ids.GameIDs.TH09:
             stage.th09_p2_shotFormat = stage.th09_p2_shot.GetName()
 
@@ -859,8 +870,6 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
             stage.stage = ""
         if stage.score is None:
             stage.score = ""
-        if stage.piv is None:
-            stage.piv = ""
         if stage.graze is None:
             stage.graze = ""
         if stage.point_items is None:
