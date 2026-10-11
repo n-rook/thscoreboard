@@ -442,6 +442,33 @@ _table_fields_th18 = immutabledict(
     }
 )
 
+_table_fields_th20 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": True,
+        "graze": False,
+        "point_items": False,
+        "power": True,
+        "lives": True,
+        "bombs": True,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+        "misses": False,
+    }
+)
+
 _table_fields_th128 = immutabledict(
     {
         "stage": True,
@@ -515,6 +542,7 @@ _game_fields = immutabledict(
         "th16": _table_fields_th16,
         "th17": _table_fields_th17,
         "th18": _table_fields_th18,
+        "th20": _table_fields_th20,
         "alco": _table_fields_alco,
     }
 )
@@ -538,6 +566,7 @@ _game_fields_PVP = immutabledict(
         "th16": None,
         "th17": None,
         "th18": None,
+        "th20": None,
         "alco": None,
     }
 )
@@ -561,6 +590,7 @@ _game_fields_nc_challenge = immutabledict(
         "th16": None,
         "th17": None,
         "th18": None,
+        "th20": None,
         "alco": None,
     }
 )
@@ -622,6 +652,7 @@ _life_pieces = immutabledict(
         "th16": None,
         "th17": 3,
         "th18": 3,
+        "th20": 3,
     }
 )
 
@@ -649,6 +680,7 @@ _bomb_pieces = immutabledict(
         "th16": 5,
         "th17": 3,
         "th18": 3,
+        "th20": 3,
     }
 )
 
@@ -770,6 +802,11 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
     new_stages = copy.deepcopy(replay_stages)
 
     for stage in new_stages:
+        # Ideally, th20's anomaly_attack should also be displayed. However, its maximum
+        # value varies by shot type, which is difficult to support with the existing
+        # architecture because it does not have access to shot information. Therefore,
+        # it is not displayed for now.
+
         stage.power = GetFormatPower(game_id, stage.power, shot)
         stage.stage = GetFormatStage(game_id, stage.stage)
         stage.lives = GetFormatLives(
