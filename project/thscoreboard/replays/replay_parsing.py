@@ -115,12 +115,12 @@ class ReplayInfo:
     # by the player.
     # The order is significant; in th20, the first incident stone is the "main"
     # stone.
-    equipment: tuple[str] = dataclasses.field(default_factory=tuple)
+    equipment: tuple[str, ...] = dataclasses.field(default_factory=tuple)
 
     @property
     def spell_card_id_format(self):
         """Get frontend formatted spellcard id (1-indexed instead of 0-indexed)"""
-        return self.spell_card_id + 1
+        return self.spell_card_id + 1 if self.spell_card_id is not None else None
 
     def __post_init__(self):
         if self.timestamp.tzinfo is None:
@@ -136,6 +136,10 @@ class ReplayInfo:
 def convert_stored_PIV_to_displayed(game_id: str, piv: int) -> int:
     if game_id in ["th12", "th128", "th13", "th14", "th15", "th16", "th17", "th18"]:
         return (math.trunc(piv / 1000)) * 10
+    if game_id in ["th20"]:
+        # TH20 PIV values can only be stored as integers, so divide by 50 to use a
+        # human-readable scale, then convert back to a decimal scale for display.
+        return int(piv / 50)
     return piv
 
 
@@ -1358,13 +1362,47 @@ def _Parse20(rep_raw) -> ReplayInfo:
 
     replay = th20.Th20.from_bytes(decomp)
     character = ["Reimu", "Marisa"][replay.header.shot]
-    stones = [_20SubshotToStone(stone_id) for stone_id in replay.header.stones]
+    stones = tuple(_20SubshotToStone(stone_id) for stone_id in replay.header.stones)
     shot = character + stones[0]
 
     if _is_spell_practice_modern(replay.header):
-        raise Exception("Spell practice is not yet supported")
+        return ReplayInfo(
+            game=game_ids.GameIDs.TH20,
+            shot=shot,
+            equipment=stones,
+            difficulty=replay.header.difficulty,
+            score=replay.header.score * 10,
+            timestamp=datetime.datetime.fromtimestamp(
+                replay.header.timestamp, tz=datetime.timezone.utc
+            ),
+            name=replay.header.name.replace("\x00", ""),
+            slowdown=replay.header.slowdown,
+            replay_type=game_ids.ReplayTypes.SPELL_PRACTICE,
+            spell_card_id=replay.header.spell_practice_id,
+        )
 
-    # No stage practice support yet.
+    rep_stages = []
+
+    for current_stage_start_data, next_stage_start_data in zip(
+        replay.stages, replay.stages[1:] + [None]
+    ):
+        s = ReplayStage(
+            stage=current_stage_start_data.stage_num,
+        )
+        if next_stage_start_data is not None:
+            s.score = next_stage_start_data.score * 10
+            s.power = next_stage_start_data.power
+            s.piv = convert_stored_PIV_to_displayed(
+                game_ids.GameIDs.TH20, next_stage_start_data.piv
+            )
+            s.lives = next_stage_start_data.lives
+            s.life_pieces = next_stage_start_data.life_pieces
+            s.bombs = next_stage_start_data.bombs
+            s.bomb_pieces = next_stage_start_data.bomb_pieces
+        else:
+            # no next stage means this is the last stage, so use the final run score
+            s.score = replay.header.score * 10
+        rep_stages.append(s)
 
     r_type = game_ids.ReplayTypes.FULL_GAME
     if replay.header.stage_count == 1 and replay.header.difficulty != 4:
@@ -1382,6 +1420,7 @@ def _Parse20(rep_raw) -> ReplayInfo:
         name=replay.header.name.replace("\x00", ""),
         slowdown=replay.header.slowdown,
         replay_type=r_type,
+        stages=rep_stages,
     )
 
     return r

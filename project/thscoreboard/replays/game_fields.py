@@ -442,6 +442,33 @@ _table_fields_th18 = immutabledict(
     }
 )
 
+_table_fields_th20 = immutabledict(
+    {
+        "stage": True,
+        "score": True,
+        "piv": True,
+        "graze": False,
+        "point_items": False,
+        "power": True,
+        "lives": True,
+        "bombs": True,
+        "th06_rank": False,
+        "th07_cherry": False,
+        "th07_cherrymax": False,
+        "th09_p1_cpu": False,
+        "th09_p2_cpu": False,
+        "th09_p2_shot": False,
+        "th09_p2_score": False,
+        "th128_motivation": False,
+        "th128_perfect_freeze": False,
+        "th128_frozen_area": False,
+        "th13_trance": False,
+        "th16_season_power": False,
+        "extends": False,
+        "misses": False,
+    }
+)
+
 _table_fields_th128 = immutabledict(
     {
         "stage": True,
@@ -515,6 +542,7 @@ _game_fields = immutabledict(
         "th16": _table_fields_th16,
         "th17": _table_fields_th17,
         "th18": _table_fields_th18,
+        "th20": _table_fields_th20,
         "alco": _table_fields_alco,
     }
 )
@@ -538,6 +566,7 @@ _game_fields_PVP = immutabledict(
         "th16": None,
         "th17": None,
         "th18": None,
+        "th20": None,
         "alco": None,
     }
 )
@@ -561,6 +590,7 @@ _game_fields_nc_challenge = immutabledict(
         "th16": None,
         "th17": None,
         "th18": None,
+        "th20": None,
         "alco": None,
     }
 )
@@ -590,6 +620,7 @@ def GetFormatPower(
         game_ids.GameIDs.TH16,
         game_ids.GameIDs.TH17,
         game_ids.GameIDs.TH18,
+        game_ids.GameIDs.TH20,
     ):
         return "{:.2f}".format(power / 100)
 
@@ -622,6 +653,7 @@ _life_pieces = immutabledict(
         "th16": None,
         "th17": 3,
         "th18": 3,
+        "th20": 3,
     }
 )
 
@@ -649,6 +681,7 @@ _bomb_pieces = immutabledict(
         "th16": 5,
         "th17": 3,
         "th18": 3,
+        "th20": 3,
     }
 )
 
@@ -765,17 +798,32 @@ def GetFormatStage(game_id: str, stage: Optional[int]) -> str:
     return str(stage)
 
 
+def GetFormatPiv(game_id: str, piv: Optional[int]) -> str:
+    if piv is None:
+        return ""
+    elif game_id in [game_ids.GameIDs.TH20]:
+        return "{:.2f}".format(piv / 100.0)
+    return str(piv)
+
+
 def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot: str):
     """This function formats the stage values to be displayed in the front end"""
     new_stages = copy.deepcopy(replay_stages)
 
     for stage in new_stages:
+        # Ideally, th20's anomaly_attack should also be displayed. However, its maximum
+        # value varies by shot type, which is difficult to support with the existing
+        # architecture because it does not have access to shot information. Therefore,
+        # it is not displayed for now.
+
         stage.power = GetFormatPower(game_id, stage.power, shot)
         stage.stage = GetFormatStage(game_id, stage.stage)
         stage.lives = GetFormatLives(
             game_id, stage.lives, stage.life_pieces, stage.extends
         )
         stage.bombs = GetFormatBombs(game_id, stage.bombs, stage.bomb_pieces)
+        stage.piv = GetFormatPiv(game_id, stage.piv)
+
         if game_id == game_ids.GameIDs.TH09:
             stage.th09_p2_shotFormat = stage.th09_p2_shot.GetName()
 
@@ -822,8 +870,6 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
             stage.stage = ""
         if stage.score is None:
             stage.score = ""
-        if stage.piv is None:
-            stage.piv = ""
         if stage.graze is None:
             stage.graze = ""
         if stage.point_items is None:
