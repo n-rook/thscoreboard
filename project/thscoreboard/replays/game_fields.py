@@ -802,7 +802,7 @@ def GetFormatPiv(game_id: str, piv: Optional[int]) -> str:
     if piv is None:
         return ""
     elif game_id in [game_ids.GameIDs.TH20]:
-        return str(piv / 100.0)
+        return "{:.2f}".format(piv / 100.0)
     return str(piv)
 
 
