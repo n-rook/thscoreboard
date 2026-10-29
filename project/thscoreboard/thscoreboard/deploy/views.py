@@ -1,4 +1,4 @@
-"""A route used for webhooks that deploys the server."""
+"""Internal server-management routes."""
 
 import base64
 import functools
@@ -8,7 +8,6 @@ from django import http
 from django.contrib.auth import hashers
 from django.views.decorators import csrf
 
-from thscoreboard.deploy import deploy as deploy_lib
 from thscoreboard.deploy import uwsgi
 from users import models
 
@@ -39,14 +38,6 @@ def _basic_auth(view_func):
         return response
 
     return inner
-
-
-@_basic_auth
-@csrf.csrf_exempt
-def deploy(request):
-    logging.info("Deploying on behalf of %s", request.user.username)
-    deploy_lib.update_and_deploy(request.user.username)
-    return http.HttpResponse(status=200, content="Success!!!")
 
 
 @_basic_auth
