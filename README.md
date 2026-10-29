@@ -133,6 +133,16 @@ sudo systemctl start silentselene-deploy.service
 sudo systemctl start silentselene-staging-deploy.service
 ```
 
+Staging automatically checks the remote `main` branch once a minute. Install
+and enable the accompanying poll timer to activate this behavior:
+
+```sh
+sudo systemctl enable --now silentselene-staging-poll.timer
+```
+
+The timer starts `silentselene-staging-deploy.service` only when `main` has a
+new revision, so unchanged checks do not run migrations or rebuild assets.
+
 The units execute `update.py` as `silentselene-deploy`. The account needs write
 access to the corresponding checkout, including its `.git` directory, and read
 access to the credential used for the Git remote. The Web-service account does
