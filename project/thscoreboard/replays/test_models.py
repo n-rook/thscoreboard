@@ -110,6 +110,18 @@ class ReplayRankTest(test_case.ReplayTestCase):
         self.assertEqual(replays[1].GetRank(), 2)
         self.assertEqual(replays[2].GetRank(), 3)
 
+    def testRanksBeyondThirdPlace(self):
+        for i in range(4):
+            test_replays.CreateAsPublishedReplay(
+                filename="th6_extra",
+                user=self.createUser(f"ranked-user-{i}"),
+                score=1_000_000_000 - i,
+            )
+
+        replays = models.Replay.objects.order_by("-score").select_related("rank_view")
+
+        self.assertEqual([replay.GetRank() for replay in replays], [1, 2, 3, 4])
+
     def testStagePracticeReplaysAreUnranked(self) -> None:
         test_replays.CreateAsPublishedReplay(
             filename="th6_extra",
