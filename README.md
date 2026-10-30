@@ -114,3 +114,67 @@ tools are referenced from the venv; for example, python is
 Note that the venvs were created by running `python -m venv .venv` in these
 directories. As always, manage these as `silentselene`, not root, or else
 root will wind up owning files.
+
+### Deploying updates
+
+Updates are run by the `silentselene-deploy` account, separately from the
+`silentselene` account that serves the Web application. The update script is
+[`ref/deploy/update.py`](ref/deploy/update.py), and the one-shot systemd unit
+definitions are:
+
+- `ref/server/systemd/silentselene-deploy.service`
+- `ref/server/systemd/silentselene-staging-deploy.service`
+
+Install the unit files in `/etc/systemd/system/`, then explicitly start the
+appropriate unit for each deployment:
+
+```sh
+sudo systemctl start silentselene-deploy.service
+sudo systemctl start silentselene-staging-deploy.service
+```
+
+Staging automatically checks the remote `main` branch once a minute. Install
+and enable the accompanying poll timer to activate this behavior:
+
+```sh
+sudo systemctl enable --now silentselene-staging-poll.timer
+```
+
+The timer starts `silentselene-staging-deploy.service` only when `main` has a
+new revision, so unchanged checks do not run migrations or rebuild assets.
+
+The units execute `update.py` as `silentselene-deploy`. The account needs write
+access to the corresponding checkout, including its `.git` directory, and read
+access to the credential used for the Git remote. The Web-service account does
+not need either Git write access or Discord credentials.
+
+The updater permits only fast-forward Git updates. Every invocation then runs
+`migrate`, `setup_constant_tables`, `compilescss`, `compilemessages`, and
+`collectstatic --noinput`. It sends a Discord message and reloads the
+corresponding uWSGI service only after those commands all succeed. These steps
+run even if the checkout was already at the latest revision.
+
+uWSGI reload is fully defined by the systemd units: the Web units reload their
+uWSGI master with `SIGHUP`, and the deploy units use a fixed `ExecStartPost=`
+command to request that reload. The updater itself has no `sudo` dependency or
+privilege to control services.
+
+Each deployment logs its start, Git revision, every Django command, Discord
+notification, completion, and any exception to the systemd journal. Inspect a
+deployment with:
+
+```sh
+sudo journalctl -u silentselene-deploy.service
+sudo journalctl -u silentselene-staging-deploy.service
+```
+
+The Discord credential belongs only in root-owned mode-`0600` environment files
+on the server, not in this repository:
+
+```text
+/etc/silentselene/deploy.env
+/etc/silentselene/staging-deploy.env
+```
+
+Each environment file must contain either `DISCORD_WEBHOOK_URL`, or both
+`DISCORD_WEBHOOK_ID` and `DISCORD_WEBHOOK_TOKEN`.
