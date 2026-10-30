@@ -1,7 +1,7 @@
 const replayTableBatchSize = 50;
 const replayTableBodyHtml = document.getElementById('replay-table-body');
 const displayedColumns = [
-  "User", "Game", "Difficulty", "Shot", "Route", "Score", "Upload Date", "Comment", "Replay"
+  "Rank", "User", "Game", "Difficulty", "Shot", "Route", "Score", "Upload Date", "Comment", "Replay"
 ];
 
 var activeFilters = {};
