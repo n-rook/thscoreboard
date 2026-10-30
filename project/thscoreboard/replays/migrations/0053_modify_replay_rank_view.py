@@ -4,7 +4,11 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-    """Rank every player's best replay in each scoreboard field."""
+    """Rank every player's best replay in each scoreboard field.
+
+    replay_rank_candidates_idx must remain aligned with the candidate filter,
+    player identity expression, and DISTINCT ON ordering in the view below.
+    """
 
     dependencies = [
         ("replays", "0052_replay_version"),
