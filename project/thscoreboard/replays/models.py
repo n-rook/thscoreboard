@@ -549,7 +549,7 @@ class ReplayRank(models.Model):
     this view. The view definition is maintained in the replays migrations.
 
     PERFORMANCE NOTE: The query relies on the replay_rank_candidates_idx index
-    from migration 0053 to efficiently select the best replay for each player.
+    from migration 0054 to efficiently select the best replay for each player.
     Changes to its candidate WHERE clause, player identity expression, or
     DISTINCT ON ordering must also update that index and be checked with
     EXPLAIN (ANALYZE, BUFFERS).
@@ -580,7 +580,7 @@ class ReplayRank(models.Model):
         created
       FROM replays_replay
       WHERE
-        replay_type IN (1, 5) -- 1 = FULL_GAME, 5 = SCENE_GAME
+        replay_type IN (1, 5, 6) -- 1 = FULL_GAME, 5 = SCENE_GAME, 6 = NC_CHALLENGE
         AND category = 1 -- 1 = STANDARD
         AND (user_id IS NOT NULL OR imported_username IS NOT NULL)
       ORDER BY
