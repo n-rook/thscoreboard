@@ -132,6 +132,17 @@ class ReplayRankTest(test_case.ReplayTestCase):
         replay = models.Replay.objects.select_related("rank_view").first()
         self.assertIsNone(replay.GetRank())
 
+    def testNcChallengeReplaysAreRanked(self) -> None:
+        replay = test_replays.CreateAsPublishedReplay(
+            filename="th6_extra",
+            user=self.user1,
+            replay_type=models.ReplayType.NC_CHALLENGE,
+        )
+
+        replay = models.Replay.objects.select_related("rank_view").get(id=replay.id)
+
+        self.assertEqual(replay.GetRank(), 1)
+
     def testRankCountsTasSeparately(self):
         th05_mima = models.Shot.objects.get(
             game_id=game_ids.GameIDs.TH05, shot_id="Mima"
