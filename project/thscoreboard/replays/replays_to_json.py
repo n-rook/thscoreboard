@@ -29,7 +29,7 @@ class ReplayToJsonConverter:
 
         json_dict = {}
         json_dict["Id"] = replay.id
-        json_dict["Rank"] = rank or ""
+        json_dict["Shot Rank"] = rank or ""
         if replay.user:
             json_dict["User"] = {
                 "text": f"{replay.user.username}",

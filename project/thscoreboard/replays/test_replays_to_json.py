@@ -83,7 +83,7 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         assert json_data[0]["Difficulty"] == "Easy"
         assert json_data[0]["Shot"] == "Reimu A"
         assert json_data[0]["Category"] == "Standard"
-        assert json_data[0]["Rank"] == 1
+        assert json_data[0]["Shot Rank"] == 1
         assert json_data[0]["Score"]["text"] == "🥇1,000,000"
         assert json_data[0]["Upload Date"] == "2000-01-01"
         assert json_data[0]["Comment"] == "鼻毛"
@@ -120,11 +120,11 @@ class ReplaysToJsonTestCase(test_case.ReplayTestCase):
         self.assertEqual(json_data[3]["Score"]["text"], "700,000,000")
         self.assertEqual(json_data[4]["Score"]["text"], "600,000,000")
 
-        self.assertEqual(json_data[0]["Rank"], 1)
-        self.assertEqual(json_data[1]["Rank"], 2)
-        self.assertEqual(json_data[2]["Rank"], 3)
-        self.assertEqual(json_data[3]["Rank"], 4)
-        self.assertEqual(json_data[4]["Rank"], 5)
+        self.assertEqual(json_data[0]["Shot Rank"], 1)
+        self.assertEqual(json_data[1]["Shot Rank"], 2)
+        self.assertEqual(json_data[2]["Shot Rank"], 3)
+        self.assertEqual(json_data[3]["Shot Rank"], 4)
+        self.assertEqual(json_data[4]["Shot Rank"], 5)
 
     def testMedalEmojisMultipleShots(self):
         replay_filenames = [
