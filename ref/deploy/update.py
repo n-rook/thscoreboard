@@ -6,7 +6,6 @@ deployment account, not under the account that serves uWSGI.
 """
 
 import argparse
-import getpass
 import json
 import logging
 import os
@@ -19,6 +18,7 @@ from urllib import error, request
 
 
 DEFAULT_GITHUB_REPOSITORY = "n-rook/thscoreboard"
+DEFAULT_BRANCH = "main"
 DJANGO_DIRECTORY = Path("project/thscoreboard")
 LOGGER = logging.getLogger(__name__)
 
@@ -99,7 +99,7 @@ def announce(webhook_url: str, message: str) -> None:
 
 def update(
     repository: Path,
-    actor: str,
+    branch: str,
     github_repository: str,
     announce_update: bool,
 ) -> None:
@@ -107,9 +107,9 @@ def update(
     if not repository.is_dir():
         raise ValueError(f"Repository directory does not exist: {repository}")
 
-    LOGGER.info("Starting deployment for %s on behalf of %s.", repository, actor)
+    LOGGER.info("Starting deployment for %s.", repository)
     old_revision = head_revision(repository)
-    run_git(repository, "pull", "--ff-only")
+    run_git(repository, "pull", "--ff-only", "origin", branch)
     new_revision = head_revision(repository)
 
     if new_revision == old_revision:
@@ -129,7 +129,7 @@ def update(
 
     if announce_update:
         message = (
-            f"{actor} updated to commit {new_revision}:\n"
+            f"Updated to commit {new_revision}:\n"
             f"https://github.com/{github_repository}/commit/{new_revision}"
         )
         announce(get_webhook_url(), message)
@@ -148,9 +148,9 @@ def parse_args(arguments: Sequence[str]) -> argparse.Namespace:
         help="Path to the existing Git checkout to update.",
     )
     parser.add_argument(
-        "--actor",
-        default=getpass.getuser(),
-        help="Name included in the Discord message (default: current user).",
+        "--branch",
+        default=DEFAULT_BRANCH,
+        help="Remote branch to deploy (default: main).",
     )
     parser.add_argument(
         "--github-repository",
@@ -175,7 +175,7 @@ def main(arguments: Sequence[str]) -> int:
     try:
         update(
             repository=args.repository,
-            actor=args.actor,
+            branch=args.branch,
             github_repository=args.github_repository,
             announce_update=args.announce_update,
         )
