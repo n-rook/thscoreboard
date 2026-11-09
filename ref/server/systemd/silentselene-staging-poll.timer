@@ -1,0 +1,11 @@
+[Unit]
+Description=Poll for Silent Selene staging updates every ten minutes
+
+[Timer]
+OnCalendar=*:0/10
+AccuracySec=1min
+Persistent=true
+Unit=silentselene-staging-poll.service
+
+[Install]
+WantedBy=timers.target

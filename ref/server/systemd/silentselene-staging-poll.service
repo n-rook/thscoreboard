@@ -1,0 +1,22 @@
+[Unit]
+Description=Check Silent Selene staging for a main-branch update
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=silentselene-deploy
+Group=silentselene-deploy
+StandardOutput=journal
+StandardError=journal
+WorkingDirectory=/home/silentselene/silentselene-staging
+# The root-owned script logs Git errors and distinguishes them from no update.
+ExecCondition=/usr/local/libexec/silentselene/check_for_update.py --repository /home/silentselene/silentselene-staging --branch main
+ExecStart=/bin/true
+ExecStartPost=+/bin/systemctl start silentselene-staging-deploy.service
+TimeoutStartSec=20min
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/home/silentselene/silentselene-staging
