@@ -681,13 +681,46 @@ class Th20ReplayTestCase(unittest.TestCase):
         r = ParseTestReplay("th20_normal")
         self.assertEqual(r.game, "th20")
         self.assertEqual(r.shot, "ReimuRed")
-        self.assertEqual(r.equipment, ["Red", "Common", "Common", "Common"])
+        self.assertEqual(r.equipment, ("Red", "Common", "Common", "Common"))
         self.assertEqual(r.difficulty, 1)
         self.assertEqual(r.score, 585_186_620)
         self.assertEqual(r.timestamp.date(), datetime.date(2025, 8, 17))
         self.assertEqual(r.name.rstrip(), "nrook")
         self.assertAlmostEqual(r.slowdown, 0.0818, places=4)
         self.assertEqual(r.replay_type, game_ids.ReplayTypes.FULL_GAME)
+        s = r.stages[0]
+        self.assertEqual(s.score, 8_030_530)
+        self.assertEqual(s.lives, 2)
+        self.assertEqual(s.life_pieces, 2)
+        self.assertEqual(s.bombs, 4)
+        self.assertEqual(s.bomb_pieces, 0)
+        self.assertEqual(s.power, 400)
+        self.assertEqual(s.piv, 257)
+
+    def testStagePractice(self):
+        r = ParseTestReplay("th20_stage_practice")
+        self.assertEqual(r.game, "th20")
+        self.assertEqual(r.shot, "MarisaYellow2")
+        self.assertEqual(r.equipment, ("Yellow2", "Green2", "Yellow", "Green"))
+        self.assertEqual(r.difficulty, 3)
+        self.assertEqual(r.score, 297_003_760)
+        self.assertEqual(r.timestamp.date(), datetime.date(2026, 10, 11))
+        self.assertEqual(r.name.rstrip(), "NiHoHe")
+        self.assertEqual(round(r.slowdown, 1) if r.slowdown is not None else None, 0.3)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.STAGE_PRACTICE)
+
+    def testSpellPractice(self):
+        r = ParseTestReplay("th20_spell_practice")
+        self.assertEqual(r.game, "th20")
+        self.assertEqual(r.shot, "ReimuYellow2")
+        self.assertEqual(r.equipment, ("Yellow2", "Red", "Yellow", "Yellow2"))
+        self.assertEqual(r.difficulty, 4)
+        self.assertEqual(r.score, 19_480)
+        self.assertEqual(r.timestamp.date(), datetime.date(2026, 10, 11))
+        self.assertEqual(r.name.rstrip(), "WEF")
+        self.assertEqual(round(r.slowdown, 1) if r.slowdown is not None else None, 0.0)
+        self.assertEqual(r.replay_type, game_ids.ReplayTypes.SPELL_PRACTICE)
+        self.assertEqual(r.spell_card_id_format, 113)
 
     def testBug(self) -> None:
         # Regression test for bug when "Chara" userdata field is set to junk.
