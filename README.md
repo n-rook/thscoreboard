@@ -114,3 +114,107 @@ tools are referenced from the venv; for example, python is
 Note that the venvs were created by running `python -m venv .venv` in these
 directories. As always, manage these as `silentselene`, not root, or else
 root will wind up owning files.
+
+### Deploying updates
+
+Updates are run by the `silentselene-deploy` account, separately from the
+`silentselene` account that serves the Web application. The update script is
+[`ref/deploy/update.py`](ref/deploy/update.py), and the one-shot systemd unit
+definitions are:
+
+- `ref/server/systemd/silentselene-deploy.service`
+- `ref/server/systemd/silentselene-staging-deploy.service`
+
+Install the unit files in `/etc/systemd/system/`, then explicitly start the
+appropriate unit for each deployment:
+
+```sh
+sudo systemctl start silentselene-deploy.service
+sudo systemctl start silentselene-staging-deploy.service
+```
+
+Staging automatically checks the remote `main` branch every ten minutes.
+Install both accompanying poll units, reload the systemd configuration, and
+enable the timer to activate this behavior:
+
+```sh
+sudo install -o root -g root -m 0644 \
+  ref/server/systemd/silentselene-staging-poll.service \
+  ref/server/systemd/silentselene-staging-poll.timer \
+  /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now silentselene-staging-poll.timer
+```
+
+The poll check is source-controlled at
+`ref/server/libexec/check_for_update.py`, but is executed from a root-owned
+location outside either application checkout. Install it before enabling the
+timer, and repeat this step whenever the source-controlled script changes:
+
+```sh
+sudo install -d -o root -g root -m 0755 /usr/local/libexec/silentselene
+sudo install -o root -g root -m 0755 ref/server/libexec/check_for_update.py \
+  /usr/local/libexec/silentselene/check_for_update.py
+```
+
+The timer starts `silentselene-staging-deploy.service` only when `main` has a
+new revision, so unchanged checks do not run migrations or rebuild assets.
+
+The units execute `update.py` as `silentselene-deploy`. The account needs write
+access to the corresponding checkout, including its `.git` directory, and read
+access to the credential used for the Git remote. The Web-service account does
+not need either Git write access or Discord credentials.
+
+The deployment account also runs Django management commands, so it needs the
+application configuration required to connect to the database. In the current
+setup, this means read access to `project/thscoreboard/.env`, including
+`LOCAL_DATABASE_PASSWORD`. If the Web service receives its Django settings
+through its unit environment instead, provide the same required settings to the
+deploy unit's root-owned environment file. Do not put database credentials in
+this repository.
+
+This separation is enforced by server filesystem permissions. The deployment
+account must control the checkout, while the Web-service account may have only
+the read and execute access it needs. In particular, `silentselene` must not be
+able to write the checkout or its `.git` directory, whether directly, through a
+shared group, or through an ACL. The systemd unit files and deployment
+environment files must be owned by root and writable by neither account.
+
+The deploy units explicitly update from the remote `main` branch, and the
+updater permits only fast-forward Git updates. Every invocation then runs
+`migrate`, `setup_constant_tables`, `compilescss`, `compilemessages`, and
+`collectstatic --noinput`. It sends a Discord message and reloads the
+corresponding uWSGI service only after those commands all succeed. These steps
+run even if the checkout was already at the latest revision.
+
+uWSGI reload is fully defined by the systemd units: the Web units reload their
+uWSGI master with `SIGHUP`, and the deploy units use a fixed `ExecStartPost=`
+command to request that reload. The updater itself has no `sudo` dependency or
+privilege to control services.
+
+The `+` prefix on the deploy and poll units' `ExecStartPost=` commands is
+intentional: systemd runs the fixed, absolute `/bin/systemctl` command with
+manager privileges so it can reload or start the named service only after a
+successful update. This relies on `/bin/systemctl` and the installed unit files
+being root-controlled. Do not make either writable by the Web or deployment
+account, and do not replace these fixed commands with interpolated input.
+
+Each deployment logs its start, Git revision, every Django command, Discord
+notification, completion, and any exception to the systemd journal. Inspect a
+deployment with:
+
+```sh
+sudo journalctl -u silentselene-deploy.service
+sudo journalctl -u silentselene-staging-deploy.service
+```
+
+The Discord credential belongs only in root-owned mode-`0600` environment files
+on the server, not in this repository:
+
+```text
+/etc/silentselene/deploy.env
+/etc/silentselene/staging-deploy.env
+```
+
+Each environment file must contain either `DISCORD_WEBHOOK_URL`, or both
+`DISCORD_WEBHOOK_ID` and `DISCORD_WEBHOOK_TOKEN`.

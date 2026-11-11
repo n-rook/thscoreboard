@@ -1,0 +1,21 @@
+[Unit]
+Description=Update and announce the Silent Selene staging release
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=silentselene-deploy
+Group=silentselene-deploy
+StandardOutput=journal
+StandardError=journal
+WorkingDirectory=/home/silentselene/silentselene-staging
+EnvironmentFile=/etc/silentselene/staging-deploy.env
+ExecStart=/home/silentselene/silentselene-staging/ref/deploy/update.py --repository /home/silentselene/silentselene-staging --branch main
+ExecStartPost=+/bin/systemctl reload silentselene-staging.service
+TimeoutStartSec=15min
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/home/silentselene/silentselene-staging
