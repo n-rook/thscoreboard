@@ -830,12 +830,12 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
         if stage.th128_motivation is None:
             stage.th128_motivation = ""
         else:
-            stage.th128_motivation = f"{stage.th128_motivation//100}%"
+            stage.th128_motivation = f"{stage.th128_motivation // 100}%"
 
         if stage.th128_perfect_freeze is None:
             stage.th128_perfect_freeze = ""
         else:
-            stage.th128_perfect_freeze = f"{stage.th128_perfect_freeze//100}%"
+            stage.th128_perfect_freeze = f"{stage.th128_perfect_freeze // 100}%"
 
         if stage.th128_frozen_area is None:
             stage.th128_frozen_area = ""
@@ -846,7 +846,7 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
             stage.th13_trance = ""
         else:
             stage.th13_trance = (
-                f"{stage.th13_trance//200} ({stage.th13_trance%200}/200)"
+                f"{stage.th13_trance // 200} ({stage.th13_trance % 200}/200)"
             )
 
         if stage.th16_season_power is None:
@@ -854,15 +854,15 @@ def FormatStages(game_id: str, replay_stages: Iterable[models.ReplayStage], shot
         elif stage.th16_season_power >= 1140:
             stage.th16_season_power = "6"
         elif stage.th16_season_power >= 840:
-            stage.th16_season_power = f"5 ({stage.th16_season_power-840}/300)"
+            stage.th16_season_power = f"5 ({stage.th16_season_power - 840}/300)"
         elif stage.th16_season_power >= 590:
-            stage.th16_season_power = f"4 ({stage.th16_season_power-590}/250)"
+            stage.th16_season_power = f"4 ({stage.th16_season_power - 590}/250)"
         elif stage.th16_season_power >= 390:
-            stage.th16_season_power = f"3 ({stage.th16_season_power-390}/200)"
+            stage.th16_season_power = f"3 ({stage.th16_season_power - 390}/200)"
         elif stage.th16_season_power >= 230:
-            stage.th16_season_power = f"2 ({stage.th16_season_power-230}/160)"
+            stage.th16_season_power = f"2 ({stage.th16_season_power - 230}/160)"
         elif stage.th16_season_power >= 100:
-            stage.th16_season_power = f"1 ({stage.th16_season_power-100}/130)"
+            stage.th16_season_power = f"1 ({stage.th16_season_power - 100}/130)"
         else:
             stage.th16_season_power = f"0 ({stage.th16_season_power}/100)"
 
