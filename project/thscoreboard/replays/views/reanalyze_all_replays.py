@@ -19,9 +19,13 @@ _BATCH_SIZE = os.environ.get("REANALYZE_BATCH_SIZE") or 1000
 
 
 def _ShortNameForReplay(r):
+    if r.user:
+        user = r.user.username
+    else:
+        user = r.imported_username
     return "{id} ({user}, {game})".format(
         id=r.id,
-        user=r.user.username,
+        user=user,
         game=r.shot.game.GetShortName(),
     )
 
