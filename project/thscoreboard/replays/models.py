@@ -488,13 +488,11 @@ class Replay(models.Model):
         return f"{gamecode}_ud{rpy_id}.rpy"
 
     def GetRank(self) -> int | None:
-        """Returns this replay's rank if it is a top-ranking replay.
+        """Returns this replay's rank if it is a ranking replay.
 
-        Only the top 3 replays (in a given field: the ranking is divided
-        by game, shot, difficulty, and so on) have a rank; for the others,
-        None is returned. Only the best replay from a specific user is ranked;
-        if someone has the top 3 runs, their best replay will get the
-        number-one slot, but the next two will go unranked.
+        Rankings are divided by game, shot, difficulty, and so on. Only the
+        best replay from a specific user is ranked; if someone has multiple
+        runs in a field, only their best one receives a rank.
 
         This method is instant if "rank_view" is selected, which is strongly
         recommended.
@@ -547,24 +545,86 @@ class Replay(models.Model):
 class ReplayRank(models.Model):
     """Represents a replay's rank on the scoreboard.
 
-    Most replays are not listed here. Only top-3 replays in a field will have
-    rows in this view.
+    Only the best replay from each player in a ranking field has a row in
+    this view. The view definition is maintained in the replays migrations.
+
+    PERFORMANCE NOTE: The query relies on the replay_rank_candidates_idx index
+    from migration 0054 to efficiently select the best replay for each player.
+    Changes to its candidate WHERE clause, player identity expression, or
+    DISTINCT ON ordering must also update that index and be checked with
+    EXPLAIN (ANALYZE, BUFFERS).
 
     IMPORTANT NOTE: This model represents a view, not a table. It is defined
     by the following query:
 
     CREATE OR REPLACE VIEW replays_rank
     AS
-    SELECT row_number() over () as id, replay, score, shot_id, difficulty, route_id, category, place
-    FROM (
-    SELECT id as replay, score, shot_id, difficulty, route_id, category, rank() OVER (PARTITION BY shot_id, difficulty, route_id, category ORDER BY score DESC, created, id) as place
-    FROM replays_replay
-    WHERE replay_type = 1 OR replay_type = 5  -- FULL_GAME or SCENE_GAME
-    AND (category = 1 OR category = 2)  -- STANDARD or TAS
-    ) AS ranked
-    WHERE place <= 3
-    ORDER BY shot_id, difficulty, route_id, category, place desc
-    ;
+    WITH best_replays_per_player AS (
+      SELECT DISTINCT ON (
+        shot_id,
+        difficulty,
+        route_id,
+        scene_game_level,
+        scene_game_scene,
+        user_id,
+        CASE WHEN user_id IS NULL THEN imported_username END
+      )
+        id AS replay,
+        score,
+        shot_id,
+        difficulty,
+        route_id,
+        1 AS category,  -- 1 = STANDARD
+        scene_game_level,
+        scene_game_scene,
+        created
+      FROM replays_replay
+      WHERE
+        replay_type IN (1, 5, 6) -- 1 = FULL_GAME, 5 = SCENE_GAME, 6 = NC_CHALLENGE
+        AND category = 1 -- 1 = STANDARD
+        AND (user_id IS NOT NULL OR imported_username IS NOT NULL)
+      ORDER BY
+        shot_id,
+        difficulty,
+        route_id,
+        scene_game_level,
+        scene_game_scene,
+        user_id,
+        CASE WHEN user_id IS NULL THEN imported_username END,
+        score DESC,
+        created,
+        id
+    ),
+    ranked_replays AS (
+      SELECT
+        *,
+        rank() OVER (
+          PARTITION BY
+            shot_id,
+            difficulty,
+            route_id,
+            category,
+            scene_game_level,
+            scene_game_scene
+          ORDER BY
+            score DESC,
+            created,
+            replay
+        ) AS place
+      FROM best_replays_per_player
+    )
+    SELECT
+      row_number() OVER () AS id,
+      replay,
+      score,
+      shot_id,
+      difficulty,
+      route_id,
+      category,
+      scene_game_level,
+      scene_game_scene,
+      place
+    FROM ranked_replays;
     """
 
     class Meta:
@@ -602,7 +662,7 @@ class ReplayRank(models.Model):
     """
 
     place = models.IntegerField("Place")
-    """The replay's rank. 1 is first place, 2 is second, 3 is third.
+    """The replay's rank. 1 is first place, 2 is second, and so on.
 
     In the case of a tie, the tied replays will all share the same place.
     """
